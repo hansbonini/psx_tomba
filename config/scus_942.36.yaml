@@ -1,0 +1,162 @@
+name: SCUS_942.36
+sha1: 81cbc79f0230aeb4252e058039f47ac95a777f5a
+options:
+  basename: scus_942.36
+  target_path: ./iso/us/SCUS_942.36
+  elf_path: ./build/scus_942.36.elf
+  base_path: ..
+  platform: psx
+  compiler: PSYQ
+
+  # asm_path: asm
+  # src_path: src
+  # build_path: build
+  # create_asm_dependencies: True
+
+  ld_script_path: scus_942.36.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  gp_value: 0x80097FA8
+
+  o_as_suffix: True
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+  # auto_link_sections: [".data", ".rodata", ".bss"]
+
+  symbol_addrs_path:
+    - ./config/symbol_addrs.txt
+  reloc_addrs_path:
+    - ./config/reloc_addrs.txt
+
+  # undefined_funcs_auto_path: undefined_funcs_auto.txt
+  # undefined_syms_auto_path: undefined_syms_auto.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 2
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x80010000
+    # bss_size: Please fill out this value when you figure out the bss size
+    subsegments:
+      - [0x800, .rodata, psxsdk/libsnd]
+      - [0x8C4, .rodata, psxsdk/libsnd]
+      - [0xA3C, .rodata, game, draw_cubes]
+      - [0xB08, .rodata, psxsdk/libsnd]
+      - [0xB6C, .rodata, psxsdk/libsnd]
+      - [0xB70, .rodata, psxsdk/libsnd]
+      - [0xB84, .rodata, psxsdk/libsnd]
+      - [0xE28, .rodata, psxsdk/libsnd]
+      - [0xF04, .rodata, psxsdk/libsnd]
+      - [0xF48, .rodata, psxsdk/libsnd]
+      - [0xF94, .rodata, psxsdk/libsnd]
+      - [0xFA8, .rodata, psxsdk/libsnd]
+      - [0x117C, data, 117C]
+      - [0x87A8, c, psxsdk/libsnd, vm_doff]
+      - [0xEBEC, c, game, draw_cubes]
+      - [0x10E7C, c, psxsdk/libsnd, scsnck]
+      - [0x2AE04, c, psxsdk/libgs, gs_101]
+      - [0x2AE04, c, psxsdk/libgs, gs_102]
+      - [0x2AE04, c, psxsdk/libgs, gs_124]
+      - [0x42AB4, c, psxsdk/libgs, gs_106]
+      - [0x42AB4, c, psxsdk/libsnd, scnoff]
+      - [0x42AB4, c, psxsdk/libsnd, ssquit]
+      - [0x42AB4, c, psxsdk/libsn, _op_vdel]
+      - [0x42AB4, c, psxsdk/libsn, _op_vnew]
+      - [0x4BB8C, c, psxsdk/libapi, c68]
+      - [0x4BB9C, c, psxsdk/libapi, c112]
+      - [0x4BB9C, c, psxsdk/libcard, c112]
+      - [0x4BBAC, c, psxsdk/libapi, a08]
+      - [0x4BBBC, c, psxsdk/libapi, a09]
+      - [0x4BBCC, c, psxsdk/libapi, a11]
+      - [0x4BBDC, c, psxsdk/libapi, a12]
+      - [0x4BBEC, c, psxsdk/libapi, a14]
+      - [0x4BBFC, c, psxsdk/libapi, a15]
+      - [0x4BC0C, c, psxsdk/libapi, a16]
+      - [0x4BC1C, c, psxsdk/libapi, a36]
+      - [0x4BC2C, c, psxsdk/libapi, a37]
+      - [0x4BC3C, c, psxsdk/libapi, a50]
+      - [0x4BC4C, c, psxsdk/libapi, a51]
+      - [0x4BC5C, c, psxsdk/libapi, a52]
+      - [0x4BC6C, c, psxsdk/libapi, a53]
+      - [0x4BC7C, c, psxsdk/libapi, a54]
+      - [0x4BC8C, c, psxsdk/libapi, a65]
+      - [0x4BC9C, c, psxsdk/libapi, a67]
+      - [0x4BCAC, c, psxsdk/libapi, a69]
+      - [0x4BCBC, c, psxsdk/libapi, a94]
+      - [0x4BF6C, c, psxsdk/libapi, a66]
+      - [0x4BF7C, c, psxsdk/libc2, bcopy]
+      - [0x4BFE0, c, psxsdk/libc2, memcpy]
+      - [0x4C084, c, psxsdk/libc2, strcat]
+      - [0x4C190, c, psxsdk/libc2, strcpy]
+      - [0x4C1D4, c, psxsdk/libc2, strlen]
+      - [0x4C204, c, psxsdk/libc2, strncat]
+      - [0x4C278, c, psxsdk/libc2, strncpy]
+      - [0x4CA28, c, psxsdk/libc2, ctype]
+      - [0x4CA88, c, psxsdk/libc2, memchr]
+      - [0x4D3E8, c, psxsdk/libc2, memmove]
+      - [0x4D3E8, c, psxsdk/libc, memmove]
+      - [0x4D454, c, psxsdk/libcard, c171]
+      - [0x4D464, c, psxsdk/libcard, c172]
+      - [0x4D4AC, c, psxsdk/libcard, a78]
+      - [0x4D4BC, c, psxsdk/libcard, a80]
+      - [0x4D558, c, psxsdk/libsnd, ssinit_c]
+      - [0x4D558, c, psxsdk/libsnd, ssinit_h]
+      - [0x4D588, c, psxsdk/libapi, a91]
+      - [0x4D598, c, psxsdk/libcard, a74]
+      - [0x4D5A8, c, psxsdk/libcard, a75]
+      - [0x4D5B8, c, psxsdk/libcard, a76]
+      - [0x51F28, c, psxsdk/libapi, c73]
+      - [0x53840, c, psxsdk/libgte, fog_01]
+      - [0x53B24, c, psxsdk/libgte, msc01]
+      - [0x54034, c, psxsdk/libgte, mtx_09]
+      - [0x540C4, c, psxsdk/libgte, mtx_12]
+      - [0x541F4, c, psxsdk/libgte, reg10]
+      - [0x54214, c, psxsdk/libgte, reg11]
+      - [0x54234, c, psxsdk/libgte, reg12]
+      - [0x54254, c, psxsdk/libgte, reg13]
+      - [0x54734, c, psxsdk/libgte, fgo_04]
+      - [0x548D4, c, psxsdk/libgte, fgo_05]
+      - [0x54A74, c, psxsdk/libgte, fgo_06]
+      - [0x54E34, c, psxsdk/libcd, cdrom]
+      - [0x54F6C, c, psxsdk/libapi, a07]
+      - [0x56DD0, c, psxsdk/libc2, puts]
+      - [0x574C8, c, psxsdk/libcd, c_002]
+      - [0x57528, c, psxsdk/libcd, c_003]
+      - [0x578B0, c, psxsdk/libcd, c_010]
+      - [0x58614, c, psxsdk/libapi, l10]
+      - [0x58D3C, c, psxsdk/libapi, c114]
+      - [0x58D54, c, psxsdk/libapi, a23]
+      - [0x58D64, c, psxsdk/libapi, a24]
+      - [0x58D74, c, psxsdk/libapi, a25]
+      - [0x591D4, c, psxsdk/libetc, vmode]
+      - [0x591EC, c, psxsdk/libgs, gs_125]
+      - [0x5A28C, c, psxsdk/libapi, l02]
+      - [0x5A29C, c, psxsdk/libapi, l03]
+      - [0x5BF0C, c, psxsdk/libapi, c57]
+      - [0x5D53C, c, psxsdk/libsnd, adsr]
+      - [0x5EC40, c, psxsdk/libsnd, ut_roff]
+      - [0x5EC40, c, psxsdk/libspu, s_i]
+      - [0x5F6F8, c, psxsdk/libsnd, play]
+      - [0x65694, c, psxsdk/libapi, a13]
+      - [0x656A4, c, psxsdk/libspu, s_m_init]
+      - [0x65CC8, c, psxsdk/libspu, s_m_f]
+      - [0x66D9C, c, psxsdk/libapi, a10]
+  - [0x88800]
