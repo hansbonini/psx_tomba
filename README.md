@@ -8,7 +8,7 @@
   <img src="https://github.com/user-attachments/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
   
   [![Discord](https://img.shields.io/discord/your-discord-id?color=7289da&logo=discord&logoColor=white)](https://discord.gg/tomba-club)
-  [![Progress](https://img.shields.io/badge/Progress-In%20Development-yellow)](https://github.com/hansbonini/tomba-decomp)
+  [![Progress](https://img.shields.io/badge/Progress-In%20Development-yellow)](https://github.com/hansbonini/PSX_TOMBA)
   [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
   [![Platform](https://img.shields.io/badge/Platform-PlayStation-blue)](https://en.wikipedia.org/wiki/PlayStation_(console))
 </div>
@@ -81,8 +81,8 @@ PSX_TOMBA/
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/hansbonini/tomba-decomp.git
-cd tomba-decomp
+git clone https://github.com/hansbonini/PSX_TOMBA.git
+cd PSX_TOMBA
 ```
 
 2. **Prepare the ISOs**
@@ -155,7 +155,7 @@ python tools/splat/split.py config/scus_942.36.yaml
 Contributions are very welcome! Here are some ways to help:
 
 ### 🐛 Report Bugs
-- Use [Issues](https://github.com/hansbonini/tomba-decomp/issues) to report problems
+- Use [Issues](https://github.com/hansbonini/PSX_TOMBA/issues) to report problems
 - Include detailed logs and steps to reproduce
 
 ### 💻 Code Contributions
@@ -182,6 +182,7 @@ Contributions are very welcome! Here are some ways to help:
 - [🎯 Game File Formats](docs/game-formats.md)
 
 ### External Resources
+- [Tomba.Club](https://tomba.club) - Community wiki and resources
 - [PSX Development Wiki](https://psx-spx.consoledev.net/)
 - [PSYQ Documentation](http://psxdev.net/help.html)
 - [Tomba! TCRF Page](https://tcrf.net/Tomba!)
@@ -208,6 +209,8 @@ This project is intended **exclusively for educational and preservation purposes
 ### Special Thanks
 - **zerovii** - Material and explanations about WFM format
 - **vervalkon** - Material and explanations about quad polygon coordinates and GAM format
+- **[Xeeynamo](https://github.com/Xeeynamo)** - Castlevania decompilation project used as reference and example
+- **LAB313Ru** - PSX loader for Ghidra reverse engineering framework
 - **ethteck** - Creator of splat, the disassembler that makes this project possible
 - **PCSX-Redux Team** - Advanced PlayStation emulator with debugging capabilities
 - **DuckStation Team** - High-accuracy PlayStation emulator for testing and verification
