@@ -1,7 +1,5 @@
 # Tomba! PSX Decompilation
 
-## 📁 Project Structure
-
 <div align="center">
   <img src="https://github.com/user-attachments/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
   
