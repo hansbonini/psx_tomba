@@ -1,9 +1,11 @@
-# Tomba! PSX Decompilation Project
+# Tomba! PSX Decompilation| 🇯🇵 **NTSC-J** | SLPS-01443 | 📋 Planned | `c9d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2` |
+
+## 📁 Project Structure
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
   
-  [![Discord](https://img.shields.io/discord/your-discord-id?color=7289da&logo=discord&logoColor=white)](https://discord.gg/tomba-club)
+  [![Discord](https://img.shields.io/discord/your-discord-id?color=7289da&logo=discord&logoColor=white)](https://discord.gg/SjBn4g57Bj)
   [![Progress](https://img.shields.io/badge/Progress-In%20Development-yellow)](https://github.com/hansbonini/PSX_TOMBA)
   [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
   [![Platform](https://img.shields.io/badge/Platform-PlayStation-blue)](https://en.wikipedia.org/wiki/PlayStation_(console))
@@ -26,11 +28,6 @@ This is a complete **decompilation** project of the **Tomba!** game (known as **
 | 🇪🇺 **PAL** | SCES-01330 | 🔄 In progress | `b8c3f4a5d2e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0` |
 | 🇯🇵 **NTSC-J** | SLPS-01443 | 📋 Planned | `c9d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2` |
 
-| Region | Game Code | Status | SHA1 |
-|--------|-----------|--------|------|
-| 🇺🇸 **NTSC-U** | SCUS-94236 | ✅ Primary | `81cbc79f0230aeb4252e058039f47ac95a777f5a` |
-| 🇪🇺 **PAL** | SCES-01330 | 🔄 In progress | - |
-| �� **NTSC-J** | SLPS-01443 | 📋 Planned | - |
 
 ## 📁 Project Structure
 
@@ -108,10 +105,10 @@ make build
 python tools/splat/split.py config/scus_942.36.yaml
 
 # Extract GAM archive files
-./tools/tombatools/tombatools.exe gam extract iso/us/AREA00/A000.GAM ./extracted/
+./tools/tombatools/tombatools.exe gam unpack iso/us/AREA00/A000.GAM ./extracted/A000.UNGAM
 
 # Extract font files for analysis
-./tools/tombatools/tombatools.exe wfm extract iso/us/SYSTEM/FONT.WFM ./fonts/
+./tools/tombatools/tombatools.exe wfm decode iso/us/SYSTEM/FONT.WFM ./fonts/
 ```
 
 ## 📊 Decompilation Progress
@@ -219,7 +216,7 @@ This project is intended **exclusively for educational and preservation purposes
 
 ## 📞 Contact and Community
 
-- 💬 **Discord**: [Tomba.Club](https://discord.gg/tomba-club)
+- 💬 **Discord**: [Tomba.Club](https://discord.gg/SjBn4g57Bj)
 - 🌐 **Website**: [hansbonini.com.br](https://hansbonini.com.br)
 
 ---
