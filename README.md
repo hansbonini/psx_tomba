@@ -154,6 +154,9 @@ Contributions are very welcome! Here are some ways to help:
 - [📦 GAM File Format](docs/gam-format.md)
 - [🎨 WFM Font Format](docs/wfm-format.md)
 - [⚙️ TombaTools Examples](docs/tombatools-examples.md)
+- [🛠️ TombaTools Commands](docs/tombatools-commands.md)
+- [📋 TombaTools Setup](docs/tombatools-setup.md)
+- [🎯 Game File Formats](docs/game-formats.md)
 
 ### External Resources
 - [PSX Development Wiki](https://psx-spx.consoledev.net/)
