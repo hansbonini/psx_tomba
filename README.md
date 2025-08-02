@@ -1,8 +1,4 @@
-# Tomba! PSX Decompila| Region | Game Code | Status | SHA1 |
-|--------|-----------|--------|------|
-| 🇺🇸 **NTSC-U** | SCUS-94236 | ✅ Primary | `81cbc79f0230aeb4252e058039f47ac95a777f5a` |
-| 🇪🇺 **PAL** | SCES-01330 | 🔄 In progress | `b8c3f4a5d2e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0` |
-| 🇯🇵 **NTSC-J** | SLPS-01443 | 📋 Planned | `c9d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2` |Project
+# Tomba! PSX Decompilation Project
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
@@ -23,6 +19,12 @@ This is a complete **decompilation** project of the **Tomba!** game (known as **
 - 🎯 **Accuracy**: Byte-perfect reproduction of the original executable
 
 ## 🌍 Supported Versions
+
+| Region | Game Code | Status | SHA1 |
+|--------|-----------|--------|------|
+| 🇺🇸 **NTSC-U** | SCUS-94236 | ✅ Primary | `81cbc79f0230aeb4252e058039f47ac95a777f5a` |
+| 🇪🇺 **PAL** | SCES-01330 | 🔄 In progress | `b8c3f4a5d2e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0` |
+| 🇯🇵 **NTSC-J** | SLPS-01443 | 📋 Planned | `c9d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2` |
 
 | Region | Game Code | Status | SHA1 |
 |--------|-----------|--------|------|
