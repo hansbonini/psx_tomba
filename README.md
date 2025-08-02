@@ -3,7 +3,7 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
   
-  [![Discord](https://img.shields.io/discord/your-discord-id?color=7289da&logo=discord&logoColor=white)](https://discord.gg/SjBn4g57Bj)
+  [![Discord](https://img.shields.io/discord/404121852517285888?color=7289da&logo=discord&logoColor=white)](https://discord.gg/SjBn4g57Bj)
   [![Progress](https://img.shields.io/badge/Progress-In%20Development-yellow)](https://github.com/hansbonini/PSX_TOMBA)
   [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
   [![Platform](https://img.shields.io/badge/Platform-PlayStation-blue)](https://en.wikipedia.org/wiki/PlayStation_(console))
