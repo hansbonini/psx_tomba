@@ -1,4 +1,8 @@
-# Tomba! PSX Decompilation Project
+# Tomba! PSX Decompila| Region | Game Code | Status | SHA1 |
+|--------|-----------|--------|------|
+| 🇺🇸 **NTSC-U** | SCUS-94236 | ✅ Primary | `81cbc79f0230aeb4252e058039f47ac95a777f5a` |
+| 🇪🇺 **PAL** | SCES-01330 | 🔄 In progress | `b8c3f4a5d2e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0` |
+| 🇯🇵 **NTSC-J** | SLPS-01443 | 📋 Planned | `c9d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2` |Project
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
@@ -24,14 +28,14 @@ This is a complete **decompilation** project of the **Tomba!** game (known as **
 |--------|-----------|--------|------|
 | 🇺🇸 **NTSC-U** | SCUS-94236 | ✅ Primary | `81cbc79f0230aeb4252e058039f47ac95a777f5a` |
 | 🇪🇺 **PAL** | SCES-01330 | 🔄 In progress | - |
-| 🇷🇺 **Russian** | - | 📋 Planned | - |
+| �� **NTSC-J** | SLPS-01443 | 📋 Planned | - |
 
 ## 📁 Project Structure
 
 ```
 PSX_TOMBA/
 ├── 📁 config/           # Splat configuration and symbols
-├── 📁 iso/              # Extracted ISO data (US, EU, RU)
+├── 📁 iso/              # Extracted ISO data (US, EU, JP)
 ├── 📁 splat/            # Decompiled code by splat
 ├── 📁 tools/            # Custom tools
 │   ├── 📁 splat/        # Splat disassembly tool
@@ -50,12 +54,19 @@ PSX_TOMBA/
 - **PSYQ SDK** - Original PlayStation toolchain
 
 ### TombaTools Features
-- 🎨 **WFM Font Processing**: Extract and modify font glyphs with transparency support
-- 📦 **GAM Archive Management**: Compress/decompress game data archives with integrity verification
-- 🖼️ **PSX Graphics Support**: Native 4bpp format handling with palette management
-- 📝 **Metadata Export**: JSON/YAML export for easy data editing and analysis
-- 🔧 **Batch Operations**: Process multiple files with command-line automation
-- 🎭 **Image Export**: PNG extraction with configurable transparency and sprite sheets
+- 🎨 **WFM Font Processing**: 
+  - Extract glyphs as PNG files with transparency support
+  - Decode dialogues to YAML format with text and control codes
+  - Encode YAML dialogues back to WFM format
+  - Automatic glyph-to-character mapping
+- � **GAM Archive Management**: 
+  - Unpack compressed GAM files using custom LZ algorithm
+  - Pack data back to GAM format with compression
+  - Integrity verification and error checking
+- 🔧 **Command-Line Interface**: 
+  - Simple and intuitive commands for all operations
+  - Verbose mode for detailed processing information
+  - Cross-platform compatibility (Windows, Linux, macOS)
 
 ## 🚀 Getting Started
 
@@ -116,9 +127,28 @@ python tools/splat/split.py config/scus_942.36.yaml
 ```
 
 ### Details by Area
-- **AREA00-05**: 🟩 Main decompilation complete
-- **AREA06-10**: 🟨 Actively in progress
-- **AREA11-19**: ⬜ Awaiting analysis
+
+#### ⬜ Planned Areas (AREA00-19)
+- **AREA00**: Village of All Beginnings (5 sections)
+- **AREA01**: Dwarf Forest (5 sections)
+- **AREA02**: Dwarf Village (6 sections)
+- **AREA03**: Phoenix Mountain (6 sections)
+- **AREA04**: Haunted Mansion (20 sections)
+- **AREA05**: Baccus Village (4 sections)
+- **AREA06**: Motocross Segment (3 sections)
+- **AREA07**: Dwarf Forest (Purified) (5 sections)
+- **AREA08**: Baccus Lake (4 sections)
+- **AREA09**: Mushroom Village (7 sections)
+- **AREA10**: Deep Jungle (9 sections)
+- **AREA11**: Village of Civilization (3 sections)
+- **AREA12**: Haunted Mansion (Purified) (20 sections)
+- **AREA13**: Pig Island (2 sections)
+- **AREA14**: Evil Pigs (8 sections)
+- **AREA15**: *Empty/Unused*
+- **AREA16**: Village of Civilization - Clock Tower (7 sections)
+- **AREA17**: Village of Civilization - Iron Tower (11 sections)
+- **AREA18**: Village of Civilization - Y Crossing (3 sections)
+- **AREA19**: Hidden Village (3 sections)
 
 ## 🤝 How to Contribute
 
@@ -148,14 +178,7 @@ Contributions are very welcome! Here are some ways to help:
 ## 📚 Resources and Documentation
 
 ### Technical Documentation
-- [📖 PSX Analysis Guide](docs/psx-analysis.md)
-- [🔧 Environment Setup](docs/setup.md)
-- [🎮 Game Structures](docs/game-structures.md)
-- [📦 GAM File Format](docs/gam-format.md)
-- [🎨 WFM Font Format](docs/wfm-format.md)
-- [⚙️ TombaTools Examples](docs/tombatools-examples.md)
-- [🛠️ TombaTools Commands](docs/tombatools-commands.md)
-- [📋 TombaTools Setup](docs/tombatools-setup.md)
+- [ Environment Setup](docs/setup.md)
 - [🎯 Game File Formats](docs/game-formats.md)
 
 ### External Resources
@@ -176,7 +199,6 @@ This project is intended **exclusively for educational and preservation purposes
 
 ### Core Team
 - **Hans Bonini** - Project lead and main development
-- **PSX-Dev Community** - Technical support and tools
 
 ### Tools and Libraries
 - [Splat](https://github.com/ethteck/splat) by ethteck
