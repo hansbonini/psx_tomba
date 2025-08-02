@@ -1,4 +1,4 @@
-# Tomba! PSX Decompilation| 🇯🇵 **NTSC-J** | SLPS-01443 | 📋 Planned | `c9d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2` |
+# Tomba! PSX Decompilation
 
 ## 📁 Project Structure
 
