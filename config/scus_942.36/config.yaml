@@ -4,16 +4,17 @@ options:
   basename: scus_942.36
   target_path: ./iso/us/SCUS_942.36
   elf_path: ./build/scus_942.36.elf
-  base_path: ..
+  base_path: ../../
   platform: psx
   compiler: PSYQ
 
-  # asm_path: asm
-  # src_path: src
-  # build_path: build
+  asm_path: ./asm/scus_942.36
+  src_path: ./src/scus_942.36
+  build_path: ./build/scus_942.36
+  asset_path: ./assets/scus_942.36
   # create_asm_dependencies: True
 
-  ld_script_path: scus_942.36.ld
+  ld_script_path: ./linker/scus_942.36/scus_942.36.ld
   ld_dependencies: True
 
   find_file_boundaries: False
@@ -25,17 +26,18 @@ options:
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
+  disassemble_all: true
 
   section_order: [".rodata", ".text", ".data", ".bss"]
-  # auto_link_sections: [".data", ".rodata", ".bss"]
+  auto_link_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
-    - ./config/symbol_addrs.txt
+    - ./symbols/scus_942.36/symbol_addrs.txt
   reloc_addrs_path:
-    - ./config/reloc_addrs.txt
+    - ./symbols/scus_942.36/reloc_addrs.txt
 
-  # undefined_funcs_auto_path: undefined_funcs_auto.txt
-  # undefined_syms_auto_path: undefined_syms_auto.txt
+  undefined_funcs_auto_path: ./symbols/scus_942.36/undefined_funcs_auto.txt
+  undefined_syms_auto_path: ./symbols/scus_942.36/undefined_syms_auto.txt
 
   extensions_path: ./tools/splat_ext
 
@@ -58,19 +60,39 @@ segments:
     subsegments:
       - [0x800, .rodata, psxsdk/libsnd]
       - [0x8C4, .rodata, psxsdk/libsnd]
-      - [0xA3C, .rodata, game, draw_cubes]
       - [0xB08, .rodata, psxsdk/libsnd]
-      - [0xB6C, .rodata, psxsdk/libsnd]
-      - [0xB70, .rodata, psxsdk/libsnd]
       - [0xB84, .rodata, psxsdk/libsnd]
       - [0xE28, .rodata, psxsdk/libsnd]
       - [0xF04, .rodata, psxsdk/libsnd]
       - [0xF48, .rodata, psxsdk/libsnd]
       - [0xF94, .rodata, psxsdk/libsnd]
       - [0xFA8, .rodata, psxsdk/libsnd]
-      - [0x117C, data, 117C]
+      - [0x3624, .rodata, psxsdk/libsnd]
+      - [0x3B9C, .rodata, psxsdk/libgs]
+      - [0x3FA8, .rodata, psxsdk/libgs]
+      - [0x4164, .rodata, psxsdk/libgs]
+      - [0x42A0, .rodata, psxsdk/libgs]
+      - [0x4304, .rodata, psxsdk/libgs]
+      - [0x4350, .rodata, psxsdk/libgs]
+      - [0x4AD0, .rodata, psxsdk/libsn]
+      - [0x5490, .rodata, psxsdk/libsnd]
+      - [0x55D4, .rodata, psxsdk/libsn]
+      - [0x5F3C, .rodata, psxsdk/libc2]
+      - [0x6178, .rodata, psxsdk/libc2]
+      - [0x622C, .rodata, psxsdk/libcard]
+      - [0x65DC, .rodata, psxsdk/libapi]
+      - [0x6714, .rodata, psxsdk/libcd]
+      - [0x689C, .rodata, psxsdk/libapi]
+      - [0x6984, .rodata, psxsdk/libc2]
+      - [0x69D0, .rodata, psxsdk/libcd]
+      - [0x6A2C, .rodata, psxsdk/libapi]
+      - [0x6A90, .rodata, psxsdk/libgs]
+      - [0x6AB0, .rodata, psxsdk/libapi]
+      - [0x6AD4, .rodata, psxsdk/libsnd]
+      - [0x6B10, .rodata, psxsdk/libapi]
+      - [0x6B70, .rodata, psxsdk/libapi]
+      - [0x7FD8, .rodata, psxsdk/libsnd]
       - [0x87A8, c, psxsdk/libsnd, vm_doff]
-      - [0xEBEC, c, game, draw_cubes]
       - [0x10E7C, c, psxsdk/libsnd, scsnck]
       - [0x2AE04, c, psxsdk/libgs, gs_101]
       - [0x2AE04, c, psxsdk/libgs, gs_102]

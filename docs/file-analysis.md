@@ -46,27 +46,39 @@ The game structure is organized into several main folders, each containing diffe
 
 ## 📊 Statistics by Region
 
-### NTSC-U (USA) - SCUS-94236
+### 🇯🇵 NTSC-J (Japan) - SLPS-01144
 | Category | Quantity |
 |----------|----------|
-| Total files | 750+ |
+| Total files | ~850+ |
+| Main folders | 26 |
+| AREA files | ~560 (25 areas) |
+| SYSTEM files | 186+ |
+| SOUND files | 81 |
+| MOVIE files | 22 |
+| SYS files | 25 |
+| Approximate total size | ~700 MB |
+
+### 🇺🇸 NTSC-U (USA) - SCUS-94236
+| Category | Quantity |
+|----------|----------|
+| Total files | 752 |
 | Main folders | 28 |
-| AREA files | ~400 |
+| AREA files | ~460 (20 areas) |
 | SYSTEM files | 186+ |
 | SOUND files | 81 |
 | MOVIE files | 22 |
 | SYS files | 20 |
 | Approximate total size | ~650 MB |
 
-### PAL (Europe) - SCES-01330
+### 🇪🇺 PAL (Europe) - SCES-01330
 | Category | Quantity |
 |----------|----------|
-| Total files | 750+ |
+| Total files | 781 |
 | Main folders | 29 (includes EXE/) |
-| AREA files | ~400 |
+| AREA files | ~460 (20 areas) |
 | SYSTEM files | 186+ |
 | SOUND files | 81 |
-| MOVIE files | 22 |
+| MOVIE files | 30 |
 | SYS files | 20 |
 | Languages included | EN, FR, DE, IT, NL |
 | Approximate total size | ~650 MB |
@@ -84,7 +96,7 @@ The game structure is organized into several main folders, each containing diffe
 | File | Size (approx.) | Type | Description | JPN | USA | EUR | Notes |
 |------|----------------|------|-------------|-----|-----|-----|-------|
 | `license_data.dat` | 28,032 bytes | DAT | PlayStation license data | ✅ | ✅ | ✅ | Identical |
-| `MAIN0.EXE` | ~500KB | EXE | PAL executable variant 0 | ❌ | ❌ | ✅ | EUR-exclusive (EXE/ folder) |
+| `MAIN0.EXE` | ~500KB | EXE | English executable (B = English) | ❌ | ❌ | ✅ | EUR-exclusive (EXE/ folder) |
 | `MAIN1.EXE` | ~500KB | EXE | PAL executable variant 1 | ❌ | ❌ | ✅ | EUR-exclusive (EXE/ folder) |
 | `MAIN2.EXE` | ~500KB | EXE | PAL executable variant 2 | ❌ | ❌ | ✅ | EUR-exclusive (EXE/ folder) |
 | `MAIN3.EXE` | ~500KB | EXE | PAL executable variant 3 | ❌ | ❌ | ✅ | EUR-exclusive (EXE/ folder) |
@@ -198,357 +210,6 @@ Each area contains a consistent set of file types:
 ---
 
 ## 🎬 Cinematic Videos (MOVIE) - Complete File Analysis
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~80,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~60,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B300.000` | ~25,000 bytes | RAW | Simplified background data | ✅ | ✅ | Identical |
-| `B400.000` | ~24,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `B500.000` | ~25,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D303.000` | ~11,000 bytes | RAW | Small uncompressed data | ✅ | ✅ | Identical |
-| `D403.000` | ~100,000 bytes | RAW | Medium uncompressed data | ✅ | ✅ | Identical |
-| `D505.000` | ~70,000 bytes | RAW | Specific uncompressed data | ✅ | ✅ | Identical |
-| `X02.BIN` | ~350,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA03 - Phoenix Mountain
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~85,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~65,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B300.000` | ~25,000 bytes | RAW | Simplified background data | ✅ | ✅ | Identical |
-| `B400.000` | ~24,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `B500.000` | ~25,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D303.000` | ~11,000 bytes | RAW | Small uncompressed data | ✅ | ✅ | Identical |
-| `D403.000` | ~100,000 bytes | RAW | Medium uncompressed data | ✅ | ✅ | Identical |
-| `D505.000` | ~70,000 bytes | RAW | Specific uncompressed data | ✅ | ✅ | Identical |
-| `X03.BIN` | ~360,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA04 - Haunted Mansion
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~120,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~90,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B300.000` | ~25,000 bytes | RAW | Simplified background data | ✅ | ✅ | Identical |
-| `B400.000` | ~24,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `B500.000` | ~25,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D303.000` | ~11,000 bytes | RAW | Small uncompressed data | ✅ | ✅ | Identical |
-| `D403.000` | ~100,000 bytes | RAW | Medium uncompressed data | ✅ | ✅ | Identical |
-| `D505.000` | ~70,000 bytes | RAW | Specific uncompressed data | ✅ | ✅ | Identical |
-| `X04.BIN` | ~380,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA05 - Baccus Village
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~75,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~55,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B300.000` | ~25,000 bytes | RAW | Simplified background data | ✅ | ✅ | Identical |
-| `B400.000` | ~24,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `B500.000` | ~25,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D303.000` | ~11,000 bytes | RAW | Small uncompressed data | ✅ | ✅ | Identical |
-| `D403.000` | ~100,000 bytes | RAW | Medium uncompressed data | ✅ | ✅ | Identical |
-| `D505.000` | ~70,000 bytes | RAW | Specific uncompressed data | ✅ | ✅ | Identical |
-| `X05.BIN` | ~340,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA06 - Motocross Segment
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~70,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~50,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X06.BIN` | ~330,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA07 - Dwarf Forest (Purified)
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~84,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~61,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `X07.BIN` | ~360,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA08 - Baccus Lake
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~78,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~58,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X08.BIN` | ~345,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA09 - Mushroom Village
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~82,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~62,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `X09.BIN` | ~355,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA10 - Deep Jungle
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~95,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~75,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D303.000` | ~11,000 bytes | RAW | Small uncompressed data | ✅ | ✅ | Identical |
-| `X10.BIN` | ~375,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA11 - Village of Civilization
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~88,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~68,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X11.BIN` | ~365,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA12 - Haunted Mansion (Purified)
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~120,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~90,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B200.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `B300.000` | ~25,000 bytes | RAW | Simplified background data | ✅ | ✅ | Identical |
-| `B400.000` | ~24,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `B500.000` | ~25,000 bytes | RAW | Background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D203.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `D303.000` | ~11,000 bytes | RAW | Small uncompressed data | ✅ | ✅ | Identical |
-| `D403.000` | ~100,000 bytes | RAW | Medium uncompressed data | ✅ | ✅ | Identical |
-| `D505.000` | ~70,000 bytes | RAW | Specific uncompressed data | ✅ | ✅ | Identical |
-| `X12.BIN` | ~380,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA13 - Pig Island
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~65,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~45,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X13.BIN` | ~325,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA14 - Evil Pigs
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~72,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~52,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `X14.BIN` | ~335,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA15 - Empty
-**Note**: This area folder exists but contains no files in any regional version.
-
-#### AREA16 - Village of Civilization (Clock Tower)
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~92,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~72,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X16.BIN` | ~370,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA17 - Village of Civilization (Iron Tower)
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~98,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~78,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `B100.000` | ~150,000 bytes | RAW | Background variation data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `D103.000` | ~200,000 bytes | RAW | Uncompressed data variation | ✅ | ✅ | Identical |
-| `X17.BIN` | ~385,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA18 - Village of Civilization (Y Crossing)
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~76,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~56,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X18.BIN` | ~340,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
-#### AREA19 - Village of Civilization (Hidden Village)
-| File | Size | Type | Description | USA | EUR | Comparison |
-|------|------|------|-------------|-----|-----|------------|
-| `A000.GAM` | 178 bytes | GAM | Basic area data | ✅ | ✅ | Identical |
-| `A001.GAM` | 13,948 bytes | GAM | Configuration data | ✅ | ✅ | Text differences possible |
-| `A002.GAM` | ~68,000 bytes | GAM | Main area data | ✅ | ✅ | Text differences possible |
-| `A003.GAM` | ~48,000 bytes | GAM | Secondary data | ✅ | ✅ | Text differences possible |
-| `A004.000` | ~45,000 bytes | RAW | Uncompressed additional data | ✅ | ✅ | Identical |
-| `A007.000` | ~185,000 bytes | RAW | Uncompressed data | ✅ | ✅ | Identical |
-| `A008.000` | ~85,000 bytes | RAW | Uncompressed extra data | ✅ | ✅ | Identical |
-| `B000.000` | ~150,000 bytes | RAW | Uncompressed background data | ✅ | ✅ | Identical |
-| `D003.000` | ~200,000 bytes | RAW | Uncompressed miscellaneous data | ✅ | ✅ | Identical |
-| `X19.BIN` | ~315,000 bytes | BIN | Area executable code | ✅ | ✅ | Regional differences |
-
----
-
-## ⚙️ System (SYS) - Regional Comparison
-
-The SYS folder contains LDAR files that act as "bills of materials" for each game area. These files contain instructions that tell the game which files to fetch and how to load them into RAM or VRAM.
-
-### LDAR Files Structure
-
-| Base File | Type | USA | EUR | Function |
-|-----------|------|-----|-----|----------|
-| `LDAR00.BIN` | LDAR | ✅ | ✅ | Village of All Beginnings loading data |
-| `LDAR01.BIN` | LDAR | ✅ | ✅ | Dwarf Forest loading data |
-| `LDAR02.BIN` | LDAR | ✅ | ✅ | Dwarf Village loading data |
-| `LDAR03.BIN` | LDAR | ✅ | ✅ | Phoenix Mountain loading data |
-| `LDAR04.BIN` | LDAR | ✅ | ✅ | Haunted Mansion loading data |
-| `LDAR05.BIN` | LDAR | ✅ | ✅ | Baccus Village loading data |
-| `LDAR06.BIN` | LDAR | ✅ | ✅ | Motocross segment loading data |
-| `LDAR07.BIN` | LDAR | ✅ | ✅ | Dwarf Forest (purified) loading data |
-| `LDAR08.BIN` | LDAR | ✅ | ✅ | Baccus Lake loading data |
-| `LDAR09.BIN` | LDAR | ✅ | ✅ | Mushroom Village loading data |
-| `LDAR10.BIN` | LDAR | ✅ | ✅ | Deep Jungle loading data |
-| `LDAR11.BIN` | LDAR | ✅ | ✅ | Village of Civilization loading data |
-| `LDAR12.BIN` | LDAR | ✅ | ✅ | Haunted Mansion (purified) loading data |
-| `LDAR13.BIN` | LDAR | ✅ | ✅ | Pig Island loading data |
-| `LDAR14.BIN` | LDAR | ✅ | ✅ | Evil Pigs loading data |
-| `LDAR16.BIN` | LDAR | ✅ | ✅ | Village of Civilization (Clock Tower) loading data |
-| `LDAR17.BIN` | LDAR | ✅ | ✅ | Village of Civilization (Iron Tower) loading data |
-| `LDAR18.BIN` | LDAR | ✅ | ✅ | Village of Civilization (Y Crossing) loading data |
-| `LDAR19.BIN` | LDAR | ✅ | ✅ | Village of Civilization (Hidden Village) loading data |
-| `LDSYS.BIN` | LDAR | ✅ | ✅ | Main system loading data |
-
-**Note**: AREA15 has no corresponding LDAR file (empty folder in all versions).
-
-### LDAR Technical Format
-
-For complete technical specifications including entry structure, file index system, RAM address usage, and processing details, see:
-
-**➡️ [LDAR Format Documentation](./game-formats.md#-ldar-format-loading-data-array)**
-
-### Regional System Differences:
-- **USA**: NTSC standard, 60Hz
-- **EUR**: PAL standard, 50Hz, timing adjustments
-
----
-
-## 🎬 Cinematic Videos (MOVIE) - Complete File Analysis
 
 The MOVIE folder contains STR (PlayStation video stream) files with significant regional variations. The Japanese version contains unique content not present in international releases. Below is the complete unified list of ALL video files from all three versions:
 
@@ -577,7 +238,7 @@ The MOVIE folder contains STR (PlayStation video stream) files with significant 
 | `018.STR` | ~3MB | STR | Final confrontation | ✅ | ✅ | ✅ | Identical |
 | `019.STR` | ~4MB | STR | Victory sequence | ✅ | ✅ | ✅ | Identical |
 | `020.STR` | ~3MB | STR | Credits | ✅ | ✅ | ✅ | Identical |
-| `100_B.STR` | ~10MB | STR | 100 Years intro (Language B) | ❌ | ❌ | ✅ | EUR multi-language |
+| `100_B.STR` | ~10MB | STR | 100 Years intro (English - B) | ❌ | ❌ | ✅ | EUR multi-language |
 | `100_D.STR` | ~10MB | STR | 100 Years intro (German - Deutsch) | ❌ | ❌ | ✅ | EUR multi-language |
 | `100_F.STR` | ~10MB | STR | 100 Years intro (French - Français) | ❌ | ❌ | ✅ | EUR multi-language |
 | `100_G.STR` | ~10MB | STR | 100 Years intro (Language G) | ❌ | ❌ | ✅ | EUR multi-language |
@@ -629,7 +290,7 @@ The Japanese version contains three unique video files that provide cultural and
 - **JPN**: Original content with cultural elements and Japanese vocals
 - **USA**: Single language (English) intro and ending
 - **EUR**: Multi-language intro support (9 language variants)
-- **Language codes**: D=German, F=French, I=Italian, S=Spanish, others TBD
+- **Language codes**: B=English, D=German, F=French, I=Italian, S=Spanish, others TBD
 - **Content**: Same core story, different cultural presentations and localizations
 
 For complete STR format specifications, see:
@@ -1046,11 +707,12 @@ For complete technical specifications of all file formats found in this analysis
 - **Executables/System**: ~50 files
 
 ### Regional Distribution:
-- **NTSC-U files**: 750+ files, ~650 MB
-- **PAL files**: 750+ files, ~650 MB
-- **Binary identical**: Audio, video, most graphics
-- **Regional differences**: Text files, executables, system config
-- **Common structure**: 95%+ file structure consistency
+- **JPN files**: ~850+ files, ~700 MB (with 5 additional areas)
+- **USA files**: 752 files, ~650 MB
+- **EUR files**: 781 files, ~670 MB (additional multi-language content)
+- **Binary identical**: Audio, most graphics across regions
+- **Regional differences**: Text files, executables, system config, videos
+- **Common structure**: 95%+ file structure consistency between USA/EUR, JPN has additional content
 
 ### File Organization Patterns:
 - **Areaxx.GAM**: Compressed game data archives
@@ -1066,59 +728,26 @@ For complete technical specifications of all file formats found in this analysis
 - **Total raw data**: ~400 .000 files
 - **Compression algorithm**: Custom LZ-style (documented in game-formats.md)
 
-## 🎬 Videos (MOVIE) - Regional Comparison
-
-### Common Files (All Versions)
-
-| File | Size (approx.) | Type | Description | USA | EUR |
-|------|----------------|------|-------------|-----|-----|
-| `100US.STR` | 10,932,480 bytes | STR | Main video | ✅ | ✅ |
-| `ARASHI.STR` | 5,438,208 bytes | STR | "Storm" cinematic | ✅ | ✅ |
-| `BAKKASU.STR` | 5,438,208 bytes | STR | "Bakkas" cinematic | ✅ | ✅ |
-| `BOY.STR` | 8,577,792 bytes | STR | "Boy" cinematic | ✅ | ✅ |
-| `BUNMEI.STR` | 5,307,392 bytes | STR | "Civilization" cinematic | ✅ | ✅ |
-| `BUNMEI2.STR` | 3,793,664 bytes | STR | "Civilization 2" cinematic | ✅ | ✅ |
-| `END_US.STR` | 22,192,000 bytes | STR | Ending video | ✅ | ✅ |
-| `HANA.STR` | 5,400,832 bytes | STR | "Flower" cinematic | ✅ | ✅ |
-| `HONOO2.STR` | 5,400,832 bytes | STR | "Flame 2" cinematic | ✅ | ✅ |
-| `JUNGLE.STR` | 5,438,208 bytes | STR | "Jungle" cinematic | ✅ | ✅ |
-| `KARAKURI.STR` | 5,438,208 bytes | STR | "Mechanism" cinematic | ✅ | ✅ |
-| `LOGO.STR` | 2,672,384 bytes | STR | Logo video | ✅ | ✅ |
-| `MABUTA.STR` | 7,400,448 bytes | STR | "Eyelid" cinematic | ✅ | ✅ |
-| `MANTION.STR` | 5,438,208 bytes | STR | "Mansion" cinematic | ✅ | ✅ |
-| `MCC.STR` | 2,578,944 bytes | STR | MCC (Media.Vision) video | ✅ | ✅ |
-| `MILLION.STR` | 5,307,392 bytes | STR | "Million" cinematic | ✅ | ✅ |
-| `MIST.STR` | 7,400,448 bytes | STR | "Mist" cinematic | ✅ | ✅ |
-| `NOZOITE1.STR` | 3,644,160 bytes | STR | "Peeping 1" cinematic | ✅ | ✅ |
-| `NOZOITE2.STR` | 4,316,928 bytes | STR | "Peeping 2" cinematic | ✅ | ✅ |
-| `OP_INST.STR` | 33,376,768 bytes | STR | Opening/instruction video | ✅ | ✅ |
-| `SORA1.STR` | 4,316,928 bytes | STR | "Sky 1" cinematic | ✅ | ✅ |
-| `SORA2.STR` | 4,260,864 bytes | STR | "Sky 2" cinematic | ✅ | ✅ |
-
-### Video Notes:
-- **USA**: Videos in English with English subtitles
-- **EUR**: Videos in English with multi-language subtitle options (EN/FR/DE/IT/NL)
-
 ---
 
 ## 🔊 Audio (SOUND) - Regional Comparison
 
-Audio files are largely identical between versions, containing standard PlayStation SEQ and WVD data:
+Audio files are largely identical across all three versions, containing standard PlayStation SEQ and WVD data:
 
-### Wave Audio Files (WVD) - Common
+### Wave Audio Files (WVD) - Regional Presence
 
-| Category | Type | USA | EUR | Notes |
-|----------|------|-----|-----|-------|
-| Background music | WVD | ✅ | ✅ | Identical in all versions |
-| Sound effects | WVD | ✅ | ✅ | Identical in all versions |
-| Character voices | WVD | ✅ | ✅ | Identical voice samples |
-| System music | WVD | ✅ | ✅ | Identical in all versions |
+| Category | Type | JPN | USA | EUR | Notes |
+|----------|------|-----|-----|-----|-------|
+| Background music | WVD | ✅ | ✅ | ✅ | Identical in all versions |
+| Sound effects | WVD | ✅ | ✅ | ✅ | Identical in all versions |
+| Character voices | WVD | ✅ | ✅ | ✅ | Identical voice samples |
+| System music | WVD | ✅ | ✅ | ✅ | Identical in all versions |
 
-### Sequences (SEQ) - Common
+### Sequences (SEQ) - Regional Presence
 
-| Category | Type | USA | EUR | Notes |
-|----------|------|-----|-----|-------|
-| MIDI sequences | SEQ | ✅ | ✅ | Standard PlayStation sequenced music |
+| Category | Type | JPN | USA | EUR | Notes |
+|----------|------|-----|-----|-----|-------|
+| MIDI sequences | SEQ | ✅ | ✅ | ✅ | Standard PlayStation sequenced music |
 | Soundtrack | SEQ | ✅ | ✅ | Same musical composition |
 
 **Main file examples (all versions):**
@@ -1231,22 +860,35 @@ System files are identical in structure, but may have small size differences:
 
 ### Main Distinctions:
 
-| Aspect | USA (NTSC-U) | Europe (PAL) |
-|--------|--------------|--------------|
-| **Main Executable** | `SCUS_942.36` | `SCES_013.30` |
-| **Languages** | English | EN/FR/DE/IT/NL |
-| **EXE Folder** | ❌ | ✅ |
-| **Video System** | NTSC (60Hz) | PAL (50Hz) |
-| **In-game Texts** | American English | Multi-language |
-| **Fonts** | Latin | Extended Latin |
-| **Total Size** | ~650 MB | ~650 MB |
-| **Compatibility** | NTSC consoles | PAL consoles |
-| **File Link Array** | `$699A0` (`$41E` entries) | Similar structure (PAL adapted) |
+| Aspect | Japan (NTSC-J) | USA (NTSC-U) | Europe (PAL) |
+|--------|----------------|--------------|--------------|
+| **Main Executable** | `SLPS_011.44` | `SCUS_942.36` | `SCES_013.30` |
+| **Languages** | Japanese | English | EN/FR/DE/IT/NL |
+| **Game Areas** | 25 (00-24) | 20 (00-19) | 20 (00-19) |
+| **EXE Folder** | ❌ | ❌ | ✅ |
+| **Video System** | NTSC (60Hz) | NTSC (60Hz) | PAL (50Hz) |
+| **In-game Texts** | Japanese | American English | Multi-language |
+| **Fonts** | Japanese characters | Latin | Extended Latin |
+| **Total Size** | ~700 MB | ~650 MB | ~670 MB |
+| **Compatibility** | Japanese consoles | NTSC consoles | PAL consoles |
+| **Video Files** | 22 (with JPN exclusives) | 22 | 30 (with language variants) |
 
 ### Unique Files by Region:
 
+#### 🇯🇵 Japanese Version Exclusives:
+- **AREA20-AREA24**: 5 additional game areas with full content
+- **`100JP.STR`**: Japanese-specific promotional/cultural content
+- **`OP_UTA.STR`**: Opening theme with Japanese vocals
+- **`ENDING.STR`**: Alternative ending sequence
+
+#### 🇺🇸 USA Version Exclusives:
+- **`100US.STR`**: Single-language intro sequence
+- **`END_US.STR`**: English ending sequence
+
 #### 🇪🇺 PAL Version Exclusives:
-- `EXE/` folder with PAL-specific executables
+- **`EXE/`** folder with PAL-specific executables (MAIN0-MAIN8.EXE)
+- **9 multi-language intro videos** (100_B.STR through 100_W.STR)
+- **`END_EU.STR`**: European ending sequence
 - PAL-adapted system files with 50Hz timing
 - Integrated multi-language selection system
 - Extended character sets for European languages
@@ -1295,10 +937,11 @@ For detailed information about file formats, see:
 - [setup.md](./setup.md) - Project setup instructions
 
 **Last updated**: August 2025  
-**USA ISO files catalogued**: 752 files  
-**EUR ISO files catalogued**: 760 files (8 additional multi-language videos)  
-**Documented versions**: NTSC-U (USA), PAL (Europe)  
-**Cross-regional analysis**: Complete ISO comparison with presence indicators
+**JPN ISO files catalogued**: ~850+ files (25 game areas)  
+**USA ISO files catalogued**: 752 files (20 game areas)  
+**EUR ISO files catalogued**: 781 files (20 game areas + 8 additional multi-language videos)  
+**Documented versions**: NTSC-J (Japan), NTSC-U (USA), PAL (Europe)  
+**Cross-regional analysis**: Complete three-region ISO comparison with presence indicators
 
 ---
 

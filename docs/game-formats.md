@@ -1,90 +1,62 @@
 # Tomba! Game File Formats
 
-This document describes the file formats used in Tomba! (Ore no Tomba) for PlayStation, based on reverse engineering and analysis.
+Technical specifications for file formats used in Tomba! (Ore no Tomba) for PlayStation.
 
-## 📋 Overview
+## 📋 Format Overview
 
-Tomba! uses several file formats for different types of game data:
+| Format | Purpose | Description |
+|--------|---------|-------------|
+| **WFM** | Font/Text | Font glyphs and dialogue text |
+| **GAM** | Archives | LZ-compressed game data |
+| **LDAR** | Loading | Memory management instructions |
+| **WVD** | Audio | Wave data for sound samples |
+| **WMD** | Maps | World map data |
+| **TIM** | Graphics | PlayStation texture format |
+| **STR** | Video | FMV sequences with MDEC compression |
+| **SEQ** | Audio | MIDI sequences |
+| **PSX-EXE** | System | PlayStation executable files |
+| **BIN/DAT** | Generic | Binary data and containers |
 
-### Custom Formats
-- **WFM**: Font files containing glyphs and dialogue text
-- **GAM**: Compressed archives containing game data
-- **LDAR**: Loading data arrays for memory management
-- **WVD**: Wave data files for audio samples
-- **WMD**: World map data files
+## 🎨 WFM Format (Font Module)
 
-### PlayStation Standard Formats
-- **TIM**: Texture images with color palettes
-- **STR**: Video streams for FMV sequences
-- **SEQ**: MIDI sequences for music
-- **PSX-EXE**: PlayStation executable files
-- **CNF**: Configuration files
+Font files containing character glyphs and dialogue text.
 
-### Generic Formats
-- **BIN**: Binary data and executables
-- **DAT**: Generic data containers
-- **4bpp Linear**: Custom graphics format used for fonts
-
-## 🎨 WFM Format (Whoopee Font Module)
-
-WFM files contain font glyphs and dialogue text used throughout the game.
-
-### File Structure
-
+### Structure
 ```
-WFM File Layout:
-├── Header (144 bytes)
-├── Glyph Pointer Table (variable)
-├── Glyph Data (variable)
-├── Dialogue Pointer Table (variable)
-└── Dialogue Data (variable)
+├── Header (144 bytes) - File info and pointers
+├── Glyph Table - Character definitions  
+├── Glyph Data - 4bpp graphics data
+├── Dialogue Table - Text entry pointers
+└── Dialogue Data - Game text with control codes
 ```
 
-### WFM Header
-
+### Header Format
 ```c
 typedef struct {
-    char magic[4];                  // "WFM3" - File signature
-    uint32_t padding;               // Usually 0x00000000
-    uint32_t dialogue_pointer_table; // Offset to dialogue pointer table
-    uint16_t total_dialogues;       // Number of dialogue entries
-    uint16_t total_glyphs;          // Number of glyph entries
-    uint8_t reserved[128];          // Reserved section (may contain special dialogue IDs)
+    char magic[4];              // "WFM3"
+    uint32_t padding;           // 0x00000000
+    uint32_t dialogue_offset;   // Dialogue table location
+    uint16_t dialogue_count;    // Number of text entries
+    uint16_t glyph_count;       // Number of characters
+    uint8_t reserved[128];      // Additional header data
 } WFMHeader;
 ```
 
-### Glyph Structure
+### Graphics: 4bpp Linear Format
+- **Encoding**: 4 bits per pixel, little endian
+- **Layout**: Two pixels per byte (lower=first, upper=second)
+- **Colors**: 16-color palettes for text rendering
 
-```c
-typedef struct {
-    uint16_t glyph_clut;       // Color lookup table data (PSX 15-bit format)
-    uint16_t glyph_height;     // Height of the glyph in pixels
-    uint16_t glyph_width;      // Width of the glyph in pixels
-    uint16_t glyph_handakuten; // Handakuten marker (Japanese diacritical mark)
-    uint8_t glyph_image[];     // Raw image data (4bpp format)
-} Glyph;
-```
-
-### Graphics Format: 4bpp Linear Little Endian
-
-WFM files use a custom 4bpp (4 bits per pixel) format:
-
-```
-Pixel Layout:
-- 4 bits per pixel (16 possible colors)
-- 2 pixels per byte
-- Little endian byte order
-- Linear layout (row-major order)
-
-Byte Structure: [pixel1][pixel0]
-- Lower 4 bits = first pixel
-- Upper 4 bits = second pixel
-
-Example:
-Byte 0x3A = 0011 1010
-- Pixel 0 = 1010 (0xA)
-- Pixel 1 = 0011 (0x3)
-```
+### Text Control Codes
+| Code | Function | Arguments | Description |
+|------|----------|-----------|-------------|
+| `0xFFFA` | BOX_INIT | - | Initialize text box |
+| `0xFFF7` | COLOR | 1 | Change text color |
+| `0xFFF8` | TAIL | 2 | Text box tail |
+| `0xFFF9` | PAUSE | 1 | Pause duration |
+| `0xFFFD` | NEWLINE | - | Line break |
+| `0xFFFC` | WAIT | - | Wait for input |
+| `0xFFFE/F` | END | - | Terminate dialogue |
 
 ### Color Palettes (CLUT)
 
@@ -166,243 +138,7 @@ Dialogues contain text and control codes for formatting:
     - tail: { width: 16, height: 8 }
 ```
 
-## 📦 GAM Format (Game Archive Module)
 
-GAM files are compressed archives containing various game data including graphics, level data, and other assets.
-
-### File Structure
-
-```
-GAM File Layout:
-├── Header (8 bytes)
-└── Compressed Data (variable size)
-```
-
-### GAM Header
-
-```c
-typedef struct {
-    char magic[3];              // "GAM" - File signature
-    uint8_t reserved;           // Padding byte (typically 0x00)
-    uint32_t uncompressed_size; // Size of decompressed data
-} GAMHeader;
-```
-
-### Compression Algorithm
-
-GAM files use a custom LZ-based compression algorithm with bitmask control:
-
-#### Algorithm Characteristics
-
-**Core Features:**
-- Dictionary-based compression with sliding window
-- Bitmask-controlled encoding (16-bit little endian)
-- Variable-length matches (2-255 bytes)
-- Backward references up to 255 bytes
-- Optimized for PlayStation memory constraints
-- Typical compression ratio: 50-70%
-
-#### Compression Format Structure
-
-```
-Compressed Data Layout:
-├── Bitmask (2 bytes, little endian)
-├── Data Block 1 (literal or LZ reference)
-├── Data Block 2 (literal or LZ reference)
-├── ... (up to 16 data blocks)
-├── Bitmask (2 bytes, little endian)
-├── Data Block 17-32
-└── ... (continues until end of data)
-```
-
-#### Bitmask Control System
-
-Each 16-bit bitmask controls the next 16 data elements:
-
-```c
-typedef struct {
-    uint16_t bitmask;           // Control bits (little endian)
-    uint8_t data_blocks[16];    // Variable-size data blocks
-} LZChunk;
-
-// Bitmask interpretation:
-// Bit 0 (LSB): Controls first data block
-// Bit 1: Controls second data block
-// ...
-// Bit 15: Controls sixteenth data block
-
-// Bit value interpretation:
-// 0 = Literal byte (1 byte follows)
-// 1 = LZ reference (2 bytes follow)
-```
-
-#### LZ Reference Format
-
-When bitmask bit = 1, the next 2 bytes represent an LZ reference:
-
-```c
-typedef struct {
-    uint8_t offset;    // Distance back in output buffer (1-255)
-    uint8_t length;    // Number of bytes to copy (1-255)
-} LZReference;
-
-// Reference interpretation:
-// offset = distance backward from current position
-// length = number of bytes to copy from that position
-```
-
-#### Decompression Algorithm
-
-```c
-void decompress_gam_lz(uint8_t* compressed, uint32_t comp_size, 
-                       uint8_t* output, uint32_t target_size) {
-    uint32_t comp_pos = 0;
-    uint32_t out_pos = 0;
-    
-    while (out_pos < target_size && comp_pos < comp_size) {
-        // Read 16-bit bitmask (little endian)
-        uint16_t bitmask = read_uint16_le(&compressed[comp_pos]);
-        comp_pos += 2;
-        
-        // Process 16 bits
-        for (int bit = 0; bit < 16 && out_pos < target_size; bit++) {
-            if (bitmask & (1 << bit)) {
-                // LZ reference (2 bytes)
-                uint8_t offset = compressed[comp_pos++];
-                uint8_t length = compressed[comp_pos++];
-                
-                // Copy data from previous position
-                uint32_t src_pos = out_pos - offset;
-                for (int i = 0; i < length && out_pos < target_size; i++) {
-                    output[out_pos++] = output[src_pos + i];
-                }
-            } else {
-                // Literal byte
-                output[out_pos++] = compressed[comp_pos++];
-            }
-        }
-    }
-    
-    // Pad with zeros if needed
-    while (out_pos < target_size) {
-        output[out_pos++] = 0x00;
-    }
-}
-```
-
-#### Compression Algorithm
-
-```c
-void compress_gam_lz(uint8_t* input, uint32_t input_size, 
-                     uint8_t* output, uint32_t* output_size) {
-    uint32_t in_pos = 0;
-    uint32_t out_pos = 0;
-    
-    while (in_pos < input_size) {
-        uint16_t bitmask = 0;
-        uint32_t bitmask_pos = out_pos;
-        out_pos += 2; // Reserve space for bitmask
-        
-        // Process up to 16 elements
-        for (int bit = 0; bit < 16 && in_pos < input_size; bit++) {
-            // Find best match in sliding window
-            int best_offset, best_length;
-            find_best_match(input, in_pos, &best_offset, &best_length);
-            
-            if (best_length >= 2 && best_offset <= 255 && best_length <= 255) {
-                // Use LZ reference
-                bitmask |= (1 << bit);
-                output[out_pos++] = (uint8_t)best_offset;
-                output[out_pos++] = (uint8_t)best_length;
-                in_pos += best_length;
-            } else {
-                // Use literal byte
-                output[out_pos++] = input[in_pos++];
-            }
-        }
-        
-        // Write bitmask (little endian)
-        write_uint16_le(&output[bitmask_pos], bitmask);
-    }
-    
-    *output_size = out_pos;
-}
-```
-
-#### Match Finding Algorithm
-
-The compression uses a sliding window approach to find the best matches:
-
-```c
-void find_best_match(uint8_t* data, uint32_t pos, int* best_offset, int* best_length) {
-    *best_offset = 0;
-    *best_length = 0;
-    
-    // Search backwards up to 255 bytes
-    int max_offset = (pos > 255) ? 255 : pos;
-    
-    for (int offset = 1; offset <= max_offset; offset++) {
-        uint32_t src_pos = pos - offset;
-        int length = 0;
-        
-        // Count matching bytes (with wraparound for repetitive patterns)
-        while (length < 255 && pos + length < data_size &&
-               data[src_pos + (length % offset)] == data[pos + length]) {
-            length++;
-        }
-        
-        // Keep best match (prioritize longer matches)
-        if (length > *best_length) {
-            *best_offset = offset;
-            *best_length = length;
-        }
-    }
-}
-```
-
-#### Performance Characteristics
-
-**Compression Efficiency:**
-- Best case: Highly repetitive data (90%+ compression)
-- Average case: Mixed data (50-70% compression)
-- Worst case: Random data (110-120% size due to overhead)
-
-**Speed Considerations:**
-- Decompression: Very fast (~1-2 cycles per byte on PSX)
-- Compression: Moderate (depends on window search depth)
-- Memory usage: Minimal (streaming algorithm)
-
-#### Implementation Notes
-
-**PlayStation-Specific Optimizations:**
-- Bitmask processing aligns with 16-bit MIPS instructions
-- Window size (255 bytes) fits in PSX cache efficiently
-- Little endian format matches PSX byte order
-
-**Error Handling:**
-- Invalid offsets are caught during decompression
-- Output buffer overflow protection
-- Automatic padding for undersized output
-
-**Compatibility:**
-- Forward compatible (older decompressors work with new files)
-- Deterministic compression (same input = same output)
-- Self-contained format (no external dictionaries)
-
-### Common GAM File Contents
-
-**Area GAM Files (A000.GAM, A001.GAM, etc.):**
-- Level geometry data
-- Texture references
-- Entity placement data
-- Collision maps
-- Trigger zones
-
-**System GAM Files:**
-- Menu graphics
-- UI elements
-- System fonts
-- Audio references
 
 ## 🖼️ TIM Format (PlayStation Standard)
 
@@ -821,149 +557,39 @@ typedef struct {
 
 ## 🎨 Graphics and UI Formats
 
-### CLUT Format (Color Look-Up Table)
+### Other Formats
 
-Color palettes used with 4-bit and 8-bit graphics.
+**CLUT (Color Look-Up Table):**
+- 256 colors in 15-bit format (0BBBBBGGGGGRRRRR)
+- Area-specific palettes (`CLUT01.GAM` - `CLUT06.GAM`)
 
-```c
-typedef struct {
-    uint16_t colors[256];  // Up to 256 colors in 15-bit format
-} CLUT;
+**DAT (Generic Data):**
+- `license_data.dat`: PlayStation license info
+- `DUMMY.DAT`: CD padding (~27MB zeros)
 
-// PlayStation 15-bit color format
-// Bit layout: 0BBBBBGGGGGRRRRR
-// - Red: 5 bits (0-31)
-// - Green: 5 bits (0-31)  
-// - Blue: 5 bits (0-31)
-// - Alpha: 1 bit (0=transparent, 1=opaque)
-```
+**WMD (World Map Data):**
+- Tile-based map layouts and collision boundaries
 
-**CLUT Types in GAM files:**
-- `CLUT01.GAM` - `CLUT06.GAM`: Area-specific color palettes
-- Different lighting conditions and time-of-day variants
-- Character and object color variations
+**CNF (PlayStation Configuration):**
+- System boot configuration (`BOOT`, `TCB`, `EVENT`, `STACK`)
 
-### DAT Format (Generic Data)
+## 🔧 File Organization
 
-Generic data containers with various internal structures.
+### Common Naming Patterns
+- `A###.GAM`: Main area data
+- `B###.GAM`: Background/scenery data
+- `CLUT##.GAM`: Color palettes
+- `X##.BIN`: Area executables
+- `LDAR##.BIN`: Per-area loading data
 
-**Common DAT file types:**
-- `license_data.dat`: PlayStation license information
-- `DUMMY.DAT`: CD padding data (~27MB of zeros)
-- Configuration and save data files
-
-## 🗺️ Specialized Formats
-
-### WMD Format (World Map Data)
-
-Contains overworld and map-specific information.
-
-```c
-typedef struct {
-    uint32_t map_width;    // Map width in tiles
-    uint32_t map_height;   // Map height in tiles
-    uint32_t tile_size;    // Size of each tile (pixels)
-    uint32_t layer_count;  // Number of map layers
-    // Map tile data
-    // Collision data
-    // Event trigger data
-} WMDHeader;
-```
-
-**Contents:**
-- Tile-based map layouts
-- Collision boundaries
-- Event trigger zones
-- Connection points between areas
-
-### CNF Format (PlayStation Configuration)
-
-System configuration file for PlayStation boot process.
-
-```
-BOOT = cdrom:\SCUS_942.36;1
-TCB = 4
-EVENT = 10
-STACK = 80200000
-```
-
-**Parameters:**
-- `BOOT`: Executable file path
-- `TCB`: Thread control block count
-- `EVENT`: Event handler count  
-- `STACK`: Stack memory address
-
-## 🔧 File Organization Patterns
-
-### Naming Conventions
-
-| Pattern | Description | Examples |
-|---------|-------------|----------|
-| `A###.GAM` | Main area data | `A000.GAM`, `A002.GAM` |
-| `B###.GAM` | Background/scenery data | `B000.GAM`, `B100.GAM` |
-| `CLUT##.GAM` | Color Look-Up Tables | `CLUT01.GAM`, `CLUT06.GAM` |
-| `D###.GAM` | Miscellaneous/specific data | `D003.GAM`, `D505.GAM` |
-| `X##.BIN` | Area executables | `X00.BIN`, `X19.BIN` |
-| `SND_***.WVD` | Named audio files | `SND_INI.WVD`, `SND_TTL.WVD` |
-| `LDAR##.BIN` | Per-area loading data | `LDAR00.BIN`, `LDAR19.BIN` |
-
-### File Size Categories
-
-| Size Range | Typical Content | Examples |
-|------------|-----------------|----------|
-| < 1KB | Small configuration data | `A000.GAM` (178 bytes) |
-| 1KB - 100KB | Medium game data | `A001.GAM` (13KB), `CLUT01.GAM` (10KB) |
-| 100KB - 1MB | Large area data | `A002.GAM` (142KB), `X00.BIN` (343KB) |
-| 1MB - 10MB | Video files | `ARASHI.STR` (5.4MB) |
-| 10MB+ | Large videos | `OP_INST.STR` (33MB), `DUMMY.DAT` (27MB) |
-
-### Internal Structure Patterns
-
-**Compressed Files (GAM):**
-- Magic header: `"GAM\0"`
-- Decompressed size information
-- LZ-compressed payload data
-
-**Raw Files:**
-- Direct binary data
-- No compression wrapper
-- Loaded directly to memory
-
-**Executable Files (BIN/PSX-EXE):**
-- PlayStation MIPS assembly code
-- Region-specific memory layouts
-- Embedded data tables and constants
-
-### File Type Codes (ftpe values)
-
-Based on LDAR file type field analysis:
-
-```c
-// File type identifiers used in LDAR entries
-#define FTYPE_COMPRESSED_GAM    0x10FF  // Compressed GAM archive
-#define FTYPE_RAW_DATA         0xF0FF  // Raw binary data
-#define FTYPE_VRAM_GRAPHICS    0x60FF  // Graphics for VRAM upload
-#define FTYPE_DECOMPRESSED     0x62FF  // Decompressed data
-#define FTYPE_EXECUTABLE       0x63FF  // Executable code
-#define FTYPE_SYSTEM_DATA      0x30FF  // System configuration
-#define FTYPE_AUDIO_WAVE       0x35FF  // Audio waveform data
-#define FTYPE_SEQUENCE         0x31FF  // Audio sequence
-#define FTYPE_TEXTURE          0x3FFF  // Texture data
-#define FTYPE_WORLD_MAP        0x32FF  // World map data
-#define FTYPE_COLLISION        0x33FF  // Collision data
-#define FTYPE_ANIMATION        0x34FF  // Animation data
-#define FTYPE_SCRIPT           0x37FF  // Event scripts
-#define FTYPE_SOUND_EFFECTS    0x39FF  // Sound effect data
-#define FTYPE_MISC_DATA        0x53FF  // Miscellaneous data
-#define FTYPE_LEVEL_DATA       0x71FF  // Level-specific data
-#define FTYPE_CHARACTER_DATA   0x52FF  // Character data
-#define FTYPE_ITEM_DATA        0x54FF  // Item/inventory data
-#define FTYPE_UI_GRAPHICS      0xB2FF  // User interface graphics
-#define FTYPE_MENU_DATA        0xB3FF  // Menu system data
-#define FTYPE_SAVE_DATA        0xD1FF  // Save game data
-#define FTYPE_DEBUG_DATA       0x86FF  // Debug information
-```
+### File Type Codes
+Key `ftpe` values used in LDAR entries:
+- `0x10FF`: Compressed GAM archive
+- `0xF0FF`: Raw binary data
+- `0x60FF`: VRAM graphics
+- `0x63FF`: Executable code
+- `0x35FF`: Audio data
 
 ---
 
-**Note**: This documentation is based on reverse engineering efforts and may be refined as analysis continues.
+**Note**: This documentation is based on reverse engineering analysis.
