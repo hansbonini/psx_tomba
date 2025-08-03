@@ -1,7 +1,7 @@
 # Tomba! PSX Decompilation
 
 <div align="center">
-  <img src="https://github.com/hansbonini/psx_tomba/docs/assets/tomba-logo.png" alt="Tomba! Logo" width="400"/>
+  <img src="https://github.com/hansbonini/psx_tomba/blob/main/docs/assets/logo.png?raw=true" alt="Tomba! Logo" width="400"/>
   
   [![Discord](https://img.shields.io/discord/404121852517285888?color=7289da&logo=discord&logoColor=white)](https://discord.gg/SjBn4g57Bj)
   [![Progress](https://img.shields.io/badge/Progress-In%20Development-yellow)](https://github.com/hansbonini/PSX_TOMBA)
