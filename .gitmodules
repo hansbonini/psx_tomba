@@ -4,3 +4,9 @@
 [submodule "tools/psx_psyq_signatures"]
 	path = tools/psx_psyq_signatures
 	url = https://github.com/lab313ru/psx_psyq_signatures.git
+[submodule "tools/tombatools"]
+	path = tools/tombatools
+	url = https://github.com/hansbonini/tombatools.git
+[submodule "tools/mkpsxiso"]
+	path = tools/mkpsxiso
+	url = https://github.com/Lameguy64/mkpsxiso
