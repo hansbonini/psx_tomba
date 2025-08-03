@@ -10,3 +10,9 @@
 [submodule "tools/mkpsxiso"]
 	path = tools/mkpsxiso
 	url = https://github.com/Lameguy64/mkpsxiso
+[submodule "tools/m2c"]
+	path = tools/m2c
+	url = https://github.com/matt-kempster/m2c.git
+[submodule "tools/m2ctx"]
+	path = tools/m2ctx
+	url = https://github.com/ethteck/m2ctx.git
