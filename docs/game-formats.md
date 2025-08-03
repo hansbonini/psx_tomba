@@ -4,11 +4,25 @@ This document describes the file formats used in Tomba! (Ore no Tomba) for PlayS
 
 ## 📋 Overview
 
-Tomba! uses several custom file formats for different types of game data:
+Tomba! uses several file formats for different types of game data:
 
+### Custom Formats
 - **WFM**: Font files containing glyphs and dialogue text
 - **GAM**: Compressed archives containing game data
-- **TIM**: PlayStation standard texture format
+- **LDAR**: Loading data arrays for memory management
+- **WVD**: Wave data files for audio samples
+- **WMD**: World map data files
+
+### PlayStation Standard Formats
+- **TIM**: Texture images with color palettes
+- **STR**: Video streams for FMV sequences
+- **SEQ**: MIDI sequences for music
+- **PSX-EXE**: PlayStation executable files
+- **CNF**: Configuration files
+
+### Generic Formats
+- **BIN**: Binary data and executables
+- **DAT**: Generic data containers
 - **4bpp Linear**: Custom graphics format used for fonts
 
 ## 🎨 WFM Format (Whoopee Font Module)
@@ -513,6 +527,442 @@ PlayStation VRAM (1MB total):
 - Test with original game
 - Compare with known good files
 - Verify decompression/recompression
+
+## 📦 GAM Format (Game Archive)
+
+GAM files are compressed archives containing various game data including textures, sprites, collision data, event scripts, enemy data, and stage layouts.
+
+### GAM File Structure
+
+```
+GAM File Layout:
+├── Header (8 bytes)
+├── Compressed Data (variable)
+└── EOF
+```
+
+### GAM Header
+
+```c
+typedef struct {
+    char magic[4];          // "GAM\0" - File signature 
+    uint32_t output_size;   // Uncompressed size (little-endian)
+    uint16_t command_word;  // Initial command word for decompression
+    uint8_t data[];         // Compressed data stream
+} GAMHeader;
+```
+
+### GAM Compression Algorithm
+
+GAM files use a custom LZ-style compression format:
+
+```
+Decompression Process:
+1. Read 16-bit command word (little-endian)
+2. Process bits from right to left:
+   - If bit = 0: Copy next byte directly to output
+   - If bit = 1: Read 2 bytes as distance/amount, copy from previous output
+3. When all 16 bits processed: Read new command word
+4. Continue until output_size bytes written or EOF reached
+```
+
+#### Detailed Algorithm
+
+```c
+void decompress_gam(uint8_t* input, uint8_t* output, uint32_t output_size) {
+    uint16_t command_word = read_u16le(input);
+    uint32_t input_pos = 2;
+    uint32_t output_pos = 0;
+    int bit_count = 0;
+    
+    while (output_pos < output_size) {
+        // Check if we need a new command word
+        if (bit_count >= 16) {
+            command_word = read_u16le(input + input_pos);
+            input_pos += 2;
+            bit_count = 0;
+        }
+        
+        // Get current bit (right to left)
+        int bit = (command_word >> bit_count) & 1;
+        bit_count++;
+        
+        if (bit == 0) {
+            // Copy literal byte
+            output[output_pos++] = input[input_pos++];
+        } else {
+            // Copy from previous output
+            uint8_t dist_byte = input[input_pos++];
+            uint8_t amnt_byte = input[input_pos++];
+            
+            uint16_t distance = dist_byte;
+            uint16_t amount = amnt_byte;
+            
+            // Copy 'amount' bytes from 'distance' bytes back
+            for (int i = 0; i < amount && output_pos < output_size; i++) {
+                output[output_pos] = output[output_pos - distance];
+                output_pos++;
+            }
+        }
+    }
+}
+```
+
+### GAM Content Types
+
+GAM archives can contain:
+- **Textures and Sprites**: TIM format graphics data
+- **Collision Maps**: Geometric collision boundaries  
+- **Event Scripts**: Game logic and triggers
+- **Enemy Data**: AI behavior and attributes
+- **Stage Layouts**: Level geometry and object placement
+- **Animation Data**: Sprite animation sequences
+- **Sound Triggers**: Audio cue definitions
+
+## 📁 LDAR Format (Loading Data Array)
+
+LDAR files contain loading instructions that tell the game which files to fetch and how to load them into RAM or VRAM. They act as "bills of materials" for each game area.
+
+### LDAR File Structure
+
+```
+LDAR File Layout:
+├── Entry 1 (20 bytes)
+├── Entry 2 (20 bytes)
+├── ...
+├── Entry N (20 bytes)
+└── Terminator (20 bytes)
+```
+
+### LDAR Entry Structure
+
+```c
+typedef struct {
+    uint32_t ignored;        // Bytes 00-03: Reserved/ignored
+    uint16_t file_index;     // Bytes 04-05: Index into File Link Array
+    uint16_t file_type;      // Bytes 06-07: File type identifier (ftpe)
+    uint32_t ram_address;    // Bytes 08-11: RAM address for loading
+    uint32_t size_or_coords; // Bytes 12-15: File size OR X/Y coordinates
+    uint16_t width;          // Bytes 16-17: Width for VRAM graphics
+    uint16_t height;         // Bytes 18-19: Height for VRAM graphics
+} LDAREntry;
+```
+
+### LDAR Processing
+
+#### File Index System
+- **USA Version**: File Link Array at `$699A0` in executable (`$41E` entries)
+- **Japan Version**: File Link Array at `$634CC` in executable (`$33C` entries)
+- Each entry contains: Minute, Second, Sector, File Size for ISO sector lookup
+
+#### RAM Address Usage
+- `$80141000`: Compressed data for decompression
+- `$80140000`: Static/raw data storage  
+- `$00000000`: Raw files (no decompression needed)
+
+#### Entry Termination
+LDAR files are terminated by:
+```
+FF FF FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+```
+
+## 🎯 File Type System
+
+Tomba! uses various file formats identified by extensions and internal type codes:
+
+### Primary File Types
+
+| Extension | Type Code | Description | Compression |
+|-----------|-----------|-------------|-------------|
+| **GAM** | Various | Game Archive | Custom LZ compression |
+| **BIN** | Various | Binary/Executable | None |
+| **STR** | N/A | PlayStation Video Stream | MDEC |
+| **WVD** | N/A | Wave Data (Audio) | None |
+| **SEQ** | N/A | MIDI Sequences | None |
+| **TIM** | N/A | PlayStation Texture | None |
+| **WMD** | N/A | World Map Data | None |
+| **DAT** | N/A | Generic Data | Variable |
+| **CNF** | N/A | PlayStation Config | None |
+
+## 🎮 PlayStation Standard Formats
+
+### TIM Format (Texture Image)
+
+TIM is the standard PlayStation texture format used throughout Tomba!.
+
+```c
+typedef struct {
+    uint32_t magic;        // 0x00000010 - TIM identifier
+    uint32_t flags;        // Pixel mode and CLUT flag
+    uint32_t clut_size;    // Size of CLUT data (if present)
+    uint16_t clut_x;       // CLUT position in VRAM (X)
+    uint16_t clut_y;       // CLUT position in VRAM (Y)
+    uint16_t clut_width;   // CLUT width
+    uint16_t clut_height;  // CLUT height
+    uint32_t image_size;   // Size of image data
+    uint16_t image_x;      // Image position in VRAM (X)
+    uint16_t image_y;      // Image position in VRAM (Y)
+    uint16_t image_width;  // Image width
+    uint16_t image_height; // Image height
+    // CLUT data (if present)
+    // Image data
+} TIMHeader;
+```
+
+**Pixel Modes:**
+- `0x08`: 4-bit (16 colors with CLUT)
+- `0x09`: 8-bit (256 colors with CLUT)
+- `0x02`: 16-bit direct color (no CLUT)
+
+### STR Format (PlayStation Video Stream)
+
+STR files contain FMV sequences using PlayStation's MDEC compression.
+
+```c
+typedef struct {
+    uint32_t magic;        // Stream identifier
+    uint32_t frame_count;  // Number of video frames
+    uint32_t frame_rate;   // Frames per second
+    uint32_t width;        // Video width
+    uint32_t height;       // Video height
+    uint32_t audio_freq;   // Audio frequency (Hz)
+    uint16_t audio_channels; // Number of audio channels
+    uint16_t audio_bits;   // Audio bit depth
+    // Interleaved video/audio sectors
+} STRHeader;
+```
+
+**Characteristics:**
+- MDEC compression for video frames
+- XA-ADPCM compression for audio
+- Sector-based interleaved structure
+- Standard PlayStation streaming format
+
+### PSX-EXE Format (PlayStation Executable)
+
+Main game executables for each regional version.
+
+```c
+typedef struct {
+    char signature[8];     // "PS-X EXE"
+    uint32_t text;         // Text section offset
+    uint32_t data;         // Data section offset  
+    uint32_t pc0;          // Initial program counter
+    uint32_t gp0;          // Initial global pointer
+    uint32_t t_addr;       // Text section load address
+    uint32_t t_size;       // Text section size
+    uint32_t d_addr;       // Data section load address
+    uint32_t d_size;       // Data section size
+    uint32_t b_addr;       // BSS section load address
+    uint32_t b_size;       // BSS section size
+    uint32_t s_addr;       // Stack address
+    uint32_t s_size;       // Stack size
+    uint32_t SavedSP;      // Saved stack pointer
+    uint32_t SavedFP;      // Saved frame pointer
+    uint32_t SavedGP;      // Saved global pointer
+    uint32_t SavedRA;      // Saved return address
+    uint32_t SavedS0;      // Saved register S0
+    char marker[60];       // Additional marker data
+} PSXEXEHeader;
+```
+
+**Regional Executables:**
+- **USA**: `SCUS_942.36` - NTSC version
+- **Europe**: `SCES_013.30` - PAL version
+- **Japan**: `SLPS_01144` - NTSC-J version
+
+## 🎵 Audio Formats
+
+### WVD Format (Wave Data)
+
+Tomba!-specific audio format containing wavetable data for the PlayStation SPU.
+
+```c
+typedef struct {
+    uint32_t sample_rate;  // Audio sample rate (Hz)
+    uint32_t sample_count; // Number of audio samples
+    uint16_t channels;     // Number of audio channels (1=mono, 2=stereo)
+    uint16_t bits_per_sample; // Audio bit depth (usually 16)
+    uint8_t loop_flag;     // Loop enable flag
+    uint8_t adsr_flag;     // ADSR envelope flag
+    uint16_t loop_start;   // Loop start point
+    uint16_t loop_end;     // Loop end point
+    // Raw PCM audio data follows
+} WVDHeader;
+```
+
+**Usage:**
+- Background music tracks
+- Sound effects
+- Character voice samples
+- System audio (menu sounds, etc.)
+
+### SEQ Format (MIDI Sequences)
+
+PlayStation standard MIDI format for sequenced music.
+
+```c
+typedef struct {
+    uint32_t magic;        // Sequence identifier
+    uint32_t version;      // Format version
+    uint32_t resolution;   // Timing resolution (ticks per quarter note)
+    uint32_t tempo;        // Default tempo (microseconds per quarter note)
+    uint16_t track_count;  // Number of MIDI tracks
+    uint16_t flags;        // Format flags
+    // MIDI track data follows
+} SEQHeader;
+```
+
+**Characteristics:**
+- References WVD wavetables for instrument sounds
+- Compact file size compared to streamed audio
+- Real-time playback using PlayStation SPU
+- Standard MIDI events and controllers
+
+## 🎨 Graphics and UI Formats
+
+### CLUT Format (Color Look-Up Table)
+
+Color palettes used with 4-bit and 8-bit graphics.
+
+```c
+typedef struct {
+    uint16_t colors[256];  // Up to 256 colors in 15-bit format
+} CLUT;
+
+// PlayStation 15-bit color format
+// Bit layout: 0BBBBBGGGGGRRRRR
+// - Red: 5 bits (0-31)
+// - Green: 5 bits (0-31)  
+// - Blue: 5 bits (0-31)
+// - Alpha: 1 bit (0=transparent, 1=opaque)
+```
+
+**CLUT Types in GAM files:**
+- `CLUT01.GAM` - `CLUT06.GAM`: Area-specific color palettes
+- Different lighting conditions and time-of-day variants
+- Character and object color variations
+
+### DAT Format (Generic Data)
+
+Generic data containers with various internal structures.
+
+**Common DAT file types:**
+- `license_data.dat`: PlayStation license information
+- `DUMMY.DAT`: CD padding data (~27MB of zeros)
+- Configuration and save data files
+
+## 🗺️ Specialized Formats
+
+### WMD Format (World Map Data)
+
+Contains overworld and map-specific information.
+
+```c
+typedef struct {
+    uint32_t map_width;    // Map width in tiles
+    uint32_t map_height;   // Map height in tiles
+    uint32_t tile_size;    // Size of each tile (pixels)
+    uint32_t layer_count;  // Number of map layers
+    // Map tile data
+    // Collision data
+    // Event trigger data
+} WMDHeader;
+```
+
+**Contents:**
+- Tile-based map layouts
+- Collision boundaries
+- Event trigger zones
+- Connection points between areas
+
+### CNF Format (PlayStation Configuration)
+
+System configuration file for PlayStation boot process.
+
+```
+BOOT = cdrom:\SCUS_942.36;1
+TCB = 4
+EVENT = 10
+STACK = 80200000
+```
+
+**Parameters:**
+- `BOOT`: Executable file path
+- `TCB`: Thread control block count
+- `EVENT`: Event handler count  
+- `STACK`: Stack memory address
+
+## 🔧 File Organization Patterns
+
+### Naming Conventions
+
+| Pattern | Description | Examples |
+|---------|-------------|----------|
+| `A###.GAM` | Main area data | `A000.GAM`, `A002.GAM` |
+| `B###.GAM` | Background/scenery data | `B000.GAM`, `B100.GAM` |
+| `CLUT##.GAM` | Color Look-Up Tables | `CLUT01.GAM`, `CLUT06.GAM` |
+| `D###.GAM` | Miscellaneous/specific data | `D003.GAM`, `D505.GAM` |
+| `X##.BIN` | Area executables | `X00.BIN`, `X19.BIN` |
+| `SND_***.WVD` | Named audio files | `SND_INI.WVD`, `SND_TTL.WVD` |
+| `LDAR##.BIN` | Per-area loading data | `LDAR00.BIN`, `LDAR19.BIN` |
+
+### File Size Categories
+
+| Size Range | Typical Content | Examples |
+|------------|-----------------|----------|
+| < 1KB | Small configuration data | `A000.GAM` (178 bytes) |
+| 1KB - 100KB | Medium game data | `A001.GAM` (13KB), `CLUT01.GAM` (10KB) |
+| 100KB - 1MB | Large area data | `A002.GAM` (142KB), `X00.BIN` (343KB) |
+| 1MB - 10MB | Video files | `ARASHI.STR` (5.4MB) |
+| 10MB+ | Large videos | `OP_INST.STR` (33MB), `DUMMY.DAT` (27MB) |
+
+### Internal Structure Patterns
+
+**Compressed Files (GAM):**
+- Magic header: `"GAM\0"`
+- Decompressed size information
+- LZ-compressed payload data
+
+**Raw Files:**
+- Direct binary data
+- No compression wrapper
+- Loaded directly to memory
+
+**Executable Files (BIN/PSX-EXE):**
+- PlayStation MIPS assembly code
+- Region-specific memory layouts
+- Embedded data tables and constants
+
+### File Type Codes (ftpe values)
+
+Based on LDAR file type field analysis:
+
+```c
+// File type identifiers used in LDAR entries
+#define FTYPE_COMPRESSED_GAM    0x10FF  // Compressed GAM archive
+#define FTYPE_RAW_DATA         0xF0FF  // Raw binary data
+#define FTYPE_VRAM_GRAPHICS    0x60FF  // Graphics for VRAM upload
+#define FTYPE_DECOMPRESSED     0x62FF  // Decompressed data
+#define FTYPE_EXECUTABLE       0x63FF  // Executable code
+#define FTYPE_SYSTEM_DATA      0x30FF  // System configuration
+#define FTYPE_AUDIO_WAVE       0x35FF  // Audio waveform data
+#define FTYPE_SEQUENCE         0x31FF  // Audio sequence
+#define FTYPE_TEXTURE          0x3FFF  // Texture data
+#define FTYPE_WORLD_MAP        0x32FF  // World map data
+#define FTYPE_COLLISION        0x33FF  // Collision data
+#define FTYPE_ANIMATION        0x34FF  // Animation data
+#define FTYPE_SCRIPT           0x37FF  // Event scripts
+#define FTYPE_SOUND_EFFECTS    0x39FF  // Sound effect data
+#define FTYPE_MISC_DATA        0x53FF  // Miscellaneous data
+#define FTYPE_LEVEL_DATA       0x71FF  // Level-specific data
+#define FTYPE_CHARACTER_DATA   0x52FF  // Character data
+#define FTYPE_ITEM_DATA        0x54FF  // Item/inventory data
+#define FTYPE_UI_GRAPHICS      0xB2FF  // User interface graphics
+#define FTYPE_MENU_DATA        0xB3FF  // Menu system data
+#define FTYPE_SAVE_DATA        0xD1FF  // Save game data
+#define FTYPE_DEBUG_DATA       0x86FF  // Debug information
+```
 
 ---
 
