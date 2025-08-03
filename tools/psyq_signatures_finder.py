@@ -82,10 +82,10 @@ for lib_name in [
     "libspu",
     "libtap",
 ]:
-    sig_path = f"./tools/psx_psyq_signatures/350/{lib_name.upper()}.LIB.json"
+    sig_path = f"./tools/psx_psyq_signatures/370/{lib_name.upper()}.LIB.json"
     res.extend(parse_libsig(lib_name, sig_path, data))
-for obj_name in ["2mbyte", "8mbyte", "none2", "none3"]:
-    sig_path = f"./tools/psx_psyq_signatures/350/{obj_name.upper()}.OBJ.json"
+for obj_name in ["2mbyte", "8mbyte","none3"]:
+    sig_path = f"./tools/psx_psyq_signatures/370/{obj_name.upper()}.OBJ.json"
     res.extend(parse_libsig(obj_name, sig_path, data))
 
 # print splat subsegment
