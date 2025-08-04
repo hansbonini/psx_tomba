@@ -35,6 +35,8 @@ jobs:
         run: |
           mkdir -p iso/us
           curl -L -o iso/us/SCUS_942.36 "${{ secrets.SCUS_94236_URL }}"
+          chmod +x ./tools/gcc-2.7.2-psx -R
+          chmod +x ./tools/objdiff -R
       
       - name: Build
         run: |
