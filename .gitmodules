@@ -16,3 +16,6 @@
 [submodule "tools/m2ctx"]
 	path = tools/m2ctx
 	url = https://github.com/ethteck/m2ctx.git
+[submodule "tools/maspsx"]
+	path = tools/maspsx
+	url = https://github.com/mkst/maspsx.git
