@@ -1,0 +1,53 @@
+ame: Build
+description: Build the Tomba! decompilation project for PSX
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        version: [ SCUS_942.32 ]
+      fail-fast: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -U -r requirements.txt
+          sudo apt-get update
+          sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu
+
+      - name: Setup build environment
+        run: |
+          curl -L -o iso/us/SCUS_942.36 "${{ secrets.SCUS_94236_URL }}"
+      
+      - name: Build
+        run: |
+          make generate
+          make build
+
+      - name: Check match
+        run: make check
+
+      - name: Generate Progress Report
+        run: make report
+
+      - name: Upload Progress Report
+        uses: actions/upload-artifact@v4
+        with:
+            name: ${{ matrix.game_id }}_report
+            path: ./build/progress.json
