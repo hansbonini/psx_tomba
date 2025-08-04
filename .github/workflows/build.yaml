@@ -33,6 +33,7 @@ jobs:
 
       - name: Setup build environment
         run: |
+          mkdir -p iso/us
           curl -L -o iso/us/SCUS_942.36 "${{ secrets.SCUS_94236_URL }}"
       
       - name: Build
