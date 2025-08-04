@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        version: [ SCUS_942.32 ]
+        game_id: [ SCUS_942.32 ]
       fail-fast: true
     runs-on: ubuntu-latest
     steps:
