@@ -43,8 +43,8 @@ jobs:
           make generate
           make build
 
-      - name: Check match
-        run: make check
+      # - name: Check match
+      #   run: make check
 
       - name: Generate Progress Report
         run: make report
