@@ -1,4 +1,4 @@
-ame: Build
+name: Build
 description: Build the Tomba! decompilation project for PSX
 
 on:
