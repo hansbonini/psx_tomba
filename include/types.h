@@ -1,40 +1,26 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef _TYPES_H
+#define _TYPES_H
 
-#ifndef VERSION_PC
-typedef char int8_t;
-typedef short int16_t;
-typedef int int32_t;
-typedef long long int64_t;
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-typedef unsigned long long uint64_t;
-#include <psyq/sys/types.h>
-#else
-#include <sys/types.h>
-#endif
-
-#ifdef _MSC_VER
-typedef unsigned char u_char;
-typedef unsigned short u_short;
-typedef unsigned long long u_long;
-#endif
-
-typedef signed char s8;
-typedef signed short s16;
-typedef signed int s32;
-typedef signed long long s64;
-typedef unsigned char u8;
-typedef unsigned short u16;
-typedef unsigned int u32;
-typedef unsigned long long u64;
-
-typedef signed char byte;
-typedef enum { false, true } bool;
+#include "psyq/sys/types.h"
 
 #ifndef NULL
-#define NULL (0)
+#define NULL 0
 #endif
+
+typedef signed char 	   byte;
+typedef signed char        s8;
+typedef signed short       s16;
+typedef signed int         s32;
+typedef signed long long   s64;
+typedef unsigned char      u8;
+typedef unsigned short     u16;
+typedef unsigned int       u32;
+typedef unsigned long long u64;
+
+#ifndef __cplusplus
+typedef enum { false, true } bool;
+#endif
+
+#define NO_VALUE -1
 
 #endif
