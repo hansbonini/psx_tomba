@@ -3,25 +3,25 @@ sha1: 81cbc79f0230aeb4252e058039f47ac95a777f5a
 options:
   basename: scus_942.36
   target_path: ./iso/us/SCUS_942.36
-  elf_path: ./build/us/scus_942.36.elf
+  elf_path: ./build/scus_942.36.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
-  asm_path: ./asm/us
-  src_path: ./src/us
+  asm_path: ./asm/scus_942.36
+  src_path: ./src/scus_942.36
   build_path: ./build/
-  asset_path: ./assets/us
+  asset_path: ./assets/scus_942.36
   # create_asm_dependencies: True
 
-  ld_script_path: ./linker/us/scus_942.36.ld
+  ld_script_path: ./linker/scus_942.36/scus_942.36.ld
   ld_dependencies: True
 
   find_file_boundaries: false
   gp_value: 0x80097FA8
   global_vram_start: 0x80010000
 
-  o_as_suffix: True
+  o_as_suffix: False
   use_legacy_include_asm: False
 
   asm_function_macro: glabel
@@ -33,12 +33,12 @@ options:
   #auto_link_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
-    - ./symbols/us/symbol_addrs.txt
+    - ./symbols/scus_942.36/symbol_addrs.txt
   reloc_addrs_path:
-    - ./symbols/us/reloc_addrs.txt
+    - ./symbols/scus_942.36/reloc_addrs.txt
 
-  undefined_funcs_auto_path: ./symbols/us/undefined_funcs_auto.txt
-  undefined_syms_auto_path: ./symbols/us/undefined_syms_auto.txt
+  undefined_funcs_auto_path: ./linker/scus_942.36/undefined_funcs_auto.scus_942.36.txt
+  undefined_syms_auto_path: ./linker/scus_942.36/undefined_syms_auto.scus_942.36.txt
 
   extensions_path: ./tools/splat_ext
 
@@ -62,7 +62,7 @@ segments:
     # bss_size: 0x2116f
     align: 4
     subsegments:
-      - [0x0800, rodata]
+      - [0x800, rodata]
       - [0x6BB0, c, main/main]
       - [0x4BB8C, c, psyq/libapi]
       - [0x4BFE0, c, psyq/libc]

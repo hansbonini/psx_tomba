@@ -1,19 +1,21 @@
-.ifndef .L_MACRO_INC
-.L_MACRO_INC:
-
-.macro jlabel label
-    glabel \label
+.macro glabel label
+    .global \label
+    .type \label, @function
+    \label:
 .endm
 
-.macro glabel label
+.macro dlabel label
     .global \label
     \label:
 .endm
 
-.macro .def #
+.macro jlabel label
+    .global \label
+    \label:
 .endm
 
+.macro move a, b
+    addu \a, \b, $zero
+.endm
 
 .include "gte.inc"
-
-.endif
