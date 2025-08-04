@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install -U -r requirements.txt
+          python3 -m pip install splat64[mips]
           sudo apt-get update
           sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu
 
