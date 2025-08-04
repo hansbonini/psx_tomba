@@ -1,4 +1,5 @@
 #include "common.h"
+#include "game.h"
 #include "psyq/libgte.h"
 #include "psyq/libgpu.h"
 
@@ -12,43 +13,42 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016A18);
 
 void func_80016AF4(void)
 {
-    s32 *D_8009CA10 = (s32 *)0x8009CA10;
     RECT rect;
 
-    SetGeomOffset(0xA0, 0x70);
-    SetGeomScreen(0x10);
-    *(s16* )(PSX_SCRATCH + 0xF8) = 0x1000;
+    SetGeomOffset(160, 112);
+    SetGeomScreen(544);
+    *(s16* )(PSX_SCRATCH + 0xF8) = 4096;
     *(s16* )(PSX_SCRATCH + 0xFA) = 0;
     *(s16* )(PSX_SCRATCH + 0xFC) = 0;
     *(s16* )(PSX_SCRATCH + 0xFE) = 0;
-    *(s16* )(PSX_SCRATCH + 0x100) = 0x1000;
+    *(s16* )(PSX_SCRATCH + 0x100) = 4096;
     *(s16* )(PSX_SCRATCH + 0x102) = 0;
     *(s16* )(PSX_SCRATCH + 0x104) = 0;
     *(s16* )(PSX_SCRATCH + 0x106) = 0;
-    *(s16* )(PSX_SCRATCH + 0x108) = 0x1000;
+    *(s16* )(PSX_SCRATCH + 0x108) = 4096;
     *(s32* )(PSX_SCRATCH + 0x114) = 0;
     *(s32* )(PSX_SCRATCH + 0x110) = 0;
     *(s32* )(PSX_SCRATCH + 0x10C) = 0;
-    func_80024AEC(&*(s32 *)(0x1F8000C0));
+    func_80024AEC(&*(s32 *)(PSX_SCRATCH + 0xC0));
     *(s16* )(PSX_SCRATCH + 0xE2) = 0;
     *(s16* )(PSX_SCRATCH + 0xE6) = 0;
-    *(s16* )(PSX_SCRATCH + 0xEA) = -0x220;
+    *(s16* )(PSX_SCRATCH + 0xEA) = -544;
     *(s16* )(PSX_SCRATCH + 0xEE) = 0;
     *(s16* )(PSX_SCRATCH + 0xF2) = 0;
     *(s16* )(PSX_SCRATCH + 0xF6) = 0;
-    func_80024B3C((s32* )PSX_SCRATCH + 0x118);
-    func_80016C4C(0x60, 0x97, 0xFF);
+    func_80024B3C((s32* )(PSX_SCRATCH + 0x118));
+    func_80016C4C(96, 151, 255);
     // Clear entire screen
-    rect.w = 0x400;
+    rect.w = 1024;
     rect.x = 0;
     rect.y = 0;
-    rect.h = 0x200;
+    rect.h = 512;
     ClearImage(&rect, 0, 0, 0);
-    ClearOTagR(&D_8009CA10, 0x328);
-    ClearOTagR(&D_8009CA10 + 0xD10, 0x328);
+    ClearOTagR(&*(s32 *)FRAMEBUFFER_OT, 0x328);
+    ClearOTagR(&*(s32 *)FRAMEBUFFER_OT + 0xD10, 0x328);
     
     *(s16* )(PSX_SCRATCH + 0xF4) = 0;
-    *(s16* )(PSX_SCRATCH + 0x1E0) = (u_long)&D_8009CA10;
+    *(s16* )(PSX_SCRATCH + 0x1E0) = (u_long)&*(s32 *)FRAMEBUFFER_OT;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016C4C);

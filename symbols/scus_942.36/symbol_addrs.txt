@@ -30,3 +30,5 @@ ClearOTagR=0x8005f05c;
 // libgte
 SetGeomOffset=0x80063a34;
 SetGeomScreen=0x80063a54;
+// bss
+FRAMEBUFFER_OT=0x8009ca10;
