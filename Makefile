@@ -197,6 +197,9 @@ all: build
 
 build: $(TARGET_OUT)
 
+check: build
+	@sha256sum --ignore-missing --check $(CONFIG_DIR)/checksum.sha
+
 generate: $(LD_FILES)
 
 clean:

@@ -64,6 +64,7 @@ segments:
     subsegments:
       - [0x800, rodata]
       - [0x6BB0, c, main/main]
+      - [0x6CFC, c, main/main_loop]
       - [0x4BB8C, c, psyq/libapi]
       - [0x4BFE0, c, psyq/libc]
       - [0x4D454, c, psyq/libcard]
