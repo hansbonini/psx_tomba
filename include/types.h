@@ -24,8 +24,3 @@ typedef enum { false, true } bool;
 #define NO_VALUE -1
 
 #endif
-
-typedef struct {		/* short word type 3D vector */	
-	short	vx, vy;
-	short	vz, pad;
-} SVECTOR;

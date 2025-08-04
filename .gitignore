@@ -1,4 +1,5 @@
-asm/*
-iso/*
+.sentry-native
+asm
+iso
 *.bin
 *.cue

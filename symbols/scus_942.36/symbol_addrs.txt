@@ -1,5 +1,5 @@
+// game
 main=0x800163b0;
-drawLicenseScreen=0x80016af4;
 // libapi
 FlushCache=0x8005b38c;
 _bu_init=0x8005b39c;
@@ -24,3 +24,9 @@ GetGp=0x8005B4BC;
 firstfile=0x8005b76c;
 _bcopy=0x8005b77c;
 _bzero=0x8005b7b0;
+// libgpu
+ClearImage=0x8005ece8;
+ClearOTagR=0x8005f05c;
+// libgte
+SetGeomOffset=0x80063a34;
+SetGeomScreen=0x80063a54;
