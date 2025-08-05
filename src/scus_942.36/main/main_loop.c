@@ -13,6 +13,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016A18);
 
 void func_80016AF4(void)
 {
+    extern s32 D_1F8000C0;
+    extern s32 D_1F800118;
     RECT rect;
 
     SetGeomOffset(160, 112);
@@ -29,14 +31,14 @@ void func_80016AF4(void)
     *(s32* )(PSX_SCRATCH + 0x114) = 0;
     *(s32* )(PSX_SCRATCH + 0x110) = 0;
     *(s32* )(PSX_SCRATCH + 0x10C) = 0;
-    func_80024AEC(&*(s32 *)(PSX_SCRATCH + 0xC0));
+    func_80024AEC(&D_1F8000C0);
     *(s16* )(PSX_SCRATCH + 0xE2) = 0;
     *(s16* )(PSX_SCRATCH + 0xE6) = 0;
     *(s16* )(PSX_SCRATCH + 0xEA) = -544;
     *(s16* )(PSX_SCRATCH + 0xEE) = 0;
     *(s16* )(PSX_SCRATCH + 0xF2) = 0;
     *(s16* )(PSX_SCRATCH + 0xF6) = 0;
-    func_80024B3C((s32* )(PSX_SCRATCH + 0x118));
+    func_80024B3C(&D_1F800118);
     func_80016C4C(96, 151, 255);
     // Clear entire screen
     rect.w = 1024;
@@ -44,11 +46,11 @@ void func_80016AF4(void)
     rect.y = 0;
     rect.h = 512;
     ClearImage(&rect, 0, 0, 0);
-    ClearOTagR(&*(s32 *)FRAMEBUFFER_OT, 0x328);
-    ClearOTagR(&*(s32 *)FRAMEBUFFER_OT + 0xD10, 0x328);
+    ClearOTagR(FRAMEBUFFER_OT, 808);
+    ClearOTagR((u32)FRAMEBUFFER_OT + 0xD10, 808);
     
-    *(s16* )(PSX_SCRATCH + 0xF4) = 0;
-    *(s16* )(PSX_SCRATCH + 0x1E0) = (u_long)&*(s32 *)FRAMEBUFFER_OT;
+    *(s16*)(PSX_SCRATCH + 0x1F4) = 0;
+    *(s32*)(PSX_SCRATCH + 0x1E0) = FRAMEBUFFER_OT;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016C4C);
