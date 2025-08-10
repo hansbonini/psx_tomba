@@ -97,7 +97,8 @@ class TombaFunction(object):
             "name": self.name,
             "target_asm": self.asm_code,
             "context": self.context,
-            "preset": preset,
+            "compiler": "gcc2.7.2-psx",
+            "compiler_flags": "-funsigned-char -gcoff -Wa,--expand-div -DVERSION_US -mel -G0 -O2",
             "diff_label": self.name,
         }
         if self.decompile():
