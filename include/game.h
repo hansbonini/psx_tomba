@@ -64,6 +64,7 @@ extern long D_8009E480;
 extern s16 D_8009EB52;
 extern u16 D_8009EB5A;
 extern u16 D_8009EB7C;
+extern u8 D_800A3940;
 extern u8 D_800A5398;
 
 #endif
