@@ -24,5 +24,13 @@ extern s32 D_1F800118;
 extern u_long FRAMEBUFFER_OT;
 extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
+extern long D_8009E45C;
+extern long D_8009E460;
+extern long D_8009E464;
+extern long D_8009E468;
+extern long D_8009E474;
+extern long D_8009E478;
+extern long D_8009E47C;
+extern long D_8009E480;
 
 #endif

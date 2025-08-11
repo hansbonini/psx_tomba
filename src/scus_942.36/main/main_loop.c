@@ -181,7 +181,30 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80018E58);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80018F04);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80019020);
+void func_80019020(void)
+{
+    EnterCriticalSection();
+    D_8009E474 = OpenEvent(0xF4000001, 4, 0x2000, 0);
+    D_8009E478 = OpenEvent(0xF4000001, 0x8000, 0x2000, 0);
+    D_8009E47C = OpenEvent(0xF4000001, 0x100, 0x2000, 0);
+    D_8009E480 = OpenEvent(0xF4000001, 0x2000, 0x2000, 0);
+    D_8009E45C = OpenEvent(0xF0000011, 4, 0x2000, 0);
+    D_8009E460 = OpenEvent(0xF0000011, 0x8000, 0x2000, 0);
+    D_8009E464 = OpenEvent(0xF0000011, 0x100, 0x2000, 0);
+    D_8009E468 = OpenEvent(0xF0000011, 0x2000, 0x2000, 0);
+    InitCARD(0);
+    ExitCriticalSection();
+    StartCARD();
+    _bu_init();
+    EnableEvent(D_8009E474);
+    EnableEvent(D_8009E478);
+    EnableEvent(D_8009E47C);
+    EnableEvent(D_8009E480);
+    EnableEvent(D_8009E45C);
+    EnableEvent(D_8009E460);
+    EnableEvent(D_8009E464);
+    EnableEvent(D_8009E468);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800191E0);
 
