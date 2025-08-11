@@ -1319,7 +1319,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800410D8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8004117C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80041754);
+void func_80041754(s16 arg0, s16 arg1, s32 arg2)
+{
+    func_80041940(0, arg0, arg1, arg2, 0, 0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80041790);
 
