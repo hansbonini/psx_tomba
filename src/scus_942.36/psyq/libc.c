@@ -1,8 +1,8 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", memcpy);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memcpy);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", memset);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memset);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", rand);
 
@@ -30,10 +30,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", toupper);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", tolower);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", memchr);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memchr);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", putchar);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", sprintf);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", memmove);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memmove);

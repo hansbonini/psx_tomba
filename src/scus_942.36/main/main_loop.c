@@ -1,7 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "psyq/libgte.h"
-#include "psyq/libgpu.h"
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800164FC);
 
@@ -53,7 +51,38 @@ void func_80016AF4(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016C4C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016DDC);
+void func_80016DDC(s8 arg0, s8 arg1, s8 arg2)
+{
+    DISPENV* temp_s2;
+
+    SetDefDrawEnv((DRAWENV*)&D_8009D6C4, 0x180, 0, 0x280, 0x1E0);
+    temp_s2 = &D_8009D6C4 - 0x5;
+    SetDefDispEnv((DISPENV*)temp_s2, 0x180, 0, 0x280, 0x1E0);
+    SetDefDrawEnv((DRAWENV*)(&D_8009D6C4 + 0x344), 0x180, 0, 0x280, 0x1E0);
+    SetDefDispEnv((DISPENV*)((DRAWENV*)(&D_8009D6C4 + 0x344)) -0x1, 0x180, 0, 0x280, 0x1E0);
+    D_8009D6B8 = 0;
+    D_8009D6BA = 0;
+    D_8009D6BC = 0x100;
+    D_8009D6BE = 0xF0;
+    D_8009E3CE = 0xF0;
+    D_8009E3C8 = 0;
+    D_8009E3CA = 0;
+    D_8009E3CC = 0x100;
+    D_8009E3EC = 1;
+    D_8009D6DC = 1;
+    D_8009E3EA = 1;
+    D_8009D6DA = 1;
+    D_8009E3EB = 1;
+    D_8009D6DB = 1;
+    D_8009D6DD = arg0;
+    D_8009D6DE = arg1;
+    D_8009D6DF = arg2;
+    D_8009E3ED = arg0;
+    D_8009E3EE = arg1;
+    D_8009E3EF = arg2;
+    PutDispEnv((DISPENV*)temp_s2);
+    PutDrawEnv((DRAWENV*)&D_8009D6C4);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016F5C);
 
@@ -115,7 +144,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017AE0);
 
 void func_80017CA0(void)
 {
-    memset(&D_800A5398, 0, 0x178);
+    _memset(&D_800A5398, 0, 0x178);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017CCC);
