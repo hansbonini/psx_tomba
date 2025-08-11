@@ -5,7 +5,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800164FC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016940);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016A00);
+void func_80016A00(s16 arg0, s16 arg1)
+{
+    *(s16* )0x1F8001EA = arg0;
+    *(s16* )0x1F8001EC = arg1;
+}
 
 void func_80016A18(void)
 {
@@ -1013,7 +1017,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003A384);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003A4F8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003A604);
+void func_8003A604(s32 arg0)
+{
+    D_8007D6A0 = arg0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003A614);
 
