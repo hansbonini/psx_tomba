@@ -256,11 +256,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80018094);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800180C4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800180F0);
+void func_800180F0(void)
+{
+    _memset(&D_800B00F8, 0, 0x16C);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001811C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800181F0);
+void func_800181F0(void)
+{
+    _memset(&D_800B0770, 0, 0x68);
+}
 
 void func_8001821C(void)
 {

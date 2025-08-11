@@ -66,5 +66,7 @@ extern u16 D_8009EB5A;
 extern u16 D_8009EB7C;
 extern u8 D_800A3940;
 extern u8 D_800A5398;
+extern u8 D_800B00F8;
+extern u8 D_800B0770;
 
 #endif
