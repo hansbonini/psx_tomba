@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""This script is intended to make it easier for someone to decompile a function within the Tomba-decomp project
+"""This script is intended to make it easier for someone to decompile a function within the sotn-decomp project
 and optionally upload that function to decomp.me.
-Any questions or issues related to running it should be directed to the Tomba-decomp discord #tooling channel:
-https://Tomba-discord.xee.dev/
+Any questions or issues related to running it should be directed to the sotn-decomp discord #tooling channel:
+https://sotn-discord.xee.dev/
 
 Use `decompile.py --help` for usage and options"""
 
@@ -98,7 +98,7 @@ class TombaFunction(object):
             "target_asm": self.asm_code,
             "context": self.context,
             "compiler": "gcc2.7.2-psx",
-            "compiler_flags": "-funsigned-char -gcoff -Wa,--expand-div -DVERSION_US -mel -G0 -O2",
+            "preset": 188,
             "diff_label": self.name,
         }
         if self.decompile():
