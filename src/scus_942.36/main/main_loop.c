@@ -176,7 +176,36 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017418);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001745C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017498);
+void func_80017498(u_long* address, s16 prectx, s16 precty, s16 crectx, s16 crecty)
+{
+    TIM_IMAGE tim;
+    TIM_IMAGE *pTim;
+
+    pTim= &tim;
+    
+    if (OpenTIM(address)) {
+        return;
+    }
+    
+    if (ReadTIM(pTim) == NULL) {
+        return;
+    }
+    
+    pTim->prect->x = prectx;
+    pTim->prect->y = precty;
+    pTim->crect->x = crectx;
+    pTim->crect->y = crecty;
+    
+    if (((pTim->mode & 8) != 0) && ((crectx << 0x10) >= 0)) {
+        LoadImage(pTim->crect, pTim->caddr);
+    }
+    
+    if ((prectx << 0x10) >= 0) {
+        LoadImage(pTim->prect, pTim->paddr);
+    }
+    
+    return;
+}
 
 void func_8001758C(void)
 {
