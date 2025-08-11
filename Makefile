@@ -76,14 +76,14 @@ OPT_FLAGS           := -O2
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR)
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
-CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc
+CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -undef -Wall -lang-c -nostdinc
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 SPLAT_FLAGS         := --disassemble-all --make-full-disasm-for-code
-DL_FLAGS := -G8
+DL_FLAGS := -G0
 AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
-CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet
+CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -quiet
 
 # PSY-Q libraries uses ASPSX 2.56 (PSQ 4.0)
 # Archive library code uses GCC 2.6.0.
@@ -94,21 +94,12 @@ define DL_FlagsSwitch
 			$(filter MAIN,$(patsubst build/src/$(BASE_DIR)/psyq/%,MAIN,$(1))), 
 			$(filter MAIN,$(patsubst build/asm/${BASE_DIR}/psyq/%,MAIN,$(1)))
 		),
-		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --expand-div --use-comm-section --run-assembler $(AS_FLAGS)),
-		$(eval MASPSX_FLAGS = --use-comm-section --run-assembler $(AS_FLAGS))
-	)
-
-	$(if
-		$(or 
-			$(filter MAIN,$(patsubst build/src/${BASE_DIR}/psyq/%,MAIN,$(1))),
-			$(filter MAIN,$(patsubst build/asm/${BASE_DIR}/psyq/%,MAIN,$(1)))
-		),
-		$(eval DL_FLAGS := -G0),
-		$(eval DL_FLAGS := -G8)
+		$(eval MASPSX_FLAGS = --aspsx-version=2.67 --macro-inc --expand-div --use-comm-section --run-assembler $(AS_FLAGS)),
+		$(eval MASPSX_FLAGS = --aspsx-version=2.67 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
 	)
 
 	$(eval AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
-	$(eval CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
+	$(eval CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -fverbose-asm -quiet)
 endef
 
 ifeq ($(NON_MATCHING),1)
