@@ -28,6 +28,9 @@ extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
 extern u16 D_8009C864;
 extern u16 D_8009C866;
+extern s16 D_8009C940;
+extern s16 D_8009C9DA;
+extern s16 D_8009C9DE;
 extern s16 D_8009D6B8;
 extern s16 D_8009D6BA;
 extern s16 D_8009D6BC;
@@ -57,6 +60,9 @@ extern long D_8009E474;
 extern long D_8009E478;
 extern long D_8009E47C;
 extern long D_8009E480;
+extern s16 D_8009EB52;
+extern u16 D_8009EB5A;
+extern u16 D_8009EB7C;
 extern u8 D_800A5398;
 
 #endif

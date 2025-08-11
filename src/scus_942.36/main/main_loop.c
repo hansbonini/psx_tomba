@@ -7,7 +7,34 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016940);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016A00);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016A18);
+void func_80016A18(void)
+{
+    D_8009EB5A = 0xFFFF;
+    D_8009EB7C = 0xFFFF;
+    *(u8* )0x1F8003D3 = 0xFF;
+    *(u8* )0x1F8003D2 = 0xFF;
+    *(s16* )0x1F8001F0 = 0;
+    *(s16* )0x1F8001F2 = 0;
+    *(s16* )0x1F8001EE = 0;
+    *(s16* )0x1F8001F6 = 0;
+    *(s16* )0x1F8001F8 = 0;
+    *(s8* )0x1F8001CC = 0;
+    *(s8* )0x1F8001D0 = 0;
+    *(s8* )0x1F8001D1 = 0;
+    *(s8* )0x1F8001CE = 0;
+    *(s8* )0x1F8001CF = 0;
+    *(s8* )0x1F8001D3 = 0;
+    *(s16* )0x1F8001C6 = 0;
+    *(s8* )0x1F8001C4 = 0;
+    *(s8* )0x1F8001C5 = 0;
+    *(s8* )0x1F8003CC = 0;
+    D_8009C9DA = 0;
+    D_8009C9DE = 0;
+    D_8009C940 = 0;
+    D_8009EB52 = 0;
+    D_8009C864 = 0;
+    D_8009C866 = 8;
+}
 
 void func_80016AF4(void)
 {
