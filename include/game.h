@@ -1,8 +1,8 @@
 #ifndef _INCLUDE_GAME_H
 #define _INCLUDE_GAME_H
 
-#define IS_DEBUG_MODE_ENABLED ((u8)(PSX_SCRATCH + 0x1B4))
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
+#define IS_DEBUG_MODE_ENABLED ((u8)(0x1F80001B4))
 #define READ32(_dst, _src) { \
     _dst = (((u8 *)_src)[1] << 8) | (((u8 *)_src)[0] << 0) \
         | ((((u8 *)_src)[3] << 8) | (((u8 *)_src)[2] << 0) << 16);\

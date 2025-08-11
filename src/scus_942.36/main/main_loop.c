@@ -1046,7 +1046,45 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003E3E8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003E408);
 
-INCLUDE_ASM("asm/scus_942.36/matchings/main/main_loop", LZDecompress);
+void LZDecompress(byte *src, byte *dest)
+{
+    uint length;
+    byte offset;
+    int next_bitmask;
+    src += 4;
+
+    READ32(LZ_FILE_CTRL->size, src);
+    READ16(LZ_BITMASK, src);
+    LZ_CURRENT_BIT = 0;
+    LZ_FILE_CTRL->offset = 0;
+     
+    do {
+        if (((LZ_BITMASK >> LZ_CURRENT_BIT) & 1)) {
+            u8 off, len;
+            off = *src++;
+            len = *src++;
+            _bcopy(dest - off, dest, len);
+            dest += len;
+            LZ_FILE_CTRL->offset += len;
+        }
+        else {
+            *dest++ = *src++;
+            LZ_FILE_CTRL->offset += 1;
+        }
+        LZ_CURRENT_BIT++;
+
+        if ( LZ_CURRENT_BIT > 15) next_bitmask = 1;
+        else if ( LZ_CURRENT_BIT > 15) next_bitmask = 1;
+        else next_bitmask = 0;
+        
+        if (next_bitmask) {
+            READ16(LZ_BITMASK, src);
+            LZ_CURRENT_BIT = 0;
+        }
+    } while (LZ_FILE_CTRL->size > LZ_FILE_CTRL->offset);
+    
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003F0DC);
 
