@@ -49,14 +49,45 @@ void func_80016AF4(void)
     *(u_long*)(PSX_SCRATCH + 0x1E0) = (u_long)&FRAMEBUFFER_OT;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016C4C);
+void func_80016C4C(s8 r0, s8 g0, s8 b0)
+{
+    DISPENV* temp_s2;
 
-void func_80016DDC(s8 arg0, s8 arg1, s8 arg2)
+    SetDefDrawEnv((DRAWENV*)&D_8009D6C4, 0x180, 0x100, 0x140, 0xE0);
+    temp_s2 = (DISPENV*)&D_8009D6C4 - 0x1;
+    SetDefDispEnv((DISPENV*)temp_s2, 0x2C0, 0x100, 0x140, 0xE0);
+    SetDefDrawEnv((DRAWENV*)(&D_8009D6C4 + 0x344), 0x2C0, 0x100, 0x140, 0xE0);
+    SetDefDispEnv((DISPENV*)((DRAWENV*)(&D_8009D6C4 + 0x344)) -0x1, 0x180, 0x100, 0x140, 0xE0);
+    D_8009D6BC = 0x100;
+    D_8009D6BE = 0xE0;
+    D_8009E3CE = 0xE0;
+    D_8009E3CC = 0x100;
+    D_8009E3EC = 1;
+    D_8009D6DC = 1;
+    D_8009E3EA = 1;
+    D_8009D6DA = 1;
+    D_8009E3EB = 0;
+    D_8009D6DB = 0;
+    D_8009D6DD = r0;
+    D_8009D6DE = g0;
+    D_8009D6DF = b0;
+    D_8009E3ED = r0;
+    D_8009E3EE = g0;
+    D_8009E3EF = b0;
+    D_8009D6B8 = (s16)D_8009C864;
+    D_8009D6BA = (s16) D_8009C866;
+    D_8009E3C8 = (s16) D_8009C864;
+    D_8009E3CA = (s16) D_8009C866;
+    PutDispEnv((DISPENV*)temp_s2);
+    PutDrawEnv((DRAWENV*)&D_8009D6C4);
+}
+
+void func_80016DDC(s8 r0, s8 g0, s8 b0)
 {
     DISPENV* temp_s2;
 
     SetDefDrawEnv((DRAWENV*)&D_8009D6C4, 0x180, 0, 0x280, 0x1E0);
-    temp_s2 = &D_8009D6C4 - 0x5;
+    temp_s2 = (DISPENV*)&D_8009D6C4 - 0x1;
     SetDefDispEnv((DISPENV*)temp_s2, 0x180, 0, 0x280, 0x1E0);
     SetDefDrawEnv((DRAWENV*)(&D_8009D6C4 + 0x344), 0x180, 0, 0x280, 0x1E0);
     SetDefDispEnv((DISPENV*)((DRAWENV*)(&D_8009D6C4 + 0x344)) -0x1, 0x180, 0, 0x280, 0x1E0);
@@ -74,12 +105,12 @@ void func_80016DDC(s8 arg0, s8 arg1, s8 arg2)
     D_8009D6DA = 1;
     D_8009E3EB = 1;
     D_8009D6DB = 1;
-    D_8009D6DD = arg0;
-    D_8009D6DE = arg1;
-    D_8009D6DF = arg2;
-    D_8009E3ED = arg0;
-    D_8009E3EE = arg1;
-    D_8009E3EF = arg2;
+    D_8009D6DD = r0;
+    D_8009D6DE = g0;
+    D_8009D6DF = b0;
+    D_8009E3ED = r0;
+    D_8009E3EE = g0;
+    D_8009E3EF = b0;
     PutDispEnv((DISPENV*)temp_s2);
     PutDrawEnv((DRAWENV*)&D_8009D6C4);
 }
