@@ -32,5 +32,6 @@ extern long D_8009E474;
 extern long D_8009E478;
 extern long D_8009E47C;
 extern long D_8009E480;
+extern u8 D_800A5398;
 
 #endif

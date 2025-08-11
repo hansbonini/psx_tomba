@@ -97,7 +97,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800177D8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017AE0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017CA0);
+void func_80017CA0(void)
+{
+    memset(&D_800A5398, 0, 0x178);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017CCC);
 
