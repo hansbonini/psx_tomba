@@ -87,7 +87,23 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001745C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017498);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001758C);
+void func_8001758C(void)
+{
+    func_80017CA0();
+    func_80017D70();
+    func_80017E44();
+    func_80017EEC();
+    func_80017F1C();
+    func_80017F88();
+    func_80017FB8();
+    func_80018094();
+    func_800180F0();
+    func_8001811C();
+    func_800180C4();
+    func_80017CCC();
+    func_800181F0();
+    func_8001821C();
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017614);
 
