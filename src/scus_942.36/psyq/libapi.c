@@ -1,43 +1,43 @@
 #include "common.h"
 #include "psyq/kernel.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", FlushCache);
+BIOS_STUB(FlushCache, 0xA0, 0x44)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", _bu_init);
+BIOS_STUB(_bu_init, 0xA0, 0x70)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", OpenEvent);
+BIOS_STUB(OpenEvent, 0xB0, 0x8)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", CloseEvent);
+BIOS_STUB(CloseEvent, 0xB0, 0x9)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", TestEvent);
+BIOS_STUB(TestEvent, 0xB0, 0xB)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", EnableEvent);
+BIOS_STUB(EnableEvent, 0xB0, 0xC)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", OpenTh);
+BIOS_STUB(OpenTh, 0xB0, 0xE)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", CloseTh);
+BIOS_STUB(CloseTh, 0xB0, 0xF)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", ChangeTh);
+BIOS_STUB(ChangeTh, 0xB0, 0x10)
 
 void EnterCriticalSection() { SYSCALL(1) }
 
 void ExitCriticalSection() { SYSCALL(2) }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", open);
+BIOS_STUB(open, 0xB0, 0x32)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", lseek);
+BIOS_STUB(lseek, 0xB0, 0x33)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", read);
+BIOS_STUB(read, 0xB0, 0x34)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", write);
+BIOS_STUB(write, 0xB0, 0x35)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", close);
+BIOS_STUB(close, 0xB0, 0x36)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", format);
+BIOS_STUB(format, 0xB0, 0x41)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", nextfile);
+BIOS_STUB(nextfile, 0xB0, 0x43)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", erase);
+BIOS_STUB(erase, 0xB0, 0x45)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", GetGp);
 
@@ -45,7 +45,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B4CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B668);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", firstfile);
+BIOS_STUB(firstfile, 0xB0, 0x42)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", _bcopy);
 
