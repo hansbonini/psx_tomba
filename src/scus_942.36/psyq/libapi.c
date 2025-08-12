@@ -19,9 +19,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", CloseTh);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", ChangeTh);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", EnterCriticalSection);
+void EnterCriticalSection() { SYSCALL(1) }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", ExitCriticalSection);
+void ExitCriticalSection() { SYSCALL(2) }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", open);
 

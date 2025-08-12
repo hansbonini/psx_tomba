@@ -1,6 +1,10 @@
 #ifndef _INCLUDE_ASM_H
 #define _INCLUDE_ASM_H
 
+#define SYSCALL(id)                                                                      \
+    __asm__("li $a0, " #id ";"                                                           \
+            "syscall 0;");
+
 #if !defined(SPLAT) && !defined(M2CTX) && !defined(PERMUTER) && !defined(SKIP_ASM)
 
         #ifndef INCLUDE_ASM
