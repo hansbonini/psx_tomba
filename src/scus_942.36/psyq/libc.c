@@ -14,7 +14,18 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", strcmp);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", strcpy);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", strlen);
+int strlen(char* pString) {
+    int nLen;
+    char chCur;
+
+    nLen = 0;
+    if (pString == NULL)
+        return 0;
+
+    while (chCur = *pString, pString++, chCur != NULL)
+        nLen++;
+    return nLen;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", strncat);
 
@@ -36,4 +47,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", putchar);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", sprintf);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memmove);
+void* _memmove(u_char* pDst, u_char* pSrc, int size) {
+    if (pDst >= pSrc) {
+        while (size-- > 0) {
+            pDst[size] = pSrc[size];
+        }
+    } else {
+        while (size-- > 0) {
+            *pDst++ = *pSrc++;
+        }
+    }
+
+    return pDst;
+}
