@@ -10,7 +10,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _card_write);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _new_card);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", InitCARD);
+void InitCARD(long val)
+{
+    ChangeClearPAD(0);
+    EnterCriticalSection();
+    InitCARD2(val);
+    _patch_card();
+    _patch_card2();
+    ExitCriticalSection();
+    return;
+}
 
 void StartCARD(void) {
     EnterCriticalSection();
