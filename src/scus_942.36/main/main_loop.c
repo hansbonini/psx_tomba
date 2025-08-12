@@ -244,7 +244,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017D70);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017E44);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017EEC);
+void func_80017EEC(void)
+{
+    *(s32* )0x1F80021C = &D_800A5970;
+    *(s32* )0x1F800260 = &D_800A5970;
+    *(s16* )0x1F800250 = 0;
+    *(s16* )0x1F800246 = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017F1C);
 
@@ -652,7 +658,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80023928);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80023A3C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80023AA4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", FontDebugPrintf);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80023CE0);
 
