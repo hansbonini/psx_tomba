@@ -1,8 +1,8 @@
 #ifndef _INCLUDE_GAME_H
 #define _INCLUDE_GAME_H
 
-#include "psyq/libgte.h"
 #include "psyq/libgpu.h"
+#include "psyq/libgte.h"
 
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define IS_DEBUG_MODE_ENABLED ((u8)(0x1F80001B4))

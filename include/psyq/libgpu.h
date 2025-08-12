@@ -1,6 +1,8 @@
 /* $PSLibId$ */
 #ifndef _LIBGPU_H_
 #define _LIBGPU_H_
+
+#include "psyq/libgte.h"
 /*
  *  (C) Copyright 1993-1995 Sony Corporation,Tokyo,Japan. All Rights Reserved
  *

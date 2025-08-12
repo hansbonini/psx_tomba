@@ -1,5 +1,8 @@
 #include "common.h"
 
+#include "psyq/libetc.h"
+#include "psyq/libgpu.h"
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut);
@@ -8,7 +11,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut2);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDrawEnv);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDispEnv);
+DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
+    env->disp.x = x;
+    env->disp.y = y;
+    env->disp.w = w;
+    env->disp.h = h;
+    env->screen.x = 0;
+    env->screen.y = 0;
+    env->screen.w = 0;
+    env->screen.h = 0;
+    env->isrgb24 = 0;
+    env->isinter = 0;
+    env->pad1 = 0;
+    env->pad0 = 0;
+    return env;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetTPage);
 
@@ -18,63 +35,146 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpTPage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpClut);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", NextPrim);
+void* NextPrim(void *p) {
+    return nextPrim(p);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", IsEndPrim);
+int IsEndPrim(void *p) {
+    return isendprim(p);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", AddPrim);
+void AddPrim(void *ot, void *p) {
+    addPrim(ot, p);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", AddPrims);
+void AddPrims(void *ot, void *p0, void *p1) {
+    addPrims(ot, p0, p1);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", CatPrim);
+void CatPrim(void *p0, void *p1) {
+    setaddr(p0, p1);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", TermPrim);
+void TermPrim(void *p) {
+    termPrim(p);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSemiTrans);
+void SetSemiTrans(void *p, int abe) {
+    setSemiTrans(p, abe);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetShadeTex);
+void SetShadeTex(void *p, int tge) {
+    setShadeTex(p, tge);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyF3);
+void SetPolyF3(POLY_F3 *p) {
+    setlen(p, 4);
+    setcode(p, 0x20);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyFT3);
+void SetPolyFT3(POLY_FT3 *p) {
+    setlen(p, 7);
+    setcode(p, 0x24);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyG3);
+void SetPolyG3(POLY_G3 *p) {
+    setlen(p, 6);
+    setcode(p, 0x30);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyGT3);
+void SetPolyGT3(POLY_GT3 *p) {
+    setlen(p, 9);
+    setcode(p, 0x34);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyF4);
+void SetPolyF4(POLY_F4 *p) {
+    setlen(p, 5);
+    setcode(p, 0x28);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyFT4);
+void SetPolyFT4(POLY_FT4 *p) {
+    setlen(p, 9);
+    setcode(p, 0x2C);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyG4);
+void SetPolyG4(POLY_G4 *p) {
+    setlen(p, 8);
+    setcode(p, 0x38);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyGT4);
+void SetPolyGT4(POLY_GT4 *p) {
+    setlen(p, 12);
+    setcode(p, 0x3C);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSprt8);
+void SetSprt8(SPRT_8 *p) {
+    setlen(p, 3);
+    setcode(p, 0x74);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSprt16);
+void SetSprt16(SPRT_16 *p) {
+    setlen(p, 3);
+    setcode(p, 0x7C);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSprt);
+void SetSprt(SPRT *p) {
+    setlen(p, 4);
+    setcode(p, 0x64);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile1);
+void SetTile1(TILE_1 *p) {
+    setlen(p, 2);
+    setcode(p, 0x68);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile8);
+void SetTile8(TILE_8 *p) {
+    setlen(p, 2);
+    setcode(p, 0x70);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile16);
+void SetTile16(TILE_16 *p) {
+    setlen(p, 2);
+    setcode(p, 0x78);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile);
+void SetTile(TILE *p) {
+    setlen(p, 3);
+    setcode(p, 0x60);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineF2);
+void SetLineF2(LINE_F2 *p) {
+    setlen(p, 3);
+    setcode(p, 0x40);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineG2);
+void SetLineG2(LINE_G2 *p) {
+    setlen(p, 4);
+    setcode(p, 0x50);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineF3);
+void SetLineF3(LINE_F3 *p) {
+    setlen(p, 5);
+    setcode(p, 0x48);
+    p->pad = 0x55555555;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineG3);
+void SetLineG3(LINE_G3 *p) {
+    setlen(p, 7);
+    setcode(p, 0x58);
+    p->pad = 0x55555555;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineF4);
+void SetLineF4(LINE_F4 *p) {
+    setlen(p, 6);
+    setcode(p, 0x4c);
+    p->pad = 0x55555555;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineG4);
+void SetLineG4(LINE_G4 *p) {
+    setlen(p, 9);
+    setcode(p, 0x5c);
+    p->pad = 0x55555555;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawTPage);
 
