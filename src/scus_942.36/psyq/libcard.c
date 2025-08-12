@@ -1,14 +1,14 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _card_info);
+BIOS_STUB(_card_info, 0xA0, 0xAB);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _card_load);
+BIOS_STUB(_card_load, 0xA0, 0xAC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _card_clear);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _card_write);
+BIOS_STUB(_card_write, 0xB0, 0x4E);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _new_card);
+BIOS_STUB(_new_card, 0xB0, 0x50);
 
 void InitCARD(long val)
 {
@@ -37,11 +37,11 @@ void StopCARD(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", ChangeClearPAD);
+BIOS_STUB(ChangeClearPAD, 0xB0, 0x5B);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", InitCARD2);
+BIOS_STUB(InitCARD2, 0xB0, 0x4A);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", StartCARD2);
+BIOS_STUB(StartCARD2, 0xB0, 0x4B);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", StopCARD2);
 

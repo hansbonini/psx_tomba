@@ -1,6 +1,17 @@
 #ifndef _INCLUDE_ASM_H
 #define _INCLUDE_ASM_H
 
+#define BIOS_STUB(name, table, id)                                                       \
+    __asm__(".set push;"                                                                 \
+            ".set noat;"                                                                 \
+            ".set noreorder;"                                                            \
+            "glabel " #name ";"                                                          \
+            "li  $t2, " #table ";"                                                       \
+            "jr  $t2;"                                                                   \
+            "li  $t1, " #id ";"                                                          \
+            "nop;"                                                                       \
+            ".set pop;");
+
 #define SYSCALL(id)                                                                      \
     __asm__("li $a0, " #id ";"                                                           \
             "syscall 0;");
