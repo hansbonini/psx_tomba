@@ -1,12 +1,22 @@
 #include "common.h"
 
+extern u32 D_8009B138;
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memcpy);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memset);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", rand);
+int rand(void) {
+    u_long nNext;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", srand);
+    nNext = (D_8009B138 * 0x41C64E6D) + 0x3039;
+    D_8009B138 = nNext;
+    return (nNext >> 0x10) & 0x7FFF;
+}
+
+void srand(u_long seed) {
+    D_8009B138 = seed;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", strcat);
 

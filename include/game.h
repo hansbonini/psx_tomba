@@ -26,6 +26,7 @@ extern s32 D_1F800118;
 extern s32 D_8007D6A0;
 extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
+extern u32 D_8009B138;
 extern u16 D_8009C864;
 extern u16 D_8009C866;
 extern s16 D_8009C940;
