@@ -20,7 +20,13 @@ void StartCARD(void) {
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", StopCARD);
+void StopCARD(void)
+{
+    StopCARD2();
+    _patch_card2();
+    func_8005CF68();
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", ChangeClearPAD);
 
