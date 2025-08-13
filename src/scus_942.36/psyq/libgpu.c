@@ -63,7 +63,18 @@ DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
     return env;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetTPage);
+u16 GetTPage(s32 tp, s32 abr, s32 x, s32 y)
+{
+    s32 result;
+    s32 var_v1;
+
+    if ((GetGraphType() == 1) || (GetGraphType() == 2)) {
+        result = ((tp & 3 ) << 9) | ((abr & 3) << 7) | ((s32) (y & 0x300) >> 3) | ((s32) (x & 0x3FF) >> 6);
+    } else {
+        result = (u16)getTPage(tp,abr,x,y);
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetClut);
 
