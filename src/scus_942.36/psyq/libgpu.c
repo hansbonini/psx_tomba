@@ -76,7 +76,10 @@ u16 GetTPage(s32 tp, s32 abr, s32 x, s32 y)
     return result;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetClut);
+u16 GetClut(s32 x, s32 y)
+{
+    return getClut(x,y);
+}
 
 void DumpTPage(u16 tpage)
 {
