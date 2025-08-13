@@ -39,7 +39,32 @@ extern s32 D_8009B2A0;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
+u16 LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h)
+{
+    RECT temp;
+    s32 var_v0;
+
+    temp.x = (s16) x;
+    temp.h = (s16) h;
+    temp.y = (s16) y;
+    switch (tp) {
+        case 0:
+            var_v0 = w;
+            if (w < 0) {
+                var_v0 = w + 3;
+            }
+            temp.w = (s16) (var_v0 >> 2);
+            break;
+        case 1:
+            temp.w = (s16) (w / 2);
+            break;
+        case 2:
+            temp.w = (s16) w;
+            break;
+    }
+    LoadImage((RECT* )&temp, pix);
+    return GetTPage(tp, abr, x, y) & 0xFFFF;
+}
 
 u16 LoadClut(u_long* clut, s32 x, s32 y)
 {
