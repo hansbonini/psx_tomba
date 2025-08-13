@@ -3,6 +3,8 @@
 #include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 
+extern char* D_80015AD8; // DumpTPage text
+extern char* D_80015AF0; // DumpClut text
 extern s32 D_80090C9C;
 extern s32 D_80090C9F;
 extern volatile s32* GPU_DATA;
@@ -47,9 +49,23 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetTPage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetClut);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpTPage);
+void DumpTPage(u16 tpage)
+{
+        u32 temp_v0;
+        u32 temp_v0_2;
+    
+        if ((GetGraphType() == 1) || (temp_v0 = tpage & 0xFFFF, (GetGraphType() == 2))) {
+            temp_v0_2 = tpage & 0xFFFF;
+            GPU_printf(&D_80015AD8, (temp_v0_2 >> 9) & 3, (temp_v0_2 >> 7) & 3, (temp_v0_2 << 6) & 0x7C0, (temp_v0_2 * 8) & 0x300);
+            return;
+        }
+        GPU_printf(&D_80015AD8, ((tpage) >> 7) & 0x003, ((tpage) >> 5) & 0x003, ((tpage) << 6) & 0x7c0, (((tpage) << 4) & 0x100) + (((tpage) >> 2) & 0x200));
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpClut);
+void DumpClut(u16 clut)
+{
+    GPU_printf(&D_80015AF0, (clut & 0x3F) * 0x10, (u32) (clut & 0xFFFF) >> 6);
+}
 
 void* NextPrim(void *p) {
     return nextPrim(p);
