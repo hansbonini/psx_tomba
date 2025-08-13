@@ -4,7 +4,11 @@ BIOS_STUB(_card_info, 0xA0, 0xAB);
 
 BIOS_STUB(_card_load, 0xA0, 0xAC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", _card_clear);
+void _card_clear(s32 arg0)
+{
+    _new_card();
+    _card_write(arg0, 0x3F, 0);
+}
 
 BIOS_STUB(_card_write, 0xB0, 0x4E);
 
