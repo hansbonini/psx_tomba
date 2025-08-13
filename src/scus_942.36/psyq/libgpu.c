@@ -5,6 +5,7 @@
 
 extern s32 D_80090C9C;
 extern s32 D_80090C9F;
+extern s32* GPU_DATA;
 extern s32* GPU_STATUS;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
@@ -306,7 +307,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwb);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwc);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _param);
+s32 _param(s32 arg0)
+{
+    *GPU_STATUS = arg0 | 0x10000000;
+    return *GPU_DATA & 0xFFFFFF;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque);
 
