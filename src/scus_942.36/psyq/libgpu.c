@@ -41,9 +41,29 @@ extern s32 D_80090DB8;
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut);
+u16 LoadClut(u_long* clut, s32 x, s32 y)
+{
+    RECT temp;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut2);
+    temp.w = 0x100;
+    temp.x = (s16) x;
+    temp.y = (s16) y;
+    temp.h = 1;
+    LoadImage((RECT *)&temp, clut);
+    return GetClut(x, y) & 0xFFFF;
+}
+
+u16 LoadClut2(u_long* clut, s32 x, s32 y)
+{
+    RECT temp;
+
+    temp.w = 0x10;
+    temp.x = (s16) x;
+    temp.y = (s16) y;
+    temp.h = 1;
+    LoadImage((RECT* ) &temp, clut);
+    return GetClut(x, y) & 0xFFFF;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDrawEnv);
 
