@@ -328,7 +328,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", memset);
+void * memset(s8* ptr, int value, s32 num) {
+    s32 i;
+
+    for (i = num - 1; i != -1; i--) {
+        *ptr++ = value;
+    }
+}
 
 BIOS_STUB(GPU_cw, 0xA0, 0x49);
 
