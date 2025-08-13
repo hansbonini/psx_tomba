@@ -274,9 +274,26 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_cs);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ce);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ofs);
+u32 get_ofs(s32 arg0, u16 arg1) {
+    
+    if (!(1U < (u8)D_80090C9C - 1U)) {
+        return 0xe5000000 | ((arg1 & 0xfff) << 0xC) | arg0 & 0xfFF;
+    }
+    return 0xe5000000 | ((arg1 & 0x7ff) << 0xB) | (arg0 & 0x7ff);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tw);
+u32 get_tw(RECT* arg0) {
+    u32 pad[4];
+
+    if (arg0 != 0) {
+        pad[0] = (u8) arg0->x >> 3;
+        pad[2] = (s32) (-arg0->w & 0xFF) >> 3;
+        pad[1] = (u8) arg0->y >> 3;
+        pad[3] = (s32) (-arg0->h & 0xFF) >> 3;
+        return (pad[1] << 0xF) | 0xE2000000 | ((pad[0] << 0xA) ) | (pad[3] << 5) |  pad[2];
+    }
+    return 0;
+}
 
 u32 get_dx(DISPENV* env)
 {
