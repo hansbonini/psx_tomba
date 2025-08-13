@@ -5,10 +5,14 @@
 
 extern s32 D_80090C9C;
 extern s32 D_80090C9F;
-extern s32* GPU_DATA;
-extern s32* GPU_STATUS;
+extern volatile s32* GPU_DATA;
+extern volatile s32* GPU_STATUS;
+extern volatile s32* DMA1_MADR;
+extern volatile s32* DMA1_BCR;
+extern volatile s32* DMA1_CHCR;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
+extern u8 D_8009B18C[];
 extern u32* D_8009B290;
 extern s32 D_8009B294;
 extern s32 D_8009B298;
@@ -301,11 +305,37 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _drs);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _ctl);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _getctl);
+s32 _getctl(s32 arg0)
+{
+    return *(&D_8009B18C[arg0]);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwb);
+s32 _cwb(s32* arg0, s32 arg1) {
+    s32 temp_v1;
+    s32 var_a2;
+    s32* var_a0;
+    u8 pad[8];
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwc);
+    var_a0 = arg0;
+    var_a2 = arg1 - 1;
+    *GPU_STATUS = 0x04000000;
+    if (arg1 != 0) {
+        do {
+            temp_v1 = *var_a0;
+            var_a0 += 1;
+            var_a2 -= 1;
+            *GPU_DATA = temp_v1;
+        } while (var_a2 != -1);
+    }
+    return 0;
+}
+
+void _cwc(s32 arg0) {
+    *GPU_STATUS = 0x04000002;
+    *DMA1_MADR = arg0;
+    *DMA1_BCR = 0;
+    *DMA1_CHCR = 0x01000401;
+}
 
 s32 _param(s32 arg0)
 {
