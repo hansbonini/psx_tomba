@@ -119,26 +119,20 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", printf);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", prnt);
 
-s32 toupper(s32 arg0)
+s32 toupper(char ch)
 {
-    u8 var_v1;
-
-    var_v1 = arg0;
-    if (D_8007FA71[var_v1] & 2) {
-        var_v1 = arg0 - 0x20;
+    if (D_8007FA71[ch] & 2) {
+        ch = ch - 0x20;
     }
-    return var_v1;
+    return ch;
 }
 
-s32 tolower(s32 arg0)
+s32 tolower(char ch)
 {
-    u8 var_v1;
-
-    var_v1 = arg0;
-    if (D_8007FA71[var_v1] & 1) {
-        var_v1 = arg0 + 0x20;
+    if (D_8007FA71[ch] & 1) {
+        ch = ch + 0x20;
     }
-    return var_v1;
+    return ch;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memchr);
