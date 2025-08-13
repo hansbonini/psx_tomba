@@ -303,7 +303,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _dws);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _drs);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _ctl);
+void _ctl(s32 arg0)
+{
+    *GPU_STATUS = arg0;
+    D_8009B18C[(u32) arg0 >> 0x18] = (u8) arg0;
+}
 
 s32 _getctl(s32 arg0)
 {
