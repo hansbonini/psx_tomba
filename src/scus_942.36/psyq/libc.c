@@ -33,27 +33,22 @@ u8* _memcpy(u8* arg0, u8* arg1, s32 arg2)
     return var_v0;
 }
 
-s8* _memset(s8* arg0, s8 arg1, s32 arg2)
-{
-    s32 var_a2;
-    s8* var_a0;
-    s8* var_v0;
-
-    var_a0 = arg0;
-    var_a2 = arg2;
-    var_v0 = NULL;
-    if (var_a0 != NULL) {
-        var_v0 = var_a0;
-        if (var_a2 <= 0) {
-            return NULL;
+void* _memset(unsigned char* pMem, unsigned char val, int len) {
+    unsigned char* pRet = 0;
+    int remaining = len;
+    if(pMem != 0){
+        pRet = pMem;
+        if (len <= 0){
+            pRet = 0;
+        }else{
+            while(remaining > 0){
+                *pMem = val;
+                pMem++;
+                remaining--;
+            }
         }
-        do {
-            *var_a0 = arg1;
-            var_a2 -= 1;
-            var_a0 += 1;
-        } while (var_a2 > 0);
     }
-    return var_v0;
+    return pRet;
 }
 
 int rand(void) {
