@@ -90,7 +90,39 @@ u16 LoadClut2(u_long* clut, s32 x, s32 y)
     return GetClut(x, y) & 0xFFFF;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDrawEnv);
+DRAWENV* SetDefDrawEnv(DRAWENV* env, s32 x, s32 y, s32 w, s32 h)
+{
+    s32 temp_v0;
+    u8 var_v0;
+
+    temp_v0 = GetVideoMode();
+    env->clip.x = (s16) x;
+    env->clip.y = (s16) y;
+    env->clip.w = (s16) w;
+    env->tw.x = 0;
+    env->tw.y = 0;
+    env->tw.w = 0;
+    env->tw.h = 0;
+    env->r0 = 0;
+    env->g0 = 0;
+    env->b0 = 0;
+    env->dtd = 1;
+    env->clip.h = (s16) h;
+    if (temp_v0 != 0) {
+        var_v0 = h < 0x121;
+    } else {
+        var_v0 = h < 0x101;
+    }
+    env->dfe = var_v0;
+    env->ofs[0] = (s16) x;
+    env->ofs[1] = (s16) y;
+    if (GetGraphType() != 1) {
+        GetGraphType();
+    }
+    env->tpage = 0xA;
+    env->isbg = 0;
+    return env;
+}
 
 DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
     env->disp.x = x;
