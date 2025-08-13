@@ -5,6 +5,14 @@
 
 extern s32 D_80090C9C;
 extern s32 D_80090C9F;
+extern s32* GPU_STATUS;
+extern s32 D_80090DB4;
+extern s32 D_80090DB8;
+extern u32* D_8009B290;
+extern s32 D_8009B294;
+extern s32 D_8009B298;
+extern s32 D_8009B29C;
+extern s32 D_8009B2A0;
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 
@@ -277,7 +285,10 @@ u32 get_dx(DISPENV* env)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _status);
+s32 _status(void)
+{
+    return *GPU_STATUS;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _otc);
 
@@ -307,7 +318,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _reset);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _sync);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", set_alarm);
+void set_alarm(void)
+{
+    D_80090DB4 = VSync(-1) + 0xF0;
+    D_80090DB8 = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 
@@ -315,13 +330,28 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", memset);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GPU_cw);
+BIOS_STUB(GPU_cw, 0xA0, 0x49);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTIM);
+int OpenTIM(u_long* addr)
+{
+    D_8009B290 = addr;
+    return 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTIM);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTMD);
+int OpenTMD(u_long* tmd, int obj_no)
+{
+
+    D_8009B2A0 = get_tmd_addr(
+        tmd,
+        obj_no,
+        &D_8009B29C,
+        &D_8009B294,
+        &D_8009B298
+    );
+    return D_8009B2A0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTMD);
 
