@@ -226,7 +226,18 @@ void SetLineG4(LINE_G4 *p) {
     p->pad = 0x55555555;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawTPage);
+void SetDrawTPage(DR_TPAGE* p, s32 dfe, s32 dtd, s32 tpage)
+{
+    s32 result;
+
+    setlen(p, 1);
+    if ((GetGraphType() == 1) || (GetGraphType() == 2)) {
+        result = ((0xe1000000) | ((dtd) ? 0x0800 : 0) | ((dfe) ? 0x1000 : 0) | ((tpage) & 0x27ff));
+    } else {
+        result = ((0xe1000000) | ((dtd) ? 0x0200 : 0) | ((dfe) ? 0x0400 : 0) | ((tpage) & 0x9ff));
+    }
+    p->code[0] = result;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMove);
 
