@@ -3,6 +3,9 @@
 #include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 
+extern s32 D_80090C9C;
+extern s32 D_80090C9F;
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut);
@@ -262,7 +265,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ofs);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tw);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_dx);
+u32 get_dx(DISPENV* env)
+{
+    switch ((u8)D_80090C9C) {
+    case 1:
+        return (u8)D_80090C9F ? 0x400 - env->disp.x - env->disp.w : env->disp.x;
+    case 2:
+        return (u8)D_80090C9F ? 0x400 - env->disp.x - (env->disp.w / 2) : env->disp.x / 2;
+    default:
+        return env->disp.x;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _status);
 
