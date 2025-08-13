@@ -3,23 +3,41 @@
 #include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 
+#define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
+#define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
+
 extern char* D_80015AD8; // DumpTPage text
 extern char* D_80015AF0; // DumpClut text
 extern s32 D_80090C9C;
 extern s32 D_80090C9F;
+extern s16 D_80090CA0;
+extern s16 D_80090CA2;
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
 extern volatile s32* DMA1_BCR;
 extern volatile s32* DMA1_CHCR;
-extern s32 D_80090DB4;
-extern s32 D_80090DB8;
+extern s32 D_8009B148;
+extern s32 D_8009B14C;
+extern s32 D_8009B150;
+extern s32 D_8009B154;
+extern s32 D_8009B158;
+extern s32 D_8009B15C;
+extern s32 D_8009B160;
+extern s32 D_8009B164;
+extern s32 D_8009B168;
+extern s32 D_8009B16C;
+extern s32 D_8009B170;
+extern s32 D_8009B174;
+extern s32 D_8009B178;
 extern u8 D_8009B18C[];
 extern u32* D_8009B290;
 extern s32 D_8009B294;
 extern s32 D_8009B298;
 extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
+extern s32 D_80090DB4;
+extern s32 D_80090DB8;
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 
@@ -330,7 +348,62 @@ s32 _status(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _otc);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _clr);
+s32 _clr(RECT* rect, u32 color)
+{
+    s16 temp_w;
+    s16 temp_h;
+    s32* ptr;
+
+    if (rect->w >= 0) {
+        if ((D_80090CA0-1) >= rect->w) {
+            temp_w = rect->w;
+        } else {
+            temp_w = D_80090CA0 - 1;
+        }
+    } else {
+        temp_w = 0;
+    }
+    rect->w = temp_w;
+    
+    if (rect->h >= 0) {
+        if ((D_80090CA2-1) >= rect->h) {
+            temp_h = rect->h;
+        } else {
+            temp_h = D_80090CA2 - 1;
+        }
+    } else {
+        temp_h = 0;
+    }
+    rect->h = temp_h;
+    
+    if ((rect->x & 0x3F) || (rect->w & 0x3F)) {
+        ptr = &D_8009B16C;
+        D_8009B148 = ((s32) ptr & 0xFFFFFF) | 0x08000000;
+        D_8009B14C = 0xE3000000;
+        D_8009B150 = 0xE4FFFFFF;
+        D_8009B154 = 0xE5000000;
+        D_8009B158 = 0xE6000000;
+        
+        D_8009B15C = 0xE1000000 | (*GPU_STATUS & 0x7FF) | (((color >> 0x1F) << 0xA));
+        D_8009B160 = CMD_MONOCHROME_RECTANGLE(color);
+        D_8009B164 = (s32) *(u32*)&rect->x;
+        D_8009B168 = (s32) *(u32*)&rect->w;
+        *ptr = 0x03FFFFFF;
+        D_8009B170 = _param(3) | 0xE3000000; // set drawing area top left
+        D_8009B174 = _param(4) | 0xE4000000; // set drawing area bottom right
+        D_8009B178 = _param(5) | 0xE5000000; // set drawing offset
+    } else {
+        D_8009B148 = 0x05FFFFFF;
+        D_8009B14C = 0xE6000000;
+        
+        D_8009B150 = 0xE1000000 | ((*GPU_STATUS) & 0x7FF) | (((color >> 0x1F) << 0xA));
+        D_8009B154 = CMD_FILL_RECTANGLE_IN_VRAM(color);
+        D_8009B158 = (s32) *(u32*)&rect->x;
+        D_8009B15C = (s32) *(u32*)&rect->w;
+    }
+    _cwc((s32) &D_8009B148);
+    return 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _dws);
 
