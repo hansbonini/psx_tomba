@@ -6,6 +6,25 @@
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
 #define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
 
+typedef struct {
+    /* 0x00 */ u32 unk00;                       // aIdSysCV1831995
+    /* 0x04 */ void (*addque)();                // _addque
+    /* 0x08 */ int (*addque2)();                // _addque2
+    /* 0x0C */ u32 clr;                         // _clr
+    /* 0x10 */ void (*ctl)(int);                // _ctl
+    /* 0x14 */ s32 (*cwb)(s32* arg0, s32 arg1); // _cwb
+    /* 0x18 */ u32 cwc;                         // _cwc
+    /* 0x1C */ u32 drs;                         // _drs
+    /* 0x20 */ u32 dws;                         // _dws
+    /* 0x24 */ u32 unk24;                       // _exeque
+    /* 0x28 */ int (*getctl)(int);              // _getctl
+    /* 0x2C */ void (*otc)(u32* ot, s32 n);     // _otc
+    /* 0x30 */ u32 unk30;                       // _param
+    /* 0x34 */ s32 (*reset)(int);               // _reset
+    /* 0x38 */ u_long (*status)(void);          // _status
+    /* 0x3C */ void (*sync)(int);               // _sync
+} gpu;                                          // size = 0x40
+
 extern char* D_80015AD8; // DumpTPage text
 extern char* D_80015AF0; // DumpClut text
 extern s8* D_80015B00;   // DumpDrawEnv text
@@ -13,14 +32,20 @@ extern s8* D_80015B18;   // DumpDrawEnv text
 extern s8* D_80015B28;   // DumpDrawEnv text
 extern s8* D_80015B40;   // DumpDrawEnv text
 extern s8* D_80015B4C;   // DumpDrawEnv text
-extern s32 D_80090C9C;   // DumpDrawEnv text
-extern s32 D_80090C9F;   // DumpDrawEnv text
-extern s16 D_80090CA0;   // DumpDrawEnv text
-extern s16 D_80090CA2;   // DumpDrawEnv text
 extern s32 D_80015B58;   // DumpDispEnv text
 extern s32 D_80015B74;   // DumpDispEnv text
 extern s32 D_80015B90;   // DumpDispEnv text
 extern s32 D_80015B9C;   // DumpDispEnv text
+extern s32 D_80015BDC;   // ResetGraph text
+extern s32 D_80015BFC;   // ResetGraph text
+extern s32 D_80090C54;   // ResetGraph text
+extern gpu* D_80090C94;
+extern s32 D_80090C9C;
+extern s8 D_80090C9D;
+extern u8 D_80090C9E;
+extern s32 D_80090C9F;
+extern s16 D_80090CA0;
+extern s16 D_80090CA2;
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -45,6 +70,8 @@ extern s32 D_8009B294;
 extern s32 D_8009B298;
 extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
+extern s32 D_80090D1C;
+extern s32 D_80090D30;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
 
@@ -400,7 +427,37 @@ void DumpDispEnv(DISPENV* env)
     GPU_printf(&D_80015B9C, (s16) env->isrgb24);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ResetGraph);
+s32 ResetGraph(s32 mode)
+{
+    s32 temp_v0_2;
+    s32 temp_v1;
+    u8 temp_v0;
+
+    temp_v1 = mode & 7;
+    switch (temp_v1) {
+        case 3:
+        case 0:
+            printf(&D_80015BDC, &D_80090C54, &D_80090C9C);
+        case 5:
+            GPU_memset((s8* ) &D_80090C9C, 0, sizeof(gpu)*2);
+            ResetCallback();
+            GPU_cw((s32) D_80090C94 & 0xFFFFFF);
+            temp_v0 = _reset(mode);
+            temp_v0_2 = (temp_v0 & 0xFF);
+            *(u8*)(&D_80090C9C) = temp_v0;
+            *(s8*)(&D_80090C9D) = 1;
+            D_80090CA0 = *(u32*)(&D_80090D1C + temp_v0_2);
+            D_80090CA2 = *(u32*)(&D_80090D30 + temp_v0_2);
+            GPU_memset((s8* ) (&D_80090C9C + 0x4), -1, sizeof(DRAWENV));
+            GPU_memset((s8* ) (&D_80090C9C + 0x1B), -1, sizeof(DISPENV));
+            return *(u8*)(&D_80090C9C);
+        default:
+            if ((u8) D_80090C9E >= 2U) {
+                GPU_printf(&D_80015BFC, mode);
+            }
+            return D_80090C94->reset(1);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphReverse);
 
