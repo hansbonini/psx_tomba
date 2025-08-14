@@ -348,7 +348,21 @@ void SetDrawMove(DR_MOVE* p, RECT* rect, s32 x, s32 y)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawLoad);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MargePrim);
+s32 MargePrim(void* p0, void* p1)
+{
+    s32 temp_v1;
+    s32 result;
+
+    temp_v1 = *(u8 *)(p0 + 3) + *(u8 *)(p1 + 3) + 1;
+    if (temp_v1 < 0x11) {
+        *(u8*)(p0 + 3) = (u8) temp_v1;
+        *(u32 *)(p1) = 0;
+        result = 0;
+    } else {
+        result = -1;
+    }
+    return result;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDrawEnv);
 
