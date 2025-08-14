@@ -76,7 +76,7 @@ OPT_FLAGS           := -O2
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR)
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
-CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -undef -Wall -lang-c -nostdinc
+CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MP -undef -Wall -lang-c -nostdinc
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
