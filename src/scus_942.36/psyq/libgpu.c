@@ -330,7 +330,21 @@ void SetDrawTPage(DR_TPAGE* p, s32 dfe, s32 dtd, s32 tpage)
     p->code[0] = result;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMove);
+void SetDrawMove(DR_MOVE* p, RECT* rect, s32 x, s32 y)
+{
+    u32 var_a0;
+
+    var_a0 = 5;
+    if ((rect->w == 0) || (rect->h == 0)) {
+        var_a0 = 0;
+    }
+    p->code[0] = 0x01000000;
+    p->code[1] = 0x80000000;
+    setlen(p, var_a0);
+    p->code[2] = *(u32*)(&rect->x);
+    p->code[3] = (y << 0x10) | (x & 0xFFFF);
+    p->code[4] = *(u32*)(&rect->w);;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawLoad);
 
