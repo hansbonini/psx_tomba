@@ -38,9 +38,9 @@ extern char* D_80015B90; // DumpDispEnv text
 extern char* D_80015B9C; // DumpDispEnv text
 extern char* D_80015BDC; // ResetGraph text
 extern char* D_80015BFC; // ResetGraph text
-extern char* D_80090C54; // ResetGraph text
 extern char* D_80015C10; // SetGraphReverse text
 extern char* D_80015C28; // SetGraphDebug text
+extern char* D_80015C54; // SetGraphQueue text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -80,6 +80,7 @@ extern s32 D_80090D30;
 extern s32* D_80090D84;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
+extern s32 D_80090C54;
 
 u16 LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h)
 {
@@ -495,7 +496,20 @@ s32 SetGraphDebug(s32 level) {
     return temp_s0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphQueue);
+int SetGraphQueue(int mode) {
+    u8 old = *(s32*)(&D_80090C9D);
+
+    if (*(u8*)(&D_80090C9E) >= 2) {
+        GPU_printf(&D_80015C54, mode);
+    }
+    if (mode != *(u8*)(&D_80090C9D)) {
+        D_80090C94->reset(1);
+        *(u8*)(&D_80090C9D) = mode;
+        DMACallback(2, 0);
+    }
+
+    return old;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphType);
 
