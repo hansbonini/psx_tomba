@@ -600,7 +600,11 @@ s32 ClearImage(RECT* rect, u8 r, u8 g, u8 b)
     return D_80090C94->addque2(D_80090C94->clr, rect, 8, ((b & 0xFF) << 0x10) | ((g & 0xFF) << 8) | (r & 0xFF));
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage2);
+s32 ClearImage2(RECT* rect, u8 r, u8 g, u8 b)
+{
+    checkRECT(&D_80015CD0, rect);
+    return D_80090C94->addque2(D_80090C94->clr, rect, 8, (((b & 0xFF) << 0x10) | 0x80000000) | ((g & 0xFF) << 8) | (r & 0xFF));
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadImage);
 
