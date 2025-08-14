@@ -516,7 +516,10 @@ u8 GetGraphType(void)
     return D_80090C9C;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphDebug);
+s32 GetGraphDebug(void)
+{
+    return (s32) D_80090C9E;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSyncCallback);
 
