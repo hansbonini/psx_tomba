@@ -27,19 +27,20 @@ typedef struct {
 
 extern char* D_80015AD8; // DumpTPage text
 extern char* D_80015AF0; // DumpClut text
-extern s8* D_80015B00;   // DumpDrawEnv text
-extern s8* D_80015B18;   // DumpDrawEnv text
-extern s8* D_80015B28;   // DumpDrawEnv text
-extern s8* D_80015B40;   // DumpDrawEnv text
-extern s8* D_80015B4C;   // DumpDrawEnv text
-extern s32 D_80015B58;   // DumpDispEnv text
-extern s32 D_80015B74;   // DumpDispEnv text
-extern s32 D_80015B90;   // DumpDispEnv text
-extern s32 D_80015B9C;   // DumpDispEnv text
-extern s32 D_80015BDC;   // ResetGraph text
-extern s32 D_80015BFC;   // ResetGraph text
-extern s32 D_80090C54;   // ResetGraph text
-extern s32 D_80015C10;   // SetGraphReverse text
+extern char* D_80015B00; // DumpDrawEnv text
+extern char* D_80015B18; // DumpDrawEnv text
+extern char* D_80015B28; // DumpDrawEnv text
+extern char* D_80015B40; // DumpDrawEnv text
+extern char* D_80015B4C; // DumpDrawEnv text
+extern char* D_80015B58; // DumpDispEnv text
+extern char* D_80015B74; // DumpDispEnv text
+extern char* D_80015B90; // DumpDispEnv text
+extern char* D_80015B9C; // DumpDispEnv text
+extern char* D_80015BDC; // ResetGraph text
+extern char* D_80015BFC; // ResetGraph text
+extern char* D_80090C54; // ResetGraph text
+extern char* D_80015C10; // SetGraphReverse text
+extern char* D_80015C28; // SetGraphDebug text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -480,7 +481,19 @@ int SetGraphReverse(int mode) {
     return old;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphDebug);
+s32 SetGraphDebug(s32 level) {
+    u8 temp_s0;
+    u8 temp_a1;
+
+    temp_s0 = *(s32*)(&D_80090C9E);
+    temp_a1 = level;
+    temp_a1 &= 0xFF;
+    *(s8*)(&D_80090C9E) = temp_a1;
+    if (temp_a1) {
+        GPU_printf(&D_80015C28, temp_a1, *(u8*)(&D_80090C9C), *(u8*)(&D_80090C9F));
+    }
+    return temp_s0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphQueue);
 
