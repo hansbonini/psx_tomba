@@ -39,6 +39,7 @@ extern s32 D_80015B9C;   // DumpDispEnv text
 extern s32 D_80015BDC;   // ResetGraph text
 extern s32 D_80015BFC;   // ResetGraph text
 extern s32 D_80090C54;   // ResetGraph text
+extern s32 D_80015C10;   // SetGraphReverse text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -463,7 +464,21 @@ s32 ResetGraph(s32 mode)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphReverse);
+int SetGraphReverse(int mode) {
+    s32 old = *(u8*)(&D_80090C9F);
+
+    if (*(u8*)(&D_80090C9E) >= 2) {
+        GPU_printf(&D_80015C10, mode);
+    }
+
+    *(u8*)(&D_80090C9F) = mode;
+    D_80090C94->ctl(D_80090C94->getctl(8) | (*(u8*)(&D_80090C9F) ? 0x08000080 : 0x08000000));
+    
+    if ((u8)D_80090C9C == 2) {
+        D_80090C94->ctl(*(u8*)(&D_80090C9F) ? 0x20000501 : 0x20000504);
+    }
+    return old;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphDebug);
 
