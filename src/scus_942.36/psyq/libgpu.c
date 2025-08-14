@@ -511,7 +511,10 @@ int SetGraphQueue(int mode) {
     return old;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphType);
+u8 GetGraphType(void)
+{
+    return D_80090C9C;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphDebug);
 
