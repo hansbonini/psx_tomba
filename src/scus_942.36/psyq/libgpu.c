@@ -583,7 +583,8 @@ void * memset(s8* ptr, int value, s32 num) {
     }
 }
 
-#ifndef SKIP_ASM
+
+#if !(SKIP_ASM || M2CTX)
 
     BIOS_STUB(GPU_cw, 0xA0, 0x49);
 
