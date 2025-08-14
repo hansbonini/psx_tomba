@@ -44,6 +44,9 @@ extern char* D_80015C54; // SetGraphQueue text
 extern char* D_80015C68; // DrawSyncCallback text
 extern char* D_80015C84; // SetDispMask text
 extern char* D_80015C98; // DrawSync text
+extern char* D_80015CAC; // checkRECT text
+extern char* D_80015CB8; // checkRECT text
+extern char* D_80015CCC; // checkRECT text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -573,7 +576,22 @@ s32 DrawSync(s32 mode)
     D_80090C94->sync(mode);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", checkRECT);
+void checkRECT(const char* log, RECT* r) {
+    switch (*(u8*)(&D_80090C9E)) {
+    case 1:
+        if (r->w > D_80090CA0 || r->w + r->x > D_80090CA0 || r->y > D_80090CA2 ||
+            r->y + r->h > D_80090CA2 || r->w <= 0 || r->x < 0 || r->y < 0 ||
+            r->h <= 0) {
+            GPU_printf(&D_80015CAC, log);
+            GPU_printf(&D_80015CB8, r->x, r->y, r->w, r->h);
+        }
+        break;
+    case 2:
+        GPU_printf(&D_80015CCC, log);
+        GPU_printf(&D_80015CB8, r->x, r->y, r->w, r->h);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage);
 
