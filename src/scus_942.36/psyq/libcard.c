@@ -1,8 +1,12 @@
 #include "common.h"
 
-BIOS_STUB(_card_info, 0xA0, 0xAB);
+#ifndef SKIP_ASM
 
-BIOS_STUB(_card_load, 0xA0, 0xAC);
+    BIOS_STUB(_card_info, 0xA0, 0xAB);
+
+    BIOS_STUB(_card_load, 0xA0, 0xAC);
+    
+#endif
 
 void _card_clear(s32 arg0)
 {
@@ -10,9 +14,13 @@ void _card_clear(s32 arg0)
     _card_write(arg0, 0x3F, 0);
 }
 
-BIOS_STUB(_card_write, 0xB0, 0x4E);
+#ifndef SKIP_ASM
 
-BIOS_STUB(_new_card, 0xB0, 0x50);
+    BIOS_STUB(_card_write, 0xB0, 0x4E);
+
+    BIOS_STUB(_new_card, 0xB0, 0x50);
+
+#endif
 
 void InitCARD(long val)
 {
@@ -41,11 +49,15 @@ void StopCARD(void)
     return;
 }
 
-BIOS_STUB(ChangeClearPAD, 0xB0, 0x5B);
+#ifndef SKIP_ASM
 
-BIOS_STUB(InitCARD2, 0xB0, 0x4A);
+    BIOS_STUB(ChangeClearPAD, 0xB0, 0x5B);
 
-BIOS_STUB(StartCARD2, 0xB0, 0x4B);
+    BIOS_STUB(InitCARD2, 0xB0, 0x4A);
+
+    BIOS_STUB(StartCARD2, 0xB0, 0x4B);
+
+#endif
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcard", StopCARD2);
 

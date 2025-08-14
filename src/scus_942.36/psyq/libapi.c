@@ -1,43 +1,47 @@
 #include "common.h"
 #include "psyq/kernel.h"
 
-BIOS_STUB(FlushCache, 0xA0, 0x44);
+#ifndef SKIP_ASM
 
-BIOS_STUB(_bu_init, 0xA0, 0x70);
+    BIOS_STUB(FlushCache, 0xA0, 0x44);
 
-BIOS_STUB(OpenEvent, 0xB0, 0x8);
+    BIOS_STUB(_bu_init, 0xA0, 0x70);
 
-BIOS_STUB(CloseEvent, 0xB0, 0x9);
+    BIOS_STUB(OpenEvent, 0xB0, 0x8);
 
-BIOS_STUB(TestEvent, 0xB0, 0xB);
+    BIOS_STUB(CloseEvent, 0xB0, 0x9);
 
-BIOS_STUB(EnableEvent, 0xB0, 0xC);
+    BIOS_STUB(TestEvent, 0xB0, 0xB);
 
-BIOS_STUB(OpenTh, 0xB0, 0xE);
+    BIOS_STUB(EnableEvent, 0xB0, 0xC);
 
-BIOS_STUB(CloseTh, 0xB0, 0xF);
+    BIOS_STUB(OpenTh, 0xB0, 0xE);
 
-BIOS_STUB(ChangeTh, 0xB0, 0x10);
+    BIOS_STUB(CloseTh, 0xB0, 0xF);
 
-void EnterCriticalSection() { SYSCALL(1); }
+    BIOS_STUB(ChangeTh, 0xB0, 0x10);
 
-void ExitCriticalSection() { SYSCALL(2); }
+    void EnterCriticalSection() { SYSCALL(1); }
 
-BIOS_STUB(open, 0xB0, 0x32);
+    void ExitCriticalSection() { SYSCALL(2); }
 
-BIOS_STUB(lseek, 0xB0, 0x33);
+    BIOS_STUB(open, 0xB0, 0x32);
 
-BIOS_STUB(read, 0xB0, 0x34);
+    BIOS_STUB(lseek, 0xB0, 0x33);
 
-BIOS_STUB(write, 0xB0, 0x35);
+    BIOS_STUB(read, 0xB0, 0x34);
 
-BIOS_STUB(close, 0xB0, 0x36);
+    BIOS_STUB(write, 0xB0, 0x35);
 
-BIOS_STUB(format, 0xB0, 0x41);
+    BIOS_STUB(close, 0xB0, 0x36);
 
-BIOS_STUB(nextfile, 0xB0, 0x43);
+    BIOS_STUB(format, 0xB0, 0x41);
 
-BIOS_STUB(erase, 0xB0, 0x45);
+    BIOS_STUB(nextfile, 0xB0, 0x43);
+
+    BIOS_STUB(erase, 0xB0, 0x45);
+
+#endif
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", GetGp);
 
@@ -45,7 +49,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B4CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B668);
 
-BIOS_STUB(firstfile, 0xB0, 0x42);
+#ifndef SKIP_ASM
+    BIOS_STUB(firstfile, 0xB0, 0x42);
+#endif
 
 u8* _bcopy(u8* arg0, u8* arg1, s32 arg2)
 {

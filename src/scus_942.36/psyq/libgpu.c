@@ -583,7 +583,11 @@ void * memset(s8* ptr, int value, s32 num) {
     }
 }
 
-BIOS_STUB(GPU_cw, 0xA0, 0x49);
+#ifndef SKIP_ASM
+
+    BIOS_STUB(GPU_cw, 0xA0, 0x49);
+
+#endif
 
 int OpenTIM(u_long* addr)
 {
