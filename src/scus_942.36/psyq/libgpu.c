@@ -42,6 +42,7 @@ extern char* D_80015C10; // SetGraphReverse text
 extern char* D_80015C28; // SetGraphDebug text
 extern char* D_80015C54; // SetGraphQueue text
 extern char* D_80015C68; // DrawSyncCallback text
+extern char* D_80015C84; // SetDispMask text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -550,7 +551,18 @@ u_long DrawSyncCallback(void (*func)())
     return (u32) temp_v0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
+void SetDispMask(s32 mask)
+{
+    s32 var_a0;
+
+    if (*(s8 *)(&D_80090C9E) >= 2U) {
+        GPU_printf(&D_80015C84, mask);
+    }
+    if (!mask) {
+        GPU_memset((u8*)(&D_80090C9E + 0x6A), -1, sizeof(DISPENV));
+    }
+    D_80090C94->ctl(mask ? 0x03000000:0x03000001);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSync);
 
