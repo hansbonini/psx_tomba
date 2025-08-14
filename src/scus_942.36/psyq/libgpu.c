@@ -8,10 +8,15 @@
 
 extern char* D_80015AD8; // DumpTPage text
 extern char* D_80015AF0; // DumpClut text
-extern s32 D_80090C9C;
-extern s32 D_80090C9F;
-extern s16 D_80090CA0;
-extern s16 D_80090CA2;
+extern s8* D_80015B00;   // DumpDrawEnv text
+extern s8* D_80015B18;   // DumpDrawEnv text
+extern s8* D_80015B28;   // DumpDrawEnv text
+extern s8* D_80015B40;   // DumpDrawEnv text
+extern s8* D_80015B4C;   // DumpDrawEnv text
+extern s32 D_80090C9C;   // DumpDrawEnv text
+extern s32 D_80090C9F;   // DumpDrawEnv text
+extern s16 D_80090CA0;   // DumpDrawEnv text
+extern s16 D_80090CA2;   // DumpDrawEnv text
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -364,7 +369,24 @@ s32 MargePrim(void* p0, void* p1)
     return result;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDrawEnv);
+void DumpDrawEnv(DRAWENV* env)
+{
+    u16 temp_v0;
+    u16 temp_v0_2;
+
+    GPU_printf(&D_80015B00, env->clip.x, env->clip.y, env->clip.w, (s32) env->clip.h);
+    GPU_printf(&D_80015B18, env->ofs[0], env->ofs[1]);
+    GPU_printf(&D_80015B28, env->tw.x, env->tw.y, env->tw.w, (s32) env->tw.h);
+    GPU_printf(&D_80015B40, (s16) env->dtd);
+    GPU_printf(&D_80015B4C, (s16) env->dfe);
+    if ((GetGraphType() == 1) || (GetGraphType() == 2)) {
+        temp_v0 = env->tpage;
+        GPU_printf(&D_80015AD8, (temp_v0 >> 9) & 3, (temp_v0 >> 7) & 3, (temp_v0 << 6) & 0x7C0, (temp_v0 * 8) & 0x300);
+        return;
+    }
+    temp_v0_2 = env->tpage;
+    GPU_printf(&D_80015AD8, (temp_v0_2 >> 7) & 3, (temp_v0_2 >> 5) & 3, (temp_v0_2 << 6) & 0x7C0, ((temp_v0_2 * 0x10) & 0x100) + ((temp_v0_2 >> 2) & 0x200));
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDispEnv);
 
