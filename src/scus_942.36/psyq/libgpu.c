@@ -47,6 +47,7 @@ extern char* D_80015C98; // DrawSync text
 extern char* D_80015CAC; // checkRECT text
 extern char* D_80015CB8; // checkRECT text
 extern char* D_80015CCC; // checkRECT text
+extern char* D_80015CD0; // ClearImage text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -593,7 +594,11 @@ void checkRECT(const char* log, RECT* r) {
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage);
+s32 ClearImage(RECT* rect, u8 r, u8 g, u8 b)
+{
+    checkRECT(&D_80015CD0, rect);
+    return D_80090C94->addque2(D_80090C94->clr, rect, 8, ((b & 0xFF) << 0x10) | ((g & 0xFF) << 8) | (r & 0xFF));
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage2);
 
