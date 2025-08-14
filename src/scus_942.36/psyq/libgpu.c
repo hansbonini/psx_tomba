@@ -391,7 +391,22 @@ void SetDrawMove(DR_MOVE* p, RECT* rect, s32 x, s32 y)
     p->code[4] = *(u32*)(&rect->w);;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawLoad);
+void SetDrawLoad(DR_LOAD* p, RECT* rect)
+{
+    s32 temp_v0;
+    s32 var_v1;
+
+    temp_v0 = (s32) ((rect->w * rect->h) + 1) / 2;
+    var_v1 = temp_v0 + 4;
+    if (temp_v0 >= 0xDU) {
+        var_v1 = 0;
+    }
+    setlen(p, var_v1);
+    p->code[0] = 0xA0000000;
+    p->code[1] = *(s32*)(&rect->x);
+    p->code[2] = *(s32*)(&rect->w);
+    p->code[var_v1-1] = 0x01000000;
+}
 
 s32 MargePrim(void* p0, void* p1)
 {
