@@ -17,6 +17,10 @@ extern s32 D_80090C9C;   // DumpDrawEnv text
 extern s32 D_80090C9F;   // DumpDrawEnv text
 extern s16 D_80090CA0;   // DumpDrawEnv text
 extern s16 D_80090CA2;   // DumpDrawEnv text
+extern s32 D_80015B58;   // DumpDispEnv text
+extern s32 D_80015B74;   // DumpDispEnv text
+extern s32 D_80015B90;   // DumpDispEnv text
+extern s32 D_80015B9C;   // DumpDispEnv text
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -388,7 +392,13 @@ void DumpDrawEnv(DRAWENV* env)
     GPU_printf(&D_80015AD8, (temp_v0_2 >> 7) & 3, (temp_v0_2 >> 5) & 3, (temp_v0_2 << 6) & 0x7C0, ((temp_v0_2 * 0x10) & 0x100) + ((temp_v0_2 >> 2) & 0x200));
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDispEnv);
+void DumpDispEnv(DISPENV* env)
+{
+    GPU_printf(&D_80015B58, env->disp.x, env->disp.y, env->disp.w, (s32) env->disp.h);
+    GPU_printf(&D_80015B74, env->screen.x, env->screen.y, env->screen.w, (s32) env->screen.h);
+    GPU_printf(&D_80015B90, (s16) env->isinter);
+    GPU_printf(&D_80015B9C, (s16) env->isrgb24);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ResetGraph);
 
