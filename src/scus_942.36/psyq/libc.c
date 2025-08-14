@@ -4,7 +4,7 @@ extern u32 D_8009B138;
 extern u32 D_8009B140;
 extern u8 D_8007FA71[];
 
-u8* _memcpy(u8* arg0, u8* arg1, s32 arg2)
+u8* memcpy(u8* arg0, u8* arg1, s32 arg2)
 {
     s32 var_a2;
     u8 temp_v0;
@@ -33,7 +33,7 @@ u8* _memcpy(u8* arg0, u8* arg1, s32 arg2)
     return var_v0;
 }
 
-void* _memset(unsigned char* pMem, unsigned char val, int len) {
+void* memset(unsigned char* pMem, unsigned char val, int len) {
     unsigned char* pRet = 0;
     int remaining = len;
     if(pMem != 0){
@@ -130,7 +130,7 @@ s32 tolower(char ch)
     return ch;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", _memchr);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", memchr);
 
 void putchar(char ch) {
     if (ch != 0x9) {
@@ -156,7 +156,7 @@ void putchar(char ch) {
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc", sprintf);
 
-void* _memmove(u_char* pDst, u_char* pSrc, int size) {
+void* memmove(u_char* pDst, u_char* pSrc, int size) {
     if (pDst >= pSrc) {
         while (size-- > 0) {
             pDst[size] = pSrc[size];

@@ -235,7 +235,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017AE0);
 
 void func_80017CA0(void)
 {
-    _memset(&D_800A5398, 0, 0x178);
+    memset(&D_800A5398, 0, 0x178);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80017CCC);
@@ -264,19 +264,19 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800180C4);
 
 void func_800180F0(void)
 {
-    _memset(&D_800B00F8, 0, 0x16C);
+    memset(&D_800B00F8, 0, 0x16C);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001811C);
 
 void func_800181F0(void)
 {
-    _memset(&D_800B0770, 0, 0x68);
+    memset(&D_800B0770, 0, 0x68);
 }
 
 void func_8001821C(void)
 {
-    _memset(&D_800A3940, 0, 0x70);
+    memset(&D_800A3940, 0, 0x70);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80018248);
@@ -1243,7 +1243,7 @@ void LZDecompress(byte *src, byte *dest)
             u8 off, len;
             off = *src++;
             len = *src++;
-            _bcopy(dest - off, dest, len);
+            bcopy(dest - off, dest, len);
             dest += len;
             LZ_FILE_CTRL->offset += len;
         }

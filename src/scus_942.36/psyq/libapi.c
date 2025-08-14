@@ -53,7 +53,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B668);
     BIOS_STUB(firstfile, 0xB0, 0x42);
 #endif
 
-u8* _bcopy(u8* arg0, u8* arg1, s32 arg2)
+u8* bcopy(u8* arg0, u8* arg1, s32 arg2)
 {
     s32 var_a2;
     u8 temp_v0;
@@ -82,7 +82,7 @@ u8* _bcopy(u8* arg0, u8* arg1, s32 arg2)
     return var_v0;
 }
 
-s8* _bzero(s8* arg0, s32 arg1)
+s8* bzero(s8* arg0, s32 arg1)
 {
     s32 var_a1;
     s8* var_a0;

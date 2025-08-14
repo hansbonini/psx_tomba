@@ -635,7 +635,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
 
-void * memset(s8* ptr, int value, s32 num) {
+void * GPU_memset(s8* ptr, int value, s32 num) {
     s32 i;
 
     for (i = num - 1; i != -1; i--) {
