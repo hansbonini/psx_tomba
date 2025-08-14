@@ -569,6 +569,7 @@ SetGeomOffset=0x80063a34;
 SetGeomScreen=0x80063a54;
 VSync=0x80067C30;
 ResetCallback=0x80067E24;
+DMACallback=0x80067E84;
 SetIntrMask=0x80067FA0;
 // bss
 GPU_DATA=0x80090D6C;

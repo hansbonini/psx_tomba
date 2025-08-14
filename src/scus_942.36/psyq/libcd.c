@@ -134,7 +134,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", ResetCallback);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", func_80067E54);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", func_80067E84);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", DMACallback);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", func_80067EB4);
 
