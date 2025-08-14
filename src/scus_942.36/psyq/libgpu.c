@@ -41,6 +41,7 @@ extern char* D_80015BFC; // ResetGraph text
 extern char* D_80015C10; // SetGraphReverse text
 extern char* D_80015C28; // SetGraphDebug text
 extern char* D_80015C54; // SetGraphQueue text
+extern char* D_80015C68; // DrawSyncCallback text
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -48,6 +49,7 @@ extern u8 D_80090C9E;
 extern s32 D_80090C9F;
 extern s16 D_80090CA0;
 extern s16 D_80090CA2;
+extern void* D_80090CA8;
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -521,7 +523,17 @@ s32 GetGraphDebug(void)
     return (s32) D_80090C9E;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSyncCallback);
+u_long DrawSyncCallback(void (*func)())
+{
+    void (*temp_v0)();
+
+    if ((u8) D_80090C9E >= 2U) {
+        GPU_printf(&D_80015C68, func);
+    }
+    temp_v0 = D_80090CA8;
+    D_80090CA8 = func;
+    return (u32) temp_v0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
 
