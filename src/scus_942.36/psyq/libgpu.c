@@ -51,6 +51,9 @@ extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
 extern volatile s32* DMA1_BCR;
 extern volatile s32* DMA1_CHCR;
+extern volatile s32* DMA2_CHCR;
+extern volatile s32* DMA2_MADR;
+extern volatile s32* DPCR;
 extern s32 D_8009B148;
 extern s32 D_8009B14C;
 extern s32 D_8009B150;
@@ -72,6 +75,7 @@ extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
 extern s32 D_80090D1C;
 extern s32 D_80090D30;
+extern s32* D_80090D84;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
 
@@ -565,7 +569,32 @@ s32 _status(void)
     return *GPU_STATUS;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _otc);
+s32 _otc(s32 arg0, s32 arg1)
+{
+    s32 temp;
+
+    *DPCR |= 0x08000000;
+    *DMA2_CHCR = 0;
+    temp = arg0 - 4 + arg1 * 4;
+    *DMA2_MADR = temp;
+    *D_80090D84 = arg1;
+    *DMA2_CHCR = 0x11000002;
+    set_alarm();
+    if (*DMA2_CHCR & 0x01000000) {
+       while(1)
+        {
+            if (get_alarm()) {
+                return -1;
+            }
+            else {
+                if (!(*DMA2_CHCR & 0x01000000)) {      
+                    break;
+                }
+            }
+        }
+    }
+    return arg1;
+}
 
 s32 _clr(RECT* rect, u32 color)
 {
