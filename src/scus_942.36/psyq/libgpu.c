@@ -5,6 +5,7 @@
 
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
 #define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
+#define CLAMP(a, b, c) (a >= b ? (a > c ? c : a) : b)
 
 typedef struct {
     /* 0x00 */ u32 unk00;                       // aIdSysCV1831995
@@ -787,7 +788,57 @@ s32 _clr(RECT* rect, u32 color)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _dws);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _drs);
+s32 _drs(RECT* arg0, s32* arg1) {
+    s32 temp_a0;
+    s32 size;
+    s32 var_s0;
+    s32* img_ptr;
+    s16 var_a0, var_a02;
+    s32 var_s4;
+
+    img_ptr = arg1;
+    set_alarm();
+
+    arg0->w = CLAMP(arg0->w, 0, D_80090CA0);
+    arg0->h = CLAMP(arg0->h, 0, D_80090CA2);
+    
+    temp_a0 = ((arg0->w * arg0->h) + 1) / 2;
+    if (temp_a0 <= 0) {
+        return -1;
+    }
+    var_s0 = temp_a0 % 16;
+    size = temp_a0 / 16;
+    while (!(*GPU_STATUS & 0x04000000)) {
+        if (get_alarm()) {
+            return -1;
+        }
+    }
+
+    *GPU_STATUS = 0x04000000;
+    *GPU_DATA = 0x01000000;
+    *GPU_DATA = 0xC0000000;
+    *GPU_DATA = *(s32*)&arg0->x;
+    *GPU_DATA = *(s32*)&arg0->w;
+
+    while (!(*GPU_STATUS & 0x08000000)) {
+        if (get_alarm()) {
+            return -1;
+        }
+    }
+
+    while (--var_s0 != -1) {
+        *img_ptr++ = *GPU_DATA;
+    }
+
+    if (size != 0) {
+        *GPU_STATUS = 0x04000003;
+        *DMA1_MADR = img_ptr;
+        *DMA1_BCR = (size << 0x10) | 0x10;
+        *DMA1_CHCR = 0x01000200;
+    }
+
+    return 0;
+}
 
 void _ctl(s32 arg0)
 {
