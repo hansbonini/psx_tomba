@@ -786,7 +786,56 @@ s32 _clr(RECT* rect, u32 color)
     return 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _dws);
+s32 _dws(RECT* arg0, s32* arg1) {
+    s32 temp_a0;
+    s32 size;
+    s32 var_s0;
+    s32* img_ptr;
+    s32 var_s4;
+
+    img_ptr = arg1;
+    set_alarm();
+    var_s4 = 0;
+
+    arg0->w = CLAMP(arg0->w, 0, D_80090CA0);
+    arg0->h = CLAMP(arg0->h, 0, D_80090CA2);
+    
+    temp_a0 = ((arg0->w * arg0->h) + 1) / 2;
+    if (temp_a0 <= 0) {
+        return -1;
+    }
+    
+    var_s0 = temp_a0 % 16;
+    size = temp_a0 / 16;
+    if (!(*GPU_STATUS & 0x04000000)) {
+        while (1) {
+            if (get_alarm()) {
+                return -1;
+            } else if (*GPU_STATUS & 0x04000000) {
+                break;
+            }
+        }
+    }
+
+    *GPU_STATUS = 0x04000000;
+    *GPU_DATA = 0x01000000;
+    *GPU_DATA = var_s4 ? 0xB0000000 : 0xA0000000;
+    *GPU_DATA = *(s32*)(&arg0->x);
+    *GPU_DATA = *(s32*)(&arg0->w);
+
+    for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
+        *GPU_DATA = *img_ptr++;
+    }
+
+    if (size != 0) {
+        *GPU_STATUS = 0x04000002;
+        *DMA1_MADR = img_ptr;
+        *DMA1_BCR = (size << 0x10) | 0x10;
+        *DMA1_CHCR = 0x01000201;
+    }
+
+    return 0;
+}
 
 s32 _drs(RECT* arg0, s32* arg1) {
     s32 temp_a0;
