@@ -1046,7 +1046,41 @@ int OpenTMD(u_long* tmd, int obj_no)
     return D_8009B2A0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTMD);
+TMD_PRIM* ReadTMD(TMD_PRIM* tmdprim)
+{
+    s32 packet;
+    packet = unpack_packet((u8* ) D_8009B29C, tmdprim);
+    if (packet < 0) return 0;
+    
+    D_8009B29C += packet;
+    tmdprim->v_ofs = (SVECTOR*)(D_8009B294);
+    tmdprim->n_ofs = (SVECTOR*)(D_8009B298);
+    tmdprim->n0.vx = (*(SVECTOR *)((tmdprim->norm0 * 8) + D_8009B298)).vx;
+    tmdprim->n0.vy = (*(SVECTOR *)((tmdprim->norm0 * 8) + D_8009B298)).vy;
+    tmdprim->n0.vz = (*(SVECTOR *)((tmdprim->norm0 * 8) + D_8009B298)).vz;
+    tmdprim->n1.vx = (*(SVECTOR *)((tmdprim->norm1 * 8) + D_8009B298)).vx;
+    tmdprim->n1.vy = (*(SVECTOR *)((tmdprim->norm1 * 8) + D_8009B298)).vy;
+    tmdprim->n1.vz = (*(SVECTOR *)((tmdprim->norm1 * 8) + D_8009B298)).vz;
+    tmdprim->n2.vx = (*(SVECTOR *)((tmdprim->norm2 * 8) + D_8009B298)).vx;
+    tmdprim->n2.vy = (*(SVECTOR *)((tmdprim->norm2 * 8) + D_8009B298)).vy;
+    tmdprim->n2.vz = (*(SVECTOR *)((tmdprim->norm2 * 8) + D_8009B298)).vz;
+    tmdprim->n3.vx = (*(SVECTOR *)((tmdprim->norm3 * 8) + D_8009B298)).vx;
+    tmdprim->n3.vy = (*(SVECTOR *)((tmdprim->norm3 * 8) + D_8009B298)).vy;
+    tmdprim->n3.vz = (*(SVECTOR *)((tmdprim->norm3 * 8) + D_8009B298)).vz;
+    tmdprim->x0.vx = (*(SVECTOR *)((tmdprim->vert0 * 8) + D_8009B294)).vx;
+    tmdprim->x0.vy = (*(SVECTOR *)((tmdprim->vert0 * 8) + D_8009B294)).vy;
+    tmdprim->x0.vz = (*(SVECTOR *)((tmdprim->vert0 * 8) + D_8009B294)).vz;
+    tmdprim->x1.vx = (*(SVECTOR *)((tmdprim->vert1 * 8) + D_8009B294)).vx;
+    tmdprim->x1.vy = (*(SVECTOR *)((tmdprim->vert1 * 8) + D_8009B294)).vy;
+    tmdprim->x1.vz = (*(SVECTOR *)((tmdprim->vert1 * 8) + D_8009B294)).vz;
+    tmdprim->x2.vx = (*(SVECTOR *)((tmdprim->vert2 * 8) + D_8009B294)).vx;
+    tmdprim->x2.vy = (*(SVECTOR *)((tmdprim->vert2 * 8) + D_8009B294)).vy;
+    tmdprim->x2.vz = (*(SVECTOR *)((tmdprim->vert2 * 8) + D_8009B294)).vz;
+    tmdprim->x3.vx = (*(SVECTOR *)((tmdprim->vert3 * 8) + D_8009B294)).vx;
+    tmdprim->x3.vy = (*(SVECTOR *)((tmdprim->vert3 * 8) + D_8009B294)).vy;
+    tmdprim->x3.vz = (*(SVECTOR *)((tmdprim->vert3 * 8) + D_8009B294)).vz;
+    return tmdprim;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tim_addr);
 
