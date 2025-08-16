@@ -51,6 +51,8 @@ extern char* D_80015CCC; // checkRECT text
 extern char* D_80015CD0; // ClearImage text
 extern char* D_80015CDC; // LoadImage text
 extern char* D_80015CE8; // StoreImage text
+extern char* D_80090DA0; // _sync text
+extern char* D_80090DA4; // _sync text
 extern char* D_80015E88; // unpack_packet text
 extern char* D_80015E90; // unpack_packet text
 extern char* D_80015E98; // unpack_packet text
@@ -958,7 +960,39 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _exeque);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _reset);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _sync);
+s32 _sync(s32 arg0)
+{
+    s32 temp_s0;
+
+    if (!arg0) {
+        set_alarm();
+        while (*(s32*)(&D_80090DA0) != *(s32*)(&D_80090DA4)) {
+            _exeque();
+            if (get_alarm()) return -1;
+        }
+        
+        while ((*DMA1_CHCR & 0x01000000) || !(*GPU_STATUS & 0x04000000)) {
+            if (get_alarm()) return -1;
+        }
+
+        return 0;
+    }
+    
+    temp_s0 = (D_80090DA0 - D_80090DA4) & 0x3F;
+    if (temp_s0) {
+        _exeque();
+    }
+    
+    if ((*DMA1_CHCR & 0x01000000) || !(*GPU_STATUS & 0x04000000)) {
+        if (!temp_s0) {
+            return 1;
+        } else {
+            return temp_s0;
+        }
+    }
+    
+    return temp_s0;
+}
 
 void set_alarm(void)
 {
