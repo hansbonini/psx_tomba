@@ -1266,7 +1266,11 @@ void LZDecompress(byte *src, byte *dest)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003F0DC);
+void func_8003F0DC(s8* src, s8* dst, s8* len)
+{
+    bzero(dst, len);
+    LZDecompress(src, dst);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8003F124);
 
