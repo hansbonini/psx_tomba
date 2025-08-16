@@ -1031,7 +1031,17 @@ int OpenTIM(u_long* addr)
     return 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTIM);
+TIM_IMAGE* ReadTIM(TIM_IMAGE* timimg)
+{
+    s32 temp_v0;
+
+    temp_v0 = get_tim_addr(D_8009B290, timimg);
+    if (temp_v0 == -1) {
+        return 0;
+    }
+    D_8009B290 = &D_8009B290[temp_v0];
+    return timimg;
+}
 
 int OpenTMD(u_long* tmd, int obj_no)
 {
