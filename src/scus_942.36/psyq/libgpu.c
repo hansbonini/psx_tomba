@@ -54,6 +54,11 @@ extern char* D_80015CDC; // LoadImage text
 extern char* D_80015CE8; // StoreImage text
 extern char* D_80090DA0; // _sync text
 extern char* D_80090DA4; // _sync text
+extern char* D_80015E04; // get_tmd_addr text
+extern char* D_80015E18; // get_tmd_addr text
+extern char* D_80015E40; // get_tmd_addr text
+extern char* D_80015E58; // get_tmd_addr text
+extern char* D_80015E70; // get_tmd_addr text
 extern char* D_80015E88; // unpack_packet text
 extern char* D_80015E90; // unpack_packet text
 extern char* D_80015E98; // unpack_packet text
@@ -1045,7 +1050,36 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTMD);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tim_addr);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tmd_addr);
+s32 get_tmd_addr(s32* arg0, s32 arg1, s32* arg2, s32* arg3, s32* arg4) {
+    s32 temp_s2;
+    s32* temp_v0;
+    s32* temp_v1;
+
+    temp_s2 = arg0 + 0x3;
+    if (GetGraphDebug() == 2) {
+        printf(&D_80015E04);
+    }
+    if (GetGraphDebug() == 2) {
+        printf(&D_80015E18, *(s32*)(arg0), *(s32*)(arg0+0x1), *(s32*)(arg0+0x2), arg1);
+    }
+    if (GetGraphDebug() == 2) {
+        temp_v0 = (arg1 * 0x1C) + temp_s2;
+        printf(&D_80015E40, *(s32*)(temp_v0), *(s32*)(temp_v0+0x1));
+    }
+    if (GetGraphDebug() == 2) {
+        temp_v0 = (arg1 * 0x1C) + temp_s2;
+        printf(&D_80015E58, *(s32*)(temp_v0+0x2), *(s32*)(temp_v0+0x3));
+    }
+    if (GetGraphDebug() == 2) {
+        temp_v0 = (arg1 * 0x1C) + temp_s2;
+        printf(&D_80015E70, *(s32*)(temp_v0+0x4), *(s32*)(temp_v0+0x5));
+    }
+    temp_v1 = (((arg1 * 8) - arg1) * 4) + temp_s2;
+    *arg3 = temp_s2 + *(s32*)(temp_v1);
+    *arg4 = temp_s2 + *(s32*)(temp_v1+0x2);
+    *arg2 = temp_s2 + *(s32*)(temp_v1+0x4);
+    return *(s32*)(temp_v1+0x5);
+}
 
 s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
     s32 temp_v0;
