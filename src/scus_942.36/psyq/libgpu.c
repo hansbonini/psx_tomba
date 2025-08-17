@@ -58,8 +58,8 @@ extern char* D_80015CCC; // checkRECT text
 extern char* D_80015CD0; // ClearImage text
 extern char* D_80015CDC; // LoadImage text
 extern char* D_80015CE8; // StoreImage text
-extern char* D_80090DA0; // _sync text
-extern char* D_80090DA4; // _sync text
+extern char* D_80015CF4; // MoveImage text
+extern char* D_80015D78; // PutDispEnv text
 extern char* D_80015E04; // get_tmd_addr text
 extern char* D_80015E18; // get_tmd_addr text
 extern char* D_80015E40; // get_tmd_addr text
@@ -92,8 +92,18 @@ extern s32 D_80090C9F;
 extern s16 D_80090CA0;
 extern s16 D_80090CA2;
 extern void* D_80090CA8;
+extern DISPENV TEMP_DISPENV; // size: 0x10
+// extern u16 D_80090D0A;
+// extern u16 D_80090D0C;
+// extern u16 D_80090D0E;
+// extern u16 D_80090D10;
+// extern u16 D_80090D12;
+// extern u16 D_80090D14;
+// extern u16 D_80090D16;
+// extern s32 D_80090D18;
 extern s32 D_80090D1C;
 extern s32 D_80090D30;
+extern u32 D_80090D4C[];
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -103,6 +113,8 @@ extern volatile s32* DMA2_CHCR;
 extern volatile s32* DMA2_MADR;
 extern volatile s32* DMA2_BCR;
 extern volatile s32* DPCR;
+extern s8* D_80090DA0;
+extern s8* D_80090DA4;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
 extern s32 D_8009B148;
@@ -653,7 +665,17 @@ int StoreImage(RECT* rect, u_long* p)
     return D_80090C94->addque2(D_80090C94->drs, rect, 8, p);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MoveImage);
+s32 MoveImage(RECT* rect, s32 x, s32 y)
+{
+    checkRECT(&D_80015CF4, rect);
+    if (rect->w == 0 || rect->h == 0) {
+        return -1;
+    }
+    D_80090D4C[0] = LOW(rect->x);
+    D_80090D4C[1] = ((u16)y << 0x10) | ((u16)x);
+    D_80090D4C[2] = LOW(rect->w);
+    return D_80090C94->addque2(D_80090C94->cwc, D_80090D4C-2, sizeof(DISPENV), 0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
 
