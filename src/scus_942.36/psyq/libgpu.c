@@ -7,6 +7,12 @@
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
 #define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
 #define CLAMP(a, b, c) (a >= b ? (a > c ? c : a) : b)
+#define CMPRECT(r1, r2)  (\
+    ((volatile RECT*)r1)->x == r2.x && \
+    ((volatile RECT*)r1)->y == r2.y && \
+    ((volatile RECT*)r1)->w == r2.w && \
+    ((volatile RECT*)r1)->h == r2.h\
+)
 
 typedef struct {
     /* 0x00 */ u32 unk00;                       // aIdSysCV1831995
@@ -77,6 +83,7 @@ extern char* D_80015EE8; // unpack_packet text
 extern char* D_80015EF0; // unpack_packet text
 extern char* D_80015EF8; // unpack_packet text
 
+extern s32 D_80090C54;
 extern gpu* D_80090C94;
 extern s32 D_80090C9C;
 extern s8 D_80090C9D;
@@ -85,6 +92,8 @@ extern s32 D_80090C9F;
 extern s16 D_80090CA0;
 extern s16 D_80090CA2;
 extern void* D_80090CA8;
+extern s32 D_80090D1C;
+extern s32 D_80090D30;
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -92,7 +101,10 @@ extern volatile s32* DMA1_BCR;
 extern volatile s32* DMA1_CHCR;
 extern volatile s32* DMA2_CHCR;
 extern volatile s32* DMA2_MADR;
+extern volatile s32* DMA2_BCR;
 extern volatile s32* DPCR;
+extern s32 D_80090DB4;
+extern s32 D_80090DB8;
 extern s32 D_8009B148;
 extern s32 D_8009B14C;
 extern s32 D_8009B150;
@@ -112,12 +124,6 @@ extern s32 D_8009B294;
 extern s32 D_8009B298;
 extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
-extern s32 D_80090D1C;
-extern s32 D_80090D30;
-extern s32* D_80090D84;
-extern s32 D_80090DB4;
-extern s32 D_80090DB8;
-extern s32 D_80090C54;
 
 u16 LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h)
 {
@@ -735,7 +741,7 @@ s32 _otc(s32 arg0, s32 arg1)
     *DMA2_CHCR = 0;
     temp = arg0 - 4 + arg1 * 4;
     *DMA2_MADR = temp;
-    *D_80090D84 = arg1;
+    *DMA2_BCR = arg1;
     *DMA2_CHCR = 0x11000002;
     set_alarm();
     if (*DMA2_CHCR & 0x01000000) {
