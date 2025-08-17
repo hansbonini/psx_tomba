@@ -62,6 +62,7 @@ extern char* D_80015CE8; // StoreImage text
 extern char* D_80015CF4; // MoveImage text
 extern char* D_80015D00; // ClearOTag text
 extern char* D_80015D18; // ClearOTagR text 
+extern char* D_80015D30; // DrawOTag text
 extern char* D_80015D78; // PutDispEnv text
 extern char* D_80015E04; // get_tmd_addr text
 extern char* D_80015E18; // get_tmd_addr text
@@ -709,9 +710,22 @@ OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
     return ot;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawPrim);
+void DrawPrim(void* p)
+{
+    u8 plen;
+    
+    plen = ((P_TAG*)(p))->len;
+    D_80090C94->sync(0);
+    D_80090C94->cwb(p + 4, (s32) plen);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTag);
+void DrawOTag(u_long* p)
+{
+    if ((u8) D_80090C9E >= 2U) {
+        GPU_printf(&D_80015D30, p);
+    }
+    D_80090C94->addque2(D_80090C94->cwc, p, 0, 0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDrawEnv);
 
