@@ -4,6 +4,7 @@
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
 
+#define OT_TYPE u_long
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
 #define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
 #define CLAMP(a, b, c) (a >= b ? (a > c ? c : a) : b)
@@ -59,6 +60,7 @@ extern char* D_80015CD0; // ClearImage text
 extern char* D_80015CDC; // LoadImage text
 extern char* D_80015CE8; // StoreImage text
 extern char* D_80015CF4; // MoveImage text
+extern char* D_80015D00; // ClearOTag text
 extern char* D_80015D78; // PutDispEnv text
 extern char* D_80015E04; // get_tmd_addr text
 extern char* D_80015E18; // get_tmd_addr text
@@ -104,6 +106,7 @@ extern DISPENV TEMP_DISPENV; // size: 0x10
 extern s32 D_80090D1C;
 extern s32 D_80090D30;
 extern u32 D_80090D4C[];
+extern s32 D_80090D58;
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -677,7 +680,22 @@ s32 MoveImage(RECT* rect, s32 x, s32 y)
     return D_80090C94->addque2(D_80090C94->cwc, D_80090D4C-2, sizeof(DISPENV), 0);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
+OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
+    if (D_80090C9E >= 2) {
+        GPU_printf(&D_80015D00, ot, n);
+    }
+
+    n--;
+    while (n) {
+        setlen(ot, 0);
+        setaddr(ot, ot + 1);
+        n--;
+        ot++;
+    }
+
+    *ot = (s32) &D_80090D58 & 0xFFFFFF;
+    return ot;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTagR);
 
