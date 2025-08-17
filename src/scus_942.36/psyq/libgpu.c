@@ -61,6 +61,7 @@ extern char* D_80015CDC; // LoadImage text
 extern char* D_80015CE8; // StoreImage text
 extern char* D_80015CF4; // MoveImage text
 extern char* D_80015D00; // ClearOTag text
+extern char* D_80015D18; // ClearOTagR text 
 extern char* D_80015D78; // PutDispEnv text
 extern char* D_80015E04; // get_tmd_addr text
 extern char* D_80015E18; // get_tmd_addr text
@@ -697,7 +698,16 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     return ot;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTagR);
+OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
+{
+    if (D_80090C9E >= 2) {
+        GPU_printf(&D_80015D18, ot, n);
+    }
+
+    D_80090C94->otc(ot, n);
+    *ot = (s32) &D_80090D58 & 0xFFFFFF;
+    return ot;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawPrim);
 
