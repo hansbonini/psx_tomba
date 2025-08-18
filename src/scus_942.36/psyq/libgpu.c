@@ -761,7 +761,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDispEnv);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetODE);
+s32 GetODE(void)
+{
+    return (s32) (D_80090C94->status() >> 0x1F);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTexWindow);
 
