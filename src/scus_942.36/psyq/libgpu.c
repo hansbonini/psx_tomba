@@ -71,6 +71,9 @@ extern char* D_80015D30; // DrawOTag text
 extern char* D_80015D44; // PutDrawEnv text
 extern char* D_80015D5C; // DrawOTagEnv text
 extern char* D_80015D78; // PutDispEnv text
+extern char* D_80015DDC; // get_tim_addr text
+extern char* D_80015DE8; // get_tim_addr text
+extern char* D_80015DF4; // get_tim_addr text
 extern char* D_80015E04; // get_tmd_addr text
 extern char* D_80015E18; // get_tmd_addr text
 extern char* D_80015E40; // get_tmd_addr text
@@ -1269,7 +1272,37 @@ TMD_PRIM* ReadTMD(TMD_PRIM* tmdprim)
     return tmdprim;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tim_addr);
+s32 get_tim_addr(u32* timaddr, TIM_IMAGE* img) {
+    unsigned int clut_len;
+    unsigned int img_len;
+    if (*(int*)timaddr++ != 0x10) {
+        return -1;
+    }
+    img->mode = *timaddr++;
+    if (GetGraphDebug() == 2) {
+        printf(&D_80015DDC, 0x10);
+    }
+    if (GetGraphDebug() == 2) {
+        printf(&D_80015DE8, img->mode);
+    }
+    if (GetGraphDebug() == 2) {
+        printf(&D_80015DF4, timaddr);
+    }
+    if (img->mode & 8) {
+        clut_len = *timaddr >> 2;
+        img->crect = (RECT*)(timaddr + 1);
+        img->caddr = (u_long*)(timaddr + 3);
+        timaddr = &timaddr[clut_len];
+    } else {
+        img->crect = NULL;
+        img->caddr = NULL;
+        clut_len = 0;
+    }
+    img_len = *timaddr >> 2;
+    img->prect = (RECT*)(timaddr + 1);
+    img->paddr = (u_long*)(timaddr + 3);
+    return 2 + clut_len + img_len;
+}
 
 s32 get_tmd_addr(s32* arg0, s32 arg1, s32* arg2, s32* arg3, s32* arg4) {
     s32 temp_s2;
