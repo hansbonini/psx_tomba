@@ -130,6 +130,7 @@ extern volatile s32* DMA2_BCR;
 extern volatile s32* DPCR;
 extern s8* D_80090DA0;
 extern s8* D_80090DA4;
+extern s32 D_80090DB0;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
 extern s32 D_8009B148;
@@ -151,6 +152,7 @@ extern s32 D_8009B294;
 extern s32 D_8009B298;
 extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
+extern s8 D_8009FD88;
 
 u16 LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h)
 {
@@ -1125,7 +1127,35 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque2);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _exeque);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _reset);
+s32 _reset(s32 mode)
+{
+    u_long** queue = &D_80090DA4;
+    D_80090DB0 = SetIntrMask(0);
+    LOW(D_80090DA4) = NULL;
+    D_80090DA0 = D_80090DA4;
+    switch (mode & 7) {
+    case 0:
+    case 5:
+        // complete reset, re-initialize draw and disp environments
+        *DMA1_CHCR = 0x401;
+        *DPCR |= 0x800;
+        *GPU_STATUS = 0;
+        GPU_memset((s8* )(D_8009B18C), 0, 0x100);
+        GPU_memset(&D_8009FD88, 0, 0x1800);
+        break;
+    case 1:
+    case 3:
+        // cancels the current drawing and flushes the command buffer
+        // preserves the current draw and disp environments
+        *DMA1_CHCR = 0x401;
+        *DPCR |= 0x800;
+        *GPU_STATUS = 0x02000000;
+        *GPU_STATUS = 0x01000000;
+        break;
+    }
+    SetIntrMask(D_80090DB0);
+    return !(mode & 7) ? _version(mode) : 0;
+}
 
 s32 _sync(s32 arg0)
 {
