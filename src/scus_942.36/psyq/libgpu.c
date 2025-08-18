@@ -802,7 +802,12 @@ void SetPriority(DR_PRIO* p, int pbc, int pbw) {
     p->code[1] = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMode);
+void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw)
+{
+    setlen(p, 2);
+    p->code[0] = get_mode(dfe, dtd, tpage & 0xFFFF);
+    p->code[1] = get_tw(tw);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv);
 
