@@ -766,7 +766,12 @@ s32 GetODE(void)
     return (s32) (D_80090C94->status() >> 0x1F);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTexWindow);
+void SetTexWindow(DR_TWIN* p, RECT* tw)
+{
+    setlen(p, 2);
+    p->code[0] = get_tw(tw);
+    p->code[1] = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawArea);
 
