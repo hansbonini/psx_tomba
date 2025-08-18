@@ -817,7 +817,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_mode);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_cs);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ce);
+s32 get_ce(s16 x, s16 y)
+{
+    x = CLAMP(x, 0, D_80090CA0 - 1);
+    y = CLAMP(y, 0, D_80090CA2 - 1);
+    
+    if (*(u8*)(&D_80090C9C)-1 <= 1U) {
+        return 0xE4000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
+    } else {
+        return 0xE4000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
+    }
+}
 
 u32 get_ofs(s32 arg0, s16 arg1) {
     
