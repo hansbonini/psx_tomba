@@ -773,9 +773,18 @@ void SetTexWindow(DR_TWIN* p, RECT* tw)
     p->code[1] = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawArea);
+void SetDrawArea(DR_AREA* p, RECT* r)
+{
+    setlen(p, 2);
+    p->code[0] = get_cs(r->x, r->y);
+    p->code[1] = get_ce((s16) (((u16) r->x + (u16) r->w) - 1), (s16) (((u16) r->y + (u16) r->h) - 1));
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawOffset);
+void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
+    setlen(p, 2);
+    p->code[0] = get_ofs((s16)ofs[0], (s16)ofs[1]);
+    p->code[1] = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPriority);
 
@@ -791,7 +800,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_cs);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ce);
 
-u32 get_ofs(s32 arg0, u16 arg1) {
+u32 get_ofs(s32 arg0, s16 arg1) {
     
     if (!(1U < (u8)D_80090C9C - 1U)) {
         return 0xe5000000 | ((arg1 & 0xfff) << 0xC) | arg0 & 0xfFF;
