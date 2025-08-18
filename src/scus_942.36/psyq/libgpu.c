@@ -813,7 +813,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv2);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_mode);
+s32 get_mode(s32 dfe, s32 dtd, u16 tpage)
+{
+    if (*(u8*)(&D_80090C9C)-1 <= 1U) {
+        return (dtd ? 0xE1000800 : 0xE1000000) | (dfe ? 0x1000 : 0) |
+               (tpage & 0x27FF);
+    } else {
+        return (dtd ? 0xE1000200 : 0xE1000000) | (dfe ? 0x400 : 0) |
+               (tpage & 0x9FF);
+    }
+}
 
 s32 get_cs(s16 x, s16 y)
 {
