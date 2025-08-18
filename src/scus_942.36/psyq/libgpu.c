@@ -34,6 +34,11 @@ typedef struct {
     /* 0x3C */ void (*sync)(int);               // _sync
 } gpu;                                          // size = 0x40
 
+typedef struct {
+    u_long tag;
+    u_long code[2];
+} DR_PRIO;
+
 extern char* D_80015AD8; // DumpTPage text
 extern char* D_80015AF0; // DumpClut text
 extern char* D_80015B00; // DumpDrawEnv text
@@ -786,7 +791,16 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     p->code[1] = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPriority);
+void SetPriority(DR_PRIO* p, int pbc, int pbw) {
+    int data;
+    setlen(p, 2);
+    data = 0xE6000000;
+    if (pbc) {
+        data = 0xE6000002;
+    }
+    p->code[0] = data | (pbw != 0);
+    p->code[1] = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMode);
 
