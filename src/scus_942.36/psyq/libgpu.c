@@ -1121,7 +1121,9 @@ s32 _param(s32 arg0)
     return *GPU_DATA & 0xFFFFFF;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque);
+void _addque(int arg0, int arg1, int arg2) {
+    _addque2(arg0, arg1, 0, arg2);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque2);
 
