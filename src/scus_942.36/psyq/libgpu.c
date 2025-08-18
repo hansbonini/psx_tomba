@@ -1166,7 +1166,26 @@ void set_alarm(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
+int _version(int mode) {
+    *GPU_STATUS = 0x10000007;
+    if ((*GPU_DATA & 0xFFFFFF) != 2) { // check for GPUv2
+        *GPU_DATA = 0xE1001000 | (*GPU_STATUS & 0x3FFF);
+        *GPU_DATA;
+        if (!(*GPU_STATUS & 0x1000)) {
+            return 0;
+        }
+        if (!(mode & 8)) {
+            return 1;
+        }
+        *GPU_STATUS = 0x20000504;
+        return 2;
+    } else if (!(mode & 8)) {
+        return 3;
+    } else {
+        *GPU_STATUS = 0x09000001;
+        return 4;
+    }
+}
 
 void * GPU_memset(s8* ptr, int value, s32 num) {
     s32 i;
