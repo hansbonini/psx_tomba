@@ -3,7 +3,6 @@
 #include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
-#include "psyq/memory.h"
 
 #define OT_TYPE u_long
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
@@ -807,11 +806,83 @@ void DrawOTagEnv(u_long* p, DRAWENV* env)
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDrawEnv);
 DRAWENV* GetDrawEnv(DRAWENV* env) {
-    _memcpy(env, &D_80090C9C.draw, sizeof(DRAWENV));
+    memcpy(env, &D_80090C9C.draw, sizeof(DRAWENV));
     return env;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDispEnv);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDispEnv);
+DISPENV* PutDispEnv(DISPENV* env)
+{
+    s32 h_start;
+    s32 v_start;
+    s32 h_end;
+    s32 v_end;
+    s32 mode;
+
+    mode = 0x08000000;
+    if (D_80090C9C.level >= 2) {
+        GPU_printf(&D_80015D78, env);
+    }
+    D_80090C94->ctl(
+        (
+            D_80090C9C.version == 1 || D_80090C9C.version == 2 ? (
+            (
+                (env->disp.y & 0xFFF) << 0xC) |
+                (get_dx(env) & 0xFFF) | 0x05000000
+            ) : (
+                ((env->disp.y & 0x3FF) << 0xA) |
+                (env->disp.x & 0x3FF) | 0x05000000
+            )
+        )
+    );
+    
+    if (!CMPRECT(&D_80090C9C.disp.screen, env->screen)){
+        env->pad0 = GetVideoMode();
+        h_start = (env->screen.x * 0xA) + 0x260;
+        v_start = env->screen.y + ((env->pad0 & 0xFF) ? 0x13 : 0x10);
+        h_end = h_start + (env->screen.w ? env->screen.w * 0xA : 0xA00);  
+        v_end = v_start + (env->screen.h ? env->screen.h : 0xF0);
+        h_start = CLAMP(h_start, 0x1F4, 0xCDA);
+        h_end = CLAMP(h_end, h_start + 0x50, 0xCDA);
+        v_start = CLAMP(v_start, 0x10, (env->pad0 ? 0x136 : 0x100));
+        v_end = CLAMP(v_end, v_start + 2, (env->pad0 ? 0x138 : 0x102));
+        D_80090C94->ctl((0x06000000 | (h_end & 0xFFF) << 0xC) | ((h_start & 0xFFF)));
+        D_80090C94->ctl((0x07000000 | (v_end & 0x3FF) << 0xA) | ((v_start & 0x3FF)));
+    }
+    if ((LOWU(D_80090C9C.disp.isinter) != LOWU(env->isinter)) || !CMPRECT(&D_80090C9C.disp, env->disp)) {
+        env->pad0 = GetVideoMode();
+        if (env->pad0 == 1) {
+            mode |= 0x8;
+        }
+        if (env->isrgb24 != 0) {
+            mode |= 0x10;
+        }
+        if (env->isinter != 0) {
+            mode |= 0x20;
+        }
+        if (D_80090C9C.reverse != 0) {
+            mode |= 0x80;
+        }
+        if (env->disp.w >= 0x119) {
+            if (env->disp.w < 0x161) {
+                mode |= 1;
+            } else if (env->disp.w < 0x191) {
+                mode |= 0x40;
+            } else if (env->disp.w < 0x231) {
+                mode |= 2;
+            } else {
+                mode |= 3;
+            }
+        }
+        if (env->disp.h <= (env->pad0 ? 0x120 : 0x100)) {
+        } else {        
+            mode |= 0x24;
+        }
+        D_80090C94->ctl(mode);
+    }
+    memcpy((u8*)&D_80090C9C.disp, (u8*)env, sizeof(DISPENV));
+    return env;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
 

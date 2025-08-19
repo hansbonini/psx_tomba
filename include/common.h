@@ -27,3 +27,5 @@
     typedef char static_assertion_sizeof_##type[(sizeof(type) == (size)) ? 1 : -1]
 
 #endif
+
+u8* memcpy(u8* arg0, u8* arg1, s32 arg2);
