@@ -884,7 +884,12 @@ DISPENV* PutDispEnv(DISPENV* env)
     return env;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
+DISPENV* GetDispEnv(DISPENV* env)
+{
+    memcpy((u8* )env, (u8*)&D_80090C9C.disp, sizeof(DISPENV));
+    return env;
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetODE);
 int GetODE(void)
