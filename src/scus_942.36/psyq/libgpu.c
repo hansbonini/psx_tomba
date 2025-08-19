@@ -3,6 +3,7 @@
 #include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 #include "psyq/libgs.h"
+#include "psyq/memory.h"
 
 #define OT_TYPE u_long
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
@@ -804,11 +805,11 @@ void DrawOTagEnv(u_long* p, DRAWENV* env)
     *(DRAWENV*)(&D_80090C9C.draw) = *env;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDrawEnv);
-// DRAWENV* GetDrawEnv(DRAWENV* env) {
-//     memcpy(env, &D_80090C9C.draw, sizeof(DRAWENV));
-//     return env;
-// }
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDrawEnv);
+DRAWENV* GetDrawEnv(DRAWENV* env) {
+    _memcpy(env, &D_80090C9C.draw, sizeof(DRAWENV));
+    return env;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDispEnv);
 
