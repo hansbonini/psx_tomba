@@ -942,7 +942,49 @@ void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv2);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv2);
+int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
+    DR_ENV* dr;
+    RECT rect;
+    s32 len=0;
+    
+    dr = dr_env;
+    dr->code[0] = get_cs(env->clip.x, env->clip.y);
+    dr->code[1] = get_ce(
+                (s32)(((u32)(u16)(env->clip).w + (u32)(u16)(env->clip).x + -1) *
+                      0x10000) >> 0x10,
+                (s32)(((u32)(u16)(env->clip).y + (u32)(u16)(env->clip).h + -1) *
+                      0x10000) >> 0x10
+    );
+    dr->code[2] = get_ofs(env->ofs[0], env->ofs[1]);
+    dr->code[3] = get_mode(env->dfe, env->dtd, env->tpage);
+    dr->code[4] = get_tw(&env->tw);
+    dr->code[5]= 0xE6000000;
+    len=7;
+    if (env->isbg) {
+        rect.x = env->clip.x;
+        rect.y = env->clip.y;
+        rect.w = env->clip.w;
+        rect.h = env->clip.h;
+        rect.w = CLAMP(rect.w, 0, D_80090C9C.w-1);
+        rect.h = CLAMP(rect.h, 0, D_80090C9C.h-1);
+        if (rect.x & 0x3F || rect.w & 0x3F) {
+            rect.x -= env->ofs[0];
+            rect.y -= env->ofs[1];
+            (&dr->tag)[len++]  = 0x60000000 | (env->b0 << 16) | (env->g0 << 8) | env->r0;
+            (&dr->tag)[len++]  = LOW(rect.x);
+            (&dr->tag)[len++]  = LOW(rect.w);
+            rect.x += env->ofs[0];
+            rect.y += env->ofs[1];
+        } else {
+            (&dr->tag)[len++] = 0x02000000 | (env->b0 << 16) | (env->g0 << 8) | env->r0;
+            (&dr->tag)[len++] = LOW(rect.x);
+            (&dr->tag)[len++] = LOW(rect.w);
+        }
+    }
+    setlen(dr, len-1);
+    return;
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_mode);
 u_long get_mode(int dfe, int dtd, u_short tpage)
