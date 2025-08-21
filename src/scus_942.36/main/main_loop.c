@@ -1,6 +1,10 @@
 #include "common.h"
 #include "game.h"
 
+extern u8 INVENTORY_CURRENT_SLOT[]; // current item slot
+extern u8 INVENTORY_NEXT_SLOT[]; // next item slot
+extern u16 INVENTORY_SLOTS[];
+extern u8 ITEM_LIST[75];
 extern u8 EVENT_LIST;
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800164FC);
@@ -783,7 +787,37 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029734);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029788);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029944);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029944);
+s32 func_80029944(ITEM arg0, s32 qty)
+{
+    s32 i;
+    for (i = 0; i < INVENTORY_SLOTS[0]; i++) {
+        if (INVENTORY_CURRENT_SLOT[i] == arg0) {
+            if (qty == -1) {
+                ITEM_LIST[arg0] = 0;
+                while (i < INVENTORY_SLOTS[0] - 1) {
+                    INVENTORY_CURRENT_SLOT[i] = INVENTORY_NEXT_SLOT[i];
+                    i++;
+                }
+                INVENTORY_SLOTS[0] -= 1;
+                return 0;
+            }
+            ITEM_LIST[arg0] = ITEM_LIST[arg0] - qty;
+            if (ITEM_LIST[arg0] == 0) {
+                ITEM_LIST[arg0] = 0;
+                while (i < INVENTORY_SLOTS[0] - 1) {
+                    INVENTORY_CURRENT_SLOT[i] = INVENTORY_NEXT_SLOT[i];
+                    i++;
+                }
+                INVENTORY_SLOTS[0] -= 1;
+                return 0;
+            }
+            return ITEM_LIST[arg0];
+        }
+    }
+    return -1;
+}
+
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029A84);
 
