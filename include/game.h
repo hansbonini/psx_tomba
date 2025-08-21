@@ -105,14 +105,24 @@ typedef enum {
     /* 0x01 */ EVENT_THE100YEAROLDWISEMAN,
 } EVENT;
 
+extern u8 D_8009BCD8;
+extern u8 PLAYER_HEALTH;
+extern u8 D_8009C3E7;
+extern u8 D_8009C3E8;
+
 extern s32 D_1F8000C0;
 extern s32 D_1F800118;
 extern s32 D_8007D6A0;
 extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
 extern u32 D_8009B138;
+extern u8 ITEM_LIST[75];
 extern u16 D_8009C864;
 extern u16 D_8009C866;
+extern u8 INVENTORY_CURRENT_SLOT[]; // current item slot
+extern u8 INVENTORY_NEXT_SLOT[]; // next item slot
+extern u16 INVENTORY_SLOTS[];
+extern u8 EVENT_LIST;
 extern s16 D_8009C940;
 extern s16 D_8009C9DA;
 extern s16 D_8009C9DE;
@@ -149,6 +159,8 @@ extern long D_8009E480;
 extern s16 D_8009EB52;
 extern u16 D_8009EB5A;
 extern u16 D_8009EB7C;
+extern u16 D_800A5430;
+extern u16 D_800A5432;
 extern u8 D_800A3940;
 extern u8 D_800A5398;
 extern s32 D_800A5970;

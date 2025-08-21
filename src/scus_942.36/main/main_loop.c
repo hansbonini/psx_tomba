@@ -1,12 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-extern u8 INVENTORY_CURRENT_SLOT[]; // current item slot
-extern u8 INVENTORY_NEXT_SLOT[]; // next item slot
-extern u16 INVENTORY_SLOTS[];
-extern u8 ITEM_LIST[75];
-extern u8 EVENT_LIST;
-
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800164FC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016940);
@@ -819,7 +813,24 @@ s32 func_80029944(ITEM id, s32 qty)
 }
 
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029A84);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029A84);
+u32 func_80029A84(void)
+{
+    if (D_8009C3E7 == 0) {
+        if (PLAYER_HEALTH < 8) {
+            PLAYER_HEALTH++;
+        } else {
+            D_8009C3E8++;
+        }
+    } else {
+        if (PLAYER_HEALTH < 16) {
+            PLAYER_HEALTH++;
+        }
+    }
+
+    D_8009BCD8 = D_800A5432 = D_800A5430 = PLAYER_HEALTH;
+    return PLAYER_HEALTH;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029B20);
 
