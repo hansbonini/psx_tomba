@@ -615,7 +615,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800229CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800229FC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80022A18);
+void func_80022A18(u16* arg0)
+{
+    ((u16*)(arg0))[0x16] = ((u16*)(arg0))[0x10];
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80022A24);
 
