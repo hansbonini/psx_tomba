@@ -452,6 +452,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E220);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E31C);
 
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E3D8);
 u8 func_8001E3D8(EVENT arg0)
 {
     return (&EVENT_LIST)[arg0];
@@ -543,6 +544,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80021310);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80021340);
 
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80021B7C);
 s32 func_80021B7C(void)
 {
     return 0;
@@ -602,7 +604,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80022874);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800228A4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800228C0);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800228C0);
+void func_800228C0(u16* arg0)
+{
+    ((u32*)(arg0))[0x5] = (s32)(((u32*)(arg0))[0x5] + (((s16*)(arg0))[0x41] << 8));
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800228D8);
 
@@ -620,6 +626,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800229CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800229FC);
 
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E3D8);
 void func_80022A18(u16* arg0)
 {
     ((u16*)(arg0))[0x16] = ((u16*)(arg0))[0x10];
