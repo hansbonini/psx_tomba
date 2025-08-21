@@ -100,6 +100,11 @@ typedef enum ITEM {
     /* 0x4B */ ITEM_MATHBEAD10,
 } ITEM;
 
+typedef enum {
+    /* 0x00 */ EVENT_GRANDPASBRACELET,
+    /* 0x01 */ EVENT_THE100YEAROLDWISEMAN,
+} EVENT;
+
 extern s32 D_1F8000C0;
 extern s32 D_1F800118;
 extern s32 D_8007D6A0;

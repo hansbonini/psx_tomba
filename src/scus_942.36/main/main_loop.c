@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game.h"
 
+extern u8 EVENT_LIST;
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_800164FC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80016940);
@@ -450,7 +452,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E220);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E31C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E3D8);
+u8 func_8001E3D8(EVENT arg0)
+{
+    return (&EVENT_LIST)[arg0];
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E3EC);
 
