@@ -139,14 +139,14 @@ extern char* D_80015EF8; // unpack_packet text
 
 extern s32 D_80090C54;
 extern GPU* D_80090C94;
-extern DEBUG D_80090C9C;
+extern DEBUG GPU_INFO;
 // extern s8 D_80090C9D;
 // extern u8 D_80090C9E;
 // extern s32 D_80090C9F;
 // extern s16 D_80090CA0;
 // extern s16 D_80090CA2;
 // extern void* D_80090C98;
-extern DISPENV TEMP_DISPENV; // size: 0x10
+// extern DISPENV TEMP_DISPENV; // size: 0x10
 // extern u16 D_80090D0A;
 // extern u16 D_80090D0C;
 // extern u16 D_80090D0E;
@@ -186,7 +186,7 @@ extern s32 D_8009B16C;
 extern s32 D_8009B170;
 extern s32 D_8009B174;
 extern s32 D_8009B178;
-extern u8 D_8009B18C[];
+extern u8 GPU_CTLBUF[];
 extern u32* D_8009B290;
 extern s32 D_8009B294;
 extern s32 D_8009B298;
@@ -572,20 +572,20 @@ int ResetGraph(int mode) {
     switch (mode & 7) {
     case 3:
     case 0:
-        printf(&D_80015BDC, &D_80090C54, &D_80090C9C);
+        printf(&D_80015BDC, &D_80090C54, &GPU_INFO);
     case 5:
-        GPU_memset(&D_80090C9C, 0, sizeof(DEBUG));
+        GPU_memset(&GPU_INFO, 0, sizeof(DEBUG));
         ResetCallback();
         GPU_cw((s32) D_80090C94 & 0xFFFFFF);
-        D_80090C9C.version = _reset(mode);
-        D_80090C9C.D_80090C9D = 1;
-        D_80090C9C.w = D_80090D1C[D_80090C9C.version];
-        D_80090C9C.h = D_80090D30[D_80090C9C.version];
-        GPU_memset(&D_80090C9C.draw, -1, sizeof(DRAWENV));
-        GPU_memset(&D_80090C9C.disp, -1, sizeof(DISPENV));
-        return D_80090C9C.version;
+        GPU_INFO.version = _reset(mode);
+        GPU_INFO.D_80090C9D = 1;
+        GPU_INFO.w = D_80090D1C[GPU_INFO.version];
+        GPU_INFO.h = D_80090D30[GPU_INFO.version];
+        GPU_memset(&GPU_INFO.draw, -1, sizeof(DRAWENV));
+        GPU_memset(&GPU_INFO.disp, -1, sizeof(DISPENV));
+        return GPU_INFO.version;
     }
-    if (D_80090C9C.level >= 2U) {
+    if (GPU_INFO.level >= 2U) {
         GPU_printf(&D_80015BFC, mode);
     }
     return D_80090C94->reset(1);
@@ -593,38 +593,38 @@ int ResetGraph(int mode) {
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphReverse);
 int SetGraphReverse(int mode) {
-    u_char prev = D_80090C9C.reverse;
-    if (D_80090C9C.level >= 2) {
+    u_char prev = GPU_INFO.reverse;
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015C10, mode);
     }
-    D_80090C9C.reverse = mode;
-    D_80090C94->ctl(D_80090C94->getctl(8) | (D_80090C9C.reverse ? 0x08000080 : 0x08000000));
-    if (D_80090C9C.version == 2) {
-        D_80090C94->ctl(D_80090C9C.reverse ? 0x20000501 : 0x20000504);
+    GPU_INFO.reverse = mode;
+    D_80090C94->ctl(D_80090C94->getctl(8) | (GPU_INFO.reverse ? 0x08000080 : 0x08000000));
+    if (GPU_INFO.version == 2) {
+        D_80090C94->ctl(GPU_INFO.reverse ? 0x20000501 : 0x20000504);
     }
     return prev;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphDebug);
 int SetGraphDebug(int level) {
-    u_char prev = D_80090C9C.level;
-    D_80090C9C.level = level;
-    if (D_80090C9C.level) {
-        GPU_printf(&D_80015C28, D_80090C9C.level,
-                   D_80090C9C.version, D_80090C9C.reverse);
+    u_char prev = GPU_INFO.level;
+    GPU_INFO.level = level;
+    if (GPU_INFO.level) {
+        GPU_printf(&D_80015C28, GPU_INFO.level,
+                   GPU_INFO.version, GPU_INFO.reverse);
     }
     return prev;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphQueue);
 int SetGraphQueue(int mode) {
-    u_char prev = D_80090C9C.D_80090C9D;
-    if (D_80090C9C.level >= 2) {
+    u_char prev = GPU_INFO.D_80090C9D;
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015C54, mode);
     }
-    if (mode != D_80090C9C.D_80090C9D) {
+    if (mode != GPU_INFO.D_80090C9D) {
         D_80090C94->reset(1);
-        D_80090C9C.D_80090C9D = mode;
+        GPU_INFO.D_80090C9D = mode;
         DMACallback(2, NULL);
     }
     return prev;
@@ -633,33 +633,33 @@ int SetGraphQueue(int mode) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphType);
 u8 GetGraphType(void)
 {
-    return D_80090C9C.version;
+    return GPU_INFO.version;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphDebug);
 s32 GetGraphDebug(void)
 {
-    return D_80090C9C.level;
+    return GPU_INFO.level;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSyncCallback);
 u_long DrawSyncCallback(void (*func)()) {
     void (*prev)();
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015C68, func);
     }
-    prev = D_80090C9C.drawSyncCb;
-    D_80090C9C.drawSyncCb = func;
+    prev = GPU_INFO.drawSyncCb;
+    GPU_INFO.drawSyncCb = func;
     return (u_long)prev;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
 void SetDispMask(int mask) {
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015C84, mask);
     }
     if (mask == 0) {
-        GPU_memset(&D_80090C9C.disp, -1, sizeof(DISPENV));
+        GPU_memset(&GPU_INFO.disp, -1, sizeof(DISPENV));
     }
     D_80090C94->ctl(mask ? 0x03000000 : 0x03000001);
 }
@@ -667,7 +667,7 @@ void SetDispMask(int mask) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSync);
 int DrawSync(int mode)
 {
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015C98, mode);
     }
     D_80090C94->sync(mode);
@@ -675,13 +675,13 @@ int DrawSync(int mode)
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", checkRECT);
 void checkRECT(const char* log, RECT* r) {
-    switch (D_80090C9C.level) {
+    switch (GPU_INFO.level) {
     case 1:
         if (
-            r->w > D_80090C9C.w ||
-            r->w + r->x > D_80090C9C.w ||
-            r->y > D_80090C9C.h ||
-            r->y + r->h > D_80090C9C.h ||
+            r->w > GPU_INFO.w ||
+            r->w + r->x > GPU_INFO.w ||
+            r->y > GPU_INFO.h ||
+            r->y + r->h > GPU_INFO.h ||
             r->w <= 0 ||
             r->x < 0 ||
             r->y < 0 ||
@@ -741,7 +741,7 @@ int MoveImage(RECT* rect, s32 x, s32 y)
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
 OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015D00, ot, n);
     }
     while (--n) {
@@ -756,7 +756,7 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTagR);
 OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
 {
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015D18, ot, n);
     }
     D_80090C94->otc(ot, n);
@@ -774,7 +774,7 @@ void DrawPrim(void* p) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTag);
 void DrawOTag(u_long* p)
 {
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015D30, p);
     }
     D_80090C94->addque2(D_80090C94->cwc, p, 0, 0);
@@ -782,31 +782,31 @@ void DrawOTag(u_long* p)
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDrawEnv);
 DRAWENV* PutDrawEnv(DRAWENV* env) {
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015D44, env);
     }
     SetDrawEnv2(&env->dr_env, env);
     termPrim(&env->dr_env);
     D_80090C94->addque2(D_80090C94->cwc, &env->dr_env, sizeof(DR_ENV), 0);
-    *(DRAWENV*)(&D_80090C9C.draw) = *env;
+    *(DRAWENV*)(&GPU_INFO.draw) = *env;
     return env;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTagEnv);
 void DrawOTagEnv(u_long* p, DRAWENV* env)
 {
-    if (D_80090C9C.level >= 2U) {
+    if (GPU_INFO.level >= 2U) {
         GPU_printf(&D_80015D5C, p, env);
     }
     SetDrawEnv2(&env->dr_env, env);
     setaddr(&env->dr_env, p);
     D_80090C94->addque2(D_80090C94->cwc, &env->dr_env, sizeof(DR_ENV), 0);
-    *(DRAWENV*)(&D_80090C9C.draw) = *env;
+    *(DRAWENV*)(&GPU_INFO.draw) = *env;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDrawEnv);
 DRAWENV* GetDrawEnv(DRAWENV* env) {
-    memcpy(env, &D_80090C9C.draw, sizeof(DRAWENV));
+    memcpy(env, &GPU_INFO.draw, sizeof(DRAWENV));
     return env;
 }
 
@@ -820,12 +820,12 @@ DISPENV* PutDispEnv(DISPENV* env)
     s32 mode;
 
     mode = 0x08000000;
-    if (D_80090C9C.level >= 2) {
+    if (GPU_INFO.level >= 2) {
         GPU_printf(&D_80015D78, env);
     }
     D_80090C94->ctl(
         (
-            D_80090C9C.version == 1 || D_80090C9C.version == 2 ? (
+            GPU_INFO.version == 1 || GPU_INFO.version == 2 ? (
             (
                 (env->disp.y & 0xFFF) << 0xC) |
                 (get_dx(env) & 0xFFF) | 0x05000000
@@ -836,7 +836,7 @@ DISPENV* PutDispEnv(DISPENV* env)
         )
     );
     
-    if (!CMPRECT(&D_80090C9C.disp.screen, env->screen)){
+    if (!CMPRECT(&GPU_INFO.disp.screen, env->screen)){
         env->pad0 = GetVideoMode();
         h_start = (env->screen.x * 0xA) + 0x260;
         v_start = env->screen.y + ((env->pad0 & 0xFF) ? 0x13 : 0x10);
@@ -849,7 +849,7 @@ DISPENV* PutDispEnv(DISPENV* env)
         D_80090C94->ctl((0x06000000 | (h_end & 0xFFF) << 0xC) | ((h_start & 0xFFF)));
         D_80090C94->ctl((0x07000000 | (v_end & 0x3FF) << 0xA) | ((v_start & 0x3FF)));
     }
-    if ((LOWU(D_80090C9C.disp.isinter) != LOWU(env->isinter)) || !CMPRECT(&D_80090C9C.disp, env->disp)) {
+    if ((LOWU(GPU_INFO.disp.isinter) != LOWU(env->isinter)) || !CMPRECT(&GPU_INFO.disp, env->disp)) {
         env->pad0 = GetVideoMode();
         if (env->pad0 == 1) {
             mode |= 0x8;
@@ -860,7 +860,7 @@ DISPENV* PutDispEnv(DISPENV* env)
         if (env->isinter != 0) {
             mode |= 0x20;
         }
-        if (D_80090C9C.reverse != 0) {
+        if (GPU_INFO.reverse != 0) {
             mode |= 0x80;
         }
         if (env->disp.w >= 0x119) {
@@ -880,14 +880,14 @@ DISPENV* PutDispEnv(DISPENV* env)
         }
         D_80090C94->ctl(mode);
     }
-    memcpy((u8*)&D_80090C9C.disp, (u8*)env, sizeof(DISPENV));
+    memcpy((u8*)&GPU_INFO.disp, (u8*)env, sizeof(DISPENV));
     return env;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
 DISPENV* GetDispEnv(DISPENV* env)
 {
-    memcpy((u8* )env, (u8*)&D_80090C9C.disp, sizeof(DISPENV));
+    memcpy((u8* )env, (u8*)&GPU_INFO.disp, sizeof(DISPENV));
     return env;
 }
 
@@ -965,8 +965,8 @@ void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env)
         rect.y = env->clip.y;
         rect.w = env->clip.w;
         rect.h = env->clip.h;
-        rect.w = CLAMP(rect.w, 0, D_80090C9C.w-1);
-        rect.h = CLAMP(rect.h, 0, D_80090C9C.h-1);
+        rect.w = CLAMP(rect.w, 0, GPU_INFO.w-1);
+        rect.h = CLAMP(rect.h, 0, GPU_INFO.h-1);
         rect.x -= env->ofs[0];
         rect.y -= env->ofs[1];
         (&dr->tag)[len++] = 0x60000000 | (env->b0 << 16) | (env->g0 << 8) | env->r0;
@@ -1003,8 +1003,8 @@ int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
         rect.y = env->clip.y;
         rect.w = env->clip.w;
         rect.h = env->clip.h;
-        rect.w = CLAMP(rect.w, 0, D_80090C9C.w-1);
-        rect.h = CLAMP(rect.h, 0, D_80090C9C.h-1);
+        rect.w = CLAMP(rect.w, 0, GPU_INFO.w-1);
+        rect.h = CLAMP(rect.h, 0, GPU_INFO.h-1);
         if (rect.x & 0x3F || rect.w & 0x3F) {
             rect.x -= env->ofs[0];
             rect.y -= env->ofs[1];
@@ -1026,7 +1026,7 @@ int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_mode);
 u_long get_mode(int dfe, int dtd, u_short tpage)
 {
-    if (D_80090C9C.version == 1 || D_80090C9C.version == 2) {
+    if (GPU_INFO.version == 1 || GPU_INFO.version == 2) {
         return (dtd ? 0xE1000800 : 0xE1000000) | (dfe ? 0x1000 : 0) |
                (tpage & 0x27FF);
     }
@@ -1037,9 +1037,9 @@ u_long get_mode(int dfe, int dtd, u_short tpage)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_cs);
 u_long get_cs(short x, short y)
 {
-    x = CLAMP(x, 0, D_80090C9C.w - 1);
-    y = CLAMP(y, 0, D_80090C9C.h - 1);
-    if (D_80090C9C.version == 1 || D_80090C9C.version == 2) {
+    x = CLAMP(x, 0, GPU_INFO.w - 1);
+    y = CLAMP(y, 0, GPU_INFO.h - 1);
+    if (GPU_INFO.version == 1 || GPU_INFO.version == 2) {
         return 0xE3000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
     }
     return 0xE3000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
@@ -1048,10 +1048,10 @@ u_long get_cs(short x, short y)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ce);
 u_long get_ce(short x, short y)
 {
-    x = CLAMP(x, 0, D_80090C9C.w - 1);
-    y = CLAMP(y, 0, D_80090C9C.h - 1);
+    x = CLAMP(x, 0, GPU_INFO.w - 1);
+    y = CLAMP(y, 0, GPU_INFO.h - 1);
     
-    if (D_80090C9C.version == 1 || D_80090C9C.version == 2) {
+    if (GPU_INFO.version == 1 || GPU_INFO.version == 2) {
         return 0xE4000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
     }
     return 0xE4000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
@@ -1060,7 +1060,7 @@ u_long get_ce(short x, short y)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ofs);
 u_long get_ofs(short x, short y)
 {
-    if (D_80090C9C.version == 1 || D_80090C9C.version == 2) {
+    if (GPU_INFO.version == 1 || GPU_INFO.version == 2) {
         return 0xe5000000 | ((y & 0xFFF) << 12) | (x & 0xFFF);
     }
     return 0xe5000000 | ((y & 0x7FF) << 11) | (x & 0x7FF);
@@ -1083,11 +1083,11 @@ u_long get_tw(RECT* rect) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_dx);
 u_long get_dx(DISPENV* env)
 {
-    switch (D_80090C9C.version) {
+    switch (GPU_INFO.version) {
     case 1:
-        return D_80090C9C.reverse ? 0x400 - env->disp.x - env->disp.w : env->disp.x;
+        return GPU_INFO.reverse ? 0x400 - env->disp.x - env->disp.w : env->disp.x;
     case 2:
-        return D_80090C9C.reverse ? 0x400 - env->disp.x - (env->disp.w / 2) : env->disp.x / 2;
+        return GPU_INFO.reverse ? 0x400 - env->disp.x - (env->disp.w / 2) : env->disp.x / 2;
     default:
         return env->disp.x;
     }
@@ -1126,8 +1126,8 @@ int _otc(OT_TYPE ot, s32 n)
 s32 _clr(RECT* rect, u32 color)
 {
     s32* ptr;
-    rect->w = CLAMP(rect->w, 0, D_80090C9C.w - 1);
-    rect->h = CLAMP(rect->h, 0, D_80090C9C.h - 1);
+    rect->w = CLAMP(rect->w, 0, GPU_INFO.w - 1);
+    rect->h = CLAMP(rect->h, 0, GPU_INFO.h - 1);
     if ((rect->x & 0x3F) || (rect->w & 0x3F)) {
         ptr = &D_8009B16C;
         D_8009B148 = ((s32) ptr & 0xFFFFFF) | 0x08000000;
@@ -1165,8 +1165,8 @@ s32 _dws(RECT* arg0, s32* arg1) {
     img_ptr = arg1;
     set_alarm();
     var_s4 = 0;
-    arg0->w = CLAMP(arg0->w, 0, D_80090C9C.w);
-    arg0->h = CLAMP(arg0->h, 0, D_80090C9C.h);
+    arg0->w = CLAMP(arg0->w, 0, GPU_INFO.w);
+    arg0->h = CLAMP(arg0->h, 0, GPU_INFO.h);
     temp_a0 = ((arg0->w * arg0->h) + 1) / 2;
     if (temp_a0 <= 0) {
         return -1;
@@ -1209,8 +1209,8 @@ s32 _drs(RECT* arg0, s32* arg1) {
     s32 var_s4;
     img_ptr = arg1;
     set_alarm();
-    arg0->w = CLAMP(arg0->w, 0, D_80090C9C.w);
-    arg0->h = CLAMP(arg0->h, 0, D_80090C9C.h); 
+    arg0->w = CLAMP(arg0->w, 0, GPU_INFO.w);
+    arg0->h = CLAMP(arg0->h, 0, GPU_INFO.h); 
     temp_a0 = ((arg0->w * arg0->h) + 1) / 2;
     if (temp_a0 <= 0) {
         return -1;
@@ -1248,13 +1248,13 @@ s32 _drs(RECT* arg0, s32* arg1) {
 void _ctl(u32 arg0)
 {
     *GPU_STATUS = arg0;
-    D_8009B18C[(arg0 >> 0x18)] = arg0 & 0xFFFFFF;
+    GPU_CTLBUF[(arg0 >> 0x18)] = arg0 & 0xFFFFFF;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _getctl);
 s32 _getctl(s32 arg0)
 {
-    return *(&D_8009B18C[arg0]);
+    return *(&GPU_CTLBUF[arg0]);
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwb);
@@ -1308,7 +1308,7 @@ s32 _reset(s32 mode)
         *DMA1_CHCR = 0x401;
         *DPCR |= 0x800;
         *GPU_STATUS = 0;
-        GPU_memset((s8* )(D_8009B18C), 0, 0x100);
+        GPU_memset((s8* )(GPU_CTLBUF), 0, 0x100);
         GPU_memset(&D_8009FD88, 0, 0x1800);
         break;
     case 1:
