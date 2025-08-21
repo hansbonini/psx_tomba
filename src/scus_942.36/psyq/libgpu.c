@@ -111,6 +111,7 @@ extern char* D_80015D44; // PutDrawEnv text
 extern char* D_80015D5C; // DrawOTagEnv text
 extern char* D_80015D78; // PutDispEnv text
 extern char* D_80015D90; // get_alarm text
+extern char* D_80015DC4; // get_alarm text
 extern char* D_80015DDC; // get_tim_addr text
 extern char* D_80015DE8; // get_tim_addr text
 extern char* D_80015DF4; // get_tim_addr text
@@ -168,8 +169,11 @@ extern volatile s32* DMA2_CHCR;
 extern volatile s32* DMA2_MADR;
 extern volatile s32* DMA2_BCR;
 extern volatile s32* DPCR;
-extern s8* D_80090DA0;
-extern s8* D_80090DA4;
+extern volatile s32 D_80090D90;
+extern u32 D_80090D94;
+extern u32 D_80090D98;
+extern volatile s32 D_80090DA0;
+extern volatile s32 D_80090DA4;
 extern s32 D_80090DB0;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
@@ -1362,7 +1366,29 @@ void set_alarm(void)
     D_80090DB8 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
+s32 get_alarm(void) {
+    s32 intrMask;
+    volatile s32 *p;
+    if ((D_80090DB4 < VSync(-1)) || D_80090DB8++ > 0xF0000) {
+        *GPU_STATUS;
+        printf(&D_80015D90,
+               D_80090DA0 - D_80090DA4 & 0x3F, *GPU_STATUS, *DMA1_CHCR, *DMA1_MADR);
+        p = &D_80090D90;
+        printf(&D_80015DC4, *p, D_80090D94, D_80090D98);
+        intrMask = SetIntrMask(0);
+        LOW(D_80090DA4)=0;
+        D_80090DB0 = intrMask;
+        D_80090DA0 = D_80090DA4;
+        *DMA1_CHCR = 0x401;
+        *DPCR |= 0x800;
+        *GPU_STATUS = 0x02000000;
+        *GPU_STATUS = 0x01000000;
+        SetIntrMask(D_80090DB0);
+        return -1;
+    }
+    return 0;
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
 int _version(int mode) {
