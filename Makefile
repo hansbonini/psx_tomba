@@ -94,8 +94,8 @@ define DL_FlagsSwitch
 			$(filter MAIN,$(patsubst build/src/$(BASE_DIR)/psyq/%,MAIN,$(1))), 
 			$(filter MAIN,$(patsubst build/asm/${BASE_DIR}/psyq/%,MAIN,$(1)))
 		),
-		$(eval MASPSX_FLAGS = --aspsx-version=2.67 --macro-inc --expand-div --use-comm-section --run-assembler $(AS_FLAGS)),
-		$(eval MASPSX_FLAGS = --aspsx-version=2.67 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
+		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --macro-inc --expand-div --use-comm-section --run-assembler $(AS_FLAGS)),
+		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
 	)
 
 	$(eval AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
