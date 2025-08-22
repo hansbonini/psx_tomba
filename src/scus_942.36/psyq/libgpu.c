@@ -78,6 +78,16 @@ typedef struct {
     TmdObj obj[1];
 } TMD;
 
+typedef struct QueueItem {
+    int unk0;
+    int unk4;
+    int unk8;
+    int unkC[2];
+    int unk14;
+    int unk18;
+    char padding[0x14 + 0x1C + 0x14];
+} QueueItem;
+
 extern char* D_80015AD8; // DumpTPage text
 extern char* D_80015AF0; // DumpClut text
 extern char* D_80015B00; // DumpDrawEnv text
@@ -172,8 +182,9 @@ extern volatile s32* DPCR;
 extern volatile s32 D_80090D90;
 extern u32 D_80090D94;
 extern u32 D_80090D98;
-extern volatile s32 D_80090DA0;
-extern volatile s32 D_80090DA4;
+extern volatile s32 GPU_QIN;
+extern volatile s32 GPU_QOUT;
+extern s32 D_80090DA8;
 extern s32 D_80090DB0;
 extern s32 D_80090DB4;
 extern s32 D_80090DB8;
@@ -196,7 +207,7 @@ extern s32 D_8009B294;
 extern s32 D_8009B298;
 extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
-extern s8 D_8009FD88;
+extern volatile QueueItem GPU_QITEM[];
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
@@ -1294,17 +1305,65 @@ void _addque(int arg0, int arg1, int arg2) {
     _addque2(arg0, arg1, 0, arg2);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque2);
+s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
+{
+    s32 i;
+    set_alarm();
+    while(((GPU_QIN + 1) & 0x3F) == GPU_QOUT) {
+        if (get_alarm() != 0) {
+            return -1;
+        }
+        _exeque();
+    };
+    D_80090DA8 = SetIntrMask(0);
+    LOW(GPU_INFO.unk8[0]) = 1;
+    
+    if (
+        (GPU_INFO.D_80090C9D == 0) ||
+        (
+            (GPU_QIN == GPU_QOUT) &&
+            !(*DMA1_CHCR & 0x01000000) &&
+            (GPU_INFO.drawSyncCb == NULL)
+        )
+    ) {
+        do {
+        } while ((*GPU_STATUS & 0x04000000)==0);
+        arg0(arg1, arg3);
+        *(&D_80090D90) = arg0;
+        D_80090D94 = arg1;
+        D_80090D98 = arg3;
+        SetIntrMask(D_80090DA8);
+        return 0;
+    }
+    
+    DMACallback(2, _exeque);
+    
+    if (arg2) {
+        for (i = 0; i < (arg2 / 4); i++) {
+            GPU_QITEM[GPU_QIN].unkC[i] = arg1[i];
+        }
+        GPU_QITEM[GPU_QIN].unk4 = &GPU_QITEM[GPU_QIN].unkC[0];
+    } else {
+        GPU_QITEM[GPU_QIN].unk4 = arg1;
+    }
+    
+    GPU_QITEM[GPU_QIN].unk8 = arg3;
+    GPU_QITEM[GPU_QIN].unk0 = arg0;
+    GPU_QIN = (GPU_QIN + 1) & 0x3F;
+    SetIntrMask(D_80090DA8);
+    _exeque();
+    return (GPU_QIN - GPU_QOUT) & 0x3F;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _exeque);
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _reset);
 s32 _reset(s32 mode)
 {
-    u_long** queue = &D_80090DA4;
+    u_long** queue = &GPU_QOUT;
     D_80090DB0 = SetIntrMask(0);
-    LOW(D_80090DA4) = NULL;
-    D_80090DA0 = D_80090DA4;
+    LOW(GPU_QOUT) = NULL;
+    GPU_QIN = GPU_QOUT;
     switch (mode & 7) {
     case 0:
     case 5:
@@ -1313,7 +1372,7 @@ s32 _reset(s32 mode)
         *DPCR |= 0x800;
         *GPU_STATUS = 0;
         GPU_memset((s8* )(GPU_CTLBUF), 0, 0x100);
-        GPU_memset(&D_8009FD88, 0, 0x1800);
+        GPU_memset(&GPU_QITEM, 0, 0x1800);
         break;
     case 1:
     case 3:
@@ -1335,7 +1394,7 @@ s32 _sync(s32 arg0)
     s32 temp_s0;
     if (!arg0) {
         set_alarm();
-        while (*(s32*)(&D_80090DA0) != *(s32*)(&D_80090DA4)) {
+        while (*(s32*)(&GPU_QIN) != *(s32*)(&GPU_QOUT)) {
             _exeque();
             if (get_alarm()) return -1;
         }
@@ -1345,7 +1404,7 @@ s32 _sync(s32 arg0)
         }
         return 0;
     }    
-    temp_s0 = (D_80090DA0 - D_80090DA4) & 0x3F;
+    temp_s0 = (GPU_QIN - GPU_QOUT) & 0x3F;
     if (temp_s0) {
         _exeque();
     }    
@@ -1373,13 +1432,13 @@ s32 get_alarm(void) {
     if ((D_80090DB4 < VSync(-1)) || D_80090DB8++ > 0xF0000) {
         *GPU_STATUS;
         printf(&D_80015D90,
-               D_80090DA0 - D_80090DA4 & 0x3F, *GPU_STATUS, *DMA1_CHCR, *DMA1_MADR);
+               GPU_QIN - GPU_QOUT & 0x3F, *GPU_STATUS, *DMA1_CHCR, *DMA1_MADR);
         p = &D_80090D90;
         printf(&D_80015DC4, *p, D_80090D94, D_80090D98);
         intrMask = SetIntrMask(0);
-        LOW(D_80090DA4)=0;
+        LOW(GPU_QOUT)=0;
         D_80090DB0 = intrMask;
-        D_80090DA0 = D_80090DA4;
+        GPU_QIN = GPU_QOUT;
         *DMA1_CHCR = 0x401;
         *DPCR |= 0x800;
         *GPU_STATUS = 0x02000000;
