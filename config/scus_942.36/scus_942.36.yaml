@@ -31,6 +31,7 @@ options:
 
   section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
   #auto_link_sections: [".data", ".rodata", ".bss"]
+  #migrate_rodata_to_functions: true
 
   symbol_addrs_path:
     - ./symbols/scus_942.36/symbol_addrs.txt
@@ -63,6 +64,8 @@ segments:
     align: 4
     subsegments:
       - [0x800, rodata]
+      - [0x62D8, .rodata, psyq/libgpu]
+      - [0x6714, rodata]
       - [0x6BB0, c, main/main]
       - [0x6CFC, c, main/main_loop]
       - [0x4BB8C, c, psyq/libapi]

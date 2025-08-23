@@ -25,7 +25,7 @@
 #define TERM_PRIM(ot, p) *ot = (u_long)p & 0xFFFFFF
 
 typedef struct {
-    /* 0x00 */ const char* ver;
+    /* 0x00 */ const char* ver; // D_80015BA8
     /* 0x04 */ void (*addque)();
     /* 0x08 */ int (*addque2)();
     /* 0x0C */ int (*clr)();
@@ -91,65 +91,6 @@ typedef struct QueueItem {
     char padding[0x14 + 0x1C + 0x14];
 } QueueItem;
 
-extern char* D_80015AD8; // DumpTPage text
-extern char* D_80015AF0; // DumpClut text
-extern char* D_80015B00; // DumpDrawEnv text
-extern char* D_80015B18; // DumpDrawEnv text
-extern char* D_80015B28; // DumpDrawEnv text
-extern char* D_80015B40; // DumpDrawEnv text
-extern char* D_80015B4C; // DumpDrawEnv text
-extern char* D_80015B58; // DumpDispEnv text
-extern char* D_80015B74; // DumpDispEnv text
-extern char* D_80015B90; // DumpDispEnv text
-extern char* D_80015B9C; // DumpDispEnv text
-extern char* D_80015BDC; // ResetGraph text
-extern char* D_80015BFC; // ResetGraph text
-extern char* D_80015C10; // SetGraphReverse text
-extern char* D_80015C28; // SetGraphDebug text
-extern char* D_80015C54; // SetGraphQueue text
-extern char* D_80015C68; // DrawSyncCallback text
-extern char* D_80015C84; // SetDispMask text
-extern char* D_80015C98; // DrawSync text
-extern char* D_80015CAC; // checkRECT text
-extern char* D_80015CB8; // checkRECT text
-extern char* D_80015CCC; // checkRECT text
-extern char* D_80015CD0; // ClearImage text
-extern char* D_80015CDC; // LoadImage text
-extern char* D_80015CE8; // StoreImage text
-extern char* D_80015CF4; // MoveImage text
-extern char* D_80015D00; // ClearOTag text
-extern char* D_80015D18; // ClearOTagR text 
-extern char* D_80015D30; // DrawOTag text
-extern char* D_80015D44; // PutDrawEnv text
-extern char* D_80015D5C; // DrawOTagEnv text
-extern char* D_80015D78; // PutDispEnv text
-extern char* D_80015D90; // get_alarm text
-extern char* D_80015DC4; // get_alarm text
-extern char* D_80015DDC; // get_tim_addr text
-extern char* D_80015DE8; // get_tim_addr text
-extern char* D_80015DF4; // get_tim_addr text
-extern char* D_80015E04; // get_tmd_addr text
-extern char* D_80015E18; // get_tmd_addr text
-extern char* D_80015E40; // get_tmd_addr text
-extern char* D_80015E58; // get_tmd_addr text
-extern char* D_80015E70; // get_tmd_addr text
-extern char* D_80015E88; // unpack_packet text
-extern char* D_80015E90; // unpack_packet text
-extern char* D_80015E98; // unpack_packet text
-extern char* D_80015EA0; // unpack_packet text
-extern char* D_80015EA8; // unpack_packet text
-extern char* D_80015EAC; // unpack_packet text
-extern char* D_80015EB0; // unpack_packet text
-extern char* D_80015EB8; // unpack_packet text
-extern char* D_80015EC0; // unpack_packet text
-extern char* D_80015EC8; // unpack_packet text
-extern char* D_80015ED0; // unpack_packet text
-extern char* D_80015ED8; // unpack_packet text
-extern char* D_80015EE0; // unpack_packet text
-extern char* D_80015EE4; // unpack_packet text
-extern char* D_80015EE8; // unpack_packet text
-extern char* D_80015EF0; // unpack_packet text
-extern char* D_80015EF8; // unpack_packet text
 
 extern s32 D_80090C54;
 extern GPU* D_80090C94;
@@ -314,16 +255,16 @@ void DumpTPage(u_short tpage)
         u32 temp_v0_2; 
         if ((GetGraphType() == 1) || (temp_v0 = tpage & 0xFFFF, (GetGraphType() == 2))) {
             temp_v0_2 = tpage & 0xFFFF;
-            GPU_printf(&D_80015AD8, (temp_v0_2 >> 9) & 3, (temp_v0_2 >> 7) & 3, (temp_v0_2 << 6) & 0x7C0, (temp_v0_2 * 8) & 0x300);
+            GPU_printf("tpage: (%d,%d,%d,%d)\n", (temp_v0_2 >> 9) & 3, (temp_v0_2 >> 7) & 3, (temp_v0_2 << 6) & 0x7C0, (temp_v0_2 * 8) & 0x300);
             return;
         }
-        GPU_printf(&D_80015AD8, ((tpage) >> 7) & 0x003, ((tpage) >> 5) & 0x003, ((tpage) << 6) & 0x7c0, (((tpage) << 4) & 0x100) + (((tpage) >> 2) & 0x200));
+        GPU_printf("tpage: (%d,%d,%d,%d)\n", ((tpage) >> 7) & 0x003, ((tpage) >> 5) & 0x003, ((tpage) << 6) & 0x7c0, (((tpage) << 4) & 0x100) + (((tpage) >> 2) & 0x200));
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpClut);
 void DumpClut(u_short clut)
 {
-    GPU_printf(&D_80015AF0, (clut & 0x3F) << 4, clut >> 6);
+    GPU_printf("clut: (%d,%d)\n", (clut & 0x3F) << 4, clut >> 6);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", NextPrim);
@@ -550,33 +491,35 @@ int MargePrim(void* p0, void* p1) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDrawEnv);
 void DumpDrawEnv(DRAWENV* env)
 {
-    GPU_printf(&D_80015B00, env->clip.x, env->clip.y, env->clip.w, (s32) env->clip.h);
-    GPU_printf(&D_80015B18, env->ofs[0], env->ofs[1]);
-    GPU_printf(&D_80015B28, env->tw.x, env->tw.y, env->tw.w, (s32) env->tw.h);
-    GPU_printf(&D_80015B40, (s16) env->dtd);
-    GPU_printf(&D_80015B4C, (s16) env->dfe);
+    GPU_printf("clip (%3d,%3d)-(%d,%d)\n", env->clip.x, env->clip.y, env->clip.w, (s32) env->clip.h);
+    GPU_printf("ofs  (%3d,%3d)\n", env->ofs[0], env->ofs[1]);
+    GPU_printf("tw   (%d,%d)-(%d,%d)\n", env->tw.x, env->tw.y, env->tw.w, (s32) env->tw.h);
+    GPU_printf("dtd   %d\n", (s16) env->dtd);
+    GPU_printf("dfe   %d\n", (s16) env->dfe);
     if ((GetGraphType() == 1) || (GetGraphType() == 2)) {
-        GPU_printf(&D_80015AD8, (env->tpage >> 9) & 3, (env->tpage >> 7) & 3, (env->tpage << 6) & 0x7C0, (env->tpage * 8) & 0x300);
+        GPU_printf("tpage: (%d,%d,%d,%d)\n", (env->tpage >> 9) & 3, (env->tpage >> 7) & 3, (env->tpage << 6) & 0x7C0, (env->tpage * 8) & 0x300);
         return;
     }
-    GPU_printf(&D_80015AD8, (env->tpage >> 7) & 3, (env->tpage >> 5) & 3, (env->tpage << 6) & 0x7C0, ((env->tpage * 0x10) & 0x100) + ((env->tpage >> 2) & 0x200));
+    GPU_printf("tpage: (%d,%d,%d,%d)\n", (env->tpage >> 7) & 3, (env->tpage >> 5) & 3, (env->tpage << 6) & 0x7C0, ((env->tpage * 0x10) & 0x100) + ((env->tpage >> 2) & 0x200));
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDispEnv);
 void DumpDispEnv(DISPENV* env)
 {
-    GPU_printf(&D_80015B58, env->disp.x, env->disp.y, env->disp.w, (s32) env->disp.h);
-    GPU_printf(&D_80015B74, env->screen.x, env->screen.y, env->screen.w, (s32) env->screen.h);
-    GPU_printf(&D_80015B90, (s16) env->isinter);
-    GPU_printf(&D_80015B9C, (s16) env->isrgb24);
+    GPU_printf("disp   (%3d,%3d)-(%d,%d)\n", env->disp.x, env->disp.y, env->disp.w, (s32) env->disp.h);
+    GPU_printf("screen (%3d,%3d)-(%d,%d)\n", env->screen.x, env->screen.y, env->screen.w, (s32) env->screen.h);
+    GPU_printf("isinter %d\n", (s16) env->isinter);
+    GPU_printf("isrgb24 %d\n", (s16) env->isrgb24);
 }
+
+const char D_80015BA8[] = "$Id: sys.c,v 1.129 1996/12/25 03:36:20 noda Exp $";
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ResetGraph);
 int ResetGraph(int mode) {
     switch (mode & 7) {
     case 3:
     case 0:
-        printf(&D_80015BDC, &D_80090C54, &GPU_INFO);
+        printf("ResetGraph:jtb=%08x,env=%08x\n", &D_80090C54, &GPU_INFO);
     case 5:
         GPU_memset(&GPU_INFO, 0, sizeof(DEBUG));
         ResetCallback();
@@ -590,7 +533,7 @@ int ResetGraph(int mode) {
         return GPU_INFO.version;
     }
     if (GPU_INFO.level >= 2U) {
-        GPU_printf(&D_80015BFC, mode);
+        GPU_printf("ResetGraph(%d)...\n", mode);
     }
     return D_80090C94->reset(1);
 }
@@ -599,7 +542,7 @@ int ResetGraph(int mode) {
 int SetGraphReverse(int mode) {
     u_char prev = GPU_INFO.reverse;
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015C10, mode);
+        GPU_printf("SetGraphReverse(%d)...\n", mode);
     }
     GPU_INFO.reverse = mode;
     D_80090C94->ctl(D_80090C94->getctl(8) | (GPU_INFO.reverse ? 0x08000080 : 0x08000000));
@@ -614,7 +557,7 @@ int SetGraphDebug(int level) {
     u_char prev = GPU_INFO.level;
     GPU_INFO.level = level;
     if (GPU_INFO.level) {
-        GPU_printf(&D_80015C28, GPU_INFO.level,
+        GPU_printf("SetGraphDebug:level:%d,type:%d reverse:%d\n", GPU_INFO.level,
                    GPU_INFO.version, GPU_INFO.reverse);
     }
     return prev;
@@ -624,7 +567,7 @@ int SetGraphDebug(int level) {
 int SetGraphQueue(int mode) {
     u_char prev = GPU_INFO.D_80090C9D;
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015C54, mode);
+        GPU_printf("SetGrapQue(%d)...\n", mode);
     }
     if (mode != GPU_INFO.D_80090C9D) {
         D_80090C94->reset(1);
@@ -650,7 +593,7 @@ s32 GetGraphDebug(void)
 u_long DrawSyncCallback(void (*func)()) {
     void (*prev)();
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015C68, func);
+        GPU_printf("DrawSyncCallback(%08x)...\n", func);
     }
     prev = GPU_INFO.drawSyncCb;
     GPU_INFO.drawSyncCb = func;
@@ -660,7 +603,7 @@ u_long DrawSyncCallback(void (*func)()) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
 void SetDispMask(int mask) {
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015C84, mask);
+        GPU_printf("SetDispMask(%d)...\n", mask);
     }
     if (mask == 0) {
         GPU_memset(&GPU_INFO.disp, -1, sizeof(DISPENV));
@@ -672,7 +615,7 @@ void SetDispMask(int mask) {
 int DrawSync(int mode)
 {
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015C98, mode);
+        GPU_printf("DrawSync(%d)...\n", mode);
     }
     D_80090C94->sync(mode);
 }
@@ -691,13 +634,13 @@ void checkRECT(const char* log, RECT* r) {
             r->y < 0 ||
             r->h <= 0
         ) {
-            GPU_printf(&D_80015CAC, log);
-            GPU_printf(&D_80015CB8, r->x, r->y, r->w, r->h);
+            GPU_printf("%s:bad RECT", log);
+            GPU_printf("(%d,%d)-(%d,%d)\n", r->x, r->y, r->w, r->h);
         }
         break;
     case 2:
-        GPU_printf(&D_80015CCC, log);
-        GPU_printf(&D_80015CB8, r->x, r->y, r->w, r->h);
+        GPU_printf("%s:", log);
+        GPU_printf("(%d,%d)-(%d,%d)\n", r->x, r->y, r->w, r->h);
         break;
     }
 }
@@ -705,35 +648,35 @@ void checkRECT(const char* log, RECT* r) {
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage);
 int ClearImage(RECT* rect, u8 r, u8 g, u8 b)
 {
-    checkRECT(&D_80015CD0, rect);
+    checkRECT("ClearImage", rect);
     return D_80090C94->addque2(D_80090C94->clr, rect, sizeof(RECT), (b << 0x10) | (g << 8) | r);
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage2);
 int ClearImage2(RECT* rect, u8 r, u8 g, u8 b)
 {
-    checkRECT(&D_80015CD0, rect);
+    checkRECT("ClearImage", rect);
     return D_80090C94->addque2(D_80090C94->clr, rect, sizeof(RECT), 0x80000000 | (b << 0x10) | (g << 8) | r);
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadImage);
 int LoadImage(RECT* rect, u_long* p)
 {
-    checkRECT(&D_80015CDC, rect);
+    checkRECT("LoadImage", rect);
     return D_80090C94->addque2(D_80090C94->dws, rect, sizeof(RECT), p);
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", StoreImage);
 int StoreImage(RECT* rect, u_long* p)
 {
-    checkRECT(&D_80015CE8, rect);
+    checkRECT("StoreImage", rect);
     return D_80090C94->addque2(D_80090C94->drs, rect, sizeof(RECT), p);
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MoveImage);
 int MoveImage(RECT* rect, s32 x, s32 y)
 {
-    checkRECT(&D_80015CF4, rect);
+    checkRECT("MoveImage", rect);
     if (rect->w == 0 || rect->h == 0) {
         return -1;
     }
@@ -746,7 +689,7 @@ int MoveImage(RECT* rect, s32 x, s32 y)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
 OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015D00, ot, n);
+        GPU_printf("ClearOTag(%08x,%d)...\n", ot, n);
     }
     while (--n) {
         setlen(ot, 0);
@@ -761,7 +704,7 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
 OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
 {
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015D18, ot, n);
+        GPU_printf("ClearOTagR(%08x,%d)...\n", ot, n);
     }
     D_80090C94->otc(ot, n);
     TERM_PRIM(ot, &D_80090D58);
@@ -779,7 +722,7 @@ void DrawPrim(void* p) {
 void DrawOTag(u_long* p)
 {
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015D30, p);
+        GPU_printf("DrawOTag(%08x)...\n", p);
     }
     D_80090C94->addque2(D_80090C94->cwc, p, 0, 0);
 }
@@ -787,7 +730,7 @@ void DrawOTag(u_long* p)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDrawEnv);
 DRAWENV* PutDrawEnv(DRAWENV* env) {
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015D44, env);
+        GPU_printf("PutDrawEnv(%08x)...\n", env);
     }
     SetDrawEnv2(&env->dr_env, env);
     termPrim(&env->dr_env);
@@ -800,7 +743,7 @@ DRAWENV* PutDrawEnv(DRAWENV* env) {
 void DrawOTagEnv(u_long* p, DRAWENV* env)
 {
     if (GPU_INFO.level >= 2U) {
-        GPU_printf(&D_80015D5C, p, env);
+        GPU_printf("DrawOTagEnv(%08x,&08x)...\n", p, env);
     }
     SetDrawEnv2(&env->dr_env, env);
     setaddr(&env->dr_env, p);
@@ -825,7 +768,7 @@ DISPENV* PutDispEnv(DISPENV* env)
 
     mode = 0x08000000;
     if (GPU_INFO.level >= 2) {
-        GPU_printf(&D_80015D78, env);
+        GPU_printf("PutDispEnv(%08x)...\n", env);
     }
     D_80090C94->ctl(
         (
@@ -1465,11 +1408,11 @@ s32 get_alarm(void) {
     int a1;
     if ((D_80090DB4 < VSync(-1)) || D_80090DB8++ > 0xF0000) {
         *GPU_STATUS;
-        printf(&D_80015D90,
+        printf("GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,",
                GPU_QIN - GPU_QOUT & 0x3F, *GPU_STATUS, *DMA1_CHCR, *DMA1_MADR);
         p = &D_80090D90;
         a1 = *p;
-        printf(&D_80015DC4, a1, D_80090D94, D_80090D98);
+        printf("func=(%08x)(%08x,%08x)\n", a1, D_80090D94, D_80090D98);
         intrMask = SetIntrMask(0);
         LOW(GPU_QOUT)=0;
         D_80090DB0 = intrMask;
@@ -1583,13 +1526,13 @@ s32 get_tim_addr(u32* timaddr, TIM_IMAGE* img) {
     }
     img->mode = *timaddr++;
     if (GetGraphDebug() == 2) {
-        printf(&D_80015DDC, 0x10);
+        printf("id  =%08x\n", 0x10);
     }
     if (GetGraphDebug() == 2) {
-        printf(&D_80015DE8, img->mode);
+        printf("mode=%08x\n", img->mode);
     }
     if (GetGraphDebug() == 2) {
-        printf(&D_80015DF4, timaddr);
+        printf("timaddr=%08x\n", timaddr);
     }
     if (img->mode & 8) {
         clut_len = *timaddr >> 2;
@@ -1612,20 +1555,20 @@ u_long get_tmd_addr(
     TMD* tmd, int objid, u_long** t_prim, u_long** v_ofs, u_long** n_ofs) {
     TmdObj* obj = tmd->obj;
     if (GetGraphDebug() == 2) {
-        printf(&D_80015E04);
+        printf("analizing TMD...\n");
     }
     if (GetGraphDebug() == 2) {
-        printf(&D_80015E18, tmd->id, tmd->flags,
+        printf("\tid=%08X, flags=%d, nobj=%d, objid=%d\n", tmd->id, tmd->flags,
                tmd->nobj, objid);
     }
     if (GetGraphDebug() == 2) {
-        printf(&D_80015E40, obj[objid].vert, obj[objid].nvert);
+        printf("\tvert=%08X, nvert=%d\n", obj[objid].vert, obj[objid].nvert);
     }
     if (GetGraphDebug() == 2) {
-        printf(&D_80015E58, obj[objid].norm, obj[objid].nnorm);
+        printf("\tnorm=%08X, nnorm=%d\n", obj[objid].norm, obj[objid].nnorm);
     }
     if (GetGraphDebug() == 2) {
-        printf(&D_80015E70, obj[objid].prim, obj[objid].nprim);
+        printf("\tprim=%08X, nprim=%d\n", obj[objid].prim, obj[objid].nprim);
     }
     *v_ofs = (u_long*)((unsigned char*)obj + obj[objid].vert);
     *n_ofs = (u_long*)((unsigned char*)obj + obj[objid].norm);
@@ -1644,7 +1587,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
     switch (temp_v1) {
     case 0x20000304: // F3L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015E88);
+            printf("F3L ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1664,7 +1607,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x10;
     case 0x30000406: // G3L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015E90);
+            printf("G3L ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1684,7 +1627,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x14;
     case 0x24000507: // FT3L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015E98);
+            printf("FT3L ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1703,7 +1646,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x18;
     case 0x34000609: // GT3L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EA0);
+            printf("GT3L ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1722,7 +1665,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x1C;
     case 0x21010304: // F3
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EA8);
+            printf("F3 ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1739,7 +1682,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x10;
     case 0x31010506: // G3
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EAC);
+            printf("G3 ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1756,7 +1699,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x18;
     case 0x25010607: //FT3
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EB0);
+            printf("FT3 ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1781,7 +1724,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x1C;
     case 0x35010809: // GT3
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EB8);
+            printf("GT3 ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1806,7 +1749,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x24;
     case 0x28000405: // F4L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EC0);
+            printf("F4L ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1831,7 +1774,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x14;
     case 0x38000508: //G4L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EC8);
+            printf("G4L ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1856,7 +1799,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x18;
     case 0x2C000709: // FT4L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015ED0);
+            printf("FT4L ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1879,7 +1822,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x20;
     case 0x3C00080C: // GT4L
         if (GetGraphDebug() == 2) {
-            printf(&D_80015ED8);
+            printf("GT4L ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1902,7 +1845,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x24;
     case 0x29010305: // F4
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EE0);
+            printf("F4 ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1923,7 +1866,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x10;
     case 0x39010608: // G4
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EE4);
+            printf("G4 ");
         }
         arg1->r0 = arg0[0x4];
         arg1->g0 = arg0[0x5];
@@ -1944,7 +1887,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x1C;
     case 0x2D010709: // FT4
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EE8);
+            printf("FT4 ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -1975,7 +1918,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return 0x20;
     case 0x3D010A0C: // GT4
         if (GetGraphDebug() == 2) {
-            printf(&D_80015EF0);
+            printf("GT4 ");
         }
         arg1->tpage = *(u16*)(&arg0[0xA]);
         arg1->clut = *(u16*)(&arg0[0x6]);
@@ -2005,7 +1948,7 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         arg1->b3 = arg0[0x22];
         return 0x2C;
     default: // unsupported type
-        printf(&D_80015EF8, arg1->id & 0xFDFFFFFF);
+        printf("unsupported type (%08x)\n", arg1->id & 0xFDFFFFFF);
         return -1;
     }
 }
