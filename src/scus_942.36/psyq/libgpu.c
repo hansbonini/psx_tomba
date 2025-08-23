@@ -1,3 +1,23 @@
+/**
+ * @file libgpu.c
+ * @brief PlayStation PSYQ Graphics Processing Unit (GPU) Library
+ * 
+ * This library provides functions for managing the PlayStation's GPU, including:
+ * - Graphics initialization and configuration
+ * - Drawing environment setup
+ * - Display environment setup  
+ * - Primitive rendering and ordering tables
+ * - VRAM memory management
+ * - Graphics debugging utilities
+ * - TMD (3D model) processing
+ * 
+ * The library is part of the official PSYQ SDK from Sony and provides
+ * low-level access to the PlayStation's graphics hardware.
+ * 
+ * @note This is a reverse-engineered implementation based on the original
+ *       PSYQ library for compatibility with the PSX Tomba! project.
+ */
+
 #include "common.h"
 
 #include "psyq/libetc.h"
@@ -140,6 +160,21 @@ extern s32 D_8009B2A0;
 extern volatile QueueItem GPU_QITEM[];
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
+/**
+ * @brief Load texture page data into VRAM
+ * 
+ * Loads pixel data into VRAM and returns a texture page identifier.
+ * The width is automatically adjusted based on the texture mode (tp).
+ * 
+ * @param pix Pointer to pixel data to load
+ * @param tp Texture mode: 0=4bit, 1=8bit, 2=16bit
+ * @param abr Alpha blending rate (0-3)
+ * @param x X coordinate in VRAM (must be multiple of 64 for tp=0, 32 for tp=1)
+ * @param y Y coordinate in VRAM
+ * @param w Width in pixels (actual VRAM width depends on tp)
+ * @param h Height in pixels
+ * @return Texture page identifier for use with primitives
+ */
 u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
     RECT rect;
     rect.x = x;
@@ -161,6 +196,17 @@ u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut);
+/**
+ * @brief Load 256-color palette (CLUT) into VRAM
+ * 
+ * Loads a 256-color palette into VRAM at the specified coordinates.
+ * The palette data takes up 256 pixels horizontally and 1 pixel vertically.
+ * 
+ * @param clut Pointer to palette data (256 16-bit color values)
+ * @param x X coordinate in VRAM (typically 0-1023)
+ * @param y Y coordinate in VRAM (typically in upper area 256-511)
+ * @return CLUT identifier for use with textured primitives
+ */
 u_short LoadClut(u_long* clut, int x, int y) {
     RECT rect;
     rect.x = x;
@@ -172,6 +218,17 @@ u_short LoadClut(u_long* clut, int x, int y) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut2);
+/**
+ * @brief Load 16-color palette (CLUT) into VRAM
+ * 
+ * Loads a 16-color palette into VRAM at the specified coordinates.
+ * The palette data takes up 16 pixels horizontally and 1 pixel vertically.
+ * 
+ * @param clut Pointer to palette data (16 16-bit color values)
+ * @param x X coordinate in VRAM (typically 0-1023)
+ * @param y Y coordinate in VRAM (typically in upper area 256-511)
+ * @return CLUT identifier for use with textured primitives
+ */
 u_short LoadClut2(u_long* clut, int x, int y) {
     RECT rect;
     rect.x = x;
@@ -183,6 +240,20 @@ u_short LoadClut2(u_long* clut, int x, int y) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDrawEnv);
+/**
+ * @brief Initialize drawing environment with default values
+ * 
+ * Sets up a drawing environment structure with sensible defaults.
+ * The drawing environment controls clipping area, texture window,
+ * background color, and other rendering parameters.
+ * 
+ * @param env Pointer to DRAWENV structure to initialize
+ * @param x X coordinate of drawing area
+ * @param y Y coordinate of drawing area  
+ * @param w Width of drawing area
+ * @param h Height of drawing area
+ * @return Pointer to the initialized DRAWENV structure
+ */
 DRAWENV* SetDefDrawEnv(DRAWENV* env, int x, int y, int w, int h)
 {
     s32 videomode = GetVideoMode();
@@ -214,6 +285,20 @@ DRAWENV* SetDefDrawEnv(DRAWENV* env, int x, int y, int w, int h)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDispEnv);
+/**
+ * @brief Initialize display environment with default values
+ * 
+ * Sets up a display environment structure with sensible defaults.
+ * The display environment controls the area of VRAM that is shown
+ * on screen and various display modes.
+ * 
+ * @param env Pointer to DISPENV structure to initialize
+ * @param x X coordinate of display area in VRAM
+ * @param y Y coordinate of display area in VRAM
+ * @param w Width of display area
+ * @param h Height of display area
+ * @return Pointer to the initialized DISPENV structure
+ */
 DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
     env->disp.x = x;
     env->disp.y = y;
@@ -262,22 +347,56 @@ void DumpTPage(u_short tpage)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpClut);
+/**
+ * @brief Display CLUT (palette) information for debugging
+ * 
+ * Prints the CLUT coordinates to the debug output. Used for debugging
+ * texture and palette issues.
+ * 
+ * @param clut CLUT identifier as returned by GetClut() or LoadClut()
+ */
 void DumpClut(u_short clut)
 {
     GPU_printf("clut: (%d,%d)\n", (clut & 0x3F) << 4, clut >> 6);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", NextPrim);
+/**
+ * @brief Get pointer to next primitive in a linked list
+ * 
+ * Returns a pointer to the next primitive in a chain of linked primitives.
+ * Used for traversing primitive lists.
+ * 
+ * @param p Pointer to current primitive
+ * @return Pointer to next primitive, or NULL if end of list
+ */
 void* NextPrim(void *p) {
     return nextPrim(p);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", IsEndPrim);
+/**
+ * @brief Check if primitive is the end of a list
+ * 
+ * Determines if the given primitive is the last one in a linked list.
+ * 
+ * @param p Pointer to primitive to check
+ * @return Non-zero if this is the end primitive, zero otherwise
+ */
 int IsEndPrim(void *p) {
     return isendprim(p);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", AddPrim);
+/**
+ * @brief Add primitive to ordering table
+ * 
+ * Links a graphics primitive into the specified ordering table entry.
+ * Primitives are rendered in order from OT entry 0 to highest entry.
+ * 
+ * @param ot Pointer to ordering table entry
+ * @param p Pointer to primitive to add
+ */
 void AddPrim(void *ot, void *p) {
     addPrim(ot, p);
 }
@@ -479,6 +598,17 @@ void SetDrawLoad(DR_LOAD* p, RECT* rect) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MargePrim);
+/**
+ * @brief Merge two primitives into one
+ * 
+ * Combines two graphics primitives into a single primitive packet.
+ * This can be used to optimize rendering by reducing the number
+ * of separate GPU commands.
+ * 
+ * @param p0 Pointer to first primitive (becomes the merged primitive)
+ * @param p1 Pointer to second primitive (will be cleared)
+ * @return 0 on success, -1 if merged primitive would be too large
+ */
 int MargePrim(void* p0, void* p1) {
     int newLen = getlen(p0) + getlen(p1) + 1;
     if (newLen > 16)
@@ -489,6 +619,15 @@ int MargePrim(void* p0, void* p1) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDrawEnv);
+/**
+ * @brief Display drawing environment information for debugging
+ * 
+ * Prints detailed information about a drawing environment structure
+ * to the debug output. Shows clipping area, offset, texture window,
+ * dithering settings, and texture page information.
+ * 
+ * @param env Pointer to DRAWENV structure to display
+ */
 void DumpDrawEnv(DRAWENV* env)
 {
     GPU_printf("clip (%3d,%3d)-(%d,%d)\n", env->clip.x, env->clip.y, env->clip.w, (s32) env->clip.h);
@@ -515,6 +654,20 @@ void DumpDispEnv(DISPENV* env)
 const char D_80015BA8[] = "$Id: sys.c,v 1.129 1996/12/25 03:36:20 noda Exp $";
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ResetGraph);
+/**
+ * @brief Initialize or reset the graphics system
+ * 
+ * Resets the GPU hardware and initializes the graphics library.
+ * This function must be called before using any other graphics functions.
+ * Different modes control the level of reset performed.
+ * 
+ * @param mode Reset mode:
+ *             0 = Complete reset with debug output
+ *             3 = Complete reset with debug output  
+ *             5 = Complete reset without debug output
+ *             Other = Partial reset
+ * @return GPU version number (1 for GPU v1, 2 for GPU v2)
+ */
 int ResetGraph(int mode) {
     switch (mode & 7) {
     case 3:
@@ -553,6 +706,18 @@ int SetGraphReverse(int mode) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphDebug);
+/**
+ * @brief Set graphics debugging level
+ * 
+ * Controls the amount of debugging information output by graphics functions.
+ * Higher levels provide more detailed information about GPU operations.
+ * 
+ * @param level Debug level:
+ *              0 = No debug output
+ *              1 = Basic error checking
+ *              2 = Detailed function tracing
+ * @return Previous debug level
+ */
 int SetGraphDebug(int level) {
     u_char prev = GPU_INFO.level;
     GPU_INFO.level = level;
@@ -578,18 +743,42 @@ int SetGraphQueue(int mode) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphType);
+/**
+ * @brief Get GPU hardware version
+ * 
+ * Returns the version of the GPU hardware detected during initialization.
+ * Different GPU versions have slightly different capabilities and timing.
+ * 
+ * @return GPU version (1 for original GPU, 2 for revised GPU)
+ */
 u8 GetGraphType(void)
 {
     return GPU_INFO.version;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphDebug);
+/**
+ * @brief Get current graphics debugging level
+ * 
+ * Returns the current debugging level set by SetGraphDebug().
+ * 
+ * @return Current debug level (0-2)
+ */
 s32 GetGraphDebug(void)
 {
     return GPU_INFO.level;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSyncCallback);
+/**
+ * @brief Set callback function for draw synchronization
+ * 
+ * Registers a callback function that will be called when GPU drawing
+ * operations complete. Used for frame synchronization and timing.
+ * 
+ * @param func Pointer to callback function, or NULL to disable
+ * @return Pointer to previous callback function
+ */
 u_long DrawSyncCallback(void (*func)()) {
     void (*prev)();
     if (GPU_INFO.level >= 2) {
@@ -601,6 +790,14 @@ u_long DrawSyncCallback(void (*func)()) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
+/**
+ * @brief Enable or disable display output
+ * 
+ * Controls whether the GPU outputs video to the display. When disabled,
+ * the screen will be black but rendering can still continue to VRAM.
+ * 
+ * @param mask Non-zero to enable display, zero to disable
+ */
 void SetDispMask(int mask) {
     if (GPU_INFO.level >= 2) {
         GPU_printf("SetDispMask(%d)...\n", mask);
@@ -612,6 +809,16 @@ void SetDispMask(int mask) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSync);
+/**
+ * @brief Wait for GPU drawing operations to complete
+ * 
+ * Synchronizes CPU execution with GPU rendering. Different modes
+ * provide different levels of synchronization.
+ * 
+ * @param mode Sync mode:
+ *             0 = Wait for all operations to complete
+ *             Other values = Implementation specific
+ */
 int DrawSync(int mode)
 {
     if (GPU_INFO.level >= 2) {
@@ -646,6 +853,18 @@ void checkRECT(const char* log, RECT* r) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage);
+/**
+ * @brief Clear rectangular area of VRAM with solid color
+ * 
+ * Fills the specified rectangular area in VRAM with a solid color.
+ * This is commonly used to clear the background before rendering.
+ * 
+ * @param rect Pointer to RECT structure defining area to clear
+ * @param r Red component (0-255)
+ * @param g Green component (0-255)  
+ * @param b Blue component (0-255)
+ * @return Operation result from GPU queue
+ */
 int ClearImage(RECT* rect, u8 r, u8 g, u8 b)
 {
     checkRECT("ClearImage", rect);
@@ -653,6 +872,18 @@ int ClearImage(RECT* rect, u8 r, u8 g, u8 b)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage2);
+/**
+ * @brief Clear rectangular area of VRAM with solid color (alternate mode)
+ * 
+ * Similar to ClearImage but with different GPU command flags.
+ * The exact difference depends on GPU implementation details.
+ * 
+ * @param rect Pointer to RECT structure defining area to clear
+ * @param r Red component (0-255)
+ * @param g Green component (0-255)
+ * @param b Blue component (0-255)
+ * @return Operation result from GPU queue
+ */
 int ClearImage2(RECT* rect, u8 r, u8 g, u8 b)
 {
     checkRECT("ClearImage", rect);
@@ -660,6 +891,17 @@ int ClearImage2(RECT* rect, u8 r, u8 g, u8 b)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadImage);
+/**
+ * @brief Transfer image data from main memory to VRAM
+ * 
+ * Copies pixel data from main memory to the specified rectangular
+ * area in VRAM. This is the primary method for loading textures
+ * and other image data.
+ * 
+ * @param rect Pointer to RECT structure defining VRAM destination
+ * @param p Pointer to source pixel data in main memory
+ * @return Operation result from GPU queue
+ */
 int LoadImage(RECT* rect, u_long* p)
 {
     checkRECT("LoadImage", rect);
@@ -667,6 +909,17 @@ int LoadImage(RECT* rect, u_long* p)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", StoreImage);
+/**
+ * @brief Transfer image data from VRAM to main memory
+ * 
+ * Copies pixel data from the specified rectangular area in VRAM
+ * to main memory. Used for reading back rendered images or
+ * saving VRAM contents.
+ * 
+ * @param rect Pointer to RECT structure defining VRAM source area
+ * @param p Pointer to destination buffer in main memory
+ * @return Operation result from GPU queue
+ */
 int StoreImage(RECT* rect, u_long* p)
 {
     checkRECT("StoreImage", rect);
@@ -674,6 +927,18 @@ int StoreImage(RECT* rect, u_long* p)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MoveImage);
+/**
+ * @brief Copy rectangular area within VRAM
+ * 
+ * Copies pixel data from one rectangular area in VRAM to another.
+ * Both source and destination are within VRAM. This is faster than
+ * transferring through main memory.
+ * 
+ * @param rect Pointer to RECT structure defining source area
+ * @param x X coordinate of destination
+ * @param y Y coordinate of destination
+ * @return 0 on success, -1 if rect has zero width/height
+ */
 int MoveImage(RECT* rect, s32 x, s32 y)
 {
     checkRECT("MoveImage", rect);
@@ -687,6 +952,17 @@ int MoveImage(RECT* rect, s32 x, s32 y)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
+/**
+ * @brief Initialize ordering table for primitive sorting
+ * 
+ * Initializes an ordering table by linking all entries and setting
+ * up termination. Ordering tables are used to sort graphics primitives
+ * by depth for proper rendering order.
+ * 
+ * @param ot Pointer to ordering table array
+ * @param n Number of entries in the ordering table
+ * @return Pointer to last entry in the ordering table
+ */
 OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     if (GPU_INFO.level >= 2) {
         GPU_printf("ClearOTag(%08x,%d)...\n", ot, n);
@@ -701,6 +977,16 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTagR);
+/**
+ * @brief Initialize ordering table in reverse order
+ * 
+ * Similar to ClearOTag but initializes the ordering table in reverse
+ * order. This can be useful for certain rendering techniques.
+ * 
+ * @param ot Pointer to ordering table array
+ * @param n Number of entries in the ordering table
+ * @return Pointer to first entry in the ordering table
+ */
 OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
 {
     if (GPU_INFO.level >= 2) {
@@ -712,6 +998,15 @@ OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawPrim);
+/**
+ * @brief Draw a single primitive immediately
+ * 
+ * Renders a single graphics primitive directly to the GPU without
+ * using the ordering table system. Used for immediate rendering
+ * or special effects.
+ * 
+ * @param p Pointer to primitive structure to render
+ */
 void DrawPrim(void* p) {
     int len = getlen(p);
     D_80090C94->sync(0);
@@ -719,6 +1014,15 @@ void DrawPrim(void* p) {
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTag);
+/**
+ * @brief Render all primitives in an ordering table
+ * 
+ * Processes and renders all graphics primitives stored in the ordering
+ * table. This is the main function for rendering a complete frame.
+ * Primitives are rendered in order from entry 0 to the highest entry.
+ * 
+ * @param p Pointer to the first entry of the ordering table
+ */
 void DrawOTag(u_long* p)
 {
     if (GPU_INFO.level >= 2) {
@@ -1952,3 +2256,50 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
         return -1;
     }
 }
+
+/**
+ * @brief PSYQ LIBGPU Library Summary
+ * 
+ * This library provides comprehensive access to the PlayStation's GPU hardware
+ * through a high-level C interface. Key functionality includes:
+ * 
+ * INITIALIZATION & CONFIGURATION:
+ * - ResetGraph(): Initialize GPU hardware and graphics system
+ * - SetGraphDebug(): Control debug output and error checking
+ * - SetGraphReverse(): Configure display orientation
+ * 
+ * DISPLAY & DRAWING ENVIRONMENTS:
+ * - SetDefDrawEnv/SetDefDispEnv(): Initialize rendering parameters
+ * - PutDrawEnv/PutDispEnv(): Apply environments to hardware
+ * - GetDrawEnv/GetDispEnv(): Read current environment settings
+ * 
+ * VRAM MANAGEMENT:
+ * - LoadImage/StoreImage(): Transfer data between RAM and VRAM
+ * - ClearImage(): Fill VRAM areas with solid colors
+ * - MoveImage(): Copy data within VRAM
+ * 
+ * TEXTURE & PALETTE MANAGEMENT:
+ * - LoadTPage(): Load texture pages with automatic sizing
+ * - LoadClut/LoadClut2(): Load color palettes
+ * - GetTPage/GetClut(): Create texture/palette identifiers
+ * 
+ * PRIMITIVE RENDERING:
+ * - AddPrim(): Add primitives to ordering tables
+ * - DrawOTag(): Render complete ordering table
+ * - DrawPrim(): Immediate primitive rendering
+ * - ClearOTag/ClearOTagR(): Initialize ordering tables
+ * 
+ * SYNCHRONIZATION:
+ * - DrawSync(): Wait for rendering completion
+ * - DrawSyncCallback(): Register frame completion callbacks
+ * - SetDispMask(): Control display output
+ * 
+ * TMD (3D MODEL) PROCESSING:
+ * - Comprehensive TMD primitive unpacking for 3D models
+ * - Support for flat/gouraud shading, textured/untextured
+ * - Triangle and quad primitive types
+ * 
+ * The library abstracts the complex GPU command protocol and DMA operations
+ * into easy-to-use functions while maintaining high performance through
+ * hardware-accelerated operations.
+ */
