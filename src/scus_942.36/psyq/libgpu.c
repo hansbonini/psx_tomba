@@ -5,6 +5,9 @@
 #include "psyq/libgs.h"
 
 #define OT_TYPE u_long
+#define CMD_CLEAR_CACHE 0x01000000
+#define CMD_COPY_VRAM_TO_CPU 0xC0000000
+#define CMD_COPY_CPU_TO_VRAM 0xA0000000
 #define CMD_FILL_RECTANGLE_IN_VRAM(color) ((color & 0xFFFFFF) | 0x02000000)
 #define CMD_MONOCHROME_RECTANGLE(color) ((color & 0xFFFFFF) | 0x60000000)
 #define CLAMP(a, b, c) (a >= b ? (a > c ? c : a) : b)
@@ -151,25 +154,10 @@ extern char* D_80015EF8; // unpack_packet text
 extern s32 D_80090C54;
 extern GPU* D_80090C94;
 extern DEBUG GPU_INFO;
-// extern s8 D_80090C9D;
-// extern u8 D_80090C9E;
-// extern s32 D_80090C9F;
-// extern s16 D_80090CA0;
-// extern s16 D_80090CA2;
-// extern void* D_80090C98;
-// extern DISPENV TEMP_DISPENV; // size: 0x10
-// extern u16 D_80090D0A;
-// extern u16 D_80090D0C;
-// extern u16 D_80090D0E;
-// extern u16 D_80090D10;
-// extern u16 D_80090D12;
-// extern u16 D_80090D14;
-// extern u16 D_80090D16;
-// extern s32 D_80090D18;
 extern s32 D_80090D1C[];
 extern s32 D_80090D30[];
 extern u32 D_80090D4C[];
-extern s32 D_80090D58;
+extern volatile s32 D_80090D58;
 extern volatile s32* GPU_DATA;
 extern volatile s32* GPU_STATUS;
 extern volatile s32* DMA1_MADR;
@@ -528,7 +516,7 @@ void SetDrawMove(DR_MOVE* p, RECT* rect, int x, int y) {
         len = 0;
     }
     setlen(p, len);
-    p->code[0] = 0x01000000;
+    p->code[0] = CMD_CLEAR_CACHE;
     p->code[1] = 0x80000000;
     p->code[2] = *(int*)&rect->x;
     p->code[3] = (y << 0x10) | (x & 0xFFFF);
@@ -543,10 +531,10 @@ void SetDrawLoad(DR_LOAD* p, RECT* rect) {
         len = 0;
     }
     setlen(p, len);
-    p->code[0] = 0xA0000000;
+    p->code[0] = CMD_COPY_CPU_TO_VRAM;
     p->code[1] = *(int*)&rect->x;
     p->code[2] = *(int*)&rect->w;
-    p->code[len - 1] = 0x01000000;
+    p->code[len - 1] = CMD_CLEAR_CACHE;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MargePrim);
@@ -1124,13 +1112,13 @@ int _otc(OT_TYPE ot, s32 n)
     *DMA2_BCR = n;
     *DMA2_CHCR = 0x11000002;
     set_alarm();
-    if (*DMA2_CHCR & 0x01000000) {
+    if (*DMA2_CHCR & CMD_CLEAR_CACHE) {
        while(1)
         {
             if (get_alarm()) {
                 return -1;
             }
-            if (!(*DMA2_CHCR & 0x01000000)) {      
+            if (!(*DMA2_CHCR & CMD_CLEAR_CACHE)) {      
                 break;
             }
         }
@@ -1199,8 +1187,8 @@ s32 _dws(RECT* arg0, s32* arg1) {
         }
     }
     *GPU_STATUS = 0x04000000;
-    *GPU_DATA = 0x01000000;
-    *GPU_DATA = var_s4 ? 0xB0000000 : 0xA0000000;
+    *GPU_DATA = CMD_CLEAR_CACHE;
+    *GPU_DATA = var_s4 ? 0xB0000000 : CMD_COPY_CPU_TO_VRAM;
     *GPU_DATA = *(s32*)(&arg0->x);
     *GPU_DATA = *(s32*)(&arg0->w);
     for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
@@ -1239,8 +1227,8 @@ s32 _drs(RECT* arg0, s32* arg1) {
         }
     }
     *GPU_STATUS = 0x04000000;
-    *GPU_DATA = 0x01000000;
-    *GPU_DATA = 0xC0000000;
+    *GPU_DATA = CMD_CLEAR_CACHE;
+    *GPU_DATA = CMD_COPY_VRAM_TO_CPU;
     *GPU_DATA = *(s32*)&arg0->x;
     *GPU_DATA = *(s32*)&arg0->w;
     while (!(*GPU_STATUS & 0x08000000)) {
@@ -1324,7 +1312,7 @@ s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
         (GPU_INFO.D_80090C9D == 0) ||
         (
             (GPU_QIN == GPU_QOUT) &&
-            !(*DMA1_CHCR & 0x01000000) &&
+            !(*DMA1_CHCR & CMD_CLEAR_CACHE) &&
             (GPU_INFO.drawSyncCb == NULL)
         )
     ) {
@@ -1361,12 +1349,12 @@ s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
 s32 _exeque(void)
 {
     s32 result=1;
-    if (*DMA1_CHCR & 0x01000000) {
+    if (*DMA1_CHCR & CMD_CLEAR_CACHE) {
         return result;
     }
     D_80090DAC = SetIntrMask(0);
     if (GPU_QIN != GPU_QOUT) {
-        while (!(*DMA1_CHCR & 0x01000000)) {
+        while (!(*DMA1_CHCR & CMD_CLEAR_CACHE)) {
             if (((GPU_QOUT + 1 & 0x3F) == LOW(GPU_QIN)) && (*GPU_INFO.drawSyncCb == NULL)) {
                 DMACallback(2, 0);
             }
@@ -1390,7 +1378,7 @@ s32 _exeque(void)
     if (
         (
             (GPU_QIN == GPU_QOUT) &&
-            !(*DMA1_CHCR & 0x01000000)
+            !(*DMA1_CHCR & CMD_CLEAR_CACHE)
         ) && 
         (LOW(GPU_INFO.unk8[0]) != 0) &&
         (GPU_INFO.drawSyncCb != 0)
@@ -1426,7 +1414,7 @@ s32 _reset(s32 mode)
         *DMA1_CHCR = 0x401;
         *DPCR |= 0x800;
         *GPU_STATUS = 0x02000000;
-        *GPU_STATUS = 0x01000000;
+        *GPU_STATUS = CMD_CLEAR_CACHE;
         break;
     }
     SetIntrMask(D_80090DB0);
@@ -1444,7 +1432,7 @@ s32 _sync(s32 arg0)
             if (get_alarm()) return -1;
         }
         
-        while ((*DMA1_CHCR & 0x01000000) || !(*GPU_STATUS & 0x04000000)) {
+        while ((*DMA1_CHCR & CMD_CLEAR_CACHE) || !(*GPU_STATUS & 0x04000000)) {
             if (get_alarm()) return -1;
         }
         return 0;
@@ -1453,7 +1441,7 @@ s32 _sync(s32 arg0)
     if (temp_s0) {
         _exeque();
     }    
-    if ((*DMA1_CHCR & 0x01000000) || !(*GPU_STATUS & 0x04000000)) {
+    if ((*DMA1_CHCR & CMD_CLEAR_CACHE) || !(*GPU_STATUS & 0x04000000)) {
         if (!temp_s0) {
             return 1;
         } else {
@@ -1473,13 +1461,11 @@ void set_alarm(void)
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 // s32 get_alarm(void) {
 //     s32 intrMask;
-//     volatile s32 *p;
 //     if ((D_80090DB4 < VSync(-1)) || D_80090DB8++ > 0xF0000) {
 //         *GPU_STATUS;
 //         printf(&D_80015D90,
 //                GPU_QIN - GPU_QOUT & 0x3F, *GPU_STATUS, *DMA1_CHCR, *DMA1_MADR);
-//         p = &D_80090D90;
-//         printf(&D_80015DC4, *p, D_80090D94, D_80090D98);
+//         printf(&D_80015DC4, &D_80090D90, D_80090D94, D_80090D98);
 //         intrMask = SetIntrMask(0);
 //         LOW(GPU_QOUT)=0;
 //         D_80090DB0 = intrMask;
@@ -1487,7 +1473,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 //         *DMA1_CHCR = 0x401;
 //         *DPCR |= 0x800;
 //         *GPU_STATUS = 0x02000000;
-//         *GPU_STATUS = 0x01000000;
+//         *GPU_STATUS = CMD_CLEAR_CACHE;
 //         SetIntrMask(D_80090DB0);
 //         return -1;
 //     }
