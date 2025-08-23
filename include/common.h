@@ -29,4 +29,4 @@
 #endif
 
 u8* memcpy(u8* arg0, u8* arg1, s32 arg2);
-void _exeque(void);
+s32 _exeque(void);
