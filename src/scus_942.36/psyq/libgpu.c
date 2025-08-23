@@ -333,6 +333,15 @@ u_short GetClut(int x, int y)
     return getClut(x,y);
 }
 
+/**
+ * @brief Display texture page information for debugging
+ * 
+ * Prints detailed texture page information to the debug output.
+ * Shows texture format, position, and color mode based on the
+ * current graphics type.
+ * 
+ * @param tpage Texture page identifier as returned by GetTPage() or LoadTPage()
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpTPage);
 void DumpTPage(u_short tpage)
 {
@@ -401,133 +410,337 @@ void AddPrim(void *ot, void *p) {
     addPrim(ot, p);
 }
 
+/**
+ * @brief Add multiple primitives to ordering table
+ * 
+ * Adds multiple primitives to the ordering table at once,
+ * treating p0 through p1 as a range of primitives to add.
+ * 
+ * @param ot Pointer to ordering table
+ * @param p0 Pointer to first primitive in range
+ * @param p1 Pointer to last primitive in range
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", AddPrims);
 void AddPrims(void *ot, void *p0, void *p1) {
     addPrims(ot, p0, p1);
 }
 
+/**
+ * @brief Connect two primitives together
+ * 
+ * Links two primitives by setting the address of p0 to point to p1,
+ * creating a chain of primitives for the GPU to process.
+ * 
+ * @param p0 Pointer to first primitive
+ * @param p1 Pointer to second primitive to link to
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", CatPrim);
 void CatPrim(void *p0, void *p1) {
     setaddr(p0, p1);
 }
 
+/**
+ * @brief Terminate a primitive chain
+ * 
+ * Marks a primitive as the end of a primitive chain by setting
+ * its address to NULL, stopping GPU command traversal.
+ * 
+ * @param p Pointer to primitive to terminate
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", TermPrim);
 void TermPrim(void *p) {
     termPrim(p);
 }
 
+/**
+ * @brief Set semi-transparency mode for a primitive
+ * 
+ * Enables or disables semi-transparency blending for a primitive.
+ * When enabled, the primitive will be blended with the framebuffer
+ * using the current blending equation.
+ * 
+ * @param p Pointer to primitive
+ * @param abe Semi-transparency flag (0=disabled, 1=enabled)
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSemiTrans);
 void SetSemiTrans(void *p, int abe) {
     setSemiTrans(p, abe);
 }
 
+/**
+ * @brief Set texture gouraud shading mode for a primitive
+ * 
+ * Enables or disables texture gouraud shading, which applies
+ * vertex colors to textured primitives for lighting effects.
+ * 
+ * @param p Pointer to primitive
+ * @param tge Texture gouraud flag (0=disabled, 1=enabled)
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetShadeTex);
 void SetShadeTex(void *p, int tge) {
     setShadeTex(p, tge);
 }
 
+/**
+ * @brief Initialize a flat-shaded 3-vertex polygon primitive
+ * 
+ * Sets up a POLY_F3 primitive with proper packet length and
+ * GPU command code for rendering a 3-vertex polygon with
+ * flat (single) color shading.
+ * 
+ * @param p Pointer to POLY_F3 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyF3);
 void SetPolyF3(POLY_F3 *p) {
     setlen(p, 4);
     setcode(p, 0x20);
 }
 
+/**
+ * @brief Initialize a flat-shaded textured 3-vertex polygon primitive
+ * 
+ * Sets up a POLY_FT3 primitive with proper packet length and
+ * GPU command code for rendering a 3-vertex polygon with
+ * flat color shading and texture mapping.
+ * 
+ * @param p Pointer to POLY_FT3 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyFT3);
 void SetPolyFT3(POLY_FT3 *p) {
     setlen(p, 7);
     setcode(p, 0x24);
 }
 
+/**
+ * @brief Initialize a gouraud-shaded 3-vertex polygon primitive
+ * 
+ * Sets up a POLY_G3 primitive with proper packet length and
+ * GPU command code for rendering a 3-vertex polygon with
+ * gouraud (interpolated) color shading.
+ * 
+ * @param p Pointer to POLY_G3 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyG3);
 void SetPolyG3(POLY_G3 *p) {
     setlen(p, 6);
     setcode(p, 0x30);
 }
 
+/**
+ * @brief Initialize a gouraud-shaded textured 3-vertex polygon primitive
+ * 
+ * Sets up a POLY_GT3 primitive with proper packet length and
+ * GPU command code for rendering a 3-vertex polygon with
+ * gouraud color shading and texture mapping.
+ * 
+ * @param p Pointer to POLY_GT3 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyGT3);
 void SetPolyGT3(POLY_GT3 *p) {
     setlen(p, 9);
     setcode(p, 0x34);
 }
 
+/**
+ * @brief Initialize a flat-shaded 4-vertex polygon primitive
+ * 
+ * Sets up a POLY_F4 primitive (quad) with proper packet length and
+ * GPU command code for rendering a 4-vertex polygon with
+ * flat (single) color shading.
+ * 
+ * @param p Pointer to POLY_F4 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyF4);
 void SetPolyF4(POLY_F4 *p) {
     setlen(p, 5);
     setcode(p, 0x28);
 }
 
+/**
+ * @brief Initialize a flat-shaded textured 4-vertex polygon primitive
+ * 
+ * Sets up a POLY_FT4 primitive (textured quad) with proper packet length and
+ * GPU command code for rendering a 4-vertex polygon with
+ * flat color shading and texture mapping.
+ * 
+ * @param p Pointer to POLY_FT4 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyFT4);
 void SetPolyFT4(POLY_FT4 *p) {
     setlen(p, 9);
     setcode(p, 0x2C);
 }
 
+/**
+ * @brief Initialize a gouraud-shaded 4-vertex polygon primitive
+ * 
+ * Sets up a POLY_G4 primitive (gouraud quad) with proper packet length and
+ * GPU command code for rendering a 4-vertex polygon with
+ * gouraud (interpolated) color shading.
+ * 
+ * @param p Pointer to POLY_G4 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyG4);
 void SetPolyG4(POLY_G4 *p) {
     setlen(p, 8);
     setcode(p, 0x38);
 }
 
+/**
+ * @brief Initialize a gouraud-shaded textured 4-vertex polygon primitive
+ * 
+ * Sets up a POLY_GT4 primitive (textured gouraud quad) with proper packet length and
+ * GPU command code for rendering a 4-vertex polygon with
+ * gouraud color shading and texture mapping.
+ * 
+ * @param p Pointer to POLY_GT4 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPolyGT4);
 void SetPolyGT4(POLY_GT4 *p) {
     setlen(p, 12);
     setcode(p, 0x3C);
 }
 
+/**
+ * @brief Initialize an 8x8 pixel sprite primitive
+ * 
+ * Sets up a SPRT_8 primitive with proper packet length and
+ * GPU command code for rendering an 8x8 pixel textured sprite.
+ * 
+ * @param p Pointer to SPRT_8 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSprt8);
 void SetSprt8(SPRT_8 *p) {
     setlen(p, 3);
     setcode(p, 0x74);
 }
 
+/**
+ * @brief Initialize a 16x16 pixel sprite primitive
+ * 
+ * Sets up a SPRT_16 primitive with proper packet length and
+ * GPU command code for rendering a 16x16 pixel textured sprite.
+ * 
+ * @param p Pointer to SPRT_16 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSprt16);
 void SetSprt16(SPRT_16 *p) {
     setlen(p, 3);
     setcode(p, 0x7C);
 }
 
+/**
+ * @brief Initialize a variable-size sprite primitive
+ * 
+ * Sets up a SPRT primitive with proper packet length and
+ * GPU command code for rendering a textured sprite with
+ * arbitrary width and height.
+ * 
+ * @param p Pointer to SPRT primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetSprt);
 void SetSprt(SPRT *p) {
     setlen(p, 4);
     setcode(p, 0x64);
 }
 
+/**
+ * @brief Initialize a 1x1 pixel tile primitive
+ * 
+ * Sets up a TILE_1 primitive with proper packet length and
+ * GPU command code for rendering a single pixel with solid color.
+ * 
+ * @param p Pointer to TILE_1 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile1);
 void SetTile1(TILE_1 *p) {
     setlen(p, 2);
     setcode(p, 0x68);
 }
 
+/**
+ * @brief Initialize an 8x8 pixel tile primitive
+ * 
+ * Sets up a TILE_8 primitive with proper packet length and
+ * GPU command code for rendering an 8x8 pixel solid color rectangle.
+ * 
+ * @param p Pointer to TILE_8 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile8);
 void SetTile8(TILE_8 *p) {
     setlen(p, 2);
     setcode(p, 0x70);
 }
 
+/**
+ * @brief Initialize a 16x16 pixel tile primitive
+ * 
+ * Sets up a TILE_16 primitive with proper packet length and
+ * GPU command code for rendering a 16x16 pixel solid color rectangle.
+ * 
+ * @param p Pointer to TILE_16 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile16);
 void SetTile16(TILE_16 *p) {
     setlen(p, 2);
     setcode(p, 0x78);
 }
 
+/**
+ * @brief Initialize a variable-size tile primitive
+ * 
+ * Sets up a TILE primitive with proper packet length and
+ * GPU command code for rendering a solid color rectangle with
+ * arbitrary width and height.
+ * 
+ * @param p Pointer to TILE primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTile);
 void SetTile(TILE *p) {
     setlen(p, 3);
     setcode(p, 0x60);
 }
 
+/**
+ * @brief Initialize a flat-shaded 2-point line primitive
+ * 
+ * Sets up a LINE_F2 primitive with proper packet length and
+ * GPU command code for rendering a line between two points
+ * with flat (single) color.
+ * 
+ * @param p Pointer to LINE_F2 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineF2);
 void SetLineF2(LINE_F2 *p) {
     setlen(p, 3);
     setcode(p, 0x40);
 }
 
+/**
+ * @brief Initialize a gouraud-shaded 2-point line primitive
+ * 
+ * Sets up a LINE_G2 primitive with proper packet length and
+ * GPU command code for rendering a line between two points
+ * with gouraud (interpolated) color blending.
+ * 
+ * @param p Pointer to LINE_G2 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineG2);
 void SetLineG2(LINE_G2 *p) {
     setlen(p, 4);
     setcode(p, 0x50);
 }
 
+/**
+ * @brief Initialize a flat-shaded 3-point polyline primitive
+ * 
+ * Sets up a LINE_F3 primitive with proper packet length and
+ * GPU command code for rendering a polyline through three points
+ * with flat (single) color. The pad field is set to disable
+ * automatic line termination.
+ * 
+ * @param p Pointer to LINE_F3 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineF3);
 void SetLineF3(LINE_F3 *p) {
     setlen(p, 5);
@@ -535,6 +748,16 @@ void SetLineF3(LINE_F3 *p) {
     p->pad = 0x55555555;
 }
 
+/**
+ * @brief Initialize a gouraud-shaded 3-point polyline primitive
+ * 
+ * Sets up a LINE_G3 primitive with proper packet length and
+ * GPU command code for rendering a polyline through three points
+ * with gouraud (interpolated) color blending. The pad field is set
+ * to disable automatic line termination.
+ * 
+ * @param p Pointer to LINE_G3 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineG3);
 void SetLineG3(LINE_G3 *p) {
     setlen(p, 7);
@@ -542,6 +765,16 @@ void SetLineG3(LINE_G3 *p) {
     p->pad = 0x55555555;
 }
 
+/**
+ * @brief Initialize a flat-shaded 4-point polyline primitive
+ * 
+ * Sets up a LINE_F4 primitive with proper packet length and
+ * GPU command code for rendering a polyline through four points
+ * with flat (single) color. The pad field is set to disable
+ * automatic line termination.
+ * 
+ * @param p Pointer to LINE_F4 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineF4);
 void SetLineF4(LINE_F4 *p) {
     setlen(p, 6);
@@ -549,6 +782,16 @@ void SetLineF4(LINE_F4 *p) {
     p->pad = 0x55555555;
 }
 
+/**
+ * @brief Initialize a gouraud-shaded 4-point polyline primitive
+ * 
+ * Sets up a LINE_G4 primitive with proper packet length and
+ * GPU command code for rendering a polyline through four points
+ * with gouraud (interpolated) color blending. The pad field is set
+ * to disable automatic line termination.
+ * 
+ * @param p Pointer to LINE_G4 primitive structure
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetLineG4);
 void SetLineG4(LINE_G4 *p) {
     setlen(p, 9);
@@ -556,6 +799,18 @@ void SetLineG4(LINE_G4 *p) {
     p->pad = 0x55555555;
 }
 
+/**
+ * @brief Initialize a texture page drawing command
+ * 
+ * Sets up a DR_TPAGE primitive that configures texture page settings
+ * for subsequent rendering operations. This command is added to the
+ * ordering table to change GPU texture parameters.
+ * 
+ * @param p Pointer to DR_TPAGE primitive structure
+ * @param dfe Dither flag enable (0=disabled, 1=enabled)
+ * @param dtd Draw to display area flag (0=disabled, 1=enabled)  
+ * @param tpage Texture page ID containing format and position info
+ */
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawTPage);
 void SetDrawTPage(DR_TPAGE* p, s32 dfe, s32 dtd, s32 tpage)
 {
@@ -569,6 +824,18 @@ void SetDrawTPage(DR_TPAGE* p, s32 dfe, s32 dtd, s32 tpage)
     p->code[0] = result;
 }
 
+/**
+ * @brief Initialize a VRAM move command
+ * 
+ * Sets up a DR_MOVE primitive that copies a rectangular area from
+ * one location in VRAM to another. The command includes cache
+ * clear operations to ensure data integrity.
+ * 
+ * @param p Pointer to DR_MOVE primitive structure
+ * @param rect Source rectangle in VRAM to copy from
+ * @param x Destination X coordinate in VRAM
+ * @param y Destination Y coordinate in VRAM
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMove);
 void SetDrawMove(DR_MOVE* p, RECT* rect, int x, int y) {
     int len = 5;
@@ -583,6 +850,16 @@ void SetDrawMove(DR_MOVE* p, RECT* rect, int x, int y) {
     p->code[4] = *(int*)&rect->w;
 }
 
+/**
+ * @brief Initialize a CPU-to-VRAM data transfer command
+ * 
+ * Sets up a DR_LOAD primitive that prepares for transferring pixel data
+ * from CPU memory to VRAM. The command calculates the required packet
+ * size based on pixel count and includes cache operations.
+ * 
+ * @param p Pointer to DR_LOAD primitive structure
+ * @param rect Target rectangle in VRAM where data will be loaded
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawLoad);
 void SetDrawLoad(DR_LOAD* p, RECT* rect) {
     int pixel_count = (rect->w * rect->h + 1) / 2;
@@ -642,6 +919,15 @@ void DumpDrawEnv(DRAWENV* env)
     GPU_printf("tpage: (%d,%d,%d,%d)\n", (env->tpage >> 7) & 3, (env->tpage >> 5) & 3, (env->tpage << 6) & 0x7C0, ((env->tpage * 0x10) & 0x100) + ((env->tpage >> 2) & 0x200));
 }
 
+/**
+ * @brief Display video display environment information for debugging
+ * 
+ * Prints detailed information about a display environment structure
+ * to the debug output. Shows display area, screen area, interlace
+ * mode, and RGB24 mode settings.
+ * 
+ * @param env Pointer to DISPENV structure to display
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDispEnv);
 void DumpDispEnv(DISPENV* env)
 {
@@ -1043,6 +1329,16 @@ DRAWENV* PutDrawEnv(DRAWENV* env) {
     return env;
 }
 
+/**
+ * @brief Render ordering table with specific drawing environment
+ * 
+ * Processes and renders all graphics primitives in the ordering table
+ * with a specific drawing environment applied. The drawing environment
+ * is linked to the ordering table and both are sent to the GPU.
+ * 
+ * @param p Pointer to the first entry of the ordering table
+ * @param env Pointer to drawing environment to apply during rendering
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTagEnv);
 void DrawOTagEnv(u_long* p, DRAWENV* env)
 {
@@ -1135,6 +1431,15 @@ DISPENV* PutDispEnv(DISPENV* env)
     return env;
 }
 
+/**
+ * @brief Get current display environment settings
+ * 
+ * Retrieves the current display environment configuration from
+ * the GPU system. Used to query current video display settings.
+ * 
+ * @param env Pointer to DISPENV structure to fill with current settings
+ * @return Pointer to the filled environment structure
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
 DISPENV* GetDispEnv(DISPENV* env)
 {
@@ -1142,12 +1447,30 @@ DISPENV* GetDispEnv(DISPENV* env)
     return env;
 }
 
+/**
+ * @brief Get Odd/Even display field status
+ * 
+ * Returns the current field being displayed in interlaced video modes.
+ * Used for field-based rendering and synchronization.
+ * 
+ * @return 0 for even field, 1 for odd field
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetODE);
 int GetODE(void)
 {
     return D_80090C94->status() >> 0x1F;
 }
 
+/**
+ * @brief Set texture window drawing command
+ * 
+ * Sets up a DR_TWIN primitive that defines the texture window
+ * for texture coordinate wrapping. The texture window controls
+ * how texture coordinates wrap when they exceed texture boundaries.
+ * 
+ * @param p Pointer to DR_TWIN primitive structure
+ * @param tw Pointer to RECT defining texture window area
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTexWindow);
 void SetTexWindow(DR_TWIN* p, RECT* tw)
 {
@@ -1156,6 +1479,15 @@ void SetTexWindow(DR_TWIN* p, RECT* tw)
     p->code[1] = 0;
 }
 
+/**
+ * @brief Set drawing area drawing command
+ * 
+ * Sets up a DR_AREA primitive that defines the drawing area bounds.
+ * All rendering operations will be clipped to this rectangular area.
+ * 
+ * @param p Pointer to DR_AREA primitive structure
+ * @param r Pointer to RECT defining the drawing area
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawArea);
 void SetDrawArea(DR_AREA* p, RECT* r)
 {
@@ -1164,6 +1496,15 @@ void SetDrawArea(DR_AREA* p, RECT* r)
     p->code[1] = get_ce((s16) (((u16) r->x + (u16) r->w) - 1), (s16) (((u16) r->y + (u16) r->h) - 1));
 }
 
+/**
+ * @brief Set drawing offset drawing command
+ * 
+ * Sets up a DR_OFFSET primitive that defines the drawing offset.
+ * All subsequent rendering operations will be offset by these values.
+ * 
+ * @param p Pointer to DR_OFFSET primitive structure
+ * @param ofs Pointer to array of two offsets [x_offset, y_offset]
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawOffset);
 void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     setlen(p, 2);
@@ -1171,6 +1512,17 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     p->code[1] = 0;
 }
 
+/**
+ * @brief Set rendering priority drawing command
+ * 
+ * Sets up a DR_PRIO primitive that controls primitive rendering priority.
+ * This affects the order in which primitives are processed and can
+ * influence depth testing behavior.
+ * 
+ * @param p Pointer to DR_PRIO primitive structure
+ * @param pbc Priority comparison flag
+ * @param pbw Priority window flag
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPriority);
 void SetPriority(DR_PRIO* p, int pbc, int pbw) {
     int data;
@@ -1183,6 +1535,18 @@ void SetPriority(DR_PRIO* p, int pbc, int pbw) {
     p->code[1] = 0;
 }
 
+/**
+ * @brief Set drawing mode drawing command
+ * 
+ * Sets up a DR_MODE primitive that configures various drawing modes
+ * including dithering, texture page settings, and texture window.
+ * 
+ * @param p Pointer to DR_MODE primitive structure
+ * @param dfe Dither flag enable (0=disabled, 1=enabled)
+ * @param dtd Draw to display area flag (0=disabled, 1=enabled)
+ * @param tpage Texture page ID
+ * @param tw Pointer to RECT defining texture window
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMode);
 void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw)
 {
@@ -1191,6 +1555,16 @@ void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw)
     p->code[1] = get_tw(tw);
 }
 
+/**
+ * @brief Set drawing environment drawing command
+ * 
+ * Sets up a DR_ENV primitive that contains all drawing environment
+ * settings from a DRAWENV structure. This includes clipping area,
+ * drawing offset, texture window, and various GPU modes.
+ * 
+ * @param dr_env Pointer to DR_ENV primitive structure to initialize
+ * @param env Pointer to DRAWENV structure containing settings
+ */
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv);
 void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env)
 {
