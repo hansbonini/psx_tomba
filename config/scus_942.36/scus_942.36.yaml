@@ -75,7 +75,7 @@ segments:
       - [0x4E2E0, c, psyq/libgpu]
       - [0x536D4, c, psyq/libgte]
       - [0x54E34, c, psyq/libcd]
-      - [0x58898, c, psyq/libetc]
+      - [0x58614, c, psyq/libetc]
       - [0x5BF1C, c, psyq/libsnd]
       - [0x648D4, c, psyq/libspu]
       - [0x67638, data]
