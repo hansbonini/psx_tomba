@@ -464,7 +464,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001ECD8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001EFE8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001F158);
+void func_8001F158(s16 file_id)
+{
+    if (CdControl(2, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
+        CdControlF(0x15, 0);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001F1C0);
 

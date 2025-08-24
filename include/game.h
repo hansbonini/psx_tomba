@@ -112,6 +112,9 @@ extern u8 D_8009C3E8;
 
 extern s32 D_1F8000C0;
 extern s32 D_1F800118;
+extern u8 D_8007775C[];
+extern s16 D_80078F80;
+extern s32 D_800791A0; // FileLinkArray
 extern s32 D_8007D6A0;
 extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
