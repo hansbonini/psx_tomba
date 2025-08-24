@@ -453,7 +453,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E31C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E3D8);
 u8 func_8001E3D8(EVENT id)
 {
-    return (&EVENT_LIST)[id];
+    return EVENT_LIST[id];
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_8001E3EC);
@@ -786,29 +786,29 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029734);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029788);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029944);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main_loop", func_80029944);
 s32 func_80029944(ITEM id, s32 qty)
 {
     s32 i;
-    for (i = 0; i < INVENTORY_SLOTS[0]; i++) {
-        if (INVENTORY_CURRENT_SLOT[i] == id) {
+    for (i = 0; i < INVENTORY_PAGE[0]; i++) {
+        if (INVENTORY_SLOT[i] == id) {
             if (qty == -1) {
                 ITEM_LIST[id] = 0;
-                while (i < INVENTORY_SLOTS[0] - 1) {
-                    INVENTORY_CURRENT_SLOT[i] = INVENTORY_NEXT_SLOT[i];
+                while (i < INVENTORY_PAGE[0] - 1) {
+                    INVENTORY_SLOT[i] = *(&INVENTORY_SLOT[i]+1U);
                     i++;
                 }
-                INVENTORY_SLOTS[0] -= 1;
+                INVENTORY_PAGE[0] -= 1;
                 return 0;
             }
             ITEM_LIST[id] = ITEM_LIST[id] - qty;
             if (ITEM_LIST[id] == 0) {
                 ITEM_LIST[id] = 0;
-                while (i < INVENTORY_SLOTS[0] - 1) {
-                    INVENTORY_CURRENT_SLOT[i] = INVENTORY_NEXT_SLOT[i];
+                while (i < INVENTORY_PAGE[0] - 1) {
+                    INVENTORY_SLOT[i] = *(&INVENTORY_SLOT[i]+1U);
                     i++;
                 }
-                INVENTORY_SLOTS[0] -= 1;
+                INVENTORY_PAGE[0] -= 1;
                 return 0;
             }
             return ITEM_LIST[id];

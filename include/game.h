@@ -120,12 +120,11 @@ extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
 extern u32 D_8009B138;
 extern u8 ITEM_LIST[75];
+extern u8 INVENTORY_SLOT[]; // current item slot
+extern u16 INVENTORY_PAGE[3];
+extern u8 EVENT_LIST[];
 extern u16 D_8009C864;
 extern u16 D_8009C866;
-extern u8 INVENTORY_CURRENT_SLOT[]; // current item slot
-extern u8 INVENTORY_NEXT_SLOT[]; // next item slot
-extern u16 INVENTORY_SLOTS[];
-extern u8 EVENT_LIST;
 extern s16 D_8009C940;
 extern s16 D_8009C9DA;
 extern s16 D_8009C9DE;
