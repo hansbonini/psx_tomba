@@ -1,7 +1,7 @@
 #include "common.h"
 #include "psyq/kernel.h"
 
-#if !(SKIP_ASM || M2CTX)
+#if !defined(SPLAT) && !defined(M2CTX)
 
     BIOS_STUB(FlushCache, 0xA0, 0x44);
 
@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B4CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B668);
 
-#if !(SKIP_ASM || M2CTX)
+#if !defined(SPLAT) && !defined(M2CTX)
     BIOS_STUB(firstfile, 0xB0, 0x42);
 #endif
 

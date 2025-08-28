@@ -21,7 +21,19 @@ typedef struct lz_t {
     s32 offset;
 } lz_t;
 
-typedef enum ITEM {
+typedef struct some_struct {
+    int field_0;
+    char field_4;
+    int field_8;
+    char field_C;
+    int field_10[22];
+    char field_68;
+    char field_69;
+    char field_6A;
+    char field_6B;
+} some_struct;
+
+typedef enum {
     /* 0x00 */ ITEM_CHICK,
     /* 0x01 */ ITEM_FROG,
     /* 0x02 */ ITEM_LOSTDWARF,
@@ -105,11 +117,18 @@ typedef enum {
     /* 0x01 */ EVENT_THE100YEAROLDWISEMAN,
 } EVENT;
 
-extern u8 D_8009BCD8;
+typedef enum {
+    /* 0x0 */ INVENTORY_SCREEN_ITEM,
+    /* 0x1 */ INVENTORY_SCREEN_EVENT,
+    /* 0x2 */ INVENTORY_SCREEN_STATUS,
+    /* 0x3 */ INVENTORY_SCREEN_MAP,
+    /* 0x4 */ INVENTORY_SCREEN_ITEM_ONLY,
+} INVENTORY_SCREEN_ID;
+
 extern u8 PLAYER_HEALTH;
+extern u8 PLAYER_HEALTH_MAX;
 extern u8 D_8009C3E7;
 extern u8 D_8009C3E8;
-
 extern s32 D_1F8000C0;
 extern s32 D_1F800118;
 extern u8 D_8007775C[];

@@ -1,6 +1,6 @@
 #include "common.h"
 
-#if !(SKIP_ASM || M2CTX)
+#if !defined(SPLAT) && !defined(M2CTX)
 
     BIOS_STUB(_card_info, 0xA0, 0xAB);
 
@@ -14,7 +14,7 @@ void _card_clear(s32 arg0)
     _card_write(arg0, 0x3F, 0);
 }
 
-#if !(SKIP_ASM || M2CTX)
+#if !defined(SPLAT) && !defined(M2CTX)
 
     BIOS_STUB(_card_write, 0xB0, 0x4E);
 
@@ -49,7 +49,7 @@ void StopCARD(void)
     return;
 }
 
-#if !(SKIP_ASM || M2CTX)
+#if !defined(SPLAT) && !defined(M2CTX)
 
     BIOS_STUB(ChangeClearPAD, 0xB0, 0x5B);
 

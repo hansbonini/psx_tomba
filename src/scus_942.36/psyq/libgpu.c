@@ -67,7 +67,6 @@ typedef struct {
     // GPU version
     // https://psx-spx.consoledev.net/graphicsprocessingunitgpu/#gpu-versions
     u_char version;
-
     u_char D_80090C9D;
     u_char level;
     u_char reverse;
@@ -159,7 +158,7 @@ extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
 extern volatile QueueItem GPU_QITEM[];
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadTPage);
 /**
  * @brief Load texture page data into VRAM
  * 
@@ -195,7 +194,7 @@ u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
     return GetTPage(tp, abr, x, y);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut);
 /**
  * @brief Load 256-color palette (CLUT) into VRAM
  * 
@@ -217,7 +216,7 @@ u_short LoadClut(u_long* clut, int x, int y) {
     return GetClut(x, y);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut2);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadClut2);
 /**
  * @brief Load 16-color palette (CLUT) into VRAM
  * 
@@ -239,7 +238,7 @@ u_short LoadClut2(u_long* clut, int x, int y) {
     return GetClut(x, y);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDrawEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDrawEnv);
 /**
  * @brief Initialize drawing environment with default values
  * 
@@ -284,7 +283,7 @@ DRAWENV* SetDefDrawEnv(DRAWENV* env, int x, int y, int w, int h)
     return env;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDispEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDefDispEnv);
 /**
  * @brief Initialize display environment with default values
  * 
@@ -315,7 +314,7 @@ DISPENV* SetDefDispEnv(DISPENV* env, int x, int y, int w, int h) {
     return env;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetTPage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetTPage);
 u_short GetTPage(int tp, int abr, int x, int y)
 {
     s32 result;
@@ -327,7 +326,7 @@ u_short GetTPage(int tp, int abr, int x, int y)
     return result;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetClut);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetClut);
 u_short GetClut(int x, int y)
 {
     return getClut(x,y);
@@ -342,7 +341,7 @@ u_short GetClut(int x, int y)
  * 
  * @param tpage Texture page identifier as returned by GetTPage() or LoadTPage()
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpTPage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpTPage);
 void DumpTPage(u_short tpage)
 {
         u32 temp_v0;
@@ -355,7 +354,7 @@ void DumpTPage(u_short tpage)
         GPU_printf("tpage: (%d,%d,%d,%d)\n", ((tpage) >> 7) & 0x003, ((tpage) >> 5) & 0x003, ((tpage) << 6) & 0x7c0, (((tpage) << 4) & 0x100) + (((tpage) >> 2) & 0x200));
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpClut);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpClut);
 /**
  * @brief Display CLUT (palette) information for debugging
  * 
@@ -836,7 +835,7 @@ void SetDrawTPage(DR_TPAGE* p, s32 dfe, s32 dtd, s32 tpage)
  * @param x Destination X coordinate in VRAM
  * @param y Destination Y coordinate in VRAM
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMove);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMove);
 void SetDrawMove(DR_MOVE* p, RECT* rect, int x, int y) {
     int len = 5;
     if (!rect->w || !rect->h) {
@@ -860,7 +859,7 @@ void SetDrawMove(DR_MOVE* p, RECT* rect, int x, int y) {
  * @param p Pointer to DR_LOAD primitive structure
  * @param rect Target rectangle in VRAM where data will be loaded
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawLoad);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawLoad);
 void SetDrawLoad(DR_LOAD* p, RECT* rect) {
     int pixel_count = (rect->w * rect->h + 1) / 2;
     int len = pixel_count + 4;
@@ -874,7 +873,7 @@ void SetDrawLoad(DR_LOAD* p, RECT* rect) {
     p->code[len - 1] = CMD_CLEAR_CACHE;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MargePrim);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MargePrim);
 /**
  * @brief Merge two primitives into one
  * 
@@ -895,7 +894,7 @@ int MargePrim(void* p0, void* p1) {
     return 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDrawEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDrawEnv);
 /**
  * @brief Display drawing environment information for debugging
  * 
@@ -928,7 +927,7 @@ void DumpDrawEnv(DRAWENV* env)
  * 
  * @param env Pointer to DISPENV structure to display
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDispEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DumpDispEnv);
 void DumpDispEnv(DISPENV* env)
 {
     GPU_printf("disp   (%3d,%3d)-(%d,%d)\n", env->disp.x, env->disp.y, env->disp.w, (s32) env->disp.h);
@@ -939,7 +938,7 @@ void DumpDispEnv(DISPENV* env)
 
 const char D_80015BA8[] = "$Id: sys.c,v 1.129 1996/12/25 03:36:20 noda Exp $";
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ResetGraph);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ResetGraph);
 /**
  * @brief Initialize or reset the graphics system
  * 
@@ -977,7 +976,7 @@ int ResetGraph(int mode) {
     return D_80090C94->reset(1);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphReverse);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphReverse);
 int SetGraphReverse(int mode) {
     u_char prev = GPU_INFO.reverse;
     if (GPU_INFO.level >= 2) {
@@ -991,7 +990,7 @@ int SetGraphReverse(int mode) {
     return prev;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphDebug);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphDebug);
 /**
  * @brief Set graphics debugging level
  * 
@@ -1014,7 +1013,7 @@ int SetGraphDebug(int level) {
     return prev;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphQueue);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetGraphQueue);
 int SetGraphQueue(int mode) {
     u_char prev = GPU_INFO.D_80090C9D;
     if (GPU_INFO.level >= 2) {
@@ -1028,7 +1027,7 @@ int SetGraphQueue(int mode) {
     return prev;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphType);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphType);
 /**
  * @brief Get GPU hardware version
  * 
@@ -1042,7 +1041,7 @@ u8 GetGraphType(void)
     return GPU_INFO.version;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphDebug);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetGraphDebug);
 /**
  * @brief Get current graphics debugging level
  * 
@@ -1055,7 +1054,7 @@ s32 GetGraphDebug(void)
     return GPU_INFO.level;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSyncCallback);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSyncCallback);
 /**
  * @brief Set callback function for draw synchronization
  * 
@@ -1075,7 +1074,7 @@ u_long DrawSyncCallback(void (*func)()) {
     return (u_long)prev;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDispMask);
 /**
  * @brief Enable or disable display output
  * 
@@ -1094,7 +1093,7 @@ void SetDispMask(int mask) {
     D_80090C94->ctl(mask ? 0x03000000 : 0x03000001);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSync);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawSync);
 /**
  * @brief Wait for GPU drawing operations to complete
  * 
@@ -1113,7 +1112,7 @@ int DrawSync(int mode)
     D_80090C94->sync(mode);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", checkRECT);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", checkRECT);
 void checkRECT(const char* log, RECT* r) {
     switch (GPU_INFO.level) {
     case 1:
@@ -1138,7 +1137,7 @@ void checkRECT(const char* log, RECT* r) {
     }
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage);
 /**
  * @brief Clear rectangular area of VRAM with solid color
  * 
@@ -1157,7 +1156,7 @@ int ClearImage(RECT* rect, u8 r, u8 g, u8 b)
     return D_80090C94->addque2(D_80090C94->clr, rect, sizeof(RECT), (b << 0x10) | (g << 8) | r);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage2);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearImage2);
 /**
  * @brief Clear rectangular area of VRAM with solid color (alternate mode)
  * 
@@ -1176,7 +1175,7 @@ int ClearImage2(RECT* rect, u8 r, u8 g, u8 b)
     return D_80090C94->addque2(D_80090C94->clr, rect, sizeof(RECT), 0x80000000 | (b << 0x10) | (g << 8) | r);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadImage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", LoadImage);
 /**
  * @brief Transfer image data from main memory to VRAM
  * 
@@ -1194,7 +1193,7 @@ int LoadImage(RECT* rect, u_long* p)
     return D_80090C94->addque2(D_80090C94->dws, rect, sizeof(RECT), p);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", StoreImage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", StoreImage);
 /**
  * @brief Transfer image data from VRAM to main memory
  * 
@@ -1212,7 +1211,7 @@ int StoreImage(RECT* rect, u_long* p)
     return D_80090C94->addque2(D_80090C94->drs, rect, sizeof(RECT), p);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MoveImage);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", MoveImage);
 /**
  * @brief Copy rectangular area within VRAM
  * 
@@ -1237,7 +1236,7 @@ int MoveImage(RECT* rect, s32 x, s32 y)
     return D_80090C94->addque2(D_80090C94->cwc, D_80090D4C-2, sizeof(DISPENV), 0);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTag);
 /**
  * @brief Initialize ordering table for primitive sorting
  * 
@@ -1262,7 +1261,7 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     return ot;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTagR);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ClearOTagR);
 /**
  * @brief Initialize ordering table in reverse order
  * 
@@ -1283,7 +1282,7 @@ OT_TYPE* ClearOTagR(OT_TYPE* ot, int n)
     return ot;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawPrim);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawPrim);
 /**
  * @brief Draw a single primitive immediately
  * 
@@ -1299,7 +1298,7 @@ void DrawPrim(void* p) {
     D_80090C94->cwb((u32*)&((P_TAG*)p)->r0, len);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTag);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTag);
 /**
  * @brief Render all primitives in an ordering table
  * 
@@ -1317,7 +1316,7 @@ void DrawOTag(u_long* p)
     D_80090C94->addque2(D_80090C94->cwc, p, 0, 0);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDrawEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDrawEnv);
 DRAWENV* PutDrawEnv(DRAWENV* env) {
     if (GPU_INFO.level >= 2) {
         GPU_printf("PutDrawEnv(%08x)...\n", env);
@@ -1339,7 +1338,7 @@ DRAWENV* PutDrawEnv(DRAWENV* env) {
  * @param p Pointer to the first entry of the ordering table
  * @param env Pointer to drawing environment to apply during rendering
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTagEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", DrawOTagEnv);
 void DrawOTagEnv(u_long* p, DRAWENV* env)
 {
     if (GPU_INFO.level >= 2U) {
@@ -1351,13 +1350,13 @@ void DrawOTagEnv(u_long* p, DRAWENV* env)
     *(DRAWENV*)(&GPU_INFO.draw) = *env;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDrawEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDrawEnv);
 DRAWENV* GetDrawEnv(DRAWENV* env) {
     memcpy(env, &GPU_INFO.draw, sizeof(DRAWENV));
     return env;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDispEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", PutDispEnv);
 DISPENV* PutDispEnv(DISPENV* env)
 {
     s32 h_start;
@@ -1440,7 +1439,7 @@ DISPENV* PutDispEnv(DISPENV* env)
  * @param env Pointer to DISPENV structure to fill with current settings
  * @return Pointer to the filled environment structure
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetDispEnv);
 DISPENV* GetDispEnv(DISPENV* env)
 {
     memcpy((u8* )env, (u8*)&GPU_INFO.disp, sizeof(DISPENV));
@@ -1455,7 +1454,7 @@ DISPENV* GetDispEnv(DISPENV* env)
  * 
  * @return 0 for even field, 1 for odd field
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetODE);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GetODE);
 int GetODE(void)
 {
     return D_80090C94->status() >> 0x1F;
@@ -1471,7 +1470,7 @@ int GetODE(void)
  * @param p Pointer to DR_TWIN primitive structure
  * @param tw Pointer to RECT defining texture window area
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTexWindow);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetTexWindow);
 void SetTexWindow(DR_TWIN* p, RECT* tw)
 {
     setlen(p, 2);
@@ -1488,7 +1487,7 @@ void SetTexWindow(DR_TWIN* p, RECT* tw)
  * @param p Pointer to DR_AREA primitive structure
  * @param r Pointer to RECT defining the drawing area
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawArea);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawArea);
 void SetDrawArea(DR_AREA* p, RECT* r)
 {
     setlen(p, 2);
@@ -1505,7 +1504,7 @@ void SetDrawArea(DR_AREA* p, RECT* r)
  * @param p Pointer to DR_OFFSET primitive structure
  * @param ofs Pointer to array of two offsets [x_offset, y_offset]
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawOffset);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawOffset);
 void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     setlen(p, 2);
     p->code[0] = get_ofs((s16)ofs[0], (s16)ofs[1]);
@@ -1523,7 +1522,7 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
  * @param pbc Priority comparison flag
  * @param pbw Priority window flag
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPriority);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetPriority);
 void SetPriority(DR_PRIO* p, int pbc, int pbw) {
     int data;
     setlen(p, 2);
@@ -1547,7 +1546,7 @@ void SetPriority(DR_PRIO* p, int pbc, int pbw) {
  * @param tpage Texture page ID
  * @param tw Pointer to RECT defining texture window
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMode);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawMode);
 void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw)
 {
     setlen(p, 2);
@@ -1565,7 +1564,7 @@ void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw)
  * @param dr_env Pointer to DR_ENV primitive structure to initialize
  * @param env Pointer to DRAWENV structure containing settings
  */
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv);
 void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env)
 {
     DR_ENV* dr;
@@ -1604,7 +1603,7 @@ void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env)
     return;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv2);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", SetDrawEnv2);
 int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
     DR_ENV* dr;
     RECT rect;
@@ -1648,7 +1647,7 @@ int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
     return;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_mode);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_mode);
 u_long get_mode(int dfe, int dtd, u_short tpage)
 {
     if (GPU_INFO.version == 1 || GPU_INFO.version == 2) {
@@ -1659,7 +1658,7 @@ u_long get_mode(int dfe, int dtd, u_short tpage)
             (tpage & 0x9FF);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_cs);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_cs);
 u_long get_cs(short x, short y)
 {
     x = CLAMP(x, 0, GPU_INFO.w - 1);
@@ -1670,7 +1669,7 @@ u_long get_cs(short x, short y)
     return 0xE3000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ce);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ce);
 u_long get_ce(short x, short y)
 {
     x = CLAMP(x, 0, GPU_INFO.w - 1);
@@ -1682,7 +1681,7 @@ u_long get_ce(short x, short y)
     return 0xE4000000 | ((y & 0x3FF) << 10) | (x & 0x3FF);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ofs);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_ofs);
 u_long get_ofs(short x, short y)
 {
     if (GPU_INFO.version == 1 || GPU_INFO.version == 2) {
@@ -1691,7 +1690,7 @@ u_long get_ofs(short x, short y)
     return 0xe5000000 | ((y & 0x7FF) << 11) | (x & 0x7FF);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tw);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tw);
 u_long get_tw(RECT* rect) {
     u_long code[4];
     if (rect) {
@@ -1705,7 +1704,7 @@ u_long get_tw(RECT* rect) {
     return 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_dx);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_dx);
 u_long get_dx(DISPENV* env)
 {
     switch (GPU_INFO.version) {
@@ -1718,13 +1717,13 @@ u_long get_dx(DISPENV* env)
     }
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _status);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _status);
 int _status(void)
 {
     return *GPU_STATUS;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _otc);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _otc);
 int _otc(OT_TYPE ot, s32 n)
 {
     *DPCR |= 0x08000000;
@@ -1747,7 +1746,7 @@ int _otc(OT_TYPE ot, s32 n)
     return n;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _clr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _clr);
 s32 _clr(RECT* rect, u32 color)
 {
     s32* ptr;
@@ -1780,7 +1779,7 @@ s32 _clr(RECT* rect, u32 color)
     return 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _dws);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _dws);
 s32 _dws(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
@@ -1824,7 +1823,7 @@ s32 _dws(RECT* arg0, s32* arg1) {
     return 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _drs);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _drs);
 s32 _drs(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
@@ -1869,20 +1868,20 @@ s32 _drs(RECT* arg0, s32* arg1) {
     return 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _ctl);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _ctl);
 void _ctl(u32 arg0)
 {
     *GPU_STATUS = arg0;
     GPU_CTLBUF[(arg0 >> 0x18)] = arg0 & 0xFFFFFF;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _getctl);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _getctl);
 s32 _getctl(s32 arg0)
 {
     return *(&GPU_CTLBUF[arg0]);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwb);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _cwb);
 s32 _cwb(s32* arg0, s32 arg1) {
     s32* var_a0;
     s32 i;
@@ -1915,7 +1914,7 @@ void _addque(int arg0, int arg1, int arg2) {
     _addque2(arg0, arg1, 0, arg2);
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque2);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _addque2);
 s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
 {
     s32 i;
@@ -1966,7 +1965,7 @@ s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
     return (GPU_QIN - GPU_QOUT) & 0x3F;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _exeque);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _exeque);
 s32 _exeque(void)
 {
     s32 result=1;
@@ -2011,7 +2010,7 @@ s32 _exeque(void)
     return result;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _reset);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _reset);
 s32 _reset(s32 mode)
 {
     u_long** queue = &GPU_QOUT;
@@ -2042,7 +2041,7 @@ s32 _reset(s32 mode)
     return !(mode & 7) ? _version(mode) : 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _sync);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _sync);
 s32 _sync(s32 arg0)
 {
     s32 temp_s0;
@@ -2072,14 +2071,14 @@ s32 _sync(s32 arg0)
     return temp_s0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", set_alarm);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", set_alarm);
 void set_alarm(void)
 {
     D_80090DB4 = VSync(-1) + 0xF0;
     D_80090DB8 = 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_alarm);
 s32 get_alarm(void) {
     s32 intrMask;
     volatile int *p;
@@ -2106,7 +2105,7 @@ s32 get_alarm(void) {
 }
 
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", _version);
 int _version(int mode) {
     *GPU_STATUS = 0x10000007;
     if ((*GPU_DATA & 0xFFFFFF) != 2) { // check for GPUv2
@@ -2128,7 +2127,7 @@ int _version(int mode) {
     }
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GPU_memset);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GPU_memset);
 void * GPU_memset(s8* ptr, int value, s32 num) {
     s32 i;
     for (i = num - 1; i != -1; i--) {
@@ -2136,19 +2135,19 @@ void * GPU_memset(s8* ptr, int value, s32 num) {
     }
 }
 
-
-#if !(SKIP_ASM || M2CTX)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GPU_cw);
+#if !defined(SPLAT) && !defined(M2CTX)
     BIOS_STUB(GPU_cw, 0xA0, 0x49);
 #endif
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTIM);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTIM);
 int OpenTIM(u_long* addr)
 {
     D_8009B290 = addr;
     return 0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTIM);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTIM);
 TIM_IMAGE* ReadTIM(TIM_IMAGE* timimg)
 {
     s32 addr;
@@ -2160,7 +2159,7 @@ TIM_IMAGE* ReadTIM(TIM_IMAGE* timimg)
     return timimg;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTMD);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTMD);
 int OpenTMD(u_long* tmd, int obj_no)
 {
     D_8009B2A0 = get_tmd_addr(
@@ -2173,7 +2172,7 @@ int OpenTMD(u_long* tmd, int obj_no)
     return D_8009B2A0;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTMD);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", ReadTMD);
 TMD_PRIM* ReadTMD(TMD_PRIM* tmdprim)
 {
     s32 packet;
@@ -2195,7 +2194,7 @@ TMD_PRIM* ReadTMD(TMD_PRIM* tmdprim)
     return tmdprim;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tim_addr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tim_addr);
 s32 get_tim_addr(u32* timaddr, TIM_IMAGE* img) {
     unsigned int clut_len;
     unsigned int img_len;
@@ -2228,7 +2227,7 @@ s32 get_tim_addr(u32* timaddr, TIM_IMAGE* img) {
     return 2 + clut_len + img_len;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tmd_addr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", get_tmd_addr);
 u_long get_tmd_addr(
     TMD* tmd, int objid, u_long** t_prim, u_long** v_ofs, u_long** n_ofs) {
     TmdObj* obj = tmd->obj;
@@ -2254,7 +2253,7 @@ u_long get_tmd_addr(
     return obj[objid].nprim;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", unpack_packet);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", unpack_packet);
 s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
     s32 temp_v0;
     u32 temp_v1;
@@ -2631,49 +2630,3 @@ s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
     }
 }
 
-/**
- * @brief PSYQ LIBGPU Library Summary
- * 
- * This library provides comprehensive access to the PlayStation's GPU hardware
- * through a high-level C interface. Key functionality includes:
- * 
- * INITIALIZATION & CONFIGURATION:
- * - ResetGraph(): Initialize GPU hardware and graphics system
- * - SetGraphDebug(): Control debug output and error checking
- * - SetGraphReverse(): Configure display orientation
- * 
- * DISPLAY & DRAWING ENVIRONMENTS:
- * - SetDefDrawEnv/SetDefDispEnv(): Initialize rendering parameters
- * - PutDrawEnv/PutDispEnv(): Apply environments to hardware
- * - GetDrawEnv/GetDispEnv(): Read current environment settings
- * 
- * VRAM MANAGEMENT:
- * - LoadImage/StoreImage(): Transfer data between RAM and VRAM
- * - ClearImage(): Fill VRAM areas with solid colors
- * - MoveImage(): Copy data within VRAM
- * 
- * TEXTURE & PALETTE MANAGEMENT:
- * - LoadTPage(): Load texture pages with automatic sizing
- * - LoadClut/LoadClut2(): Load color palettes
- * - GetTPage/GetClut(): Create texture/palette identifiers
- * 
- * PRIMITIVE RENDERING:
- * - AddPrim(): Add primitives to ordering tables
- * - DrawOTag(): Render complete ordering table
- * - DrawPrim(): Immediate primitive rendering
- * - ClearOTag/ClearOTagR(): Initialize ordering tables
- * 
- * SYNCHRONIZATION:
- * - DrawSync(): Wait for rendering completion
- * - DrawSyncCallback(): Register frame completion callbacks
- * - SetDispMask(): Control display output
- * 
- * TMD (3D MODEL) PROCESSING:
- * - Comprehensive TMD primitive unpacking for 3D models
- * - Support for flat/gouraud shading, textured/untextured
- * - Triangle and quad primitive types
- * 
- * The library abstracts the complex GPU command protocol and DMA operations
- * into easy-to-use functions while maintaining high performance through
- * hardware-accelerated operations.
- */
