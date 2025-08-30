@@ -1,5 +1,7 @@
-# This file is used by modern gas.
-# Defines the expected assembly macros
+# This file is used by the original compiler/assembler.
+# Defines the expected assembly macros.
+
+.include "gte_macros.inc"
 
 # A function symbol.
 .macro glabel label, visibility=global
@@ -32,8 +34,6 @@
 
 # A label referenced by a jumptable.
 .macro jlabel label, visibility=global
-    .\visibility \label
-    .type \label, @function
     \label:
 .endm
 
@@ -53,10 +53,8 @@
 
 # Label to signal the symbol haven't been matched yet.
 .macro nonmatching label, size=1
-#    .global \label\().NON_MATCHING
-#    .type \label\().NON_MATCHING, @object
-#    .size \label\().NON_MATCHING, \size
-#    \label\().NON_MATCHING:
+    .global \label\().NON_MATCHING
+    .type \label\().NON_MATCHING, @object
+    .size \label\().NON_MATCHING, \size
+    \label\().NON_MATCHING:
 .endm
-
-.include "gte_macros.inc"

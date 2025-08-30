@@ -13,14 +13,14 @@ ifeq ($(VERSION),us)
   ROM_DIR      := iso/${VERSION}
   CONFIG_DIR   := config/${BASE_DIR}
   LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build/
+  BUILD_DIR    := build
   OUT_DIR      := $(BUILD_DIR)/out
   TOOLS_DIR    := tools
   OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
   PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets/
-  ASM_DIR      := asm/
-  C_DIR        := src/
+  ASSETS_DIR   := assets
+  ASM_DIR      := asm
+  C_DIR        := src
   EXPECTED_DIR := expected
 else ifeq ($(VERSION),jp)
   GAME_NAME := SLPS_012.34
@@ -91,8 +91,8 @@ CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -q
 define DL_FlagsSwitch
 	$(if
 		$(or 
-			$(filter MAIN,$(patsubst build/src/$(BASE_DIR)/psyq/%,MAIN,$(1))), 
-			$(filter MAIN,$(patsubst build/asm/${BASE_DIR}/psyq/%,MAIN,$(1)))
+			$(filter MAIN,$(patsubst build\/src/$(BASE_DIR)\/psyq/%,MAIN,$(1))), 
+			$(filter MAIN,$(patsubst build\/asm/${BASE_DIR}\/psyq/%,MAIN,$(1)))
 		),
 		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --macro-inc --expand-div --use-comm-section --run-assembler $(AS_FLAGS)),
 		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
@@ -200,7 +200,7 @@ check: build
 
 expected: build
 	mkdir -p $(EXPECTED_DIR)
-	mv build/asm $(EXPECTED_DIR)/asm
+	mv build/asm $(EXPECTED_DIR)
 
 generate: $(LD_FILES)
 
@@ -210,6 +210,7 @@ clean:
 reset: clean
 	rm -rf $(ASM_DIR)
 	rm -rf $(LINKER_DIR)
+	rm -rf $(EXPECTED_DIR)
 
 setup: reset
 	$(MAKE) generate

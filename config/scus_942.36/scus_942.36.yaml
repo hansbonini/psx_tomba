@@ -13,11 +13,12 @@ options:
   build_path: ./build/
   asset_path: ./assets/scus_942.36
   # create_asm_dependencies: True
+  generate_asm_macros_files : False
 
   ld_script_path: ./linker/scus_942.36/scus_942.36.ld
   ld_dependencies: True
 
-  find_file_boundaries: false
+  find_file_boundaries: False
   gp_value: 0x80097FA8
   global_vram_start: 0x80010000
 
