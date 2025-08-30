@@ -3,14 +3,14 @@ sha1: 81cbc79f0230aeb4252e058039f47ac95a777f5a
 options:
   basename: scus_942.36
   target_path: ./iso/us/SCUS_942.36
-  elf_path: ./build/scus_942.36.elf
+  elf_path: ./build/scus_942.36/scus_942.36.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36
   src_path: ./src/scus_942.36
-  build_path: ./build/
+  build_path: ./build
   asset_path: ./assets/scus_942.36
   # create_asm_dependencies: True
   generate_asm_macros_files : False
