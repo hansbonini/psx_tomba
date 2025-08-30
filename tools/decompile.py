@@ -8,6 +8,7 @@ Use `decompile.py --help` for usage and options"""
 
 import argparse
 import io
+import re
 import os
 import sys
 import tempfile
@@ -42,6 +43,11 @@ class TombaFunction(object):
             f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
         )
         self.asm_code: str = self.abspath.read_text()
+
+        # Temp filter while decomp.me doesn't update support to splat==0.3.52 labels
+        self.asm_code = re.sub("nonmatching\s(.*)\n", "", self.asm_code)
+        self.asm_code = re.sub("endlabel\s(.*)\n", "", self.asm_code)
+        
         self.c_code: str = ""
         self._context: str = ""
 
@@ -136,27 +142,32 @@ class TombaFunction(object):
         ) as tmp_ctx:
             tmp_ctx.writelines(self.context)
             tmp_ctx.flush()
-            options = m2c.parse_flags(
-                [
-                    "-P",
-                    "4",
-                    "--pointer-style",
-                    "left",
-                    "--knr",
-                    "--indent-switch-contents",
-                    "--comment-style",
-                    "oneline",
-                    "--target",
-                    "mipsel-gcc-c",
-                    "--context",
-                    tmp_ctx.name,
-                    str(self.abspath),
-                ]
-            )
+            with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-8", suffix=".s"
+            ) as tmp_asm:
+                tmp_asm.write(self.asm_code)
+                tmp_asm.flush()
+                options = m2c.parse_flags(
+                    [
+                        "-P",
+                        "4",
+                        "--pointer-style",
+                        "left",
+                        "--knr",
+                        "--indent-switch-contents",
+                        "--comment-style",
+                        "oneline",
+                        "--target",
+                        "mipsel-gcc-c",
+                        "--context",
+                        tmp_ctx.name,
+                        tmp_asm.name,
+                    ]
+                )
 
-            with redirect_stdout(io.StringIO()) as f:
-                m2c.run(options)
-                return f.getvalue()
+                with redirect_stdout(io.StringIO()) as f:
+                    m2c.run(options)
+                    return f.getvalue()
 
     def _guess_unknown_type(self, decompiled_code: str) -> str:
         return (
@@ -236,7 +247,7 @@ def inject_decompiled_function(repo_root: Path, Tomba_func: TombaFunction) -> No
     lines = Tomba_func.src_path.read_text().splitlines()
 
     # This should be removed when the remaining 4 functions in mad are decompiled
-    Tomba_func.include_asm = Tomba_func.include_asm.replace("st/mad", "asm/us/st/mad")
+    #Tomba_func.include_asm = Tomba_func.include_asm.replace("st/mad", "asm/us/st/mad")
 
     if Tomba_func.include_asm in lines:
         function_index = lines.index(Tomba_func.include_asm)
