@@ -52,6 +52,10 @@
   DEFINE_FN _bu_init, 0xA0, 0x70
 #endif
 
+#ifdef FUNC_A49
+  DEFINE_FN GPU_cw, 0xA0, 0x49
+#endif
+
 #ifdef FUNC_B08
   DEFINE_FN OpenEvent, 0xB0, 0x8
 #endif

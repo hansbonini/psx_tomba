@@ -93,12 +93,20 @@ LIBAPI_BIOS_FUNCS := 	FlushCache:A44 _bu_init:A70 \
 						open:B32 lseek:B33 read:B34 write:B35 close:B36 format:B41 \
 						firstfile:B42 nextfile:B43 erase:B45
 
+LIBGPU_BIOS_FUNCS := 	GPU_cw:A49
+
+
 # Generate object paths
 LIBAPI_BIOS_OBJS := $(foreach f,$(LIBAPI_BIOS_FUNCS), \
 						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libapi/$(word 1,$(subst :, ,$f)).hasm.s.o)
 
+LIBGPU_BIOS_OBJS := $(foreach f,$(LIBGPU_BIOS_FUNCS), \
+						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libgpu/$(word 1,$(subst :, ,$f)).hasm.s.o)
+
 # Map function name to BIOS fn number
 libapi_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBAPI_BIOS_FUNCS))))
+libgpu_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBGPU_BIOS_FUNCS))))
+
 
 # PSY-Q libraries uses ASPSX 2.56 (PSQ 4.0)
 # Archive library code uses GCC 2.6.0.
@@ -155,7 +163,7 @@ ifeq ($(SKIP_ASM),1)
 
 define make_elf_target
 $2: $2.elf
-$2.elf: $(call gen_o_files, $1) $(LIBAPI_BIOS_OBJS)
+$2.elf: $(call gen_o_files, $1) $(LIBAPI_BIOS_OBJS) $(LIBGPU_BIOS_OBJS)
 endef
 
 else
@@ -264,6 +272,12 @@ $(LIBAPI_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src
 	@mkdir -p $(dir $@)
 	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
 	-Iinclude -Ibuild -DFUNC_$(call libapi_bios_num,$*) -o $(dir $@)$*.hasm.s $<
+	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
+
+$(LIBGPU_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libgpu/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/libapi/bios.s
+	@mkdir -p $(dir $@)
+	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
+	-Iinclude -Ibuild -DFUNC_$(call libgpu_bios_num,$*) -o $(dir $@)$*.hasm.s $<
 	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
 
 $(BUILD_DIR)/%.s.o: %.s

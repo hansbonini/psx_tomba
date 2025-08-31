@@ -65,7 +65,9 @@ segments:
     align: 4
     subsegments:
       - [0x800, rodata]
-      - [0x62D8, .rodata, psyq/libgpu]
+      - [0x62D8, .rodata, psyq/libgpu/prim]
+      - [0x63A8, .rodata, psyq/libgpu/sys]
+      - [0x65DC, .rodata, psyq/libgpu/tmd]
       - [0x6714, rodata]
       - [0x6BB0, c, main/main]
       - [0x6CFC, c, main/main_loop]
@@ -97,7 +99,11 @@ segments:
       - [0x4BFE0, c, psyq/libc]
       - [0x4D454, c, psyq/libcard]
       - [0x4D7E8, c, psyq/libpress]
-      - [0x4E2E0, c, psyq/libgpu]
+      - [0x4E2E0, c, psyq/libgpu/ext]
+      - [0x4E5A8, c, psyq/libgpu/prim]
+      - [0x4EE94, c, psyq/libgpu/sys]
+      - [0x51F28, hasm, psyq/libapi/c73]
+      - [0x51F38, c, psyq/libgpu/tmd]
       - [0x536D4, c, psyq/libgte]
       - [0x54E34, c, psyq/libcd]
       - [0x58614, c, psyq/libetc]
