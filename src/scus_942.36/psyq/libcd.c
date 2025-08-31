@@ -4,8 +4,10 @@
 
 extern CdlCB CD_CBSYNC;
 extern CdlCB CD_CBREADY;
+extern u8 CD_STATUS;
 extern CdlLOC CD_POS;
 extern u8 CD_COM;
+extern u8 CD_MODE;
 extern s32 D_80096294;
 extern s32 D_8009BC7C;
 extern StHEADER* D_800A326C;
@@ -42,9 +44,17 @@ void def_cbread(u_char intr, u_char* result) {
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", DeliverEvent);
 // BIOS_STUB(DeliverEvent, 0xB0, 0x7);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdStatus);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdStatus);
+int CdStatus(void)
+{
+    return CD_STATUS;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdMode);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdMode);
+int CdMode(void)
+{
+    return CD_MODE;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdLastCom);
 int CdLastCom(void)
@@ -123,9 +133,9 @@ void(*CdDataCallback(void (*func)())) { return DMACallback(3, func); }
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdDataSync);
 int CdDataSync(int mode) { CD_datasync(mode); }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdIntToPos);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdIntToPos);
 CdlLOC* CdIntToPos(int i, CdlLOC* p) {
-    inline int ENCODE_BCD(n) { return ((n / 10) << 4) + (n % 10); }
+    inline int ENCODE_BCD(n) { return (((n / 10) << 4) + (n % 10)); };
 
     i += 150;
     p->sector = ENCODE_BCD(i % 75);
