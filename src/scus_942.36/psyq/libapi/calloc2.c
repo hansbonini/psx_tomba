@@ -23,3 +23,4 @@ s8* bzero(s8* arg0, s32 arg1)
     }
     return var_v0;
 }
+
