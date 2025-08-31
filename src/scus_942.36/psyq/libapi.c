@@ -1,47 +1,100 @@
 #include "common.h"
 #include "psyq/kernel.h"
 
-#if !(SKIP_ASM || M2CTX)
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", FlushCache);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(FlushCache, 0xA0, 0x44);
+// #endif
 
-    BIOS_STUB(FlushCache, 0xA0, 0x44);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", _bu_init);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(_bu_init, 0xA0, 0x70);
+// #endif
 
-    BIOS_STUB(_bu_init, 0xA0, 0x70);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", OpenEvent);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(OpenEvent, 0xB0, 0x8);
+// #endif
 
-    BIOS_STUB(OpenEvent, 0xB0, 0x8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", CloseEvent);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(CloseEvent, 0xB0, 0x9);
+// #endif
 
-    BIOS_STUB(CloseEvent, 0xB0, 0x9);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", TestEvent);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(TestEvent, 0xB0, 0xB);
+// #endif
 
-    BIOS_STUB(TestEvent, 0xB0, 0xB);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", EnableEvent);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(EnableEvent, 0xB0, 0xC);
+// #endif
 
-    BIOS_STUB(EnableEvent, 0xB0, 0xC);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", OpenTh);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(OpenTh, 0xB0, 0xE);
+// #endif
 
-    BIOS_STUB(OpenTh, 0xB0, 0xE);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", CloseTh);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(CloseTh, 0xB0, 0xF);
+// #endif
 
-    BIOS_STUB(CloseTh, 0xB0, 0xF);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", ChangeTh);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(ChangeTh, 0xB0, 0x10);
+// #endif
 
-    BIOS_STUB(ChangeTh, 0xB0, 0x10);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", EnterCriticalSection);
+// #if !(SKIP_ASM || M2CTX)
+//     void EnterCriticalSection() { SYSCALL(1); }
+// #endif
 
-    void EnterCriticalSection() { SYSCALL(1); }
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", ExitCriticalSection);
+// #if !(SKIP_ASM || M2CTX)
+//     void ExitCriticalSection() { SYSCALL(2); }
+// #endif
 
-    void ExitCriticalSection() { SYSCALL(2); }
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", open);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(open, 0xB0, 0x32);
+// #endif
 
-    BIOS_STUB(open, 0xB0, 0x32);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", lseek);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(lseek, 0xB0, 0x33);
+// #endif
 
-    BIOS_STUB(lseek, 0xB0, 0x33);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", read);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(read, 0xB0, 0x34);
+// #endif
 
-    BIOS_STUB(read, 0xB0, 0x34);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", write);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(write, 0xB0, 0x35);
+// #endif
 
-    BIOS_STUB(write, 0xB0, 0x35);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", close);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(close, 0xB0, 0x36);
+// #endif
 
-    BIOS_STUB(close, 0xB0, 0x36);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", format);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(format, 0xB0, 0x41);
+// #endif
 
-    BIOS_STUB(format, 0xB0, 0x41);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", nextfile);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(nextfile, 0xB0, 0x43);
+// #endif
 
-    BIOS_STUB(nextfile, 0xB0, 0x43);
-
-    BIOS_STUB(erase, 0xB0, 0x45);
-
-#endif
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", erase);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(erase, 0xB0, 0x45);
+// #endif
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", GetGp);
 
@@ -49,9 +102,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B4CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", func_8005B668);
 
-#if !(SKIP_ASM || M2CTX)
-    BIOS_STUB(firstfile, 0xB0, 0x42);
-#endif
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi", firstfile);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(firstfile, 0xB0, 0x42);
+// #endif
 
 u8* bcopy(u8* arg0, u8* arg1, s32 arg2)
 {

@@ -2135,10 +2135,10 @@ void * GPU_memset(s8* ptr, int value, s32 num) {
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GPU_cw);
-#if !(SKIP_ASM || M2CTX)
-    BIOS_STUB(GPU_cw, 0xA0, 0x49);
-#endif
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", GPU_cw);
+// #if !(SKIP_ASM || M2CTX)
+//     BIOS_STUB(GPU_cw, 0xA0, 0x49);
+// #endif
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgpu", OpenTIM);
 int OpenTIM(u_long* addr)
