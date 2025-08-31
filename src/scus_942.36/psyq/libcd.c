@@ -2,10 +2,10 @@
 #include "psyq/libcd.h"
 #include "psyq/kernel.h"
 
-extern CdlCB D_80095FEC;
-extern CdlCB D_80095FF0;
-extern CdlLOC D_80096008;
-extern u8 D_8009600D;
+extern CdlCB CD_CBSYNC;
+extern CdlCB CD_CBREADY;
+extern CdlLOC CD_POS;
+extern u8 CD_COM;
 extern s32 D_80096294;
 extern s32 D_8009BC7C;
 extern StHEADER* D_800A326C;
@@ -49,13 +49,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdMode);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdLastCom);
 int CdLastCom(void)
 {
-    return D_8009600D;
+    return CD_COM;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdLastPos);
 CdlLOC* CdLastPos(void)
 {
-    return &D_80096008;
+    return &CD_POS;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdReset);
@@ -90,15 +90,15 @@ int CdReady(int mode, u_char* result) { return CD_ready(mode, result); }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdSyncCallback);
 CdlCB CdSyncCallback(CdlCB func) {
-    CdlCB old = D_80095FEC;
-    D_80095FEC = func;
+    CdlCB old = CD_CBSYNC;
+    CD_CBSYNC = func;
     return old;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd", CdReadyCallback);
 CdlCB CdReadyCallback(CdlCB func) {
-    CdlCB old = D_80095FF0;
-    D_80095FF0 = func;
+    CdlCB old = CD_CBREADY;
+    CD_CBREADY = func;
     return old;
 }
 
