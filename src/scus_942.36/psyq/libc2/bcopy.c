@@ -1,6 +1,6 @@
 #include "common.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi/bcopy", bcopy);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/bcopy", bcopy);
 u8* bcopy(u8* arg0, u8* arg1, s32 arg2)
 {
     s32 var_a2;

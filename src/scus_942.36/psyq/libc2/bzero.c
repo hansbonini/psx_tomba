@@ -1,6 +1,6 @@
 #include "common.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libapi/bzero", bzero);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/bzero", bzero);
 s8* bzero(s8* arg0, s32 arg1)
 {
     s32 var_a1;
@@ -23,4 +23,3 @@ s8* bzero(s8* arg0, s32 arg1)
     }
     return var_v0;
 }
-
