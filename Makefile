@@ -85,6 +85,21 @@ DL_FLAGS := -G0
 AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections
 CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -quiet
 
+# Bios functions name:number
+LIBAPI_BIOS_FUNCS := 	FlushCache:A44 _bu_init:A70 \
+						OpenEvent:B08 CloseEvent:B09 TestEvent:B0B EnableEvent:B0C \
+						OpenTh:B0E CloseTh:B0F ChangeTh:B10 \
+						EnterCriticalSection:1 ExitCriticalSection:2 \
+						open:B32 lseek:B33 read:B34 write:B35 close:B36 format:B41 \
+						firstfile:B42 nextfile:B43 erase:B45
+
+# Generate object paths
+LIBAPI_BIOS_OBJS := $(foreach f,$(LIBAPI_BIOS_FUNCS), \
+						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libapi/$(word 1,$(subst :, ,$f)).hasm.s.o)
+
+# Map function name to BIOS fn number
+libapi_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBAPI_BIOS_FUNCS))))
+
 # PSY-Q libraries uses ASPSX 2.56 (PSQ 4.0)
 # Archive library code uses GCC 2.6.0.
 # Main-related and psyq code seem to use -G0 instead of -G8
@@ -140,7 +155,7 @@ ifeq ($(SKIP_ASM),1)
 
 define make_elf_target
 $2: $2.elf
-$2.elf: $(call gen_o_files, $1)
+$2.elf: $(call gen_o_files, $1) $(LIBAPI_BIOS_OBJS)
 endef
 
 else
@@ -244,6 +259,12 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	$(call DL_FlagsSwitch, $@)
 	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+
+$(LIBAPI_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/libapi/bios.s
+	@mkdir -p $(dir $@)
+	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
+	-Iinclude -Ibuild -DFUNC_$(call libapi_bios_num,$*) -o $(dir $@)$*.hasm.s $<
+	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
 
 $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
