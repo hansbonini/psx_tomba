@@ -1,7 +1,7 @@
 /**
  * @file bios.s
  *
- * PSX BIOS / custom function stubs for libapi
+ * PSX BIOS / custom function stubs
  *
  * Contains:
  *   - Standard system call wrappers (DEFINE_SYS_FN).
@@ -48,12 +48,20 @@
   DEFINE_FN FlushCache, 0xA0, 0x44
 #endif
 
+#ifdef FUNC_A49
+  DEFINE_FN GPU_cw, 0xA0, 0x49
+#endif
+
 #ifdef FUNC_A70
   DEFINE_FN _bu_init, 0xA0, 0x70
 #endif
 
-#ifdef FUNC_A49
-  DEFINE_FN GPU_cw, 0xA0, 0x49
+#ifdef FUNC_AAB
+  DEFINE_FN _card_info, 0xA0, 0xAB
+#endif
+
+#ifdef FUNC_AAC
+  DEFINE_FN _card_load, 0xA0, 0xAC
 #endif
 
 #ifdef FUNC_B08
@@ -119,3 +127,28 @@
 #ifdef FUNC_B45
   DEFINE_FN erase, 0xB0, 0x45
 #endif
+
+#ifdef FUNC_B4A
+  DEFINE_FN InitCARD2, 0xB0, 0x4A
+#endif
+
+#ifdef FUNC_B4B
+  DEFINE_FN StartCARD2, 0xB0, 0x4B
+#endif
+
+#ifdef FUNC_B4C
+  DEFINE_FN StopCARD2, 0xB0, 0x4C
+#endif
+
+#ifdef FUNC_B4E
+  DEFINE_FN _card_write, 0xB0, 0x4E
+#endif
+
+#ifdef FUNC_B50
+  DEFINE_FN _new_card, 0xB0, 0x50
+#endif
+
+#ifdef FUNC_B5B
+  DEFINE_FN ChangeClearPAD, 0xB0, 0x5B
+#endif
+
