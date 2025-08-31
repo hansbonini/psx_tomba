@@ -86,14 +86,14 @@ AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mt
 CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -quiet
 
 # Bios functions name:number
-LIBAPI_BIOS_FUNCS := 	FlushCache:A44 _bu_init:A70 \
-						OpenEvent:B08 CloseEvent:B09 TestEvent:B0B EnableEvent:B0C \
-						OpenTh:B0E CloseTh:B0F ChangeTh:B10 \
-						EnterCriticalSection:1 ExitCriticalSection:2 \
-						open:B32 lseek:B33 read:B34 write:B35 close:B36 format:B41 \
-						firstfile:B42 nextfile:B43 erase:B45
+LIBAPI_BIOS_FUNCS := 	c68:A44 c112:A70 \
+						a08:B08 a09:B09 a11:B0B a12:B0C \
+						a14:B0E a15:B0F a16:B10 \
+						a36:1 a37:2 \
+						a50:B32 a51:B33 a52:B34 a53:B35 a54:B36 a65:B41 \
+						a66:B42 a67:B43 a69:B45
 
-LIBGPU_BIOS_FUNCS := 	GPU_cw:A49
+LIBGPU_BIOS_FUNCS := 	c73:A49
 
 
 # Generate object paths
