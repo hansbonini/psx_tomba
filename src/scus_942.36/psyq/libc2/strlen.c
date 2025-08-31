@@ -9,7 +9,7 @@ int strlen(char* pString) {
     if (pString == NULL)
         return 0;
 
-    while (chCur = *pString, pString++, chCur != NULL)
+    while (chCur = *pString, pString++, chCur != '\0')
         nLen++;
     return nLen;
 }
