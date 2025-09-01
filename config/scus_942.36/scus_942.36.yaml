@@ -65,6 +65,9 @@ segments:
     align: 4
     subsegments:
       - [0x800, rodata]
+      - [0x5F3C, .rodata, psyq/libc2/prnt]
+      - [0x6150, .rodata, psyq/libc2/sprintf]
+      - [0x622C, rodata]
       - [0x62D8, .rodata, psyq/libgpu/prim]
       - [0x63A8, .rodata, psyq/libgpu/sys]
       - [0x65DC, .rodata, psyq/libgpu/tmd]
