@@ -67,7 +67,10 @@ void SetIR123(int r0, int r1, int r2)
     gte_ldsv_(r0,r1,r2);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetIR0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetIR0);
+void SetIR0(int r0) {
+    gte_lddp(r0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetSZfifo3);
 
