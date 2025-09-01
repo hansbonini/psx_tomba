@@ -25,7 +25,10 @@ void SetTransMatrix(MATRIX* m) {
     gte_SetTransMatrix(m);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex0);
+void SetVertex0(int r0) {
+    gte_ldv0(r0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex1);
 
@@ -48,24 +51,24 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetSXSYfifo);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetRii);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetMAC123);
-void SetMAC123(int arg0, int arg1, int arg2)
+void SetMAC123(int r0, int r1, int r2)
 {
-    gte_ldMAC1(arg0);
-    gte_ldMAC2(arg1);
-    gte_ldMAC3(arg2);
+    gte_ldMAC1(r0);
+    gte_ldMAC2(r1);
+    gte_ldMAC3(r2);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetData32);
-void SetData32(int arg0) {
-    gte_ldlzc(arg0);
+void SetData32(int r0) {
+    gte_ldlzc(r0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetDQA);
-void SetDQA(int arg0) {
-    gte_ldDQA(arg0);
+void SetDQA(int r0) {
+    gte_ldDQA(r0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetDQB);
-void SetDQB(int arg0) {
-    gte_ldDQB(arg0);
+void SetDQB(int r0) {
+    gte_ldDQB(r0);
 }
