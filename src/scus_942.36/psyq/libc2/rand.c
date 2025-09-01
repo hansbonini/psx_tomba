@@ -1,17 +1,15 @@
 #include "common.h"
+#include "psyq/rand.h"
 
-extern u32 D_8009B138;
+extern u32 RAND_SEED;
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/rand", rand);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/rand", rand);
 int rand(void) {
-    u_long nNext;
-
-    nNext = (D_8009B138 * 0x41C64E6D) + 0x3039;
-    D_8009B138 = nNext;
-    return (nNext >> 0x10) & 0x7FFF;
+    RAND_SEED = (RAND_SEED * 0x41C64E6D) + 12345;
+    return (RAND_SEED >> 0x10) & RAND_MAX;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/rand", srand);
-void srand(u_long seed) {
-    D_8009B138 = seed;
+void srand(unsigned int seed) {
+    RAND_SEED = seed;
 }
