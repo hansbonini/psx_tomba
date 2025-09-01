@@ -17,6 +17,12 @@
 #define gte_ldrgb1(r0) __asm__ volatile("lwc2	$20, 0( %0 )" : : "r"(r0))
 #define gte_ldrgb2(r0) __asm__ volatile("lwc2	$21, 0( %0 )" : : "r"(r0))
 #define gte_ldrgb3(r0) __asm__ volatile("lwc2	$22, 0( %0 )" : : "r"(r0))
+#define gte_ldsv_(r0, r1, r2)                                                  \
+    __asm__ volatile("mtc2	%0, $9;"                                           \
+                     "mtc2	%1, $10;"                                          \
+                     "mtc2	%2, $11"                                           \
+                     :                                                         \
+                     : "r"(r0), "r"(r1), "r"(r2))
 #define gte_ldMAC1(r0) __asm__ volatile("mtc2	%0, $25" : : "r"(r0))
 #define gte_ldMAC2(r0) __asm__ volatile("mtc2	%0, $26" : : "r"(r0))
 #define gte_ldMAC3(r0) __asm__ volatile("mtc2	%0, $27" : : "r"(r0))
@@ -55,7 +61,11 @@ void SetRGBfifo(int r0, int r1, int r2) {
     gte_ldrgb3(r2);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetIR123);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetIR123);
+void SetIR123(int r0, int r1, int r2)
+{
+    gte_ldsv_(r0,r1,r2);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetIR0);
 
