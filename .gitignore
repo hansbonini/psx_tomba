@@ -1,5 +1,8 @@
 .sentry-native
 asm
+build
+expected
 iso
+linker
 *.bin
 *.cue

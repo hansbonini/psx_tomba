@@ -176,7 +176,11 @@ ifeq ($(SKIP_ASM),1)
 
 define make_elf_target
 $2: $2.elf
-$2.elf: $(call gen_o_files, $1) $(LIBAPI_BIOS_OBJS) $(LIBGPU_BIOS_OBJS) $(LIBCARD_BIOS_OBJS) $(LIBCD_BIOS_OBJS)
+$2.elf: $(call gen_o_files, $1) \
+		$(LIBAPI_BIOS_OBJS) \
+		$(LIBGPU_BIOS_OBJS) \
+		$(LIBCARD_BIOS_OBJS) \
+		$(LIBCD_BIOS_OBJS)
 endef
 
 else
@@ -237,6 +241,8 @@ check: build
 expected: build
 	mkdir -p $(EXPECTED_DIR)
 	mv build/asm $(EXPECTED_DIR)
+	mv $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libapi/c73.s.o $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libgpu/c73.s.o
+	mv $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libapi/a07.s.o $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libcd/a07.s.o
 
 generate: $(LD_FILES)
 
