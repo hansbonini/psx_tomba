@@ -26,21 +26,24 @@ void SetTransMatrix(MATRIX* m) {
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex0);
-void SetVertex0(int r0) {
+void SetVertex0(SVECTOR* r0) {
     gte_ldv0(r0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex1);
-void SetVertex1(int r0) {
+void SetVertex1(SVECTOR* r0) {
     gte_ldv1(r0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex2);
-void SetVertex2(int r0) {
+void SetVertex2(SVECTOR* r0) {
     gte_ldv2(r0);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertexTri);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertexTri);
+void SetVertexTri(SVECTOR* r0, SVECTOR* r1, SVECTOR* r2) {
+    gte_ldv3(r0, r1, r2);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetRGBfifo);
 
