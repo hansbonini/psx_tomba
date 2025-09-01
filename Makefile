@@ -91,7 +91,8 @@ LIBAPI_BIOS_FUNCS := 	c68:A44 c112:A70 \
 						a14:B0E a15:B0F a16:B10 \
 						a36:1 a37:2 \
 						a50:B32 a51:B33 a52:B34 a53:B35 a54:B36 a65:B41 \
-						a66:B42 a67:B43 a69:B45
+						a66:B42 a67:B43 a69:B45 \
+						a94:A94
 
 LIBGPU_BIOS_FUNCS := 	c73:A49
 

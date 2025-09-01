@@ -56,6 +56,18 @@
   DEFINE_FN _bu_init, 0xA0, 0x70
 #endif
 
+#ifdef FUNC_A94
+  .set noat
+    .set noreorder
+    .global GetGp
+    .type GetGp, @function
+    GetGp:
+      jr      $ra
+      move    $v0, $gp
+    .size GetGp, . - GetGp
+      nop
+#endif
+
 #ifdef FUNC_AAB
   DEFINE_FN _card_info, 0xA0, 0xAB
 #endif

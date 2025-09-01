@@ -92,7 +92,7 @@ segments:
       - [0x4BC8C, hasm, psyq/libapi/a65]
       - [0x4BC9C, hasm, psyq/libapi/a67]
       - [0x4BCAC, hasm, psyq/libapi/a69]
-      - [0x4BCBC, c, psyq/libapi/a94]
+      - [0x4BCBC, hasm, psyq/libapi/a94]
       - [0x4BCCC, c, psyq/libapi/func_8005B4CC]
       - [0x4BE68, c, psyq/libapi/func_8005B668]
       - [0x4BF6C, hasm, psyq/libapi/a66]
