@@ -99,6 +99,8 @@ LIBCARD_BIOS_FUNCS := 	a74:B4A a75:B4B a76:B4C a78:B4E a80:B50 \
 						c171:AAB c172:AAC \
 						a91:B5B
 
+LIBCD_BIOS_FUNCS := 	a07:B07
+
 # Generate object paths
 LIBAPI_BIOS_OBJS := $(foreach f,$(LIBAPI_BIOS_FUNCS), \
 						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libapi/$(word 1,$(subst :, ,$f)).hasm.s.o)
@@ -109,11 +111,15 @@ LIBGPU_BIOS_OBJS := $(foreach f,$(LIBGPU_BIOS_FUNCS), \
 LIBCARD_BIOS_OBJS := $(foreach f,$(LIBCARD_BIOS_FUNCS), \
 						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libcard/$(word 1,$(subst :, ,$f)).hasm.s.o)
 
+LIBCD_BIOS_OBJS := $(foreach f,$(LIBCD_BIOS_FUNCS), \
+						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libcd/$(word 1,$(subst :, ,$f)).hasm.s.o)
+
+
 # Map function obj to BIOS fn number
 libapi_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBAPI_BIOS_FUNCS))))
 libgpu_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBGPU_BIOS_FUNCS))))
 libcard_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBCARD_BIOS_FUNCS))))
-
+libcd_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBCD_BIOS_FUNCS))))
 
 # PSY-Q libraries uses ASPSX 2.56 (PSQ 4.0)
 # Archive library code uses GCC 2.6.0.
@@ -170,7 +176,7 @@ ifeq ($(SKIP_ASM),1)
 
 define make_elf_target
 $2: $2.elf
-$2.elf: $(call gen_o_files, $1) $(LIBAPI_BIOS_OBJS) $(LIBGPU_BIOS_OBJS) $(LIBCARD_BIOS_OBJS)
+$2.elf: $(call gen_o_files, $1) $(LIBAPI_BIOS_OBJS) $(LIBGPU_BIOS_OBJS) $(LIBCARD_BIOS_OBJS) $(LIBCD_BIOS_OBJS)
 endef
 
 else
@@ -291,6 +297,12 @@ $(LIBCARD_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libcard/%.hasm.s.o: s
 	@mkdir -p $(dir $@)
 	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
 	-Iinclude -Ibuild -DFUNC_$(call libcard_bios_num,$*) -o $(dir $@)$*.hasm.s $<
+	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
+
+$(LIBCD_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libcd/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
+	@mkdir -p $(dir $@)
+	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
+	-Iinclude -Ibuild -DFUNC_$(call libcd_bios_num,$*) -o $(dir $@)$*.hasm.s $<
 	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
 
 $(BUILD_DIR)/%.s.o: %.s

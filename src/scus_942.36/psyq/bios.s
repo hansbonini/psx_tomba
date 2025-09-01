@@ -64,6 +64,10 @@
   DEFINE_FN _card_load, 0xA0, 0xAC
 #endif
 
+#ifdef FUNC_B07
+  DEFINE_FN DeliverEvent, 0xB0, 0x7
+#endif
+
 #ifdef FUNC_B08
   DEFINE_FN OpenEvent, 0xB0, 0x8
 #endif
