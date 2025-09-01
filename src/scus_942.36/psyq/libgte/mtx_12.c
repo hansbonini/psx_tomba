@@ -77,7 +77,10 @@ void SetSZfifo3(int r0, int r1, int r2) {
     gte_ldsz3(r0,r1,r2);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetSZfifo4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetSZfifo4);
+void SetSZfifo4(int r0, int r1, int r2, int r3) {
+    gte_ldsz4(r0,r1,r2,r3);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetSXSYfifo);
 
