@@ -1,7 +1,29 @@
 #include "common.h"
+#include "psyq/libgte.h"
 #include "psyq/gtemac.h"
+#include "psyq/inline_c.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetTransMatrix);
+#define gte_SetTransMatrix(r0)                                                 \
+    __asm__ volatile(                                                          \
+        "lw	$8, 20( %0 );"                                                     \
+        "lw	$9, 24( %0 );"                                                     \
+        "lw	$10, 28( %0 );"                                                    \
+        "ctc2	$8, $5;"                                                       \
+        "ctc2	$9, $6;"                                                       \
+        "ctc2	$10, $7"                                                       \
+        :                                                                      \
+        : "r"(r0)                                                              \
+        : "$8", "$9", "$10")
+#define gte_ldMAC1(r0) __asm__ volatile("mtc2	%0, $25" : : "r"(r0))
+#define gte_ldMAC2(r0) __asm__ volatile("mtc2	%0, $26" : : "r"(r0))
+#define gte_ldMAC3(r0) __asm__ volatile("mtc2	%0, $27" : : "r"(r0))
+#define gte_ldDQA(r0) __asm__ volatile("ctc2	%0, $27" : : "r"(r0))
+#define gte_ldDQB(r0) __asm__ volatile("ctc2	%0, $28" : : "r"(r0))
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetTransMatrix);
+void SetTransMatrix(MATRIX* m) {
+    gte_SetTransMatrix(m);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex0);
 
@@ -26,24 +48,24 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetSXSYfifo);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetRii);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetMAC123);
-void SetMAC123(void)
+void SetMAC123(int arg0, int arg1, int arg2)
 {
-    __asm__("mtc2 $a0, $25");
-    __asm__("mtc2 $a1, $26");
-    __asm__("mtc2 $a2, $27");
+    gte_ldMAC1(arg0);
+    gte_ldMAC2(arg1);
+    gte_ldMAC3(arg2);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetData32);
-void SetData32(void) {
-    __asm__("mtc2 $a0, $30");
+void SetData32(int arg0) {
+    gte_ldlzc(arg0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetDQA);
 void SetDQA(int arg0) {
-    __asm__("ctc2 %0, $27"::"r"(arg0));
+    gte_ldDQA(arg0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetDQB);
 void SetDQB(int arg0) {
-    __asm__("ctc2 %0, $28"::"r"(arg0));
+    gte_ldDQB(arg0);
 }
