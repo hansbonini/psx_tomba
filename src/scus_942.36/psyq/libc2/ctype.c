@@ -1,21 +1,20 @@
 #include "common.h"
-
-extern u8 D_8007FA71[];
+#include "psyq/ctype.h"
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/ctype", toupper);
-s32 toupper(char ch)
+char toupper(char c)
 {
-    if (D_8007FA71[ch] & 2) {
-        ch = ch - 0x20;
+    if (islower(c)) {
+        c = _toupper(c);
     }
-    return ch;
+    return c;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/ctype", tolower);
-s32 tolower(char ch)
+char tolower(char c)
 {
-    if (D_8007FA71[ch] & 1) {
-        ch = ch + 0x20;
+    if (isupper(c)) {
+        c = _tolower(c);
     }
-    return ch;
+    return c;
 }

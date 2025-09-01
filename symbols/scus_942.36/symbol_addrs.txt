@@ -663,6 +663,7 @@ unpack_packet=0x80061D54;
 SetGeomOffset=0x80063a34;
 SetGeomScreen=0x80063a54;
 // bss
+_ctype_=0x8007FA70;
 GPU_printf=0x80090C98;
 GPU_INFO=0x80090C9C; // size:0x80
 GPU_DATA=0x80090D6C;
