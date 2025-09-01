@@ -35,7 +35,10 @@ void SetVertex1(int r0) {
     gte_ldv1(r0);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex2);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertex2);
+void SetVertex2(int r0) {
+    gte_ldv2(r0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_12", SetVertexTri);
 
