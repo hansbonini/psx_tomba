@@ -141,10 +141,12 @@ extern s32 D_8007D6A0;
 extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
 extern u32 D_8009B138;
+extern s32 SELECTED_AREA;
 extern u8 ITEM_LIST[75];
 extern u8 INVENTORY_SLOT[]; // current item slot
 extern u16 INVENTORY_PAGE[3];
 extern u8 EVENT_LIST[];
+extern u8 D_8009C10D;
 extern u16 D_8009C864;
 extern u16 D_8009C866;
 extern s16 D_8009C940;
