@@ -462,7 +462,7 @@ u8 func_8001E118(EVENT event_id, s32 arg1, s32 arg2)
 {
     if (arg1 == 0) {
         func_80029548(*(&D_80077520 + (*(&D_80077540 + event_id) * 1)));
-        if (event_id != 0xA) {
+        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
             func_8001FFE8(0x2A);
@@ -470,7 +470,7 @@ u8 func_8001E118(EVENT event_id, s32 arg1, s32 arg2)
         }
     } else {
         func_80029548(*(&D_80077520 + (*(&D_80077608 + event_id) * 1)));
-        if (event_id != 0xA) {
+        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg2);
             func_8001ECD8(event_id, 1);
             func_80020DDC(2);
@@ -492,7 +492,7 @@ u8 func_8001E220(EVENT event_id, s32 arg1, s32 arg2)
             EVENT_LIST[event_id] += 1;
         }
         func_80029548((&D_80077520)[(&D_80077540)[event_id]]);
-        if (event_id != 0xA) {
+        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
             func_8001FFE8(0x2A);
