@@ -502,7 +502,25 @@ u8 func_8001E220(EVENT event_id, s32 arg1, s32 arg2)
     return EVENT_LIST[event_id];
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E31C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E31C);
+u8 func_8001E31C(EVENT event_id, s32 arg1)
+{
+    int index;
+    if (EVENT_LIST[event_id] != 0xFF) {
+        index = (&D_80077608)[event_id];
+        asm("");
+        EVENT_LIST[event_id] = 0xFF;
+        asm("");
+        func_80029548((&D_80077520)[index]);
+        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
+            func_8001E3EC(event_id, 1, 1, arg1);
+            func_8001ECD8(event_id, 1);
+            func_80020DDC(2);
+            func_80021110();
+        }
+    }
+    return EVENT_LIST[event_id];
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3D8);
 u8 func_8001E3D8(EVENT event_id)
