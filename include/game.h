@@ -398,7 +398,7 @@ extern s32 SELECTED_AREA;
 extern u8 ITEM_LIST[75];
 extern u8 INVENTORY_SLOT[]; // current item slot
 extern u16 INVENTORY_PAGE[3];
-extern u8 EVENT_LIST[];
+extern u8 EVENT_LIST[256];
 extern u8 D_8009C10D;
 extern u16 D_8009C864;
 extern u16 D_8009C866;
