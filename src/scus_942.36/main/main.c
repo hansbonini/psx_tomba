@@ -457,7 +457,28 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DE24);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DFD4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E118);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E118);
+u8 func_8001E118(s32 arg0, s32 arg1, s32 arg2)
+{
+    if (arg1 == 0) {
+        func_80029548(*(&D_80077520 + (*(&D_80077540 + arg0) * 1)));
+        if (arg0 != 0xA) {
+            func_8001E3EC(arg0, 0, 0x3C, arg2);
+            func_8001ECD8(arg0, 0);
+            func_8001FFE8(0x2A);
+            func_8002E3B0(0);
+        }
+    } else {
+        func_80029548(*(&D_80077520 + (*(&D_80077608 + arg0) * 1)));
+        if (arg0 != 0xA) {
+            func_8001E3EC(arg0, 1, 1, arg2);
+            func_8001ECD8(arg0, 1);
+            func_80020DDC(2);
+            func_80021110();
+        }
+    }
+    return EVENT_LIST[arg0];
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E220);
 

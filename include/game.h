@@ -125,6 +125,9 @@ typedef enum {
     /* 0x4 */ INVENTORY_SCREEN_ITEM_ONLY,
 } INVENTORY_SCREEN_ID;
 
+extern s32 D_80077520;
+extern u8 D_80077540;
+extern u8 D_80077608;
 extern u8 PLAYER_HEALTH;
 extern u8 PLAYER_HEALTH_MAX;
 extern u8 D_8009C3E7;
