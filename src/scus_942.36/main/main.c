@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "psyq/libgpu.h"
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 
@@ -43,45 +42,43 @@ void func_80016A18(void)
     D_8009C866 = 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016AF4);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016AF4);
 void func_80016AF4(void)
 {
     RECT rect;
 
     SetGeomOffset(160, 112);
     SetGeomScreen(544);
-    *(s16* )(PSX_SCRATCH + 0xF8) = 4096;
-    *(s16* )(PSX_SCRATCH + 0xFA) = 0;
-    *(s16* )(PSX_SCRATCH + 0xFC) = 0;
-    *(s16* )(PSX_SCRATCH + 0xFE) = 0;
-    *(s16* )(PSX_SCRATCH + 0x100) = 4096;
-    *(s16* )(PSX_SCRATCH + 0x102) = 0;
-    *(s16* )(PSX_SCRATCH + 0x104) = 0;
-    *(s16* )(PSX_SCRATCH + 0x106) = 0;
-    *(s16* )(PSX_SCRATCH + 0x108) = 4096;
-    *(s32* )(PSX_SCRATCH + 0x114) = 0;
-    *(s32* )(PSX_SCRATCH + 0x110) = 0;
-    *(s32* )(PSX_SCRATCH + 0x10C) = 0;
+    *(s16* )&PSX_SCRATCH[0xF8] = 0x1000;
+    *(s16* )&PSX_SCRATCH[0xFA] = 0;
+    *(s16* )&PSX_SCRATCH[0xFC] = 0;
+    *(s16* )&PSX_SCRATCH[0xFE] = 0;
+    *(s16* )&PSX_SCRATCH[0x100] = 0x1000;
+    *(s16* )&PSX_SCRATCH[0x102] = 0;
+    *(s16* )&PSX_SCRATCH[0x104] = 0;
+    *(s16* )&PSX_SCRATCH[0x106] = 0;
+    *(s16* )&PSX_SCRATCH[0x108] = 0x1000;
+    *(s32* )&PSX_SCRATCH[0x114] = 0;
+    *(s32* )&PSX_SCRATCH[0x110] = 0;
+    *(s32* )&PSX_SCRATCH[0x10C] = 0;
     func_80024AEC(&D_1F8000C0);
-    *(s16* )(PSX_SCRATCH + 0xE2) = 0;
-    *(s16* )(PSX_SCRATCH + 0xE6) = 0;
-    *(s16* )(PSX_SCRATCH + 0xEA) = -544;
-    *(s16* )(PSX_SCRATCH + 0xEE) = 0;
-    *(s16* )(PSX_SCRATCH + 0xF2) = 0;
-    *(s16* )(PSX_SCRATCH + 0xF6) = 0;
+    *(s16* )&PSX_SCRATCH[0xE2] = 0;
+    *(s16* )&PSX_SCRATCH[0xE6] = 0;
+    *(s16* )&PSX_SCRATCH[0xEA] = -0x220;
+    *(s16* )&PSX_SCRATCH[0xEE] = 0;
+    *(s16* )&PSX_SCRATCH[0xF2] = 0;
+    *(s16* )&PSX_SCRATCH[0xF6] = 0;
     func_80024B3C(&D_1F800118);
-    func_80016C4C(96, 151, 255);
-    // Clear entire screen
+    func_80016C4C(96U, 151U, 255U);
     rect.w = 1024;
     rect.x = 0;
     rect.y = 0;
     rect.h = 512;
-    ClearImage(&rect, 0, 0, 0);
-    ClearOTagR(&FRAMEBUFFER_OT, 808);
-    ClearOTagR(&FRAMEBUFFER_OT + 0x344, 808);
-    
-    *(s16*)(PSX_SCRATCH + 0x1F4) = 0;
-    *(u_long*)(PSX_SCRATCH + 0x1E0) = (u_long)&FRAMEBUFFER_OT;
+    ClearImage(&rect, 0U, 0U, 0U);
+    ClearOTagR(&OT_FRAMEBUFFER, 0x328);
+    ClearOTagR(&OT_FRAMEBUFFER + 0x344, 0x328);
+    *(s16* )&PSX_SCRATCH[0x1F4] = 0;
+    *(u32** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016C4C);

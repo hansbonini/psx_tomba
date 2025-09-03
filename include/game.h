@@ -378,6 +378,8 @@ typedef enum {
     /* 0x4 */ INVENTORY_SCREEN_ITEM_ONLY,
 } INVENTORY_SCREEN_ID;
 
+extern MATRIX D_1F8000C0;
+extern MATRIX D_1F800118;
 extern s32 D_80077520;
 extern u8 D_80077540;
 extern u8 D_80077608;
@@ -385,8 +387,6 @@ extern u8 PLAYER_HEALTH;
 extern u8 PLAYER_HEALTH_MAX;
 extern u8 D_8009C3E7;
 extern u8 D_8009C3E8;
-extern s32 D_1F8000C0;
-extern s32 D_1F800118;
 extern u8 D_8007775C[];
 extern s16 D_80078F80;
 extern s32 D_800791A0; // FileLinkArray
@@ -405,28 +405,8 @@ extern u16 D_8009C866;
 extern s16 D_8009C940;
 extern s16 D_8009C9DA;
 extern s16 D_8009C9DE;
-extern u_long FRAMEBUFFER_OT;
-extern s16 D_8009D6B8;
-extern s16 D_8009D6BA;
-extern s16 D_8009D6BC;
-extern s16 D_8009D6BE;
+extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* D_8009D6C4;
-extern s8 D_8009D6DA;
-extern s8 D_8009D6DB;
-extern s8 D_8009D6DC;
-extern s8 D_8009D6DD;
-extern s8 D_8009D6DE;
-extern s8 D_8009D6DF;
-extern s16 D_8009E3C8;
-extern s16 D_8009E3CA;
-extern s16 D_8009E3CC;
-extern s16 D_8009E3CE;
-extern s8 D_8009E3EA;
-extern s8 D_8009E3EB;
-extern s8 D_8009E3EC;
-extern s8 D_8009E3ED;
-extern s8 D_8009E3EE;
-extern s8 D_8009E3EF;
 extern long D_8009E45C;
 extern long D_8009E460;
 extern long D_8009E464;
