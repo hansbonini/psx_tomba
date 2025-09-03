@@ -378,8 +378,9 @@ typedef enum {
     /* 0x4 */ INVENTORY_SCREEN_ITEM_ONLY,
 } INVENTORY_SCREEN_ID;
 
-extern MATRIX D_1F8000C0;
-extern MATRIX D_1F800118;
+extern u8 D_1F8000C0[];
+extern u8 D_1F8000F8[];
+extern u8 D_1F800118[];
 extern s32 D_80077520;
 extern u8 D_80077540;
 extern u8 D_80077608;

@@ -49,26 +49,26 @@ void func_80016AF4(void)
 
     SetGeomOffset(160, 112);
     SetGeomScreen(544);
-    *(s16* )&PSX_SCRATCH[0xF8] = 0x1000;
-    *(s16* )&PSX_SCRATCH[0xFA] = 0;
-    *(s16* )&PSX_SCRATCH[0xFC] = 0;
-    *(s16* )&PSX_SCRATCH[0xFE] = 0;
-    *(s16* )&PSX_SCRATCH[0x100] = 0x1000;
-    *(s16* )&PSX_SCRATCH[0x102] = 0;
-    *(s16* )&PSX_SCRATCH[0x104] = 0;
-    *(s16* )&PSX_SCRATCH[0x106] = 0;
-    *(s16* )&PSX_SCRATCH[0x108] = 0x1000;
-    *(s32* )&PSX_SCRATCH[0x114] = 0;
-    *(s32* )&PSX_SCRATCH[0x110] = 0;
-    *(s32* )&PSX_SCRATCH[0x10C] = 0;
-    func_80024AEC(&D_1F8000C0);
+    (*(MATRIX*)(&D_1F8000F8)).m[0][0] = 0x1000;
+    (*(MATRIX*)(&D_1F8000F8)).m[0][1] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).m[0][2] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).m[1][0] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).m[1][1] = 0x1000;
+    (*(MATRIX*)(&D_1F8000F8)).m[1][2] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).m[2][0] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).m[2][1] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).m[2][2] = 0x1000;
+    (*(MATRIX*)(&D_1F8000F8)).t[2] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).t[1] = 0;
+    (*(MATRIX*)(&D_1F8000F8)).t[0] = 0;
+    func_80024AEC((MATRIX*)(&D_1F8000C0));
     *(s16* )&PSX_SCRATCH[0xE2] = 0;
     *(s16* )&PSX_SCRATCH[0xE6] = 0;
     *(s16* )&PSX_SCRATCH[0xEA] = -0x220;
     *(s16* )&PSX_SCRATCH[0xEE] = 0;
     *(s16* )&PSX_SCRATCH[0xF2] = 0;
     *(s16* )&PSX_SCRATCH[0xF6] = 0;
-    func_80024B3C(&D_1F800118);
+    func_80024B3C((MATRIX*)(&D_1F800118));
     func_80016C4C(96U, 151U, 255U);
     rect.w = 1024;
     rect.x = 0;
@@ -792,7 +792,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800246B0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80024AA8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80024AEC);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80024AEC);
+void func_80024AEC(MATRIX* dst)
+{
+    *dst=*(MATRIX*)(&D_1F8000F8);
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80024B3C);
 
