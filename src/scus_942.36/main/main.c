@@ -189,7 +189,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017374);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017418);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017418);
+void func_80017418(unkstruct_01* arg0, int arg1)
+{
+    DrawSync(0);
+    arg0->unk0 = arg1;
+    arg0->saved_reg_gp = GetGp();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001745C);
 void func_8001745C(u_long* p, short x, short y, short w, short h)
@@ -1526,7 +1532,7 @@ void func_80040FD8(void* arg0)
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041048);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800410D8);
-void func_800410D8(some_struct* arg0)
+void func_800410D8(unkstruct_00* arg0)
 {   
     if (ITEM_LIST[ITEM_JUMPINGPANTS] == 0) {
         func_80029788(ITEM_JUMPINGPANTS, 1, 1);

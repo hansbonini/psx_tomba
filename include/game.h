@@ -21,7 +21,7 @@ typedef struct lz_t {
     s32 offset;
 } lz_t;
 
-typedef struct some_struct {
+typedef struct unkstruct_00 {
     int field_0;
     char field_4;
     int field_8;
@@ -31,7 +31,12 @@ typedef struct some_struct {
     char field_69;
     char field_6A;
     char field_6B;
-} some_struct;
+} unkstruct_00;
+
+typedef struct unkstruct_01 {
+    s32 unk0;
+    s32 saved_reg_gp;
+} unkstruct_01;
 
 typedef enum {
     /* 0x00 */ ITEM_CHICK,
