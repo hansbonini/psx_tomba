@@ -126,37 +126,44 @@ void func_80016C4C(u_char r0, u_char g0, u_char b0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016DDC);
-void func_80016DDC(s8 r0, s8 g0, s8 b0)
+void func_80016DDC(u_char r0, u_char g0, u_char b0)
 {
-    DISPENV* temp_s2;
+    DISPENV* dispenv1;
+    DISPENV* dispenv2;
+    DRAWENV* drawenv1;
+    DRAWENV* drawenv2;
 
-    SetDefDrawEnv((DRAWENV*)&D_8009D6C4, 0x180, 0, 0x280, 0x1E0);
-    temp_s2 = (DISPENV*)&D_8009D6C4 - 0x1;
-    SetDefDispEnv((DISPENV*)temp_s2, 0x180, 0, 0x280, 0x1E0);
-    SetDefDrawEnv((DRAWENV*)(&D_8009D6C4 + 0x344), 0x180, 0, 0x280, 0x1E0);
-    SetDefDispEnv((DISPENV*)((DRAWENV*)(&D_8009D6C4 + 0x344)) -0x1, 0x180, 0, 0x280, 0x1E0);
-    D_8009D6B8 = 0;
-    D_8009D6BA = 0;
-    D_8009D6BC = 0x100;
-    D_8009D6BE = 0xF0;
-    D_8009E3CE = 0xF0;
-    D_8009E3C8 = 0;
-    D_8009E3CA = 0;
-    D_8009E3CC = 0x100;
-    D_8009E3EC = 1;
-    D_8009D6DC = 1;
-    D_8009E3EA = 1;
-    D_8009D6DA = 1;
-    D_8009E3EB = 1;
-    D_8009D6DB = 1;
-    D_8009D6DD = r0;
-    D_8009D6DE = g0;
-    D_8009D6DF = b0;
-    D_8009E3ED = r0;
-    D_8009E3EE = g0;
-    D_8009E3EF = b0;
-    PutDispEnv((DISPENV*)temp_s2);
-    PutDrawEnv((DRAWENV*)&D_8009D6C4);
+    drawenv1 = &D_8009D6C4;
+    SetDefDrawEnv(drawenv1, 0x180, 0, 0x280, 0x1E0);
+    dispenv1 = &D_8009D6C4 - 0x5;
+    SetDefDispEnv(dispenv1, 0x180, 0, 0x280, 0x1E0);
+    drawenv2 = (&D_8009D6C4 + 0x344);
+    SetDefDrawEnv(drawenv2, 0x180, 0, 0x280, 0x1E0);
+    dispenv2 = (&D_8009D6C4 + 0x344)-0x5;
+    SetDefDispEnv(dispenv2, 0x180, 0, 0x280, 0x1E0);
+    dispenv1->screen.x = 0;
+    dispenv1->screen.y = 0;
+    dispenv1->screen.w = 0x100;
+    dispenv1->screen.h = 0xF0;
+    dispenv2->screen.h = 0xF0;
+    dispenv2->screen.x = 0;
+    dispenv2->screen.y = 0;
+    dispenv2->screen.w = 0x100;
+    drawenv2->isbg = '\x01';
+    drawenv1->isbg = '\x01';
+    drawenv2->dtd = '\x01';
+    drawenv1->dtd = '\x01';
+    drawenv2->dfe = '\x01';
+    drawenv1->dfe = '\x01';
+    drawenv1->r0 = r0;
+    drawenv1->g0 = g0;
+    drawenv1->b0 = b0;
+    drawenv2->r0 = r0;
+    drawenv2->g0 = g0;
+    drawenv2->b0 = b0;
+    PutDispEnv(dispenv1);
+    PutDrawEnv(drawenv1);
+    return;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016F5C);
