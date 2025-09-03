@@ -191,7 +191,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017418);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001745C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001745C);
+void func_8001745C(u_long* p, short x, short y, short w, short h)
+{
+    RECT rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = w;
+    rect.h = h;
+    LoadImage(&rect, p);
+    return;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017498);
 void func_80017498(u_long* address, s16 x, s16 y, s16 x2, s16 y2)
