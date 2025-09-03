@@ -8,8 +8,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A00);
 void func_80016A00(s16 id, s16 arg1)
 {
-    *(s16* )0x1F8001EA = id;
-    *(s16* )0x1F8001EC = arg1;
+    *(s16* )&PSX_SCRATCH[0x1EA] = id;
+    *(s16* )&PSX_SCRATCH[0x1EC] = arg1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A18);
