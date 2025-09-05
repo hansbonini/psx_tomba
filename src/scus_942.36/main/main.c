@@ -776,7 +776,26 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023CE0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023E44);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023ED0);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023ED0);
+void func_80023ED0(short x, short y, short sprt_id)
+{   
+    u32 sprt_ofs;
+    s32* ot;
+    SPRT* sprt;
+
+    sprt = D_8009C8A8;
+    setlen(sprt, 4),
+    setcode(sprt, 0x65); // which type is? SPRT = 0x64
+    setRGB0(sprt, 128, 128, 128);
+    sprt_ofs = sprt_id * 0x3;
+    setXY0(sprt, x, y);
+    sprt->code = (u8) (sprt->code & 0xFD);
+    setUV0(sprt, *(u16*)&D_8007B2F4[sprt_ofs], *(u16*)(&D_8007B2F6[sprt_ofs]));
+    setWH(sprt, *(u16*)(&D_8007B2F8[sprt_ofs]), *(u16*)(&D_8007B2FA[sprt_ofs]));
+    setClut(sprt, (s16) *(&D_8007B2FC[sprt_ofs]), (s16) *(&D_8007B2FE[sprt_ofs]));
+    addPrim(*(u_long*)(0x1F8001E0), sprt);
+    D_8009C8A8 += sizeof(SPRT);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80024008);
 
