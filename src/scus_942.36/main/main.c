@@ -1745,7 +1745,24 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004ED80);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004EFA8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F24C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F24C);
+void func_8004F24C(short tpage, s32 p) {
+    typedef inline struct {
+        u8 pad[0x164];
+        int sprt;
+        u8 pad2[0x78];
+        int ot;
+    } scratchpad;
+    
+    scratchpad* scratch;
+    SPRT* sprt;
+
+    scratch = PSX_SCRATCH;
+    sprt = scratch->sprt;
+    SetDrawMode(sprt, 0, 0, tpage, 0);
+    AddPrim(scratch->ot + (p * 4), sprt);
+    scratch->sprt += 0xC;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F2CC);
 
@@ -1761,12 +1778,12 @@ void func_8004F510(short* p, u8 r0, u8 g0, u8 b0)
         int ot;
     } scratchpad;
     
-    u_long *ot;
+    scratchpad *scratch;
     SPRT* sprt;
-    scratchpad *ptr;
+    u_long *ot;
 
-    ptr=PSX_SCRATCH;
-    sprt = ptr->sprt;
+    scratch = PSX_SCRATCH;
+    sprt = scratch->sprt;
     *(u8 *)((u32)&sprt->tag+3) = '\x3';
     sprt->code = 0x60;
     sprt->r0 = r0;
@@ -1775,10 +1792,10 @@ void func_8004F510(short* p, u8 r0, u8 g0, u8 b0)
     sprt->x0 = (u16)p[0];
     sprt->y0 = (u16)p[1];
     *(u16 *)&sprt->u0 = (u16)p[2];
-    ot = ptr->ot+4;
+    ot = scratch->ot+4;
     sprt->clut = (u16)p[3];
     AddPrim(ot, sprt);
-    ptr->sprt += 0x10;
+    scratch->sprt += 0x10;
     return;
 }
 
