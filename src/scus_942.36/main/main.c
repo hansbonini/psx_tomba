@@ -1751,7 +1751,36 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F2CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F3DC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F510);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F510);
+void func_8004F510(short* p, u8 r0, u8 g0, u8 b0)
+{
+    typedef inline struct {
+        u8 pad[0x164];
+        int sprt;
+        u8 pad2[0x78];
+        int ot;
+    } scratchpad;
+    
+    u_long *ot;
+    SPRT* sprt;
+    scratchpad *ptr;
+
+    ptr=PSX_SCRATCH;
+    sprt = ptr->sprt;
+    *(u8 *)((u32)&sprt->tag+3) = '\x3';
+    sprt->code = 0x60;
+    sprt->r0 = r0;
+    sprt->g0 = g0;
+    sprt->b0 = b0;
+    sprt->x0 = (u16)p[0];
+    sprt->y0 = (u16)p[1];
+    *(u16 *)&sprt->u0 = (u16)p[2];
+    ot = ptr->ot+4;
+    sprt->clut = (u16)p[3];
+    AddPrim(ot, sprt);
+    ptr->sprt += 0x10;
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F5A4);
 
