@@ -30,6 +30,7 @@ extern int D_80096230[]; // CD_COMATTR
 extern volatile u_char* D_800962B4;
 extern volatile u_char* D_800962B8;
 extern volatile int* D_800962C0;
+extern void* D_800962C4;
 extern volatile CdlIntr D_800962C8; // CD_INTR
 extern volatile unsigned char* D_800962B0;
 
@@ -325,7 +326,34 @@ void CD_flush(void)
     *D_800962C0 = 0x1325;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_initvol);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_initvol);
+int CD_initvol(void) {
+    CdlATV vol;
+    // 0x800962C4 + 0x1b8 = 0x8009647C (current main vol left).
+    if (*((volatile u16*)((u32)D_800962C4 + 0x1b8)) == 0 &&
+        *((volatile u16*)((u32)D_800962C4 + 0x1ba)) == 0) {
+        // 0x800962C4 + 0x180 = 0x80096444 (main vol left/right).
+        *((volatile u16*)((u32)D_800962C4 + 0x180)) = 0x3fff;
+        *((volatile u16*)((u32)D_800962C4 + 0x182)) = 0x3fff;
+    }
+    // 0x800962C4 + 0x1b0 = 0x80096474 (CD volume left/right).
+    *((volatile u16*)((u32)D_800962C4 + 0x1b0)) = 0x3fff;
+    *((volatile u16*)((u32)D_800962C4 + 0x1b2)) = 0x3fff;
+    // Enable spu, unmute spu and enable cd audio.
+    *((volatile u16*)((u32)D_800962C4 + 0x1aa)) =
+        (1 << 15) | (1 << 14) | (1 << 0);
+    vol.val0 = vol.val2 = 0x80;
+    vol.val1 = vol.val3 = 0;
+    *D_800962B0 = 2;
+    *D_800962B8 = vol.val0;
+    *D_800962BC = vol.val1;
+    *D_800962B0 = 3;
+    *D_800962B4 = vol.val2;
+    *D_800962B8 = vol.val3;
+    *D_800962BC = 0x20;
+    return 0;
+}
+
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_initintr);
 
