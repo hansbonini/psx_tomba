@@ -5,42 +5,45 @@ typedef struct {
     unsigned char sync;  // sync state    
     unsigned char ready; // ready state   
     unsigned char c;                      
-} CD_flush_struct;                        
+} CdlIntr;                        
 
-extern int (*CD_CBREADY)(u8, char*); 
-extern int (*CD_CBSYNC)(u8, char*);  
+extern CdlCB (*CD_CBREADY)(u_char, u_char*); 
+extern CdlCB (*CD_CBSYNC)(u_char, u_char*);  
 
-extern u8 CD_COM;
+extern u_char CD_COM;
 extern char* D_80016070;
 extern char* D_80016080;
 extern char* D_800160F8;
 extern char* D_80016100;
 
-extern const char* D_80096010[];
+extern const char* D_80096010[]; // CD_COMSTR
 extern char* D_80096090[];
 
-extern s32 D_80096294;
-extern volatile CD_flush_struct D_800962C8;
+extern int D_80096294;
+extern volatile CdlIntr D_800962C8; // CD_INTR
 extern volatile unsigned char* D_800962B0;
 
 extern char D_8009B2A8[];
 extern char D_8009B2B0[];
+extern u_char* D_800962B4;
+extern u_char* D_800962B8;
+extern u_char* D_800962BC;
 extern char D_8009B2B8[];
-extern s32 D_8009B2C0;
-extern s32 D_8009B2C4; // timeout
+extern int D_8009B2C0;
+extern int D_8009B2C4; // timeout
 extern char* D_8009B2C8[];
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", getintr);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_sync);
 int CD_sync(int mode, unsigned char* result) {
-    s32 i;
-    s32 intr;
-    s32 sync;
-    s32 flushed;
-    s32 temp_s1;
-    u8* src;
-    u8* dst;
+    int i;
+    int intr;
+    int sync;
+    int flushed;
+    int temp_s1;
+    u_char* src;
+    u_char* dst;
     char com, s, r;
     char** name;
 
@@ -103,14 +106,14 @@ int CD_sync(int mode, unsigned char* result) {
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_ready);
 int CD_ready(int arg0, u_char* arg1) {
-    s32 i;
-    s32 c;
-    s32 ready;
-    s32 intr;
-    s32 flushed;
-    s32 temp_s1;
-    u8* src;
-    u8* dst;
+    int i;
+    int c;
+    int ready;
+    int intr;
+    int flushed;
+    int temp_s1;
+    u_char* src;
+    u_char* dst;
     
     D_8009B2C0 = VSync(-1) + 0x3C0;
     D_8009B2C4 = 0;
@@ -182,7 +185,18 @@ int CD_ready(int arg0, u_char* arg1) {
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_cw);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_vol);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_vol);
+int CD_vol(CdlATV* vol)
+{
+    *D_800962B0 = 2;
+    *D_800962B8 = vol->val0;
+    *D_800962BC = vol->val1;
+    *D_800962B0 = 3;
+    *D_800962B4 = vol->val2;
+    *D_800962B8 = vol->val3;
+    *D_800962BC = 0x20;
+    return 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_flush);
 
