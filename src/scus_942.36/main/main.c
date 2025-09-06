@@ -774,7 +774,24 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", FontDebugPrintf);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023CE0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023E44);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023E44);
+void func_80023E44(short arg0)
+{
+    int graphType = GetGraphType();
+    int val = 0x24;
+    if (graphType != 1) {
+        graphType = GetGraphType();
+        asm("");
+        if (graphType == 2) {
+            val = 0x24;
+        } else {
+            val = 0x14;   
+        }
+    }
+    func_80024008(0x68, 0x60, 1, val, arg0);
+    func_80024008(0xA0, 0x60, 2, val, arg0);
+    return;
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023ED0);
 void func_80023ED0(short x, short y, short sprt_id)
