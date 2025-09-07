@@ -18,7 +18,9 @@ extern char* D_80016100;
 extern char* D_8001610C;
 extern char* D_80016114;
 extern char* D_80016124;
-
+extern char* D_80016178;
+extern char* D_80016160;
+extern char* D_8001616C;
 extern int CD_DEBUG; // CD_DEBUG
 extern u_char CD_COM;
 extern u_char CD_MODE;
@@ -35,6 +37,7 @@ extern volatile u_char* D_800962B8;
 extern volatile int* D_800962C0;
 extern void* D_800962C4;
 extern volatile CdlIntr D_800962C8; // CD_INTR
+extern void* D_800962CC[];
 extern volatile unsigned char* D_800962B0;
 extern s32* D_800962E4;
 extern s32* D_800962E8;
@@ -43,7 +46,7 @@ extern s32* D_800962F0;
 extern volatile s32* D_800962F4;
 extern char D_8009B2A8[];
 extern char D_8009B2B0[];
-extern u_char* D_800962BC;
+extern volatile u_char* D_800962BC;
 extern char D_8009B2B8[];
 extern int D_8009B2C0;
 extern int D_8009B2C4; // timeout
@@ -373,9 +376,88 @@ void CD_initintr(void) {
     InterruptCallback(2, callback);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_init);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_init);
+int CD_init(void) {
+    puts(&D_80016160);
+    printf(&D_8001616C, &D_800962CC);
+    CD_COM = 0;
+    CD_MODE = 0;
+    CD_CBREADY = 0;
+    CD_CBSYNC = 0;
+    CD_STATUS1 = 0;
+    CD_STATUS = 0;
+    ResetCallback();
+    InterruptCallback(2, &callback);
+    
+    *D_800962B0 = 1;
+    while (*D_800962BC & 7) {
+        *D_800962B0 = 1;
+        *D_800962BC = 7;
+        *D_800962B8 = 7;
+    }
+    
+    D_800962C8.ready = D_800962C8.c = 0;
+    D_800962C8.sync = 2;
+    
+    *D_800962B0 = 0;
+    *D_800962BC = 0;
+    *D_800962C0 = 0x1325; // COM_DELAY
+    
+    CD_cw(1, 0, 0, 0);
+    if (CD_STATUS & 0x10) {
+        CD_cw(1, 0, 0, 0);
+    }
+    if (CD_cw(0xA, 0, 0, 0) != 0) {
+        return -1;
+    }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_datasync);
+    if (CD_cw(0xC, 0, 0, 0) != 0) {
+        return -1;
+    }
+
+    if (CD_sync(0, 0) != 2) {
+        return -1;
+    }
+    return 0;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_datasync);
+int CD_datasync(int arg0) {
+    int sync;
+    int flushed;
+
+    D_8009B2C0 = VSync(-1) + 0x3C0;
+    D_8009B2C4 = 0;
+    D_8009B2C8[0] = &D_80016178;    
+    while (true) {
+        if ((D_8009B2C0 < VSync(-1)) || D_8009B2C4++ > 0x3C0000) {
+            puts(&D_80016070);
+            
+            printf(&D_80016080,
+                D_8009B2C8[0],
+                CD_COMSTR[CD_COM],
+                CD_INTSTR[D_800962C8.sync],
+                CD_INTSTR[D_800962C8.ready]);
+            CD_flush();
+            flushed = -1;
+        } else {
+            flushed = 0;
+        }
+    
+        if (flushed != 0) {
+            return -1;
+        }
+        if (!(*D_800962F4 & 0x01000000)) {
+            sync = 0;
+            break;
+        }
+        if (arg0 != 0) {
+            sync = 1;
+            break;
+        }
+    }
+    return sync;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_getsector);
 int CD_getsector(int arg0, int arg1) {
