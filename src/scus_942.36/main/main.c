@@ -6,10 +6,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A00);
-void func_80016A00(s16 id, s16 arg1)
+void func_80016A00(short id, short arg1)
 {
-    *(s16* )&PSX_SCRATCH[0x1EA] = id;
-    *(s16* )&PSX_SCRATCH[0x1EC] = arg1;
+    *(short* )&PSX_SCRATCH[0x1EA] = id;
+    *(short* )&PSX_SCRATCH[0x1EC] = arg1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A18);
@@ -17,23 +17,23 @@ void func_80016A18(void)
 {
     D_8009EB5A = 0xFFFF;
     D_8009EB7C = 0xFFFF;
-    *(u8* )&PSX_SCRATCH[0x3D3] = 0xFF;
-    *(u8* )&PSX_SCRATCH[0x3D2] = 0xFF;
-    *(s16* )&PSX_SCRATCH[0x1F0] = 0;
-    *(s16* )&PSX_SCRATCH[0x1F2] = 0;
-    *(s16* )&PSX_SCRATCH[0x1EE] = 0;
-    *(s16* )&PSX_SCRATCH[0x1F6] = 0;
-    *(s16* )&PSX_SCRATCH[0x1F8] = 0;
-    *(s8* )&PSX_SCRATCH[0x1CC] = 0;
-    *(s8* )&PSX_SCRATCH[0x1D0] = 0;
-    *(s8* )&PSX_SCRATCH[0x1D1] = 0;
-    *(s8* )&PSX_SCRATCH[0x1CE] = 0;
-    *(s8* )&PSX_SCRATCH[0x1CF] = 0;
-    *(s8* )&PSX_SCRATCH[0x1D3] = 0;
-    *(s16* )&PSX_SCRATCH[0x1C6] = 0;
-    *(s8* )&PSX_SCRATCH[0x1C4] = 0;
-    *(s8* )&PSX_SCRATCH[0x1C5] = 0;
-    *(s8* )&PSX_SCRATCH[0x3CC] = 0;
+    *(u_char* )&PSX_SCRATCH[0x3D3] = 0xFF;
+    *(u_char* )&PSX_SCRATCH[0x3D2] = 0xFF;
+    *(short* )&PSX_SCRATCH[0x1F0] = 0;
+    *(short* )&PSX_SCRATCH[0x1F2] = 0;
+    *(short* )&PSX_SCRATCH[0x1EE] = 0;
+    *(short* )&PSX_SCRATCH[0x1F6] = 0;
+    *(short* )&PSX_SCRATCH[0x1F8] = 0;
+    *(char* )&PSX_SCRATCH[0x1CC] = 0;
+    *(char* )&PSX_SCRATCH[0x1D0] = 0;
+    *(char* )&PSX_SCRATCH[0x1D1] = 0;
+    *(char* )&PSX_SCRATCH[0x1CE] = 0;
+    *(char* )&PSX_SCRATCH[0x1CF] = 0;
+    *(char* )&PSX_SCRATCH[0x1D3] = 0;
+    *(short* )&PSX_SCRATCH[0x1C6] = 0;
+    *(char* )&PSX_SCRATCH[0x1C4] = 0;
+    *(char* )&PSX_SCRATCH[0x1C5] = 0;
+    *(char* )&PSX_SCRATCH[0x3CC] = 0;
     D_8009C9DA = 0;
     D_8009C9DE = 0;
     D_8009C940 = 0;
@@ -62,20 +62,20 @@ void func_80016AF4(void)
     (*(MATRIX*)(&D_1F8000F8)).t[1] = 0;
     (*(MATRIX*)(&D_1F8000F8)).t[0] = 0;
     func_80024AEC((MATRIX*)(&D_1F8000C0));
-    *(s16* )&PSX_SCRATCH[0xE2] = 0;
-    *(s16* )&PSX_SCRATCH[0xE6] = 0;
-    *(s16* )&PSX_SCRATCH[0xEA] = -0x220;
-    *(s16* )&PSX_SCRATCH[0xEE] = 0;
-    *(s16* )&PSX_SCRATCH[0xF2] = 0;
-    *(s16* )&PSX_SCRATCH[0xF6] = 0;
+    *(short* )&PSX_SCRATCH[0xE2] = 0;
+    *(short* )&PSX_SCRATCH[0xE6] = 0;
+    *(short* )&PSX_SCRATCH[0xEA] = -0x220;
+    *(short* )&PSX_SCRATCH[0xEE] = 0;
+    *(short* )&PSX_SCRATCH[0xF2] = 0;
+    *(short* )&PSX_SCRATCH[0xF6] = 0;
     func_80024B3C((MATRIX*)(&D_1F800118));
     func_80016C4C(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
     ClearImage(&rect, 0U, 0U, 0U);
     ClearOTagR(&OT_FRAMEBUFFER, 0x328);
     ClearOTagR(&OT_FRAMEBUFFER + 0x344, 0x328);
-    *(s16* )&PSX_SCRATCH[0x1F4] = 0;
-    *(u32** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
+    *(short* )&PSX_SCRATCH[0x1F4] = 0;
+    *(u_int** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016C4C);
@@ -196,7 +196,7 @@ void func_8001745C(u_long* p, short x, short y, short w, short h)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017498);
-void func_80017498(u_long* address, s16 x, s16 y, s16 x2, s16 y2)
+void func_80017498(u_long* address, short x, short y, short x2, short y2)
 {
     TIM_IMAGE tim;
     TIM_IMAGE *pTim;
@@ -269,10 +269,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017E44);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017EEC);
 void func_80017EEC(void)
 {
-    *(s32* )0x1F80021C = &D_800A5970;
-    *(s32* )0x1F800260 = &D_800A5970;
-    *(s16* )0x1F800250 = 0;
-    *(s16* )0x1F800246 = 0;
+    *(int* )0x1F80021C = &D_800A5970;
+    *(int* )0x1F800260 = &D_800A5970;
+    *(short* )0x1F800250 = 0;
+    *(short* )0x1F800246 = 0;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F1C);
@@ -472,7 +472,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DE24);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DFD4);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E118);
-u8 func_8001E118(EVENT event_id, s32 arg1, s32 arg2)
+u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 {
     if (arg1 == 0) {
         func_80029548(*(&D_80077520 + (*(&D_80077540 + event_id) * 1)));
@@ -495,7 +495,7 @@ u8 func_8001E118(EVENT event_id, s32 arg1, s32 arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E220);
-u8 func_8001E220(EVENT event_id, s32 arg1, s32 arg2)
+u_char func_8001E220(EVENT event_id, int arg1, int arg2)
 {
     if (EVENT_LIST[event_id] == 0) {
         if (event_id == 1) {
@@ -517,7 +517,7 @@ u8 func_8001E220(EVENT event_id, s32 arg1, s32 arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E31C);
-u8 func_8001E31C(EVENT event_id, s32 arg1)
+u_char func_8001E31C(EVENT event_id, int arg1)
 {
     int index;
     if (EVENT_LIST[event_id] != 0xFF) {
@@ -537,7 +537,7 @@ u8 func_8001E31C(EVENT event_id, s32 arg1)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3D8);
-u8 func_8001E3D8(EVENT event_id)
+u_char func_8001E3D8(EVENT event_id)
 {
     return EVENT_LIST[event_id];
 }
@@ -551,7 +551,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001ECD8);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001EFE8);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001F158);
-void func_8001F158(s16 file_id)
+void func_8001F158(short file_id)
 {
     if (CdControl(2, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
         CdControlF(0x15, 0);
@@ -635,7 +635,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80021310);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80021340);
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80021B7C);
-s32 func_80021B7C(void)
+int func_80021B7C(void)
 {
     return 0;
 }
@@ -695,9 +695,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80022874);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800228A4);
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800228C0);
-void func_800228C0(u16* id)
+void func_800228C0(u_short* id)
 {
-    ((u32*)(id))[0x5] = (s32)(((u32*)(id))[0x5] + (((s16*)(id))[0x41] << 8));
+    ((u_int*)(id))[0x5] = (int)(((u_int*)(id))[0x5] + (((short*)(id))[0x41] << 8));
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800228D8);
@@ -705,9 +705,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800228D8);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80022908);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80022924);
-void func_80022924(s16* id)
+void func_80022924(short* id)
 {
-    ((u32*)(id))[0x5] = (s32) (((u32*)(id))[0x5] + (((s16*)(id))[0x3F] << 8));
+    ((u_int*)(id))[0x5] = (int) (((u_int*)(id))[0x5] + (((short*)(id))[0x3F] << 8));
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8002293C);
@@ -721,9 +721,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800229CC);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800229FC);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3D8);
-void func_80022A18(u16* id)
+void func_80022A18(u_short* id)
 {
-    ((u16*)(id))[0x16] = ((u16*)(id))[0x10];
+    ((u_short*)(id))[0x16] = ((u_short*)(id))[0x10];
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80022A24);
@@ -796,8 +796,8 @@ void func_80023E44(short arg0)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80023ED0);
 void func_80023ED0(short x, short y, short sprt_id)
 {   
-    u32 sprt_ofs;
-    s32* ot;
+    u_int sprt_ofs;
+    int* ot;
     SPRT* sprt;
 
     sprt = D_8009C8A8;
@@ -806,10 +806,10 @@ void func_80023ED0(short x, short y, short sprt_id)
     setRGB0(sprt, 128, 128, 128);
     sprt_ofs = sprt_id * 0x3;
     setXY0(sprt, x, y);
-    sprt->code = (u8) (sprt->code & 0xFD);
-    setUV0(sprt, *(u16*)&D_8007B2F4[sprt_ofs], *(u16*)(&D_8007B2F6[sprt_ofs]));
-    setWH(sprt, *(u16*)(&D_8007B2F8[sprt_ofs]), *(u16*)(&D_8007B2FA[sprt_ofs]));
-    setClut(sprt, (s16) *(&D_8007B2FC[sprt_ofs]), (s16) *(&D_8007B2FE[sprt_ofs]));
+    sprt->code = (u_char) (sprt->code & 0xFD);
+    setUV0(sprt, *(u_short*)&D_8007B2F4[sprt_ofs], *(u_short*)(&D_8007B2F6[sprt_ofs]));
+    setWH(sprt, *(u_short*)(&D_8007B2F8[sprt_ofs]), *(u_short*)(&D_8007B2FA[sprt_ofs]));
+    setClut(sprt, (short) *(&D_8007B2FC[sprt_ofs]), (short) *(&D_8007B2FE[sprt_ofs]));
     addPrim(*(u_long*)(0x1F8001E0), sprt);
     D_8009C8A8 += sizeof(SPRT);
 }
@@ -918,9 +918,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029734);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029788);
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029944);
-s32 func_80029944(ITEM id, s32 qty)
+int func_80029944(ITEM id, int qty)
 {
-    s32 i;
+    int i;
     for (i = 0; i < *INVENTORY_SLOT_COUNTER; i++) {
         if (INVENTORY_SLOT[i] == id) {
             if (qty == -1) {
@@ -950,7 +950,7 @@ s32 func_80029944(ITEM id, s32 qty)
 
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029A84);
-u32 func_80029A84(void)
+u_int func_80029A84(void)
 {
     if (D_8009C3E7 == 0) {
         if (PLAYER_HEALTH_DISPLAYED < 8) {
@@ -1269,7 +1269,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8003A384);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8003A4F8);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8003A604);
-void func_8003A604(s32 id)
+void func_8003A604(int id)
 {
     D_8007D6A0 = id;
 }
@@ -1449,7 +1449,7 @@ void LZDecompress(byte *src, byte *dest)
      
     do {
         if (((LZ_BITMASK >> LZ_CURRENT_BIT) & 1)) {
-            u8 off, len;
+            u_char off, len;
             off = *src++;
             len = *src++;
             bcopy(dest - off, dest, len);
@@ -1476,7 +1476,7 @@ void LZDecompress(byte *src, byte *dest)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8003F0DC);
-void func_8003F0DC(s8* src, s8* dst, s8* len)
+void func_8003F0DC(char* src, char* dst, char* len)
 {
     bzero(dst, len);
     LZDecompress(src, dst);
@@ -1544,11 +1544,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040E24);
 void func_80040FD8(void* arg0)
 {
     func_8001E31C(EVENT_ASAFEMUSHROOM, 0);
-    func_80029788(*(u8*)(arg0+3), 1, 1);
-    if (!(*(u8*)(arg0+0xC) & 0x80)) {
-        func_8002367C(*(u8*)(arg0+0x6B));
+    func_80029788(*(u_char*)(arg0+3), 1, 1);
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
     }
-    *(u8*)(arg0+4)= (u8) (*(u8*)(arg0+4) + 1);
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041048);
@@ -1574,7 +1574,7 @@ void func_800410D8(unkstruct_00* arg0)
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004117C);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041754);
-void func_80041754(s16 id, s16 arg1, s32 arg2)
+void func_80041754(short id, short arg1, int arg2)
 {
     func_80041940(0, id, arg1, arg2, 0, 0);
 }
@@ -1768,11 +1768,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004ED80);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004EFA8);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F24C);
-void func_8004F24C(short tpage, s32 p) {
+void func_8004F24C(short tpage, int p) {
     typedef inline struct {
-        u8 pad[0x164];
+        u_char pad[0x164];
         int nextprim;
-        u8 pad2[0x78];
+        u_char pad2[0x78];
         int ot;
     } scratchpad;
     
@@ -1789,12 +1789,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F2CC);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F3DC);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004F510);
-void func_8004F510(short* p, u8 r0, u8 g0, u8 b0)
+void func_8004F510(short* p, u_char r0, u_char g0, u_char b0)
 {
     typedef inline struct {
-        u8 pad[0x164];
+        u_char pad[0x164];
         int nextprim;
-        u8 pad2[0x78];
+        u_char pad2[0x78];
         int ot;
     } scratchpad;
     
@@ -1805,9 +1805,9 @@ void func_8004F510(short* p, u8 r0, u8 g0, u8 b0)
     setTile(tile);
     setRGB0(tile, r0, g0, b0);
     setXY0(tile, p[0], p[1]);
-    tile->w = (u16)p[2];
+    tile->w = (u_short)p[2];
     ot = scratch->ot+4;
-    tile->h = (u16)p[3];
+    tile->h = (u_short)p[3];
     AddPrim(ot, tile);
     scratch->nextprim += sizeof(TILE);
     return;

@@ -5,14 +5,14 @@
 #include "psyq/libgte.h"
 
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
-#define IS_DEBUG_MODE_ENABLED ((u8)(0x1F80001B4))
+#define IS_DEBUG_MODE_ENABLED ((u_char)(0x1F80001B4))
 #define READ32(_dst, _src) { \
-    _dst = (((u8 *)_src)[1] << 8) | (((u8 *)_src)[0] << 0) \
-        | ((((u8 *)_src)[3] << 8) | (((u8 *)_src)[2] << 0) << 16);\
+    _dst = (((u_char *)_src)[1] << 8) | (((u_char *)_src)[0] << 0) \
+        | ((((u_char *)_src)[3] << 8) | (((u_char *)_src)[2] << 0) << 16);\
     _src = (char*)_src + 4; \
 }
 #define READ16(_dst, _src) { \
-    _dst = (((u8 *)_src)[1] << 8) | ((u8 *)_src)[0]; \
+    _dst = (((u_char *)_src)[1] << 8) | ((u_char *)_src)[0]; \
     _src = (char*)_src + 2; \
 }
 
@@ -362,8 +362,8 @@ typedef enum {
 } INVENTORY_SCREEN_ID;
 
 typedef struct lz_t {
-    s32 size;
-    s32 offset;
+    int size;
+    int offset;
 } lz_t;
 
 typedef struct unkstruct_00 {
@@ -379,8 +379,8 @@ typedef struct unkstruct_00 {
 } unkstruct_00;
 
 typedef struct unkstruct_01 {
-    s32 unk0;
-    s32 saved_reg_gp;
+    int unk0;
+    int saved_reg_gp;
 } unkstruct_01;
 
 typedef struct tomba_equips {
@@ -388,40 +388,39 @@ typedef struct tomba_equips {
     ITEM pants;
 } tomba_equips;
 
-extern u8 D_1F8000C0[];
-extern u8 D_1F8000F8[];
-extern u8 D_1F800118[];
-extern s32 D_80077520;
-extern u8 D_80077540;
-extern u8 D_80077608;
-extern u8 PLAYER_HEALTH;
-extern u8 PLAYER_HEALTH_DISPLAYED;
-extern u8 D_8007775C[];
-extern s16 D_80078F80;
-extern s32 D_800791A0; // FileLinkArray
-extern s32 D_8007B2F4[];
-extern s32 D_8007B2F6[];
-extern s32 D_8007B2F8[];
-extern s32 D_8007B2FA[];
-extern s32 D_8007B2FC[];
-extern s32 D_8007B2FE[];
-extern s32 D_8007D6A0;
-extern u8 LZ_CURRENT_BIT;
-extern u16 LZ_BITMASK;
-extern u32 D_8009B138;
-extern s32 SELECTED_AREA;
-extern u8 ITEM_LIST[256];
-extern u8 INVENTORY_SLOT[256];
-extern u16 INVENTORY_SLOT_COUNTER[2];
-extern u8 EVENT_LIST[256];
-extern u8 D_8009C3E7;
-extern u8 D_8009C3E8;
-extern u16 D_8009C864;
-extern u16 D_8009C866;
+extern u_char D_1F8000C0[];
+extern u_char D_1F8000F8[];
+extern u_char D_1F800118[];
+extern int D_80077520;
+extern u_char D_80077540;
+extern u_char D_80077608;
+extern u_char PLAYER_HEALTH;
+extern u_char PLAYER_HEALTH_DISPLAYED;
+extern u_char D_8007775C[];
+extern short D_80078F80;
+extern int D_800791A0; // FileLinkArray
+extern int D_8007B2F4[];
+extern int D_8007B2F6[];
+extern int D_8007B2F8[];
+extern int D_8007B2FA[];
+extern int D_8007B2FC[];
+extern int D_8007B2FE[];
+extern int D_8007D6A0;
+extern u_char LZ_CURRENT_BIT;
+extern u_short LZ_BITMASK;
+extern int SELECTED_AREA;
+extern u_char ITEM_LIST[256];
+extern u_char INVENTORY_SLOT[256];
+extern u_short INVENTORY_SLOT_COUNTER[2];
+extern u_char EVENT_LIST[256];
+extern u_char D_8009C3E7;
+extern u_char D_8009C3E8;
+extern u_short D_8009C864;
+extern u_short D_8009C866;
 extern void* D_8009C8A8;
-extern s16 D_8009C940;
-extern s16 D_8009C9DA;
-extern s16 D_8009C9DE;
+extern short D_8009C940;
+extern short D_8009C9DA;
+extern short D_8009C9DE;
 extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* D_8009D6C4;
 extern long D_8009E45C;
@@ -432,15 +431,15 @@ extern long D_8009E474;
 extern long D_8009E478;
 extern long D_8009E47C;
 extern long D_8009E480;
-extern s16 D_8009EB52;
-extern u16 D_8009EB5A;
-extern u16 D_8009EB7C;
-extern u16 D_800A5430;
-extern u16 D_800A5432;
-extern u8 D_800A3940;
-extern u8 D_800A5398;
-extern s32 D_800A5970;
-extern u8 D_800B00F8;
-extern u8 D_800B0770;
+extern short D_8009EB52;
+extern u_short D_8009EB5A;
+extern u_short D_8009EB7C;
+extern u_short D_800A5430;
+extern u_short D_800A5432;
+extern u_char D_800A3940;
+extern u_char D_800A5398;
+extern int D_800A5970;
+extern u_char D_800B00F8;
+extern u_char D_800B0770;
 
 #endif
