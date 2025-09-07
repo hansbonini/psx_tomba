@@ -1,11 +1,14 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
+extern char* D_80015F2C;
+
 extern CdlCB CD_CBSYNC;
 extern s32 CD_DEBUG;
 extern CdlCB CD_CBREADY;
 extern u8 CD_STATUS;
 extern CdlLOC CD_POS;
+extern const char* CD_COMSTR[];
 extern u8 CD_COM;
 extern u8 CD_MODE;
 
@@ -65,7 +68,15 @@ s32 CdSetDebug(s32 level) {
 }
 
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdComstr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdComstr);
+char* CdComstr(u_char com)
+{
+    if (com >= 0x1c) {
+        return &D_80015F2C;
+    }
+    return CD_COMSTR[com];
+}
+
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdIntstr);
 

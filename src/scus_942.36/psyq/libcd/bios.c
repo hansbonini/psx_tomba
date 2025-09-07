@@ -22,7 +22,7 @@ extern int CD_DEBUG; // CD_DEBUG
 extern u_char CD_COM;
 extern u_char CD_MODE;
 extern CdlLOC CD_POS;
-extern const char* D_80096010[]; // CD_COMSTR
+extern const char* CD_COMSTR[]; // CD_COMSTR
 extern char* D_80096090[];
 extern int D_80096130[]; 
 extern int D_80096294;
@@ -66,7 +66,7 @@ int CD_sync(int mode, unsigned char* result) {
             
             printf(&D_80016080,
                 D_8009B2C8[0],
-                D_80096010[CD_COM],
+                CD_COMSTR[CD_COM],
                 D_80096090[D_800962C8.sync],
                 D_80096090[D_800962C8.ready]);
             CD_flush();
@@ -135,7 +135,7 @@ int CD_ready(int arg0, u_char* arg1) {
             
             printf(&D_80016080,
                 D_8009B2C8[0],
-                D_80096010[CD_COM],
+                CD_COMSTR[CD_COM],
                 D_80096090[D_800962C8.sync],
                 D_80096090[D_800962C8.ready]);
             CD_flush();
@@ -221,12 +221,12 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
     }
     
     if (CD_DEBUG > 1) {
-        printf(&D_8001610C, D_80096010[arg0]);
+        printf(&D_8001610C, CD_COMSTR[arg0]);
     }
     
     if ((D_80096230[arg0] != 0) && (arg1 == 0)) {
         if (CD_DEBUG > 0) {
-            printf(&D_80016114, D_80096010[arg0]);
+            printf(&D_80016114, CD_COMSTR[arg0]);
         }
         
         return -2;
@@ -264,7 +264,7 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
             puts(&D_80016070);
             printf(&D_80016080,
                 D_8009B2C8[0],
-                D_80096010[CD_COM],
+                CD_COMSTR[CD_COM],
                 D_80096090[D_800962C8.sync],
                 D_80096090[D_800962C8.ready]);
             CD_flush();
