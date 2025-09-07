@@ -28,14 +28,19 @@ extern CdlLOC CD_POS;
 extern const char* CD_COMSTR[]; // CD_COMSTR
 extern const char* CD_INTSTR[];
 extern int D_80096130[]; 
-extern int D_80096294;
 extern int D_80096230[]; // CD_COMATTR
+extern int D_80096294;
 extern volatile u_char* D_800962B4;
 extern volatile u_char* D_800962B8;
 extern volatile int* D_800962C0;
 extern void* D_800962C4;
 extern volatile CdlIntr D_800962C8; // CD_INTR
 extern volatile unsigned char* D_800962B0;
+extern s32* D_800962E4;
+extern s32* D_800962E8;
+extern s32* D_800962EC;
+extern s32* D_800962F0;
+extern volatile s32* D_800962F4;
 extern char D_8009B2A8[];
 extern char D_8009B2B0[];
 extern u_char* D_800962BC;
@@ -372,7 +377,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_init);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_datasync);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_getsector);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_getsector);
+int CD_getsector(int arg0, int arg1) {
+    *D_800962B0 = 0;
+    *D_800962BC = 0x80;
+    *D_800962E4 = 0x20943;
+    *D_800962C0 = 0x1323;
+    *D_800962E8 |= 0x8000;
+    *D_800962EC = arg0;
+    *D_800962F0 = arg1 | 0x10000;
+    while (!(*D_800962B0 & 0x40)){};
+    *D_800962F4 = 0x11000000;
+    while (*D_800962F4 & 0x01000000){};
+    *D_800962C0 = 0x1325;
+    return 0;
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_set_test_parmnum);
 void CD_set_test_parmnum(int arg0)
