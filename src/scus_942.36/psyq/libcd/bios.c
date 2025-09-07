@@ -23,7 +23,7 @@ extern u_char CD_COM;
 extern u_char CD_MODE;
 extern CdlLOC CD_POS;
 extern const char* CD_COMSTR[]; // CD_COMSTR
-extern char* D_80096090[];
+extern const char* CD_INTSTR[];
 extern int D_80096130[]; 
 extern int D_80096294;
 extern int D_80096230[]; // CD_COMATTR
@@ -67,8 +67,8 @@ int CD_sync(int mode, unsigned char* result) {
             printf(&D_80016080,
                 D_8009B2C8[0],
                 CD_COMSTR[CD_COM],
-                D_80096090[D_800962C8.sync],
-                D_80096090[D_800962C8.ready]);
+                CD_INTSTR[D_800962C8.sync],
+                CD_INTSTR[D_800962C8.ready]);
             CD_flush();
             flushed = -1;
         } else {
@@ -136,8 +136,8 @@ int CD_ready(int arg0, u_char* arg1) {
             printf(&D_80016080,
                 D_8009B2C8[0],
                 CD_COMSTR[CD_COM],
-                D_80096090[D_800962C8.sync],
-                D_80096090[D_800962C8.ready]);
+                CD_INTSTR[D_800962C8.sync],
+                CD_INTSTR[D_800962C8.ready]);
             CD_flush();
             flushed = -1;
         } else {
@@ -265,8 +265,8 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
             printf(&D_80016080,
                 D_8009B2C8[0],
                 CD_COMSTR[CD_COM],
-                D_80096090[D_800962C8.sync],
-                D_80096090[D_800962C8.ready]);
+                CD_INTSTR[D_800962C8.sync],
+                CD_INTSTR[D_800962C8.ready]);
             CD_flush();
             flushed = -1;
         } else {

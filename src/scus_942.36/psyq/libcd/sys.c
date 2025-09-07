@@ -2,13 +2,14 @@
 #include "psyq/libcd.h"
 
 extern char* D_80015F2C;
-
+extern char* D_80015F2C;
 extern CdlCB CD_CBSYNC;
 extern s32 CD_DEBUG;
 extern CdlCB CD_CBREADY;
 extern u8 CD_STATUS;
 extern CdlLOC CD_POS;
 extern const char* CD_COMSTR[];
+extern const char* CD_INTSTR[];
 extern u8 CD_COM;
 extern u8 CD_MODE;
 
@@ -78,7 +79,13 @@ char* CdComstr(u_char com)
 }
 
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdIntstr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdIntstr);
+char* CdIntstr(u_char intr) {
+    if (intr >= 7) {
+        return &D_80015F2C;
+    }
+    return CD_INTSTR[intr];
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdSync);
 int CdSync(int mode, u_char* result)
