@@ -500,7 +500,7 @@ u8 func_8001E220(EVENT event_id, s32 arg1, s32 arg2)
     if (EVENT_LIST[event_id] == 0) {
         if (event_id == 1) {
             if (SELECTED_AREA == 0) {
-                D_8009C10D += 1;
+                EVENT_LIST[event_id] += 1;
             }
         } else {
             EVENT_LIST[event_id] += 1;

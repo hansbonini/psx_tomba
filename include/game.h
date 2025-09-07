@@ -16,28 +16,6 @@
     _src = (char*)_src + 2; \
 }
 
-typedef struct lz_t {
-    s32 size;
-    s32 offset;
-} lz_t;
-
-typedef struct unkstruct_00 {
-    int field_0;
-    char field_4;
-    int field_8;
-    char field_C;
-    int field_10[22];
-    char field_68;
-    char field_69;
-    char field_6A;
-    char field_6B;
-} unkstruct_00;
-
-typedef struct unkstruct_01 {
-    s32 unk0;
-    s32 saved_reg_gp;
-} unkstruct_01;
-
 typedef enum {
     /* 0x00 */ ITEM_CHICK,
     /* 0x01 */ ITEM_FROG,
@@ -383,6 +361,33 @@ typedef enum {
     /* 0x4 */ INVENTORY_SCREEN_ITEM_ONLY,
 } INVENTORY_SCREEN_ID;
 
+typedef struct lz_t {
+    s32 size;
+    s32 offset;
+} lz_t;
+
+typedef struct unkstruct_00 {
+    int field_0;
+    char field_4;
+    int field_8;
+    char field_C;
+    int field_10[22];
+    char field_68;
+    char field_69;
+    char field_6A;
+    char field_6B;
+} unkstruct_00;
+
+typedef struct unkstruct_01 {
+    s32 unk0;
+    s32 saved_reg_gp;
+} unkstruct_01;
+
+typedef struct tomba_equips {
+    ITEM weapon;
+    ITEM pants;
+} tomba_equips;
+
 extern u8 D_1F8000C0[];
 extern u8 D_1F8000F8[];
 extern u8 D_1F800118[];
@@ -405,11 +410,10 @@ extern u8 LZ_CURRENT_BIT;
 extern u16 LZ_BITMASK;
 extern u32 D_8009B138;
 extern s32 SELECTED_AREA;
-extern u8 ITEM_LIST[75];
-extern u8 INVENTORY_SLOT[]; // current item slot
+extern u8 ITEM_LIST[256];
+extern u8 INVENTORY_SLOT[256];
 extern u16 INVENTORY_SLOT_COUNTER[2];
 extern u8 EVENT_LIST[256];
-extern u8 D_8009C10D;
 extern u8 D_8009C3E7;
 extern u8 D_8009C3E8;
 extern u16 D_8009C864;
