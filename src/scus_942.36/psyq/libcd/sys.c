@@ -3,6 +3,7 @@
 
 extern char* D_80015F2C;
 extern char* D_80015F2C;
+extern int D_80095F64[];
 extern CdlCB CD_CBSYNC;
 extern s32 CD_DEBUG;
 extern CdlCB CD_CBREADY;
@@ -112,7 +113,32 @@ CdlCB CdReadyCallback(CdlCB func) {
     return old;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControl);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControl);
+int CdControl(u_char com, u_char* param, u_char* result) {
+    static inline int loop(u_char com, u_char* param, u_char* result) {
+        int i;
+        CdlCB cbprev = CD_CBSYNC;
+        for (i = 3; i != -1; --i) {
+            CD_CBSYNC = 0;
+    
+            if (com != 1 && (CD_STATUS & CdlStatShellOpen) != 0) {
+                CD_cw(CdlNop, 0, 0, 0);
+            }
+    
+            if (param == 0 || D_80095F64[com] == 0 ||
+                CD_cw(CdlSetloc, param, result, 0) == 0) {
+                CD_CBSYNC = cbprev;
+                if (CD_cw(com, param, result, 0) == 0) {
+                    return 0;
+                }
+            }
+        }
+    
+        CD_CBSYNC = cbprev;
+        return -1;
+    }
+    return loop(com, param, result) == 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControlF);
 
