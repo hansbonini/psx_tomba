@@ -2,6 +2,7 @@
 #include "psyq/libcd.h"
 
 extern CdlCB CD_CBSYNC;
+extern s32 CD_DEBUG;
 extern CdlCB CD_CBREADY;
 extern u8 CD_STATUS;
 extern CdlLOC CD_POS;
@@ -54,7 +55,15 @@ void CdFlush(void)
     CD_flush();
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdSetDebug);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdSetDebug);
+s32 CdSetDebug(s32 level) {
+    s32 lastLevel;
+
+    lastLevel = CD_DEBUG;
+    CD_DEBUG = level;
+    return lastLevel;
+}
+
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdComstr);
 

@@ -18,7 +18,7 @@ extern char* D_8001610C;
 extern char* D_80016114;
 extern char* D_80016124;
 
-extern int D_80095FF8; // CD_DEBUG
+extern int CD_DEBUG; // CD_DEBUG
 extern u_char CD_COM;
 extern u_char CD_MODE;
 extern CdlLOC CD_POS;
@@ -220,12 +220,12 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
         }
     }
     
-    if (D_80095FF8 > 1) {
+    if (CD_DEBUG > 1) {
         printf(&D_8001610C, D_80096010[arg0]);
     }
     
     if ((D_80096230[arg0] != 0) && (arg1 == 0)) {
-        if (D_80095FF8 > 0) {
+        if (CD_DEBUG > 0) {
             printf(&D_80016114, D_80096010[arg0]);
         }
         
