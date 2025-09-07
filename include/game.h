@@ -390,7 +390,7 @@ extern s32 D_80077520;
 extern u8 D_80077540;
 extern u8 D_80077608;
 extern u8 PLAYER_HEALTH;
-extern u8 PLAYER_HEALTH_MAX;
+extern u8 PLAYER_HEALTH_DISPLAYED;
 extern u8 D_8007775C[];
 extern s16 D_80078F80;
 extern s32 D_800791A0; // FileLinkArray
@@ -407,7 +407,7 @@ extern u32 D_8009B138;
 extern s32 SELECTED_AREA;
 extern u8 ITEM_LIST[75];
 extern u8 INVENTORY_SLOT[]; // current item slot
-extern u16 INVENTORY_PAGE[3];
+extern u16 INVENTORY_SLOT_COUNTER[2];
 extern u8 EVENT_LIST[256];
 extern u8 D_8009C10D;
 extern u8 D_8009C3E7;

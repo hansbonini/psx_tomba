@@ -921,25 +921,25 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029788);
 s32 func_80029944(ITEM id, s32 qty)
 {
     s32 i;
-    for (i = 0; i < *INVENTORY_PAGE; i++) {
+    for (i = 0; i < *INVENTORY_SLOT_COUNTER; i++) {
         if (INVENTORY_SLOT[i] == id) {
             if (qty == -1) {
                 ITEM_LIST[id] = 0;
-                while (i < *INVENTORY_PAGE - 1) {
+                while (i < *INVENTORY_SLOT_COUNTER - 1) {
                     INVENTORY_SLOT[i] = INVENTORY_SLOT[i+1];
                     i++;
                 }
-                *INVENTORY_PAGE -= 1;
+                *INVENTORY_SLOT_COUNTER -= 1;
                 return 0;
             }
             ITEM_LIST[id] = ITEM_LIST[id] - qty;
             if (ITEM_LIST[id] == 0) {
                 ITEM_LIST[id] = 0;
-                while (i < *INVENTORY_PAGE - 1) {
+                while (i < *INVENTORY_SLOT_COUNTER - 1) {
                     INVENTORY_SLOT[i] = INVENTORY_SLOT[i+1];
                     i++;
                 }
-                *INVENTORY_PAGE -= 1;
+                *INVENTORY_SLOT_COUNTER -= 1;
                 return 0;
             }
             return ITEM_LIST[id];
@@ -953,19 +953,19 @@ s32 func_80029944(ITEM id, s32 qty)
 u32 func_80029A84(void)
 {
     if (D_8009C3E7 == 0) {
-        if (PLAYER_HEALTH_MAX < 8) {
-            PLAYER_HEALTH_MAX++;
+        if (PLAYER_HEALTH_DISPLAYED < 8) {
+            PLAYER_HEALTH_DISPLAYED++;
         } else {
             D_8009C3E8++;
         }
     } else {
-        if (PLAYER_HEALTH_MAX < 16) {
-            PLAYER_HEALTH_MAX++;
+        if (PLAYER_HEALTH_DISPLAYED < 16) {
+            PLAYER_HEALTH_DISPLAYED++;
         }
     }
 
-    PLAYER_HEALTH = D_800A5432 = D_800A5430 = PLAYER_HEALTH_MAX;
-    return PLAYER_HEALTH_MAX;
+    PLAYER_HEALTH = D_800A5432 = D_800A5430 = PLAYER_HEALTH_DISPLAYED;
+    return PLAYER_HEALTH_DISPLAYED;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029B20);
