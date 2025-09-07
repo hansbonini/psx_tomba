@@ -114,61 +114,48 @@ CdlCB CdReadyCallback(CdlCB func) {
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControl);
-int CdControl(u_char com, u_char* param, u_char* result) {
-    static inline int loop(u_char com, u_char* param, u_char* result) {
-        int i;
-        CdlCB cbprev = CD_CBSYNC;
-        for (i = 3; i != -1; --i) {
-            CD_CBSYNC = 0;
-    
-            if (com != 1 && (CD_STATUS & CdlStatShellOpen) != 0) {
-                CD_cw(CdlNop, 0, 0, 0);
-            }
-    
-            if (param == 0 || D_80095F64[com] == 0 ||
-                CD_cw(CdlSetloc, param, result, 0) == 0) {
-                CD_CBSYNC = cbprev;
-                if (CD_cw(com, param, result, 0) == 0) {
-                    return 0;
-                }
+static inline int loop(u_char com, u_char* param, u_char* result, int arg3) {
+    int i;
+    CdlCB cbprev = CD_CBSYNC;
+    for (i = 3; i != -1; --i) {
+        CD_CBSYNC = 0;
+
+        if (com != 1 && (CD_STATUS & CdlStatShellOpen) != 0) {
+            CD_cw(CdlNop, 0, 0, 0);
+        }
+
+        if (param == 0 || D_80095F64[com] == 0 ||
+            CD_cw(CdlSetloc, param, result, 0) == 0) {
+            CD_CBSYNC = cbprev;
+            if (CD_cw(com, param, result, arg3) == 0) {
+                return 0;
             }
         }
-    
-        CD_CBSYNC = cbprev;
-        return -1;
     }
-    return loop(com, param, result) == 0;
+
+    CD_CBSYNC = cbprev;
+    return -1;
+}
+
+int CdControl(u_char com, u_char* param, u_char* result) {
+    return loop(com, param, result, 0) == 0;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControlF);
 int CdControlF(u_char com, u_char* param)
 {
-    static inline int loop(u8 com, u8* param, u8* result) {
-        s32 i;
-    
-        CdlCB cbprev = CD_CBSYNC;
-        
-        for (i = 3; i != -1; i--) {
-            CD_CBSYNC = NULL;
-            if ((com != 1) && (CD_STATUS & 0x10)) {
-                CD_cw(1, NULL, NULL, 0);
-            }
-            if ((param == NULL) || (D_80095F64[com] == 0) || (CD_cw(2, param, result, 0) == 0)) {
-                CD_CBSYNC = cbprev;
-                if (CD_cw(com, param, result, 1) == 0) {
-                    return 0;
-                }
-            }
-        }
-    
-        CD_CBSYNC = cbprev;
-        return -1;
-    }
 
-    return loop(com, param, NULL) == 0;
+    return loop(com, param, NULL, 1) == 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControlB);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdControlB);
+int CdControlB(u_char com, u_char* param, u_char* result)
+{
+    if (loop(com, param, result, 0) != 0) {
+        return 0;
+    }
+    return CD_sync(0, result) == 2;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdMix);
 int CdMix(CdlATV* vol) {
