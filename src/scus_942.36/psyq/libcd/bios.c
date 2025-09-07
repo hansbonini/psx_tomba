@@ -380,4 +380,20 @@ void CD_set_test_parmnum(int arg0)
     D_80096294 = arg0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", callback);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", callback);
+void callback(void) {
+    int intr;
+    int temp_s1;
+    
+    temp_s1 = D_800962B0[0] & 3;
+
+    while (intr = getintr()) {
+        if (intr & 4 && CD_CBREADY != NULL) {
+            CD_CBREADY(D_800962C8.ready, D_8009B2B0);
+        }
+        if (intr & 2 && CD_CBSYNC != NULL) {
+            CD_CBSYNC(D_800962C8.sync, D_8009B2A8);
+        }
+    }
+    D_800962B0[0] = temp_s1;
+}
