@@ -1,5 +1,6 @@
 #include "common.h"
 #include "psyq/libcd.h"
+// #include "psyq/libetc.h"
 
 typedef struct {                          
     unsigned char sync;  // sync state    
@@ -21,6 +22,8 @@ extern char* D_80016124;
 extern int CD_DEBUG; // CD_DEBUG
 extern u_char CD_COM;
 extern u_char CD_MODE;
+extern int CD_STATUS;
+extern int CD_STATUS1;
 extern CdlLOC CD_POS;
 extern const char* CD_COMSTR[]; // CD_COMSTR
 extern const char* CD_INTSTR[];
@@ -33,7 +36,6 @@ extern volatile int* D_800962C0;
 extern void* D_800962C4;
 extern volatile CdlIntr D_800962C8; // CD_INTR
 extern volatile unsigned char* D_800962B0;
-
 extern char D_8009B2A8[];
 extern char D_8009B2B0[];
 extern u_char* D_800962BC;
@@ -41,6 +43,8 @@ extern char D_8009B2B8[];
 extern int D_8009B2C0;
 extern int D_8009B2C4; // timeout
 extern char* D_8009B2C8[];
+
+void callback(void);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", getintr);
 
@@ -354,8 +358,15 @@ int CD_initvol(void) {
     return 0;
 }
 
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_initintr);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_initintr);
+void CD_initintr(void) {
+    CD_CBREADY = 0;
+    CD_CBSYNC = 0;
+    CD_STATUS1 = 0;
+    CD_STATUS = 0;
+    ResetCallback();
+    InterruptCallback(2, callback);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/bios", CD_init);
 
