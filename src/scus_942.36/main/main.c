@@ -1563,7 +1563,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040718);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004080C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004095C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004095C);
+void func_8004095C(void* arg0)
+{
+    func_80029788(0x21, 1, 1);
+    func_8001E31C(EVENT_APRECIOUSTREASURECHEST, 0);
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
+    }
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800409CC);
 
