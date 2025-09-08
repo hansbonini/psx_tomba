@@ -1,8 +1,6 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-extern char* D_80015F2C;
-extern char* D_80015F2C;
 extern int D_80095F64[];
 extern CdlCB CD_CBSYNC;
 extern s32 CD_DEBUG;
@@ -74,7 +72,7 @@ s32 CdSetDebug(s32 level) {
 char* CdComstr(u_char com)
 {
     if (com >= 0x1c) {
-        return &D_80015F2C;
+        return "none";
     }
     return CD_COMSTR[com];
 }
@@ -83,7 +81,7 @@ char* CdComstr(u_char com)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/sys", CdIntstr);
 char* CdIntstr(u_char intr) {
     if (intr >= 7) {
-        return &D_80015F2C;
+        return "none";
     }
     return CD_INTSTR[intr];
 }

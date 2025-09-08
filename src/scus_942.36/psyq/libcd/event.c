@@ -5,7 +5,6 @@
 void def_cbsync(u_char intr, u_char* result);
 void def_cbready(u_char intr, u_char* result);
 void def_cbread(u_char intr, u_char* result);
-extern char* D_80015F14;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/event", CdInit);
 int CdInit(void) {
@@ -18,7 +17,7 @@ int CdInit(void) {
         if (status == 1) break;
         status = -1;
         if (i == status) {
-           printf(&D_80015F14);
+           printf("CdInit: Init failed\n");
           return 0;
         }
     }

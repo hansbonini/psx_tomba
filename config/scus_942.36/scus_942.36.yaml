@@ -63,6 +63,7 @@ segments:
     vram: 0x80010000
     # bss_size: 0x2116f
     align: 4
+    subalign: 4
     subsegments:
       - [0x800, rodata]
       - [0x5F3C, .rodata, psyq/libc2/prnt]
@@ -71,7 +72,10 @@ segments:
       - [0x62D8, .rodata, psyq/libgpu/prim]
       - [0x63A8, .rodata, psyq/libgpu/sys]
       - [0x65DC, .rodata, psyq/libgpu/tmd]
-      - [0x6714, rodata]
+      - [0x6714, .rodata, psyq/libcd/event]
+      - [0x672C, .rodata, psyq/libcd/sys]
+      - [0x6734, .rodata, psyq/libcd/bios]
+      - [0x6984, rodata]
       - [0x6BB0, c, main/main]
       - [0x4BB8C, hasm, psyq/libapi/c68]
       - [0x4BB9C, hasm, psyq/libapi/c112]
