@@ -1570,7 +1570,19 @@ void func_80040468(void* arg0)
     *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800404E8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800404E8);
+void func_800404E8(void* arg0)
+{
+    if (D_8009BCA0 == 0) {
+        func_80029A84();
+        func_80031124(0x15, 3);
+        func_8001FFE8(0xA);
+        if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+            func_8002367C(*(u_char*)(arg0+0x6B));
+        }
+        *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040564);
 
