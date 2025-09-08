@@ -94,6 +94,7 @@ typedef enum {
     /* 0x49 */ ITEM_MATHBEAD8,
     /* 0x4A */ ITEM_MATHBEAD9,
     /* 0x4B */ ITEM_MATHBEAD10,
+    /* 0x8E */ ITEM_THREECRYSTALBALLS = 0x8E,
 } ITEM;
 
 typedef enum {
@@ -415,6 +416,7 @@ extern u_char ITEM_LIST[256];
 extern u_char INVENTORY_SLOT[256];
 extern u_short INVENTORY_SLOT_COUNTER[2];
 extern u_char EVENT_LIST[256];
+extern s8 D_8009C216;
 extern u_char D_8009C3E7;
 extern u_char D_8009C3E8;
 extern u_short D_8009C864;

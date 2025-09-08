@@ -1548,7 +1548,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004035C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800403E4);
 void func_800403E4(void* arg0)
 {
-    func_80029788(0xF, 1, 1);
+    func_80029788(ITEM_BAKEDYAM, 1, 1);
     if ((EVENT_LIST[EVENT_SOMETHINGCOOKIN] & 0xFF) == 3) {
         EVENT_LIST[EVENT_SOMETHINGCOOKIN] += 1;
     }
@@ -1558,7 +1558,17 @@ void func_800403E4(void* arg0)
     *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040468);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040468);
+void func_80040468(void* arg0)
+{
+    D_8009C216 = 5;
+    func_80029788(ITEM_DIRTYMIRROR, 1, 1);
+    func_8001E220(EVENT_AMAGICMIRROR, 0, 0);
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
+    }
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800404E8);
 
@@ -1577,7 +1587,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004080C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004095C);
 void func_8004095C(void* arg0)
 {
-    func_80029788(0x21, 1, 1);
+    func_80029788(ITEM_GRAPPLE, 1, 1);
     func_8001E31C(EVENT_APRECIOUSTREASURECHEST, 0);
     if (!(*(u_char*)(arg0+0xC) & 0x80)) {
         func_8002367C(*(u_char*)(arg0+0x6B));
@@ -1588,7 +1598,7 @@ void func_8004095C(void* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800409CC);
 void func_800409CC(void* arg0)
 {
-    func_80029788(0x22, 1, 1);
+    func_80029788(ITEM_GRAPPLEJACK, 1, 1);
     if (!(*(u_char*)(arg0+0xC) & 0x80)) {
         func_8002367C(*(u_char*)(arg0+0x6B));
     }
@@ -1608,7 +1618,7 @@ void func_80040A30(void* arg0)
             EVENT_LIST[EVENT_LOSTANDFOUND]+= 1;
             break;
         case 2:
-            func_80029788(0x8E, 1, 1);
+            func_80029788(ITEM_THREECRYSTALBALLS, 1, 1);
             func_8001E31C(EVENT_LOSTANDFOUND, 0);
             break;
     }
