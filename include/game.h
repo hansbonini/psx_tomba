@@ -6,6 +6,7 @@
 
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define IS_DEBUG_MODE_ENABLED ((u_char)(0x1F80001B4))
+#define D_8009E3D4 ((void*)0x8009E3D4)
 #define READ32(_dst, _src) { \
     _dst = (((u_char *)_src)[1] << 8) | (((u_char *)_src)[0] << 0) \
         | ((((u_char *)_src)[3] << 8) | (((u_char *)_src)[2] << 0) << 16);\
@@ -431,6 +432,8 @@ extern long D_8009E474;
 extern long D_8009E478;
 extern long D_8009E47C;
 extern long D_8009E480;
+extern int D_8009EB4C;
+extern short D_8009EBA0;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;
 extern u_short D_8009EB7C;

@@ -403,7 +403,46 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019E68);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A51C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A51C);
+void func_8001A51C(void)
+{
+    s32 temp_v1;
+    void* temp_v0;
+
+    temp_v0 = *(void** )&PSX_SCRATCH[0x1D4];
+    *(s8* )(&PSX_SCRATCH[0x1D1]) = 0;
+    *(s8* )(&PSX_SCRATCH[0x1D0]) = 1;
+    *(s16* )(temp_v0+0x48) = 0;
+    *(s16* )(temp_v0+0x4A) = 0;
+    *(s16* )(temp_v0+0x4C) = 0;
+    *(s16* )(temp_v0+0x4E) = 0;
+    *(s8* )(temp_v0+0x6A) = 0;
+    setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
+    setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
+    *(s16* )&PSX_SCRATCH[0x1DC] = -1;
+    *(s16* )&PSX_SCRATCH[0x1DE] = 0;
+    D_8009EB4C = 0;
+    *(s8* )&PSX_SCRATCH[0x1CE] = 0;
+    D_8009EBA0 = 0;
+    func_80024B3C(D_1F800118);
+    *(s16* )&PSX_SCRATCH[0x1FC] = 0;
+    while (true){
+        func_800223E0();
+        temp_v1 = (*(void** )0x1F8001D4);
+        switch (*(u16*)(temp_v1+0x48)) {
+            case 0:
+                func_8001A670(); // New Game
+                break;
+            case 1:
+                func_8001A954(); // Debug
+                break;
+            case 2:
+                func_8001A774(); // Load Game
+                break;
+        }
+        func_800171D4(1);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A670);
 
