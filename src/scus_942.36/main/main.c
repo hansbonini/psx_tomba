@@ -1545,7 +1545,18 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040268);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004035C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800403E4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800403E4);
+void func_800403E4(void* arg0)
+{
+    func_80029788(0xF, 1, 1);
+    if ((EVENT_LIST[EVENT_SOMETHINGCOOKIN] & 0xFF) == 3) {
+        EVENT_LIST[EVENT_SOMETHINGCOOKIN] += 1;
+    }
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B), &EVENT_LIST[EVENT_SOMETHINGCOOKIN]);
+    }
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040468);
 
@@ -1607,9 +1618,27 @@ void func_80040A30(void* arg0)
     *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040B28);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040B28);
+void func_80040B28(void* arg0)
+{
+    func_8001E31C(EVENT_THEMISTERIOUSMUSHROOM, 0);
+    func_80029788(*(u_char*)(arg0+0x3), 1, 1);
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
+    }
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040B98);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040B98);
+void func_80040B98(void* arg0)
+{
+    func_8001E220(EVENT_FLOWERSEEDS, 0, 0);
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
+    }
+    func_80029788(*(u_char*)(arg0+0x3), 1, 1);
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040C0C);
 
