@@ -1614,7 +1614,20 @@ void func_8004062C(void* arg0)
     *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040690);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040690);
+void func_80040690(void* arg0)
+{
+    u8 lives = *(s8*)&PLAYER_LIVES;
+    if (lives < 99) {
+        *(s8*)&PLAYER_LIVES=(u8)(lives+1);
+        func_80031124(0x14, 3);
+        func_8001FFE8(0xA);
+    }
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
+    }
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040718);
 

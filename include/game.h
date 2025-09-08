@@ -399,6 +399,7 @@ extern u_char D_80077540;
 extern u_char D_80077608;
 extern u_char PLAYER_HEALTH;
 extern u_char PLAYER_HEALTH_DISPLAYED;
+extern u8 PLAYER_LIVES;
 extern u_char D_8007775C[];
 extern short D_80078F80;
 extern int D_800791A0; // FileLinkArray
