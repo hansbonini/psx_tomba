@@ -1576,7 +1576,28 @@ void func_8004095C(void* arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800409CC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040A30);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040A30);
+void func_80040A30(void* arg0)
+{
+    switch (EVENT_LIST[EVENT_LOSTANDFOUND]) {
+        case 0:
+            func_8001E220(EVENT_LOSTANDFOUND, 0, 0);
+            func_80031124(0x16, 3);
+            break;
+        case 1:
+            func_80031124(0x17, 3);
+            EVENT_LIST[EVENT_LOSTANDFOUND]+= 1;
+            break;
+        case 2:
+            func_80029788(0x8E, 1, 1);
+            func_8001E31C(EVENT_LOSTANDFOUND, 0);
+            break;
+    }
+    if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+        func_8002367C(*(u_char*)(arg0+0x6B));
+    }
+    *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040B28);
 
