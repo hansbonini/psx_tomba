@@ -1851,7 +1851,73 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040C0C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040DA0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040E24);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040E24);
+void func_80040E24(unkstruct_800A6D50* arg0)
+{
+    s32 var_a0;
+    s32 var_a2;
+    u8 current_item;
+    u8 var_v0;
+    
+    current_item = arg0->item_id;
+    switch (current_item) {
+        case ITEM_JEWELOFFIRE: 
+            if (RED_EXP_LEVEL == 9) {
+                func_8001E31C(EVENT_REDHIDDENPOWERS, 1);
+                func_80029788(arg0->item_id, 1, 1);
+                asm("");
+                if (!(arg0->unkC & 0x80)) {
+                    func_8002367C(arg0->unk6B);
+                    asm("");
+                }
+                arg0->unk4++;
+            } else {
+                if ((s16)arg0->unk22 == 0) {
+                    func_80031124(0x26, 2);
+                    arg0->unk22 = 0x78;
+                } 
+                arg0->unk4--;
+            }
+            break;
+        case ITEM_JEWELOFWATER: 
+            if (BLUE_EXP_LEVEL == 9) {
+                func_8001E31C(EVENT_BLUEHIDDENPOWERS, 0);
+                func_80029788(arg0->item_id, 1, 1);
+                asm("");
+                if (!(arg0->unkC & 0x80)) {
+                    func_8002367C(arg0->unk6B);
+                    asm("");
+                }
+                arg0->unk4++;
+            } else {
+                func_8001E220(EVENT_BLUEHIDDENPOWERS, 0, 0);
+                if ((s16)arg0->unk22 == 0) {
+                    func_80031124(0x26, 2);
+                    arg0->unk22 = 0x78;
+                } 
+                arg0->unk4--;
+            }
+            break;
+        case ITEM_JEWELOFWIND:
+            if (GREEN_EXP_LEVEL == 9) {
+                func_8001E31C(EVENT_GREENHIDDENPOWERS, 1);
+                func_80029788(arg0->item_id, 1, 1);
+                if (!(arg0->unkC & 0x80)) {
+                    func_8002367C(arg0->unk6B);
+                }
+                arg0->unk4++;
+            } else {
+                func_8001E220(EVENT_GREENHIDDENPOWERS, 0, 1);
+                if ((s16)arg0->unk22 == 0) {
+                    func_80031124(0x26, 2);
+                    arg0->unk22 = 0x78;
+                } 
+                arg0->unk4--;
+            }
+            break;
+    }
+    return;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040FD8);
 void func_80040FD8(unkstruct_800A6D50* arg0)
