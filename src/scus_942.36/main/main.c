@@ -1986,7 +1986,11 @@ void func_80041790(short arg0, short arg1, int arg2)
     func_80041940(1, arg0, arg1, arg2, 0, 0);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800417CC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800417CC);
+void func_800417CC(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4)
+{
+    func_80041940(2, arg0, arg1, arg2, arg3, arg4);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041820);
 
