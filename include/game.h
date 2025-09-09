@@ -369,22 +369,29 @@ typedef struct lz_t {
     int offset;
 } lz_t;
 
-typedef struct unkstruct_00 {
-    int field_0;
-    char field_4;
-    int field_8;
-    char field_C;
-    int field_10[22];
-    char field_68;
-    char field_69;
-    char field_6A;
-    char field_6B;
-} unkstruct_00;
-
 typedef struct unkstruct_01 {
     int unk0;
     int saved_reg_gp;
 } unkstruct_01;
+
+typedef struct {
+    u_char pad1[0x3];
+    u_char unk3;
+    u_char unk4;
+    u_char unk5;
+    u_char pad2[0x6];
+    u_char unkC;
+    u_char pad3[0x4];
+    short unk12;
+    u_char pad4[0x2];
+    short unk16;
+    u_char pad5[0x2];
+    short unk1A;
+    u_char pad6[0x6];
+    u_short unk22;
+    u_char pad7[0x47];
+    u_char unk6B;
+} unkstruct_800A6D50;
 
 typedef struct tomba_equips {
     ITEM weapon;
@@ -411,6 +418,7 @@ extern int D_8007B2FA[];
 extern int D_8007B2FC[];
 extern int D_8007B2FE[];
 extern int D_8007D6A0;
+extern int D_8007E868;
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
 extern int SELECTED_AREA;
