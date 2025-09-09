@@ -1849,7 +1849,17 @@ void func_80040B98(unkstruct_800A6D50* arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040C0C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040DA0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040DA0);
+void func_80040DA0(unkstruct_800A6D50* arg0)
+{
+    if ((*(u16*)&SELECTED_AREA == 0xA) || (arg0->unkC == 1)) {
+        func_80029788(arg0->item_id, 1, 1);
+    }
+    if (!(arg0->unkC & 0x80)) {
+        func_8002367C(arg0->unk6B);
+    }
+    arg0->unk4++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040E24);
 void func_80040E24(unkstruct_800A6D50* arg0)
