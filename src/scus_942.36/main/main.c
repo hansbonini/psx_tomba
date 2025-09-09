@@ -1757,7 +1757,7 @@ void func_80040A30(unkstruct_800A6D50* arg0)
 void func_80040B28(unkstruct_800A6D50* arg0)
 {
     func_8001E31C(EVENT_THEMISTERIOUSMUSHROOM, 0);
-    func_80029788(arg0->unk3, 1, 1);
+    func_80029788(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -1771,7 +1771,7 @@ void func_80040B98(unkstruct_800A6D50* arg0)
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
-    func_80029788(arg0->unk3, 1, 1);
+    func_80029788(arg0->item_id, 1, 1);
     arg0->unk4++;
 }
 
@@ -1785,7 +1785,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040E24);
 void func_80040FD8(unkstruct_800A6D50* arg0)
 {
     func_8001E31C(EVENT_ASAFEMUSHROOM, 0);
-    func_80029788(arg0->unk3, 1, 1);
+    func_80029788(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }

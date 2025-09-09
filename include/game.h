@@ -376,7 +376,7 @@ typedef struct unkstruct_01 {
 
 typedef struct {
     u_char pad1[0x3];
-    u_char unk3;
+    u_char item_id;
     u_char unk4;
     u_char unk5;
     u_char pad2[0x6];
