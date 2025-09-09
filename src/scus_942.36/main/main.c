@@ -1541,7 +1541,31 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004008C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800400E0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040268);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040268);
+void func_80040268(unkstruct_800A6D50* arg0)
+{
+    if (D_8009BCA0 == 0) {
+        func_800E92D4(0x64, arg0->unk12, arg0->unk16, arg0->unk1A);
+        func_8001FFE8(9);
+        if (!(arg0->unkC & 0x80)) {
+            func_8002367C(arg0->unk6B);
+        }
+        if (!(arg0->unkC & 0x7F)) {
+            *(s16*)&D_800A5430+=1;
+            if ((s16)PLAYER_HEALTH_DISPLAYED < *(s16*)&D_800A5430 ) {
+                *(s16*)&D_800A5430 = PLAYER_HEALTH_DISPLAYED;
+            }
+        } else {
+            *(s16*)&D_800A5430+=2;
+            if ((s16)PLAYER_HEALTH_DISPLAYED < *(s16*)&D_800A5430 ) {
+                *(s16*)&D_800A5430 = PLAYER_HEALTH_DISPLAYED;
+            }
+        }
+        D_800A5432 = D_800A5430;
+        PLAYER_HEALTH = (u8) D_800A5430;
+        arg0->unk4++;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004035C);
 void func_8004035C(unkstruct_800A6D50* arg0)
