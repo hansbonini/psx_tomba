@@ -1987,12 +1987,16 @@ void func_80041790(short arg0, short arg1, int arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800417CC);
-void func_800417CC(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4)
+void func_800417CC(short arg0, short arg1, int arg2, short arg3, short arg4)
 {
     func_80041940(2, arg0, arg1, arg2, arg3, arg4);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041820);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041820);
+void func_80041820(short arg0, short arg1, int arg2, short arg3, short arg4)
+{
+    func_80041940(3, arg0, arg1, arg2, arg3, arg4);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041874);
 
