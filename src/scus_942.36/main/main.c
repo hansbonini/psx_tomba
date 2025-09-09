@@ -1587,7 +1587,7 @@ void func_800404E8(void* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040564);
 void func_80040564(void* arg0)
 {
-    func_80029788(0x15, 1, 1);
+    func_80029788(ITEM_WOODBOOMERANG, 1, 1);
     if (!(*(u_char*)(arg0+0xC) & 0x80)) {
         func_8002367C(*(u_char*)(arg0+0x6B));
     }
@@ -1597,7 +1597,7 @@ void func_80040564(void* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800405C8);
 void func_800405C8(void* arg0)
 {
-    func_80029788(0x16, 1, 1);
+    func_80029788(ITEM_IRONBOOMERANG, 1, 1);
     if (!(*(u_char*)(arg0+0xC) & 0x80)) {
         func_8002367C(*(u_char*)(arg0+0x6B));
     }
@@ -1607,7 +1607,7 @@ void func_800405C8(void* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004062C);
 void func_8004062C(void* arg0)
 {
-    func_80029788(0x17, 1, 1);
+    func_80029788(ITEM_STONEBOOMERANG, 1, 1);
     if (!(*(u_char*)(arg0+0xC) & 0x80)) {
         func_8002367C(*(u_char*)(arg0+0x6B));
     }
@@ -1629,7 +1629,33 @@ void func_80040690(void* arg0)
     *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040718);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040718);
+void func_80040718(void* arg0)
+{
+    u8 health;
+
+    if (D_8009BCA0 == 0) {
+        health = *(u8*)&PLAYER_HEALTH_DISPLAYED;
+        if (health < 16) {
+            health += D_8009C3E8;
+            *(u8*)&PLAYER_HEALTH_DISPLAYED = health;
+            if ((u32) ((s8)health & 0xFF) >= 17) {
+                *(u8*)&PLAYER_HEALTH_DISPLAYED = 16;
+            }
+            func_8001FFE8(10);
+            D_800A5430 = (u16*)(*(u8*)&PLAYER_HEALTH_DISPLAYED);
+            D_800A5432 = *(u8*)&PLAYER_HEALTH_DISPLAYED;
+            *(u8*)&PLAYER_HEALTH = *(u8*)&PLAYER_HEALTH_DISPLAYED;
+        }
+        D_8009C3E7 = 1;
+        D_800B078C = &D_800121C8;
+        func_8001FFE8(10);
+        if (!(*(u_char*)(arg0+0xC) & 0x80)) {
+            func_8002367C(*(u_char*)(arg0+0x6B));
+        }
+        *(u_char*)(arg0+4)= (u_char) (*(u_char*)(arg0+4) + 1);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004080C);
 

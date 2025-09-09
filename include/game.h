@@ -394,12 +394,13 @@ typedef struct tomba_equips {
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
+extern int D_800121C8;
 extern int D_80077520;
 extern u_char D_80077540;
 extern u_char D_80077608;
 extern u_char PLAYER_HEALTH;
 extern u_char PLAYER_HEALTH_DISPLAYED;
-extern u8 PLAYER_LIVES;
+extern u_char PLAYER_LIVES;
 extern u_char D_8007775C[];
 extern short D_80078F80;
 extern int D_800791A0; // FileLinkArray
@@ -449,5 +450,6 @@ extern u_char D_800A5398;
 extern int D_800A5970;
 extern u_char D_800B00F8;
 extern u_char D_800B0770;
+extern u_char* D_800B078C;
 
 #endif
