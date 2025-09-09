@@ -1864,7 +1864,19 @@ void func_80040FD8(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041048);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041048);
+void func_80041048(unkstruct_800A6D50* arg0)
+{
+    func_80031124(0xC, 3);
+    *(s32*)&AREA00_EVENT_CONTROL |= 0x40;
+    func_8001FFE8(10);
+    if (!(arg0->unkC & 0x80)) {
+        func_8002367C(arg0->unk6B);
+    }
+    D_8009C375 = 1;
+    D_8009C3FE = 1;
+    arg0->unk4++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800410D8);
 void func_800410D8(unkstruct_800A6D50* arg0)
