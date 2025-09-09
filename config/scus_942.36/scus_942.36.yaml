@@ -77,6 +77,8 @@ segments:
       - [0x6734, .rodata, psyq/libcd/bios]
       - [0x6984, rodata]
       - [0x6BB0, c, main/main]
+      - [0x3088c, c, main/events]
+      - [0x3197c, c, main/temp]
       - [0x4BB8C, hasm, psyq/libapi/c68]
       - [0x4BB9C, hasm, psyq/libapi/c112]
       - [0x4BBAC, hasm, psyq/libapi/a08]
