@@ -1630,7 +1630,7 @@ void func_80040564(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800405C8);
 void func_800405C8(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_IRONBOOMERANG, 1, 1);
+    func_80029788(ITEM_STONEBOOMERANG, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -1640,7 +1640,7 @@ void func_800405C8(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004062C);
 void func_8004062C(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_STONEBOOMERANG, 1, 1);
+    func_80029788(ITEM_IRONBOOMERANG, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
