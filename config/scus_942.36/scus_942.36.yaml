@@ -65,7 +65,9 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x800, rodata]
+      - [0x800,  rodata]
+      - [0x42C8, .rodata, main/events]
+      - [0x4304, rodata]
       - [0x5F3C, .rodata, psyq/libc2/prnt]
       - [0x6150, .rodata, psyq/libc2/sprintf]
       - [0x622C, rodata]
