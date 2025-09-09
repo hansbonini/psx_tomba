@@ -311,7 +311,75 @@ void func_80040B98(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040C0C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040C0C);
+void func_80040C0C(unkstruct_800A6D50* arg0)
+{
+    int temp;
+
+    switch (arg0->unk5) {                              // switch 3; irregular
+        case 0:                                     // switch 3
+            func_80029788(arg0->item_id, 1, 1);
+            if (!(arg0->unkC & 0x80)) {
+                func_8002367C(arg0->unk6B);
+            }
+            switch (arg0->item_id) {                      // switch 1
+                case ITEM_REDPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_ASTORMYPIGBAG, 2);
+                    break;
+                case ITEM_ORANGEPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_THEMOUSEPIGBAG, 2);
+                    break;
+                case ITEM_YELLOWPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_THEUNDERWATERPIG, 2);
+                    break;
+                case ITEM_GREENPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_THEFIREPIGBAG, 2);
+                    break;
+                case ITEM_BLUEEVILPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_THEEVILPIGBAG, 2);
+                    break;
+                case ITEM_NAVYPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_THEJUNGLEPIGBAG, 2);
+                    break;
+                case ITEM_PINKPIGBAG:                            // switch 1
+                    func_8001E31C(EVENT_THEHAUNTEDPIGBAG, 2);
+                    break;
+            }
+            arg0->unk22 = 0x168U;
+            arg0->unk5++;
+            return;
+        case 1:                                     // switch 3
+            temp = arg0->unk22 - 1;
+            arg0->unk22 = temp;
+            if ((temp << 0x10) == 0) {
+                switch (arg0->item_id) {                // switch 2
+                    case ITEM_REDPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_PHOENIXMOUNTAIN, 0, 3);
+                        break;
+                    case ITEM_ORANGEPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_BACCUSVILLAGE, 0, 3);
+                        break;
+                    case ITEM_YELLOWPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_TRICKVILLAGE, 0, 3);
+                        break;
+                    case ITEM_GREENPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_LAVACAVES, 0, 3);
+                        break;
+                    case ITEM_BLUEEVILPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_THE100FLOWERFOREST, 0, 3);
+                        break;
+                    case ITEM_NAVYPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_THEDEEPJUNGLEPIG, 0, 3);
+                        break;
+                    case ITEM_PINKPIGBAG:                        // switch 2
+                        func_8001E220(EVENT_THEHAUNTEDMANSION, 0, 3);
+                        break;
+                }
+                arg0->unk4++;
+            }
+            return;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040DA0);
 void func_80040DA0(unkstruct_800A6D50* arg0)
