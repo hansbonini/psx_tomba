@@ -1539,7 +1539,48 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8003FDD4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8004008C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800400E0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800400E0);
+void func_800400E0(unkstruct_800A6D50* arg0)
+{
+    s32 var_a0;
+    s32 var_a1;
+    s32 var_a2;
+    u8 current_item;
+
+    func_80029788(arg0->item_id, 1, 1);
+    if (!(arg0->unkC & 0x80)) {
+        func_8002367C(arg0->unk6B);
+    }
+    current_item = arg0->item_id;
+    switch (current_item) {                              // irregular
+        case ITEM_BOMB:
+            func_8001E31C(EVENT_INEEDABOMB, 4);
+            break;
+        case ITEM_PIPE:
+            D_8009C269 = 1;
+            break;
+        case ITEM_GOLDENFLOWER:
+            D_8009C34C = 1;
+            break;
+        case ITEM_TEARJAR:
+            func_8001E31C(EVENT_INEEDATEARBOTTLE, 1);
+            break;
+        case ITEM_MIGHTYFISHFOOD:
+            func_8001E31C(EVENT_WHATSTHEUNDERWATER, 0);
+            break;
+        case ITEM_WHATTHETHIEFFORGOT:
+            func_8001E220(EVENT_WHATTHETHIEFFORGOT, 1, 1);
+            break;
+        case ITEM_BOSSJEWEL:
+            func_8001E31C(EVENT_THEBOSSTREASURE, 1);
+            func_80029548(0x186A0);
+            break;
+        case ITEM_SEASHELLNECKLACE:
+            func_8001E220(EVENT_THEMERMAIDNECKLACE, 0, 0);
+            break;
+    }
+    arg0->unk4++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80040268);
 void func_80040268(unkstruct_800A6D50* arg0)

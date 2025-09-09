@@ -513,6 +513,8 @@ extern u_char INVENTORY_SLOT[256];
 extern u_short INVENTORY_SLOT_COUNTER[2];
 extern u_char EVENT_LIST[256];
 extern char D_8009C216;
+extern char D_8009C269;
+extern char D_8009C34C;
 extern char D_8009C3E3;
 extern u_char D_8009C3E7;
 extern u_char D_8009C3E8;
