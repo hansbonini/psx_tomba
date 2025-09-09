@@ -2010,7 +2010,11 @@ void func_800418C8(short arg0, short arg1, int arg2)
     func_80041940(5, arg0, arg1, arg2, 0, 0);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041904);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041904);
+void func_80041904(short arg0, short arg1, int arg2)
+{
+    func_80041940(8, arg0, arg1, arg2, 0, 0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80041940);
 
