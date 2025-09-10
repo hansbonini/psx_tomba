@@ -322,56 +322,56 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
             if (!(arg0->unkC & 0x80)) {
                 func_8002367C(arg0->unk6B);
             }
-            switch (arg0->item_id) {                      // switch 1
-                case ITEM_REDPIGBAG:                            // switch 1
+            switch (arg0->item_id) {
+                case ITEM_REDPIGBAG:
                     func_8001E31C(EVENT_ASTORMYPIGBAG, 2);
                     break;
-                case ITEM_ORANGEPIGBAG:                            // switch 1
+                case ITEM_ORANGEPIGBAG:
                     func_8001E31C(EVENT_THEMOUSEPIGBAG, 2);
                     break;
-                case ITEM_YELLOWPIGBAG:                            // switch 1
+                case ITEM_YELLOWPIGBAG:
                     func_8001E31C(EVENT_THEUNDERWATERPIG, 2);
                     break;
-                case ITEM_GREENPIGBAG:                            // switch 1
+                case ITEM_GREENPIGBAG:
                     func_8001E31C(EVENT_THEFIREPIGBAG, 2);
                     break;
-                case ITEM_BLUEEVILPIGBAG:                            // switch 1
+                case ITEM_BLUEEVILPIGBAG:
                     func_8001E31C(EVENT_THEEVILPIGBAG, 2);
                     break;
-                case ITEM_NAVYPIGBAG:                            // switch 1
+                case ITEM_NAVYPIGBAG:
                     func_8001E31C(EVENT_THEJUNGLEPIGBAG, 2);
                     break;
-                case ITEM_PINKPIGBAG:                            // switch 1
+                case ITEM_PINKPIGBAG:
                     func_8001E31C(EVENT_THEHAUNTEDPIGBAG, 2);
                     break;
             }
             arg0->unk22 = 0x168U;
             arg0->unk5++;
             return;
-        case 1:                                     // switch 3
+        case 1:
             temp = arg0->unk22 - 1;
             arg0->unk22 = temp;
             if ((temp << 0x10) == 0) {
-                switch (arg0->item_id) {                // switch 2
-                    case ITEM_REDPIGBAG:                        // switch 2
+                switch (arg0->item_id) {
+                    case ITEM_REDPIGBAG:        
                         func_8001E220(EVENT_PHOENIXMOUNTAIN, 0, 3);
                         break;
-                    case ITEM_ORANGEPIGBAG:                        // switch 2
+                    case ITEM_ORANGEPIGBAG:
                         func_8001E220(EVENT_BACCUSVILLAGE, 0, 3);
                         break;
-                    case ITEM_YELLOWPIGBAG:                        // switch 2
+                    case ITEM_YELLOWPIGBAG:
                         func_8001E220(EVENT_TRICKVILLAGE, 0, 3);
                         break;
-                    case ITEM_GREENPIGBAG:                        // switch 2
+                    case ITEM_GREENPIGBAG:
                         func_8001E220(EVENT_LAVACAVES, 0, 3);
                         break;
-                    case ITEM_BLUEEVILPIGBAG:                        // switch 2
+                    case ITEM_BLUEEVILPIGBAG:
                         func_8001E220(EVENT_THE100FLOWERFOREST, 0, 3);
                         break;
-                    case ITEM_NAVYPIGBAG:                        // switch 2
+                    case ITEM_NAVYPIGBAG:
                         func_8001E220(EVENT_THEDEEPJUNGLEPIG, 0, 3);
                         break;
-                    case ITEM_PINKPIGBAG:                        // switch 2
+                    case ITEM_PINKPIGBAG:
                         func_8001E220(EVENT_THEHAUNTEDMANSION, 0, 3);
                         break;
                 }
