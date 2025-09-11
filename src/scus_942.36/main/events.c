@@ -1,6 +1,123 @@
 #include "common.h"
 #include "game.h"
 
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F268);
+
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F3D4);
+
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F78C);
+
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F9A4);
+
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003FC18);
+
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003FDD4);
+void func_8003FDD4(unkstruct_800A6D50* arg0)
+{
+
+    typedef struct {
+        u8 unk0;
+        u8 unk1;
+        u8 unk2;
+        u8 unk3;
+        u8 unk4;
+        u8 unk5;
+        u8 unk6;
+        u8 unk7;
+        short x;
+        short y;
+        u8 unkC;
+        u8 unkD;
+        u8 unkE;
+        u8 unkF;
+        int unk10;
+    } unkstruct;
+
+    
+    s16 x;
+    s16 y;
+    s32 temp_v0;
+    s32 color;
+    s32* var_v0;
+    u8 temp_v1;
+    u8 temp_v1_2;
+    unkstruct* temp_s1;
+
+    if ((arg0->item_id == ITEM_JEWELOFWIND) && (EVENT_LIST[EVENT_THEJUNGLEPIGBAG] == 0)) {
+        arg0->unk4 = 2;
+        return;
+    }
+    arg0->unk68 = 0;
+    arg0->unk69 = 0;
+    temp_s1 = D_8007E6E4[D_8007E61C[arg0->item_id]];
+    arg0->unkA = temp_s1->unk0;
+    arg0->unk1E = (s16)temp_s1->unk2;
+    arg0->unkF = -9;
+    arg0->unkD = (u8)temp_s1->unk5;
+    arg0->unk6C = (s16)temp_s1->unkC;
+    arg0->unk6E = (s16)temp_s1->unkD;
+    arg0->unk70 = (s16)temp_s1->unkE;
+    arg0->unk72 = (s16)temp_s1->unkF;
+
+    arg0->unk3C = *(&D_1F8002C8[temp_s1->unk4]);
+    arg0->unk2E = 1;
+    if (arg0->item_id == 2) {
+        if ((u32) (arg0->unkC & 0x7F) >= 4U) {
+            arg0->buffSize = 0x2000;
+            arg0->unk6C = (s16) (temp_s1->unkC * 2);
+            arg0->unk6E = (s16) (temp_s1->unkD * 2);
+            arg0->unk70 = (s16) (temp_s1->unkE * 2);
+            arg0->unk72 = (s16) (temp_s1->unkF * 2);
+        } else {
+            arg0->buffSize = 0x1000;
+        }
+    }
+
+    switch (temp_s1->unk6) {                              // irregular
+        case 0:
+            x = temp_s1->x;
+            y = temp_s1->y;
+            arg0->clut = GetClut((s32) x, (s32) y);
+            break;
+        case 1:
+            x = temp_s1->x;
+            y = temp_s1->y;
+            arg0->clut = GetClut((s32) x, (s32) y + (arg0->unkC & 0x7F));
+            break;
+        case 2:
+            temp_v0 = (arg0->unkC & 0x7F) * 2;
+            x = *(u16*)(&D_8007E86C + temp_v0);
+            y = *(u16*)(&D_8007E86E + temp_v0);
+            arg0->clut = GetClut((s32) x, (s32) y);
+            break;
+        case 3:
+            if (ITEM_LIST[ITEM_JUMPINGPANTS] == 0) {
+                color = 0;
+            } else {
+                color = 2;
+                if (ITEM_LIST[ITEM_DASHINGPANTS] == 0) {
+                    color = 1;
+                }
+            }
+            x = temp_s1->x;
+            y = temp_s1->y;
+            arg0->clut = GetClut(x, y + color);
+            break;
+    }
+
+    switch (temp_s1->unk7) {                            // switch 1; irregular
+        case 0:                                     // switch 1
+            var_v0 = temp_s1->unk10;
+            arg0->unk24 = (s32) *var_v0;
+            break;
+        case 1:                                     // switch 1
+            var_v0 = (s32) ((arg0->unkC & 0x7F) * 4) + *(s32*)&temp_s1->unk10;
+            arg0->unk24 = (s32) *var_v0;
+            break;
+    }
+    func_800229FC(arg0);
+}
+
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8004008C);
 void func_8004008C(unkstruct_800A6D50* arg0)
 {
