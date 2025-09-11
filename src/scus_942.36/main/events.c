@@ -143,12 +143,12 @@ void func_8003FDD4(unkstruct_800A6D50* arg0)
             break;
     }
 
-    switch (temp_s1->unk7) {                            // switch 1; irregular
-        case 0:                                     // switch 1
+    switch (temp_s1->unk7) {
+        case 0:
             var_v0 = temp_s1->unk10;
             arg0->unk24 = (s32) *var_v0;
             break;
-        case 1:                                     // switch 1
+        case 1:
             var_v0 = (s32) ((arg0->unkC & 0x7F) * 4) + *(s32*)&temp_s1->unk10;
             arg0->unk24 = (s32) *var_v0;
             break;
@@ -178,7 +178,7 @@ void func_800400E0(unkstruct_800A6D50* arg0)
         func_8002367C(arg0->unk6B);
     }
     current_item = arg0->item_id;
-    switch (current_item) {                              // irregular
+    switch (current_item) {
         case ITEM_BOMB:
             func_8001E31C(EVENT_INEEDABOMB, 4);
             break;

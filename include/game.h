@@ -475,13 +475,14 @@ typedef struct {
     signed char unkF;
     short unk10;
     short unk12;
-    u_char pad1[0x2];
+    short unk14;
     short unk16;
-    u_char pad2[0x2];
+    short unk18;
     short unk1A;
-    u_char pad3[0x2];
+    u_char unk1C;
+    u_char unk1D;
     short unk1E;
-    u_char pad6[0x2];
+    short unk20;
     u_short unk22;
     int unk24;
     short unk28;
@@ -500,6 +501,14 @@ typedef struct {
     short unk6E;
     short unk70;
     short unk72;
+    u_char pad6[0x8];
+    short unk7A;
+    u_char pad7[0x3];
+    short unk82;
+    u_char pad8[0x8];
+    int unk8C;
+    u_char pad9[0x15];
+    u_char unkA5;
 } unkstruct_800A6D50;
 
 typedef struct tomba_equips {
