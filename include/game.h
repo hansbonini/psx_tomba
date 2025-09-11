@@ -525,6 +525,8 @@ extern int D_80077520;
 extern u_char D_80077540;
 extern u_char D_80077608;
 extern u_char D_8007775C[];
+extern s32 D_800771FC;
+extern s32 D_8007722C;
 extern short D_80078F80;
 extern int D_800791A0; // FileLinkArray
 extern int D_8007B2F4[];
@@ -534,6 +536,7 @@ extern int D_8007B2FA[];
 extern int D_8007B2FC[];
 extern int D_8007B2FE[];
 extern int D_8007D6A0;
+extern u8 D_8007D6D0[];
 extern u8 D_8007E61C[];
 extern s32 D_8007E6E4[];
 extern int D_8007E868;
@@ -599,5 +602,7 @@ extern int D_800A5970;
 extern u_char D_800B00F8;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
+
+void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 
 #endif

@@ -1,7 +1,50 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F268);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F268);
+void func_8003F268(unkstruct_800A6D50* arg0)
+{
+    u16 var_a1;
+    u8 var_v0;
+
+    switch (arg0->unk6) {
+        case 0:
+            func_8001FFE8(D_8007D6D0[arg0->item_id]);
+            func_800E92D4(0x1F4, arg0->unk12, arg0->unk16, arg0->unk1A);
+            arg0->unkA5 = 0;
+            if (arg0->item_id != ITEM_FLOWERTEARS) {
+                arg0->unkB = 1;
+                arg0->unkF = 4;
+            }
+            arg0->unk82 = -1024;
+            *(s32*)&arg0->unk28 = &D_8007722C;
+            if (arg0->unk2E & 2) {
+                *(s32*)&arg0->unk28 = &D_800771FC;
+            }
+            arg0->unk6++;
+            break;
+        case 1:
+
+            if (arg0->unk2E & 2) {
+                func_80022618(arg0, arg0->unk2E & 1);
+            } else {
+                func_80022618(arg0, 1 - arg0->unk2E);
+            }
+
+            arg0->unk82 += 64;
+            if (arg0->unk82 > 1024) {
+                arg0->unk82 = 1024;
+            }
+            *(s32*)&arg0->unk14 += arg0->unk82 << 8;
+            break;
+    }
+    if (arg0->unk2E & 1) {
+        var_v0 = arg0->unk8C + 24;
+    } else {
+        var_v0 = arg0->unk8C - 24;
+    }
+    arg0->unk8C = var_v0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F3D4);
 
