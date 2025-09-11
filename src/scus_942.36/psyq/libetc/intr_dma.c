@@ -2,7 +2,7 @@
 
 typedef void (*Callback)();
 
-void setIntrDMA(int arg0, Callback arg1);
+Callback setIntrDMA(int index, Callback callback);
 void trapIntrDMA(void);
 void DMA_memclr(void* ptr, int size);
 
@@ -44,6 +44,19 @@ void trapIntrDMA(void) {
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr_dma", setIntrDMA);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr_dma", setIntrDMA);
+Callback setIntrDMA(int index, Callback callback) {
+    Callback prev = D_800974E0[index];
+    if (callback != prev) {
+        if (callback != 0) {
+            D_800974E0[index] = callback;
+            *D_800974DC = (*D_800974DC & 0xFFFFFF) | 0x800000 | ((1 << (index + 0x10)));
+        } else {
+            D_800974E0[index] = 0;
+            *D_800974DC = ((*D_800974DC & 0xFFFFFF) | 0x800000) & ~(1 << (index + 0x10));
+        }
+    }
+    return prev;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr_dma", DMA_memclr);
