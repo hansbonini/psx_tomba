@@ -4,12 +4,16 @@
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F268);
 void func_8003F268(unkstruct_800A6D50* arg0)
 {
-    u16 var_a1;
-    u8 var_v0;
+    s32 var_a1;
+    s32 var_v0;
+    u16 temp_a1;
+    u16 temp_v0;
+    u8 temp_v1;
 
-    switch (arg0->unk6) {
+    temp_v1 = arg0->unk6;
+    switch (temp_v1) {                              // irregular
         case 0:
-            func_8001FFE8(D_8007D6D0[arg0->item_id]);
+            func_8001FFE8(*(&D_8007D6D0 + arg0->item_id));
             func_800E92D4(0x1F4, arg0->unk12, arg0->unk16, arg0->unk1A);
             arg0->unkA5 = 0;
             if (arg0->item_id != ITEM_FLOWERTEARS) {
@@ -21,21 +25,21 @@ void func_8003F268(unkstruct_800A6D50* arg0)
             if (arg0->unk2E & 2) {
                 *(s32*)&arg0->unk28 = &D_800771FC;
             }
-            arg0->unk6++;
+            arg0->unk6 = (u8) (arg0->unk6 + 1);
             break;
         case 1:
-
-            if (arg0->unk2E & 2) {
-                func_80022618(arg0, arg0->unk2E & 1);
+            temp_a1 = arg0->unk2E;
+            if (temp_a1 & 2) {
+                func_80022618(arg0, temp_a1 & 1);
             } else {
-                func_80022618(arg0, 1 - arg0->unk2E);
+                func_80022618(arg0, (temp_v1 - temp_a1) & 0xFFFF);
             }
-
-            arg0->unk82 += 64;
-            if (arg0->unk82 > 1024) {
+            temp_v0 = arg0->unk82 + 64;
+            arg0->unk82 = temp_v0;
+            if ((s16) temp_v0 >= 1025) {
                 arg0->unk82 = 1024;
             }
-            *(s32*)&arg0->unk14 += arg0->unk82 << 8;
+            *(s32*)&arg0->unk14 = (s32) (*(s32*)&arg0->unk14 + ((s16) arg0->unk82 << 8));
             break;
     }
     if (arg0->unk2E & 1) {
@@ -43,7 +47,7 @@ void func_8003F268(unkstruct_800A6D50* arg0)
     } else {
         var_v0 = arg0->unk8C - 24;
     }
-    arg0->unk8C = var_v0;
+    arg0->unk8C = (s32) (var_v0 & 0xFF);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F3D4);
