@@ -713,6 +713,26 @@ RotMatrixX=0x80063F34;
 RotMatrixY=0x800640D4;
 RotMatrixZ=0x80064274;
 ratan2=0x80064414;
+// libpress
+DecDCTReset = 0x8005CFE8;
+DecDCTGetEnv = 0x8005D020;
+DecDCTPutEnv = 0x8005D0AC;
+DecDCTBufSize = 0x8005D148;
+DecDCTin = 0x8005D154;
+DecDCTout = 0x8005D1D0;
+DecDCTinSync = 0x8005D1F0;
+DecDCToutSync = 0x8005D22C;
+DecDCTinCallback = 0x8005D268;
+DecDCToutCallback = 0x8005D28C;
+MDEC_reset = 0x8005D2B0;
+MDEC_in = 0x8005D3AC;
+MDEC_out = 0x8005D440;
+MDEC_in_sync = 0x8005D4D0;
+MDEC_out_sync = 0x8005D568;
+MDEC_status = 0x8005D600;
+timeout = 0x8005D618;
+DecDCTvlcSize = 0x8005D74C;
+DecDCTvlc = 0x8005D77C;
 // bss
 _ctype_=0x8007FA70; // size:0x3
 GPU_printf=0x80090C98;

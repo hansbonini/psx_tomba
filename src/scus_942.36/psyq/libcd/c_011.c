@@ -12,7 +12,3 @@ void mem2mem(s32* dst, s32* src, u32 num) {
 
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/c_011", dma_execute);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/c_011", VSync);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/c_011", v_wait);
