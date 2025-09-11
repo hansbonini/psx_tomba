@@ -9,7 +9,45 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F78C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F9A4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003FC18);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003FC18);
+void func_8003FC18(unkstruct_800A6D50* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4)
+{
+
+    if (func_800236F4(arg0->item_id) == ITEM_CHICK) {
+        switch (arg0->unk0) {
+            case 0:
+                func_80041754(arg0->unk1, arg0->unk2, arg1);
+                break;
+            case 1:
+                func_80041790(arg0->unk1, arg0->unk2, arg1);
+                break;
+            case 2:
+                func_800417CC(arg0->unk1, arg0->unk2, arg1, arg2, (s32) arg3);
+                break;
+            case 3:
+                func_80041820(arg0->unk1, arg0->unk2, arg1, arg2, (s32) arg3);
+                break;
+            case 4:
+                func_80041874(arg0->unk1, arg0->unk2, arg1, arg2, (s32) arg3);
+                break;
+            case 5:
+                func_800418C8(arg0->unk1, arg0->unk2, arg1);
+                break;
+            case 6:
+                func_80123188(arg1, arg0->item_id, arg2, arg3);
+                break;
+            case 8:
+                func_80041904(arg0->unk1, arg0->unk2, arg1);
+                break;
+        }
+        if (arg4 != 0) {
+            func_80023794(arg0->item_id);
+        }
+        if (arg0->unk5 == 0) {
+            func_8001FFE8(21);
+        }
+    }
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003FDD4);
 void func_8003FDD4(unkstruct_800A6D50* arg0)
