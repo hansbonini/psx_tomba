@@ -4,7 +4,7 @@ typedef void (*Callback)();
 
 Callback setIntrDMA(int index, Callback callback);
 void trapIntrDMA(void);
-void DMA_memclr(void* ptr, int size);
+void DMA_memclr(int* ptr, int size);
 
 extern char* D_80016264[];
 extern char* D_80016280[];
@@ -59,4 +59,9 @@ Callback setIntrDMA(int index, Callback callback) {
     return prev;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr_dma", DMA_memclr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr_dma", DMA_memclr);
+void DMA_memclr(int* ptr, int size) {
+    while (size--) {
+        *ptr++ = 0;
+    }
+}
