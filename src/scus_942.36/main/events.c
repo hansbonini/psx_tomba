@@ -246,7 +246,7 @@ void func_800400E0(unkstruct_800A6D50* arg0)
             break;
         case ITEM_BOSSJEWEL:
             func_8001E31C(EVENT_THEBOSSTREASURE, 1);
-            func_80029548(0x186A0);
+            func_80029548(100000);
             break;
         case ITEM_SEASHELLNECKLACE:
             func_8001E220(EVENT_THEMERMAIDNECKLACE, 0, 0);
