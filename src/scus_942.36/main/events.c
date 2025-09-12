@@ -415,7 +415,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
         case 0:
             func_80029788(ITEM_BITINGPLANTFLOWER, 1, 1);
             func_8001E220(EVENT_BITINGPLANTFLOWER, 0, 0);
-            if (*(u16*)&SELECTED_AREA == 0) {
+            if (*(u16*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
                 D_8009C3E3 = 2;
             }
             if (!(arg0->unkC & 0x80)) {
@@ -586,7 +586,7 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040DA0);
 void func_80040DA0(unkstruct_800A6D50* arg0)
 {
-    if ((*(u16*)&SELECTED_AREA == 0xA) || (arg0->unkC == 1)) {
+    if ((*(u16*)&SELECTED_AREA == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
         func_80029788(arg0->item_id, 1, 1);
     }
     if (!(arg0->unkC & 0x80)) {

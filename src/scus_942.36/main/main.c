@@ -538,7 +538,7 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
 {
     if (EVENT_LIST[event_id] == 0) {
         if (event_id == 1) {
-            if (SELECTED_AREA == 0) {
+            if (SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
                 EVENT_LIST[event_id] += 1;
             }
         } else {
