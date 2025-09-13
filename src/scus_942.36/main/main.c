@@ -1179,7 +1179,31 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031628);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800316EC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031868);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031868);
+void func_80031868(void)
+{
+    switch (*(u16*)&SELECTED_AREA) {
+        case AREA05_BACCUSVILLAGE:
+            func_800EF7C0();
+            return;
+        case AREA11_VILLAGEOFCIVILIZATION:
+            func_800F5D5C();
+            return;
+        case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
+            func_800EFC0C();
+            return;
+        case AREA17_VILLAGEOFCIVILIZATIONIRONTOWER:
+            func_800F026C();
+            return;
+        case AREA08_BACCUSLAKE:
+            func_800F0A60();
+            return;
+        case AREA19_VILLAGEOFCIVILIZATIONPURIFIED:
+            func_800F0590();
+        default:
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031908);
 
