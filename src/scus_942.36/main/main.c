@@ -1247,7 +1247,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033488);
 void func_80033858(void) {
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033860);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033860);
+void func_80033860(void)
+{
+    if (*(u16*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
+            func_8011BB54();
+    } else if (*(u16*)&SELECTED_AREA == AREA03_PHOENIXMOUNTAIN) {
+            func_80119894();
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800338A8);
 
