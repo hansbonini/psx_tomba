@@ -63,7 +63,45 @@ void cb_read(u_char arg0, Result_t* arg1)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", cd_read_retry);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", cd_read_retry);
+int cd_read_retry(int retry) {
+    char mode;
+    int mode2;
+    CdSyncCallback(NULL);
+    CdReadyCallback(NULL);
+    if (CdStatus() & CdlStatShellOpen) {
+        if ((VSync(-1) % 0x40) == 0) {
+            puts("CdRead: Shell open...\n");
+        }
+        CdControlF(CdlNop, NULL);
+        D_80096304.vb_start = VSync(-1);
+        D_80096304.status = -1;
+        return D_80096304.status;
+    }
+    if (retry) {
+        puts("CdRead: retry...\n");
+        CdControl(CdlPause, NULL, NULL);
+        if (!CdControl(CdlSetloc, CdLastPos(), NULL)) {
+            return D_80096304.status = -1;
+        }
+    }
+    CdFlush();
+    mode2 = D_80096304.mode;
+    mode = mode2; // FAKE
+    if ((char)mode2 != CdMode() || retry) {
+        if (!CdControl(CdlSetmode, &mode, NULL)) {
+            D_80096304.status = -1;
+            return D_80096304.status;
+        }
+    }
+    D_80096304.pos = CdPosToInt(CdLastPos());
+    CdReadyCallback(&cb_read);
+    D_80096304.buf_cur = D_80096304.buf_start;
+    CdControlF(CdlReadN, NULL);
+    D_80096304.status = D_80096304.nsectors;
+    D_80096304.vb_attempt_start = VSync(-1);
+    return D_80096304.status;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadBreak);
 
