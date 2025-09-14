@@ -105,7 +105,31 @@ int cd_read_retry(int retry) {
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadBreak);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdRead);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdRead);
+int CdRead(int sectors, u_long* buf, int mode) {
+    D_80096304.mode = mode;
+    switch (D_80096304.mode & (CdlModeSize0 | CdlModeSize1)) {
+    case 0:
+        D_80096304.secsize = 0x200;
+        break;
+    case CdlModeSize1:
+        D_80096304.secsize = 0x249;
+        break;
+    default:
+        D_80096304.secsize = 0x246;
+        break;
+    }
+    D_80096304.mode |= CdlModeSize1;
+    D_80096304.buf_start = buf;
+    D_80096304.nsectors = sectors;
+    D_80096304.cbsync = CdSyncCallback(NULL);
+    D_80096304.cbready = CdReadyCallback(NULL);
+    D_80096304.vb_start = VSync(-1);
+    if (CdStatus() & (CdlStatPlay | CdlStatSeek | CdlStatRead)) {
+        CdControlB(CdlPause, NULL, NULL);
+    }
+    return cd_read_retry(false) > 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadSync);
 
