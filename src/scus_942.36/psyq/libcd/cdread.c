@@ -1,7 +1,6 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-typedef char Result_t[8];
 typedef struct {
 /*0x00*/    int nsectors;
 /*0x04*/    u_long* buf_start;
@@ -24,7 +23,7 @@ extern CdlCB D_80096300;
 extern volatile ReadAttr_t D_80096304;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", cb_read);
-void cb_read(u_char arg0, Result_t* arg1)
+void cb_read(u_char arg0, u_char* arg1)
 {
     int pos[3];
 
@@ -131,6 +130,25 @@ int CdRead(int sectors, u_long* buf, int mode) {
     return cd_read_retry(false) > 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadSync);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadSync);
+int CdReadSync(int mode, u_char* result) {
+    int var_s0;
+
+    while (true) {
+        var_s0 = -1;
+        if (VSync(-1) <= D_80096304.vb_start + 1200) {
+            if (D_80096304.status < 0 || VSync(-1) > D_80096304.vb_attempt_start + 60) {
+                cd_read_retry(true);
+                var_s0 = D_80096304.nsectors;
+            } else {
+                var_s0 = D_80096304.status;
+            }
+        }
+        if (mode != 0 || var_s0 <= 0) {
+            CdReady(1, result);
+            return var_s0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadCallback);
