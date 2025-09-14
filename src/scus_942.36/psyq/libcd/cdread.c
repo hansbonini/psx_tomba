@@ -102,7 +102,14 @@ int cd_read_retry(int retry) {
     return D_80096304.status;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadBreak);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadBreak);
+void CdReadBreak(void)
+{
+    D_80096304.status = 0;
+    CdSyncCallback(D_80096304.cbsync);
+    CdReadyCallback(D_80096304.cbready);
+    CdControl(CdlPause, NULL, NULL);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdRead);
 int CdRead(int sectors, u_long* buf, int mode) {
