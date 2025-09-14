@@ -151,4 +151,9 @@ int CdReadSync(int mode, u_char* result) {
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadCallback);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/cdread", CdReadCallback);
+CdlCB CdReadCallback(CdlCB func) {
+    CdlCB prevFunc = D_80096300;
+    D_80096300 = func;
+    return prevFunc;
+}
