@@ -739,8 +739,19 @@ typedef struct tomba_equips {
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
+extern char* D_80010120[];
+extern char* D_80010134[];
+extern char* D_8001014C[];
+extern u_char D_1F8001B4;
+extern u_long D_1F8001D4;
+extern u_short D_1F8001F6; // ASTERISK CURSOR COLOR
+extern u_short D_1F8001FC;
 extern int D_1F8002C8[];
-extern int D_800121C8;
+
+
+extern u_short D_8007B290;
+extern int D_8007B294;
+extern byte D_8009B6A8; // SELECTED ROW
 extern int D_80077520;
 extern u_char D_80077540;
 extern u_char D_80077608;
@@ -762,33 +773,45 @@ extern int D_8007E6E4[];
 extern int D_8007E868;
 extern int D_8007E86C;
 extern int D_8007E86E;
+
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
 extern int SELECTED_AREA;
+extern int SELECTED_SECTION;
 extern u_char D_8009BCA0;
 extern char D_8009BCA7;
 extern char D_8009BCAA;
 extern u_char PLAYER_HEALTH;
 extern u_char PLAYER_HEALTH_DISPLAYED;
+extern u_char D_8009BCDC;
 extern u_char PLAYER_LIVES;
+extern char D_8009BCE9;
+extern u_short D_8009BCEA;
 extern char AREA00_EVENT_CONTROL;
+extern u_short NEXT_AREA;
+extern u_short NEXT_SECTION;
 extern u_char BLUE_EXP_LEVEL;
 extern u_char GREEN_EXP_LEVEL;
 extern u_char RED_EXP_LEVEL;
-extern u_char ITEM_LIST[256];
-extern u_char INVENTORY_SLOT[256];
-extern u_short INVENTORY_SLOT_COUNTER[2];
+extern u_short D_8009C108;
+extern char D_8009C10E;
+extern u_char EVENT_LIST[256];
 extern char D_8009C216;
 extern char D_8009C269;
-extern u_char EVENT_LIST[256];
 extern char D_8009C34C;
 extern char D_8009C375; 
 extern char D_8009C3E3;
 extern u_char D_8009C3E7;
 extern u_char D_8009C3E8;
 extern char D_8009C3FE;
-extern u_char D_8009C424;
-extern u_char D_8009C429;
+extern u_char ITEM_LIST[256];
+extern u_char INVENTORY_SLOT[256];
+extern u_short INVENTORY_SLOT_COUNTER[2];
+extern u_short CURRENT_AREA;
+extern u_short CURRENT_SECTION;
+extern u_char D_8009C424; //* remove
+extern u_char D_8009C429; //* remove
+extern char D_8009C617;
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
@@ -810,6 +833,7 @@ extern short D_8009EBA0;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;
 extern u_short D_8009EB7C;
+extern char* SPRINTF_BUFFER_MSG[];
 extern u_short D_800A5430;
 extern u_short D_800A5432;
 extern u_char D_800A3940;
@@ -822,6 +846,9 @@ extern int D_800A5970;
 extern u_char D_800B00F8;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
+extern int D_800121C8;
+
+void FontDebugPrintf(short x, short y, short color, char* fmt);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 

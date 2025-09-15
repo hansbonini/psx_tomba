@@ -456,7 +456,99 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AC00);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD1C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD58);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD58);
+void func_8001AD58(void)
+{
+    u16 var_a0;
+    s32* var_v1;
+    u16 temp_a0;
+    u32 temp_v1_2;
+    u8* temp_v1_3;
+    u8 *temp2;
+
+    /* If start a game and debug mode is enabled */
+    if (( *(u8*)(*(s32*)(&PSX_SCRATCH[0x1D4])+0x68) == 0) && (*(u8*)(&PSX_SCRATCH[0x1B4]) != 0)) {
+        if ((*(u16*)(&PSX_SCRATCH[0x1FC])) & 0x10) {
+            D_8009B6A8 = (D_8009B6A8 - 1) & 1;
+        }
+        if ((*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x40) != 0) {
+            D_8009B6A8 = (D_8009B6A8 + 1) & 1;
+        }
+        if (D_8009B6A8 != 0) {
+            if ((*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
+                var_v1 = &SELECTED_SECTION;
+                goto block_14;
+            }
+            if (*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
+                temp_v1_2 = *(u16*)&SELECTED_SECTION += 1;
+                temp_a0 = *(u16*)((u16*)&D_8007B294 + *(u16*)&SELECTED_AREA);
+                if ((temp_a0 - 1) < (s32)temp_v1_2) {
+                    *(u16*)&SELECTED_SECTION = (u16) (temp_a0 - 1);
+                }
+            }
+        } else if ((*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
+            var_v1 = &SELECTED_AREA;
+block_14:
+            *(u16*)var_v1 -= 1;
+            if ((*(u16*)var_v1 << 0x10) <= 0) {
+                *(u16*)var_v1 = 0U;
+            }
+        } else if (*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
+            *(u16*)&SELECTED_AREA += 1;
+            temp_v1_2 = (u16*)D_8007B290;
+            if (temp_v1_2 < *(u16*)(&SELECTED_AREA)) {
+                *(u16*)&SELECTED_AREA = temp_v1_2;
+            }
+        }
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, *(u16*)&SELECTED_AREA);
+        FontDebugPrintf(0x20, 0x60, 0U, &SPRINTF_BUFFER_MSG);
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u16)((u32)SELECTED_SECTION));
+        FontDebugPrintf(0x20, 0x68, 0U, &SPRINTF_BUFFER_MSG);
+        sprintf(&SPRINTF_BUFFER_MSG, &D_8001014C);
+        FontDebugPrintf(0x18, ((s8) D_8009B6A8 + 0xC) * 8, (u32) (*(u16*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
+        NEXT_AREA = *(u16*)&SELECTED_AREA;
+        NEXT_SECTION = *(u16*)&SELECTED_SECTION;
+        D_8009C108 = D_8009BCEA;
+        if (*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x2008) {
+            if (
+                (
+                    *(u16*)&SELECTED_AREA < AREA02_DWARFVILLAGE) &&
+                    (*(u16*)&SELECTED_SECTION != (
+                        AREA00_SECTION00_VILLAGEOFALLBEGINNINGS |
+                        AREA01_SECTION00_FORESTOF100FLOWERS
+                    )
+                )
+            ) {
+                D_8009BCE9 = 1;
+            }
+            if (SELECTED_AREA != AREA00_VILLAGEOFALLBEGINNINGS) {
+                EVENT_LIST[EVENT_CLEARTHEFOG] = 0xFF;
+                D_8009C617 = 1;
+            }
+        }
+        else return;
+    }
+
+    temp2 = (u8*)(&D_8009BCDC);
+     var_a0 = 1;
+    if (*temp2 == 0) {
+        //D_8009BCDC = 1;
+        *temp2 = 1;
+    } else if (*(u16*)&SELECTED_AREA != *(u16*)&CURRENT_AREA) {
+        var_a0 = 1;
+    } else {
+        var_a0 = 0;
+        if (*(u16*)&SELECTED_SECTION == *(u16*)&CURRENT_SECTION) {
+            func_8001CF7C();
+            return;
+        }
+    }
+    func_8001CE80(var_a0);
+
+    temp_v1_3 = *(u16*)(*(s32*)(&PSX_SCRATCH[0x1D4])+0x4E);
+    *(u32*)&D_8009EB4C = 0;
+    *(u16*)(*(s32*)(&PSX_SCRATCH[0x1D4])+0x4E)=temp_v1_3+1;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B0A4);
 
