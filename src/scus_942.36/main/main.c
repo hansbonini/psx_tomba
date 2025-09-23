@@ -49,22 +49,22 @@ void func_80016AF4(void)
 
     SetGeomOffset(160, 112);
     SetGeomScreen(544);
-    (*(MATRIX*)(&D_1F8000F8)).m[0][0] = 0x1000;
+    (*(MATRIX*)(&D_1F8000F8)).m[0][0] = 4096;
     (*(MATRIX*)(&D_1F8000F8)).m[0][1] = 0;
     (*(MATRIX*)(&D_1F8000F8)).m[0][2] = 0;
     (*(MATRIX*)(&D_1F8000F8)).m[1][0] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[1][1] = 0x1000;
+    (*(MATRIX*)(&D_1F8000F8)).m[1][1] = 4096;
     (*(MATRIX*)(&D_1F8000F8)).m[1][2] = 0;
     (*(MATRIX*)(&D_1F8000F8)).m[2][0] = 0;
     (*(MATRIX*)(&D_1F8000F8)).m[2][1] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[2][2] = 0x1000;
+    (*(MATRIX*)(&D_1F8000F8)).m[2][2] = 4096;
     (*(MATRIX*)(&D_1F8000F8)).t[2] = 0;
     (*(MATRIX*)(&D_1F8000F8)).t[1] = 0;
     (*(MATRIX*)(&D_1F8000F8)).t[0] = 0;
     func_80024AEC((MATRIX*)(&D_1F8000C0));
     *(short* )&PSX_SCRATCH[0xE2] = 0;
     *(short* )&PSX_SCRATCH[0xE6] = 0;
-    *(short* )&PSX_SCRATCH[0xEA] = -0x220;
+    *(short* )&PSX_SCRATCH[0xEA] = -544;
     *(short* )&PSX_SCRATCH[0xEE] = 0;
     *(short* )&PSX_SCRATCH[0xF2] = 0;
     *(short* )&PSX_SCRATCH[0xF6] = 0;
@@ -216,11 +216,11 @@ void func_80017498(u_long* address, short x, short y, short x2, short y2)
     pTim->crect->x = x2;
     pTim->crect->y = y2;
 
-    if (((pTim->mode & 8) != 0) && ((x2 << 0x10) >= 0)) {
+    if (((pTim->mode & 8) != 0) && ((x2 << 16) >= 0)) {
         LoadImage(pTim->crect, pTim->caddr);
     }
 
-    if ((x << 0x10) >= 0) {
+    if ((x << 16) >= 0) {
         LoadImage(pTim->prect, pTim->paddr);
     }
     
@@ -501,11 +501,11 @@ block_14:
             }
         }
         sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, *(u16*)&SELECTED_AREA);
-        FontDebugPrintf(0x20, 0x60, 0U, &SPRINTF_BUFFER_MSG);
+        FontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u16)((u32)SELECTED_SECTION));
-        FontDebugPrintf(0x20, 0x68, 0U, &SPRINTF_BUFFER_MSG);
+        FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, &D_8001014C);
-        FontDebugPrintf(0x18, ((s8) D_8009B6A8 + 0xC) * 8, (u32) (*(u16*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
+        FontDebugPrintf(24, ((s8) D_8009B6A8 + 0xC) * 8, (u32) (*(u16*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
         NEXT_AREA = *(u16*)&SELECTED_AREA;
         NEXT_SECTION = *(u16*)&SELECTED_SECTION;
         D_8009C108 = D_8009BCEA;
