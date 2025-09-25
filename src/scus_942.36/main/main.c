@@ -368,37 +368,47 @@ void func_80018F04(void) {
     var_v0 = &D_8009EBA8;
     func_8003B478(var_v0);
             
-    switch(SELECTED_AREA & 0xFFFF) {
+    switch(SELECTED_AREA&0xFFFF) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
-            if ((SELECTED_SECTION & 0xFFFF) > AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE) return;
-            if ((SELECTED_SECTION & 0xFFFF) < AREA00_SECTION00_VILLAGEOFALLBEGINNINGS) return;
+            switch (SELECTED_SECTION &0xFFFF) {
+                case AREA00_SECTION00_VILLAGEOFALLBEGINNINGS:
+                case AREA00_SECTION01_FORESTOFALLBEGINNINGS:
+                case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
+                    var_a0 = *(s32* )0x1F8002B8;
+                    func_8003B2C8(var_a0, var_v0);
+                    func_8003B410(var_v0, 0);
+                    break;
+            }
             break;
         case AREA01_DWARFFOREST:
-            if ((SELECTED_SECTION & 0xFFFF) > AREA01_SECTION04_CHARITYSQUARE) return;
-            if ((SELECTED_SECTION & 0xFFFF) < AREA01_SECTION00_FORESTOF100FLOWERS) return;
-            asm("");
+            switch (SELECTED_SECTION &0xFFFF) {
+                 case AREA01_SECTION00_FORESTOF100FLOWERS:
+                 case AREA01_SECTION01_FORESTOF100FLOWERSRIGHTENTRANCE:
+                 case AREA01_SECTION02_WOBBLYWHARF:
+                 case AREA01_SECTION03_WATCHTOWER:
+                 case AREA01_SECTION04_CHARITYSQUARE:
+                    var_a0 = *(s32* )0x1F8002B8;
+                    func_8003B2C8(var_a0, var_v0);
+                    func_8003B410(var_v0, 0);
+                    break;
+            }
             break;
         case AREA02_DWARFVILLAGE:
-            if ((SELECTED_SECTION & 0xFFFF) == AREA02_SECTION00_DWARFVILLAGE) {
-                var_a0 = *(s32* )0x1F8002BC;
-                func_8003B2C8(var_a0, var_v0);
-                func_8003B410(var_v0, 0);
-                return;
-            }
-            if ((SELECTED_SECTION & 0xFFFF) < AREA02_SECTION00_DWARFVILLAGE) {
-                return;
-            }
-            if ((SELECTED_SECTION & 0xFFFF) >= AREA02_SECTION03_UNDERGROUNDMAZE) {
-                return;
+            switch(SELECTED_SECTION &0xFFFF) {
+                case AREA02_SECTION00_DWARFVILLAGE:
+                    var_a0 = *(s32* )0x1F8002BC;
+                    func_8003B2C8(var_a0, var_v0);
+                    func_8003B410(var_v0, 0);
+                    break;
+                 case AREA02_SECTION01_DWARFELDERSHUT:
+                 case AREA02_SECTION02_UNDERGROUNDPRISON:
+                    var_a0 = *(s32* )0x1F8002B8;
+                    func_8003B2C8(var_a0, var_v0);
+                    func_8003B410(var_v0, 0);
+                    break;
             }
             break;
-        default:
-            return;
     }
-    var_a0 = *(s32* )0x1F8002B8;
-    func_8003B2C8(var_a0, var_v0);
-    func_8003B410(var_v0, 0);
-    return;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019020);
