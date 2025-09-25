@@ -355,10 +355,42 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D04);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D40);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D7C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D7C);
+void func_80018D7C(void)
+{
+    s32 var_v1_2;
+    int var_a0;
+    int var_a2;
+
+    int i;
+    
+    var_a0 = 0;
+    var_a2 = 0x6A;
+    
+    for (i = 0; i < 60; i++) {
+        D_800A5140[i].val[0] = var_a0;
+        D_800A5140[i].unk0 = -1;
+        D_800A5140[i].unk2 = 0;
+        D_800A5140[i].val[1] = var_a2;
+        D_800A5140[i].val[2] = 4;
+        D_800A5140[i].val[3] = 16;
+        D_800A5140[i].val[4] = 0;
+        D_800A5140[i].val[5] = 0;
+
+        var_a0 += 4;
+        
+        if (var_a0 >= 61) {
+            var_a0 = 0;
+            var_a2 += 16;
+        }
+    }
+    for (i=0; i < 8; i+=2) {
+        D_800A39B0[i].unk0 = -1;
+        D_800A39B0[i].unk2 = -1;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018E58);
-
 void func_80018E58(void)
 {
     int var_a0;

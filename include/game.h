@@ -677,6 +677,11 @@ typedef struct unkstruct_01 {
     int saved_reg_gp;
 } unkstruct_01;
 
+typedef struct unkstruct_800A39B0 {
+    short unk0;
+    short unk2;
+} unkstruct_800A39B0;
+
 typedef struct {
     u_char unk0;
     u_char unk1;
@@ -846,16 +851,18 @@ extern u_short D_800A5430;
 extern u_short D_800A5432;
 extern u_char D_800A3940;
 extern u_char D_800A5398;
+extern unkstruct_800A39B0 D_800A39B0[];
+extern unkstruct_800AFF18 D_800A5140[];
 extern char D_800A539C;
 extern char D_800A539D;
 extern char D_800A539E;
 extern char D_800A539F;
 extern int D_800A5970;
+extern unkstruct_800AFF18 D_800AFF18[];
 extern u_char D_800B00F8;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
 extern int D_800121C8;
-extern unkstruct_800AFF18 D_800AFF18[];
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
 
