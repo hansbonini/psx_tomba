@@ -277,7 +277,14 @@ void func_80017EEC(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F1C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F88);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F88);
+void func_80017F88(void)
+{
+    *(int** )0x1F800224 = &D_800B0470;
+    *(int** )0x1F800268 = &D_800B0470;
+    *(short* )0x1F800254 = 0;
+    *(short* )0x1F80024C = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017FB8);
 

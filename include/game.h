@@ -859,6 +859,7 @@ extern char D_800A539E;
 extern char D_800A539F;
 extern int D_800A5970;
 extern unkstruct_800AFF18 D_800AFF18[];
+extern int D_800B0470;
 extern u_char D_800B00F8;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
