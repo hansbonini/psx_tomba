@@ -731,6 +731,12 @@ typedef struct {
     u_char unkA5;
 } unkstruct_800A6D50;
 
+typedef struct unkstruct_800AFF18 {
+    short unk0;
+    short unk2;
+    char val[6];
+} unkstruct_800AFF18;
+
 typedef struct tomba_equips {
     ITEM weapon;
     ITEM pants;
@@ -849,6 +855,7 @@ extern u_char D_800B00F8;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
 extern int D_800121C8;
+extern unkstruct_800AFF18 D_800AFF18[];
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
 

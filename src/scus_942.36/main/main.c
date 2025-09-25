@@ -357,7 +357,36 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D40);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D7C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018E58);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018E58);
+
+void func_80018E58(void)
+{
+    int var_a0;
+    int var_a2;
+
+    int i;
+    
+    var_a0 = 0;
+    var_a2 = 0x9E;
+    
+    for (i = 0; i < 48; i++) {
+        D_800AFF18[i].val[0] = var_a0;
+        D_800AFF18[i].unk0 = -1;
+        D_800AFF18[i].unk2 = 0;
+        D_800AFF18[i].val[1] = var_a2;
+        D_800AFF18[i].val[2] = 4;
+        D_800AFF18[i].val[3] = 24;
+        D_800AFF18[i].val[4] = 0;
+        D_800AFF18[i].val[5] = 0;
+
+        var_a0 += 4;
+        
+        if (var_a0 >= 60) {
+            var_a0 = 0;
+            var_a2 += 24;
+        }
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018F04);
 void func_80018F04(void) {
