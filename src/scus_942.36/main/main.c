@@ -249,80 +249,80 @@ void func_8001758C(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017614);
 void func_80017614(void)
 {
-    *(s32** )0x1F800218 = &D_800B0528;
-    *(s32** )0x1F80025C = &D_800B0528;
-    *(s32** )0x1F80021C = &D_800A5970;
-    *(s32** )0x1F800260 = &D_800A5970;
-    *(s32** )0x1F800220 = &D_800B0680;
-    *(s32** )0x1F800264 = &D_800B0680;
-    *(s32** )0x1F800224 = &D_800B0470;
-    *(s32** )0x1F800268 = &D_800B0470;
-    *(s32** )0x1F800230 = &D_800B3184;
-    *(s32** )0x1F800274 = &D_800B3184;
-    *(s32** )0x1F800228 = &D_800B04F0;
-    *(s32** )0x1F80026C = &D_800B04F0;
-    *(s16* )0x1F80024E = 0;
-    *(s16* )0x1F800244 = 0;
-    *(s16* )0x1F800250 = 0;
-    *(s16* )0x1F800246 = 0;
-    *(s16* )0x1F800252 = 0;
-    *(s16* )0x1F80024A = 0;
-    *(s16* )0x1F800254 = 0;
-    *(s16* )0x1F80024C = 0;
-    *(s16* )0x1F800258 = 0;
-    *(s16* )0x1F800242 = 0;
-    *(s16* )0x1F800256 = 0;
-    *(s16* )0x1F800248 = 0;
-    *(s32** )0x1F80022C = &D_800A5858;
-    *(s32** )0x1F800270 = &D_800A5858;
-    *(s16* )0x1F80025A = 0;
-    *(s16* )0x1F800240 = 0;
+    *(int** )0x1F800218 = &D_800B0528;
+    *(int** )0x1F80025C = &D_800B0528;
+    *(int** )0x1F80021C = &D_800A5970;
+    *(int** )0x1F800260 = &D_800A5970;
+    *(int** )0x1F800220 = &D_800B0680;
+    *(int** )0x1F800264 = &D_800B0680;
+    *(int** )0x1F800224 = &D_800B0470;
+    *(int** )0x1F800268 = &D_800B0470;
+    *(int** )0x1F800230 = &D_800B3184;
+    *(int** )0x1F800274 = &D_800B3184;
+    *(int** )0x1F800228 = &D_800B04F0;
+    *(int** )0x1F80026C = &D_800B04F0;
+    *(short* )0x1F80024E = 0;
+    *(short* )0x1F800244 = 0;
+    *(short* )0x1F800250 = 0;
+    *(short* )0x1F800246 = 0;
+    *(short* )0x1F800252 = 0;
+    *(short* )0x1F80024A = 0;
+    *(short* )0x1F800254 = 0;
+    *(short* )0x1F80024C = 0;
+    *(short* )0x1F800258 = 0;
+    *(short* )0x1F800242 = 0;
+    *(short* )0x1F800256 = 0;
+    *(short* )0x1F800248 = 0;
+    *(int** )0x1F80022C = &D_800A5858;
+    *(int** )0x1F800270 = &D_800A5858;
+    *(short* )0x1F80025A = 0;
+    *(short* )0x1F800240 = 0;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017734);
 void func_80017734(void)
 {
     func_80024AEC((MATRIX* ) D_1F8000C0);
-    *(s16* )0x1F8000EA = -544;
-    *(s16* )0x1F8000EE = 160;
-    *(s16* )0x1F8000F2 = -120;
-    *(s32* )0x1F800200 = 69;
-    *(s16* )0x1F8000E2 = 0;
-    *(s16* )0x1F8000E6 = 0;
-    *(s16* )0x1F8000F6 = 0;
-    *(s8* )0x1F8003CE = 0;
-    *(s16* )0x1F8001C8 = 0;
-    *(s8* )0x1F8003D1 = 0;
-    *(u8* )0x1F8003D2 = 0xFF;
-    *(u8* )0x1F8003D3 = 0xFF;
+    *(short* )0x1F8000EA = -544;
+    *(short* )0x1F8000EE = 160;
+    *(short* )0x1F8000F2 = -120;
+    *(int* )0x1F800200 = 69;
+    *(short* )0x1F8000E2 = 0;
+    *(short* )0x1F8000E6 = 0;
+    *(short* )0x1F8000F6 = 0;
+    *(char* )0x1F8003CE = 0;
+    *(short* )0x1F8001C8 = 0;
+    *(char* )0x1F8003D1 = 0;
+    *(u_char* )0x1F8003D2 = 0xFF;
+    *(u_char* )0x1F8003D3 = 0xFF;
     D_8009EBA0 = 0;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800177D8);
 void func_800177D8(void)
 {
-    memset((u8 *)&SELECTED_AREA, 0, 0x988);
+    memset((u_char *)&SELECTED_AREA, 0, 0x988);
     memset(&D_8009BC98, 0, 0x2C);
     func_80024AEC((MATRIX* ) D_1F8000C0);
-    *(s16* )0x1F8000EA = -544; // CAMERA Z POSITION
-    *(s16* )0x1F8000EE = 160; // CAMERA X POSITION
-    *(s16* )0x1F8000F2 = -120; // CAMERA Y POSITION
-    *(s16* )0x1F8000E2 = 0; // CAMERA PAN HORIZONTAL
-    *(s16* )0x1F8000E6 = 0; // CAMERA PAN VERTICAL
-    *(s16* )0x1F8000F6 = 0; // ?
-    *(s32* )0x1F800200 = 69; // ?
-    *(u8* )0x1F8003D2 = 0xFF;
-    *(u8* )0x1F8003D3 = 0xFF;
+    *(short* )0x1F8000EA = -544; // CAMERA Z POSITION
+    *(short* )0x1F8000EE = 160; // CAMERA X POSITION
+    *(short* )0x1F8000F2 = -120; // CAMERA Y POSITION
+    *(short* )0x1F8000E2 = 0; // CAMERA PAN HORIZONTAL
+    *(short* )0x1F8000E6 = 0; // CAMERA PAN VERTICAL
+    *(short* )0x1F8000F6 = 0; // ?
+    *(int* )0x1F800200 = 69; // ?
+    *(u_char* )0x1F8003D2 = 0xFF;
+    *(u_char* )0x1F8003D3 = 0xFF;
     PLAYER_AP = 0;
-    *(s16*)&SELECTED_AREA = AREA00_VILLAGEOFALLBEGINNINGS;
+    *(short*)&SELECTED_AREA = AREA00_VILLAGEOFALLBEGINNINGS;
     PLAYER_LIVES = 3;
     D_8009BCDF = 0xFF;
     D_8009C3F8 = 0xFF;
-    *(s8* )0x1F8003CE = 0; // INVENTORY ENABLED
-    *(s16* )0x1F8001C8 = 0; // SPRITE ZOOM
-    *(s8* )0x1F8003D1 = 0; 
+    *(char* )0x1F8003CE = 0; // INVENTORY ENABLED
+    *(short* )0x1F8001C8 = 0; // SPRITE ZOOM
+    *(char* )0x1F8003D1 = 0; 
     D_8009EBA0 = 0;
-    *(s16*)&SELECTED_SECTION = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
+    *(short*)&SELECTED_SECTION = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
     INVENTORY_SCREEN = INVENTORY_SCREEN_ITEM;
     D_8009BCDB = 1;
     D_8009C217 = 1;
@@ -334,9 +334,9 @@ void func_800177D8(void)
     D_8009C33A = 0x639;
     D_8009C33C = 0x691;
     D_8009C284 = D_8009E744;
-    if (*(u8* )0x1F8001B3 == 0) {
+    if (*(u_char* )0x1F8001B3 == 0) {
         // 0 = NORMAL MODE | 1 = EASY MODE
-        if (*(u8* )0x1F8001AB != 0) {
+        if (*(u_char* )0x1F8001AB != 0) {
             INVENTORY_SLOT[0] = ITEM_BLACKJACK;
             INVENTORY_SLOT[1] = ITEM_GRAPPLE;
             INVENTORY_SLOT[2] = ITEM_GRAPPLEJACK;
@@ -499,7 +499,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D40);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D7C);
 void func_80018D7C(void)
 {
-    s32 var_v1_2;
+    int var_v1_2;
     int var_a0;
     int var_a2;
 
@@ -563,8 +563,8 @@ void func_80018E58(void)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018F04);
 void func_80018F04(void) {
-    s32 var_a0;
-    s32 var_v0;
+    int var_a0;
+    int var_v0;
 
     if (D_8009CA04 == 0) return;
     var_v0 = &D_8009EBA8;
@@ -576,7 +576,7 @@ void func_80018F04(void) {
                 case AREA00_SECTION00_VILLAGEOFALLBEGINNINGS:
                 case AREA00_SECTION01_FORESTOFALLBEGINNINGS:
                 case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
-                    var_a0 = *(s32* )0x1F8002B8;
+                    var_a0 = *(int* )0x1F8002B8;
                     func_8003B2C8(var_a0, var_v0);
                     func_8003B410(var_v0, 0);
                     break;
@@ -589,7 +589,7 @@ void func_80018F04(void) {
                  case AREA01_SECTION02_WOBBLYWHARF:
                  case AREA01_SECTION03_WATCHTOWER:
                  case AREA01_SECTION04_CHARITYSQUARE:
-                    var_a0 = *(s32* )0x1F8002B8;
+                    var_a0 = *(int* )0x1F8002B8;
                     func_8003B2C8(var_a0, var_v0);
                     func_8003B410(var_v0, 0);
                     break;
@@ -598,13 +598,13 @@ void func_80018F04(void) {
         case AREA02_DWARFVILLAGE:
             switch(SELECTED_SECTION &0xFFFF) {
                 case AREA02_SECTION00_DWARFVILLAGE:
-                    var_a0 = *(s32* )0x1F8002BC;
+                    var_a0 = *(int* )0x1F8002BC;
                     func_8003B2C8(var_a0, var_v0);
                     func_8003B410(var_v0, 0);
                     break;
                  case AREA02_SECTION01_DWARFELDERSHUT:
                  case AREA02_SECTION02_UNDERGROUNDPRISON:
-                    var_a0 = *(s32* )0x1F8002B8;
+                    var_a0 = *(int* )0x1F8002B8;
                     func_8003B2C8(var_a0, var_v0);
                     func_8003B410(var_v0, 0);
                     break;
@@ -658,30 +658,30 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A51C);
 void func_8001A51C(void)
 {
-    s32 temp_v1;
+    int temp_v1;
     void* temp_v0;
 
     temp_v0 = *(void** )&PSX_SCRATCH[0x1D4];
-    *(s8* )(&PSX_SCRATCH[0x1D1]) = 0;
-    *(s8* )(&PSX_SCRATCH[0x1D0]) = 1;
-    *(s16* )(temp_v0+0x48) = 0;
-    *(s16* )(temp_v0+0x4A) = 0;
-    *(s16* )(temp_v0+0x4C) = 0;
-    *(s16* )(temp_v0+0x4E) = 0;
-    *(s8* )(temp_v0+0x6A) = 0;
+    *(char* )(&PSX_SCRATCH[0x1D1]) = 0;
+    *(char* )(&PSX_SCRATCH[0x1D0]) = 1;
+    *(short* )(temp_v0+0x48) = 0;
+    *(short* )(temp_v0+0x4A) = 0;
+    *(short* )(temp_v0+0x4C) = 0;
+    *(short* )(temp_v0+0x4E) = 0;
+    *(char* )(temp_v0+0x6A) = 0;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
     setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
-    *(s16* )&PSX_SCRATCH[0x1DC] = -1;
-    *(s16* )&PSX_SCRATCH[0x1DE] = 0;
+    *(short* )&PSX_SCRATCH[0x1DC] = -1;
+    *(short* )&PSX_SCRATCH[0x1DE] = 0;
     D_8009EB4C = 0;
-    *(s8* )&PSX_SCRATCH[0x1CE] = 0;
+    *(char* )&PSX_SCRATCH[0x1CE] = 0;
     D_8009EBA0 = 0;
     func_80024B3C(D_1F800118);
-    *(s16* )&PSX_SCRATCH[0x1FC] = 0;
+    *(short* )&PSX_SCRATCH[0x1FC] = 0;
     while (true){
         func_800223E0();
         temp_v1 = (*(void** )0x1F8001D4);
-        switch (*(u16*)(temp_v1+0x48)) {
+        switch (*(u_short*)(temp_v1+0x48)) {
             case 0:
                 func_8001A670(); // New Game
                 break;
@@ -711,61 +711,61 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD1C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD58);
 void func_8001AD58(void)
 {
-    u16 var_a0;
-    s32* var_v1;
-    u16 temp_a0;
-    u32 temp_v1_2;
-    u8* temp_v1_3;
-    u8 *temp2;
+    u_short var_a0;
+    int* var_v1;
+    u_short temp_a0;
+    u_long temp_v1_2;
+    u_char* temp_v1_3;
+    u_char *temp2;
 
     /* If start a game and debug mode is enabled */
-    if (( *(u8*)(*(s32*)(&PSX_SCRATCH[0x1D4])+0x68) == 0) && (*(u8*)(&PSX_SCRATCH[0x1B4]) != 0)) {
-        if ((*(u16*)(&PSX_SCRATCH[0x1FC])) & 0x10) {
+    if (( *(u_char*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x68) == 0) && (*(u_char*)(&PSX_SCRATCH[0x1B4]) != 0)) {
+        if ((*(u_short*)(&PSX_SCRATCH[0x1FC])) & 0x10) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
         }
-        if ((*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x40) != 0) {
+        if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x40) != 0) {
             D_8009B6A8 = (D_8009B6A8 + 1) & 1;
         }
         if (D_8009B6A8 != 0) {
-            if ((*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
+            if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
                 var_v1 = &SELECTED_SECTION;
                 goto block_14;
             }
-            if (*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
-                temp_v1_2 = *(u16*)&SELECTED_SECTION += 1;
-                temp_a0 = *(u16*)((u16*)&D_8007B294 + *(u16*)&SELECTED_AREA);
-                if ((temp_a0 - 1) < (s32)temp_v1_2) {
-                    *(u16*)&SELECTED_SECTION = (u16) (temp_a0 - 1);
+            if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
+                temp_v1_2 = *(u_short*)&SELECTED_SECTION += 1;
+                temp_a0 = *(u_short*)((u_short*)&D_8007B294 + *(u_short*)&SELECTED_AREA);
+                if ((temp_a0 - 1) < (int)temp_v1_2) {
+                    *(u_short*)&SELECTED_SECTION = (u_short) (temp_a0 - 1);
                 }
             }
-        } else if ((*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
+        } else if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
             var_v1 = &SELECTED_AREA;
 block_14:
-            *(u16*)var_v1 -= 1;
-            if ((*(u16*)var_v1 << 0x10) <= 0) {
-                *(u16*)var_v1 = 0U;
+            *(u_short*)var_v1 -= 1;
+            if ((*(u_short*)var_v1 << 0x10) <= 0) {
+                *(u_short*)var_v1 = 0U;
             }
-        } else if (*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
-            *(u16*)&SELECTED_AREA += 1;
-            temp_v1_2 = (u16*)D_8007B290;
-            if (temp_v1_2 < *(u16*)(&SELECTED_AREA)) {
-                *(u16*)&SELECTED_AREA = temp_v1_2;
+        } else if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
+            *(u_short*)&SELECTED_AREA += 1;
+            temp_v1_2 = (u_short*)D_8007B290;
+            if (temp_v1_2 < *(u_short*)(&SELECTED_AREA)) {
+                *(u_short*)&SELECTED_AREA = temp_v1_2;
             }
         }
-        sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, *(u16*)&SELECTED_AREA);
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, *(u_short*)&SELECTED_AREA);
         FontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
-        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u16)((u32)SELECTED_SECTION));
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u_short)((u_long)SELECTED_SECTION));
         FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, &D_8001014C);
-        FontDebugPrintf(24, ((s8) D_8009B6A8 + 0xC) * 8, (u32) (*(u16*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
-        NEXT_AREA = *(u16*)&SELECTED_AREA;
-        NEXT_SECTION = *(u16*)&SELECTED_SECTION;
+        FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
+        NEXT_AREA = *(u_short*)&SELECTED_AREA;
+        NEXT_SECTION = *(u_short*)&SELECTED_SECTION;
         D_8009C108 = D_8009BCEA;
-        if (*(u16*)(&PSX_SCRATCH[0x1FC]) & 0x2008) {
+        if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x2008) {
             if (
                 (
-                    *(u16*)&SELECTED_AREA < AREA02_DWARFVILLAGE) &&
-                    (*(u16*)&SELECTED_SECTION != (
+                    *(u_short*)&SELECTED_AREA < AREA02_DWARFVILLAGE) &&
+                    (*(u_short*)&SELECTED_SECTION != (
                         AREA00_SECTION00_VILLAGEOFALLBEGINNINGS |
                         AREA01_SECTION00_FORESTOF100FLOWERS
                     )
@@ -781,25 +781,25 @@ block_14:
         else return;
     }
 
-    temp2 = (u8*)(&D_8009BCDC);
+    temp2 = (u_char*)(&D_8009BCDC);
      var_a0 = 1;
     if (*temp2 == 0) {
         //D_8009BCDC = 1;
         *temp2 = 1;
-    } else if (*(u16*)&SELECTED_AREA != *(u16*)&CURRENT_AREA) {
+    } else if (*(u_short*)&SELECTED_AREA != *(u_short*)&CURRENT_AREA) {
         var_a0 = 1;
     } else {
         var_a0 = 0;
-        if (*(u16*)&SELECTED_SECTION == *(u16*)&CURRENT_SECTION) {
+        if (*(u_short*)&SELECTED_SECTION == *(u_short*)&CURRENT_SECTION) {
             func_8001CF7C();
             return;
         }
     }
     func_8001CE80(var_a0);
 
-    temp_v1_3 = *(u16*)(*(s32*)(&PSX_SCRATCH[0x1D4])+0x4E);
-    *(u32*)&D_8009EB4C = 0;
-    *(u16*)(*(s32*)(&PSX_SCRATCH[0x1D4])+0x4E)=temp_v1_3+1;
+    temp_v1_3 = *(u_short*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x4E);
+    *(u_long*)&D_8009EB4C = 0;
+    *(u_short*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x4E)=temp_v1_3+1;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B0A4);
@@ -1526,7 +1526,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800316EC);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031868);
 void func_80031868(void)
 {
-    switch (*(u16*)&SELECTED_AREA) {
+    switch (*(u_short*)&SELECTED_AREA) {
         case AREA05_BACCUSVILLAGE:
             func_800EF7C0();
             return;
@@ -1594,9 +1594,9 @@ void func_80033858(void) {
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033860);
 void func_80033860(void)
 {
-    if (*(u16*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
+    if (*(u_short*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
             func_8011BB54();
-    } else if (*(u16*)&SELECTED_AREA == AREA03_PHOENIXMOUNTAIN) {
+    } else if (*(u_short*)&SELECTED_AREA == AREA03_PHOENIXMOUNTAIN) {
             func_80119894();
     }
     return;
@@ -1605,7 +1605,7 @@ void func_80033860(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800338A8);
 void func_800338A8(void)
 {
-    switch (*(u16*)&SELECTED_AREA) {
+    switch (*(u_short*)&SELECTED_AREA) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
             func_8011D65C();
             return;
@@ -1641,11 +1641,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033964);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033F50);
 void func_80033F50(void)
 {
-    if (*(u16*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
+    if (*(u_short*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80120054();
-    } else if (*(u16*)&SELECTED_AREA == AREA06_DIRTMOTOCROSS) {
+    } else if (*(u_short*)&SELECTED_AREA == AREA06_DIRTMOTOCROSS) {
         func_80119BCC();
-    } else if (*(u16*)&SELECTED_AREA == AREA11_VILLAGEOFCIVILIZATION){
+    } else if (*(u_short*)&SELECTED_AREA == AREA11_VILLAGEOFCIVILIZATION){
         func_80115724();
     }
     return;
