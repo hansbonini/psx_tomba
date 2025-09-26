@@ -4,11 +4,11 @@
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F268);
 void func_8003F268(unkstruct_800A6D50* arg0)
 {
-    s32 var_a1;
-    s32 var_v0;
-    u16 temp_a1;
-    u16 temp_v0;
-    u8 temp_v1;
+    int var_a1;
+    int var_v0;
+    u_short temp_a1;
+    u_short temp_v0;
+    u_char temp_v1;
 
     temp_v1 = arg0->unk6;
     switch (temp_v1) {                              // irregular
@@ -21,11 +21,11 @@ void func_8003F268(unkstruct_800A6D50* arg0)
                 arg0->unkF = 4;
             }
             arg0->unk82 = -1024;
-            *(s32*)&arg0->unk28 = &D_8007722C;
+            *(int*)&arg0->unk28 = &D_8007722C;
             if (arg0->unk2E & 2) {
-                *(s32*)&arg0->unk28 = &D_800771FC;
+                *(int*)&arg0->unk28 = &D_800771FC;
             }
-            arg0->unk6 = (u8) (arg0->unk6 + 1);
+            arg0->unk6 = (u_char) (arg0->unk6 + 1);
             break;
         case 1:
             temp_a1 = arg0->unk2E;
@@ -36,10 +36,10 @@ void func_8003F268(unkstruct_800A6D50* arg0)
             }
             temp_v0 = arg0->unk82 + 64;
             arg0->unk82 = temp_v0;
-            if ((s16) temp_v0 >= 1025) {
+            if ((short) temp_v0 >= 1025) {
                 arg0->unk82 = 1024;
             }
-            *(s32*)&arg0->unk14 = (s32) (*(s32*)&arg0->unk14 + ((s16) arg0->unk82 << 8));
+            *(int*)&arg0->unk14 = (int) (*(int*)&arg0->unk14 + ((short) arg0->unk82 << 8));
             break;
     }
     if (arg0->unk2E & 1) {
@@ -47,7 +47,7 @@ void func_8003F268(unkstruct_800A6D50* arg0)
     } else {
         var_v0 = arg0->unk8C - 24;
     }
-    arg0->unk8C = (s32) (var_v0 & 0xFF);
+    arg0->unk8C = (int) (var_v0 & 0xFF);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F3D4);
@@ -57,7 +57,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F78C);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F9A4);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003FC18);
-void func_8003FC18(unkstruct_800A6D50* arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4)
+void func_8003FC18(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3, int arg4)
 {
 
     if (func_800236F4(arg0->item_id) == ITEM_CHICK) {
@@ -69,13 +69,13 @@ void func_8003FC18(unkstruct_800A6D50* arg0, s32 arg1, s16 arg2, s16 arg3, s32 a
                 func_80041790(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 2:
-                func_800417CC(arg0->unk1, arg0->unk2, arg1, arg2, (s32) arg3);
+                func_800417CC(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 3:
-                func_80041820(arg0->unk1, arg0->unk2, arg1, arg2, (s32) arg3);
+                func_80041820(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 4:
-                func_80041874(arg0->unk1, arg0->unk2, arg1, arg2, (s32) arg3);
+                func_80041874(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 5:
                 func_800418C8(arg0->unk1, arg0->unk2, arg1);
@@ -101,31 +101,31 @@ void func_8003FDD4(unkstruct_800A6D50* arg0)
 {
 
     typedef struct {
-        u8 unk0;
-        u8 unk1;
-        u8 unk2;
-        u8 unk3;
-        u8 unk4;
-        u8 unk5;
-        u8 unk6;
-        u8 unk7;
+        u_char unk0;
+        u_char unk1;
+        u_char unk2;
+        u_char unk3;
+        u_char unk4;
+        u_char unk5;
+        u_char unk6;
+        u_char unk7;
         short x;
         short y;
-        u8 unkC;
-        u8 unkD;
-        u8 unkE;
-        u8 unkF;
+        u_char unkC;
+        u_char unkD;
+        u_char unkE;
+        u_char unkF;
         int unk10;
     } unkstruct;
 
     
-    s16 x;
-    s16 y;
-    s32 temp_v0;
-    s32 color;
-    s32* var_v0;
-    u8 temp_v1;
-    u8 temp_v1_2;
+    short x;
+    short y;
+    int temp_v0;
+    int color;
+    int* var_v0;
+    u_char temp_v1;
+    u_char temp_v1_2;
     unkstruct* temp_s1;
 
     if ((arg0->item_id == ITEM_JEWELOFWIND) && (EVENT_LIST[EVENT_THEJUNGLEPIGBAG] == 0)) {
@@ -136,23 +136,23 @@ void func_8003FDD4(unkstruct_800A6D50* arg0)
     arg0->unk69 = 0;
     temp_s1 = D_8007E6E4[D_8007E61C[arg0->item_id]];
     arg0->unkA = temp_s1->unk0;
-    arg0->unk1E = (s16)temp_s1->unk2;
+    arg0->unk1E = (short)temp_s1->unk2;
     arg0->unkF = -9;
-    arg0->unkD = (u8)temp_s1->unk5;
-    arg0->unk6C = (s16)temp_s1->unkC;
-    arg0->unk6E = (s16)temp_s1->unkD;
-    arg0->unk70 = (s16)temp_s1->unkE;
-    arg0->unk72 = (s16)temp_s1->unkF;
+    arg0->unkD = (u_char)temp_s1->unk5;
+    arg0->unk6C = (short)temp_s1->unkC;
+    arg0->unk6E = (short)temp_s1->unkD;
+    arg0->unk70 = (short)temp_s1->unkE;
+    arg0->unk72 = (short)temp_s1->unkF;
 
     arg0->unk3C = *(&D_1F8002C8[temp_s1->unk4]);
     arg0->unk2E = 1;
     if (arg0->item_id == 2) {
-        if ((u32) (arg0->unkC & 0x7F) >= 4U) {
+        if ((u_long) (arg0->unkC & 0x7F) >= 4U) {
             arg0->buffSize = 0x2000;
-            arg0->unk6C = (s16) (temp_s1->unkC * 2);
-            arg0->unk6E = (s16) (temp_s1->unkD * 2);
-            arg0->unk70 = (s16) (temp_s1->unkE * 2);
-            arg0->unk72 = (s16) (temp_s1->unkF * 2);
+            arg0->unk6C = (short) (temp_s1->unkC * 2);
+            arg0->unk6E = (short) (temp_s1->unkD * 2);
+            arg0->unk70 = (short) (temp_s1->unkE * 2);
+            arg0->unk72 = (short) (temp_s1->unkF * 2);
         } else {
             arg0->buffSize = 0x1000;
         }
@@ -162,18 +162,18 @@ void func_8003FDD4(unkstruct_800A6D50* arg0)
         case 0:
             x = temp_s1->x;
             y = temp_s1->y;
-            arg0->clut = GetClut((s32) x, (s32) y);
+            arg0->clut = GetClut((int) x, (int) y);
             break;
         case 1:
             x = temp_s1->x;
             y = temp_s1->y;
-            arg0->clut = GetClut((s32) x, (s32) y + (arg0->unkC & 0x7F));
+            arg0->clut = GetClut((int) x, (int) y + (arg0->unkC & 0x7F));
             break;
         case 2:
             temp_v0 = (arg0->unkC & 0x7F) * 2;
-            x = *(u16*)(&D_8007E86C + temp_v0);
-            y = *(u16*)(&D_8007E86E + temp_v0);
-            arg0->clut = GetClut((s32) x, (s32) y);
+            x = *(u_short*)(&D_8007E86C + temp_v0);
+            y = *(u_short*)(&D_8007E86E + temp_v0);
+            arg0->clut = GetClut((int) x, (int) y);
             break;
         case 3:
             if (ITEM_LIST[ITEM_JUMPINGPANTS] == 0) {
@@ -193,11 +193,11 @@ void func_8003FDD4(unkstruct_800A6D50* arg0)
     switch (temp_s1->unk7) {
         case 0:
             var_v0 = temp_s1->unk10;
-            arg0->unk24 = (s32) *var_v0;
+            arg0->unk24 = (int) *var_v0;
             break;
         case 1:
-            var_v0 = (s32) ((arg0->unkC & 0x7F) * 4) + *(s32*)&temp_s1->unk10;
-            arg0->unk24 = (s32) *var_v0;
+            var_v0 = (int) ((arg0->unkC & 0x7F) * 4) + *(int*)&temp_s1->unk10;
+            arg0->unk24 = (int) *var_v0;
             break;
     }
     func_800229FC(arg0);
@@ -215,10 +215,10 @@ void func_8004008C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_800400E0);
 void func_800400E0(unkstruct_800A6D50* arg0)
 {
-    s32 var_a0;
-    s32 var_a1;
-    s32 var_a2;
-    u8 current_item;
+    int var_a0;
+    int var_a1;
+    int var_a2;
+    u_char current_item;
 
     func_80029788(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
@@ -265,18 +265,18 @@ void func_80040268(unkstruct_800A6D50* arg0)
             func_8002367C(arg0->unk6B);
         }
         if (!(arg0->unkC & 0x7F)) {
-            *(s16*)&D_800A5430+=1;
-            if ((s16)PLAYER_HEALTH_DISPLAYED < *(s16*)&D_800A5430 ) {
-                *(s16*)&D_800A5430 = PLAYER_HEALTH_DISPLAYED;
+            *(short*)&D_800A5430+=1;
+            if ((short)PLAYER_HEALTH_DISPLAYED < *(short*)&D_800A5430 ) {
+                *(short*)&D_800A5430 = PLAYER_HEALTH_DISPLAYED;
             }
         } else {
-            *(s16*)&D_800A5430+=2;
-            if ((s16)PLAYER_HEALTH_DISPLAYED < *(s16*)&D_800A5430 ) {
-                *(s16*)&D_800A5430 = PLAYER_HEALTH_DISPLAYED;
+            *(short*)&D_800A5430+=2;
+            if ((short)PLAYER_HEALTH_DISPLAYED < *(short*)&D_800A5430 ) {
+                *(short*)&D_800A5430 = PLAYER_HEALTH_DISPLAYED;
             }
         }
         D_800A5432 = D_800A5430;
-        PLAYER_HEALTH = (u8) D_800A5430;
+        PLAYER_HEALTH = (u_char) D_800A5430;
         arg0->unk4++;
     }
 }
@@ -364,9 +364,9 @@ void func_8004062C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040690);
 void func_80040690(unkstruct_800A6D50* arg0)
 {
-    u8 lives = *(s8*)&PLAYER_LIVES;
+    u_char lives = *(char*)&PLAYER_LIVES;
     if (lives < 99) {
-        *(s8*)&PLAYER_LIVES=(u8)(lives+1);
+        *(char*)&PLAYER_LIVES=(u_char)(lives+1);
         func_80031124(0x14, 3);
         func_8001FFE8(10);
     }
@@ -379,20 +379,20 @@ void func_80040690(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040718);
 void func_80040718(unkstruct_800A6D50* arg0)
 {
-    u8 health;
+    u_char health;
 
     if (D_8009BCA0 == 0) {
-        health = *(u8*)&PLAYER_HEALTH_DISPLAYED;
+        health = *(char*)&PLAYER_HEALTH_DISPLAYED;
         if (health < 16) {
             health += D_8009C3E8;
-            *(u8*)&PLAYER_HEALTH_DISPLAYED = health;
-            if ((u32) ((s8)health & 0xFF) >= 17) {
-                *(u8*)&PLAYER_HEALTH_DISPLAYED = 16;
+            *(char*)&PLAYER_HEALTH_DISPLAYED = health;
+            if ((u_long) ((byte)health & 0xFF) >= 17) {
+                *(char*)&PLAYER_HEALTH_DISPLAYED = 16;
             }
             func_8001FFE8(10);
-            D_800A5430 = (u16*)(*(u8*)&PLAYER_HEALTH_DISPLAYED);
-            D_800A5432 = *(u8*)&PLAYER_HEALTH_DISPLAYED;
-            *(u8*)&PLAYER_HEALTH = *(u8*)&PLAYER_HEALTH_DISPLAYED;
+            D_800A5430 = (u_short*)(*(char*)&PLAYER_HEALTH_DISPLAYED);
+            D_800A5432 = *(char*)&PLAYER_HEALTH_DISPLAYED;
+            *(char*)&PLAYER_HEALTH = *(char*)&PLAYER_HEALTH_DISPLAYED;
         }
         D_8009C3E7 = 1;
         D_800B078C = &D_800121C8;
@@ -407,15 +407,15 @@ void func_80040718(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8004080C);
 void func_8004080C(unkstruct_800A6D50* arg0)
 {
-    u16 temp_v0;
-    u8 temp_v1;
+    u_short temp_v0;
+    u_char temp_v1;
 
     temp_v1 = arg0->unk5;
     switch (temp_v1) {
         case 0:
             func_80029788(ITEM_BITINGPLANTFLOWER, 1, 1);
             func_8001E220(EVENT_BITINGPLANTFLOWER, 0, 0);
-            if (*(u16*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
+            if (*(u_short*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
                 D_8009C3E3 = 2;
             }
             if (!(arg0->unkC & 0x80)) {
@@ -586,7 +586,7 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040DA0);
 void func_80040DA0(unkstruct_800A6D50* arg0)
 {
-    if ((*(u16*)&SELECTED_AREA == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
+    if ((*(u_short*)&SELECTED_AREA == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
         func_80029788(arg0->item_id, 1, 1);
     }
     if (!(arg0->unkC & 0x80)) {
@@ -598,10 +598,10 @@ void func_80040DA0(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040E24);
 void func_80040E24(unkstruct_800A6D50* arg0)
 {
-    s32 var_a0;
-    s32 var_a2;
-    u8 current_item;
-    u8 var_v0;
+    int var_a0;
+    int var_a2;
+    u_char current_item;
+    u_char var_v0;
     
     current_item = arg0->item_id;
     switch (current_item) {
@@ -616,7 +616,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
                 }
                 arg0->unk4++;
             } else {
-                if ((s16)arg0->unk22 == 0) {
+                if ((short)arg0->unk22 == 0) {
                     func_80031124(0x26, 2);
                     arg0->unk22 = 0x78;
                 } 
@@ -635,7 +635,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
                 arg0->unk4++;
             } else {
                 func_8001E220(EVENT_BLUEHIDDENPOWERS, 0, 0);
-                if ((s16)arg0->unk22 == 0) {
+                if ((short)arg0->unk22 == 0) {
                     func_80031124(0x26, 2);
                     arg0->unk22 = 0x78;
                 } 
@@ -652,7 +652,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
                 arg0->unk4++;
             } else {
                 func_8001E220(EVENT_GREENHIDDENPOWERS, 0, 1);
-                if ((s16)arg0->unk22 == 0) {
+                if ((short)arg0->unk22 == 0) {
                     func_80031124(0x26, 2);
                     arg0->unk22 = 0x78;
                 } 
@@ -678,7 +678,7 @@ void func_80040FD8(unkstruct_800A6D50* arg0)
 void func_80041048(unkstruct_800A6D50* arg0)
 {
     func_80031124(0xC, 3);
-    *(s32*)&AREA00_EVENT_CONTROL |= 0x40;
+    *(int*)&AREA00_EVENT_CONTROL |= 0x40;
     func_8001FFE8(10);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
