@@ -667,6 +667,14 @@ typedef enum {
     /* 0x4 */ INVENTORY_SCREEN_ITEM_ONLY,
 } INVENTORY_SCREEN_ID;
 
+typedef enum {
+              SORT_MODE_1,
+              SORT_MODE_2,
+              SORT_MODE_3,
+              SORT_MODE_4,
+              SORT_MODE_DEFAULT = 0x8000,
+} INVENTORY_SORT_MODE_ID;
+
 typedef struct lz_t {
     int size;
     int offset;
@@ -792,6 +800,7 @@ extern int SELECTED_SECTION;
 extern u_char D_8009BCA0;
 extern char D_8009BCA7;
 extern char D_8009BCAA;
+extern s32 PLAYER_AP;
 extern u_char PLAYER_HEALTH;
 extern u_char PLAYER_HEALTH_DISPLAYED;
 extern u_char D_8009BCDC;
@@ -805,6 +814,7 @@ extern u_char BLUE_EXP_LEVEL;
 extern u_char GREEN_EXP_LEVEL;
 extern u_char RED_EXP_LEVEL;
 extern u_short D_8009C108;
+extern s8 INVENTORY_SCREEN;
 extern char D_8009C10E;
 extern u_char EVENT_LIST[256];
 extern char D_8009C216;
@@ -818,6 +828,7 @@ extern char D_8009C3FE;
 extern u_char ITEM_LIST[256];
 extern u_char INVENTORY_SLOT[256];
 extern u_short INVENTORY_SLOT_COUNTER[2];
+extern u16 INVENTORY_SORT_MODE;
 extern u_short CURRENT_AREA;
 extern u_short CURRENT_SECTION;
 extern u_char D_8009C424; //* remove
@@ -830,6 +841,17 @@ extern short D_8009C940;
 extern short D_8009C9DA;
 extern short D_8009C9DE;
 extern int D_8009CA04;
+extern s32 D_8009BC98;
+extern s8 D_8009BCDA;
+extern s8 D_8009BCDB;
+extern u8 D_8009BCDF;
+extern s8 D_8009C217;
+extern s8 D_8009C284;
+extern s16 D_8009C338;
+extern s16 D_8009C33A;
+extern s16 D_8009C33C;
+extern u8 D_8009C3F8;
+extern u16 D_8009E744;
 extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* D_8009D6C4;
 extern long D_8009E45C;
