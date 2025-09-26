@@ -248,7 +248,24 @@ void func_8001758C(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017614);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017734);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017734);
+void func_80017734(void)
+{
+    func_80024AEC((MATRIX* ) D_1F8000C0);
+    *(s16* )0x1F8000EA = -544;
+    *(s16* )0x1F8000EE = 160;
+    *(s16* )0x1F8000F2 = -120;
+    *(s32* )0x1F800200 = 69;
+    *(s16* )0x1F8000E2 = 0;
+    *(s16* )0x1F8000E6 = 0;
+    *(s16* )0x1F8000F6 = 0;
+    *(s8* )0x1F8003CE = 0;
+    *(s16* )0x1F8001C8 = 0;
+    *(s8* )0x1F8003D1 = 0;
+    *(u8* )0x1F8003D2 = 0xFF;
+    *(u8* )0x1F8003D3 = 0xFF;
+    D_8009EBA0 = 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800177D8);
 void func_800177D8(void)
