@@ -761,8 +761,7 @@ typedef struct unkstruct_1F8001D4 {
     short action;
     short unk4A;
     short unk4C;
-    byte unk4e;
-    byte unk4f;
+    short unk4E;
     byte unk50;
     byte unk51;
     byte unk52;
@@ -772,12 +771,12 @@ typedef struct unkstruct_1F8001D4 {
     byte unk56;
     byte unk57;
     ushort unk58;
-    byte unk5a;
-    byte unk5b;
-    byte unk5c;
-    byte unk5d;
-    byte unk5e;
-    byte unk5f;
+    byte unk5A;
+    byte unk5B;
+    byte unk5C;
+    byte unk5D;
+    byte unk5E;
+    byte unk5F;
     byte unk60;
     byte unk61;
     byte unk62;
@@ -788,8 +787,8 @@ typedef struct unkstruct_1F8001D4 {
     byte unk67;
     byte start_or_load; /* Created by retype action */
     byte unk69;
-    byte unk6a;
-    byte unk6b;
+    byte unk6A;
+    byte unk6B;
 } unkstruct_1F8001D4;
 
 typedef struct unkstruct_800A39B0 {

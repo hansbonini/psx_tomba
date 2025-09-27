@@ -659,16 +659,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
 void func_8001A51C(void)
 {
     int temp_v1;
-    void* temp_v0;
+    unkstruct_1F8001D4* temp_v0;
 
-    temp_v0 = *(void** )&PSX_SCRATCH[0x1D4];
+    temp_v0 = *(unkstruct_1F8001D4** )&PSX_SCRATCH[0x1D4];
     *(char* )(&PSX_SCRATCH[0x1D1]) = 0;
     *(char* )(&PSX_SCRATCH[0x1D0]) = 1;
-    *(short* )(temp_v0+0x48) = 0;
-    *(short* )(temp_v0+0x4A) = 0;
-    *(short* )(temp_v0+0x4C) = 0;
-    *(short* )(temp_v0+0x4E) = 0;
-    *(char* )(temp_v0+0x6A) = 0;
+    temp_v0->action = 0;
+    temp_v0->unk4A = 0;
+    temp_v0->unk4C = 0;
+    temp_v0->unk4E = 0;
+    temp_v0->unk6A = 0;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
     setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
     *(short* )&PSX_SCRATCH[0x1DC] = -1;
@@ -680,8 +680,8 @@ void func_8001A51C(void)
     *(short* )&PSX_SCRATCH[0x1FC] = 0;
     while (true){
         func_800223E0();
-        temp_v1 = (*(void** )0x1F8001D4);
-        switch (*(u_short*)(temp_v1+0x48)) {
+        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->action;
+        switch ((u_short)temp_v1) {
             case 0:
                 func_8001A670(); // New Game
                 break;
@@ -843,14 +843,10 @@ void func_8001D29C(void)
 {
     unkstruct_1F8001D4* temp_v1;
 
-    temp_v1 = *(void** )0x1F8001D4;
+    temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
     *(char* )0x1F8001CF = 1;
-    ((DRAWENV*)&D_8009D6C4)->r0 = 0;
-    ((DRAWENV*)&D_8009D6C4)->g0 = 0;
-    ((DRAWENV*)&D_8009D6C4)->b0 = 0;
-    ((DRAWENV*)D_8009E3D4)->r0 = 0;
-    ((DRAWENV*)D_8009E3D4)->g0 = 0;
-    ((DRAWENV*)D_8009E3D4)->b0 = 0;
+    setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
+    setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
     temp_v1->unk4A = 3;
     temp_v1->unk4C = 0;
 }
