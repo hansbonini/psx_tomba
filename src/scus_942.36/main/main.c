@@ -838,7 +838,22 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001CF7C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001CFCC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001D29C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001D29C);
+void func_8001D29C(void)
+{
+    unkstruct_1F8001D4* temp_v1;
+
+    temp_v1 = *(void** )0x1F8001D4;
+    *(char* )0x1F8001CF = 1;
+    ((DRAWENV*)&D_8009D6C4)->r0 = 0;
+    ((DRAWENV*)&D_8009D6C4)->g0 = 0;
+    ((DRAWENV*)&D_8009D6C4)->b0 = 0;
+    ((DRAWENV*)D_8009E3D4)->r0 = 0;
+    ((DRAWENV*)D_8009E3D4)->g0 = 0;
+    ((DRAWENV*)D_8009E3D4)->b0 = 0;
+    temp_v1->unk4A = 3;
+    temp_v1->unk4C = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001D2F0);
 
@@ -881,7 +896,7 @@ u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 u_char func_8001E220(EVENT event_id, int arg1, int arg2)
 {
     if (EVENT_LIST[event_id] == 0) {
-        if (event_id == 1) {
+        if (event_id == EVENT_THE100YEAROLDWISEMAN) {
             if (SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
                 EVENT_LIST[event_id] += 1;
             }
