@@ -16,6 +16,10 @@
     _dst = (((u_char *)_src)[1] << 8) | ((u_char *)_src)[0]; \
     _src = (char*)_src + 2; \
 }
+/*
+ * Set Primitive X/Y
+ */
+#define setXY(p, _x, _y) (p)->x = _x, (p)->y = _y
 
 typedef enum {
     /*0x00*/ AREA00_VILLAGEOFALLBEGINNINGS,
