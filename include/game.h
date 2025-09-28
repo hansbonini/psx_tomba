@@ -2530,8 +2530,8 @@ extern u_short D_8007B290;
 extern int D_8007B294;
 extern byte D_8009B6A8; // SELECTED ROW
 extern int AP_TABLE;
-extern u_char D_80077540;
-extern u_char D_80077608;
+extern u_char EVENT_AP_TABLE;
+extern u_char EVENT_AP_TABLE2;
 extern u_char D_8007775C[];
 extern int D_800771FC;
 extern int D_8007722C;

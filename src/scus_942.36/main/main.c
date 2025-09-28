@@ -869,7 +869,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DFD4);
 u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 {
     if (arg1 == 0) {
-        setPlayerAP(*(&AP_TABLE + (*(&D_80077540 + event_id) * 1)));
+        setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
@@ -877,7 +877,7 @@ u_char func_8001E118(EVENT event_id, int arg1, int arg2)
             func_8002E3B0(0);
         }
     } else {
-        setPlayerAP(*(&AP_TABLE + (*(&D_80077608 + event_id) * 1)));
+        setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE2)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg2);
             func_8001ECD8(event_id, 1);
@@ -899,7 +899,7 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
         } else {
             GAME.event[event_id] += 1;
         }
-        setPlayerAP((&AP_TABLE)[(&D_80077540)[event_id]]);
+        setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
@@ -913,13 +913,9 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E31C);
 u_char func_8001E31C(EVENT event_id, int arg1)
 {
-    int index;
     if (GAME.event[event_id] != 0xFF) {
-        index = (&D_80077608)[event_id];
-        asm("");
         GAME.event[event_id] = 0xFF;
-        asm("");
-        setPlayerAP((&AP_TABLE)[index]);
+        setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE2)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg1);
             func_8001ECD8(event_id, 1);
