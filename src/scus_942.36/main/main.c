@@ -604,7 +604,7 @@ void func_80018F04(void) {
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019020);
-void func_80019020(void)
+void memCardInit(void)
 {
     EnterCriticalSection();
     MEMCARD_SW_END_IO = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, EvStUNUSED);

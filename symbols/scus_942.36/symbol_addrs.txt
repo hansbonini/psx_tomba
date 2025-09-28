@@ -389,6 +389,7 @@ gte_CompMatrix=0x2000025c;
 gte_ApplyRotMatrix=0x20000260;
 // game
 main=0x800163b0;
+memCardInit=0x80019020;
 playSFX=0x8001ffe8;
 FontDebugPrintf=0x80023aa4;
 setPlayerAP=0x80029548;
