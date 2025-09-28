@@ -230,10 +230,10 @@ void func_800400E0(unkstruct_800A6D50* arg0)
             func_8001E31C(EVENT_INEEDABOMB, 4);
             break;
         case ITEM_PIPE:
-            D_8009C269 = 1;
+            GAME.unk5a1 = 1;
             break;
         case ITEM_GOLDENFLOWER:
-            D_8009C34C = 1;
+            GAME.unk684 = 1;
             break;
         case ITEM_TEARJAR:
             func_8001E31C(EVENT_INEEDATEARBOTTLE, 1);
@@ -308,7 +308,7 @@ void func_800403E4(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040468);
 void func_80040468(unkstruct_800A6D50* arg0)
 {
-    D_8009C216 = 5;
+    GAME.unk54e = 5;
     func_80029788(ITEM_DIRTYMIRROR, 1, 1);
     func_8001E220(EVENT_AMAGICMIRROR, 0, 0);
     if (!(arg0->unkC & 0x80)) {
@@ -384,7 +384,7 @@ void func_80040718(unkstruct_800A6D50* arg0)
     if (D_8009BCA0 == 0) {
         health = GAME.playerHealthDisplayed;
         if (health < 16) {
-            health += D_8009C3E8;
+            health += GAME.unk720;
             GAME.playerHealthDisplayed = health;
             if ((u_long) ((byte)health & 0xFF) >= 17) {
                 GAME.playerHealthDisplayed = 16;
@@ -394,7 +394,7 @@ void func_80040718(unkstruct_800A6D50* arg0)
             D_800A5432 = *(char*)&GAME.playerHealthDisplayed;
             *(char*)&GAME.playerHealth = *(char*)&GAME.playerHealthDisplayed;
         }
-        D_8009C3E7 = 1;
+        GAME.unk71f = 1;
         D_800B078C = &D_800121C8;
         func_8001FFE8(10);
         if (!(arg0->unkC & 0x80)) {
@@ -416,7 +416,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
             func_80029788(ITEM_BITINGPLANTFLOWER, 1, 1);
             func_8001E220(EVENT_BITINGPLANTFLOWER, 0, 0);
             if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
-                D_8009C3E3 = 2;
+                GAME.unk71b = 2;
             }
             if (!(arg0->unkC & 0x80)) {
                 func_8002367C(arg0->unk6B);
@@ -683,8 +683,8 @@ void func_80041048(unkstruct_800A6D50* arg0)
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
-    D_8009C375 = 1;
-    D_8009C3FE = 1;
+    GAME.unk6ad = 1;
+    GAME.unk736 = 1;
     arg0->unk4++;
 }
 

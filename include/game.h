@@ -881,7 +881,7 @@ typedef struct gameConfig {
     u_char playerHealthDisplayed;
     char unk12;
     char unk13;
-    byte unk14;
+    u_char unk14;
     byte unk15;
     byte unk16;
     u_char unk17;
@@ -2250,7 +2250,6 @@ typedef struct gameConfig {
     short unk670;
     short unk672;
     short unk674;
-    byte unk675;
     byte unk676;
     byte unk677;
     byte unk678;
@@ -2420,8 +2419,8 @@ typedef struct gameConfig {
     byte unk71c;
     byte unk71d;
     byte unk71e;
-    byte unk71f;
-    byte unk720;
+    u_char unk71f;
+    u_char unk720;
     byte unk721;
     byte unk722;
     byte unk723;
@@ -2443,7 +2442,7 @@ typedef struct gameConfig {
     byte unk733;
     byte unk734;
     byte unk735;
-    byte unk736;
+    char unk736;
     byte unk737;
     byte unk738;
     byte unk739;
@@ -2456,6 +2455,7 @@ typedef struct gameConfig {
     byte unk740;
     byte unk741;
     byte unk742;
+    byte unk743;
     u_char item[256];
     struct inventory inventory;
     u_short currentArea;
@@ -2553,11 +2553,11 @@ extern int D_8007E86E;
 
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
-extern gameConfig GAME;
-extern int SELECTED_SECTION;
 extern u_char D_8009BCA0;
 extern char D_8009BCA7;
 extern char D_8009BCAA;
+extern gameConfig GAME;
+extern int SELECTED_SECTION;
 extern int PLAYER_AP;
 extern u_char PLAYER_HEALTH;
 extern u_char PLAYER_HEALTH_DISPLAYED;
@@ -2588,8 +2588,6 @@ extern u_short INVENTORY_SLOT_COUNTER[2];
 extern u_short INVENTORY_SORT_MODE;
 extern u_short CURRENT_AREA;
 extern u_short CURRENT_SECTION;
-extern u_char D_8009C424; //* remove
-extern u_char D_8009C429; //* remove
 extern char D_8009C617;
 extern u_short D_8009C864;
 extern u_short D_8009C866;

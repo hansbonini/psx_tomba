@@ -317,7 +317,7 @@ void func_800177D8(void)
     *&GAME.selectedArea = AREA00_VILLAGEOFALLBEGINNINGS;
     GAME.playerLives = 3;
     GAME.unk17 = 0xFF;
-    GAME.unk72f = 0xFF;
+    GAME.unk730 = 0xFF;
     *(char* )0x1F8003CE = 0; // INVENTORY ENABLED
     *(short* )0x1F8001C8 = 0; // SPRITE ZOOM
     *(char* )0x1F8003D1 = 0; 
@@ -572,7 +572,7 @@ void func_80018F04(void) {
             
     switch(GAME.selectedArea&0xFFFF) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
-            switch (GAME.selectedSection &0xFFFF) {
+            switch (GAME.selectedSection) {
                 case AREA00_SECTION00_VILLAGEOFALLBEGINNINGS:
                 case AREA00_SECTION01_FORESTOFALLBEGINNINGS:
                 case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
@@ -583,7 +583,7 @@ void func_80018F04(void) {
             }
             break;
         case AREA01_DWARFFOREST:
-            switch (GAME.selectedSection &0xFFFF) {
+            switch (GAME.selectedSection) {
                  case AREA01_SECTION00_FORESTOF100FLOWERS:
                  case AREA01_SECTION01_FORESTOF100FLOWERSRIGHTENTRANCE:
                  case AREA01_SECTION02_WOBBLYWHARF:
@@ -596,7 +596,7 @@ void func_80018F04(void) {
             }
             break;
         case AREA02_DWARFVILLAGE:
-            switch(GAME.selectedSection &0xFFFF) {
+            switch(GAME.selectedSection) {
                 case AREA02_SECTION00_DWARFVILLAGE:
                     var_a0 = *(int* )0x1F8002BC;
                     func_8003B2C8(var_a0, var_v0);
@@ -754,7 +754,7 @@ block_14:
         }
         sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, GAME.selectedArea);
         FontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
-        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u_short)((u_long)GAME.selectedSection));
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, GAME.selectedSection);
         FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, &D_8001014C);
         FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
@@ -781,10 +781,10 @@ block_14:
         else return;
     }
 
-    temp2 = (u_char*)(&D_8009BCDC);
+    temp2 = &GAME.unk14;
      var_a0 = 1;
     if (*temp2 == 0) {
-        //D_8009BCDC = 1;
+        // GAME.unk14 = 1;
         *temp2 = 1;
     } else if (GAME.selectedArea != *(u_short*)&GAME.currentArea) {
         var_a0 = 1;
@@ -1344,21 +1344,21 @@ int func_80029944(ITEM id, int qty)
 
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029A84);
-u_int func_80029A84(void)
+u_long func_80029A84(void)
 {
-    if (D_8009C3E7 == 0) {
-        if (PLAYER_HEALTH_DISPLAYED < 8) {
-            PLAYER_HEALTH_DISPLAYED++;
+    if (GAME.unk71f == 0) {
+        if (GAME.playerHealthDisplayed < 8) {
+            GAME.playerHealthDisplayed++;
         } else {
-            D_8009C3E8++;
+            GAME.unk720++;
         }
     } else {
-        if (PLAYER_HEALTH_DISPLAYED < 16) {
-            PLAYER_HEALTH_DISPLAYED++;
+        if (GAME.playerHealthDisplayed < 16) {
+            GAME.playerHealthDisplayed++;
         }
     }
-    PLAYER_HEALTH = D_800A5432 = D_800A5430 = PLAYER_HEALTH_DISPLAYED;
-    return PLAYER_HEALTH_DISPLAYED;
+    GAME.playerHealth = D_800A5432 = D_800A5430 = GAME.playerHealthDisplayed;
+    return GAME.playerHealthDisplayed;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029B20);
