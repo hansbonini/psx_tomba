@@ -871,10 +871,10 @@ typedef struct equips {
 typedef struct gameConfig {
     u_short selectedArea;
     u_short selectedSection;
-    byte unk4;
+    byte selectedPlane;
     byte area00_fogControl;
     byte unk6;
-    byte totalTimePlayed;
+    u_char totalTimePlayed;
     int unk8;
     int playerAP;
     u_char playerHealth;
@@ -895,7 +895,7 @@ typedef struct gameConfig {
     byte unk1f;
     u_char playerLives;
     byte unk21;
-    u_short unk22;
+    u_short selectedSpawnPoint;
     int area00_eventControl;
     byte unk28;
     byte unk29;
@@ -1943,7 +1943,7 @@ typedef struct gameConfig {
     u_char blueExpBar;
     byte unk43e;
     byte unk43f;
-    u_short unk440;
+    u_short nextSpawnPoint;
     u_char disableSelectMenu;
     u_char inventoryScreen;
     u_char event[256];
@@ -2040,7 +2040,7 @@ typedef struct gameConfig {
     byte unk59e;
     byte unk59f;
     byte unk5a0;
-    byte unk5a1;
+    byte pipeState;
     byte unk5a2;
     byte unk5a3;
     byte unk5a4;
@@ -2264,7 +2264,7 @@ typedef struct gameConfig {
     byte unk681;
     byte unk682;
     byte unk683;
-    byte unk684;
+    byte goldenFlowerState;
     byte unk685;
     byte unk686;
     byte unk687;
@@ -2415,11 +2415,11 @@ typedef struct gameConfig {
     byte unk718;
     byte unk719;
     byte unk71a;
-    byte unk71b;
+    byte bittingPlantFlowerState;
     byte unk71c;
     byte unk71d;
     byte unk71e;
-    u_char unk71f;
+    u_char goldenBowlState;
     u_char unk720;
     byte unk721;
     byte unk722;

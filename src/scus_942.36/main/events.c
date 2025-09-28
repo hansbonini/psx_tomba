@@ -13,7 +13,7 @@ void func_8003F268(unkstruct_800A6D50* arg0)
     temp_v1 = arg0->unk6;
     switch (temp_v1) {                              // irregular
         case 0:
-            func_8001FFE8(*(&D_8007D6D0 + arg0->item_id));
+            playSFX(*(&D_8007D6D0 + arg0->item_id));
             func_800E92D4(0x1F4, arg0->unk12, arg0->unk16, arg0->unk1A);
             arg0->unkA5 = 0;
             if (arg0->item_id != ITEM_FLOWERTEARS) {
@@ -91,7 +91,7 @@ void func_8003FC18(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3, i
             func_80023794(arg0->item_id);
         }
         if (arg0->unk5 == 0) {
-            func_8001FFE8(21);
+            playSFX(21);
         }
     }
 }
@@ -230,10 +230,10 @@ void func_800400E0(unkstruct_800A6D50* arg0)
             func_8001E31C(EVENT_INEEDABOMB, 4);
             break;
         case ITEM_PIPE:
-            GAME.unk5a1 = 1;
+            GAME.pipeState = 1;
             break;
         case ITEM_GOLDENFLOWER:
-            GAME.unk684 = 1;
+            GAME.goldenFlowerState = 1;
             break;
         case ITEM_TEARJAR:
             func_8001E31C(EVENT_INEEDATEARBOTTLE, 1);
@@ -246,7 +246,7 @@ void func_800400E0(unkstruct_800A6D50* arg0)
             break;
         case ITEM_BOSSJEWEL:
             func_8001E31C(EVENT_THEBOSSTREASURE, 1);
-            func_80029548(100000);
+            setPlayerAP(100000);
             break;
         case ITEM_SEASHELLNECKLACE:
             func_8001E220(EVENT_THEMERMAIDNECKLACE, 0, 0);
@@ -260,7 +260,7 @@ void func_80040268(unkstruct_800A6D50* arg0)
 {
     if (D_8009BCA0 == 0) {
         func_800E92D4(0x64, arg0->unk12, arg0->unk16, arg0->unk1A);
-        func_8001FFE8(9);
+        playSFX(9);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->unk6B);
         }
@@ -288,7 +288,7 @@ void func_8004035C(unkstruct_800A6D50* arg0)
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
-    func_8001FFE8(9);
+    playSFX(9);
     arg0->unk4+=1;
 }
 
@@ -323,7 +323,7 @@ void func_800404E8(unkstruct_800A6D50* arg0)
     if (D_8009BCA0 == 0) {
         func_80029A84();
         func_80031124(0x15, 3);
-        func_8001FFE8(10);
+        playSFX(10);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->unk6B);
         }
@@ -368,7 +368,7 @@ void func_80040690(unkstruct_800A6D50* arg0)
     if (lives < 99) {
         GAME.playerLives = (u_char)(lives+1);
         func_80031124(0x14, 3);
-        func_8001FFE8(10);
+        playSFX(10);
     }
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
@@ -389,14 +389,14 @@ void func_80040718(unkstruct_800A6D50* arg0)
             if ((u_long) ((byte)health & 0xFF) >= 17) {
                 GAME.playerHealthDisplayed = 16;
             }
-            func_8001FFE8(10);
+            playSFX(10);
             D_800A5430 = (u_short*)(*(char*)&GAME.playerHealthDisplayed);
             D_800A5432 = *(char*)&GAME.playerHealthDisplayed;
             *(char*)&GAME.playerHealth = *(char*)&GAME.playerHealthDisplayed;
         }
-        GAME.unk71f = 1;
+        GAME.goldenBowlState = 1;
         D_800B078C = &D_800121C8;
-        func_8001FFE8(10);
+        playSFX(10);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->unk6B);
         }
@@ -416,7 +416,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
             func_80029788(ITEM_BITINGPLANTFLOWER, 1, 1);
             func_8001E220(EVENT_BITINGPLANTFLOWER, 0, 0);
             if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
-                GAME.unk71b = 2;
+                GAME.bittingPlantFlowerState = 2;
             }
             if (!(arg0->unkC & 0x80)) {
                 func_8002367C(arg0->unk6B);
@@ -679,7 +679,7 @@ void func_80041048(unkstruct_800A6D50* arg0)
 {
     func_80031124(0xC, 3);
     GAME.area00_eventControl |= 0x40;
-    func_8001FFE8(10);
+    playSFX(10);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -698,7 +698,7 @@ void func_800410D8(unkstruct_800A6D50* arg0)
     } else if (GAME.item[ITEM_FLASHPANTS] == 0) {
         func_80029788(ITEM_FLASHPANTS, 1, 1);
     }
-    func_8001FFE8(10);
+    playSFX(10);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }

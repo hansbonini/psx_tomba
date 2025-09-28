@@ -760,7 +760,7 @@ block_14:
         FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
         GAME.nextArea = GAME.selectedArea;
         GAME.nextSection = GAME.selectedSection;
-        GAME.unk440 = GAME.unk22;
+        GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
         if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x2008) {
             if (
                 (
@@ -869,15 +869,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DFD4);
 u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 {
     if (arg1 == 0) {
-        func_80029548(*(&D_80077520 + (*(&D_80077540 + event_id) * 1)));
+        setPlayerAP(*(&D_80077520 + (*(&D_80077540 + event_id) * 1)));
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
-            func_8001FFE8(0x2A);
+            playSFX(0x2A);
             func_8002E3B0(0);
         }
     } else {
-        func_80029548(*(&D_80077520 + (*(&D_80077608 + event_id) * 1)));
+        setPlayerAP(*(&D_80077520 + (*(&D_80077608 + event_id) * 1)));
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg2);
             func_8001ECD8(event_id, 1);
@@ -899,11 +899,11 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
         } else {
             GAME.event[event_id] += 1;
         }
-        func_80029548((&D_80077520)[(&D_80077540)[event_id]]);
+        setPlayerAP((&D_80077520)[(&D_80077540)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
-            func_8001FFE8(0x2A);
+            playSFX(0x2A);
             func_8002E3B0(0);
         }        
     }
@@ -919,7 +919,7 @@ u_char func_8001E31C(EVENT event_id, int arg1)
         asm("");
         GAME.event[event_id] = 0xFF;
         asm("");
-        func_80029548((&D_80077520)[index]);
+        setPlayerAP((&D_80077520)[index]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg1);
             func_8001ECD8(event_id, 1);
@@ -976,7 +976,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001FE60);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001FF28);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001FFE8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", playSFX);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80020058);
 
@@ -1305,7 +1305,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029008);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8002907C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029548);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setPlayerAP);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029734);
 
@@ -1346,7 +1346,7 @@ int func_80029944(ITEM id, int qty)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029A84);
 u_long func_80029A84(void)
 {
-    if (GAME.unk71f == 0) {
+    if (GAME.goldenBowlState == 0) {
         if (GAME.playerHealthDisplayed < 8) {
             GAME.playerHealthDisplayed++;
         } else {
