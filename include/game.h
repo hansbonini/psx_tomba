@@ -765,7 +765,10 @@ typedef struct unkstruct_1F8001D4 {
     short action;
     short unk4A;
     short unk4C;
-    short unk4E;
+    union {
+        volatile u_short volatile_value;
+        u_short value;
+    } unk4E;
     byte unk50;
     byte unk51;
     byte unk52;
@@ -2597,7 +2600,9 @@ extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
 extern short D_8009C940;
+extern volatile u_short D_8009C9D8;
 extern short D_8009C9DA;
+extern volatile u_short D_8009C9DC;
 extern short D_8009C9DE;
 extern int D_8009CA04;
 extern int D_8009BC98;

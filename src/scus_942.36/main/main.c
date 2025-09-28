@@ -657,7 +657,7 @@ void func_8001A51C(void)
     temp_v0->action = 0;
     temp_v0->unk4A = 0;
     temp_v0->unk4C = 0;
-    temp_v0->unk4E = 0;
+    temp_v0->unk4E.value = 0;
     temp_v0->unk6A = 0;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
     setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
@@ -798,7 +798,58 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B2B4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B5A8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B780);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B780);
+void func_8001B780(void)
+{
+    typedef inline struct {
+        char data[0x1C2];
+        u_char unk1C2;
+        char pad[12];
+        u_char unk1CF;
+        char pad2[4];
+        unkstruct_1F8001D4 *unk1D4;
+    } scratchpad;
+
+    char pad[4];
+    scratchpad* scratch = PSX_SCRATCH;
+    unkstruct_1F8001D4* temp_a0 = scratch->unk1D4;
+    
+    switch(scratch->unk1D4->unk4E.value) {
+        case 0:
+            func_8001758C();
+            func_80017AE0();
+            scratch->unk1CF = 1;
+            func_800243E8();
+            func_800246B0();
+            func_80059F7C();
+            func_80028EF4();
+            D_800B0770 = 2;
+            if ((GAME.totalTimePlayed != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
+                func_8002065C();
+            }
+            *(short* )0x1F8001FC = 0;
+            scratch->unk1D4->unk4E.volatile_value+=1;
+            *(volatile u_short*)&D_8009C9D8 = D_8009C9DC = 0;
+            break;
+        case 1:
+            GAME.unk8++;
+            func_8001B944();
+            if (scratch->unk1C2 != 0) {
+                volatile u_short *temp_v1 = (volatile int* )&D_8009C9D8;
+                if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
+                    scratch->unk1D4->unk4E.value = 2;
+                }
+            }
+            break;
+        case 2:
+            setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
+            setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
+            temp_a0->unk4C = 8;
+            temp_a0->unk4E.value = 0;
+            break;
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B944);
 
