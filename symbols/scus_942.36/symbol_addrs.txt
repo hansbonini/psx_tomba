@@ -389,8 +389,10 @@ gte_CompMatrix=0x2000025c;
 gte_ApplyRotMatrix=0x20000260;
 // game
 main=0x800163b0;
-// system/archive
+playSFX=0x8001ffe8;
 FontDebugPrintf=0x80023aa4;
+setPlayerAP=0x80029548;
+// system/archive
 LZDecompress=0x8003EF50;
 // libapi
 FlushCache=0x8005b38c;
