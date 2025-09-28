@@ -607,26 +607,26 @@ void func_80018F04(void) {
 void func_80019020(void)
 {
     EnterCriticalSection();
-    D_8009E474 = OpenEvent(0xF4000001, 4, 0x2000, 0);
-    D_8009E478 = OpenEvent(0xF4000001, 0x8000, 0x2000, 0);
-    D_8009E47C = OpenEvent(0xF4000001, 0x100, 0x2000, 0);
-    D_8009E480 = OpenEvent(0xF4000001, 0x2000, 0x2000, 0);
-    D_8009E45C = OpenEvent(0xF0000011, 4, 0x2000, 0);
-    D_8009E460 = OpenEvent(0xF0000011, 0x8000, 0x2000, 0);
-    D_8009E464 = OpenEvent(0xF0000011, 0x100, 0x2000, 0);
-    D_8009E468 = OpenEvent(0xF0000011, 0x2000, 0x2000, 0);
+    MEMCARD_SW_END_IO = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_SW_END_ERROR = OpenEvent(SwCARD, EvSpERROR, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_SW_TIMEOUT = OpenEvent(SwCARD, EvSpTIMOUT, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_SW_NEW_DEVICE = OpenEvent(SwCARD, EvSpNEW, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_HW_END_IO = OpenEvent(HwCARD, EvSpIOE, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_HW_END_ERROR = OpenEvent(HwCARD, EvSpERROR, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_HW_TIMEOUT = OpenEvent(HwCARD, EvSpTIMOUT, EvMdNOINTR, EvStUNUSED);
+    MEMCARD_HW_NEW_DEVICE = OpenEvent(HwCARD, EvSpNEW, EvMdNOINTR, EvStUNUSED);
     InitCARD(0);
     ExitCriticalSection();
     StartCARD();
     _bu_init();
-    EnableEvent(D_8009E474);
-    EnableEvent(D_8009E478);
-    EnableEvent(D_8009E47C);
-    EnableEvent(D_8009E480);
-    EnableEvent(D_8009E45C);
-    EnableEvent(D_8009E460);
-    EnableEvent(D_8009E464);
-    EnableEvent(D_8009E468);
+    EnableEvent(MEMCARD_SW_END_IO);
+    EnableEvent(MEMCARD_SW_END_ERROR);
+    EnableEvent(MEMCARD_SW_TIMEOUT);
+    EnableEvent(MEMCARD_SW_NEW_DEVICE);
+    EnableEvent(MEMCARD_HW_END_IO);
+    EnableEvent(MEMCARD_HW_END_ERROR);
+    EnableEvent(MEMCARD_HW_TIMEOUT);
+    EnableEvent(MEMCARD_HW_NEW_DEVICE);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800191E0);
@@ -701,6 +701,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD1C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001AD58);
 void func_8001AD58(void)
 {
+    typedef inline struct {
+        char data[0x1B4];
+        u_char unk1B4;
+        char pad1[27];
+        char unk1CF;
+        char pad2[4];
+        unkstruct_1F8001D4* unk1D4;
+    } scratchpad;
+    scratchpad* scratch = PSX_SCRATCH;
+    unkstruct_1F8001D4* temp_v1;
+
     u_short var_a0;
     int* var_v1;
     u_short temp_a0;
@@ -709,7 +720,7 @@ void func_8001AD58(void)
     u_char *temp2;
 
     /* If start a game and debug mode is enabled */
-    if (( *(u_char*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x68) == 0) && (*(u_char*)(&PSX_SCRATCH[0x1B4]) != 0)) {
+    if (( *(u_char*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x68) == 0) && (scratch->unk1B4 != 0)) {
         if ((*(u_short*)(&PSX_SCRATCH[0x1FC])) & 0x10) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
         }
@@ -882,10 +893,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001CFCC);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001D29C);
 void func_8001D29C(void)
 {
+    typedef inline struct {
+        char data[0x1CF];
+        char unk1CF;
+        char pad[4];
+        unkstruct_1F8001D4* unk1D4;
+    } scratchpad;
+    scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_v1;
 
-    temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
-    *(char* )0x1F8001CF = 1;
+    temp_v1 = scratch->unk1D4;
+    scratch->unk1CF = 1;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
     setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
     temp_v1->unk4A = 3;
