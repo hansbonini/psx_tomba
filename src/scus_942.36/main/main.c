@@ -301,7 +301,7 @@ void func_80017734(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800177D8);
 void func_800177D8(void)
 {
-    memset((u_char *)&SELECTED_AREA, 0, 0x988);
+    memset((u_char *)&GAME, 0, sizeof(gameConfig));
     memset(&D_8009BC98, 0, 0x2C);
     func_80024AEC((MATRIX* ) D_1F8000C0);
     *(short* )0x1F8000EA = -544; // CAMERA Z POSITION
@@ -313,67 +313,67 @@ void func_800177D8(void)
     *(int* )0x1F800200 = 69; // ?
     *(u_char* )0x1F8003D2 = 0xFF;
     *(u_char* )0x1F8003D3 = 0xFF;
-    PLAYER_AP = 0;
-    *(short*)&SELECTED_AREA = AREA00_VILLAGEOFALLBEGINNINGS;
-    PLAYER_LIVES = 3;
-    D_8009BCDF = 0xFF;
-    D_8009C3F8 = 0xFF;
+    GAME.playerAP = 0;
+    *&GAME.selectedArea = AREA00_VILLAGEOFALLBEGINNINGS;
+    GAME.playerLives = 3;
+    GAME.unk17 = 0xFF;
+    GAME.unk72f = 0xFF;
     *(char* )0x1F8003CE = 0; // INVENTORY ENABLED
     *(short* )0x1F8001C8 = 0; // SPRITE ZOOM
     *(char* )0x1F8003D1 = 0; 
     D_8009EBA0 = 0;
-    *(short*)&SELECTED_SECTION = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
-    INVENTORY_SCREEN = INVENTORY_SCREEN_ITEM;
-    D_8009BCDB = 1;
-    D_8009C217 = 1;
-    EVENT_LIST[EVENT_GRANDPASBRACELET] = 1;
-    D_8009BCDA = 9;
-    PLAYER_HEALTH_DISPLAYED = 4;
-    PLAYER_HEALTH = 4;
-    D_8009C338 = 0x5DA;
-    D_8009C33A = 0x639;
-    D_8009C33C = 0x691;
-    D_8009C284 = D_8009E744;
-    if (*(u_char* )0x1F8001B3 == 0) {
+    GAME.selectedSection = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
+    GAME.inventoryScreen = INVENTORY_SCREEN_ITEM;
+    GAME.unk13 = 1;
+    GAME.unk54f = 1;
+    GAME.event[EVENT_GRANDPASBRACELET] = 1;
+    GAME.unk12 = 9;
+    GAME.playerHealthDisplayed = 4;
+    GAME.playerHealth = 4;
+    GAME.unk670 = 0x5DA;
+    GAME.unk672 = 0x639;
+    GAME.unk674 = 0x691;
+    GAME.unk5bc = D_8009E744;
+    if (*(u8* )0x1F8001B3 == 0) {
         // 0 = NORMAL MODE | 1 = EASY MODE
-        if (*(u_char* )0x1F8001AB != 0) {
-            INVENTORY_SLOT[0] = ITEM_BLACKJACK;
-            INVENTORY_SLOT[1] = ITEM_GRAPPLE;
-            INVENTORY_SLOT[2] = ITEM_GRAPPLEJACK;
-            INVENTORY_SLOT[3] = ITEM_WOODBOOMERANG;
-            INVENTORY_SLOT[4] = ITEM_STONEBOOMERANG;
-            INVENTORY_SLOT[5] = ITEM_IRONBOOMERANG;
-            INVENTORY_SLOT[6] = ITEM_NORMALPANTS;
-            INVENTORY_SLOT[7] = ITEM_JUMPINGPANTS;
-            INVENTORY_SLOT[8] = ITEM_DASHINGPANTS;
-            INVENTORY_SLOT[9] = ITEM_FLASHPANTS;
-            INVENTORY_SLOT[10] = ITEM_100YEAROLDBELL;
-            INVENTORY_SLOT[11] = ITEM_100YEAROLDKEY;
-            INVENTORY_SLOT[12] = ITEM_1000YEAROLDKEY;
-            INVENTORY_SLOT[13] = ITEM_FUNKYPARASOL;
-            *INVENTORY_SLOT_COUNTER = 14;
-            ITEM_LIST[ITEM_BLACKJACK] = 1;
-            ITEM_LIST[ITEM_GRAPPLE] = 1;
-            ITEM_LIST[ITEM_GRAPPLEJACK] = 1;
-            ITEM_LIST[ITEM_WOODBOOMERANG] = 1;
-            ITEM_LIST[ITEM_STONEBOOMERANG] = 1;
-            ITEM_LIST[ITEM_IRONBOOMERANG] = 1;
-            ITEM_LIST[ITEM_DASHINGPANTS] = 1;
-            ITEM_LIST[ITEM_NORMALPANTS] = 1;
-            ITEM_LIST[ITEM_JUMPINGPANTS] = 1;
-            ITEM_LIST[ITEM_FLASHPANTS] = 1;
-            ITEM_LIST[ITEM_100YEAROLDBELL] = 1;
-            ITEM_LIST[ITEM_100YEAROLDKEY] = 1;
-            ITEM_LIST[ITEM_1000YEAROLDKEY] = 1;
-            ITEM_LIST[ITEM_FUNKYPARASOL] = 1;
-            INVENTORY_SORT_MODE = SORT_MODE_DEFAULT;
+        if (*(u8* )0x1F8001AB != 0) {
+            GAME.inventory.slots[0] = ITEM_BLACKJACK;
+            GAME.inventory.slots[1] = ITEM_GRAPPLE;
+            GAME.inventory.slots[2] = ITEM_GRAPPLEJACK;
+            GAME.inventory.slots[3] = ITEM_WOODBOOMERANG;
+            GAME.inventory.slots[4] = ITEM_STONEBOOMERANG;
+            GAME.inventory.slots[5] = ITEM_IRONBOOMERANG;
+            GAME.inventory.slots[6] = ITEM_NORMALPANTS;
+            GAME.inventory.slots[7] = ITEM_JUMPINGPANTS;
+            GAME.inventory.slots[8] = ITEM_DASHINGPANTS;
+            GAME.inventory.slots[9] = ITEM_FLASHPANTS;
+            GAME.inventory.slots[10] = ITEM_100YEAROLDBELL;
+            GAME.inventory.slots[11] = ITEM_100YEAROLDKEY;
+            GAME.inventory.slots[12] = ITEM_1000YEAROLDKEY;
+            GAME.inventory.slots[13] = ITEM_FUNKYPARASOL;
+            GAME.inventory.counter = 14;
+            GAME.item[ITEM_BLACKJACK] = 1;
+            GAME.item[ITEM_GRAPPLE] = 1;
+            GAME.item[ITEM_GRAPPLEJACK] = 1;
+            GAME.item[ITEM_WOODBOOMERANG] = 1;
+            GAME.item[ITEM_STONEBOOMERANG] = 1;
+            GAME.item[ITEM_IRONBOOMERANG] = 1;
+            GAME.item[ITEM_DASHINGPANTS] = 1;
+            GAME.item[ITEM_NORMALPANTS] = 1;
+            GAME.item[ITEM_JUMPINGPANTS] = 1;
+            GAME.item[ITEM_FLASHPANTS] = 1;
+            GAME.item[ITEM_100YEAROLDBELL] = 1;
+            GAME.item[ITEM_100YEAROLDKEY] = 1;
+            GAME.item[ITEM_1000YEAROLDKEY] = 1;
+            GAME.item[ITEM_FUNKYPARASOL] = 1;
+            GAME.inventory.sortMode = SORT_MODE_DEFAULT;
         } else {
-            INVENTORY_SLOT[0] = ITEM_BLACKJACK;
-            INVENTORY_SLOT[1] = ITEM_NORMALPANTS;
-            *INVENTORY_SLOT_COUNTER = 2;
-            ITEM_LIST[ITEM_BLACKJACK] = 1;
-            ITEM_LIST[ITEM_NORMALPANTS] = 1;
-            INVENTORY_SORT_MODE = SORT_MODE_DEFAULT;
+            GAME.inventory.slots[0] = ITEM_BLACKJACK;
+            GAME.inventory.slots[1] = ITEM_NORMALPANTS;
+            GAME.inventory.counter = 2;
+            GAME.item[ITEM_BLACKJACK] = 1;
+            GAME.item[ITEM_NORMALPANTS] = 1;
+            GAME.inventory.sortMode = SORT_MODE_DEFAULT;
         }
     }
     return;
@@ -570,9 +570,9 @@ void func_80018F04(void) {
     var_v0 = &D_8009EBA8;
     func_8003B478(var_v0);
             
-    switch(SELECTED_AREA&0xFFFF) {
+    switch(GAME.selectedArea&0xFFFF) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
-            switch (SELECTED_SECTION &0xFFFF) {
+            switch (GAME.selectedSection &0xFFFF) {
                 case AREA00_SECTION00_VILLAGEOFALLBEGINNINGS:
                 case AREA00_SECTION01_FORESTOFALLBEGINNINGS:
                 case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
@@ -583,7 +583,7 @@ void func_80018F04(void) {
             }
             break;
         case AREA01_DWARFFOREST:
-            switch (SELECTED_SECTION &0xFFFF) {
+            switch (GAME.selectedSection &0xFFFF) {
                  case AREA01_SECTION00_FORESTOF100FLOWERS:
                  case AREA01_SECTION01_FORESTOF100FLOWERSRIGHTENTRANCE:
                  case AREA01_SECTION02_WOBBLYWHARF:
@@ -596,7 +596,7 @@ void func_80018F04(void) {
             }
             break;
         case AREA02_DWARFVILLAGE:
-            switch(SELECTED_SECTION &0xFFFF) {
+            switch(GAME.selectedSection &0xFFFF) {
                 case AREA02_SECTION00_DWARFVILLAGE:
                     var_a0 = *(int* )0x1F8002BC;
                     func_8003B2C8(var_a0, var_v0);
@@ -728,54 +728,54 @@ void func_8001AD58(void)
         }
         if (D_8009B6A8 != 0) {
             if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
-                var_v1 = &SELECTED_SECTION;
+                var_v1 = &GAME.selectedSection;
                 goto block_14;
             }
             if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
-                temp_v1_2 = *(u_short*)&SELECTED_SECTION += 1;
-                temp_a0 = *(u_short*)((u_short*)&D_8007B294 + *(u_short*)&SELECTED_AREA);
+                temp_v1_2 = GAME.selectedSection += 1;
+                temp_a0 = *(u_short*)((u_short*)&D_8007B294 + GAME.selectedArea);
                 if ((temp_a0 - 1) < (int)temp_v1_2) {
-                    *(u_short*)&SELECTED_SECTION = (u_short) (temp_a0 - 1);
+                    GAME.selectedSection = (u_short) (temp_a0 - 1);
                 }
             }
         } else if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
-            var_v1 = &SELECTED_AREA;
+            var_v1 = &GAME.selectedArea;
 block_14:
             *(u_short*)var_v1 -= 1;
             if ((*(u_short*)var_v1 << 0x10) <= 0) {
                 *(u_short*)var_v1 = 0U;
             }
         } else if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
-            *(u_short*)&SELECTED_AREA += 1;
+            GAME.selectedArea += 1;
             temp_v1_2 = (u_short*)D_8007B290;
-            if (temp_v1_2 < *(u_short*)(&SELECTED_AREA)) {
-                *(u_short*)&SELECTED_AREA = temp_v1_2;
+            if (temp_v1_2 < *(u_short*)(&GAME.selectedArea)) {
+                GAME.selectedArea = temp_v1_2;
             }
         }
-        sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, *(u_short*)&SELECTED_AREA);
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010120, GAME.selectedArea);
         FontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
-        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u_short)((u_long)SELECTED_SECTION));
+        sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, (u_short)((u_long)GAME.selectedSection));
         FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, &D_8001014C);
         FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
-        NEXT_AREA = *(u_short*)&SELECTED_AREA;
-        NEXT_SECTION = *(u_short*)&SELECTED_SECTION;
-        D_8009C108 = D_8009BCEA;
+        GAME.nextArea = GAME.selectedArea;
+        GAME.nextSection = GAME.selectedSection;
+        GAME.unk440 = GAME.unk22;
         if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x2008) {
             if (
                 (
-                    *(u_short*)&SELECTED_AREA < AREA02_DWARFVILLAGE) &&
-                    (*(u_short*)&SELECTED_SECTION != (
+                    GAME.selectedArea < AREA02_DWARFVILLAGE) &&
+                    (GAME.selectedSection != (
                         AREA00_SECTION00_VILLAGEOFALLBEGINNINGS |
                         AREA01_SECTION00_FORESTOF100FLOWERS
                     )
                 )
             ) {
-                D_8009BCE9 = 1;
+                GAME.unk21 = 1;
             }
-            if (SELECTED_AREA != AREA00_VILLAGEOFALLBEGINNINGS) {
-                EVENT_LIST[EVENT_CLEARTHEFOG] = 0xFF;
-                D_8009C617 = 1;
+            if (*(u_long*)&GAME.selectedArea != AREA00_VILLAGEOFALLBEGINNINGS) {
+                GAME.event[EVENT_CLEARTHEFOG] = 0xFF;
+                GAME.playerState = 1;
             }
         }
         else return;
@@ -786,11 +786,11 @@ block_14:
     if (*temp2 == 0) {
         //D_8009BCDC = 1;
         *temp2 = 1;
-    } else if (*(u_short*)&SELECTED_AREA != *(u_short*)&CURRENT_AREA) {
+    } else if (GAME.selectedArea != *(u_short*)&GAME.currentArea) {
         var_a0 = 1;
     } else {
         var_a0 = 0;
-        if (*(u_short*)&SELECTED_SECTION == *(u_short*)&CURRENT_SECTION) {
+        if (GAME.selectedSection == *(u_short*)&GAME.currentSection) {
             func_8001CF7C();
             return;
         }
@@ -891,13 +891,13 @@ u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E220);
 u_char func_8001E220(EVENT event_id, int arg1, int arg2)
 {
-    if (EVENT_LIST[event_id] == 0) {
+    if (GAME.event[event_id] == 0) {
         if (event_id == EVENT_THE100YEAROLDWISEMAN) {
-            if (SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
-                EVENT_LIST[event_id] += 1;
+            if (*(u_long*)&GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
+                GAME.event[event_id] += 1;
             }
         } else {
-            EVENT_LIST[event_id] += 1;
+            GAME.event[event_id] += 1;
         }
         func_80029548((&D_80077520)[(&D_80077540)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
@@ -907,17 +907,17 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
             func_8002E3B0(0);
         }        
     }
-    return EVENT_LIST[event_id];
+    return GAME.event[event_id];
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E31C);
 u_char func_8001E31C(EVENT event_id, int arg1)
 {
     int index;
-    if (EVENT_LIST[event_id] != 0xFF) {
+    if (GAME.event[event_id] != 0xFF) {
         index = (&D_80077608)[event_id];
         asm("");
-        EVENT_LIST[event_id] = 0xFF;
+        GAME.event[event_id] = 0xFF;
         asm("");
         func_80029548((&D_80077520)[index]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
@@ -927,13 +927,13 @@ u_char func_8001E31C(EVENT event_id, int arg1)
             func_80021110();
         }
     }
-    return EVENT_LIST[event_id];
+    return GAME.event[event_id];
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3D8);
 u_char func_8001E3D8(EVENT event_id)
 {
-    return EVENT_LIST[event_id];
+    return GAME.event[event_id];
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3EC);
@@ -1315,28 +1315,28 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029788);
 int func_80029944(ITEM id, int qty)
 {
     int i;
-    for (i = 0; i < *INVENTORY_SLOT_COUNTER; i++) {
-        if (INVENTORY_SLOT[i] == id) {
+    for (i = 0; i < GAME.inventory.counter; i++) {
+        if (GAME.inventory.slots[i] == id) {
             if (qty == -1) {
-                ITEM_LIST[id] = 0;
-                while (i < *INVENTORY_SLOT_COUNTER - 1) {
-                    INVENTORY_SLOT[i] = INVENTORY_SLOT[i+1];
+                GAME.item[id] = 0;
+                while (i < GAME.inventory.counter - 1) {
+                    GAME.inventory.slots[i] = GAME.inventory.slots[i+1];
                     i++;
                 }
-                *INVENTORY_SLOT_COUNTER -= 1;
+                GAME.inventory.counter -= 1;
                 return 0;
             }
-            ITEM_LIST[id] = ITEM_LIST[id] - qty;
-            if (ITEM_LIST[id] == 0) {
-                ITEM_LIST[id] = 0;
-                while (i < *INVENTORY_SLOT_COUNTER - 1) {
-                    INVENTORY_SLOT[i] = INVENTORY_SLOT[i+1];
+            GAME.item[id] = GAME.item[id] - qty;
+            if (GAME.item[id] == 0) {
+                GAME.item[id] = 0;
+                while (i < GAME.inventory.counter - 1) {
+                    GAME.inventory.slots[i] = GAME.inventory.slots[i+1];
                     i++;
                 }
-                *INVENTORY_SLOT_COUNTER -= 1;
+                GAME.inventory.counter -= 1;
                 return 0;
             }
-            return ITEM_LIST[id];
+            return GAME.item[id];
         }
     }
     return -1;
@@ -1357,7 +1357,6 @@ u_int func_80029A84(void)
             PLAYER_HEALTH_DISPLAYED++;
         }
     }
-
     PLAYER_HEALTH = D_800A5432 = D_800A5430 = PLAYER_HEALTH_DISPLAYED;
     return PLAYER_HEALTH_DISPLAYED;
 }
@@ -1537,7 +1536,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800316EC);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031868);
 void func_80031868(void)
 {
-    switch (*(u_short*)&SELECTED_AREA) {
+    switch (GAME.selectedArea) {
         case AREA05_BACCUSVILLAGE:
             func_800EF7C0();
             return;
@@ -1605,9 +1604,9 @@ void func_80033858(void) {
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033860);
 void func_80033860(void)
 {
-    if (*(u_short*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
             func_8011BB54();
-    } else if (*(u_short*)&SELECTED_AREA == AREA03_PHOENIXMOUNTAIN) {
+    } else if (GAME.selectedArea == AREA03_PHOENIXMOUNTAIN) {
             func_80119894();
     }
     return;
@@ -1616,7 +1615,7 @@ void func_80033860(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800338A8);
 void func_800338A8(void)
 {
-    switch (*(u_short*)&SELECTED_AREA) {
+    switch (GAME.selectedArea) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
             func_8011D65C();
             return;
@@ -1652,11 +1651,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033964);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80033F50);
 void func_80033F50(void)
 {
-    if (*(u_short*)&SELECTED_AREA == AREA00_VILLAGEOFALLBEGINNINGS) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80120054();
-    } else if (*(u_short*)&SELECTED_AREA == AREA06_DIRTMOTOCROSS) {
+    } else if (GAME.selectedArea == AREA06_DIRTMOTOCROSS) {
         func_80119BCC();
-    } else if (*(u_short*)&SELECTED_AREA == AREA11_VILLAGEOFCIVILIZATION){
+    } else if (GAME.selectedArea == AREA11_VILLAGEOFCIVILIZATION){
         func_80115724();
     }
     return;
