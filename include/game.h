@@ -2529,7 +2529,7 @@ extern int D_1F8002C8[];
 extern u_short D_8007B290;
 extern int D_8007B294;
 extern byte D_8009B6A8; // SELECTED ROW
-extern int D_80077520;
+extern int AP_TABLE;
 extern u_char D_80077540;
 extern u_char D_80077608;
 extern u_char D_8007775C[];

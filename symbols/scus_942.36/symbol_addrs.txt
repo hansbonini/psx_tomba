@@ -735,6 +735,8 @@ MDEC_status = 0x8005D600;
 timeout = 0x8005D618;
 DecDCTvlcSize = 0x8005D74C;
 DecDCTvlc = 0x8005D77C;
+// data
+AP_TABLE=0x80077520; // size:0x20
 // bss
 _ctype_=0x8007FA70; // size:0x3
 GPU_printf=0x80090C98;

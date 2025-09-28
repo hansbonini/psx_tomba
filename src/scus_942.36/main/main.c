@@ -869,7 +869,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DFD4);
 u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 {
     if (arg1 == 0) {
-        setPlayerAP(*(&D_80077520 + (*(&D_80077540 + event_id) * 1)));
+        setPlayerAP(*(&AP_TABLE + (*(&D_80077540 + event_id) * 1)));
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
@@ -877,7 +877,7 @@ u_char func_8001E118(EVENT event_id, int arg1, int arg2)
             func_8002E3B0(0);
         }
     } else {
-        setPlayerAP(*(&D_80077520 + (*(&D_80077608 + event_id) * 1)));
+        setPlayerAP(*(&AP_TABLE + (*(&D_80077608 + event_id) * 1)));
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg2);
             func_8001ECD8(event_id, 1);
@@ -899,7 +899,7 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
         } else {
             GAME.event[event_id] += 1;
         }
-        setPlayerAP((&D_80077520)[(&D_80077540)[event_id]]);
+        setPlayerAP((&AP_TABLE)[(&D_80077540)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, arg2);
             func_8001ECD8(event_id, 0);
@@ -919,7 +919,7 @@ u_char func_8001E31C(EVENT event_id, int arg1)
         asm("");
         GAME.event[event_id] = 0xFF;
         asm("");
-        setPlayerAP((&D_80077520)[index]);
+        setPlayerAP((&AP_TABLE)[index]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, arg1);
             func_8001ECD8(event_id, 1);
@@ -1114,7 +1114,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800229CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800229FC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3D8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80022A18);
 void func_80022A18(u_short* id)
 {
     ((u_short*)(id))[0x16] = ((u_short*)(id))[0x10];
