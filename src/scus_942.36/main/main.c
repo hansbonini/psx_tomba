@@ -1649,7 +1649,14 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80030E30);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80030EF8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031124);
+/*
+ 0x00 = Adquired
+ 0x01 = Used the
+ 0x02 = It's Locked
+ 0x03 = Adquired
+ 0x04 = Hourglass
+*/
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", printInfoMessage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80031628);
 

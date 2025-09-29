@@ -396,6 +396,7 @@ printEventCompleteMessage=0x8001ECD8;
 playSFX=0x8001ffe8;
 FontDebugPrintf=0x80023aa4;
 setPlayerAP=0x80029548;
+printInfoMessage=0x80031124;
 // system/archive
 LZDecompress=0x8003EF50;
 // libapi
