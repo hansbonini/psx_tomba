@@ -42,32 +42,34 @@ void func_80016A18(void)
     D_8009C866 = 8;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016AF4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016AF4);
 void func_80016AF4(void)
 {
     RECT rect;
+    CAMERA* camera = (CAMERA*)0x1F8000E2;
+    MATRIX* matrix = (MATRIX*)0x1F8000F8;
 
     SetGeomOffset(160, 112);
     SetGeomScreen(544);
-    (*(MATRIX*)(&D_1F8000F8)).m[0][0] = 4096;
-    (*(MATRIX*)(&D_1F8000F8)).m[0][1] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[0][2] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[1][0] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[1][1] = 4096;
-    (*(MATRIX*)(&D_1F8000F8)).m[1][2] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[2][0] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[2][1] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).m[2][2] = 4096;
-    (*(MATRIX*)(&D_1F8000F8)).t[2] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).t[1] = 0;
-    (*(MATRIX*)(&D_1F8000F8)).t[0] = 0;
+    matrix->m[0][0] = 4096;
+    matrix->m[0][1] = 0;
+    matrix->m[0][2] = 0;
+    matrix->m[1][0] = 0;
+    matrix->m[1][1] = 4096;
+    matrix->m[1][2] = 0;
+    matrix->m[2][0] = 0;
+    matrix->m[2][1] = 0;
+    matrix->m[2][2] = 4096;
+    matrix->t[2] = 0;
+    matrix->t[1] = 0;
+    matrix->t[0] = 0;
     func_80024AEC((MATRIX*)(&D_1F8000C0));
-    *(short* )&PSX_SCRATCH[0xE2] = 0;
-    *(short* )&PSX_SCRATCH[0xE6] = 0;
-    *(short* )&PSX_SCRATCH[0xEA] = -544;
-    *(short* )&PSX_SCRATCH[0xEE] = 0;
-    *(short* )&PSX_SCRATCH[0xF2] = 0;
-    *(short* )&PSX_SCRATCH[0xF6] = 0;
+    *(short*)&camera->vrx= 0;
+    *(short*)&camera->vry = 0;
+    *(short*)&camera->vrz= -544;
+    *(short*)&camera->vpx = 0;
+    *(short*)&camera->vpy = 0;
+    *(short*)&camera->vpz = 0;
     func_80024B3C((MATRIX*)(&D_1F800118));
     func_80016C4C(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
@@ -272,14 +274,15 @@ void func_80017614(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017734);
 void func_80017734(void)
 {
+    CAMERA* camera = (CAMERA*)0x1F8000E2;
     func_80024AEC((MATRIX* ) D_1F8000C0);
-    *(short* )0x1F8000EA = -544;
-    *(short* )0x1F8000EE = 160;
-    *(short* )0x1F8000F2 = -120;
+    *(short*)&camera->vrz = -544; 
+    *(short*)&camera->vpx = 160;
+    *(short*)&camera->vpy = -120;
     *(int* )0x1F800200 = 69;
-    *(short* )0x1F8000E2 = 0;
-    *(short* )0x1F8000E6 = 0;
-    *(short* )0x1F8000F6 = 0;
+    *(short*)&camera->vrx = 0;
+    *(short*)&camera->vry = 0;
+    *(short*)&camera->vpz = 0;
     *(char* )0x1F8003CE = 0;
     *(short* )0x1F8001C8 = 0;
     *(char* )0x1F8003D1 = 0;
@@ -291,15 +294,16 @@ void func_80017734(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800177D8);
 void func_800177D8(void)
 {
+    CAMERA* camera = (CAMERA*)0x1F8000E2;
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
     memset(&D_8009BC98, 0, 0x2C);
     func_80024AEC((MATRIX* ) D_1F8000C0);
-    *(short* )0x1F8000EA = -544; // CAMERA Z POSITION
-    *(short* )0x1F8000EE = 160; // CAMERA X POSITION
-    *(short* )0x1F8000F2 = -120; // CAMERA Y POSITION
-    *(short* )0x1F8000E2 = 0; // CAMERA PAN HORIZONTAL
-    *(short* )0x1F8000E6 = 0; // CAMERA PAN VERTICAL
-    *(short* )0x1F8000F6 = 0; // ?
+    *(short*)&camera->vrz = -544; 
+    *(short*)&camera->vpx = 160;
+    *(short*)&camera->vpy = -120;
+    *(short*)&camera->vrx = 0;
+    *(short*)&camera->vry = 0;
+    *(short*)&camera->vpz = 0;
     *(int* )0x1F800200 = 69; // ?
     *(u_char* )0x1F8003D2 = 0xFF;
     *(u_char* )0x1F8003D3 = 0xFF;
@@ -774,7 +778,7 @@ block_14:
             ) {
                 GAME.unk21 = 1;
             }
-            if (*(u_long*)&GAME.selectedArea != AREA00_VILLAGEOFALLBEGINNINGS) {
+            if (*(u_long*)&GAME.selectedArea != (AREA00_VILLAGEOFALLBEGINNINGS << 16 | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS)) {
                 GAME.event[EVENT_CLEARTHEFOG] = 0xFF;
                 GAME.playerState = 1;
             }

@@ -2595,6 +2595,12 @@ typedef struct gameConfig {
     byte unk980;
 } gameConfig;
 
+typedef struct CAMERA {
+    short vrx, pad1, vry, pad2, vrz, pad3;
+    short vpx, pad4, vpy, pad5, vpz;
+    MATRIX matrix;
+} CAMERA;
+
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
