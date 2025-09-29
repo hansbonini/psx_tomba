@@ -64,12 +64,12 @@ void func_80016AF4(void)
     matrix->t[1] = 0;
     matrix->t[0] = 0;
     func_80024AEC((MATRIX*)(&D_1F8000C0));
-    *(short*)&camera->vrx= 0;
-    *(short*)&camera->vry = 0;
-    *(short*)&camera->vrz= -544;
-    *(short*)&camera->vpx = 0;
-    *(short*)&camera->vpy = 0;
-    *(short*)&camera->vpz = 0;
+    camera->vrx= 0;
+    camera->vry = 0;
+    camera->vrz= -544;
+    camera->vpx = 0;
+    camera->vpy = 0;
+    camera->vpz = 0;
     func_80024B3C((MATRIX*)(&D_1F800118));
     func_80016C4C(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
@@ -276,13 +276,13 @@ void func_80017734(void)
 {
     CAMERA* camera = (CAMERA*)0x1F8000E2;
     func_80024AEC((MATRIX* ) D_1F8000C0);
-    *(short*)&camera->vrz = -544; 
-    *(short*)&camera->vpx = 160;
-    *(short*)&camera->vpy = -120;
+    camera->vrz = -544; 
+    camera->vpx = 160;
+    camera->vpy = -120;
     *(int* )0x1F800200 = 69;
-    *(short*)&camera->vrx = 0;
-    *(short*)&camera->vry = 0;
-    *(short*)&camera->vpz = 0;
+    camera->vrx = 0;
+    camera->vry = 0;
+    camera->vpz = 0;
     *(char* )0x1F8003CE = 0;
     *(short* )0x1F8001C8 = 0;
     *(char* )0x1F8003D1 = 0;
@@ -298,12 +298,12 @@ void func_800177D8(void)
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
     memset(&D_8009BC98, 0, 0x2C);
     func_80024AEC((MATRIX* ) D_1F8000C0);
-    *(short*)&camera->vrz = -544; 
-    *(short*)&camera->vpx = 160;
-    *(short*)&camera->vpy = -120;
-    *(short*)&camera->vrx = 0;
-    *(short*)&camera->vry = 0;
-    *(short*)&camera->vpz = 0;
+    camera->vrz = -544; 
+    camera->vpx = 160;
+    camera->vpy = -120;
+    camera->vrx = 0;
+    camera->vry = 0;
+    camera->vpz = 0;
     *(int* )0x1F800200 = 69; // ?
     *(u_char* )0x1F8003D2 = 0xFF;
     *(u_char* )0x1F8003D3 = 0xFF;
