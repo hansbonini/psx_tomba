@@ -1036,8 +1036,8 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
     return GAME.event[event_id];
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E31C);
-u_char func_8001E31C(EVENT event_id, int arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setEventClear);
+u_char setEventClear(EVENT event_id, int arg1)
 {
     if (GAME.event[event_id] != 0xFF) {
         GAME.event[event_id] = 0xFF;
