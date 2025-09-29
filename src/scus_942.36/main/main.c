@@ -1036,14 +1036,14 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
     return GAME.event[event_id];
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setEventClear);
-u_char setEventClear(EVENT event_id, int arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setEventComplete);
+u_char setEventComplete(EVENT event_id, int state)
 {
     if (GAME.event[event_id] != 0xFF) {
         GAME.event[event_id] = 0xFF;
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE2)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 1, 1, arg1);
+            func_8001E3EC(event_id, 1, 1, state);
             func_8001ECD8(event_id, 1);
             func_80020DDC(2);
             func_80021110();

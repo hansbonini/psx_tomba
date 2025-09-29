@@ -227,7 +227,7 @@ void func_800400E0(unkstruct_800A6D50* arg0)
     current_item = arg0->item_id;
     switch (current_item) {
         case ITEM_BOMB:
-            setEventClear(EVENT_INEEDABOMB, 4);
+            setEventComplete(EVENT_INEEDABOMB, 4);
             break;
         case ITEM_PIPE:
             GAME.pipeState = 1;
@@ -236,16 +236,16 @@ void func_800400E0(unkstruct_800A6D50* arg0)
             GAME.goldenFlowerState = 1;
             break;
         case ITEM_TEARJAR:
-            setEventClear(EVENT_INEEDATEARBOTTLE, 1);
+            setEventComplete(EVENT_INEEDATEARBOTTLE, 1);
             break;
         case ITEM_MIGHTYFISHFOOD:
-            setEventClear(EVENT_WHATSTHEUNDERWATER, 0);
+            setEventComplete(EVENT_WHATSTHEUNDERWATER, 0);
             break;
         case ITEM_WHATTHETHIEFFORGOT:
             func_8001E220(EVENT_WHATTHETHIEFFORGOT, 1, 1);
             break;
         case ITEM_BOSSJEWEL:
-            setEventClear(EVENT_THEBOSSTREASURE, 1);
+            setEventComplete(EVENT_THEBOSSTREASURE, 1);
             setPlayerAP(100000);
             break;
         case ITEM_SEASHELLNECKLACE:
@@ -451,7 +451,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
 void func_8004095C(unkstruct_800A6D50* arg0)
 {
     func_80029788(ITEM_GRAPPLE, 1, 1);
-    setEventClear(EVENT_APRECIOUSTREASURECHEST, 0);
+    setEventComplete(EVENT_APRECIOUSTREASURECHEST, 0);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -482,7 +482,7 @@ void func_80040A30(unkstruct_800A6D50* arg0)
             break;
         case 2:
             func_80029788(ITEM_THREECRYSTALBALLS, 1, 1);
-            setEventClear(EVENT_LOSTANDFOUND, 0);
+            setEventComplete(EVENT_LOSTANDFOUND, 0);
             break;
     }
     if (!(arg0->unkC & 0x80)) {
@@ -494,7 +494,7 @@ void func_80040A30(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040B28);
 void func_80040B28(unkstruct_800A6D50* arg0)
 {
-    setEventClear(EVENT_THEMISTERIOUSMUSHROOM, 0);
+    setEventComplete(EVENT_THEMISTERIOUSMUSHROOM, 0);
     func_80029788(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
@@ -526,25 +526,25 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
             }
             switch (arg0->item_id) {
                 case ITEM_REDPIGBAG:
-                    setEventClear(EVENT_ASTORMYPIGBAG, 2);
+                    setEventComplete(EVENT_ASTORMYPIGBAG, 2);
                     break;
                 case ITEM_ORANGEPIGBAG:
-                    setEventClear(EVENT_THEMOUSEPIGBAG, 2);
+                    setEventComplete(EVENT_THEMOUSEPIGBAG, 2);
                     break;
                 case ITEM_YELLOWPIGBAG:
-                    setEventClear(EVENT_THEUNDERWATERPIG, 2);
+                    setEventComplete(EVENT_THEUNDERWATERPIG, 2);
                     break;
                 case ITEM_GREENPIGBAG:
-                    setEventClear(EVENT_THEFIREPIGBAG, 2);
+                    setEventComplete(EVENT_THEFIREPIGBAG, 2);
                     break;
                 case ITEM_BLUEEVILPIGBAG:
-                    setEventClear(EVENT_THEEVILPIGBAG, 2);
+                    setEventComplete(EVENT_THEEVILPIGBAG, 2);
                     break;
                 case ITEM_NAVYPIGBAG:
-                    setEventClear(EVENT_THEJUNGLEPIGBAG, 2);
+                    setEventComplete(EVENT_THEJUNGLEPIGBAG, 2);
                     break;
                 case ITEM_PINKPIGBAG:
-                    setEventClear(EVENT_THEHAUNTEDPIGBAG, 2);
+                    setEventComplete(EVENT_THEHAUNTEDPIGBAG, 2);
                     break;
             }
             arg0->unk22 = 0x168U;
@@ -607,7 +607,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
     switch (current_item) {
         case ITEM_JEWELOFFIRE: 
             if (GAME.redExpLevel == 9) {
-                setEventClear(EVENT_REDHIDDENPOWERS, 1);
+                setEventComplete(EVENT_REDHIDDENPOWERS, 1);
                 func_80029788(arg0->item_id, 1, 1);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
@@ -625,7 +625,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
             break;
         case ITEM_JEWELOFWATER: 
             if (GAME.blueExpLevel == 9) {
-                setEventClear(EVENT_BLUEHIDDENPOWERS, 0);
+                setEventComplete(EVENT_BLUEHIDDENPOWERS, 0);
                 func_80029788(arg0->item_id, 1, 1);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
@@ -644,7 +644,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
             break;
         case ITEM_JEWELOFWIND:
             if (GAME.greenExpLevel == 9) {
-                setEventClear(EVENT_GREENHIDDENPOWERS, 1);
+                setEventComplete(EVENT_GREENHIDDENPOWERS, 1);
                 func_80029788(arg0->item_id, 1, 1);
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->unk6B);
@@ -666,7 +666,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040FD8);
 void func_80040FD8(unkstruct_800A6D50* arg0)
 {
-    setEventClear(EVENT_ASAFEMUSHROOM, 0);
+    setEventComplete(EVENT_ASAFEMUSHROOM, 0);
     func_80029788(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
