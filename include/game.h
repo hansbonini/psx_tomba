@@ -867,7 +867,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk65;
     byte unk66;
     byte unk67;
-    byte start_or_load; /* Created by retype action */
+    u_char start_or_load; /* Created by retype action */
     byte unk69;
     byte unk6A;
     byte unk6B;

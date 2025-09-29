@@ -723,14 +723,22 @@ void func_8001AD58(void)
     typedef inline struct {
         char data[0x1B4];
         u_char unk1B4;
-        char pad1[27];
+        char pad1[23];
         char unk1CF;
-        char pad2[4];
-        unkstruct_1F8001D4* unk1D4;
+        char pad2[7];
+        char unk1D4;
+        char pad3[33];
+        char unk1F6;
+        char unk1F7;
+        char unk1F8;
+        char unk1F9;
+        char unk1FA;
+        char unk1FB;
+        u_short unk1FC;
     } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_v1;
-
+    unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)&scratch->unk1D4;
+    
     u_short var_a0;
     int* var_v1;
     u_short temp_a0;
@@ -739,36 +747,36 @@ void func_8001AD58(void)
     u_char *temp2;
 
     /* If start a game and debug mode is enabled */
-    if (( *(u_char*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x68) == 0) && (scratch->unk1B4 != 0)) {
-        if ((*(u_short*)(&PSX_SCRATCH[0x1FC])) & 0x10) {
+    if ((temp_v1->start_or_load == 0) && (scratch->unk1B4 != 0)) {
+        if (scratch->unk1FC & 0x10) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
         }
-        if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x40) != 0) {
+        if ((scratch->unk1FC & 0x40) != 0) {
             D_8009B6A8 = (D_8009B6A8 + 1) & 1;
         }
         if (D_8009B6A8 != 0) {
-            if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
+            if ((scratch->unk1FC & 0x80) != 0) {
                 var_v1 = &GAME.selectedSection;
                 goto block_14;
             }
-            if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
+            if (scratch->unk1FC & 0x20) {
                 temp_v1_2 = GAME.selectedSection += 1;
                 temp_a0 = *(u_short*)((u_short*)&D_8007B294 + GAME.selectedArea);
                 if ((temp_a0 - 1) < (int)temp_v1_2) {
                     GAME.selectedSection = (u_short) (temp_a0 - 1);
                 }
             }
-        } else if ((*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x80) != 0) {
+        } else if ((scratch->unk1FC & 0x80) != 0) {
             var_v1 = &GAME.selectedArea;
 block_14:
             *(u_short*)var_v1 -= 1;
             if ((*(u_short*)var_v1 << 0x10) <= 0) {
                 *(u_short*)var_v1 = 0U;
             }
-        } else if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x20) {
+        } else if (scratch->unk1FC & 0x20) {
             GAME.selectedArea += 1;
             temp_v1_2 = (u_short*)D_8007B290;
-            if (temp_v1_2 < *(u_short*)(&GAME.selectedArea)) {
+            if (temp_v1_2 < GAME.selectedArea) {
                 GAME.selectedArea = temp_v1_2;
             }
         }
@@ -777,11 +785,11 @@ block_14:
         sprintf(&SPRINTF_BUFFER_MSG, &D_80010134, GAME.selectedSection);
         FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, &D_8001014C);
-        FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)(&PSX_SCRATCH[0x1F6]) & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
+        FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)&PSX_SCRATCH[0x1F6] & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
         GAME.nextArea = GAME.selectedArea;
         GAME.nextSection = GAME.selectedSection;
         GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
-        if (*(u_short*)(&PSX_SCRATCH[0x1FC]) & 0x2008) {
+        if (scratch->unk1FC & 0x2008) {
             if (
                 (
                     GAME.selectedArea < AREA02_DWARFVILLAGE) &&
@@ -801,25 +809,25 @@ block_14:
         else return;
     }
 
-    temp2 = &GAME.unk14;
+    temp2 = (u_char*)(&D_8009BCDC);
      var_a0 = 1;
     if (*temp2 == 0) {
-        // GAME.unk14 = 1;
+        //D_8009BCDC = 1;
         *temp2 = 1;
-    } else if (GAME.selectedArea != *(u_short*)&GAME.currentArea) {
+    } else if (GAME.selectedArea != GAME.currentArea) {
         var_a0 = 1;
     } else {
         var_a0 = 0;
-        if (GAME.selectedSection == *(u_short*)&GAME.currentSection) {
+        if (GAME.selectedSection == GAME.currentSection) {
             func_8001CF7C();
             return;
         }
     }
     func_8001CE80(var_a0);
 
-    temp_v1_3 = *(u_short*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x4E);
+    temp_v1_3 = (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value;
     *(u_long*)&D_8009EB4C = 0;
-    *(u_short*)(*(int*)(&PSX_SCRATCH[0x1D4])+0x4E)=temp_v1_3+1;
+    (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value=temp_v1_3+1;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001B0A4);
