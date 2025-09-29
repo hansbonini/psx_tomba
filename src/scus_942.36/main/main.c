@@ -991,13 +991,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DE24);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001DFD4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E118);
-u_char func_8001E118(EVENT event_id, int arg1, int arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setEventCompleteAndAPTable);
+u_char setEventCompleteAndAPTable(EVENT event_id, int arg1, int state)
 {
     if (arg1 == 0) {
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 0, 0x3C, arg2);
+            func_8001E3EC(event_id, 0, 0x3C, state);
             printEventCompleteMessage(event_id, 0);
             playSFX(0x2A);
             func_8002E3B0(0);
@@ -1005,7 +1005,7 @@ u_char func_8001E118(EVENT event_id, int arg1, int arg2)
     } else {
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE2)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 1, 1, arg2);
+            func_8001E3EC(event_id, 1, 1, state);
             printEventCompleteMessage(event_id, 1);
             func_80020DDC(2);
             func_80021110();
@@ -1015,11 +1015,11 @@ u_char func_8001E118(EVENT event_id, int arg1, int arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E220);
-u_char func_8001E220(EVENT event_id, int arg1, int arg2)
+u_char func_8001E220(EVENT event_id, int arg1, int state)
 {
     if (GAME.event[event_id] == 0) {
         if (event_id == EVENT_THE100YEAROLDWISEMAN) {
-            if (*(u_long*)&GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
+            if (*(u_long*)&GAME.selectedArea == (AREA00_VILLAGEOFALLBEGINNINGS << 16 | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS)) {
                 GAME.event[event_id] += 1;
             }
         } else {
@@ -1027,7 +1027,7 @@ u_char func_8001E220(EVENT event_id, int arg1, int arg2)
         }
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 0, 0x3C, arg2);
+            func_8001E3EC(event_id, 0, 0x3C, state);
             printEventCompleteMessage(event_id, 0);
             playSFX(0x2A);
             func_8002E3B0(0);
