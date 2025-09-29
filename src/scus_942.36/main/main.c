@@ -8,8 +8,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A00);
 void func_80016A00(short id, short arg1)
 {
-    *(short* )&PSX_SCRATCH[0x1EA] = id;
-    *(short* )&PSX_SCRATCH[0x1EC] = arg1;
+    typedef inline struct {
+        byte data[0x1EA];
+        short unk1EA;
+        short unk1EC;
+    } scratchpad;
+    scratchpad* scratch = PSX_SCRATCH;
+
+    scratch->unk1EA = id;
+    scratch->unk1EC = arg1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A18);
