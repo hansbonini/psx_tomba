@@ -1052,8 +1052,8 @@ u_char setEventComplete(EVENT event_id, int state)
     return GAME.event[event_id];
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3D8);
-u_char func_8001E3D8(EVENT event_id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", getEventState);
+u_char getEventState(EVENT event_id)
 {
     return GAME.event[event_id];
 }
