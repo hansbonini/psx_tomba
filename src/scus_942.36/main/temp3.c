@@ -175,7 +175,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D624);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D660);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D69C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D69C);
+void func_8002D69C(void)
+{
+    if (GAME.selectedSection == 0) {
+        func_800E8388();
+        return;
+    }
+    func_8011546C();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D6D8);
 void func_8002D6D8(void)
