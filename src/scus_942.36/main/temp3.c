@@ -103,7 +103,23 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029C80);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029CDC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002A008);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002A008);
+void func_8002A008(s32 arg0)
+{
+    func_8002467C();
+    switch (GAME.selectedArea) {                    // irregular
+        case AREA00_VILLAGEOFALLBEGINNINGS:
+            func_80115AA8(arg0);
+            return;
+        case AREA01_DWARFFOREST:
+        case AREA07_DWARFFORESTPURIFIED:
+            func_80115910(arg0);
+            return;
+        case AREA03_PHOENIXMOUNTAIN:
+            func_801162C4(arg0);
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002A0A0);
 
