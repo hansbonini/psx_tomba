@@ -37,7 +37,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_8003076C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_800307AC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_800307D4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_800307D4);
+void func_800307D4(s32 arg0, s32 arg1, s32 arg2, s16 arg3)
+{
+    func_80030800(arg0, arg1, arg2, 1, arg3);
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80030800);
 
