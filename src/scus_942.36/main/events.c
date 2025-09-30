@@ -220,7 +220,7 @@ void func_800400E0(unkstruct_800A6D50* arg0)
     int var_a2;
     u_char current_item;
 
-    func_80029788(arg0->item_id, 1, 1);
+    addItemToInventory(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -295,7 +295,7 @@ void func_8004035C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_800403E4);
 void func_800403E4(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_BAKEDYAM, 1, 1);
+    addItemToInventory(ITEM_BAKEDYAM, 1, 1);
     if ((GAME.event[EVENT_SOMETHINGCOOKIN] & 0xFF) == 3) {
         GAME.event[EVENT_SOMETHINGCOOKIN] += 1;
     }
@@ -309,7 +309,7 @@ void func_800403E4(unkstruct_800A6D50* arg0)
 void func_80040468(unkstruct_800A6D50* arg0)
 {
     GAME.unk54e = 5;
-    func_80029788(ITEM_DIRTYMIRROR, 1, 1);
+    addItemToInventory(ITEM_DIRTYMIRROR, 1, 1);
     func_8001E220(EVENT_AMAGICMIRROR, 0, 0);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
@@ -334,7 +334,7 @@ void func_800404E8(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040564);
 void func_80040564(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_WOODBOOMERANG, 1, 1);
+    addItemToInventory(ITEM_WOODBOOMERANG, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -344,7 +344,7 @@ void func_80040564(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_800405C8);
 void func_800405C8(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_STONEBOOMERANG, 1, 1);
+    addItemToInventory(ITEM_STONEBOOMERANG, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -354,7 +354,7 @@ void func_800405C8(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8004062C);
 void func_8004062C(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_IRONBOOMERANG, 1, 1);
+    addItemToInventory(ITEM_IRONBOOMERANG, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -413,7 +413,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
     temp_v1 = arg0->unk5;
     switch (temp_v1) {
         case 0:
-            func_80029788(ITEM_BITINGPLANTFLOWER, 1, 1);
+            addItemToInventory(ITEM_BITINGPLANTFLOWER, 1, 1);
             func_8001E220(EVENT_BITINGPLANTFLOWER, 0, 0);
             if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
                 GAME.bittingPlantFlowerState = 2;
@@ -450,7 +450,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8004095C);
 void func_8004095C(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_GRAPPLE, 1, 1);
+    addItemToInventory(ITEM_GRAPPLE, 1, 1);
     setEventComplete(EVENT_APRECIOUSTREASURECHEST, 0);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
@@ -461,7 +461,7 @@ void func_8004095C(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_800409CC);
 void func_800409CC(unkstruct_800A6D50* arg0)
 {
-    func_80029788(ITEM_GRAPPLEJACK, 1, 1);
+    addItemToInventory(ITEM_GRAPPLEJACK, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -481,7 +481,7 @@ void func_80040A30(unkstruct_800A6D50* arg0)
             GAME.event[EVENT_LOSTANDFOUND]+= 1;
             break;
         case 2:
-            func_80029788(ITEM_THREECRYSTALBALLS, 1, 1);
+            addItemToInventory(ITEM_THREECRYSTALBALLS, 1, 1);
             setEventComplete(EVENT_LOSTANDFOUND, 0);
             break;
     }
@@ -495,7 +495,7 @@ void func_80040A30(unkstruct_800A6D50* arg0)
 void func_80040B28(unkstruct_800A6D50* arg0)
 {
     setEventComplete(EVENT_THEMISTERIOUSMUSHROOM, 0);
-    func_80029788(arg0->item_id, 1, 1);
+    addItemToInventory(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -509,7 +509,7 @@ void func_80040B98(unkstruct_800A6D50* arg0)
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
-    func_80029788(arg0->item_id, 1, 1);
+    addItemToInventory(arg0->item_id, 1, 1);
     arg0->unk4++;
 }
 
@@ -520,7 +520,7 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
 
     switch (arg0->unk5) {                              // switch 3; irregular
         case 0:                                     // switch 3
-            func_80029788(arg0->item_id, 1, 1);
+            addItemToInventory(arg0->item_id, 1, 1);
             if (!(arg0->unkC & 0x80)) {
                 func_8002367C(arg0->unk6B);
             }
@@ -587,7 +587,7 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
 void func_80040DA0(unkstruct_800A6D50* arg0)
 {
     if ((GAME.selectedArea == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
-        func_80029788(arg0->item_id, 1, 1);
+        addItemToInventory(arg0->item_id, 1, 1);
     }
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
@@ -608,7 +608,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
         case ITEM_JEWELOFFIRE: 
             if (GAME.redExpLevel == 9) {
                 setEventComplete(EVENT_REDHIDDENPOWERS, 1);
-                func_80029788(arg0->item_id, 1, 1);
+                addItemToInventory(arg0->item_id, 1, 1);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->unk6B);
@@ -626,7 +626,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
         case ITEM_JEWELOFWATER: 
             if (GAME.blueExpLevel == 9) {
                 setEventComplete(EVENT_BLUEHIDDENPOWERS, 0);
-                func_80029788(arg0->item_id, 1, 1);
+                addItemToInventory(arg0->item_id, 1, 1);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->unk6B);
@@ -645,7 +645,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
         case ITEM_JEWELOFWIND:
             if (GAME.greenExpLevel == 9) {
                 setEventComplete(EVENT_GREENHIDDENPOWERS, 1);
-                func_80029788(arg0->item_id, 1, 1);
+                addItemToInventory(arg0->item_id, 1, 1);
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->unk6B);
                 }
@@ -667,7 +667,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
 void func_80040FD8(unkstruct_800A6D50* arg0)
 {
     setEventComplete(EVENT_ASAFEMUSHROOM, 0);
-    func_80029788(arg0->item_id, 1, 1);
+    addItemToInventory(arg0->item_id, 1, 1);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -692,11 +692,11 @@ void func_80041048(unkstruct_800A6D50* arg0)
 void func_800410D8(unkstruct_800A6D50* arg0)
 {   
     if (GAME.item[ITEM_JUMPINGPANTS] == 0) {
-        func_80029788(ITEM_JUMPINGPANTS, 1, 1);
+        addItemToInventory(ITEM_JUMPINGPANTS, 1, 1);
     } else if ((GAME.item[ITEM_DASHINGPANTS] == 0)) {
-        func_80029788(ITEM_DASHINGPANTS, 1, 1);
+        addItemToInventory(ITEM_DASHINGPANTS, 1, 1);
     } else if (GAME.item[ITEM_FLASHPANTS] == 0) {
-        func_80029788(ITEM_FLASHPANTS, 1, 1);
+        addItemToInventory(ITEM_FLASHPANTS, 1, 1);
     }
     playSFX(10);
     if (!(arg0->unkC & 0x80)) {
