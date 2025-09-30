@@ -81,7 +81,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E1F8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E248);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E298);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E298);
+void func_8003E298(void)
+{
+    unkstruct_8009E458* temp_s0;
+
+    temp_s0 = D_8009E458;
+    func_800EDE44(&D_800A5398, temp_s0->unk1190, temp_s0->unk1194);
+    temp_s0->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E2E8);
 
@@ -94,7 +102,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E3C4);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E3E8);
 void func_8003E3E8(void)
 {
-    D_8009E458->unk8A = (u16) (D_8009E458->unk8A + 1);
+    D_8009E458->unk8A++;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E408);

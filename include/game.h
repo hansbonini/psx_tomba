@@ -874,8 +874,12 @@ typedef struct unkstruct_1F8001D4 {
 
 
 typedef struct unkstruct_8009E458 {
-  byte data[0x8A];
-  u_short unk8A;
+    byte data[0x8A];
+    u_short unk8A;
+    byte pad[0x1104];
+    short unk1190;
+    short unk1192;
+    short unk1194;
 } unkstruct_8009E458;
 
 
