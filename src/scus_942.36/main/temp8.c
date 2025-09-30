@@ -18,7 +18,35 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_80033FB0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_80033FF0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_800340FC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_800340FC);
+void func_800340FC(void)
+{
+    switch (GAME.selectedArea) {
+        case AREA01_DWARFFOREST:
+            func_8011FD7C();
+            return;
+        case AREA02_DWARFVILLAGE:
+            func_80116C44();
+            return;
+        case AREA03_PHOENIXMOUNTAIN:
+            func_8011CB9C();
+            return;
+        case AREA04_HAUNTEDMANSION:
+            func_8011C210();
+            return;
+        case AREA09_MUSHROOMVILLAGE:
+            func_8011C0D4();
+            return;
+        case AREA10_DEEPJUNGLE:
+            func_80119AC8();
+            return;
+        case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
+            func_80115DB0();
+            // fallthrough
+        default:
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_800341AC);
 
