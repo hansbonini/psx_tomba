@@ -308,7 +308,7 @@ void func_800403E4(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040468);
 void func_80040468(unkstruct_800A6D50* arg0)
 {
-    GAME.unk54e = 5;
+    GAME.baronState = 5;
     addItemToInventory(ITEM_DIRTYMIRROR, 1, true);
     func_8001E220(EVENT_AMAGICMIRROR, 0, 0);
     if (!(arg0->unkC & 0x80)) {
