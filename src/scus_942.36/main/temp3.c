@@ -179,7 +179,19 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D69C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D6D8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D714);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D714);
+void func_8002D714(void)
+{
+    switch (GAME.selectedSection) {                     // irregular
+        case 1:
+            func_801151F8();
+            return;
+        case 2:
+        case 0:
+            func_800E84BC();
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D784);
 
