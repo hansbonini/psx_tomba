@@ -1014,8 +1014,8 @@ u_char setEventCompleteAndAPTable(EVENT event_id, int arg1, int state)
     return EVENT_LIST[event_id];
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E220);
-u_char func_8001E220(EVENT event_id, int arg1, int state)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setEventState);
+u_char setEventState(EVENT event_id, int arg1, int state)
 {
     if (GAME.event[event_id] == 0) {
         if (event_id == EVENT_THE100YEAROLDWISEMAN) {
