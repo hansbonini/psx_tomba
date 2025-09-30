@@ -998,7 +998,7 @@ u_char setEventCompleteAndAPTable(EVENT event_id, int arg1, int state)
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, state);
-            printEventCompleteMessage(event_id, 0);
+            printEventMessage(event_id, 0);
             playSFX(0x2A);
             func_8002E3B0(0);
         }
@@ -1006,7 +1006,7 @@ u_char setEventCompleteAndAPTable(EVENT event_id, int arg1, int state)
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE2)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, state);
-            printEventCompleteMessage(event_id, 1);
+            printEventMessage(event_id, 1);
             func_80020DDC(2);
             func_80021110();
         }
@@ -1028,7 +1028,7 @@ u_char func_8001E220(EVENT event_id, int arg1, int state)
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, state);
-            printEventCompleteMessage(event_id, 0);
+            printEventMessage(event_id, 0);
             playSFX(0x2A);
             func_8002E3B0(0);
         }        
@@ -1044,7 +1044,7 @@ u_char setEventComplete(EVENT event_id, int state)
         setPlayerAP((&AP_TABLE)[(&EVENT_AP_TABLE2)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, state);
-            printEventCompleteMessage(event_id, 1);
+            printEventMessage(event_id, 1);
             func_80020DDC(2);
             func_80021110();
         }
@@ -1062,7 +1062,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001E3EC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001EA40);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", printEventCompleteMessage);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", printEventMessage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001EFE8);
 
