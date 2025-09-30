@@ -42,12 +42,10 @@
 
         #ifndef INCLUDE_RODATA
                 #define INCLUDE_RODATA(FOLDER, NAME)                                            \
-                void __maspsx_include_asm_hack_##NAME() {                                       \
-                        __asm__(".section .rodata                       # maspsx-keep\n"        \
-                                "\t.include \"" FOLDER "/" #NAME ".s\"  # maspsx-keep\n"        \
-                                ".section .text                         # maspsx-keep\n"        \
-                        );                                                                      \
-                }
+                __asm__(".section .rodata                       # maspsx-keep\n"                \
+                        "\t.include \"" FOLDER "/" #NAME ".s\"  # maspsx-keep\n"                \
+                        ".section .text                         # maspsx-keep\n"                \
+                );
         #endif
 
         __asm__(".include \"include/macro.inc\"                         # maspsx-keep\n"        \
