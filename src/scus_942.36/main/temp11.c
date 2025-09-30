@@ -143,6 +143,34 @@ void func_8003F0DC(char* src, char* dst, char* len)
     LZDecompress(src, dst);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003F124);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003F124);
+void func_8003F124(void)
+{
+    switch (GAME.selectedArea) {
+        case AREA05_BACCUSVILLAGE:
+            func_800EF5B0();
+            return;
+        case AREA08_BACCUSLAKE:
+            func_800F08C0();
+            return;
+        case AREA11_VILLAGEOFCIVILIZATION:
+            func_800F1CA8();
+            return;
+        case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
+            func_800F2D84();
+            return;
+        case AREA17_VILLAGEOFCIVILIZATIONIRONTOWER:
+            func_800F428C();
+            return;
+        case AREA18_VILLAGEOFCIVILIZATIONYCROSSING:
+            func_800F448C();
+            return;
+        case AREA19_VILLAGEOFCIVILIZATIONPURIFIED:
+            func_800F5B4C();
+            // fallthrough
+        default:
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003F1D4);
