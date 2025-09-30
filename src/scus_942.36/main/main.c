@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game.h"
 
+void func_8001F1C0(void);
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
@@ -686,7 +688,49 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800199B8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019CA4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019D78);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019D78);
+void func_80019D78(void)
+{
+    typedef inline struct {
+        byte data[0x1CC];
+        byte unk1CC;
+        byte unk1CD;
+        byte unk1CE;
+        byte unk1CF;
+        byte pad[0x4];
+        unkstruct_1F8001D4* unk1D4;
+    } scratchpad;
+    
+    u8 temp_v0;
+    unkstruct_1F8001D4* temp_v1;
+    scratchpad* scratch = PSX_SCRATCH;
+    unkstruct_1F8001D4* temp_a1 = scratch->unk1D4;
+    
+    switch (temp_a1->unk4A) {
+        case 0:
+            SetDispMask(0);
+            func_80016C4C(0U, 0U, 0U);
+            *(u8* )&scratch->unk1CC = 1;
+            *(s8* )&scratch->unk1CD = 0;
+            scratch->unk1D4->unk4A ++;
+            func_80017154(1, &func_8001F1C0);
+            break;
+        case 1:
+            temp_v0 = *(u_long**)&scratch->unk1CC;
+            if (temp_v0 == 0) {
+                temp_a1->unk4A++;
+                return;
+            }
+            break;
+        case 2:
+            func_80020C00(0);
+            temp_v1 = *(u_long**)&scratch->unk1D4;
+            temp_v1->action = 4;
+            temp_v1->unk4A = 0;
+            break;
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019E68);
 
@@ -766,14 +810,14 @@ void func_8001A670(void)
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_a0 = *(u_long**)&scratch->unk1D4;
 
-    switch ((u16)temp_a0->unk4A) {                              // irregular
+    switch (temp_a0->unk4A) {                              // irregular
         case 0:
             temp_a0->unk5A = 1U;
-            temp_a0->unk4A = (u16) (temp_a0->unk4A + 1);
-            rect.w = 0x40;
+            temp_a0->unk4A += 1;
+            rect.w = 64;
             rect.x = 0;
             rect.y = 0;
-            rect.h = 0x100;
+            rect.h = 256;
             ClearImage((RECT* ) &rect, 0U, 0U, 0U);
             func_800177D8();
             scratch->unk1CF = 0;
@@ -782,7 +826,7 @@ void func_8001A670(void)
             temp_v0 = temp_a0->unk5A - 1;
             temp_a0->unk5A = temp_v0;
             if ((temp_v0 << 0x10) <= 0) {
-                temp_a0->unk4A = (u16) (temp_a0->unk4A + 1);
+                temp_a0->unk4A += 1;
                 return;
             }
             return;

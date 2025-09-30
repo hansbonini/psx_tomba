@@ -838,7 +838,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk46;
     byte unk47;
     short action;
-    short unk4A;
+    u_short unk4A;
     short unk4C;
     union {
         volatile u_short volatile_value;
