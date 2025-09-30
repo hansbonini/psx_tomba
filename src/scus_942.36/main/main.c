@@ -682,7 +682,68 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800191E0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001964C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019844);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019844);
+void func_80019844(void)
+{
+        typedef inline struct {
+        byte data[0x1CC];
+        byte unk1CC;
+        byte unk1CD;
+        byte unk1CE;
+        byte unk1CF;
+        byte unk1D0;
+        byte unk1D1;
+        byte unk1D2;
+        byte unk1D3;
+        unkstruct_1F8001D4* unk1D4;
+    } scratchpad;
+    
+    scratchpad* scratch = PSX_SCRATCH;
+    unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)scratch->unk1D4;
+
+    u32 sp10[2];
+    u16 temp_a0;
+
+    *(s8* )&scratch->unk1D1 = 1;
+    *(s8* )&scratch->unk1D0 = 0;
+    sp10[0] = 0;
+    scratch->unk1D4->unk69 = 0;
+    while(true) {
+        *(u16* )0x1F8001F8 = *(u16* )(D_1F8000F8+0x100) + 1;
+        asm("");
+        func_800223E0();
+        temp_v1 = *(unkstruct_1F8001D4**)0x1F8001D4;
+        temp_a0 = temp_v1->action;
+        if ((temp_a0 >= 3U) && (*(u16* )0x1F8001FC & 0x4008) && (temp_a0 != 4)) {
+            temp_v1->action = 4U;
+            temp_v1->unk4A = 0;
+            temp_v1->unk4C = 0;
+            sp10[0] = 1;
+            func_80020C00(0);
+            if (*(u8* )0x1F8001CC != 0) {
+                *(s8* )0x1F8001D3 = 1;
+            }
+        }
+        switch ((u16)(*(unkstruct_1F8001D4**)0x1F8001D4)->action) {
+            case 0:
+                func_800199B8(sp10);
+                break;
+            case 1:
+                func_80019CA4();
+                break;
+            case 2:
+                func_8001A328();
+                break;
+            case 3:
+                func_80019D78();
+                break;
+            case 4:
+                func_80019E68(sp10);
+                break;
+        }
+        func_800171D4(1);
+    };
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800199B8);
 
