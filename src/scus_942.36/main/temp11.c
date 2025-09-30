@@ -91,7 +91,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E330);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E3C4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E3E8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E3E8);
+void func_8003E3E8(void)
+{
+    D_8009E458->unk8A = (u16) (D_8009E458->unk8A + 1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E408);
 

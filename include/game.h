@@ -872,10 +872,18 @@ typedef struct unkstruct_1F8001D4 {
     byte unk6B;
 } unkstruct_1F8001D4;
 
+
+typedef struct unkstruct_8009E458 {
+  byte data[0x8A];
+  u_short unk8A;
+} unkstruct_8009E458;
+
+
 typedef struct unkstruct_800A39B0 {
     short unk0;
     short unk2;
 } unkstruct_800A39B0;
+
 
 typedef struct {
     u_char unk0;
@@ -2702,6 +2710,7 @@ extern short D_8009C338;
 extern short D_8009C33A;
 extern short D_8009C33C;
 extern u_char D_8009C3F8;
+extern unkstruct_8009E458* D_8009E458;
 extern u_short D_8009E744;
 extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* D_8009D6C4;
