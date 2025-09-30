@@ -2039,7 +2039,7 @@ typedef struct gameConfig {
     byte unk54b;
     byte unk54c;
     byte unk54d;
-    byte baronState;
+    byte unk54e;
     char unk54f;
     byte unk550;
     byte unk551;
@@ -2748,4 +2748,4 @@ void FontDebugPrintf(short x, short y, short color, char* fmt);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 
-#endif
+#endif _INCLUDE_GAME_H
