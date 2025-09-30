@@ -1432,11 +1432,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setPlayerAP);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029734);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", addItemToInventory);
-u8 addItemToInventory(u32 item_id, u8 qty, s32 printMessage)
+u_char addItemToInventory(u_long item_id, u_char qty, bool printMessage)
 {
-    s32 i;
+    int i;
     
-    for(i = 0; D_8007C2B8[i].first != 0xFF; ++i)
+    for(i = 0; D_8007C2B8[i].first != sizeof(GAME.item)-1; ++i)
     {
         if (D_8007C2B8[i].first == item_id)
         {
@@ -1446,7 +1446,7 @@ u8 addItemToInventory(u32 item_id, u8 qty, s32 printMessage)
             }
         }
     }
-    if (printMessage != 0) {
+    if (printMessage != false) {
         printInfoMessage(item_id, 0);
     }
     for(i = 0; i < GAME.inventory.counter; ++i)
@@ -1454,24 +1454,24 @@ u8 addItemToInventory(u32 item_id, u8 qty, s32 printMessage)
         if (GAME.inventory.slots[i] == item_id)
         {
             GAME.item[item_id] = GAME.item[item_id] + qty;
-            playSFX(0xA);
+            playSFX(10);
             return GAME.item[item_id];
         }
     }
     for(i = GAME.inventory.counter - 1; i >= 0; --i)
     {
-        ((u8*)(&GAME.inventory.slots[1]))[i] = GAME.inventory.slots[i];
+        GAME.inventory.slots[i+1] = GAME.inventory.slots[i];
     }
     GAME.inventory.slots[0] = item_id;
     GAME.item[item_id] = qty;
     GAME.inventory.counter += 1;
-    playSFX(0xA);
+    playSFX(10);
     GAME.inventory.sortMode |= SORT_MODE_DEFAULT;
     return GAME.item[item_id];
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029944);
-int func_80029944(ITEM id, int qty)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", removeItemFromInventory);
+int removeItemFromInventory(ITEM id, int qty)
 {
     int i;
     for (i = 0; i < GAME.inventory.counter; i++) {
@@ -1500,7 +1500,6 @@ int func_80029944(ITEM id, int qty)
     }
     return -1;
 }
-
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029A84);
 u_long func_80029A84(void)
