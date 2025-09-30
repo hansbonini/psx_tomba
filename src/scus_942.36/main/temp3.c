@@ -165,7 +165,26 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002CEF8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002CFF4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D4C8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D4C8);
+void func_8002D4C8(void)
+{
+    switch (GAME.selectedSection) {
+        case 0:
+            func_800E7574();
+            return;
+        case 3:
+            func_800E79F8();
+            return;
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+            func_801156A8();
+            // fallthrough
+        default:
+            return;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_8002D534);
 void func_8002D534(void)
