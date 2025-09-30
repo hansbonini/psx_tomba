@@ -1431,7 +1431,49 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setPlayerAP);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029734);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029788);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029788);
+u8 func_80029788(u32 item_id, u8 qty, s32 printMessage)
+{
+    s32 i;
+    
+    for(i = 0; D_8007C2B8[i].first != 0xFF; ++i)
+    {
+        if (D_8007C2B8[i].first == item_id)
+        {
+            if (D_8007C2B8[i].second <= GAME.item[item_id])
+            {
+                return GAME.item[item_id];
+            }
+        }
+    }
+    
+    if (printMessage != 0) {
+        printInfoMessage(item_id, 0);
+    }
+
+    for(i = 0; i < GAME.inventory.counter; ++i)
+    {
+        if (GAME.inventory.slots[i] == item_id)
+        {
+            GAME.item[item_id] = GAME.item[item_id] + qty;
+            playSFX(0xA);
+            return GAME.item[item_id];
+        }
+    }
+    
+    for(i = GAME.inventory.counter - 1; i >= 0; --i)
+    {
+        ((u8*)(&GAME.inventory.slots[1]))[i] = GAME.inventory.slots[i];
+    }
+    
+    GAME.inventory.slots[0] = item_id;
+    GAME.item[item_id] = qty;
+    GAME.inventory.counter += 1;
+    playSFX(0xA);
+    GAME.inventory.sortMode |= 0x8000;
+    
+    return GAME.item[item_id];
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80029944);
 int func_80029944(ITEM id, int qty)

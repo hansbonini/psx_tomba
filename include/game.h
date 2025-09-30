@@ -2601,6 +2601,12 @@ typedef struct CAMERA {
     MATRIX matrix;
 } CAMERA;
 
+typedef struct
+{
+    u8 first, second;
+} U8Pair;
+
+
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
@@ -2616,7 +2622,7 @@ extern int D_1F8002C8[];
 
 extern u_short D_8007B290;
 extern int D_8007B294;
-extern byte D_8009B6A8; // SELECTED ROW
+extern U8Pair D_8007C2B8[];
 extern int AP_TABLE;
 extern u_char EVENT_AP_TABLE;
 extern u_char EVENT_AP_TABLE2;
@@ -2644,6 +2650,7 @@ extern u_short LZ_BITMASK;
 extern u_char D_8009BCA0;
 extern char D_8009BCA7;
 extern char D_8009BCAA;
+extern byte D_8009B6A8; // SELECTED ROW
 extern gameConfig GAME;
 extern int SELECTED_SECTION;
 extern int PLAYER_AP;
