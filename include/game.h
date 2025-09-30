@@ -852,9 +852,8 @@ typedef struct unkstruct_1F8001D4 {
     byte unk55;
     byte unk56;
     byte unk57;
-    ushort unk58;
-    byte unk5A;
-    byte unk5B;
+    u_short unk58;
+    u_short unk5A;
     byte unk5C;
     byte unk5D;
     byte unk5E;
@@ -867,7 +866,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk65;
     byte unk66;
     byte unk67;
-    u_char start_or_load; /* Created by retype action */
+    u_char start_or_load;
     byte unk69;
     byte unk6A;
     byte unk6B;

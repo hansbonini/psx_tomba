@@ -748,4 +748,55 @@ void func_8001A51C(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A670);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A670);
+void func_8001A670(void)
+{
+
+    typedef inline struct {
+        byte data[0x1CF];
+        byte unk1CF;
+        byte pad[0x4];
+        byte unk1D4;
+    } scratchpad;
+    
+    RECT rect;
+    s16 var_v0;
+    u16 temp_v0;
+    u16 temp_v1;
+    scratchpad* scratch = PSX_SCRATCH;
+    unkstruct_1F8001D4* temp_a0 = *(u_long**)&scratch->unk1D4;
+
+    switch ((u16)temp_a0->unk4A) {                              // irregular
+        case 0:
+            temp_a0->unk5A = 1U;
+            temp_a0->unk4A = (u16) (temp_a0->unk4A + 1);
+            rect.w = 0x40;
+            rect.x = 0;
+            rect.y = 0;
+            rect.h = 0x100;
+            ClearImage((RECT* ) &rect, 0U, 0U, 0U);
+            func_800177D8();
+            scratch->unk1CF = 0;
+            return;
+        case 1:
+            temp_v0 = temp_a0->unk5A - 1;
+            temp_a0->unk5A = temp_v0;
+            if ((temp_v0 << 0x10) <= 0) {
+                temp_a0->unk4A = (u16) (temp_a0->unk4A + 1);
+                return;
+            }
+            return;
+        case 2:
+            temp_a0->unk4C = 0;
+            temp_a0->unk4E.value = 0;
+            if (temp_a0->start_or_load != 0) {
+                var_v0 = 2;
+            } else {
+                var_v0 = 1;
+                asm("");
+            }
+            temp_a0->action = var_v0;
+            temp_a0->unk4A = 0U;
+            break;
+    }
+}
