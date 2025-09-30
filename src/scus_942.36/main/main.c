@@ -686,7 +686,46 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019844);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800199B8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019CA4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019CA4);
+void func_80019CA4(void)
+{
+    typedef inline struct {
+        byte data[0x1CC];
+        byte unk1CC;
+        byte unk1CD;
+        byte unk1CE;
+        byte unk1CF;
+        byte pad[0x4];
+        unkstruct_1F8001D4* unk1D4;
+    } scratchpad;
+    
+    u8 temp_v0;
+    unkstruct_1F8001D4* temp_v1;
+    scratchpad* scratch = PSX_SCRATCH;
+    unkstruct_1F8001D4* temp_a1 = scratch->unk1D4;
+
+    switch (temp_a1->unk4A) {                              // irregular
+        case 0:
+            SetDispMask(0);
+             *(u8* )&scratch->unk1CE = 0;
+            func_800223A0(2);
+            func_800222B8(2, 1);
+            scratch->unk1D4->unk4A++;
+            return;
+        case 1:
+            if (*(u8* )&scratch->unk1CE != 0) {
+                temp_a1->unk4A++;
+                func_8001F158(0);
+                return;
+            }
+            return;
+        case 2:
+            temp_v1 = *(u_long**)&scratch->unk1D4;
+            temp_v1->action = 4;
+            temp_v1->unk4A = 0;
+            break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019D78);
 void func_80019D78(void)
