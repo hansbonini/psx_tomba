@@ -93,7 +93,27 @@ u_long func_80029A84(void)
     return GAME.playerHealthDisplayed;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029B20);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029B20);
+u8 func_80029B20(void)
+{
+    u8 health;
+
+    if ((u8) GAME.playerHealthDisplayed < 0x10U) {
+        health = GAME.playerHealthDisplayed + GAME.unk720;
+        GAME.playerHealthDisplayed = health;
+        if ((u32) (health & 0xFF) >= 0x11U) {
+            GAME.playerHealthDisplayed = 0x10;
+        }
+        printInfoMessage(0x87, 0);
+        playSFX(10);
+        (u16*)D_800A5430 = GAME.playerHealthDisplayed;
+        D_800A5432 = GAME.playerHealthDisplayed;
+        GAME.playerHealth = GAME.playerHealthDisplayed;
+    }
+    GAME.goldenBowlState = 1;
+    D_800B078C = (u8* ) &D_800121C8;
+    return GAME.playerHealth;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029BD8);
 
