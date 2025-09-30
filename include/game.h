@@ -2726,6 +2726,7 @@ extern u_short D_800A5432;
 extern u_char D_800A3940;
 extern u_char D_800A5398;
 extern unkstruct_800A39B0 D_800A39B0[];
+extern u_char D_800A38B8[];
 extern unkstruct_800AFF18 D_800A5140[];
 extern char D_800A539C;
 extern char D_800A539D;
