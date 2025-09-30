@@ -2036,7 +2036,7 @@ typedef struct gameConfig {
     byte unk548;
     byte unk549;
     byte unk54a;
-    byte unk54b;
+    byte baronState;
     byte unk54c;
     byte unk54d;
     byte unk54e;
