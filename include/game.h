@@ -767,10 +767,8 @@ typedef struct unkstruct_01 {
 } unkstruct_01;
 
 typedef struct unkstruct_1F8001D4 {
-    byte unk0;
-    byte unk1;
-    byte unk2;
-    byte unk3;
+    short unk0;
+    short unk2;
     byte unk4;
     byte unk5;
     byte unk6;
