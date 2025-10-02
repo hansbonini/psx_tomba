@@ -15,7 +15,7 @@
  * $PSLibId$
  */
 
-#include <sys/types.h>
+#include <psyq/sys/types.h>
 
 /*
  * Macro

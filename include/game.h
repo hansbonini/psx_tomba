@@ -78,6 +78,8 @@
 
 #include "psyq/libgpu.h"
 #include "psyq/libgte.h"
+#include "psyq/libspu.h"
+#include "psyq/libsnd.h"
 
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define IS_DEBUG_MODE_ENABLED ((u_char)(0x1F80001B4))
@@ -2629,6 +2631,7 @@ extern u_long D_1F8001D4;
 extern u_short D_1F8001F6; // ASTERISK CURSOR COLOR
 extern u_short D_1F8001FC;
 extern int D_1F8002C8[];
+extern short D_1F8003B6;
 
 
 extern u_short D_8007B290;
@@ -2640,6 +2643,7 @@ extern u_char EVENT_AP_TABLE2;
 extern u_char D_8007775C[];
 extern int D_800771FC;
 extern int D_8007722C;
+extern u_char D_80077FA8;
 extern short D_80078F80;
 extern int D_800791A0; // FileLinkArray
 extern int D_8007B2F4[];
@@ -2656,11 +2660,20 @@ extern int D_8007E868;
 extern int D_8007E86C;
 extern int D_8007E86E;
 
+extern SpuCommonAttr D_8009B048; // SPU_ATTR
+extern short D_8009B078;
+extern short D_8009B07C;
+extern short D_8009B094;
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
+extern short D_8009BC28;
+extern int D_8009BC98;
 extern u_char D_8009BCA0;
-extern char D_8009BCA7;
 extern char D_8009BCAA;
+extern char D_8009BCA7;
+extern char D_8009BCDA;
+extern char D_8009BCDB;
+extern u_char D_8009BCDF;
 extern byte D_8009B6A8; // SELECTED ROW
 extern gameConfig GAME;
 extern int SELECTED_SECTION;
@@ -2669,32 +2682,20 @@ extern u_char PLAYER_HEALTH;
 extern u_char PLAYER_HEALTH_DISPLAYED;
 extern u_char D_8009BCDC;
 extern u_char PLAYER_LIVES;
-extern char D_8009BCE9;
-extern u_short D_8009BCEA;
 extern char AREA00_EVENT_CONTROL;
 extern u_short NEXT_AREA;
 extern u_short NEXT_SECTION;
 extern u_char BLUE_EXP_LEVEL;
 extern u_char GREEN_EXP_LEVEL;
 extern u_char RED_EXP_LEVEL;
-extern u_short D_8009C108;
 extern char INVENTORY_SCREEN;
 extern u_char EVENT_LIST[256];
-extern char D_8009C216;
-extern char D_8009C269;
-extern char D_8009C34C;
-extern char D_8009C375; 
-extern char D_8009C3E3;
-extern u_char D_8009C3E7;
-extern u_char D_8009C3E8;
-extern char D_8009C3FE;
 extern u_char ITEM_LIST[256];
 extern u_char INVENTORY_SLOT[256];
 extern u_short INVENTORY_SLOT_COUNTER[2];
 extern u_short INVENTORY_SORT_MODE;
 extern u_short CURRENT_AREA;
 extern u_short CURRENT_SECTION;
-extern char D_8009C617;
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
@@ -2703,18 +2704,12 @@ extern volatile u_short D_8009C9D8;
 extern short D_8009C9DA;
 extern volatile u_short D_8009C9DC;
 extern short D_8009C9DE;
+extern short D_8009C9F0;
 extern int D_8009CA04;
-extern int D_8009BC98;
-extern char D_8009BCDA;
-extern char D_8009BCDB;
-extern u_char D_8009BCDF;
-extern char D_8009C217;
-extern char D_8009C284;
-extern short D_8009C338;
-extern short D_8009C33A;
-extern short D_8009C33C;
 extern u_char D_8009C3F8;
+extern short D_8009E430;
 extern unkstruct_8009E458* D_8009E458;
+extern short D_8009E638;
 extern u_short D_8009E744;
 extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* D_8009D6C4;
@@ -2733,8 +2728,10 @@ extern short D_8009EB52;
 extern u_short D_8009EB5A;
 extern u_short D_8009EB7C;
 extern char* SPRINTF_BUFFER_MSG[];
-extern u_short D_800A5430;
-extern u_short D_800A5432;
+extern char D_800A15D8; // SPU_SEQ_TABLE
+extern short D_800A2790;
+extern short D_800A3030;
+extern short D_800A32F8;
 extern u_char D_800A3940;
 extern u_char D_800A5398;
 extern unkstruct_800A39B0 D_800A39B0[];
@@ -2744,6 +2741,8 @@ extern char D_800A539C;
 extern char D_800A539D;
 extern char D_800A539E;
 extern char D_800A539F;
+extern u_short D_800A5430;
+extern u_short D_800A5432;
 extern int D_800A5858;
 extern int D_800A5970;
 extern unkstruct_800AFF18 D_800AFF18[];
