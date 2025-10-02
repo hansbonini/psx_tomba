@@ -47,18 +47,18 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023CE0);
 void func_80023E44(short arg0)
 {
     int graphType = GetGraphType();
-    int val = 0x24;
+    int tpage = 36;
     if (graphType != 1) {
         graphType = GetGraphType();
         asm("");
         if (graphType == 2) {
-            val = 0x24;
+            tpage = 36;
         } else {
-            val = 0x14;   
+            tpage = 20;
         }
     }
-    func_80024008(0x68, 0x60, 1, val, arg0);
-    func_80024008(0xA0, 0x60, 2, val, arg0);
+    func_80024008(0x68, 0x60, 1, tpage, arg0);
+    func_80024008(0xA0, 0x60, 2, tpage, arg0);
     return;
 }
 
