@@ -130,10 +130,10 @@ void func_80016C4C(u_char r0, u_char g0, u_char b0)
     DRAWENV* drawenv1;
     DRAWENV* drawenv2;
 
-    drawenv1 = &D_8009D6C4;
-    dispenv1 = (byte*)(&D_8009D6C4) - sizeof(DISPENV);
-    drawenv2 = (byte*)(&D_8009D6C4) + 0xD10;
-    dispenv2 = (byte*)(&D_8009D6C4) + 0xD10 - sizeof(DISPENV);
+    drawenv1 = (DRAWENV*)&D_8009D6C4;
+    dispenv1 = (DISPENV*)((byte*)(&D_8009D6C4) - sizeof(DISPENV));
+    drawenv2 = (DRAWENV*)((byte*)(&D_8009D6C4) + 0xD10);
+    dispenv2 = (DISPENV*)((byte*)(&D_8009D6C4) + 0xD10 - sizeof(DISPENV));
     SetDefDrawEnv(drawenv1, 384, 256, 320, 224);
     SetDefDispEnv(dispenv1, 704, 256, 320, 224);
     SetDefDrawEnv(drawenv2, 704, 256, 320, 224);
@@ -160,10 +160,10 @@ void func_80016DDC(u_char r0, u_char g0, u_char b0)
     DRAWENV* drawenv1;
     DRAWENV* drawenv2;
 
-    drawenv1 = &D_8009D6C4;
-    dispenv1 = (byte*)(&D_8009D6C4) - sizeof(DISPENV);
-    drawenv2 = (byte*)(&D_8009D6C4) + 0xD10;
-    dispenv2 = (byte*)(&D_8009D6C4) + 0xD10 - sizeof(DISPENV);
+    drawenv1 = (DRAWENV*)&D_8009D6C4;
+    dispenv1 = (DISPENV*)((byte*)(&D_8009D6C4) - sizeof(DISPENV));
+    drawenv2 = (DRAWENV*)((byte*)(&D_8009D6C4) + 0xD10);
+    dispenv2 = (DISPENV*)((byte*)(&D_8009D6C4) + 0xD10 - sizeof(DISPENV));
     SetDefDrawEnv(drawenv1, 384, 0, 640, 480);
     SetDefDispEnv(dispenv1, 384, 0, 640, 480);
     SetDefDrawEnv(drawenv2, 384, 0, 640, 480);
