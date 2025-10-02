@@ -230,28 +230,22 @@ void func_80017498(u_long* address, short x, short y, short x2, short y2)
     TIM_IMAGE *pTim;
 
     pTim= &tim;
-    
     if (OpenTIM(address)) {
         return;
     }
-    
     if (ReadTIM(pTim) == NULL) {
         return;
     }
-    
     pTim->prect->x = x;
     pTim->prect->y = y;
     pTim->crect->x = x2;
     pTim->crect->y = y2;
-
     if (((pTim->mode & 8) != 0) && ((x2 << 16) >= 0)) {
         LoadImage(pTim->crect, pTim->caddr);
     }
-
     if ((x << 16) >= 0) {
         LoadImage(pTim->prect, pTim->paddr);
     }
-    
     return;
 }
 
