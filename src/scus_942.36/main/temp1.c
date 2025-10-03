@@ -7,7 +7,51 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A9F0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AC00);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AC00);
+void func_8001AC00(void)
+{
+    s16 temp_v0;
+    u16 temp_v1;
+    unkstruct_1F8001D4* temp_v0_2;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C;
+    switch (temp_v1) {
+        case 0:
+            func_8001B0A4();
+            break;
+        case 1:
+            func_8001B2B4();
+            break;
+        case 2:
+            func_8001B780();
+            break;
+        case 3:
+            func_8001BB1C();
+            break;
+        case 4:
+            func_8001C104();
+            break;
+        case 5:
+            func_8001C434();
+            break;
+        case 6:
+            func_8001C75C();
+            break;
+        case 7:
+            func_8001CFCC();
+            break;
+        case 8:
+            func_8001D29C();
+            break;
+    }
+    temp_v0 = *(s16* )0x1F8001DC;
+    if ((temp_v0 >= 0) && ((*(u8* )0x1F8001CE) != 0)) {
+        temp_v0_2 = (*(unkstruct_1F8001D4** )0x1F8001D4);
+        *(s16* )(&SCRATCHPAD+0x1DC) = -1;
+        temp_v0_2->unk4C = (u16) temp_v0;
+        temp_v0_2->unk4E = (u16) *(u16* )0x1F8001DE;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AD1C);
 
