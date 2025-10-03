@@ -124,7 +124,75 @@ block_14:
     (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value=temp_v1_3+1;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B0A4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B0A4);
+void func_8001B0A4(void)
+{
+    s32 var_a0;
+    u16 temp_v0;
+    unkstruct_1F8001D4* p;
+    u8* temp1;
+    u8* temp2;
+
+    switch ((*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value) {
+        case 0:
+            func_800222B8(9, 1);
+            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+            return;
+        case 1:
+            if (*(u8* )0x1F8001CE != 0) {
+                (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+                return;
+            }
+        default:
+            return;
+        case 2:
+            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+            func_8001758C();
+            *(s8* )0x1F8001CF = 0;
+            return;
+        case 3:
+            func_8001AD58();
+            return;
+        case 5:
+            func_80020FAC();
+            (*(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4))->unk4E.value++;
+            func_8001758C();
+            *(u8*)&(*(u32**)0x1F8001CF) = 0;
+            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E = 0x78U;
+            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk64 = 0U;
+            return;
+        case 6:
+            p = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
+            *(u16*)&p->unk64=((p->unk64+0xC)&0xFF);
+            func_80023E44(p->unk64);
+            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E--;
+            if (((*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E << 0x10) == 0) {
+                var_a0 = 1;
+                temp1 = (u8*)&D_8009BCDC;
+                if (*temp1 == 0) {
+                   *temp1 = 1;
+                    func_8001CE80(var_a0);
+                } else {
+                    if (GAME.selectedArea == GAME.currentArea) {
+                        var_a0 = 0;
+                        if (GAME.selectedSection == GAME.currentSection) {
+                            func_8001CF7C(0);
+                            return;
+                        }
+                    }
+                    func_8001CE80(var_a0);
+                }
+                D_8009EB4C = 0;
+                (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+            }
+            break;
+        case 4:
+        case 7:
+            func_8001CA84();
+            break;
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B2B4);
 

@@ -856,14 +856,12 @@ typedef struct unkstruct_1F8001D4 {
     u_short unk5A;
     byte unk5C;
     byte unk5D;
-    byte unk5E;
-    byte unk5F;
+    u_short unk5E;
     byte unk60;
     byte unk61;
     byte unk62;
     byte unk63;
-    byte unk64;
-    byte unk65;
+    u_short unk64;
     byte unk66;
     byte unk67;
     u_char start_or_load;
@@ -2618,16 +2616,17 @@ typedef struct
 } U8Pair;
 
 
+extern u_char SCRATCHPAD;
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
-extern char* D_80010120[];
-extern char* D_80010134[];
-extern char* D_8001014C[];
-extern u_char D_1F8001B4;
-extern u_long D_1F8001D4;
-extern u_short D_1F8001F6; // ASTERISK CURSOR COLOR
-extern u_short D_1F8001FC;
+// extern char* D_80010120[];
+// extern char* D_80010134[];
+// extern char* D_8001014C[];
+// extern u_char D_1F8001B4;
+// extern u_long D_1F8001D4;
+// extern u_short D_1F8001F6; // ASTERISK CURSOR COLOR
+// extern u_short D_1F8001FC;
 extern int D_1F8002C8[];
 extern short D_1F8003B6;
 
