@@ -57,8 +57,8 @@ void func_80023E44(short arg0)
             tpage = 20;
         }
     }
-    func_80024008(0x68, 0x60, 1, tpage, arg0);
-    func_80024008(0xA0, 0x60, 2, tpage, arg0);
+    func_80024008(104, 96, 1, tpage, arg0);
+    func_80024008(160, 96, 2, tpage, arg0);
     return;
 }
 
