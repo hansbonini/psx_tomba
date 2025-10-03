@@ -187,7 +187,7 @@ void func_8001B0A4(void)
             break;
         case 4:
         case 7:
-            displayDebugLoadingScreen();
+            displayLoadingScreen();
             break;
     }
     return;
@@ -268,7 +268,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C75C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C940);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugLoadingScreen);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayLoadingScreen);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CB54);
 
