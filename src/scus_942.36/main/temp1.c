@@ -53,7 +53,16 @@ void func_8001AC00(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AD1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AD1C);
+void func_8001AD1C(void)
+{
+    unkstruct_1F8001D4* temp_v1;
+
+    temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v1->unk4E.value++;
+    func_8001758C();
+    *(s8* )0x1F8001CF = 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
 void displayDebugScreen(void)
