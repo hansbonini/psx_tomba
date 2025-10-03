@@ -11,8 +11,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AC00);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AD1C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AD58);
-void func_8001AD58(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
+void displayDebugScreen(void)
 {
     typedef inline struct {
         char data[0x1B4];
@@ -128,7 +128,6 @@ block_14:
 void func_8001B0A4(void)
 {
     s32 var_a0;
-    u16 temp_v0;
     unkstruct_1F8001D4* p;
     u8* temp1;
     u8* temp2;
@@ -151,7 +150,7 @@ void func_8001B0A4(void)
             *(s8* )0x1F8001CF = 0;
             return;
         case 3:
-            func_8001AD58();
+            displayDebugScreen();
             return;
         case 5:
             func_80020FAC();
