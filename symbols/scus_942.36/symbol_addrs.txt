@@ -392,8 +392,8 @@ main=0x800163b0;
 memCardInit=0x80019020;
 displayDebugScreen=0x8001AD58;
 displayLoadingScreen=0x8001CA84;
-setEventCompleteAndAPTable=0x8001E118;
-setEventState=0x8001E220;
+setEventState=0x8001E118;
+setEventStarted=0x8001E220;
 setEventComplete=0x8001E31C;
 getEventState=0x8001E3D8;
 printEventMessage=0x8001ECD8;
@@ -907,8 +907,8 @@ SpuRGetAllKeysStatus = 0x80076CE0;
 SpuGetAllKeysStatus = 0x80076DB0;
 // data
 AP_TABLE=0x80077520; // size:0x20
-EVENT_AP_TABLE=0x80077540; // size:0xC8
-EVENT_AP_TABLE2=0x80077608; // size:0xC8
+EVENT_STARTED_AP_TABLE=0x80077540; // size:0xC8
+EVENT_COMPLETE_AP_TABLE=0x80077608; // size:0xC8
 // bss
 _ctype_=0x8007FA70; // size:0x3
 GPU_printf=0x80090C98;

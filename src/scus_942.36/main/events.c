@@ -242,14 +242,14 @@ void func_800400E0(unkstruct_800A6D50* arg0)
             setEventComplete(EVENT_WHATSTHEUNDERWATER, 0);
             break;
         case ITEM_WHATTHETHIEFFORGOT:
-            setEventState(EVENT_WHATTHETHIEFFORGOT, 1, 1);
+            setEventStarted(EVENT_WHATTHETHIEFFORGOT, 1, 1);
             break;
         case ITEM_BOSSJEWEL:
             setEventComplete(EVENT_THEBOSSTREASURE, 1);
             setPlayerAP(100000);
             break;
         case ITEM_SEASHELLNECKLACE:
-            setEventState(EVENT_THEMERMAIDNECKLACE, 0, 0);
+            setEventStarted(EVENT_THEMERMAIDNECKLACE, 0, 0);
             break;
     }
     arg0->unk4++;
@@ -310,7 +310,7 @@ void func_80040468(unkstruct_800A6D50* arg0)
 {
     GAME.unk54e = 5;
     addItemToInventory(ITEM_DIRTYMIRROR, 1, true);
-    setEventState(EVENT_AMAGICMIRROR, 0, 0);
+    setEventStarted(EVENT_AMAGICMIRROR, 0, 0);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -414,7 +414,7 @@ void func_8004080C(unkstruct_800A6D50* arg0)
     switch (temp_v1) {
         case 0:
             addItemToInventory(ITEM_BITINGPLANTFLOWER, 1, true);
-            setEventState(EVENT_BITINGPLANTFLOWER, 0, 0);
+            setEventStarted(EVENT_BITINGPLANTFLOWER, 0, 0);
             if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
                 GAME.bittingPlantFlowerState = 2;
             }
@@ -473,7 +473,7 @@ void func_80040A30(unkstruct_800A6D50* arg0)
 {
     switch (GAME.event[EVENT_LOSTANDFOUND]) {
         case 0:
-            setEventState(EVENT_LOSTANDFOUND, 0, 0);
+            setEventStarted(EVENT_LOSTANDFOUND, 0, 0);
             printInfoMessage(0x16, 3);
             break;
         case 1:
@@ -505,7 +505,7 @@ void func_80040B28(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80040B98);
 void func_80040B98(unkstruct_800A6D50* arg0)
 {
-    setEventState(EVENT_FLOWERSEEDS, 0, 0);
+    setEventStarted(EVENT_FLOWERSEEDS, 0, 0);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->unk6B);
     }
@@ -556,25 +556,25 @@ void func_80040C0C(unkstruct_800A6D50* arg0)
             if ((temp << 0x10) == 0) {
                 switch (arg0->item_id) {
                     case ITEM_REDPIGBAG:        
-                        setEventState(EVENT_PHOENIXMOUNTAIN, 0, 3);
+                        setEventStarted(EVENT_PHOENIXMOUNTAIN, 0, 3);
                         break;
                     case ITEM_ORANGEPIGBAG:
-                        setEventState(EVENT_BACCUSVILLAGE, 0, 3);
+                        setEventStarted(EVENT_BACCUSVILLAGE, 0, 3);
                         break;
                     case ITEM_YELLOWPIGBAG:
-                        setEventState(EVENT_TRICKVILLAGE, 0, 3);
+                        setEventStarted(EVENT_TRICKVILLAGE, 0, 3);
                         break;
                     case ITEM_GREENPIGBAG:
-                        setEventState(EVENT_LAVACAVES, 0, 3);
+                        setEventStarted(EVENT_LAVACAVES, 0, 3);
                         break;
                     case ITEM_BLUEEVILPIGBAG:
-                        setEventState(EVENT_THE100FLOWERFOREST, 0, 3);
+                        setEventStarted(EVENT_THE100FLOWERFOREST, 0, 3);
                         break;
                     case ITEM_NAVYPIGBAG:
-                        setEventState(EVENT_THEDEEPJUNGLEPIG, 0, 3);
+                        setEventStarted(EVENT_THEDEEPJUNGLEPIG, 0, 3);
                         break;
                     case ITEM_PINKPIGBAG:
-                        setEventState(EVENT_THEHAUNTEDMANSION, 0, 3);
+                        setEventStarted(EVENT_THEHAUNTEDMANSION, 0, 3);
                         break;
                 }
                 arg0->unk4++;
@@ -634,7 +634,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
                 }
                 arg0->unk4++;
             } else {
-                setEventState(EVENT_BLUEHIDDENPOWERS, 0, 0);
+                setEventStarted(EVENT_BLUEHIDDENPOWERS, 0, 0);
                 if ((short)arg0->unk22 == 0) {
                     printInfoMessage(0x26, 2);
                     arg0->unk22 = 0x78;
@@ -651,7 +651,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
                 }
                 arg0->unk4++;
             } else {
-                setEventState(EVENT_GREENHIDDENPOWERS, 0, 1);
+                setEventStarted(EVENT_GREENHIDDENPOWERS, 0, 1);
                 if ((short)arg0->unk22 == 0) {
                     printInfoMessage(0x26, 2);
                     arg0->unk22 = 0x78;
