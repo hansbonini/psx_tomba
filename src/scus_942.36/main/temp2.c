@@ -41,7 +41,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023A3C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", FontDebugPrintf);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", drawNowLoading);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023CE0);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023E44);
 void func_80023E44(short arg0)

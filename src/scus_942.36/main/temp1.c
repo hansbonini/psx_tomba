@@ -641,7 +641,7 @@ void displayLoadingScreen(void)
             temp_v1->unk62 = 0;
             temp_v1->unk60 = 0xFU;
             temp_v1->loadingTime = 0U;
-            drawNowLoading(temp_v1->unk62, 0U);
+            func_80023CE0(temp_v1->unk62, 0U);
             D_8009EB4C += 1;
             // fallthrough
         case 1:
@@ -649,12 +649,12 @@ void displayLoadingScreen(void)
             temp_v0 = temp_a0->unk60 - 1;
             temp_a0->unk60 = temp_v0;
             if ((temp_v0 << 0x10) == 0) {
-                temp_a0->unk60 = 0xFU;
+                temp_a0->unk60 = 0xFU; // pig refresh rate?
                 temp_a0->unk62 = (short) ((u_short) temp_a0->unk62 ^ 1);
             }
             temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             *(u_short*)&temp_v0_2->loadingTime = ((temp_v0_2->loadingTime + 12) & 0xFF);
-            drawNowLoading(temp_v0_2->unk62, temp_v0_2->loadingTime);
+            func_80023CE0(temp_v0_2->unk62, temp_v0_2->loadingTime);
             return;
     }
 }
