@@ -1,8 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-void func_8001F1C0(void);
-
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);

@@ -2754,6 +2754,7 @@ extern int D_800B3184;
 extern int D_800121C8;
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
+void func_8001F1C0(void);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 

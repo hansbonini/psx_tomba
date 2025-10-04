@@ -5,7 +5,93 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A9F0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A9F0);
+void func_8001A9F0(void)
+{
+    u16 temp_v1;
+    u8* temp1;
+    unkstruct_1F8001D4* temp_v0;
+    unkstruct_1F8001D4* temp_v1_2;
+    unkstruct_1F8001D4* temp_v1_3;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C;
+    switch (temp_v1) {
+        case 0:
+            func_800222B8(9, 1);
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2->unk4C++;
+            return;
+        case 1:
+            if (*(u8* )0x1F8001CE != 0) {
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->unk4C++;
+                return;
+            }
+        default:
+            return;
+        case 2:
+            if (*(u8* )0x1F8001B4 == 0) {
+                D_8009EB4C = 0;
+                *(u8* )0x1F8001CE = 0U;
+                func_8001CE80(1);
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->unk4C++;
+                return;
+            }
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C = 7U;
+            return;
+        case 3:
+            displayLoadingScreen();
+            if (*(u8* )0x1F8001CE != 0) {
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->unk4C++;
+                return;
+            }
+            break;
+        case 4:
+            *(u8* )0x1F8001CC = 1;
+            *(s8* )0x1F8001CD = 1;
+            func_80017154(1, &func_8001F1C0);
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2->unk4C++;
+            return;
+        case 5:
+            if (*(u8* )0x1F8001CC != 0) {
+                if (*(u16* )(&SCRATCHPAD+0x1FC) & 0x4008) {
+                    *(s8* )0x1F8001D3 = 1;
+                    *(u16* )0x1F8001FC = 0U;
+                    (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C = 6U;
+                    return;
+                }
+            } else {
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C = 7U;
+                return;
+            }
+            break;
+        case 6:
+            if (*(u8* )0x1F8001CC == 0) {
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C = 7U;
+                return;
+            }
+            break;
+        case 7:
+            temp1 = (u8*)&D_8009BCDC;
+            *temp1 = 1;
+            temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            *(u16*)&temp_v1_3->unk4C = 1;
+            if (*(u8* )0x1F8001B4 != 0) {
+                temp_v1_3->unk4C = 0U;
+                *temp1 = 0;
+            }
+            temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v0->unk4A = 1;
+            temp_v0->unk4E.value = 0;
+            GAME.currentArea = GAME.selectedArea;
+            GAME.currentSection = GAME.selectedSection;
+            GAME.currentSpawnPoint = GAME.selectedSpawnPoint;
+            break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AC00);
 void func_8001AC00(void)
