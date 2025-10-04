@@ -275,27 +275,30 @@ void displayDebugScreen(void)
         if (D_8009B6A8 != 0) {
             if ((scratch->unk1FC & 0x80) != 0) {
                 var_v1 = &GAME.selectedSection;
-                goto block_14;
-            }
-            if (scratch->unk1FC & 0x20) {
+                *(u_short*)var_v1 -= 1;
+                if ((*(u_short*)var_v1 << 0x10) <= 0) {
+                    *(u_short*)var_v1 = 0U;
+                }
+            } else if (scratch->unk1FC & 0x20) {
                 temp_v1_2 = GAME.selectedSection += 1;
                 temp_a0 = *(u_short*)((u_short*)&D_8007B294 + GAME.selectedArea);
                 if ((temp_a0 - 1) < (int)temp_v1_2) {
                     GAME.selectedSection = (u_short) (temp_a0 - 1);
                 }
             }
-        } else if ((scratch->unk1FC & 0x80) != 0) {
-            var_v1 = &GAME.selectedArea;
-block_14:
-            *(u_short*)var_v1 -= 1;
-            if ((*(u_short*)var_v1 << 0x10) <= 0) {
-                *(u_short*)var_v1 = 0U;
-            }
-        } else if (scratch->unk1FC & 0x20) {
-            GAME.selectedArea += 1;
-            temp_v1_2 = (u_short*)D_8007B290;
-            if (temp_v1_2 < GAME.selectedArea) {
-                GAME.selectedArea = temp_v1_2;
+        } else {
+            if ((scratch->unk1FC & 0x80) != 0) {
+                var_v1 = &GAME.selectedArea;
+                *(u_short*)var_v1 -= 1;
+                if ((*(u_short*)var_v1 << 0x10) <= 0) {
+                    *(u_short*)var_v1 = 0U;
+                }
+            } else if (scratch->unk1FC & 0x20) {
+                GAME.selectedArea++;
+                temp_v1_2 = (u_short*)D_8007B290;
+                if (temp_v1_2 < GAME.selectedArea) {
+                    GAME.selectedArea = temp_v1_2;
+                }
             }
         }
         sprintf(&SPRINTF_BUFFER_MSG, "AREA SELECT = %02d", GAME.selectedArea);
