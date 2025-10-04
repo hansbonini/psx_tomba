@@ -417,7 +417,87 @@ void func_8001B0A4(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B2B4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B2B4);
+void func_8001B2B4(void)
+{
+    u_short temp_v1;
+    u_char temp_v0;
+    unkstruct_1F8001D4* temp_a0;
+    unkstruct_1F8001D4* temp_a0_2;
+    unkstruct_1F8001D4* temp_v1_2;
+
+    temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v1 = temp_a0->unk4E.value;
+    switch (temp_v1) {                              // irregular
+        case 0:
+            func_8001758C(temp_a0);
+            func_80017AE0();
+            temp_a0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            *(char* )0x1F8001CF = 1;
+            temp_a0_2->unk4E.value++;
+            func_800243E8();
+            func_800246B0();
+            if (*(u_long*)&GAME.selectedArea == 6) {
+                func_8011AF40();
+            } else {
+                func_80028EF4();
+            }
+            func_80059F7C();
+            if (GAME.totalTimePlayed != 1) {
+                func_8002065C();
+            }
+            GAME.unk21 = 1;
+            *(&D_8009C9D8) = D_8009C9DC = 0;
+            *(short*)(&SCRATCHPAD+0x1FC)=0;
+            return;
+        case 1:
+            GAME.unk8++;
+            func_8001B5A8(temp_a0);
+            if (D_8009BCA0 == 2) {
+                temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                temp_v1_2->unk4E.value++;
+                func_80020C00(1);
+            }
+            if ((*(u_char* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
+                return;
+            }
+            return;
+        case 2:
+            if ((*(u_char* )0x1F8001BB == 0) && (temp_v0 = GAME.playerLives - 1, GAME.playerLives = temp_v0, ((temp_v0 & 0xFF) == 0))) {
+                temp_a0->unk4E.value = 3U;
+            } else {
+                temp_a0->unk4C = 0;
+                temp_a0->unk4E.value = 5U;
+                GAME.selectedSpawnPoint = 0;
+                GAME.nextSpawnPoint = 0;
+                GAME.playerHealth = GAME.playerHealthDisplayed;
+            }
+            GAME.unk30 = 0;
+            D_800B07CD = 0;
+            GAME.totalTimePlayed = 0;
+            D_8009D6DD = 0;
+            D_8009D6DE = 0;
+            D_8009D6DF = 0;
+            D_8009E3ED = 0;
+            D_8009E3EE = 0;
+            D_8009E3EF = 0;
+            GAME.currentArea = GAME.selectedArea;
+            GAME.currentSection = GAME.selectedSection;
+            GAME.currentSpawnPoint = GAME.selectedSpawnPoint;
+            return;
+        case 3:
+            D_8009D6DD = 0;
+            D_8009D6DE = 0;
+            D_8009D6DF = 0;
+            D_8009E3ED = 0;
+            D_8009E3EE = 0;
+            D_8009E3EF = 0;
+            temp_a0->unk4C = 8;
+            temp_a0->unk4E.value = 0U;
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B5A8);
 
