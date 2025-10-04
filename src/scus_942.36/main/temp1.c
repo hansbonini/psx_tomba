@@ -626,7 +626,38 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C75C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C940);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayLoadingScreen);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayLoadingScreen);
+void displayLoadingScreen(void)
+{
+    u_short temp_a1;
+    u_short temp_v0;
+    unkstruct_1F8001D4* temp_a0;
+    unkstruct_1F8001D4* temp_v0_2;
+    unkstruct_1F8001D4* temp_v1;
+
+    switch (D_8009EB4C) {                           // irregular
+        case 0:
+            temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1->unk62 = 0;
+            temp_v1->unk60 = 0xFU;
+            temp_v1->unk64 = 0U;
+            drawNowLoading(temp_v1->unk62, 0U);
+            D_8009EB4C += 1;
+            // fallthrough
+        case 1:
+            temp_a0 = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
+            temp_v0 = temp_a0->unk60 - 1;
+            temp_a0->unk60 = temp_v0;
+            if ((temp_v0 << 0x10) == 0) {
+                temp_a0->unk60 = 0xFU;
+                temp_a0->unk62 = (short) ((u_short) temp_a0->unk62 ^ 1);
+            }
+            temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            *(u_short*)&temp_v0_2->unk64 = ((temp_v0_2->unk64 + 0xC) & 0xFF);
+            drawNowLoading(temp_v0_2->unk62, temp_v0_2->unk64);
+            return;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CB54);
 

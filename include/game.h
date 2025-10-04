@@ -857,10 +857,8 @@ typedef struct unkstruct_1F8001D4 {
     byte unk5C;
     byte unk5D;
     u_short unk5E;
-    byte unk60;
-    byte unk61;
-    byte unk62;
-    byte unk63;
+    short unk60;
+    short unk62;
     u_short unk64;
     byte unk66;
     byte unk67;
