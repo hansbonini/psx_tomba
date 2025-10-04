@@ -2730,6 +2730,7 @@ extern short D_800A2790;
 extern short D_800A3030;
 extern short D_800A32F8;
 extern u_char D_800A3940;
+extern s16 D_800A3952;
 extern u_char D_800A5398;
 extern unkstruct_800A39B0 D_800A39B0[];
 extern u_char D_800A38B8[];
@@ -2751,6 +2752,8 @@ extern int D_800B0680;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
 extern int D_800B3184;
+extern s8 D_800B3188;
+extern void func_80019844(void);
 extern int D_800121C8;
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);

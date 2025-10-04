@@ -1,7 +1,72 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
+void func_8001A774(void)
+{
+    s16 var_v0;
+    s32 temp_v0;
+    u16 temp_v1;
+    unkstruct_1F8001D4* temp_v0_2;
+    unkstruct_1F8001D4* temp_v0_3;
+    unkstruct_1F8001D4* temp_v1_2;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
+    switch (temp_v1) {
+        case 0:
+            SetDispMask(0);
+            func_80028CE4();
+            *(u8* )0x1F8001CE = 0;
+            func_800223A0(3);
+            func_800222B8(5, 1);
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2->unk4A++;;
+            return;
+        case 1:
+            if (*(u8* )0x1F8001CE != 0) {
+                func_8001821C();
+                D_800A3952 = 5;
+                func_80020AF0(0);
+                SetDispMask(1);
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->unk4A++;;
+                return;
+            }
+        default:
+            return;
+        case 2:
+            *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            temp_v0 = func_800E9438();
+            if (temp_v0 == 1) {
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+            } else {
+                if (temp_v0 == -1) (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A = 4;
+            }
+            func_800E9EF8();
+            func_8001F6D4();
+            return;
+        case 3:
+            D_8009BCDC = 0;
+            GAME.totalTimePlayed = 0;
+            func_80020C00(0);
+            temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v0_2->action = 1;
+            temp_v0_2->unk4A = 1U;
+            temp_v0_2->unk4C = 0;
+            temp_v0_2->unk4E.value = 0;
+            return;
+        case 4:
+            func_80020C00(0);
+            temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            *(s8* )0x1F8001D0 = 0;
+            temp_v0_3->action = 1;
+            temp_v0_3->unk4A = 0U;
+            temp_v0_3->unk4C = 0;
+            temp_v0_3->unk4E.value = 0;
+            func_800172C4(&func_80019844);
+            break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
 void func_8001A954(void)
