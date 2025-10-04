@@ -641,7 +641,7 @@ void displayLoadingScreen(void)
             temp_v1->unk62 = 0;
             temp_v1->unk60 = 0xFU;
             temp_v1->loadingTime = 0U;
-            func_80023CE0(temp_v1->unk62, 0U);
+            drawLoadingSprites(temp_v1->unk62, 0U);
             D_8009EB4C += 1;
             // fallthrough
         case 1:
@@ -654,7 +654,7 @@ void displayLoadingScreen(void)
             }
             temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             *(u_short*)&temp_v0_2->loadingTime = ((temp_v0_2->loadingTime + 12) & 0xFF);
-            func_80023CE0(temp_v0_2->unk62, temp_v0_2->loadingTime);
+            drawLoadingSprites(temp_v0_2->unk62, temp_v0_2->loadingTime);
             return;
     }
 }

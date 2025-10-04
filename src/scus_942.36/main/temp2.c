@@ -41,7 +41,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023A3C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", FontDebugPrintf);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023CE0);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", drawLoadingSprites);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023E44);
 void func_80023E44(short arg0)
@@ -57,8 +57,8 @@ void func_80023E44(short arg0)
             tpage = 20;
         }
     }
-    func_80024008(104, 96, 1, tpage, arg0);
-    func_80024008(160, 96, 2, tpage, arg0);
+    drawNowLoadingSprite(104, 96, 1, tpage, arg0);
+    drawNowLoadingSprite(160, 96, 2, tpage, arg0);
     return;
 }
 
@@ -83,7 +83,7 @@ void func_80023ED0(short x, short y, short sprt_id)
     D_8009C8A8 += sizeof(SPRT);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80024008);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", drawNowLoadingSprite);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80024254);
 
