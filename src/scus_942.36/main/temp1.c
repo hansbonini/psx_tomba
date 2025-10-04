@@ -4,9 +4,9 @@
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
 void func_8001A774(void)
 {
-    s16 var_v0;
-    s32 temp_v0;
-    u16 temp_v1;
+    short var_v0;
+    int temp_v0;
+    u_short temp_v1;
     unkstruct_1F8001D4* temp_v0_2;
     unkstruct_1F8001D4* temp_v0_3;
     unkstruct_1F8001D4* temp_v1_2;
@@ -16,14 +16,14 @@ void func_8001A774(void)
         case 0:
             SetDispMask(0);
             func_80028CE4();
-            *(u8* )0x1F8001CE = 0;
+            *(u_char* )0x1F8001CE = 0;
             func_800223A0(3);
             func_800222B8(5, 1);
             temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             temp_v1_2->unk4A++;;
             return;
         case 1:
-            if (*(u8* )0x1F8001CE != 0) {
+            if (*(u_char* )0x1F8001CE != 0) {
                 func_8001821C();
                 D_800A3952 = 5;
                 func_80020AF0(0);
@@ -35,7 +35,7 @@ void func_8001A774(void)
         default:
             return;
         case 2:
-            *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             temp_v0 = func_800E9438();
             if (temp_v0 == 1) {
                 (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
@@ -58,7 +58,7 @@ void func_8001A774(void)
         case 4:
             func_80020C00(0);
             temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            *(s8* )0x1F8001D0 = 0;
+            *(char* )0x1F8001D0 = 0;
             temp_v0_3->action = 1;
             temp_v0_3->unk4A = 0U;
             temp_v0_3->unk4C = 0;
@@ -71,7 +71,7 @@ void func_8001A774(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
 void func_8001A954(void)
 {
-    u16 temp_v1;
+    u_short temp_v1;
 
     temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
     switch (temp_v1) {
@@ -93,8 +93,8 @@ void func_8001A954(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A9F0);
 void func_8001A9F0(void)
 {
-    u16 temp_v1;
-    u8* temp1;
+    u_short temp_v1;
+    u_char* temp1;
     unkstruct_1F8001D4* temp_v0;
     unkstruct_1F8001D4* temp_v1_2;
     unkstruct_1F8001D4* temp_v1_3;
@@ -107,7 +107,7 @@ void func_8001A9F0(void)
             temp_v1_2->unk4C++;
             return;
         case 1:
-            if (*(u8* )0x1F8001CE != 0) {
+            if (*(u_char* )0x1F8001CE != 0) {
                 temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 temp_v1_2->unk4C++;
                 return;
@@ -115,9 +115,9 @@ void func_8001A9F0(void)
         default:
             return;
         case 2:
-            if (*(u8* )0x1F8001B4 == 0) {
+            if (*(u_char* )0x1F8001B4 == 0) {
                 D_8009EB4C = 0;
-                *(u8* )0x1F8001CE = 0U;
+                *(u_char* )0x1F8001CE = 0U;
                 func_8001CE80(1);
                 temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 temp_v1_2->unk4C++;
@@ -127,24 +127,24 @@ void func_8001A9F0(void)
             return;
         case 3:
             displayLoadingScreen();
-            if (*(u8* )0x1F8001CE != 0) {
+            if (*(u_char* )0x1F8001CE != 0) {
                 temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 temp_v1_2->unk4C++;
                 return;
             }
             break;
         case 4:
-            *(u8* )0x1F8001CC = 1;
-            *(s8* )0x1F8001CD = 1;
+            *(u_char* )0x1F8001CC = 1;
+            *(char* )0x1F8001CD = 1;
             func_80017154(1, &func_8001F1C0);
             temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             temp_v1_2->unk4C++;
             return;
         case 5:
-            if (*(u8* )0x1F8001CC != 0) {
-                if (*(u16* )(&SCRATCHPAD+0x1FC) & 0x4008) {
-                    *(s8* )0x1F8001D3 = 1;
-                    *(u16* )0x1F8001FC = 0U;
+            if (*(u_char* )0x1F8001CC != 0) {
+                if (*(u_short* )(&SCRATCHPAD+0x1FC) & 0x4008) {
+                    *(char* )0x1F8001D3 = 1;
+                    *(u_short* )0x1F8001FC = 0U;
                     (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C = 6U;
                     return;
                 }
@@ -154,17 +154,17 @@ void func_8001A9F0(void)
             }
             break;
         case 6:
-            if (*(u8* )0x1F8001CC == 0) {
+            if (*(u_char* )0x1F8001CC == 0) {
                 (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C = 7U;
                 return;
             }
             break;
         case 7:
-            temp1 = (u8*)&D_8009BCDC;
+            temp1 = (u_char*)&D_8009BCDC;
             *temp1 = 1;
             temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            *(u16*)&temp_v1_3->unk4C = 1;
-            if (*(u8* )0x1F8001B4 != 0) {
+            *(u_short*)&temp_v1_3->unk4C = 1;
+            if (*(u_char* )0x1F8001B4 != 0) {
                 temp_v1_3->unk4C = 0U;
                 *temp1 = 0;
             }
@@ -181,8 +181,8 @@ void func_8001A9F0(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AC00);
 void func_8001AC00(void)
 {
-    s16 temp_v0;
-    u16 temp_v1;
+    short temp_v0;
+    u_short temp_v1;
     unkstruct_1F8001D4* temp_v0_2;
 
     temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4C;
@@ -215,12 +215,12 @@ void func_8001AC00(void)
             func_8001D29C();
             break;
     }
-    temp_v0 = *(s16* )0x1F8001DC;
-    if ((temp_v0 >= 0) && ((*(u8* )0x1F8001CE) != 0)) {
+    temp_v0 = *(short* )0x1F8001DC;
+    if ((temp_v0 >= 0) && ((*(u_char* )0x1F8001CE) != 0)) {
         temp_v0_2 = (*(unkstruct_1F8001D4** )0x1F8001D4);
-        *(s16* )(&SCRATCHPAD+0x1DC) = -1;
-        temp_v0_2->unk4C = (u16) temp_v0;
-        temp_v0_2->unk4E = (u16) *(u16* )0x1F8001DE;
+        *(short* )(&SCRATCHPAD+0x1DC) = -1;
+        temp_v0_2->unk4C = (u_short) temp_v0;
+        temp_v0_2->unk4E = (u_short) *(u_short* )0x1F8001DE;
     }
 }
 
@@ -232,7 +232,7 @@ void func_8001AD1C(void)
     temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
     temp_v1->unk4E.value++;
     func_8001758C();
-    *(s8* )0x1F8001CF = 0;
+    *(char* )0x1F8001CF = 0;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
@@ -351,10 +351,10 @@ block_14:
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B0A4);
 void func_8001B0A4(void)
 {
-    s32 var_a0;
+    int var_a0;
     unkstruct_1F8001D4* p;
-    u8* temp1;
-    u8* temp2;
+    u_char* temp1;
+    u_char* temp2;
 
     switch ((*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value) {
         case 0:
@@ -362,7 +362,7 @@ void func_8001B0A4(void)
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
             return;
         case 1:
-            if (*(u8* )0x1F8001CE != 0) {
+            if (*(u_char* )0x1F8001CE != 0) {
                 (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
                 return;
             }
@@ -371,7 +371,7 @@ void func_8001B0A4(void)
         case 2:
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
             func_8001758C();
-            *(s8* )0x1F8001CF = 0;
+            *(char* )0x1F8001CF = 0;
             return;
         case 3:
             displayDebugScreen();
@@ -380,18 +380,18 @@ void func_8001B0A4(void)
             func_80020FAC();
             (*(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4))->unk4E.value++;
             func_8001758C();
-            *(u8*)&(*(u32**)0x1F8001CF) = 0;
+            *(u_char*)&(*(u_long**)0x1F8001CF) = 0;
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E = 0x78U;
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk64 = 0U;
             return;
         case 6:
             p = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
-            *(u16*)&p->unk64=((p->unk64+0xC)&0xFF);
+            *(u_short*)&p->unk64=((p->unk64+0xC)&0xFF);
             func_80023E44(p->unk64);
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E--;
             if (((*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E << 0x10) == 0) {
                 var_a0 = 1;
-                temp1 = (u8*)&D_8009BCDC;
+                temp1 = (u_char*)&D_8009BCDC;
                 if (*temp1 == 0) {
                    *temp1 = 1;
                     func_8001CE80(var_a0);
