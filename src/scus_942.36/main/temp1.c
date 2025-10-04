@@ -3,7 +3,27 @@
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
+void func_8001A954(void)
+{
+    u16 temp_v1;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
+    switch (temp_v1) {
+        case 0:
+            func_8001A9F0();
+            return;
+        case 1:
+            func_8001AC00();
+            return;
+        case 2:
+            func_8001D2F0();
+            return;
+        case 3:
+            func_8001D480();
+            return;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A9F0);
 void func_8001A9F0(void)
