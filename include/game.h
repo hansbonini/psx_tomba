@@ -859,7 +859,7 @@ typedef struct unkstruct_1F8001D4 {
     u_short unk5E;
     short unk60;
     short unk62;
-    u_short loadingTime;
+    u_short unk64;
     byte unk66;
     byte unk67;
     u_char start_or_load;
