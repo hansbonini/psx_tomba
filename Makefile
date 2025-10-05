@@ -69,6 +69,7 @@ OBJDIFF := $(OBJDIFF_DIR)/objdiff
 PYTHON          := python3
 SPLAT           := splat split
 MASPSX          := $(PYTHON) $(TOOLS_DIR)/maspsx/maspsx.py
+ARMIPS          := $(TOOLS_DIR)/armips/armips
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 
 # Flags
@@ -265,6 +266,15 @@ clean-build: clean
 	rm -rf $(LINKER_DIR)
 	$(MAKE) generate
 	$(MAKE) build
+
+patch_debug_sfx: build
+	rm -rf $(BUILD_DIR)/patch/debug_sfx
+	mkdir -p $(BUILD_DIR)/patch/debug_sfx
+	$(CPP) -P -MMD -MP -MT patch/debug_sfx/debug_sfx/temp1.i -MF build/patch/debug_sfx/debug_sfx.i.d $(CPP_FLAGS) -o build/patch/debug_sfx/debug_sfx.i patch/debug_sfx/debug_sfx.c
+	$(CC) $(CC_FLAGS) -o build/patch/debug_sfx/debug_sfx.c.s build/patch/debug_sfx/debug_sfx.i
+	$(call DL_FlagsSwitch, build/patch/debug_sfx/debug_sfx.c.o)
+	$(MASPSX) $(MASPSX_FLAGS) -o build/patch/debug_sfx/debug_sfx.c.o build/patch/debug_sfx/debug_sfx.c.s
+	$(ARMIPS) patch/debug_sfx/debug_sfx.asm
 
 # Recipes
 

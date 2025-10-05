@@ -19,3 +19,6 @@
 [submodule "tools/maspsx"]
 	path = tools/maspsx
 	url = https://github.com/mkst/maspsx.git
+[submodule "tools/armips"]
+	path = tools/armips
+	url = https://github.com/Kingcom/armips.git
