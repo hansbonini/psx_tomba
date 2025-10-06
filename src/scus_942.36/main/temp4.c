@@ -59,9 +59,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80030EF8);
 
 /*
  0x00 = Adquired
- 0x01 = Used the
- 0x02 = It's Locked
- 0x03 = Adquired
+ 0x01 = Equipped the
+ 0x02 = Special Message
+ 0x03 = Special Message Adquired
  0x04 = Hourglass
 */
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", printInfoMessage);

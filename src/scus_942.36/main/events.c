@@ -322,7 +322,7 @@ void func_800404E8(unkstruct_800A6D50* arg0)
 {
     if (D_8009BCA0 == 0) {
         func_80029A84();
-        printInfoMessage(0x15, 3);
+        printInfoMessage(0x15, 3); // Vitality Max +1 Adquired
         playSFX(10);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->unk6B);
@@ -367,7 +367,7 @@ void func_80040690(unkstruct_800A6D50* arg0)
     u_char lives = GAME.playerLives;
     if (lives < 99) {
         GAME.playerLives = (u_char)(lives+1);
-        printInfoMessage(0x14, 3); // "1UP"
+        printInfoMessage(0x14, 3); // "1UP Adquired"
         playSFX(10);
     }
     if (!(arg0->unkC & 0x80)) {
@@ -617,7 +617,7 @@ void func_80040E24(unkstruct_800A6D50* arg0)
                 arg0->unk4++;
             } else {
                 if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2);
+                    printInfoMessage(0x26, 2); // "It's Locked"
                     arg0->unk22 = 0x78;
                 } 
                 arg0->unk4--;
@@ -677,7 +677,7 @@ void func_80040FD8(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_80041048);
 void func_80041048(unkstruct_800A6D50* arg0)
 {
-    printInfoMessage(0xC, 3); // "Animal Dash"
+    printInfoMessage(0xC, 3); // "Animal Dash Adquired"
     GAME.area00_eventControl |= 0x40;
     playSFX(10);
     if (!(arg0->unkC & 0x80)) {
