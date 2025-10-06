@@ -868,6 +868,10 @@ typedef struct unkstruct_1F8001D4 {
     byte unk6B;
 } unkstruct_1F8001D4;
 
+typedef inline struct {
+    byte data[3];
+    u_char unk3;
+} unkstruct_80033FB0;
 
 typedef struct unkstruct_8009E458 {
     byte data[0x8A];
