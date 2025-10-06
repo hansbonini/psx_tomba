@@ -24,7 +24,57 @@ void func_80033FB0(unkstruct_80033FB0* arg0)
     func_8011EE60();
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_80033FF0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_80033FF0);
+void func_80033FF0(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    typedef inline struct {
+        byte unk0;
+        byte unk1;
+        byte unk2;
+        byte unk3;
+        byte unk4;
+        byte unk5;
+        byte unk6;
+        byte pad[0x6];
+        byte unkD;
+        byte unkE;
+        byte unkF;
+        int unk10;
+        int unk14;
+        int unk18;
+        byte pad2[0x11];
+        short unk2E;
+        
+    } unkstruct_80018474;
+    unkstruct_80018474* temp_v0;
+
+    temp_v0 = func_80018474();
+    if (temp_v0 != NULL) {
+        temp_v0->unk0 = 1;
+        temp_v0->unk2 = 0x20;
+        temp_v0->unk10 = (s32) (arg1 << 0x10);
+        temp_v0->unk14 = (s32) (arg2 << 0x10);
+        temp_v0->unk18 = (s32) (arg3 << 0x10);
+        temp_v0->unk2E = (s16) (*(u16*)&D_800A53C6 & 1);
+        temp_v0->unk3 = arg0;
+        temp_v0->unkD = 0;
+        if ((s16)arg0 == 0) {
+            temp_v0->unk5 = 1;
+        } else {
+            temp_v0->unk5 = arg0;
+            GAME.unk597 = 1;
+        }
+        temp_v0->unk6 = 0;
+        if (*&GAME.area00_eventControl & 0x100) {
+            if ((s16) arg0 == 1) {
+                printInfoMessage(0xF, 2);
+            }
+            temp_v0->unk4 = 3;
+            temp_v0->unk5 = 0;
+            temp_v0->unk6 = 0;
+        }
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_800340FC);
 void func_800340FC(void)

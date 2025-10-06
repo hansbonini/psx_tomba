@@ -868,7 +868,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk6B;
 } unkstruct_1F8001D4;
 
-typedef inline struct {
+typedef struct unkstruct_80033FB0 {
     byte data[3];
     u_char unk3;
 } unkstruct_80033FB0;
@@ -2659,6 +2659,7 @@ extern int D_8007E868;
 extern int D_8007E86C;
 extern int D_8007E86E;
 
+
 extern SpuCommonAttr D_8009B048; // SPU_ATTR
 extern short D_8009B078;
 extern short D_8009B07C;
@@ -2741,6 +2742,7 @@ extern u_char D_800A3940;
 extern short D_800A3952;
 extern short D_800A3954;
 extern short D_800A3956;
+extern u_short D_800A53C6;
 extern u_char D_800A5398;
 extern unkstruct_800A39B0 D_800A39B0[];
 extern u_char D_800A38B8[];
