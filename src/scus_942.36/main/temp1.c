@@ -238,9 +238,28 @@ void func_8001AD1C(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
 void displayDebugScreen(void)
 {
+    typedef inline enum {
+        JOY_SELECT   = 0x1,
+        JOY_L3       = 0x2,
+        JOY_R3       = 0x4,
+        JOY_START    = 0x8,
+        JOY_UP       = 0x10,
+        JOY_RIGHT    = 0x20,
+        JOY_LEFT     = 0x80,
+        JOY_DOWN     = 0x40,
+        JOY_L2       = 0x100,
+        JOY_R2       = 0x200,
+        JOY_L1       = 0x400,
+        JOY_R1       = 0x800,
+        JOY_TRIANGLE = 0x1000,
+        JOY_CIRCLE   = 0x2000,
+        JOY_CROSS    = 0x4000,
+        JOY_SQUARE   = 0x8000,
+    } joypad_buttons;
+
     typedef inline struct {
         char data[0x1B4];
-        u_char unk1B4;
+        u_char debug_mode_enabled;
         char pad1[23];
         char unk1CF;
         char pad2[7];
@@ -252,7 +271,7 @@ void displayDebugScreen(void)
         char unk1F9;
         char unk1FA;
         char unk1FB;
-        u_short unk1FC;
+        u_short joypad_state;
     } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)&scratch->unk1D4;
@@ -265,19 +284,19 @@ void displayDebugScreen(void)
     u_char *temp2;
 
     /* If start a game and debug mode is enabled */
-    if ((temp_v1->start_or_load == 0) && (scratch->unk1B4 != 0)) {
+    if ((temp_v1->start_or_load == 0) && (scratch->debug_mode_enabled != 0)) {
         // If button UP is pressed decrease selected row
-        if (scratch->unk1FC & 0x10) {
+        if (scratch->joypad_state & JOY_UP) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
         }
         // If button DOWN is pressed increase selected row
-        if ((scratch->unk1FC & 0x40) != 0) {
+        if (scratch->joypad_state & JOY_DOWN) {
             D_8009B6A8 = (D_8009B6A8 + 1) & 1;
         }
         // If selected row is the second one "SELECTED SECTION"
         if (D_8009B6A8 != 0) {
             // If button LEFT is pressed decrease selected section
-            if ((scratch->unk1FC & 0x80) != 0) {
+            if (scratch->joypad_state & JOY_LEFT) {
                 var_v1 = &GAME.selectedSection;
                 *(u_short*)var_v1 -= 1;
                 /* If selected section is less than the min section allowed for the current area,
@@ -286,7 +305,7 @@ void displayDebugScreen(void)
                     *(u_short*)var_v1 = 0U;
                 }
             // If button RIGHT is pressed increase selected section
-            } else if (scratch->unk1FC & 0x20) {
+            } else if (scratch->joypad_state & JOY_RIGHT) {
                 temp_v1_2 = GAME.selectedSection += 1;
                 /* If selected section is greater than the max section allowed for the current area,
                    clamp it to the max section */
@@ -298,7 +317,7 @@ void displayDebugScreen(void)
         // If selected row is the first one "SELECTED AREA"
         } else {
             // If button LEFT is pressed decrease selected area option
-            if ((scratch->unk1FC & 0x80) != 0) {
+            if (scratch->joypad_state & JOY_LEFT) {
                 var_v1 = &GAME.selectedArea;
                 *(u_short*)var_v1 -= 1;
                 /* If selected area is less than the min area allowed,
@@ -307,7 +326,7 @@ void displayDebugScreen(void)
                     *(u_short*)var_v1 = 0U;
                 }
             // If button RIGHT is pressed increase selected area option
-            } else if (scratch->unk1FC & 0x20) {
+            } else if (scratch->joypad_state & JOY_RIGHT) {
                 GAME.selectedArea++;
                 temp_v1_2 = (u_short*)D_8007B290;
                 /* If selected area is greater than the max area allowed,
@@ -330,7 +349,7 @@ void displayDebugScreen(void)
         GAME.nextSection = GAME.selectedSection;
         GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
         // If any action button (CIRCLE or START) is pressed
-        if (scratch->unk1FC & 0x2008) {
+        if (scratch->joypad_state & 0x2008) {
             // Handle area and section exceptions cases
             /* If selected area is not VILLAGE OF ALL BEGINNINGS or DWARF FOREST
                and selected section is not VILLAGE OF ALL BEGINNINGS or FOREST OF 100 FLOWERS */
