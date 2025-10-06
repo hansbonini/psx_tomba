@@ -673,7 +673,146 @@ void memCardInit(void)
     EnableEvent(MEMCARD_HW_NEW_DEVICE);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800191E0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800191E0);
+void func_800191E0(void)
+{
+    u16 temp_v0_4;
+    u16 temp_v0_5;
+    u16 temp_v0_6;
+    u16 temp_v1;
+    u16 temp_v1_3;
+    u16 temp_v1_4;
+    unkstruct_1F8001D4* temp_a0;
+    unkstruct_1F8001D4* temp_a0_2;
+    unkstruct_1F8001D4* temp_a1;
+    unkstruct_1F8001D4* temp_a1_2;
+    unkstruct_1F8001D4* temp_v0;
+    unkstruct_1F8001D4* temp_v0_2;
+    unkstruct_1F8001D4* temp_v0_3;
+    unkstruct_1F8001D4* temp_v0_7;
+    unkstruct_1F8001D4* temp_v1_2;
+
+    D_8009D6DD = 0;
+    D_8009D6DE = 0;
+    D_8009D6DF = 0;
+    D_8009E3ED = 0;
+    D_8009E3EE = 0;
+    D_8009E3EF = 0;
+    *(s8* )0x1F8001D1 = 0;
+    *(s8* )0x1F8001D0 = 0;
+    D_8009E744 = 0;
+    D_8009C9E4 = 1;
+    D_8009E450 = 0;
+    func_80023A3C();
+    temp_v0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v0->action = 9U;
+    temp_v0->unk4A = 0U;
+    temp_v0->unk4C = 0;
+    SetDispMask(0);
+    do {
+        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->action;
+        switch (temp_v1) {
+            case 0:
+                *(u8* )0x1F8001CE = 0;
+                func_800223A0(0);
+                func_800223A0(1);
+                func_800222B8(0, 1);
+                *(s8* )0x1F8001C4 = 0;
+                *(s8* )0x1F8001C5 = 0;
+                memset(&D_1F8001A0, 0, 0x24);
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->action++;
+                break;
+            case 1:
+                if (*(u8* )0x1F8001CE != 0) {
+                    func_8001F158(0x15);
+                    (*(unkstruct_1F8001D4** )0x1F8001D4)->action = 4U;
+                }
+                break;
+            case 2:
+                SetDispMask(1);
+                temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_a0->unk58 = 0x78U;
+                temp_a0->action++;
+                break;
+            case 3:
+                temp_a1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+                temp_a1->unk58--;
+                if ((s16) temp_a1->unk58 == -1) {
+                    temp_a1->action++;
+                }
+                FontDebugPrintf(0x50, 0x60, 0, &D_80010000);
+                FontDebugPrintf(0x50, 0x70, 0, &D_80010008);
+                break;
+            case 4:
+                temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v0_2->action = 0U;
+                temp_v0_2->unk4A = 1U;
+                temp_v0_2->unk4C = 0;
+                func_800172C4((s32*)func_80019844);
+                break;
+            case 9:
+                SetDispMask(0);
+                *(byte* )0x1F8001CE = 0U;
+                func_800222B8(0x5E, 1);
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->action = 0xAU;
+                break;
+            case 10:
+                if (*(u8* )0x1F8001CE != 0) {
+                    SetDispMask(0);
+                    func_80016DDC(0U, 0U, 0U);
+                    SetDispMask(1);
+                    temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                    temp_v0_3->unk58 = 0xF0U;
+                    temp_v0_3->action = 0xBU;
+                    temp_v0_3->unk4A = 0U;
+                }
+                break;
+            case 11:
+                temp_a1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                *(int* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
+                switch (temp_a1_2->unk4A) {                    // switch 1; irregular
+                    case 0:                             // switch 1
+                        temp_a1_2->unk5A = 1U;
+                        temp_a1_2->unk4A++;
+                        break;
+                    case 1:                             // switch 1
+                        temp_a1_2->unk5A++;
+                        if ((s16) temp_a1_2->unk5A >= 0x80) {
+                            temp_a1_2->unk58 = 0xB4U;
+                            temp_a1_2->unk4A++;
+                            break;
+                        }
+                        break;
+                    case 2:                             // switch 1
+                        temp_a1_2->unk58--;
+                        if ((s16) temp_a1_2->unk58 == -1) {
+                            temp_a1_2->unk4A++;
+                        }
+                        break;
+                    case 3:                             // switch 1
+                        temp_a1_2->unk5A--;
+                        if ((s16)temp_a1_2->unk5A == 0) {
+                            SetDispMask(0);
+                            func_80016C4C(0U, 0U, 0U);
+                            temp_v0_7 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            *(byte* )0x1F8001D1 = 0;
+                            *(s16* )0x1F8001F6 = 0;
+                            temp_v0_7->action = 0U;
+                            temp_v0_7->unk4A = 0U;
+                        }
+                        break;
+                }
+                temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                if (*(u16*)&temp_a0_2->action == 0xB) {
+                    func_8001964C((u8) temp_a0_2->unk5A, 1);
+                }
+                break;
+        }
+        func_800171D4(1);
+    } while(true);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001964C);
 
