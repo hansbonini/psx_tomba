@@ -266,51 +266,74 @@ void displayDebugScreen(void)
 
     /* If start a game and debug mode is enabled */
     if ((temp_v1->start_or_load == 0) && (scratch->unk1B4 != 0)) {
+        // If button UP is pressed decrease selected row
         if (scratch->unk1FC & 0x10) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
         }
+        // If button DOWN is pressed increase selected row
         if ((scratch->unk1FC & 0x40) != 0) {
             D_8009B6A8 = (D_8009B6A8 + 1) & 1;
         }
+        // If selected row is the second one "SELECTED SECTION"
         if (D_8009B6A8 != 0) {
+            // If button LEFT is pressed decrease selected section
             if ((scratch->unk1FC & 0x80) != 0) {
                 var_v1 = &GAME.selectedSection;
                 *(u_short*)var_v1 -= 1;
+                /* If selected section is less than the min section allowed for the current area,
+                   clamp it to the min section */
                 if ((*(u_short*)var_v1 << 0x10) <= 0) {
                     *(u_short*)var_v1 = 0U;
                 }
+            // If button RIGHT is pressed increase selected section
             } else if (scratch->unk1FC & 0x20) {
                 temp_v1_2 = GAME.selectedSection += 1;
+                /* If selected section is greater than the max section allowed for the current area,
+                   clamp it to the max section */
                 temp_a0 = *(u_short*)((u_short*)&D_8007B294 + GAME.selectedArea);
                 if ((temp_a0 - 1) < (int)temp_v1_2) {
                     GAME.selectedSection = (u_short) (temp_a0 - 1);
                 }
             }
+        // If selected row is the first one "SELECTED AREA"
         } else {
+            // If button LEFT is pressed decrease selected area option
             if ((scratch->unk1FC & 0x80) != 0) {
                 var_v1 = &GAME.selectedArea;
                 *(u_short*)var_v1 -= 1;
+                /* If selected area is less than the min area allowed,
+                   clamp it to the min area */
                 if ((*(u_short*)var_v1 << 0x10) <= 0) {
                     *(u_short*)var_v1 = 0U;
                 }
+            // If button RIGHT is pressed increase selected area option
             } else if (scratch->unk1FC & 0x20) {
                 GAME.selectedArea++;
                 temp_v1_2 = (u_short*)D_8007B290;
+                /* If selected area is greater than the max area allowed,
+                   clamp it to the max area */
                 if (temp_v1_2 < GAME.selectedArea) {
                     GAME.selectedArea = temp_v1_2;
                 }
             }
         }
+        // Print rows with current selected options
         sprintf(&SPRINTF_BUFFER_MSG, "AREA SELECT = %02d", GAME.selectedArea);
         FontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, "SECTION SELECT = %02d", GAME.selectedSection);
         FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
+        // Print asterisk cursor on the selected row
         sprintf(&SPRINTF_BUFFER_MSG, "*");
         FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)&PSX_SCRATCH[0x1F6] & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
+        // Set next area, section and spawn point to the selected ones
         GAME.nextArea = GAME.selectedArea;
         GAME.nextSection = GAME.selectedSection;
         GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
+        // If any action button (CIRCLE or START) is pressed
         if (scratch->unk1FC & 0x2008) {
+            // Handle area and section exceptions cases
+            /* If selected area is not VILLAGE OF ALL BEGINNINGS or DWARF FOREST
+               and selected section is not VILLAGE OF ALL BEGINNINGS or FOREST OF 100 FLOWERS */
             if (
                 (
                     GAME.selectedArea < AREA02_DWARFVILLAGE) &&
@@ -320,14 +343,15 @@ void displayDebugScreen(void)
                     )
                 )
             ) {
-                GAME.unk21 = 1;
+                GAME.unk21 = 1; // Set unk21 to 1 (unknown purpose)
             }
+            /* If selected area is not the VILLAGE OF ALL BEGINNINGS 
+               and selected section is not VILLAGE OF ALL BEGINNINGS */
             if (*(u_long*)&GAME.selectedArea != (AREA00_VILLAGEOFALLBEGINNINGS << 16 | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS)) {
-                GAME.event[EVENT_CLEARTHEFOG] = 0xFF;
-                GAME.playerState = 1;
+                GAME.event[EVENT_CLEARTHEFOG] = 0xFF; // Set event CLEARTHEFOG to CLEARED
+                GAME.playerState = 1; // Set player state to NORMAL
             }
-        }
-        else return;
+        } else return;
     }
 
     temp2 = (u_char*)(&D_8009BCDC);
