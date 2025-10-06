@@ -51,7 +51,7 @@ void func_80033FF0(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
     temp_v0 = func_80018474();
     if (temp_v0 != NULL) {
         temp_v0->unk0 = 1;
-        temp_v0->unk2 = 0x20;
+        temp_v0->unk2 = 32;
         temp_v0->unk10 = (s32) (arg1 << 0x10);
         temp_v0->unk14 = (s32) (arg2 << 0x10);
         temp_v0->unk18 = (s32) (arg3 << 0x10);
