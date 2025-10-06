@@ -276,6 +276,24 @@ patch_debug_sfx: build
 	$(MASPSX) $(MASPSX_FLAGS) -o build/patch/debug_sfx/debug_sfx.c.o build/patch/debug_sfx/debug_sfx.c.s
 	$(ARMIPS) patch/debug_sfx/debug_sfx.asm
 
+patch_debug_event: build
+	rm -rf $(BUILD_DIR)/patch/debug_event
+	mkdir -p $(BUILD_DIR)/patch/debug_event
+	$(CPP) -P -MMD -MP -MT patch/debug_event/debug_event/temp1.i -MF build/patch/debug_event/debug_event.i.d $(CPP_FLAGS) -o build/patch/debug_event/debug_event.i patch/debug_event/debug_event.c
+	$(CC) $(CC_FLAGS) -o build/patch/debug_event/debug_event.c.s build/patch/debug_event/debug_event.i
+	$(call DL_FlagsSwitch, build/patch/debug_event/debug_event.c.o)
+	$(MASPSX) $(MASPSX_FLAGS) -o build/patch/debug_event/debug_event.c.o build/patch/debug_event/debug_event.c.s
+	$(ARMIPS) patch/debug_event/debug_event.asm
+
+patch_debug_infomessage: build
+	rm -rf $(BUILD_DIR)/patch/debug_infomessage
+	mkdir -p $(BUILD_DIR)/patch/debug_infomessage
+	$(CPP) -P -MMD -MP -MT patch/debug_infomessage/debug_infomessage/temp1.i -MF build/patch/debug_infomessage/debug_infomessage.i.d $(CPP_FLAGS) -o build/patch/debug_infomessage/debug_infomessage.i patch/debug_infomessage/debug_infomessage.c
+	$(CC) $(CC_FLAGS) -o build/patch/debug_infomessage/debug_infomessage.c.s build/patch/debug_infomessage/debug_infomessage.i
+	$(call DL_FlagsSwitch, build/patch/debug_infomessage/debug_infomessage.c.o)
+	$(MASPSX) $(MASPSX_FLAGS) -o build/patch/debug_infomessage/debug_infomessage.c.o build/patch/debug_infomessage/debug_infomessage.c.s
+	$(ARMIPS) patch/debug_infomessage/debug_infomessage.asm
+
 # Recipes
 
 # .elf targets
