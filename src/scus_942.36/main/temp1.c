@@ -46,7 +46,7 @@ void func_8001A774(void)
             func_8001F6D4();
             return;
         case 3:
-            D_8009BCDC = 0;
+            GAME.unk14 = 0;
             GAME.totalTimePlayed = 0;
             func_80020C00(0);
             temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
@@ -160,7 +160,7 @@ void func_8001A9F0(void)
             }
             break;
         case 7:
-            temp1 = (u_char*)&D_8009BCDC;
+            temp1 = (u_char*)&GAME.unk14;
             *temp1 = 1;
             temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
             *(u_short*)&temp_v1_3->unk4C = 1;
@@ -373,10 +373,9 @@ void displayDebugScreen(void)
         } else return;
     }
 
-    temp2 = (u_char*)(&D_8009BCDC);
+    temp2 = (u_char*)(&GAME.unk14);
     var_a0 = 1;
     if (*temp2 == 0) {
-        //D_8009BCDC = 1;
         *temp2 = 1;
     } else if (GAME.selectedArea != GAME.currentArea) {
         var_a0 = 1;
@@ -437,7 +436,7 @@ void func_8001B0A4(void)
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E--;
             if (((*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E << 0x10) == 0) {
                 var_a0 = 1;
-                temp1 = (u_char*)&D_8009BCDC;
+                temp1 = (u_char*)&GAME.unk14;
                 if (*temp1 == 0) {
                    *temp1 = 1;
                     func_8001CE80(var_a0);
