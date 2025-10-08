@@ -7,6 +7,7 @@ extern CdlLOC D_8009B2D0;
 extern s32 D_8009B2D4;
 extern void (*D_8009C85C)(void);
 extern s32 D_8009CA08;
+extern s32 D_8009BC7C;
 extern s32 D_800A15CC;
 extern s32 D_800A15D0;
 extern StHEADER* D_800A326C;
@@ -38,4 +39,10 @@ void data_ready_callback(void)
     D_8009CA08 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/c_003", StGetBackloc);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/c_003", StGetBackloc);
+s32 StGetBackloc(CdlLOC* loc)
+{
+    if (D_8009BC7C != 0) return -1;
+    CdIntToPos(CdPosToInt(&D_8009B2D0) + 1, loc);
+    return D_8009B2D4;
+}
