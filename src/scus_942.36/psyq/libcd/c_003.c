@@ -1,5 +1,6 @@
 #include "common.h"
 #include "psyq/libcd.h"
+
 extern volatile s8* D_80096340;
 extern volatile s8* D_8009634C;
 
