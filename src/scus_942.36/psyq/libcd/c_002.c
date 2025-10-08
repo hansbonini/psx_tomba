@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libcd.h"
 
 extern s32 D_8009B69C;
 extern s16 D_8009BC74;
