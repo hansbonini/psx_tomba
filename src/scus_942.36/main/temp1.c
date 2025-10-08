@@ -544,7 +544,55 @@ void func_8001B2B4(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B5A8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B5A8);
+void func_8001B5A8(void)
+{
+    *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    if (*(s16* )(&SCRATCHPAD+0x1C6) == 2) {
+        if (*(u8* )(&SCRATCHPAD+0x1CC) == 0) {
+            *(s16* )0x1F8001C6 = 0;
+        } else if (
+            (*(u8* )(&SCRATCHPAD+0x3D0) == 1) &&
+            ( 
+                (
+                    ((*(u8* )(&SCRATCHPAD+0x1CD)) == 5) || 
+                    (((u8) ((*(u8* )(&SCRATCHPAD+0x1CD)) - 7) < 2))
+                ) && ((*(u16* )(&SCRATCHPAD+0x1FC) & 0x4008) != 0)
+            )
+        ) {
+            *(s8* )(&SCRATCHPAD+0x1D3) = 1;
+            *(u8* )(&SCRATCHPAD+0x3D0) = 0U;
+        }
+    }
+    func_8001D6C0();
+    if (*(s16* )0x1F8001C6 == 0) {
+        (*(s16* )(&SCRATCHPAD+0x1F8))=(*(s16* )0x1F8001F8)+1;
+        func_80034524();
+        func_80029008();
+        if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
+            func_8003C9D4();
+            func_8001DFD4();
+            func_8003438C();
+            func_8005A074();
+            func_80055BA0();
+        }
+    }
+    if (*(s16* )0x1F8001C6 != 1) {
+        func_80029C48();
+    }
+    if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
+        func_8002DA2C();
+        func_8002DB3C();
+    }
+    // Hack to match (using this instead SCRATCHPAD to access 1F8001C6)
+    if (*(s16* )((byte*)&D_1F8001A0+0x26) != 2) {
+        func_80046264();
+    } else {
+        func_80017614();
+    }
+    func_8001F6D4();
+    return;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B780);
 void func_8001B780(void)
