@@ -6,18 +6,17 @@ u_char* strncat(u_char* dest, u_char* src, int count) {
     
     if (dest == NULL) {
         return NULL;
-    } else {
-        temp = dest;
-        if (src == NULL) return NULL;
-        while (*dest++) {
-        }
-        dest--;
-        while ((*dest++ = *src++) != 0) {
-            if (--count < 0) {
-                dest[-1] = '\x00';
-                break;
-            }   
-        }
+    }
+    temp = dest;
+    if (src == NULL) return NULL;
+    while (*dest++) {
+    }
+    dest--;
+    while ((*dest++ = *src++) != 0) {
+        if (--count < 0) {
+            dest[-1] = '\x00';
+            break;
+        }   
     }
     return temp;
 }
