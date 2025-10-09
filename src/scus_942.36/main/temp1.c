@@ -700,7 +700,152 @@ void func_8001B944(void)
     func_8001F6D4();
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BB1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BB1C);
+void func_8001BB1C(void)
+{
+    DRAWENV drawenv;
+    RECT rect;
+    s32 var_a0;
+    s16* temp_s0;
+    u16 temp_s1;
+    u16 temp_v1;
+    unkstruct_1F8001D4* temp_a0;
+    unkstruct_1F8001D4* temp_v0;
+    unkstruct_1F8001D4* temp_v0_2;
+    unkstruct_1F8001D4* temp_v1_2;
+    unkstruct_1F8001D4* temp_v1_3;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+    switch (temp_v1) {                              // switch 1
+        case 0:                                     // switch 1
+            *(s8* )0x1F8001CF = 1;
+            (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk6A = 0;
+            SetDispMask(0);
+            rect.x = 288;
+            rect.y = 480;
+            rect.w = 48;
+            rect.h = 31;
+            StoreImage((RECT* ) &rect, (u32* )0x801FB000);
+            rect.x = 128;
+            rect.y = 511;
+            rect.w = 256;
+            rect.h = 1;
+            StoreImage((RECT* ) &rect, (u32* )0x801FBBA0);
+            GetDrawEnv(&drawenv);
+            setRGB0((DRAWENV*)(&D_8009D6C4), 248, 200, 192);
+            setRGB0((DRAWENV*)(D_8009E3D4), 248, 200, 192);
+            D_8009B000 = drawenv.r0;
+            D_8009B004 = drawenv.g0;
+            D_8009B008 = drawenv.b0;
+            temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a0->unk4E.value++;
+            return;
+        case 1:                                     // switch 1
+            *(u8* )0x1F8001CE = 0;
+            switch (D_800A3952) {                   // switch 2
+                case 0:                             // switch 2
+                case 1:                             // switch 2
+                case 2:                             // switch 2
+                case 6:                             // switch 2
+                    var_a0 = 3;
+                    func_800222B8(var_a0, 1);
+                    break;
+                case 4:                             // switch 2
+                    var_a0 = 4;
+                    func_800222B8(var_a0, 1);
+                    break;
+                case 5:                             // switch 2
+                    var_a0 = 5;
+                    func_800222B8(var_a0, 1);
+                    break;
+                case 7:                             // switch 2
+                    var_a0 = 6;
+                    func_800222B8(var_a0, 1);
+                    break;
+                case 3:                             // switch 2
+                    var_a0 = 7;
+                    func_800222B8(var_a0, 1);
+                    break;
+            }
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2->unk4E.value++;
+            return;
+        case 2:                                     // switch 1
+            if (*(u8* )0x1F8001CE != 0) {
+                EnterCriticalSection();
+                FlushCache();
+                ExitCriticalSection();
+                temp_s1 = *(volatile u16*)&D_800A3952;
+                func_8001821C();
+                *(s16*)&(*(volatile u16**)&D_800A3952) = temp_s1;
+                SetDispMask(1);
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->unk4E.value++;
+                return;
+            }
+        default:                                    // switch 1
+            return;
+        case 3:                                     // switch 1
+            func_8001BF90();
+            if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 6U;
+                return;
+            }
+            break;
+        case 4:                                     // switch 1
+            SetDispMask(0);
+            rect.x = 288;
+            rect.y = 480;
+            rect.w = 48;
+            rect.h = 31;
+            LoadImage((RECT* ) &rect, (u32* )0x801FB000);
+            rect.x = 128;
+            rect.y = 511;
+            rect.w = 256;
+            rect.h = 1;
+            LoadImage((RECT* ) &rect, (u32* )0x801FBBA0);
+            *(s8* )0x1F8001CE = 0U;
+            setRGB0((DRAWENV*)(&D_8009D6C4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
+            setRGB0((DRAWENV*)(D_8009E3D4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
+            var_a0 = ((&D_80076FAC)[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
+            func_800222B8(((s16*)var_a0)[GAME.selectedSection], 1);
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2->unk4E.value++;
+            return;
+        case 5:                                     // switch 1
+            if ((*(u8* )0x1F8001CE) != 0) {
+                EnterCriticalSection();
+                FlushCache();
+                ExitCriticalSection();
+                SetDispMask(1);
+                temp_v0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                *(s16* )0x1F8001C6 = 0;
+                temp_v0->unk4C = (u16) *(u16* )0x1F8003B8;
+                temp_v0->unk4E.value = (u16) *(u16* )0x1F8003BA;
+                return;
+            }
+            break;
+        case 6:                                     // switch 1
+            temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_3->unk4C = 8U;
+            temp_v1_3->unk4E.value = 0U;
+            return;
+        case 7:                                     // switch 1
+            GAME.unk14 = 0;
+            GAME.totalTimePlayed = 0;
+            func_80020C00(0);
+            setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
+            setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->start_or_load = 1;
+            temp_v0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v0_2->action = 1;
+            temp_v0_2->unk4A = 1;
+            temp_v0_2->unk4C = 0U;
+            temp_v0_2->unk4E.value = 0U;
+            break;
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BF90);
 

@@ -2636,6 +2636,7 @@ extern short D_1F8003B6;
 extern char D_80010000;
 extern char D_80010008;
 
+extern int D_80076FAC;
 extern u_short D_8007B290;
 extern int D_8007B294;
 extern U8Pair D_8007C2B8[];
@@ -2663,6 +2664,9 @@ extern int D_8007E86C;
 extern int D_8007E86E;
 
 
+extern u_char D_8009B000;
+extern u_char D_8009B004;
+extern u_char D_8009B008;
 extern SpuCommonAttr D_8009B048; // SPU_ATTR
 extern short D_8009B078;
 extern short D_8009B07C;
