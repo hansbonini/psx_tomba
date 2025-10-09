@@ -1117,7 +1117,90 @@ void func_8001C618(void)
     func_8001F6D4();
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C75C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C75C);
+void func_8001C75C(void)
+{
+    typedef inline struct {
+        u_char unk0;
+        u_char unk1;
+        u_char unk2;
+        u_char unk3;
+        u_char unk4;
+        u_char unk5;
+        u_char unk6;
+        u_char unk7;
+        u_char unk8;
+        u_char unk9;
+        u_char unkA;
+        u_char unkB;
+        u_char unkC;
+        u_char unkD;
+        u_char unkE;
+        u_char unkF;
+        u_char unk10;
+        u_char unk11;
+        u_short unk12;
+        u_short unk14;
+        u_short unk16;
+        u_short unk18;
+        u_short unk1A;
+    } unkstruct_1F800214;
+    
+    u16 temp_v1;
+    unkstruct_1F800214* temp_v0;
+    unkstruct_1F8001D4* temp_v1_2;
+    unkstruct_1F8001D4* temp_v1_3;
+    char pad[2]; // ?? fixes the stack, but there's probably a better way
+    
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+    switch (temp_v1) {
+        case 0:
+            func_8001758C();
+            func_80017AE0();
+            func_800243E8();
+            func_800246B0();
+            func_80059F7C();
+            func_80028EF4();
+            D_800B0770 = 0;
+            *(s8* )0x1F8001CF = 1;
+            if (GAME.totalTimePlayed != 1) {
+                func_8002065C();
+            }
+            temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v1_2->unk4E.value++;
+            temp_v0 = (unkstruct_1F800214*)func_80018614();
+            if (temp_v0 != NULL) {
+                temp_v0->unk0 = 1;
+                temp_v0->unk2 = 13;
+                temp_v0->unk3 = 0;
+                temp_v0->unk12 = 0;
+                temp_v0->unk16 = 0;
+                temp_v0->unk1A = 0;
+            }
+            *&D_8009C9D8 = D_8009C9DC = 0;
+            *(s16* )0x1F8001FC = 0;
+        break;   
+    
+        case 1:
+            GAME.unk8 += 1;
+            func_8001C940();
+            if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
+                return;
+            }
+        break;
+    
+        case 2:
+        case 3:
+            temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
+            setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
+            temp_v1_3->unk4C = 8;
+            temp_v1_3->unk4E.value = 0U;
+        break;
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C940);
 
