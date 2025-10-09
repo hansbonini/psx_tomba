@@ -721,15 +721,9 @@ void func_8001BB1C(void)
             *(s8* )0x1F8001CF = 1;
             (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk6A = 0;
             SetDispMask(0);
-            rect.x = 288;
-            rect.y = 480;
-            rect.w = 48;
-            rect.h = 31;
+            setRECT(&rect, 288, 480, 48, 31);
             StoreImage((RECT* ) &rect, (u32* )0x801FB000);
-            rect.x = 128;
-            rect.y = 511;
-            rect.w = 256;
-            rect.h = 1;
+            setRECT(&rect, 128, 511, 256, 1);
             StoreImage((RECT* ) &rect, (u32* )0x801FBBA0);
             GetDrawEnv(&drawenv);
             setRGB0((DRAWENV*)(&D_8009D6C4), 248, 200, 192);
@@ -747,24 +741,19 @@ void func_8001BB1C(void)
                 case 1:                             // switch 2
                 case 2:                             // switch 2
                 case 6:                             // switch 2
-                    var_a0 = 3;
-                    func_800222B8(var_a0, 1);
+                    func_800222B8(3, 1);
                     break;
                 case 4:                             // switch 2
-                    var_a0 = 4;
-                    func_800222B8(var_a0, 1);
+                    func_800222B8(4, 1);
                     break;
                 case 5:                             // switch 2
-                    var_a0 = 5;
-                    func_800222B8(var_a0, 1);
+                    func_800222B8(5, 1);
                     break;
                 case 7:                             // switch 2
-                    var_a0 = 6;
-                    func_800222B8(var_a0, 1);
+                    func_800222B8(6, 1);
                     break;
                 case 3:                             // switch 2
-                    var_a0 = 7;
-                    func_800222B8(var_a0, 1);
+                    func_800222B8(7, 1);
                     break;
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
@@ -794,15 +783,9 @@ void func_8001BB1C(void)
             break;
         case 4:                                     // switch 1
             SetDispMask(0);
-            rect.x = 288;
-            rect.y = 480;
-            rect.w = 48;
-            rect.h = 31;
+            setRECT(&rect, 288, 480, 48, 31);
             LoadImage((RECT* ) &rect, (u32* )0x801FB000);
-            rect.x = 128;
-            rect.y = 511;
-            rect.w = 256;
-            rect.h = 1;
+            setRECT(&rect, 128, 511, 256, 1);
             LoadImage((RECT* ) &rect, (u32* )0x801FBBA0);
             *(s8* )0x1F8001CE = 0U;
             setRGB0((DRAWENV*)(&D_8009D6C4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
