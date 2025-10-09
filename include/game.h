@@ -2557,12 +2557,6 @@ typedef struct gameConfig {
     u_char inventoryButton;
     u_char playerState;
     struct equips playerEquips;
-    byte unk952;
-    byte unk953;
-    byte unk954;
-    byte unk955;
-    byte unk956;
-    byte unk957;
     byte unk958;
     byte unk959;
     byte unk95a;
@@ -2574,7 +2568,7 @@ typedef struct gameConfig {
     byte unk960;
     byte unk961;
     byte unk962;
-    byte unk963;
+    u_char purifiedAreas;
     byte unk964;
     byte unk965;
     byte unk966;
@@ -2604,6 +2598,10 @@ typedef struct gameConfig {
     byte unk97e;
     byte unk97f;
     byte unk980;
+    byte unk981;
+    byte unk982;
+    byte unk983;
+    byte unk984;
 } gameConfig;
 
 typedef struct CAMERA {

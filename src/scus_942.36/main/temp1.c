@@ -957,7 +957,132 @@ void displayLoadingScreen(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CB54);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CB54);
+s32 func_8001CB54(void)
+{
+    s32 var_a1;
+    s32 var_v0;
+    u16 var_v0_2;
+
+    var_a1 = 0;
+    switch (GAME.selectedArea) {
+        case 7:
+            if ((u16)D_8009EBA0 != 6) {
+                var_a1 = 1;
+            }
+            GAME.purifiedAreas |= GAME.selectedArea = 1;
+            D_8009EBA0 = 6;
+            break;
+        case 1:
+            if (GAME.purifiedAreas & 1) {
+                if (*(u16*)&D_8009EBA0 != 6) {
+                    var_a1 = 1;
+                }
+                D_8009EBA0 = 6;
+            } else {
+            case 0:
+            case 6:
+            case 8:
+            case 9:
+            case 11:
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+                if (*(u16*)&D_8009EBA0 != 0) {
+                    var_a1 = 1;
+                }
+                D_8009EBA0 = 0;
+            }
+            break;
+        case 19:
+            if (GAME.selectedSection != 2) {
+                if (*(u16*)&D_8009EBA0 != 0x11) {
+                    var_a1 = 1;
+                }
+                D_8009EBA0 = 17;
+                GAME.selectedArea = 2;
+            } else {
+                if (*(u16*)&D_8009EBA0 != 0) {
+                    var_a1 = 1;
+                }
+                D_8009EBA0 = 0;
+            }
+            break;
+        case 2:
+            if (*(u16*)&D_8009EBA0 != 0) {
+                var_a1 = 1;
+            }
+            D_8009EBA0 = 0;
+            if ((GAME.purifiedAreas & 1) && ((u16) GAME.selectedSection < 2U)) {
+                D_8009EBA0 = 17;
+                GAME.selectedArea = 2;
+            }
+            break;
+        case 3:
+            if (*(u16*)&D_8009EBA0 != 0) {
+                var_a1 = 1;
+            }
+            D_8009EBA0 = 0;
+            if (GAME.purifiedAreas & 2) {
+                var_v0 = (u16) GAME.selectedSection < 2U;
+                if (var_v0 != 0) {
+                    var_v0_2 = GAME.selectedSection + 4;
+                    GAME.selectedSection = var_v0_2;
+                }
+            }
+            break;
+        case 12:
+            if (*(u16*)&D_8009EBA0 != 8) {
+                var_a1 = 1;
+            }
+            GAME.purifiedAreas |= 8, GAME.selectedArea = 4;
+            D_8009EBA0 = 8;
+            break;
+        case 4:
+            if (GAME.purifiedAreas & 8) {
+                if (*(u16*)&D_8009EBA0 != 8) {
+                    var_a1 = 1;
+                }
+                D_8009EBA0 = 8;
+            } else {
+                if (*(u16*)&D_8009EBA0 != 0) {
+                    var_a1 = 1;
+                }
+                D_8009EBA0 = 0;
+            }
+            break;
+        case 5:
+            if (*(u16*)&D_8009EBA0 != 0) {
+                var_a1 = 1;
+            }
+            D_8009EBA0 = 0;
+            if ((GAME.purifiedAreas & 0x10) && ((u16) GAME.selectedSection < 2U)) {
+                var_v0_2 = GAME.selectedSection + 2;
+                GAME.selectedSection = var_v0_2;
+            }
+            break;
+        case 10:
+            if (*(u16*)&D_8009EBA0 != 0) {
+                var_a1 = 1;
+            }
+            D_8009EBA0 = 0;
+            if ((GAME.purifiedAreas & 0x40) && (GAME.selectedSection == 3)) {
+                GAME.selectedSection = 7;
+            }
+            if (GAME.purifiedAreas & 0x20) {
+                var_v0 = (u16) GAME.selectedSection < 3U;
+                if (var_v0 != 0) {
+                    var_v0_2 = GAME.selectedSection + 4;
+                    GAME.selectedSection = var_v0_2;
+                }
+            }
+            break;
+    }
+    return var_a1;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CE80);
 
