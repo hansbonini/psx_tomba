@@ -830,7 +830,56 @@ void func_8001BB1C(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BF90);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BF90);
+void func_8001BF90(void)
+{
+    s32 var_s0;
+
+    *(u16* )(&SCRATCHPAD+0x1F8)=*(u16* )(0x1F8001F8)+1;
+    *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    switch (D_800A3952) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 6:
+            var_s0 = func_800EEBBC();
+            if (var_s0 == 0) {
+                func_800EEE84();
+            }
+            break;
+        case 4:
+        case 5:
+            var_s0 = func_800E9438();
+            if (var_s0 == 0) {
+                func_800E9EF8();
+            }
+            break;
+        case 7:
+            var_s0 = func_800ECED8();
+            if (var_s0 == 0) {
+                func_800ED0B8();
+            }
+            break;
+    }
+    if (D_800A3952 == 5) {
+        if (var_s0 == 1) {
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 7U;
+        } else {
+            if (var_s0 != 0) {
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value++; 
+            }
+        }
+    } else {
+        if (var_s0 == 2) {
+            SetDispMask(0);
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 1;
+        }else if (var_s0 != 0) {
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value++;
+        }
+    }
+    func_8001F6D4();
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C104);
 
