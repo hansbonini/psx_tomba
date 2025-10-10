@@ -863,9 +863,9 @@ typedef struct unkstruct_1F8001D4 {
     byte unk66;
     byte unk67;
     u_char start_or_load;
-    byte unk69;
-    byte unk6A;
-    byte unk6B;
+    u_char unk69;
+    u_char unk6A;
+    u_char unk6B;
 } unkstruct_1F8001D4;
 
 typedef struct unkstruct_80033FB0 {
@@ -2634,6 +2634,7 @@ extern short D_1F8003B6;
 extern char D_80010000;
 extern char D_80010008;
 
+extern u_short D_80076E80;
 extern int D_80076FAC;
 extern u_short D_8007B290;
 extern int D_8007B294;
@@ -2757,6 +2758,7 @@ extern void func_80019844(void);
 extern int D_800121C8;
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
+void func_8001A51C(void);
 void func_8001F1C0(void);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);

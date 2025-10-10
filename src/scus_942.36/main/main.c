@@ -966,7 +966,162 @@ void func_80019D78(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019E68);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019E68);
+void func_80019E68(s32* arg0)
+{
+    s32 var_v1;
+    u16 temp_v1;
+    u16 temp_v1_6;
+    u16 temp_v1_7;
+    u32 temp_v0_2;
+    u8 temp_a1_2;
+    u8 temp_a2_2;
+    u8 temp_v0;
+    u8 temp_v1_10;
+    u8 temp_v1_13;
+    unkstruct_1F8001D4* temp_a0;
+    unkstruct_1F8001D4* temp_a0_2;
+    unkstruct_1F8001D4* temp_a0_3;
+    unkstruct_1F8001D4* temp_a0_4;
+    unkstruct_1F8001D4* temp_a1;
+    unkstruct_1F8001D4* temp_a2;
+    unkstruct_1F8001D4* temp_v0_3;
+    unkstruct_1F8001D4* temp_v1_11;
+    unkstruct_1F8001D4* temp_v1_12;
+    unkstruct_1F8001D4* temp_v1_14;
+    unkstruct_1F8001D4* temp_v1_2;
+    unkstruct_1F8001D4* temp_v1_3;
+    unkstruct_1F8001D4* temp_v1_4;
+    unkstruct_1F8001D4* temp_v1_5;
+    unkstruct_1F8001D4* temp_v1_8;
+    unkstruct_1F8001D4* temp_v1_9;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
+    switch (temp_v1) {
+        case 0:
+            SetDispMask(0);
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2->unk4C = 0U;
+            temp_v1_2->unk4A++;
+        case 1:
+            if (*(u8* )0x1F8001CC == 0) {
+                func_80016C4C(0U, 0U, 0U);
+                temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_3->unk4A++;
+                return;
+            }
+        default:
+            return;
+        case 2:
+            func_800E7DA4();
+            SetDispMask(1);
+            func_80020AF0(0);
+            func_800E889C(48, 192, 1);
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk69 = 0U;
+            temp_v1_4 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
+            temp_v1_4->unk6A = (u8) *(&D_80076E80 + (temp_v1_4->unk69));
+            temp_v1_5 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+            temp_v1_5->unk6B = (u8) *(&D_80076E80 + (temp_v1_5->unk69));
+            temp_a0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_a0->unk58 = 0x3CCU;
+            temp_a0->unk4A++;
+            return;
+        case 3:
+            temp_a1 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
+            *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            temp_v1_6 = temp_a1->unk58 - 1;
+            temp_a1->unk58 = temp_v1_6;
+            if ((temp_v1_6 << 0x10) <= 0) {
+                temp_a1->unk4A++;
+            }
+            func_800E7DDC(arg0, temp_a1);
+            if (*&D_8009C9D8 != 0) {
+                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk58 = 0x3CCU;
+            }
+            temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_7 = temp_a0_2->unk4C;
+            switch (temp_v1_7) {                    // switch 1; irregular
+                case 0:                             // switch 1
+                    if (*(u16* )0x1F8001FC & 0x80) {
+                        temp_v0 = temp_a0_2->unk69;
+                        if (temp_v0 != 0) {
+                            temp_a0_2->unk69--;
+                            temp_v1_8 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            temp_v1_8->unk6B = (u8) *(&D_80076E80 + (temp_v1_8->unk69));
+                            temp_v1_9 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            temp_v1_9->unk4C++;
+                            playSFX(8);
+                        }
+                    }
+                    if (*(u16* )0x1F8001FC & 0x20) {
+                        temp_a0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                        temp_v1_10 = temp_a0_3->unk69;
+                        if (temp_v1_10 < 2U) {
+                            temp_a0_3->unk69++;
+                            temp_v1_11 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            temp_v1_11->unk6B = (u8) *(&D_80076E80 + (temp_v1_11->unk69));
+                            temp_v1_12 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            temp_v1_12->unk4C++;
+                            playSFX(8);
+                        }
+                    }
+                    if (*(u16* )0x1F8001FC & 0x4008) {
+                        func_80020C00(0);
+                        temp_a2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                        temp_v1_13 = temp_a2->unk69;
+                        switch (temp_v1_13) {       // switch 2; irregular
+                            case 0:                 // switch 2
+                                temp_a2->start_or_load = 0;
+                                func_800204E0(10, 10, temp_a2);
+                                func_800172C4(func_8001A51C);
+                                break;
+                            case 1:                 // switch 2
+                                temp_a2->start_or_load = 1;
+                                func_800204E0(10, 10, temp_a2);
+                                func_800172C4(func_8001A51C);
+                                break;
+                            case 2:                 // switch 2
+                                temp_a2->action = 2;
+                                temp_a2->unk4A = 0U;
+                                func_800204E0(10, 10, temp_a2);
+                                break;
+                        }
+                    }
+                    break;
+                case 1:                             // switch 1
+                    temp_a2_2 = temp_a0_2->unk6A;
+                    temp_a1_2 = temp_a0_2->unk6B;
+                    temp_v0_2 = temp_a2_2 & 0xFF;
+                    if (temp_v0_2 != temp_a1_2) {
+                        var_v1 = -4;
+                        if (temp_v0_2 < temp_a1_2) {
+                            var_v1 = 4;
+                        }
+                        temp_a0_2->unk6A = (u8) (temp_a2_2 + var_v1);
+                        temp_a0_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                        if (temp_a0_4->unk6B == temp_a0_4->unk6A) {
+                            temp_a0_4->unk4C--;
+                        }
+                    }
+                    break;
+            }
+            func_800E889C(48, 192, 1);
+            if (*(u16* )0x1F8001F8 & 0x20) {
+                func_800E889C(56, 144, 0);
+            }
+            temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            func_800E8E78(temp_v0_3->unk6A, temp_v0_3->unk69);
+            func_8001F6D4();
+            return;
+        case 4:
+            func_80020C00(0);
+            *arg0 = 0;
+            temp_v1_14 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_14->action = 3;
+            temp_v1_14->unk4A = 0U;
+            break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
 void func_8001A328(void)
