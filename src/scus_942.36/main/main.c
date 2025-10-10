@@ -111,7 +111,7 @@ void func_80016AF4(void)
     camera->vpy = 0;
     camera->vpz = 0;
     func_80024B3C((MATRIX*)(&D_1F800118));
-    initDisplay2x(96U, 151U, 255U);
+    initDisplay(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
     ClearImage(&rect, 0U, 0U, 0U);
     ClearOTagR(&OT_FRAMEBUFFER, 0x328);
@@ -120,8 +120,8 @@ void func_80016AF4(void)
     *(u_int** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay2x);
-void initDisplay2x(u_char r0, u_char g0, u_char b0)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay);
+void initDisplay(u_char r0, u_char g0, u_char b0)
 {
     DISPENV* dispenv1;
     DISPENV* dispenv2;
@@ -150,8 +150,8 @@ void initDisplay2x(u_char r0, u_char g0, u_char b0)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay2x2x);
-void initDisplay2x2x(u_char r0, u_char g0, u_char b0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay2x);
+void initDisplay2x(u_char r0, u_char g0, u_char b0)
 {
     DISPENV* dispenv1;
     DISPENV* dispenv2;
@@ -761,7 +761,7 @@ void func_800191E0(void)
             case 10:
                 if (*(u8* )0x1F8001CE != 0) {
                     SetDispMask(0);
-                    initDisplay2x2x(0U, 0U, 0U);
+                    initDisplay2x(0U, 0U, 0U);
                     SetDispMask(1);
                     temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
                     temp_v0_3->unk58 = 0xF0U;
@@ -795,7 +795,7 @@ void func_800191E0(void)
                         temp_a1_2->unk5A--;
                         if ((s16)temp_a1_2->unk5A == 0) {
                             SetDispMask(0);
-                            initDisplay2x(0U, 0U, 0U);
+                            initDisplay(0U, 0U, 0U);
                             temp_v0_7 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             *(byte* )0x1F8001D1 = 0;
                             *(s16* )0x1F8001F6 = 0;
@@ -941,7 +941,7 @@ void func_800199B8(void)
             return;
         case 4:
             SetDispMask(0);
-            initDisplay2x2x(240U, 240U, 240U);
+            initDisplay2x(240U, 240U, 240U);
             SetDispMask(1);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
@@ -958,7 +958,7 @@ void func_800199B8(void)
             if ((temp_v0 << 0x10) <= 0) {
                 func_80020C00(0);
                 SetDispMask(0);
-                initDisplay2x(0U, 0U, 0U);
+                initDisplay(0U, 0U, 0U);
                 *(u8* )0x1F8001CE = 0U;
                 func_800223A0(2);
                 func_800222B8(2, 1);
@@ -1045,7 +1045,7 @@ void func_80019D78(void)
     switch (temp_a1->state1) {
         case 0:
             SetDispMask(0);
-            initDisplay2x(0U, 0U, 0U);
+            initDisplay(0U, 0U, 0U);
             *(u8* )&scratch->unk1CC = 1;
             *(s8* )&scratch->unk1CD = 0;
             scratch->unk1D4->state1 ++;
@@ -1107,7 +1107,7 @@ void func_80019E68(s32* arg0)
             temp_v1_2->state1++;
         case 1:
             if (*(u8* )0x1F8001CC == 0) {
-                initDisplay2x(0U, 0U, 0U);
+                initDisplay(0U, 0U, 0U);
                 temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 temp_v1_3->state1++;
                 return;
