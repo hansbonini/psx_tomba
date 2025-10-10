@@ -968,7 +968,75 @@ void func_80019D78(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019E68);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
+void func_8001A328(void)
+{
+    u_short temp_v1_3;
+    unkstruct_1F8001D4* temp_a0;
+    unkstruct_1F8001D4* temp_v1_2;
+    unkstruct_1F8001D4* temp_v1_4;
+
+    *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    switch ((*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A) {
+        case 0:
+            func_80020C00(0);
+            SetDispMask(0);
+            *(u_char* )0x1F8001CE = 0;
+            func_800223A0(3);
+            func_800222B8(8, 1);
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+            return;
+        case 1:
+            if (*(u_char* )0x1F8001CE != 0) {
+                SetDispMask(1);
+                func_800E75C4();
+                func_80020AF0(0);
+                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2->unk4C = 0U;
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+                return;
+            }
+        default:
+            return;
+        case 2:
+            temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_3 = temp_a0->unk4C;
+            switch (temp_v1_3) {                    // switch 1; irregular
+                case 0:                             // switch 1
+                    temp_a0->unk4E.value = 0;
+                    temp_a0->unk4C++;
+                    // fallthrough
+                case 1:                             // switch 1
+                    if (func_800E75CC(temp_a0) != 0) {
+                    (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+                    return;
+                    }
+                    break;
+                case 2:                             // switch 1
+                    func_800E7960(temp_a0);
+                    return;
+                case 3:                             // switch 1
+                    func_800E7A48(temp_a0);
+                    return;
+            }
+            break;
+        case 3:
+            func_80020C00(0);
+            SetDispMask(0);
+            *(u_char* )0x1F8001CE = 0U;
+            func_800223A0(2);
+            func_800222B8(2, 1);
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+            return;
+        case 4:
+            if (*(u_char* )0x1F8001CE != 0) {
+                temp_v1_4 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_4->action = 4;
+                temp_v1_4->unk4A = 0U;
+            }
+            break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A51C);
 void func_8001A51C(void)
