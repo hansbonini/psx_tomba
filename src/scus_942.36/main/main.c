@@ -879,7 +879,109 @@ void func_80019844(void)
     };
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800199B8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800199B8);
+void func_800199B8(void)
+{
+    u16 temp_a0;
+    u16 temp_v0;
+    u16 temp_v1;
+    unkstruct_1F8001D4* temp_a0_2;
+    unkstruct_1F8001D4* temp_a2;
+    unkstruct_1F8001D4* temp_v1_2;
+    unkstruct_1F8001D4* temp_v1_3;
+    unkstruct_1F8001D4* temp_v1_4;
+    unkstruct_1F8001D4* temp_v1_5;
+    unkstruct_1F8001D4* temp_v1_6;
+    unkstruct_1F8001D4* temp_v1_7;
+
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
+    switch (temp_v1) {
+        case 0:
+            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a0 = temp_v1_2->unk4C;
+            switch (temp_a0) {                      // switch 1; irregular
+                case 0:                             // switch 1
+                    SetDispMask(0);
+                    *(u8* )0x1F8001CE = 0U;
+                    func_800223A0(1);
+                    func_800222B8(1, 1);
+                    temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                    temp_v1_3->unk4C++;
+                    return;
+                case 1:                             // switch 1
+                    if (*(u8* )0x1F8001CE != 0) {
+                        temp_v1_2->unk4A = 2U;
+                        temp_v1_2->unk4C = 0U;
+                        func_800E7D5C();
+                        return;
+                    }
+                default:
+                    return;
+            }
+            break;
+        case 1:
+            SetDispMask(0);
+            func_800E7D5C();
+            temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v1_4->unk4A++;
+            return;
+        case 2:
+            temp_a2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            *(u8* )0x1F8001CC = 1;
+            *(s8* )0x1F8001CD = 0x15;
+            temp_a2->unk4A++;
+            func_80017154(1, func_8001F1C0);
+            return;
+        case 3:
+            if (*(u8* )0x1F8001CC != 0) {
+                return;
+            }
+            temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v1_4->unk4A++;
+            return;
+        case 4:
+            SetDispMask(0);
+            func_80016DDC(240U, 240U, 240U);
+            SetDispMask(1);
+            *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            func_800E7D74();
+            temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a0_2->unk58 = 0x78U;
+            temp_a0_2->unk4A++;
+            return;
+        case 5:
+            *(s32* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
+            func_800E7D74();
+            temp_v1_5 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v0 = temp_v1_5->unk58 - 1;
+            temp_v1_5->unk58 = temp_v0;
+            if ((temp_v0 << 0x10) <= 0) {
+                func_80020C00(0);
+                SetDispMask(0);
+                func_80016C4C(0U, 0U, 0U);
+                *(u8* )0x1F8001CE = 0U;
+                func_800223A0(2);
+                func_800222B8(2, 1);
+                temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                temp_v1_4->unk4A++;
+                return;
+            }
+            break;
+        case 6:
+            if (*(u8* )0x1F8001CE != 0) {
+                temp_v1_6 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_6->unk4A++;
+                func_8001F158(0);
+                return;
+            }
+            break;
+        case 7:
+            temp_v1_7 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_7->action = 3;
+            temp_v1_7->unk4A = 0U;
+            break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019CA4);
 void func_80019CA4(void)
