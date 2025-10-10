@@ -854,6 +854,10 @@ typedef struct unkstruct_1F8001D4 {
     u_char unk69;
     u_char unk6A;
     u_char unk6B;
+    u_char unk6C;
+    u_char unk6D;
+    u_char unk6E;
+    u_char unk6F;
 } unkstruct_1F8001D4;
 
 typedef struct unkstruct_80033FB0 {

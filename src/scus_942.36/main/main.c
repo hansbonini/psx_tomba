@@ -182,7 +182,32 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016F5C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016FD8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017024);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017024);
+void func_80017024(void)
+{
+    int tid;
+    unkstruct_1F8001D4* temp_v0;
+    unkstruct_1F8001D4* temp_v0_2;
+    unkstruct_1F8001D4* temp_v1;
+
+    *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)0x801FD800;
+    for (temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); temp_v0 <= 0x801FD94FU; temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
+        tid = 2;
+        switch ((u16)(*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34))->unk0) {
+            case 3:
+                EnterCriticalSection();
+                temp_v0_2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                (*(unkstruct_1F8001D4** )0x01F8001D4)->task_id = OpenTh(temp_v0_2->task_func, temp_v0_2->task_sp, temp_v0_2->task_gp);
+                ExitCriticalSection();
+            case 2:
+                temp_v1 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                temp_v1->unk0 = tid*2;
+                ChangeTh(temp_v1->task_id);
+                break;
+        }
+    }
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800170F8);
 
@@ -196,7 +221,7 @@ void func_800171D4(s16 arg0)
     temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
     temp_v1->unk2 = arg0;
     temp_v1->unk0 = 1;
-    ChangeTh(0xFF000000);
+    ChangeTh(DescTH);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017208);
