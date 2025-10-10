@@ -769,22 +769,10 @@ typedef struct unkstruct_01 {
 typedef struct unkstruct_1F8001D4 {
     short unk0;
     short unk2;
-    byte unk4;
-    byte unk5;
-    byte unk6;
-    byte unk7;
-    byte unk8;
-    byte unk9;
-    byte unka;
-    byte unkb;
-    byte unkc;
-    byte unkd;
-    byte unke;
-    byte unkf;
-    byte unk10;
-    byte unk11;
-    byte unk12;
-    byte unk13;
+    int task_id;
+    int task_sp;
+    int task_func;
+    int task_gp;
     byte unk14;
     byte unk15;
     byte unk16;
@@ -837,9 +825,9 @@ typedef struct unkstruct_1F8001D4 {
     byte unk45;
     byte unk46;
     byte unk47;
-    short action;
-    u_short unk4A;
-    short unk4C;
+    short state0;
+    u_short state1;
+    short state2;
     union {
         volatile u_short volatile_value;
         u_short value;

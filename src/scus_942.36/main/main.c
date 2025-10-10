@@ -111,7 +111,7 @@ void func_80016AF4(void)
     camera->vpy = 0;
     camera->vpz = 0;
     func_80024B3C((MATRIX*)(&D_1F800118));
-    func_80016C4C(96U, 151U, 255U);
+    initDisplay2x(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
     ClearImage(&rect, 0U, 0U, 0U);
     ClearOTagR(&OT_FRAMEBUFFER, 0x328);
@@ -120,8 +120,8 @@ void func_80016AF4(void)
     *(u_int** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016C4C);
-void func_80016C4C(u_char r0, u_char g0, u_char b0)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay2x);
+void initDisplay2x(u_char r0, u_char g0, u_char b0)
 {
     DISPENV* dispenv1;
     DISPENV* dispenv2;
@@ -150,8 +150,8 @@ void func_80016C4C(u_char r0, u_char g0, u_char b0)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016DDC);
-void func_80016DDC(u_char r0, u_char g0, u_char b0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay2x2x);
+void initDisplay2x2x(u_char r0, u_char g0, u_char b0)
 {
     DISPENV* dispenv1;
     DISPENV* dispenv2;
@@ -705,12 +705,12 @@ void func_800191E0(void)
     D_8009E450 = 0;
     func_80023A3C();
     temp_v0 = *(unkstruct_1F8001D4** )0x1F8001D4;
-    temp_v0->action = 9U;
-    temp_v0->unk4A = 0U;
-    temp_v0->unk4C = 0;
+    temp_v0->state0 = 9U;
+    temp_v0->state1 = 0U;
+    temp_v0->state2 = 0;
     SetDispMask(0);
     do {
-        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->action;
+        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state0;
         switch (temp_v1) {
             case 0:
                 *(u8* )0x1F8001CE = 0;
@@ -721,91 +721,91 @@ void func_800191E0(void)
                 *(s8* )0x1F8001C5 = 0;
                 memset(&D_1F8001A0, 0, 0x24);
                 temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v1_2->action++;
+                temp_v1_2->state0++;
                 break;
             case 1:
                 if (*(u8* )0x1F8001CE != 0) {
                     func_8001F158(0x15);
-                    (*(unkstruct_1F8001D4** )0x1F8001D4)->action = 4U;
+                    (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 4U;
                 }
                 break;
             case 2:
                 SetDispMask(1);
                 temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 temp_a0->unk58 = 0x78U;
-                temp_a0->action++;
+                temp_a0->state0++;
                 break;
             case 3:
                 temp_a1 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
                 temp_a1->unk58--;
                 if ((s16) temp_a1->unk58 == -1) {
-                    temp_a1->action++;
+                    temp_a1->state0++;
                 }
                 FontDebugPrintf(0x50, 0x60, 0, &D_80010000);
                 FontDebugPrintf(0x50, 0x70, 0, &D_80010008);
                 break;
             case 4:
                 temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v0_2->action = 0U;
-                temp_v0_2->unk4A = 1U;
-                temp_v0_2->unk4C = 0;
+                temp_v0_2->state0 = 0U;
+                temp_v0_2->state1 = 1U;
+                temp_v0_2->state2 = 0;
                 func_800172C4((s32*)func_80019844);
                 break;
             case 9:
                 SetDispMask(0);
                 *(byte* )0x1F8001CE = 0U;
                 func_800222B8(0x5E, 1);
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->action = 0xAU;
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 0xAU;
                 break;
             case 10:
                 if (*(u8* )0x1F8001CE != 0) {
                     SetDispMask(0);
-                    func_80016DDC(0U, 0U, 0U);
+                    initDisplay2x2x(0U, 0U, 0U);
                     SetDispMask(1);
                     temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
                     temp_v0_3->unk58 = 0xF0U;
-                    temp_v0_3->action = 0xBU;
-                    temp_v0_3->unk4A = 0U;
+                    temp_v0_3->state0 = 0xBU;
+                    temp_v0_3->state1 = 0U;
                 }
                 break;
             case 11:
                 temp_a1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 *(int* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
-                switch (temp_a1_2->unk4A) {                    // switch 1; irregular
+                switch (temp_a1_2->state1) {                    // switch 1; irregular
                     case 0:                             // switch 1
                         temp_a1_2->unk5A = 1U;
-                        temp_a1_2->unk4A++;
+                        temp_a1_2->state1++;
                         break;
                     case 1:                             // switch 1
                         temp_a1_2->unk5A++;
                         if ((s16) temp_a1_2->unk5A >= 0x80) {
                             temp_a1_2->unk58 = 0xB4U;
-                            temp_a1_2->unk4A++;
+                            temp_a1_2->state1++;
                             break;
                         }
                         break;
                     case 2:                             // switch 1
                         temp_a1_2->unk58--;
                         if ((s16) temp_a1_2->unk58 == -1) {
-                            temp_a1_2->unk4A++;
+                            temp_a1_2->state1++;
                         }
                         break;
                     case 3:                             // switch 1
                         temp_a1_2->unk5A--;
                         if ((s16)temp_a1_2->unk5A == 0) {
                             SetDispMask(0);
-                            func_80016C4C(0U, 0U, 0U);
+                            initDisplay2x(0U, 0U, 0U);
                             temp_v0_7 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             *(byte* )0x1F8001D1 = 0;
                             *(s16* )0x1F8001F6 = 0;
-                            temp_v0_7->action = 0U;
-                            temp_v0_7->unk4A = 0U;
+                            temp_v0_7->state0 = 0U;
+                            temp_v0_7->state1 = 0U;
                         }
                         break;
                 }
                 temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                if (*(u16*)&temp_a0_2->action == 0xB) {
+                if (*(u16*)&temp_a0_2->state0 == 0xB) {
                     func_8001964C((u8) temp_a0_2->unk5A, 1);
                 }
                 break;
@@ -847,18 +847,18 @@ void func_80019844(void)
         asm("");
         func_800223E0();
         temp_v1 = *(unkstruct_1F8001D4**)0x1F8001D4;
-        temp_a0 = temp_v1->action;
+        temp_a0 = temp_v1->state0;
         if ((temp_a0 >= 3U) && (*(u16* )0x1F8001FC & 0x4008) && (temp_a0 != 4)) {
-            temp_v1->action = 4U;
-            temp_v1->unk4A = 0;
-            temp_v1->unk4C = 0;
+            temp_v1->state0 = 4U;
+            temp_v1->state1 = 0;
+            temp_v1->state2 = 0;
             sp10[0] = 1;
             func_80020C00(0);
             if (*(u8* )0x1F8001CC != 0) {
                 *(s8* )0x1F8001D3 = 1;
             }
         }
-        switch ((u16)(*(unkstruct_1F8001D4**)0x1F8001D4)->action) {
+        switch ((u16)(*(unkstruct_1F8001D4**)0x1F8001D4)->state0) {
             case 0:
                 func_800199B8(sp10);
                 break;
@@ -894,11 +894,11 @@ void func_800199B8(void)
     unkstruct_1F8001D4* temp_v1_6;
     unkstruct_1F8001D4* temp_v1_7;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
     switch (temp_v1) {
         case 0:
             temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_a0 = temp_v1_2->unk4C;
+            temp_a0 = temp_v1_2->state2;
             switch (temp_a0) {                      // switch 1; irregular
                 case 0:                             // switch 1
                     SetDispMask(0);
@@ -906,12 +906,12 @@ void func_800199B8(void)
                     func_800223A0(1);
                     func_800222B8(1, 1);
                     temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                    temp_v1_3->unk4C++;
+                    temp_v1_3->state2++;
                     return;
                 case 1:                             // switch 1
                     if (*(u8* )0x1F8001CE != 0) {
-                        temp_v1_2->unk4A = 2U;
-                        temp_v1_2->unk4C = 0U;
+                        temp_v1_2->state1 = 2U;
+                        temp_v1_2->state2 = 0U;
                         func_800E7D5C();
                         return;
                     }
@@ -923,13 +923,13 @@ void func_800199B8(void)
             SetDispMask(0);
             func_800E7D5C();
             temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_4->unk4A++;
+            temp_v1_4->state1++;
             return;
         case 2:
             temp_a2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             *(u8* )0x1F8001CC = 1;
             *(s8* )0x1F8001CD = 0x15;
-            temp_a2->unk4A++;
+            temp_a2->state1++;
             func_80017154(1, func_8001F1C0);
             return;
         case 3:
@@ -937,17 +937,17 @@ void func_800199B8(void)
                 return;
             }
             temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_4->unk4A++;
+            temp_v1_4->state1++;
             return;
         case 4:
             SetDispMask(0);
-            func_80016DDC(240U, 240U, 240U);
+            initDisplay2x2x(240U, 240U, 240U);
             SetDispMask(1);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
             temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             temp_a0_2->unk58 = 0x78U;
-            temp_a0_2->unk4A++;
+            temp_a0_2->state1++;
             return;
         case 5:
             *(s32* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
@@ -958,27 +958,27 @@ void func_800199B8(void)
             if ((temp_v0 << 0x10) <= 0) {
                 func_80020C00(0);
                 SetDispMask(0);
-                func_80016C4C(0U, 0U, 0U);
+                initDisplay2x(0U, 0U, 0U);
                 *(u8* )0x1F8001CE = 0U;
                 func_800223A0(2);
                 func_800222B8(2, 1);
                 temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                temp_v1_4->unk4A++;
+                temp_v1_4->state1++;
                 return;
             }
             break;
         case 6:
             if (*(u8* )0x1F8001CE != 0) {
                 temp_v1_6 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v1_6->unk4A++;
+                temp_v1_6->state1++;
                 func_8001F158(0);
                 return;
             }
             break;
         case 7:
             temp_v1_7 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_7->action = 3;
-            temp_v1_7->unk4A = 0U;
+            temp_v1_7->state0 = 3;
+            temp_v1_7->state1 = 0U;
             break;
     }
 }
@@ -1001,25 +1001,25 @@ void func_80019CA4(void)
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_a1 = scratch->unk1D4;
 
-    switch (temp_a1->unk4A) {                              // irregular
+    switch (temp_a1->state1) {                              // irregular
         case 0:
             SetDispMask(0);
              *(u8* )&scratch->unk1CE = 0;
             func_800223A0(2);
             func_800222B8(2, 1);
-            scratch->unk1D4->unk4A++;
+            scratch->unk1D4->state1++;
             return;
         case 1:
             if (*(u8* )&scratch->unk1CE != 0) {
-                temp_a1->unk4A++;
+                temp_a1->state1++;
                 func_8001F158(0);
                 return;
             }
             return;
         case 2:
             temp_v1 = *(u_long**)&scratch->unk1D4;
-            temp_v1->action = 4;
-            temp_v1->unk4A = 0;
+            temp_v1->state0 = 4;
+            temp_v1->state1 = 0;
             break;
     }
 }
@@ -1042,27 +1042,27 @@ void func_80019D78(void)
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_a1 = scratch->unk1D4;
     
-    switch (temp_a1->unk4A) {
+    switch (temp_a1->state1) {
         case 0:
             SetDispMask(0);
-            func_80016C4C(0U, 0U, 0U);
+            initDisplay2x(0U, 0U, 0U);
             *(u8* )&scratch->unk1CC = 1;
             *(s8* )&scratch->unk1CD = 0;
-            scratch->unk1D4->unk4A ++;
+            scratch->unk1D4->state1 ++;
             func_80017154(1, &func_8001F1C0);
             break;
         case 1:
             temp_v0 = *(u_long**)&scratch->unk1CC;
             if (temp_v0 == 0) {
-                temp_a1->unk4A++;
+                temp_a1->state1++;
                 return;
             }
             break;
         case 2:
             func_80020C00(0);
             temp_v1 = *(u_long**)&scratch->unk1D4;
-            temp_v1->action = 4;
-            temp_v1->unk4A = 0;
+            temp_v1->state0 = 4;
+            temp_v1->state1 = 0;
             break;
     }
     return;
@@ -1098,18 +1098,18 @@ void func_80019E68(s32* arg0)
     unkstruct_1F8001D4* temp_v1_8;
     unkstruct_1F8001D4* temp_v1_9;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A;
+    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
     switch (temp_v1) {
         case 0:
             SetDispMask(0);
             temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_2->unk4C = 0U;
-            temp_v1_2->unk4A++;
+            temp_v1_2->state2 = 0U;
+            temp_v1_2->state1++;
         case 1:
             if (*(u8* )0x1F8001CC == 0) {
-                func_80016C4C(0U, 0U, 0U);
+                initDisplay2x(0U, 0U, 0U);
                 temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v1_3->unk4A++;
+                temp_v1_3->state1++;
                 return;
             }
         default:
@@ -1126,7 +1126,7 @@ void func_80019E68(s32* arg0)
             temp_v1_5->unk6B = (u8) *(&D_80076E80 + (temp_v1_5->unk69));
             temp_a0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             temp_a0->unk58 = 0x3CCU;
-            temp_a0->unk4A++;
+            temp_a0->state1++;
             return;
         case 3:
             temp_a1 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
@@ -1134,14 +1134,14 @@ void func_80019E68(s32* arg0)
             temp_v1_6 = temp_a1->unk58 - 1;
             temp_a1->unk58 = temp_v1_6;
             if ((temp_v1_6 << 0x10) <= 0) {
-                temp_a1->unk4A++;
+                temp_a1->state1++;
             }
             func_800E7DDC(arg0, temp_a1);
             if (*&D_8009C9D8 != 0) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk58 = 0x3CCU;
             }
             temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_7 = temp_a0_2->unk4C;
+            temp_v1_7 = temp_a0_2->state2;
             switch (temp_v1_7) {                    // switch 1; irregular
                 case 0:                             // switch 1
                     if (*(u16* )0x1F8001FC & 0x80) {
@@ -1151,7 +1151,7 @@ void func_80019E68(s32* arg0)
                             temp_v1_8 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
                             temp_v1_8->unk6B = (u8) *(&D_80076E80 + (temp_v1_8->unk69));
                             temp_v1_9 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                            temp_v1_9->unk4C++;
+                            temp_v1_9->state2++;
                             playSFX(8);
                         }
                     }
@@ -1163,7 +1163,7 @@ void func_80019E68(s32* arg0)
                             temp_v1_11 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
                             temp_v1_11->unk6B = (u8) *(&D_80076E80 + (temp_v1_11->unk69));
                             temp_v1_12 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                            temp_v1_12->unk4C++;
+                            temp_v1_12->state2++;
                             playSFX(8);
                         }
                     }
@@ -1183,8 +1183,8 @@ void func_80019E68(s32* arg0)
                                 func_800172C4(func_8001A51C);
                                 break;
                             case 2:                 // switch 2
-                                temp_a2->action = 2;
-                                temp_a2->unk4A = 0U;
+                                temp_a2->state0 = 2;
+                                temp_a2->state1 = 0U;
                                 func_800204E0(10, 10, temp_a2);
                                 break;
                         }
@@ -1202,7 +1202,7 @@ void func_80019E68(s32* arg0)
                         temp_a0_2->unk6A = (u8) (temp_a2_2 + var_v1);
                         temp_a0_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                         if (temp_a0_4->unk6B == temp_a0_4->unk6A) {
-                            temp_a0_4->unk4C--;
+                            temp_a0_4->state2--;
                         }
                     }
                     break;
@@ -1219,8 +1219,8 @@ void func_80019E68(s32* arg0)
             func_80020C00(0);
             *arg0 = 0;
             temp_v1_14 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_14->action = 3;
-            temp_v1_14->unk4A = 0U;
+            temp_v1_14->state0 = 3;
+            temp_v1_14->state1 = 0U;
             break;
     }
 }
@@ -1234,14 +1234,14 @@ void func_8001A328(void)
     unkstruct_1F8001D4* temp_v1_4;
 
     *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    switch ((*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A) {
+    switch ((*(unkstruct_1F8001D4** )0x1F8001D4)->state1) {
         case 0:
             func_80020C00(0);
             SetDispMask(0);
             *(u_char* )0x1F8001CE = 0;
             func_800223A0(3);
             func_800222B8(8, 1);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
             return;
         case 1:
             if (*(u_char* )0x1F8001CE != 0) {
@@ -1249,23 +1249,23 @@ void func_8001A328(void)
                 func_800E75C4();
                 func_80020AF0(0);
                 temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v1_2->unk4C = 0U;
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+                temp_v1_2->state2 = 0U;
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
                 return;
             }
         default:
             return;
         case 2:
             temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_3 = temp_a0->unk4C;
+            temp_v1_3 = temp_a0->state2;
             switch (temp_v1_3) {                    // switch 1; irregular
                 case 0:                             // switch 1
                     temp_a0->unk4E.value = 0;
-                    temp_a0->unk4C++;
+                    temp_a0->state2++;
                     // fallthrough
                 case 1:                             // switch 1
                     if (func_800E75CC(temp_a0) != 0) {
-                    (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+                    (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
                     return;
                     }
                     break;
@@ -1283,13 +1283,13 @@ void func_8001A328(void)
             *(u_char* )0x1F8001CE = 0U;
             func_800223A0(2);
             func_800222B8(2, 1);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4A++;
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
             return;
         case 4:
             if (*(u_char* )0x1F8001CE != 0) {
                 temp_v1_4 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v1_4->action = 4;
-                temp_v1_4->unk4A = 0U;
+                temp_v1_4->state0 = 4;
+                temp_v1_4->state1 = 0U;
             }
             break;
     }
@@ -1319,9 +1319,9 @@ void func_8001A51C(void)
 
     scratch->unk1D1 = 0;
     scratch->unk1D0 = 1;
-    temp_v0->action = 0;
-    temp_v0->unk4A = 0;
-    temp_v0->unk4C = 0;
+    temp_v0->state0 = 0;
+    temp_v0->state1 = 0;
+    temp_v0->state2 = 0;
     temp_v0->unk4E.value = 0;
     temp_v0->unk6A = 0;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
@@ -1335,7 +1335,7 @@ void func_8001A51C(void)
     scratch->unk1FC  = 0;
     while (true){
         func_800223E0();
-        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->action;
+        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state0;
         switch ((u_short)temp_v1) {
             case 0:
                 func_8001A670(); // New Game
@@ -1369,10 +1369,10 @@ void func_8001A670(void)
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_a0 = *(u_long**)&scratch->unk1D4;
 
-    switch (temp_a0->unk4A) {                              // irregular
+    switch (temp_a0->state1) {                              // irregular
         case 0:
             temp_a0->unk5A = 1U;
-            temp_a0->unk4A += 1;
+            temp_a0->state1 += 1;
             rect.w = 64;
             rect.x = 0;
             rect.y = 0;
@@ -1385,12 +1385,12 @@ void func_8001A670(void)
             temp_v0 = temp_a0->unk5A - 1;
             temp_a0->unk5A = temp_v0;
             if ((temp_v0 << 0x10) <= 0) {
-                temp_a0->unk4A += 1;
+                temp_a0->state1 += 1;
                 return;
             }
             return;
         case 2:
-            temp_a0->unk4C = 0;
+            temp_a0->state2 = 0;
             temp_a0->unk4E.value = 0;
             if (temp_a0->start_or_load != 0) {
                 var_v0 = 2;
@@ -1398,8 +1398,8 @@ void func_8001A670(void)
                 var_v0 = 1;
                 asm("");
             }
-            temp_a0->action = var_v0;
-            temp_a0->unk4A = 0U;
+            temp_a0->state0 = var_v0;
+            temp_a0->state1 = 0U;
             break;
     }
 }
