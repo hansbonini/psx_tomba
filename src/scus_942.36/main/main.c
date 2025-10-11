@@ -224,7 +224,15 @@ void func_800171D4(s16 arg0)
     ChangeTh(DescTH);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017208);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017208);
+void func_80017208(void)
+{
+    (*(unkstruct_1F8001D4** )0x1F8001D4)->unk0 = 0;
+    EnterCriticalSection();
+    CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);
+    ExitCriticalSection();
+    ChangeTh(DescTH);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017258);
 
