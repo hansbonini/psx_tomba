@@ -146,7 +146,7 @@ u8 func_80029B20(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029BD8);
 int func_80029BD8(int arg0, char arg1, int arg2) {
     GAME.disableSelectMenu = 0;
-    if ((GAME.playerEquips.weapon != 3) && (GAME.unk15 != 2)) {
+    if ((GAME.playerEquips.weapon != 3) && (GAME.fadeScreenControl != 2)) {
         GAME.playerEquips.weapon = 0;
         *(u_char*)(arg0 + 3) = arg1;
         (*(u_char*)(arg0 + 5))++;

@@ -47,7 +47,7 @@ void func_8001A774(void)
             return;
         case 3:
             GAME.unk14 = 0;
-            GAME.totalTimePlayed = 0;
+            GAME.unk7 = 0;
             func_80020C00(0);
             temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             temp_v0_2->state0 = 1;
@@ -488,7 +488,7 @@ void func_8001B2B4(void)
                 func_80028EF4();
             }
             func_80059F7C();
-            if (GAME.totalTimePlayed != 1) {
+            if (GAME.unk7 != 1) {
                 func_8002065C();
             }
             GAME.unk21 = 1;
@@ -496,7 +496,7 @@ void func_8001B2B4(void)
             *(short*)(&SCRATCHPAD+0x1FC)=0;
             return;
         case 1:
-            GAME.unk8++;
+            GAME.totalTimePlayed++;
             func_8001B5A8(temp_a0);
             if (D_8009BCA0 == 2) {
                 temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -518,9 +518,9 @@ void func_8001B2B4(void)
                 GAME.nextSpawnPoint = 0;
                 GAME.playerHealth = GAME.playerHealthDisplayed;
             }
-            GAME.unk30 = 0;
+            GAME.displayExpBar = 0;
             D_800B07CD = 0;
-            GAME.totalTimePlayed = 0;
+            GAME.unk7 = 0;
             D_8009D6DD = 0;
             D_8009D6DE = 0;
             D_8009D6DF = 0;
@@ -620,7 +620,7 @@ void func_8001B780(void)
             func_80059F7C();
             func_80028EF4();
             D_800B0770 = 2;
-            if ((GAME.totalTimePlayed != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
+            if ((GAME.unk7 != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
                 func_8002065C();
             }
             *(short* )0x1F8001FC = 0;
@@ -628,7 +628,7 @@ void func_8001B780(void)
             *(volatile u_short*)&D_8009C9D8 = D_8009C9DC = 0;
             break;
         case 1:
-            GAME.unk8++;
+            GAME.totalTimePlayed++;
             func_8001B944();
             if (scratch->unk1C2 != 0) {
                 volatile u_short *temp_v1 = (volatile int* )&D_8009C9D8;
@@ -815,7 +815,7 @@ void func_8001BB1C(void)
             return;
         case 7:                                     // switch 1
             GAME.unk14 = 0;
-            GAME.totalTimePlayed = 0;
+            GAME.unk7 = 0;
             func_80020C00(0);
             setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
             setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
@@ -928,7 +928,7 @@ void func_8001C104(void)
             func_80028EF4();
             D_800B0770 = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.totalTimePlayed != 1) {
+            if (GAME.unk7 != 1) {
                 func_8002065C();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -947,7 +947,7 @@ void func_8001C104(void)
         break;   
 
         case 1:
-            GAME.unk8 += 1;
+            GAME.totalTimePlayed += 1;
             func_8001C2E8();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
@@ -1046,7 +1046,7 @@ void func_8001C434(void)
             func_80028EF4();
             D_800B0770 = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.totalTimePlayed != 1) {
+            if (GAME.unk7 != 1) {
                 func_8002065C();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -1065,7 +1065,7 @@ void func_8001C434(void)
         break;   
     
         case 1:
-            GAME.unk8 += 1;
+            GAME.totalTimePlayed += 1;
             func_8001C618();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
@@ -1163,7 +1163,7 @@ void func_8001C75C(void)
             func_80028EF4();
             D_800B0770 = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.totalTimePlayed != 1) {
+            if (GAME.unk7 != 1) {
                 func_8002065C();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -1182,7 +1182,7 @@ void func_8001C75C(void)
         break;   
     
         case 1:
-            GAME.unk8 += 1;
+            GAME.totalTimePlayed += 1;
             func_8001C940();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;

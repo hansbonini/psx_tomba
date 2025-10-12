@@ -392,7 +392,7 @@ void func_800177D8(void)
     GAME.playerAP = 0;
     *&GAME.selectedArea = AREA00_VILLAGEOFALLBEGINNINGS;
     GAME.playerLives = 3;
-    GAME.unk17 = 0xFF;
+    GAME.saveSlot = 0xFF;
     GAME.unk730 = 0xFF;
     *(char* )0x1F8003CE = 0; // INVENTORY ENABLED
     *(short* )0x1F8001C8 = 0; // SPRITE ZOOM
