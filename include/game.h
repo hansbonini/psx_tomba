@@ -949,8 +949,8 @@ struct inventory {
 } inventory;
 
 typedef struct equips {
-    ITEM weapon;
-    ITEM pants;
+    byte weapon;
+    byte pants;
 } equips;
 
 typedef struct gameConfig {
@@ -967,7 +967,7 @@ typedef struct gameConfig {
     char unk12;
     char unk13;
     u_char unk14;
-    byte unk15;
+    u_char unk15;
     byte unk16;
     u_char unk17;
     byte unk18;
@@ -1929,6 +1929,12 @@ typedef struct gameConfig {
     u_char inventoryButton;
     u_char playerState;
     struct equips playerEquips;
+    byte unk952;
+    byte unk953;
+    byte unk954;
+    byte unk955;
+    byte unk956;
+    byte unk957;
     byte unk958;
     byte unk959;
     byte unk95a;
@@ -2052,6 +2058,7 @@ extern char D_8009BCA7;
 extern char D_8009BCDA;
 extern char D_8009BCDB;
 extern u_char D_8009BCDF;
+extern short D_8009BCEA;
 extern byte D_8009B6A8; // SELECTED ROW
 extern gameConfig GAME;
 extern u_short D_8009C864;
