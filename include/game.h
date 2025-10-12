@@ -851,7 +851,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk66;
     byte unk67;
     u_char start_or_load;
-    u_char unk69;
+    u_char titleScreenSelectedOption;
     u_char unk6A;
     u_char unk6B;
     u_char unk6C;

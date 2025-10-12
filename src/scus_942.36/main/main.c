@@ -373,8 +373,8 @@ void func_80017734(void)
     D_8009EBA0 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800177D8);
-void func_800177D8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initGameConfig);
+void initGameConfig(void)
 {
     CAMERA* camera = (CAMERA*)0x1F8000E2;
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
@@ -886,7 +886,7 @@ void func_80019844(void)
     *(s8* )&scratch->unk1D1 = 1;
     *(s8* )&scratch->unk1D0 = 0;
     sp10[0] = 0;
-    scratch->unk1D4->unk69 = 0;
+    scratch->unk1D4->titleScreenSelectedOption = 0;
     while(true) {
         *(u16* )0x1F8001F8 = *(u16* )(D_1F8000F8+0x100) + 1;
         asm("");
@@ -1164,13 +1164,13 @@ void func_80019E68(s32* arg0)
             SetDispMask(1);
             func_80020AF0(0);
             func_800E889C(48, 192, 1);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk69 = 0U;
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = 0U;
             temp_v1_4 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
-            temp_v1_4->unk6A = (u8) *(&D_80076E80 + (temp_v1_4->unk69));
+            temp_v1_4->unk6A = (u8) *(&D_80076E80 + (temp_v1_4->titleScreenSelectedOption));
             temp_v1_5 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-            temp_v1_5->unk6B = (u8) *(&D_80076E80 + (temp_v1_5->unk69));
+            temp_v1_5->unk6B = (u8) *(&D_80076E80 + (temp_v1_5->titleScreenSelectedOption));
             temp_a0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_a0->unk58 = 0x3CCU;
+            temp_a0->unk58 = 972;
             temp_a0->state1++;
             return;
         case 3:
@@ -1190,11 +1190,11 @@ void func_80019E68(s32* arg0)
             switch (temp_v1_7) {                    // switch 1; irregular
                 case 0:                             // switch 1
                     if (*(u16* )0x1F8001FC & 0x80) {
-                        temp_v0 = temp_a0_2->unk69;
+                        temp_v0 = temp_a0_2->titleScreenSelectedOption;
                         if (temp_v0 != 0) {
-                            temp_a0_2->unk69--;
+                            temp_a0_2->titleScreenSelectedOption--;
                             temp_v1_8 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            temp_v1_8->unk6B = (u8) *(&D_80076E80 + (temp_v1_8->unk69));
+                            temp_v1_8->unk6B = (u8) *(&D_80076E80 + (temp_v1_8->titleScreenSelectedOption));
                             temp_v1_9 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             temp_v1_9->state2++;
                             playSFX(8);
@@ -1202,11 +1202,11 @@ void func_80019E68(s32* arg0)
                     }
                     if (*(u16* )0x1F8001FC & 0x20) {
                         temp_a0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                        temp_v1_10 = temp_a0_3->unk69;
+                        temp_v1_10 = temp_a0_3->titleScreenSelectedOption;
                         if (temp_v1_10 < 2U) {
-                            temp_a0_3->unk69++;
+                            temp_a0_3->titleScreenSelectedOption++;
                             temp_v1_11 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            temp_v1_11->unk6B = (u8) *(&D_80076E80 + (temp_v1_11->unk69));
+                            temp_v1_11->unk6B = (u8) *(&D_80076E80 + (temp_v1_11->titleScreenSelectedOption));
                             temp_v1_12 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             temp_v1_12->state2++;
                             playSFX(8);
@@ -1215,7 +1215,7 @@ void func_80019E68(s32* arg0)
                     if (*(u16* )0x1F8001FC & 0x4008) {
                         func_80020C00(0);
                         temp_a2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                        temp_v1_13 = temp_a2->unk69;
+                        temp_v1_13 = temp_a2->titleScreenSelectedOption;
                         switch (temp_v1_13) {       // switch 2; irregular
                             case 0:                 // switch 2
                                 temp_a2->start_or_load = 0;
@@ -1257,7 +1257,7 @@ void func_80019E68(s32* arg0)
                 func_800E889C(56, 144, 0);
             }
             temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            func_800E8E78(temp_v0_3->unk6A, temp_v0_3->unk69);
+            func_800E8E78(temp_v0_3->unk6A, temp_v0_3->titleScreenSelectedOption);
             func_8001F6D4();
             return;
         case 4:
@@ -1423,7 +1423,7 @@ void func_8001A670(void)
             rect.y = 0;
             rect.h = 256;
             ClearImage((RECT* ) &rect, 0U, 0U, 0U);
-            func_800177D8();
+            initGameConfig();
             scratch->unk1CF = 0;
             return;
         case 1:
