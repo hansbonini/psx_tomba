@@ -961,7 +961,7 @@ typedef struct gameConfig {
     byte unk6;
     u_char totalTimePlayed;
     int unk8;
-    int playerAP;
+    u_long playerAP;
     u_char playerHealth;
     u_char playerHealthDisplayed;
     char unk12;
@@ -2026,6 +2026,7 @@ extern int D_8007B2F8[];
 extern int D_8007B2FA[];
 extern int D_8007B2FC[];
 extern int D_8007B2FE[];
+extern u_long D_8007C290[];
 extern int D_8007D6A0;
 extern u_char D_8007D6D0;
 extern u_char D_8007E61C[];
@@ -2033,7 +2034,6 @@ extern int D_8007E6E4[];
 extern int D_8007E868;
 extern int D_8007E86C;
 extern int D_8007E86E;
-
 
 extern u_char D_8009B000;
 extern u_char D_8009B004;
@@ -2123,6 +2123,7 @@ extern int D_800B0528;
 extern int D_800B0680;
 extern u_char D_800B0770;
 extern u_char* D_800B078C;
+extern char D_800B07AC[8];
 extern char D_800B07CD;
 extern int D_800B3184;
 extern char D_800B3188;
