@@ -1116,24 +1116,17 @@ void func_80019D78(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", loopTitleScreen);
 void loopTitleScreen(s32* arg0)
 {
-    s32 direction;
-    u16 nextTimer;
-    u16 currentState1;
-    u16 currentState2;
+    s32 amount;
     unkstruct_1F8001D4* gameControl;
-    unkstruct_1F8001D4* gameControlTemp1;
+    unkstruct_1F8001D4* gameControlTemp;
     unkstruct_1F8001D4* gameControlTemp2;
     unkstruct_1F8001D4* gameControlTemp3;
     unkstruct_1F8001D4* gameControlTemp4;
     unkstruct_1F8001D4* gameControlTemp5;
     unkstruct_1F8001D4* gameControlTemp6;
     unkstruct_1F8001D4* gameControlTemp7;
-    unkstruct_1F8001D4* gameControlTemp8;
-    unkstruct_1F8001D4* gameControlTemp9;
-    unkstruct_1F8001D4* gameControlTemp10;
 
-    currentState1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
-    switch (currentState1) {
+    switch ((*(unkstruct_1F8001D4** )0x1F8001D4)->state1) {
         case 0:
             SetDispMask(0);
             gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
@@ -1154,37 +1147,35 @@ void loopTitleScreen(s32* arg0)
             func_80020AF0(0);
             func_800E889C(48, 192, 1);
             (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
-            gameControlTemp9 = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
-            gameControlTemp9->unk6A = (u8) (&D_80076E80)[gameControlTemp9->titleScreenSelectedOption];
-            gameControlTemp9 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-            gameControlTemp9->unk6B = (u8) (&D_80076E80)[gameControlTemp9->titleScreenSelectedOption];
-            gameControlTemp1 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            gameControlTemp1->timer = 972;
-            gameControlTemp1->state1++;
+            gameControl = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
+            gameControl->unk6A = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+            gameControl->unk6B = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControlTemp = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            gameControlTemp->timer = 972;
+            gameControlTemp->state1++;
             return;
         case 3:
             gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-            nextTimer = gameControlTemp5->timer - 1;
-            gameControlTemp5->timer = nextTimer;
-            if ((nextTimer << 0x10) <= 0) {
+            gameControlTemp5->timer--;
+            if ((short)gameControlTemp5->timer <= 0) {
                 gameControlTemp5->state1++;
             }
-            func_800E7DDC(arg0, gameControlTemp5);
+            func_800E7DDC(arg0);
             if (*&D_8009C9D8 != 0) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
             gameControlTemp2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            currentState2 = gameControlTemp2->state2;
-            switch (currentState2) {                    // switch 1; irregular
+            switch ((u16)gameControlTemp2->state2) {                    // switch 1; irregular
                 case 0:                             // switch 1
                     if (*(u16* )0x1F8001FC & JOY_LEFT) {
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
-                            gameControlTemp9 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControlTemp9->unk6B = (u8) (&D_80076E80)[gameControlTemp9->titleScreenSelectedOption];
-                            gameControlTemp9 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                            gameControlTemp9->state2++;
+                            gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            gameControl->unk6B = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            gameControl->state2++;
                             playSFX(8);
                         }
                     }
@@ -1192,10 +1183,10 @@ void loopTitleScreen(s32* arg0)
                         gameControlTemp3 = *(unkstruct_1F8001D4** )0x1F8001D4;;
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
-                            gameControlTemp8 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControlTemp8->unk6B = (u8) (&D_80076E80)[gameControlTemp8->titleScreenSelectedOption];
-                            gameControlTemp8 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                            gameControlTemp8->state2++;
+                            gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            gameControl->unk6B = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            gameControl->state2++;
                             playSFX(8);
                         }
                     }
@@ -1205,29 +1196,29 @@ void loopTitleScreen(s32* arg0)
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
                             case TITLESCREEN_NEWGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 0;
-                                func_800204E0(10, 10, gameControlTemp6);
+                                func_800204E0(10, 10);
                                 func_800172C4(func_8001A51C);
                                 break;
                             case TITLESCREEN_LOADGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 1;
-                                func_800204E0(10, 10, gameControlTemp6);
+                                func_800204E0(10, 10);
                                 func_800172C4(func_8001A51C);
                                 break;
                             case TITLESCREEN_OPTIONS:                 // switch 2
                                 gameControlTemp6->state0 = 2;
                                 gameControlTemp6->state1 = 0U;
-                                func_800204E0(10, 10, gameControlTemp6);
+                                func_800204E0(10, 10);
                                 break;
                         }
                     }
                     break;
                 case 1:                             // switch 1
                     if (gameControlTemp2->unk6A != gameControlTemp2->unk6B) {
-                        direction = -4;
+                        amount = -4;
                         if (gameControlTemp2->unk6A < gameControlTemp2->unk6B) {
-                            direction = 4;
+                            amount = 4;
                         }
-                        gameControlTemp2->unk6A = gameControlTemp2->unk6A + direction;
+                        gameControlTemp2->unk6A += amount;
                         gameControlTemp4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                         if (gameControlTemp4->unk6B == gameControlTemp4->unk6A) {
                             gameControlTemp4->state2--;
