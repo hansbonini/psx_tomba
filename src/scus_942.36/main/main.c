@@ -777,14 +777,14 @@ void func_800191E0(void)
             case 2:
                 SetDispMask(1);
                 temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_a0->unk58 = 0x78U;
+                temp_a0->timer = 120;
                 temp_a0->state0++;
                 break;
             case 3:
                 temp_a1 = *(unkstruct_1F8001D4** )0x1F8001D4;
                 *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-                temp_a1->unk58--;
-                if ((s16) temp_a1->unk58 == -1) {
+                temp_a1->timer--;
+                if ((s16) temp_a1->timer == -1) {
                     temp_a1->state0++;
                 }
                 FontDebugPrintf(0x50, 0x60, 0, &D_80010000);
@@ -809,7 +809,7 @@ void func_800191E0(void)
                     initDisplay2x(0U, 0U, 0U);
                     SetDispMask(1);
                     temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                    temp_v0_3->unk58 = 0xF0U;
+                    temp_v0_3->timer = 240;
                     temp_v0_3->state0 = 0xBU;
                     temp_v0_3->state1 = 0U;
                 }
@@ -825,14 +825,14 @@ void func_800191E0(void)
                     case 1:                             // switch 1
                         temp_a1_2->unk5A++;
                         if ((s16) temp_a1_2->unk5A >= 0x80) {
-                            temp_a1_2->unk58 = 0xB4U;
+                            temp_a1_2->timer = 0xB4U;
                             temp_a1_2->state1++;
                             break;
                         }
                         break;
                     case 2:                             // switch 1
-                        temp_a1_2->unk58--;
-                        if ((s16) temp_a1_2->unk58 == -1) {
+                        temp_a1_2->timer--;
+                        if ((s16) temp_a1_2->timer == -1) {
                             temp_a1_2->state1++;
                         }
                         break;
@@ -917,7 +917,7 @@ void func_80019844(void)
                 func_80019D78();
                 break;
             case 4:
-                func_80019E68(sp10);
+                loopTitleScreen(sp10);
                 break;
         }
         func_800171D4(1);
@@ -991,15 +991,15 @@ void func_800199B8(void)
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
             temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_a0_2->unk58 = 0x78U;
+            temp_a0_2->timer = 120;
             temp_a0_2->state1++;
             return;
         case 5:
             *(s32* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
             func_800E7D74();
             temp_v1_5 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v0 = temp_v1_5->unk58 - 1;
-            temp_v1_5->unk58 = temp_v0;
+            temp_v0 = temp_v1_5->timer - 1;
+            temp_v1_5->timer = temp_v0;
             if ((temp_v0 << 0x10) <= 0) {
                 func_80020C00(0);
                 SetDispMask(0);
@@ -1113,8 +1113,8 @@ void func_80019D78(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019E68);
-void func_80019E68(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", loopTitleScreen);
+void loopTitleScreen(s32* arg0)
 {
     s32 var_v1;
     u16 temp_v1;
@@ -1170,20 +1170,20 @@ void func_80019E68(s32* arg0)
             temp_v1_5 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
             temp_v1_5->unk6B = (u8) *(&D_80076E80 + (temp_v1_5->titleScreenSelectedOption));
             temp_a0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_a0->unk58 = 972;
+            temp_a0->timer = 972;
             temp_a0->state1++;
             return;
         case 3:
             temp_a1 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-            temp_v1_6 = temp_a1->unk58 - 1;
-            temp_a1->unk58 = temp_v1_6;
+            temp_v1_6 = temp_a1->timer - 1;
+            temp_a1->timer = temp_v1_6;
             if ((temp_v1_6 << 0x10) <= 0) {
                 temp_a1->state1++;
             }
             func_800E7DDC(arg0, temp_a1);
             if (*&D_8009C9D8 != 0) {
-                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk58 = 0x3CCU;
+                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
             temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             temp_v1_7 = temp_a0_2->state2;
@@ -1218,12 +1218,12 @@ void func_80019E68(s32* arg0)
                         temp_v1_13 = temp_a2->titleScreenSelectedOption;
                         switch (temp_v1_13) {       // switch 2; irregular
                             case 0:                 // switch 2
-                                temp_a2->start_or_load = 0;
+                                temp_a2->loadGameSelected = 0;
                                 func_800204E0(10, 10, temp_a2);
                                 func_800172C4(func_8001A51C);
                                 break;
                             case 1:                 // switch 2
-                                temp_a2->start_or_load = 1;
+                                temp_a2->loadGameSelected = 1;
                                 func_800204E0(10, 10, temp_a2);
                                 func_800172C4(func_8001A51C);
                                 break;
@@ -1437,7 +1437,7 @@ void func_8001A670(void)
         case 2:
             temp_a0->state2 = 0;
             temp_a0->unk4E.value = 0;
-            if (temp_a0->start_or_load != 0) {
+            if (temp_a0->loadGameSelected != 0) {
                 var_v0 = 2;
             } else {
                 var_v0 = 1;

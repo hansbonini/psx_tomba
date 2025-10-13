@@ -840,7 +840,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk55;
     byte unk56;
     byte unk57;
-    u_short unk58;
+    u_short timer;
     u_short unk5A;
     byte unk5C;
     byte unk5D;
@@ -850,7 +850,7 @@ typedef struct unkstruct_1F8001D4 {
     u_short unk64;
     byte unk66;
     byte unk67;
-    u_char start_or_load;
+    u_char loadGameSelected;
     u_char titleScreenSelectedOption;
     u_char unk6A;
     u_char unk6B;
