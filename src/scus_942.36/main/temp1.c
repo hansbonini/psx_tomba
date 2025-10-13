@@ -63,7 +63,7 @@ void func_8001A774(void)
             temp_v0_3->state1 = 0U;
             temp_v0_3->state2 = 0;
             temp_v0_3->unk4E.value = 0;
-            func_800172C4(&func_80019844);
+            setTask(&func_80019844);
             break;
     }
 }

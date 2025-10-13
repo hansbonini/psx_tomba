@@ -236,8 +236,8 @@ void func_80017208(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017258);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800172C4);
-void func_800172C4(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setTask);
+void setTask(s32 arg0)
 {
     unkstruct_1F8001D4* temp_v0;
 
@@ -795,7 +795,7 @@ void func_800191E0(void)
                 temp_v0_2->state0 = 0U;
                 temp_v0_2->state1 = 1U;
                 temp_v0_2->state2 = 0;
-                func_800172C4((s32*)func_80019844);
+                setTask((s32*)func_80019844);
                 break;
             case 9:
                 SetDispMask(0);
@@ -1197,12 +1197,12 @@ void loopTitleScreen(s32* arg0)
                             case TITLESCREEN_NEWGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 0;
                                 func_800204E0(10, 10);
-                                func_800172C4(func_8001A51C);
+                                setTask(func_8001A51C);
                                 break;
                             case TITLESCREEN_LOADGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 1;
                                 func_800204E0(10, 10);
-                                func_800172C4(func_8001A51C);
+                                setTask(func_8001A51C);
                                 break;
                             case TITLESCREEN_OPTIONS:                 // switch 2
                                 gameControlTemp6->state0 = 2;

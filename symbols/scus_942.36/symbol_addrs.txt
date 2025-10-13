@@ -391,6 +391,7 @@ gte_ApplyRotMatrix=0x20000260;
 main=0x800163b0;
 initDisplay=0x80016C4C;
 initDisplay2x=0x80016DDC;
+setTask=0x800172C4;
 initGameConfig=0x800177D8;
 memCardInit=0x80019020;
 loopTitleScreen=0x80019E68;
