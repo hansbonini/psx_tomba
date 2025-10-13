@@ -1392,10 +1392,7 @@ void func_8001A670(void)
         case 0:
             temp_a0->unk5A = 1U;
             temp_a0->state1 += 1;
-            rect.w = 64;
-            rect.x = 0;
-            rect.y = 0;
-            rect.h = 256;
+            setRECT(&rect, 0, 0, 64, 256);
             ClearImage((RECT* ) &rect, 0U, 0U, 0U);
             initGameConfig();
             scratch->unk1CF = 0;
@@ -1403,7 +1400,7 @@ void func_8001A670(void)
         case 1:
             temp_v0 = temp_a0->unk5A - 1;
             temp_a0->unk5A = temp_v0;
-            if ((temp_v0 << 0x10) <= 0) {
+            if ((short)temp_v0 <= 0) {
                 temp_a0->state1 += 1;
                 return;
             }

@@ -51,10 +51,7 @@ u_short LoadTPage(u_long* pix, int tp, int abr, int x, int y, int w, int h) {
  */
 u_short LoadClut(u_long* clut, int x, int y) {
     RECT rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = 256;
-    rect.h = 1;
+    setRECT(&rect, x, y, 256, 1);
     LoadImage(&rect, clut);
     return GetClut(x, y);
 }
@@ -73,10 +70,7 @@ u_short LoadClut(u_long* clut, int x, int y) {
  */
 u_short LoadClut2(u_long* clut, int x, int y) {
     RECT rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = 16;
-    rect.h = 1;
+    setRECT(&rect, x, y, 16, 1);
     LoadImage(&rect, clut);
     return GetClut(x, y);
 }

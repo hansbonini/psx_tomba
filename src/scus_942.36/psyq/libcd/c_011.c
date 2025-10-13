@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libcd.h"
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libcd/c_011", StCdInterrupt);
 

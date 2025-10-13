@@ -756,10 +756,7 @@ void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env)
     dr->code[5]= 0xE6000000;
     len=7;
     if (env->isbg) {
-        rect.x = env->clip.x;
-        rect.y = env->clip.y;
-        rect.w = env->clip.w;
-        rect.h = env->clip.h;
+        setRECT(&rect, env->clip.x, env->clip.y, env->clip.w, env->clip.h);
         rect.w = CLAMP(rect.w, 0, GPU_INFO.w-1);
         rect.h = CLAMP(rect.h, 0, GPU_INFO.h-1);
         rect.x -= env->ofs[0];
@@ -794,10 +791,7 @@ int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
     dr->code[5]= 0xE6000000;
     len=7;
     if (env->isbg) {
-        rect.x = env->clip.x;
-        rect.y = env->clip.y;
-        rect.w = env->clip.w;
-        rect.h = env->clip.h;
+        setRECT(&rect, env->clip.x, env->clip.y, env->clip.w, env->clip.h);
         rect.w = CLAMP(rect.w, 0, GPU_INFO.w-1);
         rect.h = CLAMP(rect.h, 0, GPU_INFO.h-1);
         if (rect.x & 0x3F || rect.w & 0x3F) {
