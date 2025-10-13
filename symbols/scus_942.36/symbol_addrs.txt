@@ -403,6 +403,7 @@ setEventComplete=0x8001E31C;
 getEventState=0x8001E3D8;
 printEventMessage=0x8001ECD8;
 playSFX=0x8001ffe8;
+playSFXandSetNote=0x800204E0;
 FontDebugPrintf=0x80023aa4;
 drawLoadingSprites=0x80023CE0;
 drawNowLoadingSprite=0x80024008;
@@ -410,8 +411,8 @@ setPlayerAP=0x80029548;
 addItemToInventory=0x80029788;
 removeItemFromInventory=0x80029944;
 printInfoMessage=0x80031124;
-// system/archive
 LZDecompress=0x8003EF50;
+printTitleScreenMessage=0x800E889C;
 // libapi
 FlushCache=0x8005b38c;
 _bu_init=0x8005b39c;

@@ -1534,7 +1534,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020264);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020434);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800204E0);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", playSFXandSetNote);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002059C);
 

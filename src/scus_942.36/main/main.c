@@ -1145,7 +1145,7 @@ void loopTitleScreen(int* arg0)
             func_800E7DA4();
             SetDispMask(1);
             func_80020AF0(0);
-            func_800E889C(48, 192, 1);
+            printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
             (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
             gameControl = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
             gameControl->unk6A = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
@@ -1196,18 +1196,18 @@ void loopTitleScreen(int* arg0)
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
                             case TITLESCREEN_NEWGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 0;
-                                func_800204E0(10, 10);
+                                playSFXandSetNote(10, 10);
                                 setTask(func_8001A51C);
                                 break;
                             case TITLESCREEN_LOADGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 1;
-                                func_800204E0(10, 10);
+                                playSFXandSetNote(10, 10);
                                 setTask(func_8001A51C);
                                 break;
                             case TITLESCREEN_OPTIONS:                 // switch 2
                                 gameControlTemp6->state0 = 2;
                                 gameControlTemp6->state1 = 0U;
-                                func_800204E0(10, 10);
+                                playSFXandSetNote(10, 10);
                                 break;
                         }
                     }
@@ -1226,9 +1226,9 @@ void loopTitleScreen(int* arg0)
                     }
                     break;
             }
-            func_800E889C(48, 192, 1);
+            printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
             if (*(u_short* )0x1F8001F8 & 0x20) {
-                func_800E889C(56, 144, 0);
+                printTitleScreenMessage(56, 144, TITLESCREEN_MESSAGE_PRESSSTART);
             }
             gameControlTemp7 = *(unkstruct_1F8001D4** )0x1F8001D4;
             func_800E8E78(gameControlTemp7->unk6A, gameControlTemp7->titleScreenSelectedOption);
