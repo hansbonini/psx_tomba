@@ -238,25 +238,6 @@ void func_8001AD1C(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
 void displayDebugScreen(void)
 {
-    typedef inline enum {
-        JOY_SELECT   = 0x1,
-        JOY_L3       = 0x2,
-        JOY_R3       = 0x4,
-        JOY_START    = 0x8,
-        JOY_UP       = 0x10,
-        JOY_RIGHT    = 0x20,
-        JOY_LEFT     = 0x80,
-        JOY_DOWN     = 0x40,
-        JOY_L2       = 0x100,
-        JOY_R2       = 0x200,
-        JOY_L1       = 0x400,
-        JOY_R1       = 0x800,
-        JOY_TRIANGLE = 0x1000,
-        JOY_CIRCLE   = 0x2000,
-        JOY_CROSS    = 0x4000,
-        JOY_SQUARE   = 0x8000,
-    } joypad_buttons;
-
     typedef inline struct {
         char data[0x1B4];
         u_char debug_mode_enabled;
@@ -273,9 +254,9 @@ void displayDebugScreen(void)
         char unk1FB;
         u_short joypad_state;
     } scratchpad;
+
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)&scratch->unk1D4;
-    
     u_short var_a0;
     int* var_v1;
     u_short temp_a0;
@@ -284,7 +265,7 @@ void displayDebugScreen(void)
     u_char *temp2;
 
     /* If start a game and debug mode is enabled */
-    if ((temp_v1->start_or_load == 0) && (scratch->debug_mode_enabled != 0)) {
+    if ((temp_v1->loadGameSelected == 0) && (scratch->debug_mode_enabled != 0)) {
         // If button UP is pressed decrease selected row
         if (scratch->joypad_state & JOY_UP) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
@@ -819,7 +800,7 @@ void func_8001BB1C(void)
             func_80020C00(0);
             setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
             setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->start_or_load = 1;
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->loadGameSelected = 1;
             temp_v0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             temp_v0_2->state0 = 1;
             temp_v0_2->state1 = 1;

@@ -893,7 +893,7 @@ void func_80019844(void)
         func_800223E0();
         temp_v1 = *(unkstruct_1F8001D4**)0x1F8001D4;
         temp_a0 = temp_v1->state0;
-        if ((temp_a0 >= 3U) && (*(u16* )0x1F8001FC & 0x4008) && (temp_a0 != 4)) {
+        if ((temp_a0 >= 3U) && (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) && (temp_a0 != 4)) {
             temp_v1->state0 = 4U;
             temp_v1->state1 = 0;
             temp_v1->state2 = 0;
@@ -1116,45 +1116,34 @@ void func_80019D78(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", loopTitleScreen);
 void loopTitleScreen(s32* arg0)
 {
-    s32 var_v1;
-    u16 temp_v1;
-    u16 temp_v1_6;
-    u16 temp_v1_7;
-    u32 temp_v0_2;
-    u8 temp_a1_2;
-    u8 temp_a2_2;
-    u8 temp_v0;
-    u8 temp_v1_10;
-    u8 temp_v1_13;
-    unkstruct_1F8001D4* temp_a0;
-    unkstruct_1F8001D4* temp_a0_2;
-    unkstruct_1F8001D4* temp_a0_3;
-    unkstruct_1F8001D4* temp_a0_4;
-    unkstruct_1F8001D4* temp_a1;
-    unkstruct_1F8001D4* temp_a2;
-    unkstruct_1F8001D4* temp_v0_3;
-    unkstruct_1F8001D4* temp_v1_11;
-    unkstruct_1F8001D4* temp_v1_12;
-    unkstruct_1F8001D4* temp_v1_14;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
-    unkstruct_1F8001D4* temp_v1_4;
-    unkstruct_1F8001D4* temp_v1_5;
-    unkstruct_1F8001D4* temp_v1_8;
-    unkstruct_1F8001D4* temp_v1_9;
+    s32 direction;
+    u16 nextTimer;
+    u16 currentState1;
+    u16 currentState2;
+    unkstruct_1F8001D4* gameControl;
+    unkstruct_1F8001D4* gameControlTemp1;
+    unkstruct_1F8001D4* gameControlTemp2;
+    unkstruct_1F8001D4* gameControlTemp3;
+    unkstruct_1F8001D4* gameControlTemp4;
+    unkstruct_1F8001D4* gameControlTemp5;
+    unkstruct_1F8001D4* gameControlTemp6;
+    unkstruct_1F8001D4* gameControlTemp7;
+    unkstruct_1F8001D4* gameControlTemp8;
+    unkstruct_1F8001D4* gameControlTemp9;
+    unkstruct_1F8001D4* gameControlTemp10;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
-    switch (temp_v1) {
+    currentState1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
+    switch (currentState1) {
         case 0:
             SetDispMask(0);
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_2->state2 = 0U;
-            temp_v1_2->state1++;
+            gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+            gameControl->state2 = 0U;
+            gameControl->state1++;
         case 1:
             if (*(u8* )0x1F8001CC == 0) {
                 initDisplay(0U, 0U, 0U);
-                temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                temp_v1_3->state1++;
+                gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+                gameControl->state1++;
                 return;
             }
         default:
@@ -1164,90 +1153,84 @@ void loopTitleScreen(s32* arg0)
             SetDispMask(1);
             func_80020AF0(0);
             func_800E889C(48, 192, 1);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = 0U;
-            temp_v1_4 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
-            temp_v1_4->unk6A = (u8) *(&D_80076E80 + (temp_v1_4->titleScreenSelectedOption));
-            temp_v1_5 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-            temp_v1_5->unk6B = (u8) *(&D_80076E80 + (temp_v1_5->titleScreenSelectedOption));
-            temp_a0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_a0->timer = 972;
-            temp_a0->state1++;
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
+            gameControlTemp9 = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
+            gameControlTemp9->unk6A = (u8) (&D_80076E80)[gameControlTemp9->titleScreenSelectedOption];
+            gameControlTemp9 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+            gameControlTemp9->unk6B = (u8) (&D_80076E80)[gameControlTemp9->titleScreenSelectedOption];
+            gameControlTemp1 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            gameControlTemp1->timer = 972;
+            gameControlTemp1->state1++;
             return;
         case 3:
-            temp_a1 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
+            gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-            temp_v1_6 = temp_a1->timer - 1;
-            temp_a1->timer = temp_v1_6;
-            if ((temp_v1_6 << 0x10) <= 0) {
-                temp_a1->state1++;
+            nextTimer = gameControlTemp5->timer - 1;
+            gameControlTemp5->timer = nextTimer;
+            if ((nextTimer << 0x10) <= 0) {
+                gameControlTemp5->state1++;
             }
-            func_800E7DDC(arg0, temp_a1);
+            func_800E7DDC(arg0, gameControlTemp5);
             if (*&D_8009C9D8 != 0) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
-            temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_7 = temp_a0_2->state2;
-            switch (temp_v1_7) {                    // switch 1; irregular
+            gameControlTemp2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            currentState2 = gameControlTemp2->state2;
+            switch (currentState2) {                    // switch 1; irregular
                 case 0:                             // switch 1
-                    if (*(u16* )0x1F8001FC & 0x80) {
-                        temp_v0 = temp_a0_2->titleScreenSelectedOption;
-                        if (temp_v0 != 0) {
-                            temp_a0_2->titleScreenSelectedOption--;
-                            temp_v1_8 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            temp_v1_8->unk6B = (u8) *(&D_80076E80 + (temp_v1_8->titleScreenSelectedOption));
-                            temp_v1_9 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                            temp_v1_9->state2++;
+                    if (*(u16* )0x1F8001FC & JOY_LEFT) {
+                        if (gameControlTemp2->titleScreenSelectedOption != 0) {
+                            gameControlTemp2->titleScreenSelectedOption--;
+                            gameControlTemp9 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            gameControlTemp9->unk6B = (u8) (&D_80076E80)[gameControlTemp9->titleScreenSelectedOption];
+                            gameControlTemp9 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            gameControlTemp9->state2++;
                             playSFX(8);
                         }
                     }
-                    if (*(u16* )0x1F8001FC & 0x20) {
-                        temp_a0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                        temp_v1_10 = temp_a0_3->titleScreenSelectedOption;
-                        if (temp_v1_10 < 2U) {
-                            temp_a0_3->titleScreenSelectedOption++;
-                            temp_v1_11 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            temp_v1_11->unk6B = (u8) *(&D_80076E80 + (temp_v1_11->titleScreenSelectedOption));
-                            temp_v1_12 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                            temp_v1_12->state2++;
+                    if (*(u16* )0x1F8001FC & JOY_RIGHT) {
+                        gameControlTemp3 = *(unkstruct_1F8001D4** )0x1F8001D4;;
+                        if (gameControlTemp3->titleScreenSelectedOption < 2U) {
+                            gameControlTemp3->titleScreenSelectedOption++;
+                            gameControlTemp8 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            gameControlTemp8->unk6B = (u8) (&D_80076E80)[gameControlTemp8->titleScreenSelectedOption];
+                            gameControlTemp8 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            gameControlTemp8->state2++;
                             playSFX(8);
                         }
                     }
-                    if (*(u16* )0x1F8001FC & 0x4008) {
+                    if (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) {
                         func_80020C00(0);
-                        temp_a2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-                        temp_v1_13 = temp_a2->titleScreenSelectedOption;
-                        switch (temp_v1_13) {       // switch 2; irregular
-                            case 0:                 // switch 2
-                                temp_a2->loadGameSelected = 0;
-                                func_800204E0(10, 10, temp_a2);
+                        gameControlTemp6 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                        switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
+                            case TITLESCREEN_NEWGAME:                 // switch 2
+                                gameControlTemp6->loadGameSelected = 0;
+                                func_800204E0(10, 10, gameControlTemp6);
                                 func_800172C4(func_8001A51C);
                                 break;
-                            case 1:                 // switch 2
-                                temp_a2->loadGameSelected = 1;
-                                func_800204E0(10, 10, temp_a2);
+                            case TITLESCREEN_LOADGAME:                 // switch 2
+                                gameControlTemp6->loadGameSelected = 1;
+                                func_800204E0(10, 10, gameControlTemp6);
                                 func_800172C4(func_8001A51C);
                                 break;
-                            case 2:                 // switch 2
-                                temp_a2->state0 = 2;
-                                temp_a2->state1 = 0U;
-                                func_800204E0(10, 10, temp_a2);
+                            case TITLESCREEN_OPTIONS:                 // switch 2
+                                gameControlTemp6->state0 = 2;
+                                gameControlTemp6->state1 = 0U;
+                                func_800204E0(10, 10, gameControlTemp6);
                                 break;
                         }
                     }
                     break;
                 case 1:                             // switch 1
-                    temp_a2_2 = temp_a0_2->unk6A;
-                    temp_a1_2 = temp_a0_2->unk6B;
-                    temp_v0_2 = temp_a2_2 & 0xFF;
-                    if (temp_v0_2 != temp_a1_2) {
-                        var_v1 = -4;
-                        if (temp_v0_2 < temp_a1_2) {
-                            var_v1 = 4;
+                    if (gameControlTemp2->unk6A != gameControlTemp2->unk6B) {
+                        direction = -4;
+                        if (gameControlTemp2->unk6A < gameControlTemp2->unk6B) {
+                            direction = 4;
                         }
-                        temp_a0_2->unk6A = (u8) (temp_a2_2 + var_v1);
-                        temp_a0_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                        if (temp_a0_4->unk6B == temp_a0_4->unk6A) {
-                            temp_a0_4->state2--;
+                        gameControlTemp2->unk6A = gameControlTemp2->unk6A + direction;
+                        gameControlTemp4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                        if (gameControlTemp4->unk6B == gameControlTemp4->unk6A) {
+                            gameControlTemp4->state2--;
                         }
                     }
                     break;
@@ -1256,16 +1239,16 @@ void loopTitleScreen(s32* arg0)
             if (*(u16* )0x1F8001F8 & 0x20) {
                 func_800E889C(56, 144, 0);
             }
-            temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            func_800E8E78(temp_v0_3->unk6A, temp_v0_3->titleScreenSelectedOption);
+            gameControlTemp7 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            func_800E8E78(gameControlTemp7->unk6A, gameControlTemp7->titleScreenSelectedOption);
             func_8001F6D4();
             return;
         case 4:
             func_80020C00(0);
             *arg0 = 0;
-            temp_v1_14 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            temp_v1_14->state0 = 3;
-            temp_v1_14->state1 = 0U;
+            gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+            gameControl->state0 = 3;
+            gameControl->state1 = 0U;
             break;
     }
 }

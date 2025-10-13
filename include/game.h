@@ -749,12 +749,37 @@ typedef enum {
 } INVENTORY_SCREEN_ID;
 
 typedef enum {
-              SORT_MODE_1,
-              SORT_MODE_2,
-              SORT_MODE_3,
-              SORT_MODE_4,
-              SORT_MODE_DEFAULT = 0x8000,
+    SORT_MODE_1,
+    SORT_MODE_2,
+    SORT_MODE_3,
+    SORT_MODE_4,
+    SORT_MODE_DEFAULT = 0x8000,
 } INVENTORY_SORT_MODE_ID;
+
+typedef enum {
+    TITLESCREEN_NEWGAME,
+    TITLESCREEN_LOADGAME,
+    TITLESCREEN_OPTIONS
+} TITLESCREEN_OPTION;
+
+typedef enum {
+    JOY_SELECT   = 0x1,
+    JOY_L3       = 0x2,
+    JOY_R3       = 0x4,
+    JOY_START    = 0x8,
+    JOY_UP       = 0x10,
+    JOY_RIGHT    = 0x20,
+    JOY_DOWN     = 0x40,
+    JOY_LEFT     = 0x80,
+    JOY_L2       = 0x100,
+    JOY_R2       = 0x200,
+    JOY_L1       = 0x400,
+    JOY_R1       = 0x800,
+    JOY_TRIANGLE = 0x1000,
+    JOY_CIRCLE   = 0x2000,
+    JOY_CROSS    = 0x4000,
+    JOY_SQUARE   = 0x8000,
+} JOYPAD_BUTTONS;
 
 typedef struct lz_t {
     int size;
