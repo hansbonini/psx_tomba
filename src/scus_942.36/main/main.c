@@ -1114,9 +1114,9 @@ void func_80019D78(void)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", loopTitleScreen);
-void loopTitleScreen(s32* arg0)
+void loopTitleScreen(int* arg0)
 {
-    s32 amount;
+    int amount;
     unkstruct_1F8001D4* gameControl;
     unkstruct_1F8001D4* gameControlTemp;
     unkstruct_1F8001D4* gameControlTemp2;
@@ -1133,7 +1133,7 @@ void loopTitleScreen(s32* arg0)
             gameControl->state2 = 0U;
             gameControl->state1++;
         case 1:
-            if (*(u8* )0x1F8001CC == 0) {
+            if (*(u_char* )0x1F8001CC == 0) {
                 initDisplay(0U, 0U, 0U);
                 gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
                 gameControl->state1++;
@@ -1148,16 +1148,16 @@ void loopTitleScreen(s32* arg0)
             func_800E889C(48, 192, 1);
             (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
             gameControl = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
-            gameControl->unk6A = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl->unk6A = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-            gameControl->unk6B = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
             gameControlTemp = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             gameControlTemp->timer = 972;
             gameControlTemp->state1++;
             return;
         case 3:
             gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
-            *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             gameControlTemp5->timer--;
             if ((short)gameControlTemp5->timer <= 0) {
                 gameControlTemp5->state1++;
@@ -1167,30 +1167,30 @@ void loopTitleScreen(s32* arg0)
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
             gameControlTemp2 = *(unkstruct_1F8001D4** )0x1F8001D4;
-            switch ((u16)gameControlTemp2->state2) {                    // switch 1; irregular
+            switch ((u_short)gameControlTemp2->state2) {                    // switch 1; irregular
                 case 0:                             // switch 1
-                    if (*(u16* )0x1F8001FC & JOY_LEFT) {
+                    if (*(u_short* )0x1F8001FC & JOY_LEFT) {
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControl->unk6B = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
                             gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
                         }
                     }
-                    if (*(u16* )0x1F8001FC & JOY_RIGHT) {
+                    if (*(u_short* )0x1F8001FC & JOY_RIGHT) {
                         gameControlTemp3 = *(unkstruct_1F8001D4** )0x1F8001D4;;
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControl->unk6B = (u8) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
                             gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
                         }
                     }
-                    if (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) {
+                    if (*(u_short* )0x1F8001FC & (JOY_CROSS | JOY_START)) {
                         func_80020C00(0);
                         gameControlTemp6 = *(unkstruct_1F8001D4** )0x1F8001D4;
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
@@ -1227,7 +1227,7 @@ void loopTitleScreen(s32* arg0)
                     break;
             }
             func_800E889C(48, 192, 1);
-            if (*(u16* )0x1F8001F8 & 0x20) {
+            if (*(u_short* )0x1F8001F8 & 0x20) {
                 func_800E889C(56, 144, 0);
             }
             gameControlTemp7 = *(unkstruct_1F8001D4** )0x1F8001D4;
