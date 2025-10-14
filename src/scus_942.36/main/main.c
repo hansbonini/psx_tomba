@@ -3,7 +3,25 @@
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
+void func_80016940(void)
+{
+    short temp_a1;
+    u_long* ot;
+    u_long* temp_v1;
+
+    temp_a1 = 1 - *(u_short* )(0x1F8001F4);
+    ot = (temp_a1 * 0xD10) + (byte*)&OT_FRAMEBUFFER;
+    temp_v1 = *(u_long** )((byte*)&D_1F8000C0[0]+0x120);
+    *(u_short* )(&SCRATCHPAD+0x1f4) = (u_short) temp_a1;
+    *(u_long* )(&SCRATCHPAD+0x1E0) = ot;
+    *(u_long** )(&SCRATCHPAD+0x1E4) = temp_v1;
+    PutDispEnv(ot + 0x328);
+    PutDrawEnv(*(u_long* )0x1F8001E0 + 0xCB4);
+    func_80016F5C(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
+    DrawOTag(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
+    ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), 0x328);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A00);
 void func_80016A00(short id, short arg1)
