@@ -412,6 +412,7 @@ addItemToInventory=0x80029788;
 removeItemFromInventory=0x80029944;
 printInfoMessage=0x80031124;
 LZDecompress=0x8003EF50;
+__main=0x8006b634;
 printTitleScreenMessage=0x800E889C;
 // libapi
 FlushCache=0x8005b38c;
