@@ -2169,7 +2169,7 @@ extern void func_80019844(void);
 extern int D_800121C8;
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
-void func_80017374(void);
+void vsyncEventHandler(void);
 void func_800191E0(void);
 void func_8001A51C(void);
 void func_8001F1C0(void);

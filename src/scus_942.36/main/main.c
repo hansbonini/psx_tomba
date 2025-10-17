@@ -22,7 +22,7 @@ void main(void)
     func_80016A18();
     ResetGraph(0);
     SetGraphDebug(0);
-    func_8006329C();
+    InitGeom();
     CdInit();
     sp18 = 0x80;
     while (CdControl(0xE, &sp18, 0) == 0);
@@ -39,12 +39,12 @@ void main(void)
     func_80016FD8();
     func_800170F8(0, func_800191E0);
     EnterCriticalSection();
-    *(s32*)0x1F8001D8 = OpenEvent(0xF2000003, 2, 0x1000, &func_80017374);
+    *(s32*)0x1F8001D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vsyncEventHandler);
     ExitCriticalSection();
     ptr_9eb5a = &D_8009EB5A;
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
     SetDispMask(1);
-    do {
+    while (true) {
         *(u16*)((byte*)&D_1F8001A0+0x48) = 0;
         if (*(u16*)(&SCRATCHPAD+0x1F0) < 0x4001U) {
             D_8009C8A8 = (*(s16*)0x1F8001F4 * 0x780) + &D_800A1890;
@@ -131,7 +131,7 @@ void main(void)
                 }
             }
         }   
-    } while (true);
+    };
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
@@ -403,7 +403,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001731C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017348);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017374);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vsyncEventHandler);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
 
