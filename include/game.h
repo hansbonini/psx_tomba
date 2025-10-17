@@ -803,8 +803,7 @@ typedef struct unkstruct_1F8001D4 {
     int task_sp;
     int task_func;
     int task_gp;
-    byte unk14;
-    byte unk15;
+    volatile u_short unk14;
     byte unk16;
     byte unk17;
     byte unk18;
@@ -2071,6 +2070,7 @@ extern int D_8007E868;
 extern int D_8007E86C;
 extern int D_8007E86E;
 
+extern DISPENV D_8009AFE8;
 extern u_char D_8009B000;
 extern u_char D_8009B004;
 extern u_char D_8009B008;
@@ -2132,6 +2132,7 @@ extern u_short D_8009EB5A;
 extern u_short D_8009EB7C;
 extern char* SPRINTF_BUFFER_MSG[];
 extern char D_800A15D8; // SPU_SEQ_TABLE
+extern char D_800A1890;
 extern short D_800A2790;
 extern short D_800A3030;
 extern short D_800A32F8;
@@ -2168,6 +2169,8 @@ extern void func_80019844(void);
 extern int D_800121C8;
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
+void func_80017374(void);
+void func_800191E0(void);
 void func_8001A51C(void);
 void func_8001F1C0(void);
 

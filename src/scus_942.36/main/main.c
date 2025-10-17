@@ -1,7 +1,138 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
+void main(void)
+{
+    u8 sp18;
+    u16 temp_v0;
+    u16 temp_v0_2;
+    u16 temp_v1;
+    u16 temp_v1_3;
+    u16 temp_v1_4;
+    u16 temp_v1_5;
+    s32 temp_a0;
+    u8 temp_v1_2;
+    u_short* ptr_9eb5a;
+    RECT* disp;
+
+    SetDispMask(0);
+    SetVideoMode(0);
+    ResetCallback();
+    func_80016A18();
+    ResetGraph(0);
+    SetGraphDebug(0);
+    func_8006329C();
+    CdInit();
+    sp18 = 0x80;
+    while (CdControl(0xE, &sp18, 0) == 0);
+    DecDCTReset(0);
+    *(s32*)0x1F8002A0 = 0;
+    *(s32*)0x1F80029C = 0;
+    func_80016AF4();
+    func_80016A00(1, 1);
+    func_800211A4();
+    SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
+    disp = &D_8009AFE8.disp;
+    memCardInit();
+    func_80028728();
+    func_80016FD8();
+    func_800170F8(0, func_800191E0);
+    EnterCriticalSection();
+    *(s32*)0x1F8001D8 = OpenEvent(0xF2000003, 2, 0x1000, &func_80017374);
+    ExitCriticalSection();
+    ptr_9eb5a = &D_8009EB5A;
+    EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
+    SetDispMask(1);
+    do {
+        *(u16*)((byte*)&D_1F8001A0+0x48) = 0;
+        if (*(u16*)(&SCRATCHPAD+0x1F0) < 0x4001U) {
+            D_8009C8A8 = (*(s16*)0x1F8001F4 * 0x780) + &D_800A1890;
+            func_80017024();
+        }
+        if (*(u16*)0x1F8001EC != 0) {
+            DrawSync(0);
+        }
+        temp_v1 = *(u16*)(&D_1F8000C0[0]+0x12A);
+        while (((unkstruct_1F8001D4*)0x1F8001D4)->unk14 < temp_v1) {
+        }
+        if (*(u16*)(&SCRATCHPAD+0x1EC) == 0) {
+            ResetGraph(1);
+        }
+        if ((*(u8*)0x1F8001BD != 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
+            while (~*ptr_9eb5a & 0x200) {
+                if (~*ptr_9eb5a & 0x80) {
+                    disp->x -= 4;
+                }
+                if (~*ptr_9eb5a & 0x20) {
+                    disp->x += 4;
+                }
+                if (~*ptr_9eb5a & 0x10) {
+                    D_8009AFE8.disp.y -= 4;
+                }
+                if (~*ptr_9eb5a & 0x40) {
+                    D_8009AFE8.disp.y += 4;
+                }
+                VSync(0);
+                PutDispEnv(&D_8009AFE8);
+                do {} while (0);
+            }
+        }
+
+        switch (*(u8*)0x1F8001CC) {
+            case 2:
+                break;
+            case 0:
+            case 1:
+                if (*(u16*)0x1F8001F0 <= 0x4000) {
+                    func_80016940();
+                    func_800173B0();
+                }
+                break;
+            case 3:
+                *(u8*)(&SCRATCHPAD+0x1CC) = 2;
+                if (*(u16*)0x1F8001F0 <= 0x4000) {
+                    func_80016940();
+                    func_800173B0();
+                }
+                break;
+        }
+
+        if (*(u8*)0x1F8001BF != 0) {
+            if ((*(u8*)0x1F8001CC == 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (*(u8*)0x1F8001CE == 1) && (*(u16*)0x1F8001FC & 0x400)) {
+                *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - *(u16*)0x1F8001F0);
+            }
+        } else if (*(u8*)0x1F8001BE != 0 && *(u8*)0x1F8001CC == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
+            temp_a0 = *(u8*)0x1F8001CE;
+            if (temp_a0 == 1) {
+                temp_v1_3 = *(u16*)0x1F8001FC;
+                if (temp_v1_3 & 0x400) {
+                    temp_v0 = 1 - *(u16*)0x1F8001EE;
+                    *(u16*)(&SCRATCHPAD+0x1EE) = temp_v0;
+                    *(u16*)0x1F8001F0 = (u16)(temp_v0 << 0xF);
+                }
+                if (*(u16*)(0x1F8001EE) != 0) {
+                    *(u16*)0x1F8001F0 = 0x8000U;
+                    if (temp_v1_3 & 0x100) {
+                        *(u16*)(&SCRATCHPAD+0x1F0) = 0U;
+                    }
+                } else if (temp_v1_3 & 0x100) {
+                    temp_v0_2 = *(u16*)0x1F8001F0;
+                    temp_v1_4 = (~temp_v0_2 & 0x4000) | (temp_v0_2 & 0xBFFF);
+                    *(u16*)(&D_1F800118[0]+0xD8) = temp_v1_4;
+                    if (!(temp_v1_4 & 0x4000)) {
+                        *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(temp_v1_4 & 0xFFF0);
+                    }
+                } else {
+                    temp_v1_5 = *(u16*)0x1F8001F0;
+                    if (temp_v1_5 & 0x4000) {
+                        *(u16*)(&SCRATCHPAD+0x1F0) = (u16)((temp_v1_5 + 1) & 0xFFF3);
+                    }
+                }
+            }
+        }   
+    } while (true);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
 void func_80016940(void)
