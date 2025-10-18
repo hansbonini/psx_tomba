@@ -180,6 +180,7 @@ segments:
       - [0x537A0, c, psyq/libgte/geo_01]
       - [0x53840, c, psyq/libgte/fog_01]
       - [0x538A4, c, psyq/libgte/cor_05]
+      - [0x53A9C, c, psyq/libgte/msc00]
       - [0x53B24, c, psyq/libgte/msc01]
       - [0x53BB4, c, psyq/libgte/mtx_000]
       - [0x54034, c, psyq/libgte/mtx_09]

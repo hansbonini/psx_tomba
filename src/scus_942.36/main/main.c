@@ -39,7 +39,7 @@ void main(void)
     func_80016FD8();
     func_800170F8(0, func_800191E0);
     EnterCriticalSection();
-    *(s32*)0x1F8001D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vsyncEventHandler);
+    *(s32*)0x1F8001D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
     ExitCriticalSection();
     ptr_9eb5a = &D_8009EB5A;
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
@@ -403,7 +403,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001731C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017348);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vsyncEventHandler);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vblankHandler);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
 
