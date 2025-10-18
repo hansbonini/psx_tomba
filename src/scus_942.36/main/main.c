@@ -8,13 +8,12 @@ void main(void)
     u16 temp_v0;
     u16 temp_v0_2;
     u16 temp_v1;
-    u16 temp_v1_3;
+    u16 joypad_state;
     u16 temp_v1_4;
     u16 temp_v1_5;
     s32 temp_a0;
     u8 temp_v1_2;
-    u_short* joypad_state;
-    RECT* disp;
+    u_short* joypad_state_ptr;
 
     SetDispMask(0);
     SetVideoMode(MODE_NTSC);
@@ -33,7 +32,6 @@ void main(void)
     GsSetOrigin(1, 1);
     func_800211A4();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
-    disp = &D_8009AFE8.disp;
     memCardInit();
     func_80028728();
     func_80016FD8();
@@ -41,7 +39,7 @@ void main(void)
     EnterCriticalSection();
     *(s32*)0x1F8001D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
     ExitCriticalSection();
-    joypad_state = &D_8009EB5A;
+    joypad_state_ptr = &D_8009EB5A;
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
     SetDispMask(1);
     while (true) {
@@ -60,17 +58,17 @@ void main(void)
             ResetGraph(1);
         }
         if ((*(u8*)0x1F8001BD != 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
-            while (~*joypad_state & 0x200) {
-                if (~*joypad_state & JOY_LEFT) {
-                    disp->x -= 4;
+            while (~*joypad_state_ptr & 0x200) {
+                if (~*joypad_state_ptr & JOY_LEFT) {
+                    D_8009AFE8.disp.x -= 4;
                 }
-                if (~*joypad_state & JOY_RIGHT) {
-                    disp->x += 4;
+                if (~*joypad_state_ptr & JOY_RIGHT) {
+                    D_8009AFE8.disp.x += 4;
                 }
-                if (~*joypad_state & JOY_UP) {
+                if (~*joypad_state_ptr & JOY_UP) {
                     D_8009AFE8.disp.y -= 4;
                 }
-                if (~*joypad_state & JOY_DOWN) {
+                if (~*joypad_state_ptr & JOY_DOWN) {
                     D_8009AFE8.disp.y += 4;
                 }
                 VSync(0);
@@ -105,18 +103,18 @@ void main(void)
         } else if (*(u8*)0x1F8001BE != 0 && *(u8*)0x1F8001CC == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
             temp_a0 = *(u8*)0x1F8001CE;
             if (temp_a0 == 1) {
-                temp_v1_3 = *(u16*)0x1F8001FC;
-                if (temp_v1_3 & JOY_L1) {
+                joypad_state = *(u16*)0x1F8001FC;
+                if (joypad_state & JOY_L1) {
                     temp_v0 = 1 - *(u16*)0x1F8001EE;
                     *(u16*)(&SCRATCHPAD+0x1EE) = temp_v0;
                     *(u16*)0x1F8001F0 = (u16)(temp_v0 << 0xF);
                 }
                 if (*(u16*)(0x1F8001EE) != 0) {
                     *(u16*)0x1F8001F0 = 0x8000U;
-                    if (temp_v1_3 & JOY_L2) {
+                    if (joypad_state & JOY_L2) {
                         *(u16*)(&SCRATCHPAD+0x1F0) = 0U;
                     }
-                } else if (temp_v1_3 & JOY_L2) {
+                } else if (joypad_state & JOY_L2) {
                     temp_v0_2 = *(u16*)0x1F8001F0;
                     temp_v1_4 = (~temp_v0_2 & 0x4000) | (temp_v0_2 & 0xBFFF);
                     *(u16*)(&D_1F800118[0]+0xD8) = temp_v1_4;
