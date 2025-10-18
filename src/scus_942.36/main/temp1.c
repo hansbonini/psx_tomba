@@ -1633,7 +1633,11 @@ int func_80021B7C(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021B84);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BC4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BC4);
+void func_80021BC4(int arg1, int arg2)
+{
+    func_80021D70((D_8007912C)[arg2]);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BF4);
 

@@ -2044,9 +2044,6 @@ extern char D_80010008;
 
 extern u_short D_80076E80;
 extern int D_80076FAC;
-extern u_short D_8007B290;
-extern int D_8007B294;
-extern U8Pair D_8007C2B8[];
 extern int AP_TABLE;
 extern u_char EVENT_STARTED_AP_TABLE;
 extern u_char EVENT_COMPLETE_AP_TABLE;
@@ -2055,7 +2052,10 @@ extern int D_800771FC;
 extern int D_8007722C;
 extern u_char D_80077FA8;
 extern short D_80078F80;
+extern int D_8007912C[];
 extern int D_800791A0; // FileLinkArray
+extern u_short D_8007B290;
+extern int D_8007B294;
 extern int D_8007B2F4[];
 extern int D_8007B2F6[];
 extern int D_8007B2F8[];
@@ -2063,6 +2063,7 @@ extern int D_8007B2FA[];
 extern int D_8007B2FC[];
 extern int D_8007B2FE[];
 extern u_long D_8007C290[];
+extern U8Pair D_8007C2B8[];
 extern int D_8007D6A0;
 extern u_char D_8007D6D0;
 extern u_char D_8007E61C[];
