@@ -76,6 +76,7 @@
 #define TcbStUNUSED 0x1000
 #define TcbStACTIVE 0x4000
 
+#include "psyq/libetc.h"
 #include "psyq/libgpu.h"
 #include "psyq/libgte.h"
 #include "psyq/libspu.h"

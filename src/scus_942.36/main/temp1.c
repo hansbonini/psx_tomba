@@ -142,7 +142,7 @@ void func_8001A9F0(void)
             return;
         case 5:
             if (*(u_char* )0x1F8001CC != 0) {
-                if (*(u_short* )(&SCRATCHPAD+0x1FC) & 0x4008) {
+                if (*(u_short* )(&SCRATCHPAD+0x1FC) & (JOY_CROSS | JOY_START)) {
                     *(char* )0x1F8001D3 = 1;
                     *(u_short* )0x1F8001FC = 0U;
                     (*(unkstruct_1F8001D4** )0x1F8001D4)->state2 = 6U;
@@ -538,7 +538,7 @@ void func_8001B5A8(void)
                 (
                     ((*(u8* )(&SCRATCHPAD+0x1CD)) == 5) || 
                     (((u8) ((*(u8* )(&SCRATCHPAD+0x1CD)) - 7) < 2))
-                ) && ((*(u16* )(&SCRATCHPAD+0x1FC) & 0x4008) != 0)
+                ) && ((*(u16* )(&SCRATCHPAD+0x1FC) & (JOY_CROSS | JOY_START)) != 0)
             )
         ) {
             *(s8* )(&SCRATCHPAD+0x1D3) = 1;
