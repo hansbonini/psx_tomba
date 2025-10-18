@@ -389,6 +389,7 @@ gte_CompMatrix=0x2000025c;
 gte_ApplyRotMatrix=0x20000260;
 // game
 main=0x800163b0;
+GsSetOrigin=0x80016A00;
 initDisplay=0x80016C4C;
 initDisplay2x=0x80016DDC;
 setTask=0x800172C4;

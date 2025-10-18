@@ -13,7 +13,7 @@ void main(void)
     u16 temp_v1_5;
     s32 temp_a0;
     u8 temp_v1_2;
-    u_short* ptr_9eb5a;
+    u_short* joypad_state;
     RECT* disp;
 
     SetDispMask(0);
@@ -30,7 +30,7 @@ void main(void)
     *(s32*)0x1F8002A0 = 0;
     *(s32*)0x1F80029C = 0;
     func_80016AF4();
-    func_80016A00(1, 1);
+    GsSetOrigin(1, 1);
     func_800211A4();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
     disp = &D_8009AFE8.disp;
@@ -41,7 +41,7 @@ void main(void)
     EnterCriticalSection();
     *(s32*)0x1F8001D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
     ExitCriticalSection();
-    ptr_9eb5a = &D_8009EB5A;
+    joypad_state = &D_8009EB5A;
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
     SetDispMask(1);
     while (true) {
@@ -60,17 +60,17 @@ void main(void)
             ResetGraph(1);
         }
         if ((*(u8*)0x1F8001BD != 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
-            while (~*ptr_9eb5a & 0x200) {
-                if (~*ptr_9eb5a & 0x80) {
+            while (~*joypad_state & 0x200) {
+                if (~*joypad_state & JOY_LEFT) {
                     disp->x -= 4;
                 }
-                if (~*ptr_9eb5a & 0x20) {
+                if (~*joypad_state & JOY_RIGHT) {
                     disp->x += 4;
                 }
-                if (~*ptr_9eb5a & 0x10) {
+                if (~*joypad_state & JOY_UP) {
                     D_8009AFE8.disp.y -= 4;
                 }
-                if (~*ptr_9eb5a & 0x40) {
+                if (~*joypad_state & JOY_DOWN) {
                     D_8009AFE8.disp.y += 4;
                 }
                 VSync(0);
@@ -154,8 +154,8 @@ void func_80016940(void)
     ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), 0x328);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A00);
-void func_80016A00(short id, short arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", GsSetOrigin);
+void GsSetOrigin(short id, short arg1)
 {
     typedef inline struct {
         byte data[0x1EA];
