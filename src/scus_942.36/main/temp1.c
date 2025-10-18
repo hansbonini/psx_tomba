@@ -1615,7 +1615,13 @@ void func_800211A4(void)
     D_80077FA8 = 1;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021310);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021310);
+void func_80021310(void)
+{
+    D_80077FA8 = 0;
+    SsEnd();
+    SsQuit();
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021340);
 
