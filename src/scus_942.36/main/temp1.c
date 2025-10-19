@@ -1504,7 +1504,25 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F4D4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F5D0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F634);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F634);
+void func_8001F634(s32 arg0)
+{
+    int mode;
+    
+    DecDCTReset(0);
+    DecDCToutCallback(&func_8001F4D4);
+    CdMix(&D_80077754);
+    StSetRing(&D_800D7188, 0x20);
+    StSetStream(0, 1, -1, 0, 0);
+    do {
+
+    } while (CdControl(2, arg0, 0) == 0);
+    mode = 0x1C0;
+    do {
+        
+    } while (CdRead2(mode) == 0);
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F6D4);
 

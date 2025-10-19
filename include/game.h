@@ -2050,6 +2050,7 @@ extern u_char EVENT_COMPLETE_AP_TABLE;
 extern u_char D_8007775C[];
 extern int D_800771FC;
 extern int D_8007722C;
+extern int D_80077754;
 extern u_char D_80077FA8;
 extern short D_80078F80;
 extern int D_8007912C[];
@@ -2167,14 +2168,16 @@ extern char D_800B07AC[8];
 extern char D_800B07CD;
 extern int D_800B3184;
 extern char D_800B3188;
-extern void func_80019844(void);
+extern int D_800D7188;
 extern int D_800121C8;
 
 void FontDebugPrintf(short x, short y, short color, char* fmt);
 void vblankHandler(void);
 void func_800191E0(void);
+void func_80019844(void);
 void func_8001A51C(void);
 void func_8001F1C0(void);
+void func_8001F4D4(void);
 void func_80021340(void);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
