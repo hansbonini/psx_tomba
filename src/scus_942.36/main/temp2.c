@@ -158,7 +158,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80027A30);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80028638);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80028728);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", joypadInit);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80028794);
 

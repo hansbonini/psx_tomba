@@ -2175,6 +2175,7 @@ void vblankHandler(void);
 void func_800191E0(void);
 void func_8001A51C(void);
 void func_8001F1C0(void);
+void func_80021340(void);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 

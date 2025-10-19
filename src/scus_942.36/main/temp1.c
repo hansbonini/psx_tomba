@@ -1576,10 +1576,10 @@ void func_800211A4(void)
     if (D_80077FA8 != 0) {
         func_80021310();
     }
-    func_8006BA8C();
+    SsInitHot();
     SsSetTableSize(&D_800A15D8, 4, 1);
     SsSetTickMode(SS_TICK60);
-    func_80073AF0(0);
+    SsSetAutoKeyOffMode(0);
     SpuSetKey(SPU_OFF, 0xFFFFFF);
     SsSetReservedVoice(0x10);
     D_8009B048.mask = (
@@ -1639,7 +1639,12 @@ void func_80021BC4(int arg1, int arg2)
     func_80021D70((D_8007912C)[arg2]);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BF4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BF4);
+void func_80021BF4(void)
+{
+    *(byte* )0x1F8001CE = 0;
+    func_80017154(2, &func_80021340);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021C24);
 

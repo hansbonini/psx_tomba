@@ -33,7 +33,7 @@ void main(void)
     func_800211A4();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
     memCardInit();
-    func_80028728();
+    joypadInit();
     func_80016FD8();
     func_800170F8(0, func_800191E0);
     EnterCriticalSection();
@@ -58,7 +58,7 @@ void main(void)
             ResetGraph(1);
         }
         if ((*(u8*)0x1F8001BD != 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
-            while (~*joypad_state_ptr & 0x200) {
+            while (~*joypad_state_ptr & JOY_R2) {
                 if (~*joypad_state_ptr & JOY_LEFT) {
                     D_8009AFE8.disp.x -= 4;
                 }
