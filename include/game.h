@@ -77,6 +77,7 @@
 #define TcbStACTIVE 0x4000
 
 #include "psyq/libetc.h"
+#include "psyq/libpress.h"
 #include "psyq/libgpu.h"
 #include "psyq/libgte.h"
 #include "psyq/libspu.h"
@@ -85,6 +86,7 @@
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define IS_DEBUG_MODE_ENABLED ((u_char)(0x1F80001B4))
 #define D_8009E3D4 ((void*)0x8009E3D4)
+
 #define READ32(_dst, _src) { \
     _dst = (((u_char *)_src)[1] << 8) | (((u_char *)_src)[0] << 0) \
         | ((((u_char *)_src)[3] << 8) | (((u_char *)_src)[2] << 0) << 16);\
@@ -2077,6 +2079,10 @@ extern DISPENV D_8009AFE8;
 extern u_char D_8009B000;
 extern u_char D_8009B004;
 extern u_char D_8009B008;
+extern int D_8009B024;
+extern int D_8009B028;
+extern int D_8009B02C;
+extern int D_8009B03C;
 extern SpuCommonAttr D_8009B048; // SPU_ATTR
 extern short D_8009B078;
 extern short D_8009B07C;

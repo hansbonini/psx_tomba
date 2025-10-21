@@ -1500,7 +1500,44 @@ void func_8001F158(short file_id)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F1C0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F4D4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F4D4);
+void func_8001F4D4(void)
+{
+    #define D_8009B034 ((DISPENV*)((byte*)&D_8009B03C-0x8))
+
+    u_long* sliceRect = &D_8009B034->screen;
+    u_long* mdecImage = sliceRect - 0x8;
+    int sliceSize;
+    short screenX;
+    int temp_v1;
+    
+    LoadImage(sliceRect, *(u_long**)&mdecImage[D_8009B024]);
+    D_8009B024 = 1 - D_8009B024;
+    screenX = D_8009B034->screen.x;
+    D_8009B034->screen.x += 0x10;
+
+    asm("");
+    temp_v1 = *(int*)&D_8009B034->disp.w * 4;
+    asm("");
+
+    if (
+            D_8009B034->screen.x <
+            (
+                (((short*)&D_8009B028)[temp_v1]) +
+                (((short*)&D_8009B02C)[temp_v1])
+            )
+    ) {
+        sliceSize = (D_8009B034->screen.w * D_8009B034->screen.h) / 2;
+        DecDCTout(
+            *(u_long**)&mdecImage[D_8009B024],
+            sliceSize
+        );
+        return;
+    }
+    *(int*)&D_8009B034->isinter = 1;
+    D_8009B034->screen.x = screenX;
+    return;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F5D0);
 
