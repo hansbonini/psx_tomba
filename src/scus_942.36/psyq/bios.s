@@ -88,12 +88,20 @@
   DEFINE_FN CloseEvent, 0xB0, 0x9
 #endif
 
+#ifdef FUNC_B0A
+  DEFINE_FN WaitEvent, 0xB0, 0xA
+#endif
+
 #ifdef FUNC_B0B
   DEFINE_FN TestEvent, 0xB0, 0xB
 #endif
 
 #ifdef FUNC_B0C
   DEFINE_FN EnableEvent, 0xB0, 0xC
+#endif
+
+#ifdef FUNC_B0D
+  DEFINE_FN DisableEvent, 0xB0, 0xD
 #endif
 
 #ifdef FUNC_B0E
@@ -106,6 +114,18 @@
 
 #ifdef FUNC_B10
   DEFINE_FN ChangeTh, 0xB0, 0x10
+#endif
+
+#ifdef FUNC_B17
+  DEFINE_FN ReturnFromException, 0xB0, 0x17
+#endif
+
+#ifdef FUNC_B18
+  DEFINE_FN ResetEntryInt, 0xB0, 0x18
+#endif
+
+#ifdef FUNC_B19
+  DEFINE_FN HookEntryInt, 0xB0, 0x19
 #endif
 
 #ifdef FUNC_B32
@@ -167,4 +187,10 @@
 #ifdef FUNC_B5B
   DEFINE_FN ChangeClearPAD, 0xB0, 0x5B
 #endif
+
+#ifdef FUNC_C0A
+  DEFINE_FN ChangeClearRCnt, 0xC0, 0xA
+#endif
+
+
 

@@ -87,41 +87,22 @@ AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mt
 CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -quiet
 
 # Bios functions obj:number
-LIBAPI_BIOS_FUNCS := 	c68:A44 c112:A70 \
-						a08:B08 a09:B09 a11:B0B a12:B0C \
-						a14:B0E a15:B0F a16:B10 \
-						a36:1 a37:2 \
-						a50:B32 a51:B33 a52:B34 a53:B35 a54:B36 a65:B41 \
-						a66:B42 a67:B43 a69:B45 \
-						a94:A94
-
-LIBGPU_BIOS_FUNCS := 	c73:A49
-
-LIBCARD_BIOS_FUNCS := 	a74:B4A a75:B4B a76:B4C a78:B4E a80:B50 \
-						c171:AAB c172:AAC \
-						a91:B5B
-
-LIBCD_BIOS_FUNCS := 	a07:B07
+BIOS_FUNCS := 	a07:B07 a08:B08 a09:B09 a10:B0A a11:B0B 	\
+				a12:B0C a13:B0D a14:B0E a15:B0F a16:B10 	\
+				a23:B17 a24:B18 a25:B19 a36:1 a37:2 		\
+				a50:B32 a51:B33 a52:B34 a53:B35 a54:B36 	\
+				a65:B41 a66:B42 a67:B43 a69:B45 a74:B4A 	\
+				a75:B4B a76:B4C a78:B4E a80:B50 a91:B5B 	\
+				a94:A94 c112:A70 c171:AAB c172:AAC c68:A44 	\
+				c73:A49 l10:C0A
 
 # Generate object paths
-LIBAPI_BIOS_OBJS := $(foreach f,$(LIBAPI_BIOS_FUNCS), \
+BIOS_OBJS := $(foreach f,$(BIOS_FUNCS), \
 						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libapi/$(word 1,$(subst :, ,$f)).hasm.s.o)
-
-LIBGPU_BIOS_OBJS := $(foreach f,$(LIBGPU_BIOS_FUNCS), \
-						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libgpu/$(word 1,$(subst :, ,$f)).hasm.s.o)
-
-LIBCARD_BIOS_OBJS := $(foreach f,$(LIBCARD_BIOS_FUNCS), \
-						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libcard/$(word 1,$(subst :, ,$f)).hasm.s.o)
-
-LIBCD_BIOS_OBJS := $(foreach f,$(LIBCD_BIOS_FUNCS), \
-						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libcd/$(word 1,$(subst :, ,$f)).hasm.s.o)
 
 
 # Map function obj to BIOS fn number
-libapi_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBAPI_BIOS_FUNCS))))
-libgpu_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBGPU_BIOS_FUNCS))))
-libcard_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBCARD_BIOS_FUNCS))))
-libcd_bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(LIBCD_BIOS_FUNCS))))
+bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(BIOS_FUNCS))))
 
 # PSY-Q libraries uses ASPSX 2.56 (PSQ 4.0)
 # Archive library code uses GCC 2.6.0.
@@ -179,10 +160,7 @@ ifeq ($(SKIP_ASM),1)
 define make_elf_target
 $2: $2.elf
 $2.elf: $(call gen_o_files, $1) \
-		$(LIBAPI_BIOS_OBJS) \
-		$(LIBGPU_BIOS_OBJS) \
-		$(LIBCARD_BIOS_OBJS) \
-		$(LIBCD_BIOS_OBJS)
+		$(BIOS_OBJS)
 endef
 
 else
@@ -316,28 +294,10 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
-$(LIBAPI_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
+$(BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
 	@mkdir -p $(dir $@)
 	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
-	-Iinclude -Ibuild -DFUNC_$(call libapi_bios_num,$*) -o $(dir $@)$*.hasm.s $<
-	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
-
-$(LIBGPU_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libgpu/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
-	@mkdir -p $(dir $@)
-	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
-	-Iinclude -Ibuild -DFUNC_$(call libgpu_bios_num,$*) -o $(dir $@)$*.hasm.s $<
-	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
-
-$(LIBCARD_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libcard/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
-	@mkdir -p $(dir $@)
-	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
-	-Iinclude -Ibuild -DFUNC_$(call libcard_bios_num,$*) -o $(dir $@)$*.hasm.s $<
-	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
-
-$(LIBCD_BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libcd/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
-	@mkdir -p $(dir $@)
-	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
-	-Iinclude -Ibuild -DFUNC_$(call libcd_bios_num,$*) -o $(dir $@)$*.hasm.s $<
+	-Iinclude -Ibuild -DFUNC_$(call bios_num,$*) -o $(dir $@)$*.hasm.s $<
 	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
 
 $(BUILD_DIR)/%.s.o: %.s
