@@ -2149,6 +2149,7 @@ extern char D_800A1890;
 extern short D_800A2790;
 extern short D_800A3030;
 extern short D_800A32F8;
+extern byte D_800A3348[0x3D4];
 extern u_char D_800A3940;
 extern short D_800A3952;
 extern short D_800A3954;

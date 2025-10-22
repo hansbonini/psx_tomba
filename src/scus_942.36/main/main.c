@@ -647,7 +647,21 @@ void func_80017EEC(void)
     *(short* )0x1F800246 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F1C);
+void func_80017F1C(void)
+{
+    s32 var_a0;
+    s32 var_v1;
+
+    *(s32** )0x1F800264 = *(s32** )0x1F800220 = &D_800B0680;
+    *(s16* )0x1F80024A = *(s16* )0x1F800252 = 0;
+    for (var_a0 = 7; 0 <= var_a0; --var_a0) {
+        var_v1 = var_a0 * 0x8C;
+        *(s16*)&D_800A3348[var_v1] = 0xFFFF;
+    }
+    func_80018D7C();
+    return;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F88);
 void func_80017F88(void)
