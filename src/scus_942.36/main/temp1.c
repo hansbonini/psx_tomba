@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game.h"
 
+#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
+#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
+
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
 void func_8001A774(void)
 {
@@ -1498,13 +1501,81 @@ void func_8001F158(short file_id)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F1C0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F1C0);
+void func_8001F1C0(void)
+{   
+    u_short state;
+    unkstruct_1F8001D4* gameControl;
+    unkstruct_1F8001D4* gameControlTemp;
+
+    gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+    *(u_char* )0x1F8001CC = 1;
+    gameControl->state0 = 0;
+    gameControl->unk4E.value = 0;
+    gameControl->loadGameSelected = 0;
+    do {
+        if (*(u_char* )0x1F8001D3 == 1) {
+            (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 3;
+            CdMix(&D_80077758);
+        }
+        gameControlTemp = *(unkstruct_1F8001D4** )0x1F8001D4;
+        state = gameControlTemp->state0;
+        switch (state) {
+            case 0:
+                func_8001F5D0(&D_8009B010, 384, 256, 704, 256);
+                func_8001F634((int) (((&D_80078F80)[D_8007775C[*(u_char* )0x1F8001CD]] * 2) + &D_800791A0));
+                gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                gameControl->state0+=1;
+                do {
+                } while (func_8001EFE8(&D_8009B010) == 0);
+                break;
+            case 1:
+                *(char* )0x1F8001CC = 2;
+                gameControlTemp->state0 = 2;
+            case 2:
+                while ((*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value == 0) {
+                    func_8001EFE8(&D_8009B010);
+                }
+                DecDCTin(*(D_8009B018 + &D_8009B010), 2);
+                *(int*)&D_8009B034->disp.w = *(short*)0x1F8001F4;
+                D_8009B034->screen.x = ((short*)&D_8009B028)[(*(short*)0x1F8001F4) * 4];
+                D_8009B034->screen.y = ((short*)&D_8009B02A)[(*(short*)0x1F8001F4) * 4];
+                DecDCTout(
+                    *(u_long**)&D_8009B01C[D_8009B024],
+                    (D_8009B034->screen.w * D_8009B034->screen.h) / 2
+                );
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 0;
+                while (func_8001EFE8(&D_8009B010) == 0) {
+                    if (*(int*)&D_8009B034->isinter == 1) {
+                        break;
+                    }
+                }
+                if (*(int*)&D_8009B034->isinter == 0) {
+                    do {
+                    } while (*(int*)&D_8009B034->isinter == 0);
+                }
+                SetDispMask(1);
+                *(int*)&D_8009B034->isinter = 0;
+                *(char* )0x1F8001CC = 3;
+                *(short* )0x1F8001E8 = 0;
+                break;
+            case 3:
+                DecDCToutCallback(NULL);
+                StUnSetRing();
+                StClearRing();
+                CdControlB(9, 0, 0);
+                *(char* )0x1F8001CC = 0;
+                *(char* )(&SCRATCHPAD+0x1D3) = 0;
+                func_80017208();
+                break;
+        }
+        func_800171D4(1);
+    } while(true);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F4D4);
 void func_8001F4D4(void)
 {
-    #define D_8009B034 ((DISPENV*)((byte*)&D_8009B03C-0x8))
-
     u_long* sliceRect = &D_8009B034->screen;
     u_long* mdecImage = sliceRect - 0x8;
     int sliceSize;

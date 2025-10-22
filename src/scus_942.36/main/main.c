@@ -602,7 +602,29 @@ void initGameConfig(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017AE0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017AE0);
+void func_80017AE0(void)
+{
+    char *tmp;
+
+    memset(&D_8009BC98, 0, 0x2C);
+    *(s16* )0x1F8001C6 = 0;
+    GAME.fadeScreenControl = 1;
+    *(s8* )0x1F8003D0 = 0;
+    GAME.playerIdleState = 0;
+    func_80018F04();
+    func_80020CB0();
+    
+    tmp = D_800B07AC;
+    *tmp++ = (GAME.playerAP / 10000000) % 10;
+    *tmp++ = (GAME.playerAP / 1000000 ) % 10;
+    *tmp++ = (GAME.playerAP / 100000  ) % 10;
+    *tmp++ = (GAME.playerAP / 10000   ) % 10;
+    *tmp++ = (GAME.playerAP / 1000    ) % 10;
+    *tmp++ = (GAME.playerAP / 100     ) % 10;
+    *tmp++ = (GAME.playerAP / 10      ) % 10;
+    *tmp++ = (GAME.playerAP / 1       ) % 10;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017CA0);
 void func_80017CA0(void)

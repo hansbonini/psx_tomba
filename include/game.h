@@ -1804,7 +1804,7 @@ typedef struct gameConfig {
     byte unk6ac;
     byte unk6ad;
     byte unk6ae;
-    byte unk6af;
+    byte playerIdleState;
     byte unk6b0;
     byte unk6b1;
     byte unk6b2;
@@ -2049,6 +2049,7 @@ extern int D_80076FAC;
 extern int AP_TABLE;
 extern u_char EVENT_STARTED_AP_TABLE;
 extern u_char EVENT_COMPLETE_AP_TABLE;
+extern int D_80077758;
 extern u_char D_8007775C[];
 extern int D_800771FC;
 extern int D_8007722C;
@@ -2079,6 +2080,9 @@ extern DISPENV D_8009AFE8;
 extern u_char D_8009B000;
 extern u_char D_8009B004;
 extern u_char D_8009B008;
+extern int D_8009B010;
+extern int D_8009B018;
+extern int D_8009B02A;
 extern int D_8009B024;
 extern int D_8009B028;
 extern int D_8009B02C;
@@ -2188,4 +2192,4 @@ void func_80021340(void);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 
-#endif _INCLUDE_GAME_H
+#endif // GAME_H
