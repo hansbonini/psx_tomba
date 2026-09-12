@@ -66,7 +66,35 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80030EF8);
 */
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", printInfoMessage);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80031628);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80031628);
+void func_80031628(void* obj, s32 stringIndex)
+{
+    u8*      base;
+    s16*     tbl;
+    s16*     ent;
+    u_short* str;
+    s32      token;
+
+    base = *(u8**)(PSX_SCRATCH + 0x398);
+    tbl  = (s16*)(base + *(s16*)(base + 8));
+    ent  = tbl + stringIndex;
+    str  = (u_short*)((u8*)tbl + *ent);
+
+    for (;;) {
+        token = *str++;
+
+        if ((u_short)(token + 2) < 2) {
+            return;
+        }
+        if ((s16)token == -3) continue;
+        if ((s16)token == -7) continue;
+        if ((s16)token == -6) {
+            str += 2;
+            continue;
+        }
+        func_800316EC(obj, (s16)token);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_800316EC);
 
