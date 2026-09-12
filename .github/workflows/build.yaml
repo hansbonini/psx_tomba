@@ -12,7 +12,7 @@ jobs:
       matrix:
         game_id: [ SCUS_942.32 ]
       fail-fast: true
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install splat64[mips]==0.35.1 spimdisasm==1.36.0
+          python3 -m pip install splat64[mips]==0.35.2 spimdisasm==1.36.0
           sudo apt-get update
           sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu
 
