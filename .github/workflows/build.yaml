@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install splat64[mips]
+          python3 -m pip install splat64[mips]==0.35.1 spimdisasm==1.36.0
           sudo apt-get update
           sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu
 
