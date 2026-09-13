@@ -411,7 +411,23 @@ void func_80017208(void)
     ChangeTh(DescTH);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017258);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017258);
+void func_80017258(s32 id)
+{
+    s32  off;
+    u16* flag;
+
+    off  = id * 0x70;
+    flag = (u16*)(0x801FD800 + off);
+
+    if (*flag != 0) {
+        *flag = 0;
+        EnterCriticalSection();
+        CloseTh(*(s32*)(0x801FD804 + off));
+        ExitCriticalSection();
+    }
+}
+
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setTask);
 void setTask(s32 arg0)

@@ -1968,6 +1968,7 @@ extern int D_1F8001A0;
 // extern u_short D_1F8001FC;
 extern int D_1F8002C8[];
 extern short D_1F8003B6;
+extern long D_801FD804;
 
 extern char D_80010000;
 extern char D_80010008;
@@ -2110,6 +2111,7 @@ extern char D_800B3188;
 extern int D_800D7188;
 extern int D_800121C8;
 
+void func_80017154(s32, s32);
 void FontDebugPrintf(short x, short y, short color, char* fmt);
 void vblankHandler(void);
 void func_800191E0(void);
