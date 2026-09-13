@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", updateItemPickupAnim);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", updateItemPickupAnim);
 void updateItemPickupAnim(unkstruct_800A6D50* arg0)
 {
     int var_a1;
@@ -50,13 +50,13 @@ void updateItemPickupAnim(unkstruct_800A6D50* arg0)
     arg0->unk8C = (int) (var_v0 & 0xFF);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F3D4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F3D4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F78C);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F78C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", func_8003F9A4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F9A4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", applyItemEffect);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", applyItemEffect);
 void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3, int arg4)
 {
 
@@ -96,7 +96,7 @@ void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3,
     }
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", initItemObject);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", initItemObject);
 void initItemObject(unkstruct_800A6D50* arg0)
 {
 
@@ -185,7 +185,7 @@ void initItemObject(unkstruct_800A6D50* arg0)
     func_800229FC(arg0);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardNone);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardNone);
 void rewardNone(unkstruct_800A6D50* arg0)
 {
     if (!(arg0->unkC & 0x80)) {
@@ -194,7 +194,7 @@ void rewardNone(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardItem);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardItem);
 void rewardItem(unkstruct_800A6D50* arg0)
 {
     int var_a0;
@@ -237,7 +237,7 @@ void rewardItem(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardHeart);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardHeart);
 void rewardHeart(unkstruct_800A6D50* arg0)
 {
     if (D_8009BCA0 == 0) {
@@ -263,7 +263,7 @@ void rewardHeart(unkstruct_800A6D50* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardEffectOnly);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardEffectOnly);
 void rewardEffectOnly(unkstruct_800A6D50* arg0)
 {
     func_800E92D4(*(&D_8007E868 + ((arg0->unkC & 0x7F) * 2)), arg0->unk12, arg0->unk16, arg0->unk1A);
@@ -274,7 +274,7 @@ void rewardEffectOnly(unkstruct_800A6D50* arg0)
     arg0->unk4+=1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardBakedYam);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardBakedYam);
 void rewardBakedYam(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_BAKEDYAM, 1, true);
@@ -287,7 +287,7 @@ void rewardBakedYam(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardDirtyMirror);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardDirtyMirror);
 void rewardDirtyMirror(unkstruct_800A6D50* arg0)
 {
     GAME.unk54e = 5;
@@ -299,7 +299,7 @@ void rewardDirtyMirror(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardVitalityMaxUp);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardVitalityMaxUp);
 void rewardVitalityMaxUp(unkstruct_800A6D50* arg0)
 {
     if (D_8009BCA0 == 0) {
@@ -313,7 +313,7 @@ void rewardVitalityMaxUp(unkstruct_800A6D50* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardWoodBoomerang);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardWoodBoomerang);
 void rewardWoodBoomerang(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_WOODBOOMERANG, 1, true);
@@ -323,7 +323,7 @@ void rewardWoodBoomerang(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardStoneBoomerang);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardStoneBoomerang);
 void rewardStoneBoomerang(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_STONEBOOMERANG, 1, true);
@@ -333,7 +333,7 @@ void rewardStoneBoomerang(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardIronBoomerang);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardIronBoomerang);
 void rewardIronBoomerang(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_IRONBOOMERANG, 1, true);
@@ -343,7 +343,7 @@ void rewardIronBoomerang(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardOneUp);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardOneUp);
 void rewardOneUp(unkstruct_800A6D50* arg0)
 {
     u_char lives = GAME.playerLives;
@@ -358,7 +358,7 @@ void rewardOneUp(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardGoldenBowl);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGoldenBowl);
 void rewardGoldenBowl(unkstruct_800A6D50* arg0)
 {
     u_char health;
@@ -386,7 +386,7 @@ void rewardGoldenBowl(unkstruct_800A6D50* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardBitingPlantFlower);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardBitingPlantFlower);
 void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
 {
     u_short temp_v0;
@@ -429,7 +429,7 @@ void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardGrapple);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGrapple);
 void rewardGrapple(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_GRAPPLE, 1, true);
@@ -440,7 +440,7 @@ void rewardGrapple(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardGrappleJack);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGrappleJack);
 void rewardGrappleJack(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_GRAPPLEJACK, 1, true);
@@ -450,7 +450,7 @@ void rewardGrappleJack(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardCrystalBalls);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardCrystalBalls);
 void rewardCrystalBalls(unkstruct_800A6D50* arg0)
 {
     switch (GAME.event[EVENT_LOSTANDFOUND]) {
@@ -473,7 +473,7 @@ void rewardCrystalBalls(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardMysteriousMushroom);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardMysteriousMushroom);
 void rewardMysteriousMushroom(unkstruct_800A6D50* arg0)
 {
     setEventComplete(EVENT_THEMISTERIOUSMUSHROOM, 0);
@@ -484,7 +484,7 @@ void rewardMysteriousMushroom(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardFlowerSeeds);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardFlowerSeeds);
 void rewardFlowerSeeds(unkstruct_800A6D50* arg0)
 {
     setEventStarted(EVENT_FLOWERSEEDS, 0, 0);
@@ -495,7 +495,7 @@ void rewardFlowerSeeds(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardPigBag);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardPigBag);
 void rewardPigBag(unkstruct_800A6D50* arg0)
 {
     int temp;
@@ -565,7 +565,7 @@ void rewardPigBag(unkstruct_800A6D50* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardConditionalItem);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardConditionalItem);
 void rewardConditionalItem(unkstruct_800A6D50* arg0)
 {
     if ((GAME.selectedArea == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
@@ -577,7 +577,7 @@ void rewardConditionalItem(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardJewel);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardJewel);
 void rewardJewel(unkstruct_800A6D50* arg0)
 {
     int var_a0;
@@ -645,7 +645,7 @@ void rewardJewel(unkstruct_800A6D50* arg0)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardSafeMushroom);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardSafeMushroom);
 void rewardSafeMushroom(unkstruct_800A6D50* arg0)
 {
     setEventComplete(EVENT_ASAFEMUSHROOM, 0);
@@ -656,7 +656,7 @@ void rewardSafeMushroom(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardAnimalDash);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardAnimalDash);
 void rewardAnimalDash(unkstruct_800A6D50* arg0)
 {
     printInfoMessage(0xC, 3); // "Animal Dash Adquired"
@@ -670,7 +670,7 @@ void rewardAnimalDash(unkstruct_800A6D50* arg0)
     arg0->unk4++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/events", rewardPants);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardPants);
 void rewardPants(unkstruct_800A6D50* arg0)
 {   
     if (GAME.item[ITEM_JUMPINGPANTS] == 0) {

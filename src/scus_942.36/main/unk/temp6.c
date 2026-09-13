@@ -1,24 +1,24 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_80032DB4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_80032DB4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_8003301C);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_8003301C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_800330EC);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_800330EC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_800332CC);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_800332CC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_80033374);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_80033374);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_80033404);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_80033404);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_80033488);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_80033488);
 
 void func_80033858(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_80033860);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_80033860);
 void func_80033860(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
@@ -29,7 +29,7 @@ void func_80033860(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp6", func_800338A8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp6", func_800338A8);
 void func_800338A8(void)
 {
     switch (GAME.selectedArea) {

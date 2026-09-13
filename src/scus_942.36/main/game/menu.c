@@ -4,7 +4,7 @@
 #define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
 #define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A774);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A774);
 void func_8001A774(void)
 {
     short var_v0;
@@ -71,7 +71,7 @@ void func_8001A774(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A954);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A954);
 void func_8001A954(void)
 {
     u_short temp_v1;
@@ -93,7 +93,7 @@ void func_8001A954(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001A9F0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A9F0);
 void func_8001A9F0(void)
 {
     u_short temp_v1;
@@ -181,7 +181,7 @@ void func_8001A9F0(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AC00);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001AC00);
 void func_8001AC00(void)
 {
     short temp_v0;
@@ -227,7 +227,7 @@ void func_8001AC00(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001AD1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001AD1C);
 void func_8001AD1C(void)
 {
     unkstruct_1F8001D4* temp_v1;
@@ -238,7 +238,7 @@ void func_8001AD1C(void)
     *(char* )0x1F8001CF = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", displayDebugScreen);
 void displayDebugScreen(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
@@ -360,7 +360,7 @@ void displayDebugScreen(void)
     (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value=temp_v1_3+1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B0A4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B0A4);
 void func_8001B0A4(void)
 {
     int var_a0;
@@ -429,7 +429,7 @@ void func_8001B0A4(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B2B4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B2B4);
 void func_8001B2B4(void)
 {
     u_short temp_v1;
@@ -511,7 +511,7 @@ void func_8001B2B4(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B5A8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B5A8);
 void func_8001B5A8(void)
 {
     *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
@@ -561,7 +561,7 @@ void func_8001B5A8(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B780);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B780);
 void func_8001B780(void)
 {
     char pad[4];
@@ -605,7 +605,7 @@ void func_8001B780(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B944);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B944);
 void func_8001B944(void)
 {
     char* var_a0;
@@ -658,7 +658,7 @@ void func_8001B944(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BB1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001BB1C);
 void func_8001BB1C(void)
 {
     DRAWENV drawenv;
@@ -788,7 +788,7 @@ void func_8001BB1C(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001BF90);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001BF90);
 void func_8001BF90(void)
 {
     s32 var_s0;
@@ -839,7 +839,7 @@ void func_8001BF90(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C104);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C104);
 void func_8001C104(void)
 {
     u16 temp_v1;
@@ -899,7 +899,7 @@ void func_8001C104(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C2E8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C2E8);
 void func_8001C2E8(void)
 {
     *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
@@ -932,7 +932,7 @@ void func_8001C2E8(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C434);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C434);
 void func_8001C434(void)
 {
     u16 temp_v1;
@@ -991,7 +991,7 @@ void func_8001C434(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C618);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C618);
 void func_8001C618(void)
 {
     *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
@@ -1023,7 +1023,7 @@ void func_8001C618(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C75C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C75C);
 void func_8001C75C(void)
 {
     u16 temp_v1;
@@ -1082,7 +1082,7 @@ void func_8001C75C(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C940);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C940);
 void func_8001C940(void)
 {
     *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
@@ -1114,7 +1114,7 @@ void func_8001C940(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayLoadingScreen);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", displayLoadingScreen);
 void displayLoadingScreen(void)
 {
     u_short temp_a1;
@@ -1147,7 +1147,7 @@ void displayLoadingScreen(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CB54);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CB54);
 s32 func_8001CB54(void)
 {
     s32 var_a1;
@@ -1274,13 +1274,13 @@ s32 func_8001CB54(void)
     return var_a1;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CE80);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CE80);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CF7C);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CF7C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CFCC);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CFCC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D29C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D29C);
 void func_8001D29C(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
@@ -1294,456 +1294,16 @@ void func_8001D29C(void)
     temp_v1->state2 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D2F0);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D2F0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D480);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D480);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D610);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D610);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D668);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D668);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D6C0);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D6C0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001DE24);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001DE24);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001DFD4);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", awardEventProgress);
-u_char awardEventProgress(EVENT event_id, int ap_table, int state)
-{
-    if (ap_table == 0) {
-        addPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
-        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 0, 0x3C, state);
-            printEventMessage(event_id, 0);
-            playSFX(42);
-            func_8002E3B0(0);
-        }
-    } else {
-        addPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
-        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 1, 1, state);
-            printEventMessage(event_id, 1);
-            func_80020DDC(2);
-            func_80021110();
-        }
-    }
-    return GAME.event[event_id];
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", setEventStarted);
-u_char setEventStarted(EVENT event_id, int arg1, int state)
-{
-    if (GAME.event[event_id] == 0) {
-        if (event_id == EVENT_THE100YEAROLDWISEMAN) {
-            if (*(u_long*)&GAME.selectedArea == (AREA00_VILLAGEOFALLBEGINNINGS << 16 | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS)) {
-                GAME.event[event_id] += 1;
-            }
-        } else {
-            GAME.event[event_id] += 1;
-        }
-        addPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
-        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 0, 0x3C, state);
-            printEventMessage(event_id, 0);
-            playSFX(42);
-            func_8002E3B0(0);
-        }        
-    }
-    return GAME.event[event_id];
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", setEventComplete);
-u_char setEventComplete(EVENT event_id, int state)
-{
-    if (GAME.event[event_id] != 0xFF) {
-        GAME.event[event_id] = 0xFF;
-        addPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
-        if (event_id != EVENT_TALEOFTHEEVILPIGS) {
-            func_8001E3EC(event_id, 1, 1, state);
-            printEventMessage(event_id, 1);
-            func_80020DDC(2);
-            func_80021110();
-        }
-    }
-    return GAME.event[event_id];
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", getEventState);
-u_char getEventState(EVENT event_id)
-{
-    return GAME.event[event_id];
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001E3EC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001EA40);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", printEventMessage);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001EFE8);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", cdSeekStream);
-void cdSeekStream(short file_id)
-{
-    if (CdControl(2, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
-        CdControlF(0x15, 0);
-    }
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", moviePlayerTask);
-void moviePlayerTask(void)
-{   
-    u_short state;
-    unkstruct_1F8001D4* gameControl;
-    unkstruct_1F8001D4* gameControlTemp;
-
-    gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
-    *(u_char* )0x1F8001CC = 1;
-    gameControl->state0 = 0;
-    gameControl->unk4E.value = 0;
-    gameControl->loadGameSelected = 0;
-    do {
-        if (*(u_char* )0x1F8001D3 == 1) {
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 3;
-            CdMix(&D_80077758);
-        }
-        gameControlTemp = *(unkstruct_1F8001D4** )0x1F8001D4;
-        state = gameControlTemp->state0;
-        switch (state) {
-            case 0:
-                func_8001F5D0(&D_8009B010, 384, 256, 704, 256);
-                startMovieStream((int) (((&D_80078F80)[D_8007775C[*(u_char* )0x1F8001CD]] * 2) + &D_800791A0));
-                gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                gameControl->state0+=1;
-                do {
-                } while (func_8001EFE8(&D_8009B010) == 0);
-                break;
-            case 1:
-                *(char* )0x1F8001CC = 2;
-                gameControlTemp->state0 = 2;
-            case 2:
-                while ((*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value == 0) {
-                    func_8001EFE8(&D_8009B010);
-                }
-                DecDCTin(*(D_8009B018 + &D_8009B010), 2);
-                *(int*)&D_8009B034->disp.w = *(short*)0x1F8001F4;
-                D_8009B034->screen.x = ((short*)&D_8009B028)[(*(short*)0x1F8001F4) * 4];
-                D_8009B034->screen.y = ((short*)&D_8009B02A)[(*(short*)0x1F8001F4) * 4];
-                DecDCTout(
-                    *(u_long**)&D_8009B01C[D_8009B024],
-                    (D_8009B034->screen.w * D_8009B034->screen.h) / 2
-                );
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 0;
-                while (func_8001EFE8(&D_8009B010) == 0) {
-                    if (*(int*)&D_8009B034->isinter == 1) {
-                        break;
-                    }
-                }
-                if (*(int*)&D_8009B034->isinter == 0) {
-                    do {
-                    } while (*(int*)&D_8009B034->isinter == 0);
-                }
-                SetDispMask(1);
-                *(int*)&D_8009B034->isinter = 0;
-                *(char* )0x1F8001CC = 3;
-                *(short* )0x1F8001E8 = 0;
-                break;
-            case 3:
-                DecDCToutCallback(NULL);
-                StUnSetRing();
-                StClearRing();
-                CdControlB(9, 0, 0);
-                *(char* )0x1F8001CC = 0;
-                *(char* )(&SCRATCHPAD+0x1D3) = 0;
-                exitTask();
-                break;
-        }
-        sleepTask(1);
-    } while(true);
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", mdecSliceCallback);
-void mdecSliceCallback(void)
-{
-    u_long* sliceRect = &D_8009B034->screen;
-    u_long* mdecImage = sliceRect - 0x8;
-    int sliceSize;
-    short screenX;
-    int temp_v1;
-    
-    LoadImage(sliceRect, *(u_long**)&mdecImage[D_8009B024]);
-    D_8009B024 = 1 - D_8009B024;
-    screenX = D_8009B034->screen.x;
-    D_8009B034->screen.x += 0x10;
-
-    asm("");
-    temp_v1 = *(int*)&D_8009B034->disp.w * 4;
-    asm("");
-
-    if (
-            D_8009B034->screen.x <
-            (
-                (((short*)&D_8009B028)[temp_v1]) +
-                (((short*)&D_8009B02C)[temp_v1])
-            )
-    ) {
-        sliceSize = (D_8009B034->screen.w * D_8009B034->screen.h) / 2;
-        DecDCTout(
-            *(u_long**)&mdecImage[D_8009B024],
-            sliceSize
-        );
-        return;
-    }
-    *(int*)&D_8009B034->isinter = 1;
-    D_8009B034->screen.x = screenX;
-    return;
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F5D0);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", startMovieStream);
-void startMovieStream(s32 arg0)
-{
-    int mode;
-    
-    DecDCTReset(0);
-    DecDCToutCallback(&mdecSliceCallback);
-    CdMix(&D_80077754);
-    StSetRing(&D_800D7188, 0x20);
-    StSetStream(0, 1, -1, 0, 0);
-    do {
-
-    } while (CdControl(2, arg0, 0) == 0);
-    mode = 0x1C0;
-    do {
-        
-    } while (CdRead2(mode) == 0);
-    return;
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F6D4);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FAE4);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FCE4);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FD20);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FD80);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FDC4);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FE60);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001FF28);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", playSFX);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020058);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800200EC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020180);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020264);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020434);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", playSFXAndSetNote);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002059C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800205C4);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002065C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002067C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800206A0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020778);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020AF0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020C00);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020CB0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020DDC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020EEC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020FAC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800210A8);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021110);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021148);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021180);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800211A4);
-void func_800211A4(void)
-{
-    s32 i;
-
-    if (D_80077FA8 != 0) {
-        sndQuit();
-    }
-    SsInitHot();
-    SsSetTableSize(&D_800A15D8, 4, 1);
-    SsSetTickMode(SS_TICK60);
-    SsSetAutoKeyOffMode(0);
-    SpuSetKey(SPU_OFF, 0xFFFFFF);
-    SsSetReservedVoice(0x10);
-    D_8009B048.mask = (
-        SPU_COMMON_CDMIX |
-        SPU_COMMON_CDVOLR | 
-        SPU_COMMON_CDVOLL | 
-        SPU_COMMON_MVOLR | 
-        SPU_COMMON_MVOLL
-    );
-    D_8009B048.mvol.left = 0x3FFF;
-    D_8009B048.mvol.right = 0x3FFF;
-    D_8009B048.cd.volume.left = 0x7FFF;
-    D_8009B048.cd.volume.right = 0x7FFF;
-    D_8009B048.cd.mix = SPU_ON;
-    SpuSetCommonAttr(&D_8009B048);
-    SsStart();
-    
-    D_8009E638 = 0;
-    D_800A32F8 = 0;
-    D_8009C9F0 = 0;
-    D_8009B078 = 0;
-    D_8009B07C = 0;
-    D_8009B094 = 0;
-    for (i = 0; i < 0x18; ++i) {
-        (&D_8009BC28)[i] = 0xF;
-        (&D_800A3030)[i] = -1;
-    }
-    for (i = 0; i < 0x8; ++i) {
-        (&D_1F8003B6-7)[i] = -1;
-    }
-    D_800A2790 = -1;
-    D_8009E430 = -1;
-    D_80077FA8 = 1;
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", sndQuit);
-void sndQuit(void)
-{
-    D_80077FA8 = 0;
-    SsEnd();
-    SsQuit();
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021340);
-
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021B7C);
-int func_80021B7C(void)
-{
-    return 0;
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021B84);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BC4);
-void func_80021BC4(int arg1, int arg2)
-{
-    func_80021D70((D_8007912C)[arg2]);
-}
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", startSoundTask);
-void startSoundTask(void)
-{
-    *(byte* )0x1F8001CE = 0;
-    openTask(2, &func_80021340);
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021C24);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021CC8);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021D70);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800222B8);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800223A0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800223E0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022474);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800224B0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800224CC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800224FC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022570);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800225B0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800225F0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022618);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022644);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022684);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800226B0);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800226D8);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022714);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002273C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800227A4);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002280C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022874);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800228A4);
-
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800228C0);
-void func_800228C0(u_short* id)
-{
-    ((u_int*)(id))[0x5] = (int)(((u_int*)(id))[0x5] + (((short*)(id))[0x41] << 8));
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800228D8);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022908);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022924);
-void func_80022924(short* id)
-{
-    ((u_int*)(id))[0x5] = (int) (((u_int*)(id))[0x5] + (((short*)(id))[0x3F] << 8));
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002293C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002296C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002299C);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800229CC);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_800229FC);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022A18);
-void func_80022A18(u_short* id)
-{
-    ((u_short*)(id))[0x16] = ((u_short*)(id))[0x10];
-}
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022A24);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022A50);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80022B34);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001DFD4);
