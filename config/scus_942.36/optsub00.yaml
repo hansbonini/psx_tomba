@@ -1,0 +1,66 @@
+name: OPTSUB00
+sha1: 50c4fc9ccc467e0d67c14eb8706d67c4f10fcd4c
+options:
+  basename: optsub00
+  target_path: ./iso/us/SYSTEM/OPTSUB00.BIN
+  elf_path: ./build/optsub00/optsub00.elf
+  base_path: ../../
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: ./asm/scus_942.36/overlays/optsub00
+  src_path: ./src/scus_942.36/overlays/optsub00
+  build_path: ./build
+  asset_path: ./assets/scus_942.36/overlays/optsub00
+  generate_asm_macros_files : False
+
+  ld_script_path: ./linker/scus_942.36/optsub00.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  gp_value: 0x80097FA8
+  global_vram_start: 0x800E7388
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  disassemble_all: true
+
+  # the header sits at file offset 0, so .data has to precede .text here
+  section_order: [".data", ".text", ".rodata", ".sdata", ".bss", ".sbss"]
+
+  symbol_addrs_path:
+    - ./symbols/scus_942.36/symbol_addrs.txt
+    - ./symbols/scus_942.36/optsub00_symbol_addrs.txt
+  reloc_addrs_path:
+    - ./symbols/scus_942.36/reloc_addrs.txt
+
+  undefined_funcs_auto_path: ./linker/scus_942.36/undefined_funcs_auto.optsub00.txt
+  undefined_syms_auto_path: ./linker/scus_942.36/undefined_syms_auto.optsub00.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
+segments:
+  - name: optsub00
+    type: code
+    start: 0x0
+    vram: 0x800E7388
+    align: 4
+    subalign: 4
+    subsegments:
+      # 0x00        overlay id (0x34)
+      # 0x04..0x37  13 hook pointers copied into the game's per-area table
+      - [0x0, data, header]
+      - [0x38, c, optsub00]
+  - [0x300C]
