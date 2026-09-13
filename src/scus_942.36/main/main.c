@@ -362,7 +362,7 @@ void func_80017024(void)
             case 3:
                 EnterCriticalSection();
                 temp_v0_2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                (*(unkstruct_1F8001D4** )0x01F8001D4)->task_id = OpenTh(temp_v0_2->task_func, temp_v0_2->task_sp, temp_v0_2->task_gp);
+                (*(unkstruct_1F8001D4** )0x1F8001D4)->task_id = OpenTh(temp_v0_2->task_func, temp_v0_2->task_sp, temp_v0_2->task_gp);
                 ExitCriticalSection();
             case 2:
                 temp_v1 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
