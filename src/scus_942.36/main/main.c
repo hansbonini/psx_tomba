@@ -468,7 +468,14 @@ void func_8001731C(s32 id)
     *p |= 0x10;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017348);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017348);
+void func_80017348(s32 id)
+{
+    u16* p;
+
+    p = (u16*)(0x801FD800 + id * 0x70);
+    *p &= ~0x10;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vblankHandler);
 
