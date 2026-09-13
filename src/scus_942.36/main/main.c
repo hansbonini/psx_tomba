@@ -1,6 +1,9 @@
 #include "common.h"
 #include "game.h"
 
+#define CURRENT_TASK *(unkstruct_1F8001D4**)0x1F8001D4
+#define TASK_TABLE  0x801FD800
+
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 void main(void)
 {
@@ -335,7 +338,7 @@ void func_80016FD8(void)
     s32                 i;
 
     tcb  = *(struct TCB**)0x110;
-    task = (unkstruct_1F8001D4*)0x801FD800;
+    task = (unkstruct_1F8001D4*)TASK_TABLE;
 
     for (i = 0; i < 3; i++) {
         tcb++;
@@ -355,14 +358,14 @@ void func_80017024(void)
     unkstruct_1F8001D4* temp_v0_2;
     unkstruct_1F8001D4* temp_v1;
 
-    *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)0x801FD800;
+    *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
     for (temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); temp_v0 <= 0x801FD94FU; temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
         tid = 2;
         switch ((u16)(*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34))->unk0) {
             case 3:
                 EnterCriticalSection();
                 temp_v0_2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->task_id = OpenTh(temp_v0_2->task_func, temp_v0_2->task_sp, temp_v0_2->task_gp);
+                (CURRENT_TASK)->task_id = OpenTh(temp_v0_2->task_func, temp_v0_2->task_sp, temp_v0_2->task_gp);
                 ExitCriticalSection();
             case 2:
                 temp_v1 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -378,7 +381,7 @@ void func_80017024(void)
 void func_800170F8(s32 id, int fn)
 {
     func_80017418((unkstruct_01*)(0x801FD80C + id * 0x70), fn);
-    func_80017154(id, ((unkstruct_1F8001D4*)(0x801FD800 + id * 0x70))->task_func);
+    func_80017154(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * 0x70))->task_func);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017154);
@@ -386,7 +389,7 @@ void func_80017154(s32 arg0, long (*func)())
 {
     int temp_s1 = arg0 * sizeof(unkstruct_1F8001D4);
 
-    ((unkstruct_1F8001D4*)(0x801FD800 + temp_s1))->unk0 = 2;
+    ((unkstruct_1F8001D4*)(TASK_TABLE + temp_s1))->unk0 = 2;
     EnterCriticalSection();
     *(int*)(0x801FD804 + temp_s1) = OpenTh(func,
                                            *(int*)(0x801FD808 + temp_s1),
@@ -399,7 +402,7 @@ void func_800171D4(s16 arg0)
 {
     unkstruct_1F8001D4* temp_v1;
 
-    temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v1 = CURRENT_TASK;
     temp_v1->unk2 = arg0;
     temp_v1->unk0 = 1;
     ChangeTh(DescTH);
@@ -408,7 +411,7 @@ void func_800171D4(s16 arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017208);
 void func_80017208(void)
 {
-    (*(unkstruct_1F8001D4** )0x1F8001D4)->unk0 = 0;
+    (CURRENT_TASK)->unk0 = 0;
     EnterCriticalSection();
     CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);
     ExitCriticalSection();
@@ -422,7 +425,7 @@ void func_80017258(s32 id)
     u16* flag;
 
     off  = id * 0x70;
-    flag = (u16*)(0x801FD800 + off);
+    flag = (u16*)(TASK_TABLE + off);
 
     if (*flag != 0) {
         *flag = 0;
@@ -438,7 +441,7 @@ void setTask(s32 arg0)
 {
     unkstruct_1F8001D4* temp_v0;
 
-    temp_v0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v0 = CURRENT_TASK;
     temp_v0->unk0 = 3;
     temp_v0->task_func = arg0;
     EnterCriticalSection();
@@ -452,7 +455,7 @@ void func_8001731C(s32 id)
 {
     u16* p;
 
-    p = (u16*)(0x801FD800 + id * 0x70);
+    p = (u16*)(TASK_TABLE + id * 0x70);
     *p |= 0x10;
 }
 
@@ -461,7 +464,7 @@ void func_80017348(s32 id)
 {
     u16* p;
 
-    p = (u16*)(0x801FD800 + id * 0x70);
+    p = (u16*)(TASK_TABLE + id * 0x70);
     *p &= ~0x10;
 }
 
@@ -483,7 +486,7 @@ void vblankHandler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
 void func_800173B0(void)
 {
-    #define D_801FD800 ((void*)0x801FD800)
+    #define D_801FD800 ((void*)TASK_TABLE)
     u16* p;
     u16  t;
 
@@ -1066,13 +1069,13 @@ void func_800191E0(void)
     D_8009C9E4 = 1;
     D_8009E450 = 0;
     func_80023A3C();
-    temp_v0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v0 = CURRENT_TASK;
     temp_v0->state0 = 9U;
     temp_v0->state1 = 0U;
     temp_v0->state2 = 0;
     SetDispMask(0);
     do {
-        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state0;
+        temp_v1 = (CURRENT_TASK)->state0;
         switch (temp_v1) {
             case 0:
                 *(u8* )0x1F8001CE = 0;
@@ -1082,23 +1085,23 @@ void func_800191E0(void)
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
                 memset(&D_1F8001A0, 0, 0x24);
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state0++;
                 break;
             case 1:
                 if (*(u8* )0x1F8001CE != 0) {
                     func_8001F158(0x15);
-                    (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 4U;
+                    (CURRENT_TASK)->state0 = 4U;
                 }
                 break;
             case 2:
                 SetDispMask(1);
-                temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_a0 = CURRENT_TASK;
                 temp_a0->timer = 120;
                 temp_a0->state0++;
                 break;
             case 3:
-                temp_a1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_a1 = CURRENT_TASK;
                 *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
                 temp_a1->timer--;
                 if ((s16) temp_a1->timer == -1) {
@@ -1108,7 +1111,7 @@ void func_800191E0(void)
                 FontDebugPrintf(0x50, 0x70, 0, &D_80010008);
                 break;
             case 4:
-                temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v0_2 = CURRENT_TASK;
                 temp_v0_2->state0 = 0U;
                 temp_v0_2->state1 = 1U;
                 temp_v0_2->state2 = 0;
@@ -1118,21 +1121,21 @@ void func_800191E0(void)
                 SetDispMask(0);
                 *(byte* )0x1F8001CE = 0U;
                 func_800222B8(0x5E, 1);
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 0xAU;
+                (CURRENT_TASK)->state0 = 0xAU;
                 break;
             case 10:
                 if (*(u8* )0x1F8001CE != 0) {
                     SetDispMask(0);
                     initDisplay2x(0U, 0U, 0U);
                     SetDispMask(1);
-                    temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                    temp_v0_3 = CURRENT_TASK;
                     temp_v0_3->timer = 240;
                     temp_v0_3->state0 = 0xBU;
                     temp_v0_3->state1 = 0U;
                 }
                 break;
             case 11:
-                temp_a1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_a1_2 = CURRENT_TASK;
                 *(int* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
                 switch (temp_a1_2->state1) {                    // switch 1; irregular
                     case 0:                             // switch 1
@@ -1166,7 +1169,7 @@ void func_800191E0(void)
                         }
                         break;
                 }
-                temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_a0_2 = CURRENT_TASK;
                 if (*(u16*)&temp_a0_2->state0 == 0xB) {
                     func_8001964C((u8) temp_a0_2->unk5A, 1);
                 }
@@ -1208,7 +1211,7 @@ void func_80019844(void)
         *(u16* )0x1F8001F8 = *(u16* )(D_1F8000F8+0x100) + 1;
         asm("");
         func_800223E0();
-        temp_v1 = *(unkstruct_1F8001D4**)0x1F8001D4;
+        temp_v1 = CURRENT_TASK;
         temp_a0 = temp_v1->state0;
         if ((temp_a0 >= 3U) && (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) && (temp_a0 != 4)) {
             temp_v1->state0 = 4U;
@@ -1220,7 +1223,7 @@ void func_80019844(void)
                 *(s8* )0x1F8001D3 = 1;
             }
         }
-        switch ((u16)(*(unkstruct_1F8001D4**)0x1F8001D4)->state0) {
+        switch ((u16)(CURRENT_TASK)->state0) {
             case 0:
                 func_800199B8(sp10);
                 break;
@@ -1256,10 +1259,10 @@ void func_800199B8(void)
     unkstruct_1F8001D4* temp_v1_6;
     unkstruct_1F8001D4* temp_v1_7;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
+    temp_v1 = (CURRENT_TASK)->state1;
     switch (temp_v1) {
         case 0:
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2 = CURRENT_TASK;
             temp_a0 = temp_v1_2->state2;
             switch (temp_a0) {                      // switch 1; irregular
                 case 0:                             // switch 1
@@ -1288,7 +1291,7 @@ void func_800199B8(void)
             temp_v1_4->state1++;
             return;
         case 2:
-            temp_a2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a2 = CURRENT_TASK;
             *(u8* )0x1F8001CC = 1;
             *(s8* )0x1F8001CD = 0x15;
             temp_a2->state1++;
@@ -1307,14 +1310,14 @@ void func_800199B8(void)
             SetDispMask(1);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
-            temp_a0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a0_2 = CURRENT_TASK;
             temp_a0_2->timer = 120;
             temp_a0_2->state1++;
             return;
         case 5:
             *(s32* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
             func_800E7D74();
-            temp_v1_5 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_5 = CURRENT_TASK;
             temp_v0 = temp_v1_5->timer - 1;
             temp_v1_5->timer = temp_v0;
             if ((temp_v0 << 0x10) <= 0) {
@@ -1331,14 +1334,14 @@ void func_800199B8(void)
             break;
         case 6:
             if (*(u8* )0x1F8001CE != 0) {
-                temp_v1_6 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_6 = CURRENT_TASK;
                 temp_v1_6->state1++;
                 func_8001F158(0);
                 return;
             }
             break;
         case 7:
-            temp_v1_7 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_7 = CURRENT_TASK;
             temp_v1_7->state0 = 3;
             temp_v1_7->state1 = 0U;
             break;
@@ -1443,16 +1446,16 @@ void loopTitleScreen(int* arg0)
     unkstruct_1F8001D4* gameControlTemp6;
     unkstruct_1F8001D4* gameControlTemp7;
 
-    switch ((*(unkstruct_1F8001D4** )0x1F8001D4)->state1) {
+    switch ((CURRENT_TASK)->state1) {
         case 0:
             SetDispMask(0);
-            gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+            gameControl = CURRENT_TASK;
             gameControl->state2 = 0U;
             gameControl->state1++;
         case 1:
             if (*(u_char* )0x1F8001CC == 0) {
                 initDisplay(0U, 0U, 0U);
-                gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+                gameControl = CURRENT_TASK;
                 gameControl->state1++;
                 return;
             }
@@ -1463,7 +1466,7 @@ void loopTitleScreen(int* arg0)
             SetDispMask(1);
             func_80020AF0(0);
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
+            (CURRENT_TASK)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
             gameControl = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
             gameControl->unk6A = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
@@ -1483,7 +1486,7 @@ void loopTitleScreen(int* arg0)
             if (*&D_8009C9D8 != 0) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
-            gameControlTemp2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            gameControlTemp2 = CURRENT_TASK;
             switch ((u_short)gameControlTemp2->state2) {                    // switch 1; irregular
                 case 0:                             // switch 1
                     if (*(u_short* )0x1F8001FC & JOY_LEFT) {
@@ -1497,7 +1500,7 @@ void loopTitleScreen(int* arg0)
                         }
                     }
                     if (*(u_short* )0x1F8001FC & JOY_RIGHT) {
-                        gameControlTemp3 = *(unkstruct_1F8001D4** )0x1F8001D4;;
+                        gameControlTemp3 = CURRENT_TASK;;
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
@@ -1509,7 +1512,7 @@ void loopTitleScreen(int* arg0)
                     }
                     if (*(u_short* )0x1F8001FC & (JOY_CROSS | JOY_START)) {
                         func_80020C00(0);
-                        gameControlTemp6 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                        gameControlTemp6 = CURRENT_TASK;
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
                             case TITLESCREEN_NEWGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 0;
@@ -1547,14 +1550,14 @@ void loopTitleScreen(int* arg0)
             if (*(u_short* )0x1F8001F8 & 0x20) {
                 printTitleScreenMessage(56, 144, TITLESCREEN_MESSAGE_PRESSSTART);
             }
-            gameControlTemp7 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            gameControlTemp7 = CURRENT_TASK;
             func_800E8E78(gameControlTemp7->unk6A, gameControlTemp7->titleScreenSelectedOption);
             func_8001F6D4();
             return;
         case 4:
             func_80020C00(0);
             *arg0 = 0;
-            gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
+            gameControl = CURRENT_TASK;
             gameControl->state0 = 3;
             gameControl->state1 = 0U;
             break;
@@ -1570,29 +1573,29 @@ void func_8001A328(void)
     unkstruct_1F8001D4* temp_v1_4;
 
     *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    switch ((*(unkstruct_1F8001D4** )0x1F8001D4)->state1) {
+    switch ((CURRENT_TASK)->state1) {
         case 0:
             func_80020C00(0);
             SetDispMask(0);
             *(u_char* )0x1F8001CE = 0;
             func_800223A0(3);
             func_800222B8(8, 1);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
+            (CURRENT_TASK)->state1++;
             return;
         case 1:
             if (*(u_char* )0x1F8001CE != 0) {
                 SetDispMask(1);
                 func_800E75C4();
                 func_80020AF0(0);
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state2 = 0U;
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
+                (CURRENT_TASK)->state1++;
                 return;
             }
         default:
             return;
         case 2:
-            temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a0 = CURRENT_TASK;
             temp_v1_3 = temp_a0->state2;
             switch (temp_v1_3) {                    // switch 1; irregular
                 case 0:                             // switch 1
@@ -1601,7 +1604,7 @@ void func_8001A328(void)
                     // fallthrough
                 case 1:                             // switch 1
                     if (func_800E75CC(temp_a0) != 0) {
-                    (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
+                    (CURRENT_TASK)->state1++;
                     return;
                     }
                     break;
@@ -1619,11 +1622,11 @@ void func_8001A328(void)
             *(u_char* )0x1F8001CE = 0U;
             func_800223A0(2);
             func_800222B8(2, 1);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
+            (CURRENT_TASK)->state1++;
             return;
         case 4:
             if (*(u_char* )0x1F8001CE != 0) {
-                temp_v1_4 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_4 = CURRENT_TASK;
                 temp_v1_4->state0 = 4;
                 temp_v1_4->state1 = 0U;
             }
@@ -1671,7 +1674,7 @@ void func_8001A51C(void)
     scratch->unk1FC  = 0;
     while (true){
         func_800223E0();
-        temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state0;
+        temp_v1 = (CURRENT_TASK)->state0;
         switch ((u_short)temp_v1) {
             case 0:
                 func_8001A670(); // New Game
