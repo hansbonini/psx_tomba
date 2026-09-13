@@ -1953,6 +1953,8 @@ typedef struct
     u8 first, second;
 } U8Pair;
 
+extern char D_80010000;
+extern char D_80010008;
 
 extern u_char SCRATCHPAD;
 extern u_char D_1F8000C0[];
@@ -1968,10 +1970,11 @@ extern int D_1F8001A0;
 // extern u_short D_1F8001FC;
 extern int D_1F8002C8[];
 extern short D_1F8003B6;
-extern long D_801FD804;
+extern unkstruct_1F8001D4* D_801FD800;
+extern int D_801FD804;
+extern int D_801FD808;
+extern int D_801FD810;
 
-extern char D_80010000;
-extern char D_80010008;
 
 extern u_short D_80076E80;
 extern int D_80076FAC;

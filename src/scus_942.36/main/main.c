@@ -388,7 +388,18 @@ void func_80017024(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800170F8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017154);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017154);
+void func_80017154(s32 arg0, long (*func)())
+{
+    int temp_s1 = arg0 * sizeof(unkstruct_1F8001D4);
+
+    ((unkstruct_1F8001D4*)(0x801FD800 + temp_s1))->unk0 = 2;
+    EnterCriticalSection();
+    *(int*)(0x801FD804 + temp_s1) = OpenTh(func,
+                                           *(int*)(0x801FD808 + temp_s1),
+                                           *(int*)(0x801FD810 + temp_s1));
+    ExitCriticalSection();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800171D4);
 void func_800171D4(s16 arg0)
