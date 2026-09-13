@@ -330,34 +330,22 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016F5C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016FD8);
 void func_80016FD8(void)
 {
-    typedef inline struct {
-        long          status;
-        long          mode;
-        unsigned long reg[40];
-        long          system[6];
-    } TCB;
-
-    TCB*                tcb;
+    struct TCB*         tcb;
     unkstruct_1F8001D4* task;
     s32                 i;
-    u_long*             stack;
-    u_long              sr;        /* <- declarada por ultimo */
 
-    tcb   = *(TCB**)0x110;
-    task  = (unkstruct_1F8001D4*)0x801FD800;
-    i     = 0;
-    sr    = 0x40000404;            /* <- antes do stack */
-    stack = (u_long*)0x801FE400;
+    tcb  = *(struct TCB**)0x110;
+    task = (unkstruct_1F8001D4*)0x801FD800;
 
-    for (; i < 3; i++) {
+    for (i = 0; i < 3; i++) {
         tcb++;
         task->unk0    = 0;
-        task->task_sp = (int)stack;
+        task->task_sp = 0x801FE400 + i * 0x800;   /* <- sem variavel `stack` */
         task++;
-        stack += 0x200;
-        tcb->reg[R_SR] = sr;       /* <- usa a variavel */
+        tcb->reg[R_SR] = 0x40000404;
     }
 }
+
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017024);
 void func_80017024(void)
@@ -492,7 +480,25 @@ void vblankHandler(void)
     scratch->unk1F6++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
+void func_800173B0(void)
+{
+    #define D_801FD800 ((void*)0x801FD800)
+    u16* p;
+    u16  t;
+
+    p = (u16*)(D_801FD800);
+    do {
+        if (*p == 1) {
+            t = p[1] - 1;
+            p[1] = t;
+            if ((t << 0x10) == 0) {
+                *p = 2;
+            }
+        }
+        p += 0x38;
+    } while (p <= (u16*)(D_801FD800 + 0x14F));
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017418);
 void func_80017418(unkstruct_01* arg0, int arg1)
