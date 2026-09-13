@@ -459,7 +459,14 @@ void setTask(s32 arg0)
     ChangeTh(DescTH);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001731C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001731C);
+void func_8001731C(s32 id)
+{
+    u16* p;
+
+    p = (u16*)(0x801FD800 + id * 0x70);
+    *p |= 0x10;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017348);
 
