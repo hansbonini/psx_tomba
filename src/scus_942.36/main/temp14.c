@@ -145,8 +145,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", func_8004ED80);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", func_8004EFA8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", func_8004F24C);
-void func_8004F24C(short tpage, int p) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", addDrawModePrim);
+void addDrawModePrim(short tpage, int p) {
     typedef inline struct {
         u_char pad[0x164];
         int nextprim;
@@ -166,8 +166,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", func_8004F2CC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", func_8004F3DC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", func_8004F510);
-void func_8004F510(short* p, u_char r0, u_char g0, u_char b0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp14", addTilePrim);
+void addTilePrim(short* p, u_char r0, u_char g0, u_char b0)
 {
     typedef inline struct {
         u_char pad[0x164];

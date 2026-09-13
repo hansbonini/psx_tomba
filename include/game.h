@@ -2115,14 +2115,14 @@ extern char D_800B3188;
 extern int D_800D7188;
 extern int D_800121C8;
 
-void func_80017154(s32 arg0, long (*func)());
-void FontDebugPrintf(short x, short y, short color, char* fmt);
+void openTask(s32 arg0, long (*func)());
+void fontDebugPrintf(short x, short y, short color, char* fmt);
 void vblankHandler(void);
-void func_800191E0(void);
-void func_80019844(void);
+void bootSequenceTask(void);
+void titleSequenceTask(void);
 void func_8001A51C(void);
-void func_8001F1C0(void);
-void func_8001F4D4(void);
+void moviePlayerTask(void);
+void mdecSliceCallback(void);
 void func_80021340(void);
 
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);

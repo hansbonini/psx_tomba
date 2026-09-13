@@ -107,8 +107,8 @@ void func_8003E3E8(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003E408);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", LZDecompress);
-void LZDecompress(byte *src, byte *dest)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", lzDecompress);
+void lzDecompress(byte *src, byte *dest)
 {
     uint length;
     byte offset;
@@ -148,11 +148,11 @@ void LZDecompress(byte *src, byte *dest)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003F0DC);
-void func_8003F0DC(char* src, char* dst, char* len)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", lzDecompressToBuffer);
+void lzDecompressToBuffer(char* src, char* dst, char* len)
 {
     bzero(dst, len);
-    LZDecompress(src, dst);
+    lzDecompress(src, dst);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp11", func_8003F124);

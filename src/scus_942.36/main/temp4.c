@@ -66,8 +66,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80030EF8);
 */
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", printInfoMessage);
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", func_80031628);
-void func_80031628(void* obj, s32 stringIndex)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp4", drawInfoMessageText);
+void drawInfoMessageText(void* obj, s32 stringIndex)
 {
     u8*      base;
     s16*     tbl;

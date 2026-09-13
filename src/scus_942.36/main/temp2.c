@@ -39,12 +39,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023928);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023A3C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", FontDebugPrintf);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", fontDebugPrintf);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", drawLoadingSprites);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023E44);
-void func_80023E44(short arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", drawNowLoading);
+void drawNowLoading(short arg0)
 {
     int graphType = GetGraphType();
     int tpage = 36;
@@ -62,8 +62,8 @@ void func_80023E44(short arg0)
     return;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80023ED0);
-void func_80023ED0(short x, short y, short sprt_id)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", drawUiSprite);
+void drawUiSprite(short x, short y, short sprt_id)
 {   
     u_int sprt_ofs;
     int* ot;
@@ -99,8 +99,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_800246B0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80024AA8);
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", func_80024AEC);
-void func_80024AEC(MATRIX* dst)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp2", getBaseMatrix);
+void getBaseMatrix(MATRIX* dst)
 {
     *dst=*(MATRIX*)(&D_1F8000F8);
     return;

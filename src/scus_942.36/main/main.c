@@ -20,7 +20,7 @@ void main(void)
     SetDispMask(0);
     SetVideoMode(MODE_NTSC);
     ResetCallback();
-    func_80016A18();
+    initGlobalState();
     ResetGraph(0);
     SetGraphDebug(0);
     InitGeom();
@@ -30,14 +30,14 @@ void main(void)
     DecDCTReset(0);
     *(s32*)0x1F8002A0 = 0;
     *(s32*)0x1F80029C = 0;
-    func_80016AF4();
+    initGraphics();
     GsSetOrigin(1, 1);
     func_800211A4();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
     memCardInit();
     joypadInit();
-    func_80016FD8();
-    func_800170F8(0, func_800191E0);
+    initTasks();
+    startTask(0, bootSequenceTask);
     EnterCriticalSection();
     *(s32*)0x1F8001D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
     ExitCriticalSection();
@@ -48,7 +48,7 @@ void main(void)
         *(u16*)((byte*)&D_1F8001A0+0x48) = 0;
         if (*(u16*)(&SCRATCHPAD+0x1F0) < 0x4001U) {
             D_8009C8A8 = (*(s16*)0x1F8001F4 * 0x780) + &D_800A1890;
-            func_80017024();
+            dispatchTasks();
         }
         if (*(u16*)0x1F8001EC != 0) {
             DrawSync(0);
@@ -85,15 +85,15 @@ void main(void)
             case 0:
             case 1:
                 if (*(u16*)0x1F8001F0 <= 0x4000) {
-                    func_80016940();
-                    func_800173B0();
+                    flipFrameBuffer();
+                    tickTaskTimers();
                 }
                 break;
             case 3:
                 *(u8*)(&SCRATCHPAD+0x1CC) = 2;
                 if (*(u16*)0x1F8001F0 <= 0x4000) {
-                    func_80016940();
-                    func_800173B0();
+                    flipFrameBuffer();
+                    tickTaskTimers();
                 }
                 break;
         }
@@ -134,8 +134,8 @@ void main(void)
     };
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
-void func_80016940(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", flipFrameBuffer);
+void flipFrameBuffer(void)
 {
     short bufIndex;
     u_long* ot;
@@ -149,7 +149,7 @@ void func_80016940(void)
     *(u_long** )(&SCRATCHPAD+0x1E4) = prevOt;
     PutDispEnv(ot + 0x328);
     PutDrawEnv(*(u_long* )0x1F8001E0 + 0xCB4);
-    func_80016F5C(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
+    compactOrderingTable(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
     DrawOTag(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
     ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), 0x328);
 }
@@ -168,8 +168,8 @@ void GsSetOrigin(short id, short arg1)
     scratch->unk1EC = arg1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016A18);
-void func_80016A18(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initGlobalState);
+void initGlobalState(void)
 {
     typedef inline struct {
         byte data[0x1C4];
@@ -231,8 +231,8 @@ void func_80016A18(void)
     D_8009C866 = 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016AF4);
-void func_80016AF4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initGraphics);
+void initGraphics(void)
 {
     RECT rect;
     CAMERA* camera = (CAMERA*)0x1F8000E2;
@@ -252,7 +252,7 @@ void func_80016AF4(void)
     matrix->t[2] = 0;
     matrix->t[1] = 0;
     matrix->t[0] = 0;
-    func_80024AEC((MATRIX*)(&D_1F8000C0));
+    getBaseMatrix((MATRIX*)(&D_1F8000C0));
     camera->vrx= 0;
     camera->vry = 0;
     camera->vrz= -544;
@@ -327,10 +327,10 @@ void initDisplay2x(u_char r0, u_char g0, u_char b0)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016F5C);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", compactOrderingTable);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016FD8);
-void func_80016FD8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initTasks);
+void initTasks(void)
 {
     struct TCB*         tcb;
     unkstruct_1F8001D4* task;
@@ -349,8 +349,8 @@ void func_80016FD8(void)
 }
 
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017024);
-void func_80017024(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", dispatchTasks);
+void dispatchTasks(void)
 {
     int tid;
     unkstruct_1F8001D4* task;
@@ -376,15 +376,15 @@ void func_80017024(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800170F8);
-void func_800170F8(s32 id, int fn)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", startTask);
+void startTask(s32 id, int fn)
 {
-    func_80017418((unkstruct_01*)(0x801FD80C + id * 0x70), fn);
-    func_80017154(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * 0x70))->task_func);
+    setTaskEntry((unkstruct_01*)(0x801FD80C + id * 0x70), fn);
+    openTask(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * 0x70))->task_func);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017154);
-void func_80017154(s32 arg0, long (*func)())
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", openTask);
+void openTask(s32 arg0, long (*func)())
 {
     int off = arg0 * sizeof(unkstruct_1F8001D4);
 
@@ -396,8 +396,8 @@ void func_80017154(s32 arg0, long (*func)())
     ExitCriticalSection();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800171D4);
-void func_800171D4(s16 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", sleepTask);
+void sleepTask(s16 arg0)
 {
     unkstruct_1F8001D4* task;
 
@@ -407,8 +407,8 @@ void func_800171D4(s16 arg0)
     ChangeTh(DescTH);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017208);
-void func_80017208(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", exitTask);
+void exitTask(void)
 {
     (CURRENT_TASK)->unk0 = 0;
     EnterCriticalSection();
@@ -417,8 +417,8 @@ void func_80017208(void)
     ChangeTh(DescTH);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017258);
-void func_80017258(s32 id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", closeTask);
+void closeTask(s32 id)
 {
     s32  off;
     u16* flag;
@@ -449,8 +449,8 @@ void setTask(s32 arg0)
     ChangeTh(DescTH);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001731C);
-void func_8001731C(s32 id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setTaskFlag10);
+void setTaskFlag10(s32 id)
 {
     u16* p;
 
@@ -458,8 +458,8 @@ void func_8001731C(s32 id)
     *p |= 0x10;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017348);
-void func_80017348(s32 id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", clearTaskFlag10);
+void clearTaskFlag10(s32 id)
 {
     u16* p;
 
@@ -482,8 +482,8 @@ void vblankHandler(void)
     scratch->unk1F6++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
-void func_800173B0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", tickTaskTimers);
+void tickTaskTimers(void)
 {
     #define D_801FD800 ((void*)TASK_TABLE)
     u16* p;
@@ -502,16 +502,16 @@ void func_800173B0(void)
     } while (p <= (u16*)(D_801FD800 + 0x14F));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017418);
-void func_80017418(unkstruct_01* arg0, int arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setTaskEntry);
+void setTaskEntry(unkstruct_01* arg0, int arg1)
 {
     DrawSync(0);
     arg0->unk0 = arg1;
     arg0->saved_reg_gp = GetGp();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001745C);
-void func_8001745C(u_long* p, short x, short y, short w, short h)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", loadImageRect);
+void loadImageRect(u_long* p, short x, short y, short w, short h)
 {
     RECT rect;
     setRECT(&rect, x, y, w, h);
@@ -519,8 +519,8 @@ void func_8001745C(u_long* p, short x, short y, short w, short h)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017498);
-void func_80017498(u_long* address, short x, short y, short x2, short y2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", loadTIM);
+void loadTIM(u_long* address, short x, short y, short x2, short y2)
 {
     TIM_IMAGE tim;
     TIM_IMAGE *pTim;
@@ -545,8 +545,8 @@ void func_80017498(u_long* address, short x, short y, short x2, short y2)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001758C);
-void func_8001758C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDrawLists);
+void initDrawLists(void)
 {
     func_80017CA0();
     func_80017D70();
@@ -564,8 +564,8 @@ void func_8001758C(void)
     func_8001821C();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017614);
-void func_80017614(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", resetDrawLists);
+void resetDrawLists(void)
 {
     *(int** )0x1F800218 = &D_800B0528;
     *(int** )0x1F80025C = &D_800B0528;
@@ -597,11 +597,11 @@ void func_80017614(void)
     *(short* )0x1F800240 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017734);
-void func_80017734(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", resetCamera);
+void resetCamera(void)
 {
     CAMERA* camera = (CAMERA*)0x1F8000E2;
-    func_80024AEC((MATRIX* ) D_1F8000C0);
+    getBaseMatrix((MATRIX* ) D_1F8000C0);
     camera->vrz = -544; 
     camera->vpx = 160;
     camera->vpy = -120;
@@ -623,7 +623,7 @@ void initGameConfig(void)
     CAMERA* camera = (CAMERA*)0x1F8000E2;
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
     memset(&D_8009BC98, 0, 0x2C);
-    func_80024AEC((MATRIX* ) D_1F8000C0);
+    getBaseMatrix((MATRIX* ) D_1F8000C0);
     camera->vrz = -544; 
     camera->vpx = 160;
     camera->vpy = -120;
@@ -699,8 +699,8 @@ void initGameConfig(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017AE0);
-void func_80017AE0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initHud);
+void initHud(void)
 {
     char *tmp;
 
@@ -807,8 +807,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800182C8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018354);
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800183E4);
-void* func_800183E4(void)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", allocObjectLayer3);
+void* allocObjectLayer3(void)
 {
     typedef inline struct {
         byte data[0x1C8];
@@ -1036,8 +1036,8 @@ void memCardInit(void)
     EnableEvent(MEMCARD_HW_NEW_DEVICE);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800191E0);
-void func_800191E0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", bootSequenceTask);
+void bootSequenceTask(void)
 {
     u16 state;
     unkstruct_1F8001D4* task5;
@@ -1083,7 +1083,7 @@ void func_800191E0(void)
                 break;
             case 1:
                 if (*(u8* )0x1F8001CE != 0) {
-                    func_8001F158(0x15);
+                    cdSeekStream(0x15);
                     (CURRENT_TASK)->state0 = 4U;
                 }
                 break;
@@ -1100,15 +1100,15 @@ void func_800191E0(void)
                 if ((s16) task7->timer == -1) {
                     task7->state0++;
                 }
-                FontDebugPrintf(0x50, 0x60, 0, &D_80010000);
-                FontDebugPrintf(0x50, 0x70, 0, &D_80010008);
+                fontDebugPrintf(0x50, 0x60, 0, &D_80010000);
+                fontDebugPrintf(0x50, 0x70, 0, &D_80010008);
                 break;
             case 4:
                 task2 = CURRENT_TASK;
                 task2->state0 = 0U;
                 task2->state1 = 1U;
                 task2->state2 = 0;
-                setTask((s32*)func_80019844);
+                setTask((s32*)titleSequenceTask);
                 break;
             case 9:
                 SetDispMask(0);
@@ -1168,14 +1168,14 @@ void func_800191E0(void)
                 }
                 break;
         }
-        func_800171D4(1);
+        sleepTask(1);
     } while(true);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001964C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019844);
-void func_80019844(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", titleSequenceTask);
+void titleSequenceTask(void)
 {
         typedef inline struct {
         byte data[0x1CC];
@@ -1233,7 +1233,7 @@ void func_80019844(void)
                 loopTitleScreen(sp10);
                 break;
         }
-        func_800171D4(1);
+        sleepTask(1);
     };
 }
 
@@ -1288,7 +1288,7 @@ void func_800199B8(void)
             *(u8* )0x1F8001CC = 1;
             *(s8* )0x1F8001CD = 0x15;
             task2->state1++;
-            func_80017154(1, func_8001F1C0);
+            openTask(1, moviePlayerTask);
             return;
         case 3:
             if (*(u8* )0x1F8001CC != 0) {
@@ -1329,7 +1329,7 @@ void func_800199B8(void)
             if (*(u8* )0x1F8001CE != 0) {
                 task7 = CURRENT_TASK;
                 task7->state1++;
-                func_8001F158(0);
+                cdSeekStream(0);
                 return;
             }
             break;
@@ -1369,7 +1369,7 @@ void func_80019CA4(void)
         case 1:
             if (*(u8* )&scratch->unk1CE != 0) {
                 task->state1++;
-                func_8001F158(0);
+                cdSeekStream(0);
                 return;
             }
             return;
@@ -1406,7 +1406,7 @@ void func_80019D78(void)
             *(u8* )&scratch->unk1CC = 1;
             *(s8* )&scratch->unk1CD = 0;
             scratch->unk1D4->state1 ++;
-            func_80017154(1, &func_8001F1C0);
+            openTask(1, &moviePlayerTask);
             break;
         case 1:
             temp_v0 = *(u_long**)&scratch->unk1CC;
@@ -1508,18 +1508,18 @@ void loopTitleScreen(int* arg0)
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
                             case TITLESCREEN_NEWGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 0;
-                                playSFXandSetNote(10, 10);
+                                playSFXAndSetNote(10, 10);
                                 setTask(func_8001A51C);
                                 break;
                             case TITLESCREEN_LOADGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 1;
-                                playSFXandSetNote(10, 10);
+                                playSFXAndSetNote(10, 10);
                                 setTask(func_8001A51C);
                                 break;
                             case TITLESCREEN_OPTIONS:                 // switch 2
                                 gameControlTemp6->state0 = 2;
                                 gameControlTemp6->state1 = 0U;
-                                playSFXandSetNote(10, 10);
+                                playSFXAndSetNote(10, 10);
                                 break;
                         }
                     }
@@ -1678,7 +1678,7 @@ void func_8001A51C(void)
                 func_8001A774(); // Load Game
                 break;
         }
-        func_800171D4(1);
+        sleepTask(1);
     }
 }
 

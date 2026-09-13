@@ -66,7 +66,7 @@ void func_8001A774(void)
             temp_v0_3->state1 = 0U;
             temp_v0_3->state2 = 0;
             temp_v0_3->unk4E.value = 0;
-            setTask(&func_80019844);
+            setTask(&titleSequenceTask);
             break;
     }
 }
@@ -139,7 +139,7 @@ void func_8001A9F0(void)
         case 4:
             *(u_char* )0x1F8001CC = 1;
             *(char* )0x1F8001CD = 1;
-            func_80017154(1, &func_8001F1C0);
+            openTask(1, &moviePlayerTask);
             temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
             temp_v1_2->state2++;
             return;
@@ -234,7 +234,7 @@ void func_8001AD1C(void)
 
     temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
     temp_v1->unk4E.value++;
-    func_8001758C();
+    initDrawLists();
     *(char* )0x1F8001CF = 0;
 }
 
@@ -322,12 +322,12 @@ void displayDebugScreen(void)
         }
         // Print rows with current selected options
         sprintf(&SPRINTF_BUFFER_MSG, "AREA SELECT = %02d", GAME.selectedArea);
-        FontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
+        fontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, "SECTION SELECT = %02d", GAME.selectedSection);
-        FontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
+        fontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
         // Print asterisk cursor on the selected row
         sprintf(&SPRINTF_BUFFER_MSG, "*");
-        FontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)&PSX_SCRATCH[0x1F6] & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
+        fontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)&PSX_SCRATCH[0x1F6] & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
         // Set next area, section and spawn point to the selected ones
         GAME.nextArea = GAME.selectedArea;
         GAME.nextSection = GAME.selectedSection;
@@ -399,7 +399,7 @@ void func_8001B0A4(void)
             return;
         case 2:
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
-            func_8001758C();
+            initDrawLists();
             *(char* )0x1F8001CF = 0;
             return;
         case 3:
@@ -408,7 +408,7 @@ void func_8001B0A4(void)
         case 5:
             func_80020FAC();
             (*(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4))->unk4E.value++;
-            func_8001758C();
+            initDrawLists();
             *(u_char*)&(*(u_long**)0x1F8001CF) = 0;
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E = 0x78U;
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk64 = 0U;
@@ -416,7 +416,7 @@ void func_8001B0A4(void)
         case 6:
             p = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
             *(u_short*)&p->unk64=((p->unk64+12)&0xFF);
-            func_80023E44(p->unk64);
+            drawNowLoading(p->unk64);
             (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E--;
             if (((*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E << 0x10) == 0) {
                 var_a0 = 1;
@@ -459,8 +459,8 @@ void func_8001B2B4(void)
     temp_v1 = temp_a0->unk4E.value;
     switch (temp_v1) {                              // irregular
         case 0:
-            func_8001758C(temp_a0);
-            func_80017AE0();
+            initDrawLists(temp_a0);
+            initHud();
             temp_a0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             *(char* )0x1F8001CF = 1;
             temp_a0_2->unk4E.value++;
@@ -572,7 +572,7 @@ void func_8001B5A8(void)
     if (*(s16* )((byte*)&D_1F8001A0+0x26) != 2) {
         func_80046264();
     } else {
-        func_80017614();
+        resetDrawLists();
     }
     func_8001F6D4();
     return;
@@ -596,8 +596,8 @@ void func_8001B780(void)
     
     switch(scratch->unk1D4->unk4E.value) {
         case 0:
-            func_8001758C();
-            func_80017AE0();
+            initDrawLists();
+            initHud();
             scratch->unk1CF = 1;
             func_800243E8();
             func_800246B0();
@@ -679,7 +679,7 @@ void func_8001B944(void)
     if (*(short* )0x1F8001C6 != 2) {
         func_80046264();
     } else {
-        func_80017614();
+        resetDrawLists();
     }
     func_8001F6D4();
 }
@@ -904,8 +904,8 @@ void func_8001C104(void)
 
     switch (temp_v1) {
         case 0:
-            func_8001758C();
-            func_80017AE0();
+            initDrawLists();
+            initHud();
             func_800243E8();
             func_800246B0();
             func_80059F7C();
@@ -979,7 +979,7 @@ void func_8001C2E8(void)
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 2) {
         func_80046264();
     } else {
-        func_80017614();
+        resetDrawLists();
     }
     func_8001F6D4();
 }
@@ -1022,8 +1022,8 @@ void func_8001C434(void)
     temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
     switch (temp_v1) {
         case 0:
-            func_8001758C();
-            func_80017AE0();
+            initDrawLists();
+            initHud();
             func_800243E8();
             func_800246B0();
             func_80059F7C();
@@ -1096,7 +1096,7 @@ void func_8001C618(void)
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 2) {
         func_80046264();
     } else {
-        func_80017614();
+        resetDrawLists();
     }
     func_8001F6D4();
 }
@@ -1139,8 +1139,8 @@ void func_8001C75C(void)
     temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
     switch (temp_v1) {
         case 0:
-            func_8001758C();
-            func_80017AE0();
+            initDrawLists();
+            initHud();
             func_800243E8();
             func_800246B0();
             func_80059F7C();
@@ -1213,7 +1213,7 @@ void func_8001C940(void)
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 2) {
         func_80046264();
     } else {
-        func_80017614();
+        resetDrawLists();
     }
     func_8001F6D4();
 }
@@ -1418,11 +1418,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001DE24);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001DFD4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", setEventState);
-u_char setEventState(EVENT event_id, int ap_table, int state)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", awardEventProgress);
+u_char awardEventProgress(EVENT event_id, int ap_table, int state)
 {
     if (ap_table == 0) {
-        setPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
+        addPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, state);
             printEventMessage(event_id, 0);
@@ -1430,7 +1430,7 @@ u_char setEventState(EVENT event_id, int ap_table, int state)
             func_8002E3B0(0);
         }
     } else {
-        setPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
+        addPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
@@ -1452,7 +1452,7 @@ u_char setEventStarted(EVENT event_id, int arg1, int state)
         } else {
             GAME.event[event_id] += 1;
         }
-        setPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
+        addPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, state);
             printEventMessage(event_id, 0);
@@ -1468,7 +1468,7 @@ u_char setEventComplete(EVENT event_id, int state)
 {
     if (GAME.event[event_id] != 0xFF) {
         GAME.event[event_id] = 0xFF;
-        setPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
+        addPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
@@ -1493,16 +1493,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", printEventMessage);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001EFE8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F158);
-void func_8001F158(short file_id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", cdSeekStream);
+void cdSeekStream(short file_id)
 {
     if (CdControl(2, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
         CdControlF(0x15, 0);
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F1C0);
-void func_8001F1C0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", moviePlayerTask);
+void moviePlayerTask(void)
 {   
     u_short state;
     unkstruct_1F8001D4* gameControl;
@@ -1523,7 +1523,7 @@ void func_8001F1C0(void)
         switch (state) {
             case 0:
                 func_8001F5D0(&D_8009B010, 384, 256, 704, 256);
-                func_8001F634((int) (((&D_80078F80)[D_8007775C[*(u_char* )0x1F8001CD]] * 2) + &D_800791A0));
+                startMovieStream((int) (((&D_80078F80)[D_8007775C[*(u_char* )0x1F8001CD]] * 2) + &D_800791A0));
                 gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 gameControl->state0+=1;
                 do {
@@ -1566,15 +1566,15 @@ void func_8001F1C0(void)
                 CdControlB(9, 0, 0);
                 *(char* )0x1F8001CC = 0;
                 *(char* )(&SCRATCHPAD+0x1D3) = 0;
-                func_80017208();
+                exitTask();
                 break;
         }
-        func_800171D4(1);
+        sleepTask(1);
     } while(true);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F4D4);
-void func_8001F4D4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", mdecSliceCallback);
+void mdecSliceCallback(void)
 {
     u_long* sliceRect = &D_8009B034->screen;
     u_long* mdecImage = sliceRect - 0x8;
@@ -1612,13 +1612,13 @@ void func_8001F4D4(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F5D0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001F634);
-void func_8001F634(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", startMovieStream);
+void startMovieStream(s32 arg0)
 {
     int mode;
     
     DecDCTReset(0);
-    DecDCToutCallback(&func_8001F4D4);
+    DecDCToutCallback(&mdecSliceCallback);
     CdMix(&D_80077754);
     StSetRing(&D_800D7188, 0x20);
     StSetStream(0, 1, -1, 0, 0);
@@ -1660,7 +1660,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020264);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80020434);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", playSFXandSetNote);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", playSFXAndSetNote);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8002059C);
 
@@ -1700,7 +1700,7 @@ void func_800211A4(void)
     s32 i;
 
     if (D_80077FA8 != 0) {
-        func_80021310();
+        sndQuit();
     }
     SsInitHot();
     SsSetTableSize(&D_800A15D8, 4, 1);
@@ -1741,8 +1741,8 @@ void func_800211A4(void)
     D_80077FA8 = 1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021310);
-void func_80021310(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", sndQuit);
+void sndQuit(void)
 {
     D_80077FA8 = 0;
     SsEnd();
@@ -1765,11 +1765,11 @@ void func_80021BC4(int arg1, int arg2)
     func_80021D70((D_8007912C)[arg2]);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021BF4);
-void func_80021BF4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", startSoundTask);
+void startSoundTask(void)
 {
     *(byte* )0x1F8001CE = 0;
-    func_80017154(2, &func_80021340);
+    openTask(2, &func_80021340);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_80021C24);

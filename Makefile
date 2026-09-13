@@ -199,6 +199,8 @@ endif
 # Source Definitions
 TARGET_IN  := $(TARGET_MAIN)
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
+SYMBOLS_DIR  := symbols/$(BASE_DIR)
+SYMBOL_FILES := $(wildcard $(SYMBOLS_DIR)/*.txt)
 LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
 
 # Rules
@@ -370,7 +372,7 @@ $(BUILD_DIR)/%.bin.o: %.bin
 	$(LD) -r -b binary -o $@ $<
 
 # Split .yaml.
-$(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
+$(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml $(SYMBOL_FILES)
 	@mkdir -p $(dir $@)
 	$(SPLAT) $(SPLAT_FLAGS) $<
 
