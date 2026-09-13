@@ -241,25 +241,8 @@ void func_8001AD1C(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", displayDebugScreen);
 void displayDebugScreen(void)
 {
-    typedef inline struct {
-        char data[0x1B4];
-        u_char debug_mode_enabled;
-        char pad1[23];
-        char unk1CF;
-        char pad2[7];
-        char unk1D4;
-        char pad3[33];
-        char unk1F6;
-        char unk1F7;
-        char unk1F8;
-        char unk1F9;
-        char unk1FA;
-        char unk1FB;
-        u_short joypad_state;
-    } scratchpad;
-
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)&scratch->unk1D4;
+    unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)&scratch->currentTask;
     u_short var_a0;
     int* var_v1;
     u_short temp_a0;
@@ -581,20 +564,11 @@ void func_8001B5A8(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001B780);
 void func_8001B780(void)
 {
-    typedef inline struct {
-        char data[0x1C2];
-        u_char unk1C2;
-        char pad[12];
-        u_char unk1CF;
-        char pad2[4];
-        unkstruct_1F8001D4 *unk1D4;
-    } scratchpad;
-
     char pad[4];
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_a0 = scratch->unk1D4;
+    unkstruct_1F8001D4* temp_a0 = scratch->currentTask;
     
-    switch(scratch->unk1D4->unk4E.value) {
+    switch(scratch->currentTask->unk4E.value) {
         case 0:
             initDrawLists();
             initHud();
@@ -608,7 +582,7 @@ void func_8001B780(void)
                 func_8002065C();
             }
             *(short* )0x1F8001FC = 0;
-            scratch->unk1D4->unk4E.volatile_value+=1;
+            scratch->currentTask->unk4E.volatile_value+=1;
             *(volatile u_short*)&D_8009C9D8 = D_8009C9DC = 0;
             break;
         case 1:
@@ -617,7 +591,7 @@ void func_8001B780(void)
             if (scratch->unk1C2 != 0) {
                 volatile u_short *temp_v1 = (volatile int* )&D_8009C9D8;
                 if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
-                    scratch->unk1D4->unk4E.value = 2;
+                    scratch->currentTask->unk4E.value = 2;
                 }
             }
             break;
@@ -868,32 +842,6 @@ void func_8001BF90(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C104);
 void func_8001C104(void)
 {
-    typedef inline struct {
-        u_char unk0;
-        u_char unk1;
-        u_char unk2;
-        u_char unk3;
-        u_char unk4;
-        u_char unk5;
-        u_char unk6;
-        u_char unk7;
-        u_char unk8;
-        u_char unk9;
-        u_char unkA;
-        u_char unkB;
-        u_char unkC;
-        u_char unkD;
-        u_char unkE;
-        u_char unkF;
-        u_char unk10;
-        u_char unk11;
-        u_short unk12;
-        u_short unk14;
-        u_short unk16;
-        u_short unk18;
-        u_short unk1A;
-    } unkstruct_1F800214;
-    
     u16 temp_v1;
     unkstruct_1F800214* temp_v0;
     unkstruct_1F8001D4* temp_v1_2;
@@ -987,32 +935,6 @@ void func_8001C2E8(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C434);
 void func_8001C434(void)
 {
-    typedef inline struct {
-        u_char unk0;
-        u_char unk1;
-        u_char unk2;
-        u_char unk3;
-        u_char unk4;
-        u_char unk5;
-        u_char unk6;
-        u_char unk7;
-        u_char unk8;
-        u_char unk9;
-        u_char unkA;
-        u_char unkB;
-        u_char unkC;
-        u_char unkD;
-        u_char unkE;
-        u_char unkF;
-        u_char unk10;
-        u_char unk11;
-        u_short unk12;
-        u_short unk14;
-        u_short unk16;
-        u_short unk18;
-        u_short unk1A;
-    } unkstruct_1F800214;
-    
     u16 temp_v1;
     unkstruct_1F800214* temp_v0;
     unkstruct_1F8001D4* temp_v1_2;
@@ -1104,32 +1026,6 @@ void func_8001C618(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001C75C);
 void func_8001C75C(void)
 {
-    typedef inline struct {
-        u_char unk0;
-        u_char unk1;
-        u_char unk2;
-        u_char unk3;
-        u_char unk4;
-        u_char unk5;
-        u_char unk6;
-        u_char unk7;
-        u_char unk8;
-        u_char unk9;
-        u_char unkA;
-        u_char unkB;
-        u_char unkC;
-        u_char unkD;
-        u_char unkE;
-        u_char unkF;
-        u_char unk10;
-        u_char unk11;
-        u_short unk12;
-        u_short unk14;
-        u_short unk16;
-        u_short unk18;
-        u_short unk1A;
-    } unkstruct_1F800214;
-    
     u16 temp_v1;
     unkstruct_1F800214* temp_v0;
     unkstruct_1F8001D4* temp_v1_2;
@@ -1387,16 +1283,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001CFCC);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp1", func_8001D29C);
 void func_8001D29C(void)
 {
-    typedef inline struct {
-        char data[0x1CF];
-        char unk1CF;
-        char pad[4];
-        unkstruct_1F8001D4* unk1D4;
-    } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_v1;
 
-    temp_v1 = scratch->unk1D4;
+    temp_v1 = scratch->currentTask;
     scratch->unk1CF = 1;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
     setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);

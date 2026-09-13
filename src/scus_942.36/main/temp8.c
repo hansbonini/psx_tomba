@@ -27,25 +27,6 @@ void func_80033FB0(unkstruct_80033FB0* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp8", func_80033FF0);
 void func_80033FF0(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    typedef inline struct {
-        byte unk0;
-        byte unk1;
-        byte unk2;
-        byte unk3;
-        byte unk4;
-        byte unk5;
-        byte unk6;
-        byte pad[0x6];
-        byte unkD;
-        byte unkE;
-        byte unkF;
-        int unk10;
-        int unk14;
-        int unk18;
-        byte pad2[0x11];
-        short unk2E;
-        
-    } unkstruct_80018474;
     unkstruct_80018474* temp_v0;
 
     temp_v0 = func_80018474();
