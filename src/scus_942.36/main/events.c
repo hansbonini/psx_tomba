@@ -100,24 +100,6 @@ void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3,
 void initItemObject(unkstruct_800A6D50* arg0)
 {
 
-    typedef struct {
-        u_char unk0;
-        u_char unk1;
-        u_char unk2;
-        u_char unk3;
-        u_char unk4;
-        u_char unk5;
-        u_char unk6;
-        u_char unk7;
-        short x;
-        short y;
-        u_char unkC;
-        u_char unkD;
-        u_char unkE;
-        u_char unkF;
-        int unk10;
-    } unkstruct;
-
     
     short x;
     short y;
@@ -126,7 +108,7 @@ void initItemObject(unkstruct_800A6D50* arg0)
     int* var_v0;
     u_char temp_v1;
     u_char temp_v1_2;
-    unkstruct* temp_s1;
+    itemDef* temp_s1;
 
     if ((arg0->item_id == ITEM_JEWELOFWIND) && (GAME.event[EVENT_THEJUNGLEPIGBAG] == 0)) {
         arg0->unk4 = 2;

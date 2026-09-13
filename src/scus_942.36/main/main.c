@@ -157,68 +157,32 @@ void flipFrameBuffer(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", GsSetOrigin);
 void GsSetOrigin(short id, short arg1)
 {
-    typedef inline struct {
-        byte data[0x1EA];
-        short unk1EA;
-        short unk1EC;
-    } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
 
     scratch->unk1EA = id;
-    scratch->unk1EC = arg1;
+    scratch->useDrawSync = arg1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initGlobalState);
 void initGlobalState(void)
 {
-    typedef inline struct {
-        byte data[0x1C4];
-        char unk1C4;
-        char unk1C5;
-        short unk1C6;
-        char pad[4];
-        char unk1CC;
-        char unk1CD;
-        char unk1CE;
-        char unk1CF;
-        char unk1D0;
-        char unk1D1;
-        char unk1D2;
-        char unk1D3;
-        byte pad1[0x12];
-        short unk1E6;
-        short unk1E8;
-        short unk1EA;
-        short unk1EC;
-        short unk1EE;
-        short unk1F0;
-        short unk1F2;
-        short unk1F4;
-        short unk1F6;
-        short unk1F8;
-        byte pad3[0x1D2];
-        u_char unk3CC;
-        byte pad4[0x5];
-        u_char unk3D2;
-        u_char unk3D3;
-    } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
     
     D_8009EB5A = 0xFFFF;
     D_8009EB7C = 0xFFFF;
     scratch->unk3D3 = 0xFF;
     scratch->unk3D2 = 0xFF;
-    scratch->unk1F0 = 0;
+    scratch->pauseFlags = 0;
     scratch->unk1F2 = 0;
-    scratch->unk1EE = 0;
-    scratch->unk1F6 = 0;
+    scratch->pauseToggle = 0;
+    scratch->frameCount = 0;
     scratch->unk1F8 = 0;
-    scratch->unk1CC = 0;
+    scratch->moviePlayState = 0;
     scratch->unk1D0 = 0;
     scratch->unk1D1 = 0;
-    scratch->unk1CE = 0;
+    scratch->loadComplete = 0;
     scratch->unk1CF = 0;
-    scratch->unk1D3 = 0;
+    scratch->movieSkipRequest = 0;
     scratch->unk1C6 = 0;
     scratch->unk1C4 = 0;
     scratch->unk1C5= 0;
@@ -342,7 +306,7 @@ void initTasks(void)
     for (i = 0; i < 3; i++) {
         tcb++;
         task->unk0    = 0;
-        task->task_sp = 0x801FE400 + i * 0x800;   /* <- sem variavel `stack` */
+        task->task_sp = 0x801FE400 + i * 0x800;
         task++;
         tcb->reg[R_SR] = 0x40000404;
     }
@@ -470,16 +434,10 @@ void clearTaskFlag10(s32 id)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vblankHandler);
 void vblankHandler(void)
 {
-    typedef inline struct {
-        byte data[0x1E8];
-        volatile u_short unk1E8;
-        byte pad[0xC];
-        u_short unk1F6;
-    } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
 
-    scratch->unk1E8++;
-    scratch->unk1F6++;
+    scratch->vblankCount++;
+    scratch->frameCount++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", tickTaskTimers);
@@ -810,30 +768,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018354);
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", allocObjectLayer3);
 void* allocObjectLayer3(void)
 {
-    typedef inline struct {
-        byte data[0x1C8];
-        u_short unk1C8;
-        byte pad0[0x3E];
-        void** unk208;
-        byte pad1[0x2C];
-        short unk238;
-    } scratchpad;
-
-    typedef inline struct {
-        byte data[0x1C];
-        byte unk1C;
-        byte pad0[0x23];
-        void* unk40;
-        void* unk44;
-    } unkstruct_800183E4;
-
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_800183E4* obj;
     u_char layer = 3;
 
-    if (scratch->unk238 > 0) {
-        scratch->unk238 -= 1;
-        obj = *scratch->unk208++;
+    if (scratch->freeObjectCount > 0) {
+        scratch->freeObjectCount -= 1;
+        obj = *scratch->freeObjects++;
         obj->unk1C = layer;
 
         if ((scratch->unk1C8 & 1) == 0) {
@@ -1177,21 +1118,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001964C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", titleSequenceTask);
 void titleSequenceTask(void)
 {
-        typedef inline struct {
-        byte data[0x1CC];
-        byte unk1CC;
-        byte unk1CD;
-        byte unk1CE;
-        byte unk1CF;
-        byte unk1D0;
-        byte unk1D1;
-        byte unk1D2;
-        byte unk1D3;
-        unkstruct_1F8001D4* unk1D4;
-    } scratchpad;
-    
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)scratch->unk1D4;
+    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)scratch->currentTask;
 
     u32 sp10[2];
     u16 state;
@@ -1199,7 +1127,7 @@ void titleSequenceTask(void)
     *(s8* )&scratch->unk1D1 = 1;
     *(s8* )&scratch->unk1D0 = 0;
     sp10[0] = 0;
-    scratch->unk1D4->titleScreenSelectedOption = 0;
+    scratch->currentTask->titleScreenSelectedOption = 0;
     while(true) {
         *(u16* )0x1F8001F8 = *(u16* )(D_1F8000F8+0x100) + 1;
         asm("");
@@ -1344,37 +1272,27 @@ void func_800199B8(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019CA4);
 void func_80019CA4(void)
 {
-    typedef inline struct {
-        byte data[0x1CC];
-        byte unk1CC;
-        byte unk1CD;
-        byte unk1CE;
-        byte unk1CF;
-        byte pad[0x4];
-        unkstruct_1F8001D4* unk1D4;
-    } scratchpad;
-    
     unkstruct_1F8001D4* task2;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = scratch->unk1D4;
+    unkstruct_1F8001D4* task = scratch->currentTask;
 
     switch (task->state1) {                              // irregular
         case 0:
             SetDispMask(0);
-             *(u8* )&scratch->unk1CE = 0;
+             *(u8* )&scratch->loadComplete = 0;
             func_800223A0(2);
             func_800222B8(2, 1);
-            scratch->unk1D4->state1++;
+            scratch->currentTask->state1++;
             return;
         case 1:
-            if (*(u8* )&scratch->unk1CE != 0) {
+            if (*(u8* )&scratch->loadComplete != 0) {
                 task->state1++;
                 cdSeekStream(0);
                 return;
             }
             return;
         case 2:
-            task2 = *(u_long**)&scratch->unk1D4;
+            task2 = *(u_long**)&scratch->currentTask;
             task2->state0 = 4;
             task2->state1 = 0;
             break;
@@ -1384,32 +1302,22 @@ void func_80019CA4(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80019D78);
 void func_80019D78(void)
 {
-    typedef inline struct {
-        byte data[0x1CC];
-        byte unk1CC;
-        byte unk1CD;
-        byte unk1CE;
-        byte unk1CF;
-        byte pad[0x4];
-        unkstruct_1F8001D4* unk1D4;
-    } scratchpad;
-    
     u8 temp_v0;
     unkstruct_1F8001D4* task2;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = scratch->unk1D4;
+    unkstruct_1F8001D4* task = scratch->currentTask;
     
     switch (task->state1) {
         case 0:
             SetDispMask(0);
             initDisplay(0U, 0U, 0U);
-            *(u8* )&scratch->unk1CC = 1;
-            *(s8* )&scratch->unk1CD = 0;
-            scratch->unk1D4->state1 ++;
+            *(u8* )&scratch->moviePlayState = 1;
+            *(s8* )&scratch->movieId = 0;
+            scratch->currentTask->state1 ++;
             openTask(1, &moviePlayerTask);
             break;
         case 1:
-            temp_v0 = *(u_long**)&scratch->unk1CC;
+            temp_v0 = *(u_long**)&scratch->moviePlayState;
             if (temp_v0 == 0) {
                 task->state1++;
                 return;
@@ -1417,7 +1325,7 @@ void func_80019D78(void)
             break;
         case 2:
             func_80020C00(0);
-            task2 = *(u_long**)&scratch->unk1D4;
+            task2 = *(u_long**)&scratch->currentTask;
             task2->state0 = 4;
             task2->state1 = 0;
             break;
@@ -1629,23 +1537,8 @@ void func_8001A328(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A51C);
 void func_8001A51C(void)
 {
-    typedef inline struct {
-        byte data[0x1CE];
-        char unk1CE;
-        char unk1CF;
-        char unk1D0;
-        char unk1D1;
-        char unk1D2;
-        char unk1D3;
-        char unk1D4;
-        char pad[6];
-        short unk1DC;
-        short unk1DE;
-        char pad2[28];
-        short unk1FC;
-    } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)&scratch->unk1D4;
+    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)&scratch->currentTask;
     int state;
 
     scratch->unk1D1 = 0;
@@ -1660,10 +1553,10 @@ void func_8001A51C(void)
     scratch->unk1DC = -1;
     scratch->unk1DE = 0;
     D_8009EB4C = 0;
-    scratch->unk1CE = 0;
+    scratch->loadComplete = 0;
     D_8009EBA0 = 0;
     func_80024B3C(D_1F800118);
-    scratch->unk1FC  = 0;
+    scratch->joypad_state  = 0;
     while (true){
         func_800223E0();
         state = (CURRENT_TASK)->state0;
@@ -1686,18 +1579,11 @@ void func_8001A51C(void)
 void func_8001A670(void)
 {
 
-    typedef inline struct {
-        byte data[0x1CF];
-        byte unk1CF;
-        byte pad[0x4];
-        byte unk1D4;
-    } scratchpad;
-    
     RECT rect;
     s16 var_v0;
     u16 timer;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = *(u_long**)&scratch->unk1D4;
+    unkstruct_1F8001D4* task = *(u_long**)&scratch->currentTask;
 
     switch (task->state1) {                              // irregular
         case 0:

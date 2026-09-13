@@ -1,6 +1,10 @@
 #ifndef _INCLUDE_GAME_H
 #define _INCLUDE_GAME_H
 
+/* ========================================================================
+ * Psy-Q headers
+ */
+
 /* psyq/kernel.h guards its structs on LANGUAGE_C, not _LANGUAGE_C */
 #define LANGUAGE_C 1
 #include "psyq/kernel.h"
@@ -11,8 +15,11 @@
 #include "psyq/libspu.h"
 #include "psyq/libsnd.h"
 
+/* ========================================================================
+ * Macros
+ */
+
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
-#define IS_DEBUG_MODE_ENABLED ((u_char)(0x1F80001B4))
 #define D_8009E3D4 ((void*)0x8009E3D4)
 
 #define READ32(_dst, _src) { \
@@ -28,6 +35,10 @@
  * Set Primitive X/Y
  */
 #define setXY(p, _x, _y) (p)->x = _x, (p)->y = _y
+
+/* ========================================================================
+ * Enums -- areas and sections
+ */
 
 typedef enum {
     /*0x00*/ AREA00_VILLAGEOFALLBEGINNINGS,
@@ -248,6 +259,10 @@ typedef enum {
     /*0x01*/ AREA19_SECTION01_DWARFELDERSHUT,
     /*0x02*/ AREA19_SECTION02_HIDDENVILLAGE
 } AREA19_SECTION;
+
+/* ========================================================================
+ * Enums -- items, events, UI and input
+ */
 
 typedef enum {
     /* 0x00 */ ITEM_CHICK,
@@ -717,6 +732,10 @@ typedef enum {
     JOY_SQUARE   = 0x8000,
 } JOYPAD_BUTTONS;
 
+/* ========================================================================
+ * Structs
+ */
+
 typedef struct lz_t {
     int size;
     int offset;
@@ -820,6 +839,147 @@ typedef struct unkstruct_1F8001D4 {
     u_char unk6F;
 } unkstruct_1F8001D4;
 
+/* PSX scratchpad (data cache) at 0x1F800000, 1 KiB.
+   Field offsets were verified against the 14 local definitions this replaces. */
+typedef struct scratchpad {
+    /* 0x000  Shared scratch area -- NOT a stable layout. These bytes are reused
+       with a different shape by each user, so do not name fields in here:
+         - func_8001964C / func_8004BDE4 / func_8004C258 assemble a SPRT at
+           0x000-0x013 (code 0x003, rgb 0x004-0x006, xy 0x008/0x00A,
+           uv 0x00C/0x00D, clut 0x00E, wh 0x010/0x012) writing it field by field
+           and reading it back word-wise to copy into the OT;
+         - 0x014 / 0x018 / 0x01C hold unrelated 4-byte values for ~10 other
+           functions -- 0x018 in particular is one byte of the staged primitive
+           in func_8004C258 and a word everywhere else.
+       Two stable overlays live further up and are reached by explicit cast,
+       never through this struct: a CAMERA at 0x0E2 and a MATRIX at 0x0F8. */
+    /* 0x000 */ u_char  unk000[0x164];
+    /* 0x164 */ int     nextprim;
+    /* 0x168 */ u_char  unk168[0x4C];
+    /* 0x1B4 */ u_char  debug_mode_enabled;
+    /* 0x1B5 */ u_char  unk1B5[0xD];
+    /* 0x1C2 */ u_char  unk1C2;
+    /* 0x1C3 */ u_char  unk1C3;
+    /* 0x1C4 */ u_char  unk1C4;
+    /* 0x1C5 */ u_char  unk1C5;
+    /* 0x1C6 */ short   unk1C6;
+    /* 0x1C8 */ u_short unk1C8;
+    /* 0x1CA */ u_char  unk1CA[2];
+    /* 0x1CC */ u_char  moviePlayState;
+    /* 0x1CD */ u_char  movieId;
+    /* 0x1CE */ u_char  loadComplete;
+    /* 0x1CF */ u_char  unk1CF;
+    /* 0x1D0 */ u_char  unk1D0;
+    /* 0x1D1 */ u_char  unk1D1;
+    /* 0x1D2 */ u_char  unk1D2;
+    /* 0x1D3 */ u_char  movieSkipRequest;
+    /* 0x1D4 */ unkstruct_1F8001D4* currentTask;
+    /* 0x1D8 */ u_char  unk1D8[4];
+    /* 0x1DC */ short   unk1DC;
+    /* 0x1DE */ short   unk1DE;
+    /* 0x1E0 */ int     ot;
+    /* 0x1E4 */ void*   prevOt;
+    /* 0x1E8 */ volatile u_short vblankCount;
+    /* 0x1EA */ short   unk1EA;
+    /* 0x1EC */ short   useDrawSync;
+    /* 0x1EE */ short   pauseToggle;
+    /* 0x1F0 */ short   pauseFlags;
+    /* 0x1F2 */ short   unk1F2;
+    /* 0x1F4 */ short   frameBufferIndex;
+    /* 0x1F6 */ u_short frameCount;
+    /* 0x1F8 */ short   unk1F8;
+    /* 0x1FA */ u_char  unk1FA[2];
+    /* 0x1FC */ u_short joypad_state;
+    /* 0x1FE */ u_char  unk1FE[0xA];
+    /* 0x208 */ void**  freeObjects;
+    /* 0x20C */ u_char  unk20C[0x2C];
+    /* 0x238 */ short   freeObjectCount;
+    /* 0x23A */ u_char  unk23A[0x192];
+    /* 0x3CC */ u_char  unk3CC;
+    /* 0x3CD */ u_char  unk3CD[5];
+    /* 0x3D2 */ u_char  unk3D2;
+    /* 0x3D3 */ u_char  unk3D3;
+    /* 0x3D4 */ u_char  unk3D4[0x2C];
+} scratchpad;
+
+/* Item definition entry, reached through D_8007E6E4[D_8007E61C[item_id]].
+   Holds the sprite/CLUT/animation description for one item. */
+typedef struct itemDef {
+    /* 0x00 */ u_char unk0;
+    /* 0x01 */ u_char unk1;
+    /* 0x02 */ u_char unk2;
+    /* 0x03 */ u_char unk3;
+    /* 0x04 */ u_char unk4;
+    /* 0x05 */ u_char unk5;
+    /* 0x06 */ u_char unk6;
+    /* 0x07 */ u_char unk7;
+    /* 0x08 */ short  x;
+    /* 0x0A */ short  y;
+    /* 0x0C */ u_char unkC;
+    /* 0x0D */ u_char unkD;
+    /* 0x0E */ u_char unkE;
+    /* 0x0F */ u_char unkF;
+    /* 0x10 */ int    unk10;
+} itemDef;
+
+/* Views over the object returned by the allocator family
+   (allocObjectLayer3 / func_80018474 / func_80018614). They describe the same
+   block through different field subsets and cannot be merged into a single
+   struct: offset 0x10 is u_char in unkstruct_1F800214 and int in
+   unkstruct_80018474. */
+typedef struct unkstruct_1F800214 {
+    u_char  unk0;
+    u_char  unk1;
+    u_char  unk2;
+    u_char  unk3;
+    u_char  unk4;
+    u_char  unk5;
+    u_char  unk6;
+    u_char  unk7;
+    u_char  unk8;
+    u_char  unk9;
+    u_char  unkA;
+    u_char  unkB;
+    u_char  unkC;
+    u_char  unkD;
+    u_char  unkE;
+    u_char  unkF;
+    u_char  unk10;
+    u_char  unk11;
+    u_short unk12;
+    u_short unk14;
+    u_short unk16;
+    u_short unk18;
+    u_short unk1A;
+} unkstruct_1F800214;
+
+typedef struct unkstruct_800183E4 {
+    byte  data[0x1C];
+    byte  unk1C;
+    byte  pad0[0x23];
+    void* unk40;
+    void* unk44;
+} unkstruct_800183E4;
+
+typedef struct unkstruct_80018474 {
+    byte  unk0;
+    byte  unk1;
+    byte  unk2;
+    byte  unk3;
+    byte  unk4;
+    byte  unk5;
+    byte  unk6;
+    byte  pad[0x6];
+    byte  unkD;
+    byte  unkE;
+    byte  unkF;
+    int   unk10;
+    int   unk14;
+    int   unk18;
+    byte  pad2[0x11];
+    short unk2E;
+} unkstruct_80018474;
+
 typedef struct unkstruct_80033FB0 {
     byte data[3];
     u_char unk3;
@@ -906,7 +1066,7 @@ struct inventory {
     u_char slots[256];
     u_short counter;
     u_short sortMode;
-} inventory;
+};
 
 typedef struct equips {
     byte weapon;
@@ -1953,40 +2113,35 @@ typedef struct
     u8 first, second;
 } U8Pair;
 
-extern char D_80010000;
-extern char D_80010008;
+/* ========================================================================
+ * Extern data -- sorted by address
+ */
 
+/* --- PSX scratchpad (0x1F800000) -- see `struct scratchpad` --- */
 extern u_char SCRATCHPAD;
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
 extern int D_1F8001A0;
-// extern char* D_80010120[];
-// extern char* D_80010134[];
-// extern char* D_8001014C[];
-// extern u_char D_1F8001B4;
-// extern u_long D_1F8001D4;
-// extern u_short D_1F8001F6; // ASTERISK CURSOR COLOR
-// extern u_short D_1F8001FC;
 extern int D_1F8002C8[];
 extern short D_1F8003B6;
-extern unkstruct_1F8001D4* D_801FD800;
-extern int D_801FD804;
-extern int D_801FD808;
-extern int D_801FD80C;
-extern int D_801FD810;
 
+/* --- RAM / ROM data 0x8001____ --- */
+extern char D_80010000;
+extern char D_80010008;
+extern int D_800121C8;
 
+/* --- RAM / ROM data 0x8007____ --- */
 extern u_short D_80076E80;
 extern int D_80076FAC;
+extern int D_800771FC;
+extern int D_8007722C;
 extern int AP_TABLE;
 extern u_char EVENT_STARTED_AP_TABLE;
 extern u_char EVENT_COMPLETE_AP_TABLE;
+extern int D_80077754;
 extern int D_80077758;
 extern u_char D_8007775C[];
-extern int D_800771FC;
-extern int D_8007722C;
-extern int D_80077754;
 extern u_char D_80077FA8;
 extern short D_80078F80;
 extern int D_8007912C[];
@@ -2009,15 +2164,16 @@ extern int D_8007E868;
 extern int D_8007E86C;
 extern int D_8007E86E;
 
+/* --- RAM / ROM data 0x8009____ --- */
 extern DISPENV D_8009AFE8;
 extern u_char D_8009B000;
 extern u_char D_8009B004;
 extern u_char D_8009B008;
 extern int D_8009B010;
 extern int D_8009B018;
-extern int D_8009B02A;
 extern int D_8009B024;
 extern int D_8009B028;
+extern int D_8009B02A;
 extern int D_8009B02C;
 extern int D_8009B03C;
 extern SpuCommonAttr D_8009B048; // SPU_ATTR
@@ -2026,17 +2182,18 @@ extern short D_8009B07C;
 extern short D_8009B094;
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
+extern byte D_8009B6A8; // SELECTED ROW
 extern short D_8009BC28;
 extern int D_8009BC98;
 extern u_char D_8009BCA0;
-extern char D_8009BCAA;
 extern char D_8009BCA7;
+extern char D_8009BCAA;
+extern gameConfig GAME;
 extern char D_8009BCDA;
 extern char D_8009BCDB;
 extern u_char D_8009BCDF;
 extern short D_8009BCEA;
-extern byte D_8009B6A8; // SELECTED ROW
-extern gameConfig GAME;
+extern u_char D_8009C3F8;
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
@@ -2048,12 +2205,6 @@ extern short D_8009C9DE;
 extern char D_8009C9E4;
 extern short D_8009C9F0;
 extern int D_8009CA04;
-extern u_char D_8009C3F8;
-extern short D_8009E430;
-extern char D_8009E450;
-extern unkstruct_8009E458* D_8009E458;
-extern short D_8009E638;
-extern u_short D_8009E744;
 extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* D_8009D6C4;
 extern char D_8009D6DD;
@@ -2062,6 +2213,9 @@ extern char D_8009D6DF;
 extern char D_8009E3ED;
 extern char D_8009E3EE;
 extern char D_8009E3EF;
+extern short D_8009E430;
+extern char D_8009E450;
+extern unkstruct_8009E458* D_8009E458;
 extern long MEMCARD_HW_END_IO;
 extern long MEMCARD_HW_END_ERROR;
 extern long MEMCARD_HW_TIMEOUT;
@@ -2070,12 +2224,16 @@ extern long MEMCARD_SW_END_IO;
 extern long MEMCARD_SW_END_ERROR;
 extern long MEMCARD_SW_TIMEOUT;
 extern long MEMCARD_SW_NEW_DEVICE;
-extern int D_8009EBA8;
+extern short D_8009E638;
+extern u_short D_8009E744;
 extern int D_8009EB4C;
-extern short D_8009EBA0;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;
 extern u_short D_8009EB7C;
+extern short D_8009EBA0;
+extern int D_8009EBA8;
+
+/* --- RAM / ROM data 0x800A____ --- */
 extern char* SPRINTF_BUFFER_MSG[];
 extern char D_800A15D8; // SPU_SEQ_TABLE
 extern char D_800A1890;
@@ -2083,24 +2241,26 @@ extern short D_800A2790;
 extern short D_800A3030;
 extern short D_800A32F8;
 extern byte D_800A3348[0x3D4];
+extern u_char D_800A38B8[];
 extern u_char D_800A3940;
 extern short D_800A3952;
 extern short D_800A3954;
 extern short D_800A3956;
-extern u_short D_800A53C6;
-extern u_char D_800A5398;
 extern unkstruct_800A39B0 D_800A39B0[];
-extern u_char D_800A38B8[];
 extern unkstruct_800AFF18 D_800A5140[];
+extern u_char D_800A5398;
 extern char D_800A539C;
 extern char D_800A539D;
 extern char D_800A539E;
 extern char D_800A539F;
+extern u_short D_800A53C6;
 extern u_short D_800A5430;
 extern u_short D_800A5432;
 extern int D_800A5858;
 extern int D_800A5970;
 extern unkstruct_800AFF18 D_800AFF18[];
+
+/* --- RAM / ROM data 0x800B____ --- */
 extern u_char D_800B00F8;
 extern int D_800B0470;
 extern int D_800B04F0;
@@ -2112,8 +2272,28 @@ extern char D_800B07AC[8];
 extern char D_800B07CD;
 extern int D_800B3184;
 extern char D_800B3188;
+
+/* --- RAM / ROM data 0x800D____ --- */
 extern int D_800D7188;
-extern int D_800121C8;
+
+/* --- Task table (0x801FD800) --- */
+extern unkstruct_1F8001D4* D_801FD800;
+extern int D_801FD804;
+extern int D_801FD808;
+extern int D_801FD80C;
+extern int D_801FD810;
+
+/* ========================================================================
+ * Declarations kept for reference (not in use)
+ */
+
+// extern char* D_80010120[];
+// extern char* D_80010134[];
+// extern char* D_8001014C[];
+
+/* ========================================================================
+ * Function prototypes
+ */
 
 void openTask(s32 arg0, long (*func)());
 void fontDebugPrintf(short x, short y, short color, char* fmt);
@@ -2124,7 +2304,6 @@ void func_8001A51C(void);
 void moviePlayerTask(void);
 void mdecSliceCallback(void);
 void func_80021340(void);
-
 // void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
 
 #endif // GAME_H
