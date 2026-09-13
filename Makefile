@@ -254,7 +254,6 @@ clean-build: clean
 #
 PERMUTER       := $(TOOLS_DIR)/decomp-permuter
 PERMUTER_JOBS  ?= 4
-# Localiza o .s isolado da funcao dentro de nonmatchings/
 permuter_asm    = $(shell find $(ASM_DIR)/$(BASE_DIR)/nonmatchings -name '$(1).s' -print -quit)
 
 permuter-setup:
@@ -282,7 +281,6 @@ permuter-run:
 	@test -d $(PERMUTER_DIR)/$(FUNC) || { echo 'rode antes: make permuter-import FUNC=$(FUNC) SRC=<arquivo.c>'; exit 1; }
 	$(PYTHON) $(PERMUTER)/permuter.py -j $(PERMUTER_JOBS) $(PERMUTER_DIR)/$(FUNC)
 
-# Realimenta o permuter com um resultado como nova base, para escalar.
 # make permuter-reseed FUNC=func_80016F5C OUT=output-345-2
 permuter-reseed:
 	@test -n "$(FUNC)" || { echo 'uso: make permuter-reseed FUNC=<funcao> OUT=<output-dir>'; exit 1; }
