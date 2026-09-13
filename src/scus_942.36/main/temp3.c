@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", setPlayerAP);
-void setPlayerAP(int arg0) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", addPlayerAP);
+void addPlayerAP(int arg0) {
     u_long* ptr;
 	char *mytemp;
     int i = 0;
@@ -103,8 +103,8 @@ int removeItemFromInventory(ITEM id, int qty)
     return -1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029A84);
-u_long func_80029A84(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", increaseMaxHealth);
+u_long increaseMaxHealth(void)
 {
     if (GAME.goldenBowlState == 0) {
         if (GAME.playerHealthDisplayed < 8) {
@@ -121,8 +121,8 @@ u_long func_80029A84(void)
     return GAME.playerHealthDisplayed;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", func_80029B20);
-u8 func_80029B20(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/temp3", applyGoldenBowl);
+u8 applyGoldenBowl(void)
 {
     u8 health;
 
