@@ -477,7 +477,20 @@ void func_80017348(s32 id)
     *p &= ~0x10;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vblankHandler);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", vblankHandler);
+void vblankHandler(void)
+{
+    typedef inline struct {
+        byte data[0x1E8];
+        volatile u_short unk1E8;
+        byte pad[0xC];
+        u_short unk1F6;
+    } scratchpad;
+    scratchpad* scratch = PSX_SCRATCH;
+
+    scratch->unk1E8++;
+    scratch->unk1F6++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800173B0);
 
