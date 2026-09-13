@@ -6,3 +6,13 @@ iso
 linker
 *.bin
 *.cue
+permuter
+tools/armips
+tools/decomp-permuter
+tools/m2c
+tools/m2ctx
+tools/maspsx
+tools/mkspsxiso
+tools/psx_psyq_signatures
+tools/splat
+tools/tombatools
