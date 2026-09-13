@@ -245,6 +245,58 @@ clean-build: clean
 	$(MAKE) generate
 	$(MAKE) build
 
+### decomp-permuter
+# https://github.com/simonlindholm/decomp-permuter
+#
+#   make permuter-setup
+#   make permuter-import FUNC=func_80016F5C SRC=src/scus_942.36/main/main.c
+#   make permuter-run    FUNC=func_80016F5C
+#
+PERMUTER       := $(TOOLS_DIR)/decomp-permuter
+PERMUTER_JOBS  ?= 4
+# Localiza o .s isolado da funcao dentro de nonmatchings/
+permuter_asm    = $(shell find $(ASM_DIR)/$(BASE_DIR)/nonmatchings -name '$(1).s' -print -quit)
+
+permuter-setup:
+	@test -d $(PERMUTER) || git clone --depth 1 https://github.com/simonlindholm/decomp-permuter $(PERMUTER)
+	$(PYTHON) -m pip install --upgrade pynacl toml Levenshtein
+
+permuter-import:
+	@test -n "$(FUNC)" || { echo 'uso: make permuter-import FUNC=<funcao> SRC=<arquivo.c>'; exit 1; }
+	@test -n "$(SRC)"  || { echo 'uso: make permuter-import FUNC=<funcao> SRC=<arquivo.c>'; exit 1; }
+	@test -d $(PERMUTER) || { echo 'faltando $(PERMUTER); rode: make permuter-setup'; exit 1; }
+	@test -n "$(call permuter_asm,$(FUNC))" || { echo 'asm de $(FUNC) nao encontrado em $(ASM_DIR)/$(BASE_DIR)/nonmatchings'; exit 1; }
+	@mkdir -p $(PERMUTER_DIR)/$(FUNC)
+	$(MAKE) $(BUILD_DIR)/$(SRC:.c=.i)
+	cp $(BUILD_DIR)/$(SRC:.c=.i) $(PERMUTER_DIR)/$(FUNC)/base.c
+	$(PYTHON) $(PERMUTER)/strip_other_fns.py $(PERMUTER_DIR)/$(FUNC)/base.c $(FUNC)
+	@printf '.include "include/macro.inc"\n.set noat\n.set noreorder\n' > $(PERMUTER_DIR)/$(FUNC)/target.s
+	@cat $(call permuter_asm,$(FUNC)) >> $(PERMUTER_DIR)/$(FUNC)/target.s
+	$(AS) $(AS_FLAGS) -o $(PERMUTER_DIR)/$(FUNC)/target.o $(PERMUTER_DIR)/$(FUNC)/target.s
+	@install -m 755 $(TOOLS_DIR)/permuter_compile.sh $(PERMUTER_DIR)/$(FUNC)/compile.sh
+	@printf 'func_name = "%s"\ncompiler_type = "gcc"\n' '$(FUNC)' > $(PERMUTER_DIR)/$(FUNC)/settings.toml
+	@echo '==> $(PERMUTER_DIR)/$(FUNC) pronto; rode: make permuter-run FUNC=$(FUNC)'
+
+permuter-run:
+	@test -n "$(FUNC)" || { echo 'uso: make permuter-run FUNC=<funcao>'; exit 1; }
+	@test -d $(PERMUTER_DIR)/$(FUNC) || { echo 'rode antes: make permuter-import FUNC=$(FUNC) SRC=<arquivo.c>'; exit 1; }
+	$(PYTHON) $(PERMUTER)/permuter.py -j $(PERMUTER_JOBS) $(PERMUTER_DIR)/$(FUNC)
+
+# Realimenta o permuter com um resultado como nova base, para escalar.
+# make permuter-reseed FUNC=func_80016F5C OUT=output-345-2
+permuter-reseed:
+	@test -n "$(FUNC)" || { echo 'uso: make permuter-reseed FUNC=<funcao> OUT=<output-dir>'; exit 1; }
+	@test -n "$(OUT)"  || { echo 'uso: make permuter-reseed FUNC=<funcao> OUT=<output-dir>'; exit 1; }
+	@test -f $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c || { echo 'nao existe: $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c'; exit 1; }
+	cp $(PERMUTER_DIR)/$(FUNC)/base.c $(PERMUTER_DIR)/$(FUNC)/base.c.bak
+	cp $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c $(PERMUTER_DIR)/$(FUNC)/base.c
+	rm -rf $(PERMUTER_DIR)/$(FUNC)/output-*
+	@echo '==> base.c reposto a partir de $(OUT) (backup em base.c.bak)'
+	@echo '==> rode: make permuter-run FUNC=$(FUNC)'
+
+permuter-clean:
+	rm -rf $(PERMUTER_DIR)
+
 patch_debug_sfx: build
 	rm -rf $(BUILD_DIR)/patch/debug_sfx
 	mkdir -p $(BUILD_DIR)/patch/debug_sfx
@@ -315,5 +367,5 @@ $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default
+.PHONY: all clean default permuter-setup permuter-import permuter-run permuter-reseed permuter-clean
 SHELL = /bin/bash -e -o pipefail
