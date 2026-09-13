@@ -327,7 +327,37 @@ void initDisplay2x(u_char r0, u_char g0, u_char b0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016F5C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016FD8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016FD8);
+void func_80016FD8(void)
+{
+    typedef inline struct {
+        long          status;
+        long          mode;
+        unsigned long reg[40];
+        long          system[6];
+    } TCB;
+
+    TCB*                tcb;
+    unkstruct_1F8001D4* task;
+    s32                 i;
+    u_long*             stack;
+    u_long              sr;        /* <- declarada por ultimo */
+
+    tcb   = *(TCB**)0x110;
+    task  = (unkstruct_1F8001D4*)0x801FD800;
+    i     = 0;
+    sr    = 0x40000404;            /* <- antes do stack */
+    stack = (u_long*)0x801FE400;
+
+    for (; i < 3; i++) {
+        tcb++;
+        task->unk0    = 0;
+        task->task_sp = (int)stack;
+        task++;
+        stack += 0x200;
+        tcb->reg[R_SR] = sr;       /* <- usa a variavel */
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017024);
 void func_80017024(void)
