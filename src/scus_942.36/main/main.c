@@ -7,15 +7,14 @@
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 void main(void)
 {
-    u8 sp18;
-    u16 temp_v0;
-    u16 temp_v0_2;
-    u16 temp_v1;
+    u8 cdMode;
+    u16 toggled;
+    u16 flags;
+    u16 targetFrame;
     u16 joypad_state;
-    u16 temp_v1_4;
-    u16 temp_v1_5;
-    s32 temp_a0;
-    u8 temp_v1_2;
+    u16 newFlags;
+    u16 curFlags;
+    s32 dbgMode;
     u_short* joypad_state_ptr;
 
     SetDispMask(0);
@@ -26,8 +25,8 @@ void main(void)
     SetGraphDebug(0);
     InitGeom();
     CdInit();
-    sp18 = 0x80;
-    while (CdControl(0xE, &sp18, 0) == 0);
+    cdMode = 0x80;
+    while (CdControl(0xE, &cdMode, 0) == 0);
     DecDCTReset(0);
     *(s32*)0x1F8002A0 = 0;
     *(s32*)0x1F80029C = 0;
@@ -54,8 +53,8 @@ void main(void)
         if (*(u16*)0x1F8001EC != 0) {
             DrawSync(0);
         }
-        temp_v1 = *(u16*)(&D_1F8000C0[0]+0x12A);
-        while (((unkstruct_1F8001D4*)0x1F8001D4)->unk14 < temp_v1) {
+        targetFrame = *(u16*)(&D_1F8000C0[0]+0x12A);
+        while (((unkstruct_1F8001D4*)0x1F8001D4)->unk14 < targetFrame) {
         }
         if (*(u16*)(&SCRATCHPAD+0x1EC) == 0) {
             ResetGraph(1);
@@ -104,13 +103,13 @@ void main(void)
                 *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - *(u16*)0x1F8001F0);
             }
         } else if (*(u8*)0x1F8001BE != 0 && *(u8*)0x1F8001CC == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
-            temp_a0 = *(u8*)0x1F8001CE;
-            if (temp_a0 == 1) {
+            dbgMode = *(u8*)0x1F8001CE;
+            if (dbgMode == 1) {
                 joypad_state = *(u16*)0x1F8001FC;
                 if (joypad_state & JOY_L1) {
-                    temp_v0 = 1 - *(u16*)0x1F8001EE;
-                    *(u16*)(&SCRATCHPAD+0x1EE) = temp_v0;
-                    *(u16*)0x1F8001F0 = (u16)(temp_v0 << 0xF);
+                    toggled = 1 - *(u16*)0x1F8001EE;
+                    *(u16*)(&SCRATCHPAD+0x1EE) = toggled;
+                    *(u16*)0x1F8001F0 = (u16)(toggled << 0xF);
                 }
                 if (*(u16*)(0x1F8001EE) != 0) {
                     *(u16*)0x1F8001F0 = 0x8000U;
@@ -118,16 +117,16 @@ void main(void)
                         *(u16*)(&SCRATCHPAD+0x1F0) = 0U;
                     }
                 } else if (joypad_state & JOY_L2) {
-                    temp_v0_2 = *(u16*)0x1F8001F0;
-                    temp_v1_4 = (~temp_v0_2 & 0x4000) | (temp_v0_2 & 0xBFFF);
-                    *(u16*)(&D_1F800118[0]+0xD8) = temp_v1_4;
-                    if (!(temp_v1_4 & 0x4000)) {
-                        *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(temp_v1_4 & 0xFFF0);
+                    flags = *(u16*)0x1F8001F0;
+                    newFlags = (~flags & 0x4000) | (flags & 0xBFFF);
+                    *(u16*)(&D_1F800118[0]+0xD8) = newFlags;
+                    if (!(newFlags & 0x4000)) {
+                        *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(newFlags & 0xFFF0);
                     }
                 } else {
-                    temp_v1_5 = *(u16*)0x1F8001F0;
-                    if (temp_v1_5 & 0x4000) {
-                        *(u16*)(&SCRATCHPAD+0x1F0) = (u16)((temp_v1_5 + 1) & 0xFFF3);
+                    curFlags = *(u16*)0x1F8001F0;
+                    if (curFlags & 0x4000) {
+                        *(u16*)(&SCRATCHPAD+0x1F0) = (u16)((curFlags + 1) & 0xFFF3);
                     }
                 }
             }
@@ -138,16 +137,16 @@ void main(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80016940);
 void func_80016940(void)
 {
-    short temp_a1;
+    short bufIndex;
     u_long* ot;
-    u_long* temp_v1;
+    u_long* prevOt;
 
-    temp_a1 = 1 - *(u_short* )(0x1F8001F4);
-    ot = (temp_a1 * 0xD10) + (byte*)&OT_FRAMEBUFFER;
-    temp_v1 = *(u_long** )((byte*)&D_1F8000C0[0]+0x120);
-    *(u_short* )(&SCRATCHPAD+0x1f4) = (u_short) temp_a1;
+    bufIndex = 1 - *(u_short* )(0x1F8001F4);
+    ot = (bufIndex * 0xD10) + (byte*)&OT_FRAMEBUFFER;
+    prevOt = *(u_long** )((byte*)&D_1F8000C0[0]+0x120);
+    *(u_short* )(&SCRATCHPAD+0x1f4) = (u_short) bufIndex;
     *(u_long* )(&SCRATCHPAD+0x1E0) = ot;
-    *(u_long** )(&SCRATCHPAD+0x1E4) = temp_v1;
+    *(u_long** )(&SCRATCHPAD+0x1E4) = prevOt;
     PutDispEnv(ot + 0x328);
     PutDrawEnv(*(u_long* )0x1F8001E0 + 0xCB4);
     func_80016F5C(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
@@ -354,23 +353,23 @@ void func_80016FD8(void)
 void func_80017024(void)
 {
     int tid;
-    unkstruct_1F8001D4* temp_v0;
-    unkstruct_1F8001D4* temp_v0_2;
-    unkstruct_1F8001D4* temp_v1;
+    unkstruct_1F8001D4* task;
+    unkstruct_1F8001D4* task2;
+    unkstruct_1F8001D4* task3;
 
     *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
-    for (temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); temp_v0 <= 0x801FD94FU; temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
+    for (task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); task <= 0x801FD94FU; task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
         tid = 2;
         switch ((u16)(*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34))->unk0) {
             case 3:
                 EnterCriticalSection();
-                temp_v0_2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                (CURRENT_TASK)->task_id = OpenTh(temp_v0_2->task_func, temp_v0_2->task_sp, temp_v0_2->task_gp);
+                task2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                (CURRENT_TASK)->task_id = OpenTh(task2->task_func, task2->task_sp, task2->task_gp);
                 ExitCriticalSection();
             case 2:
-                temp_v1 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                temp_v1->unk0 = tid*2;
-                ChangeTh(temp_v1->task_id);
+                task3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                task3->unk0 = tid*2;
+                ChangeTh(task3->task_id);
                 break;
         }
     }
@@ -387,24 +386,24 @@ void func_800170F8(s32 id, int fn)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017154);
 void func_80017154(s32 arg0, long (*func)())
 {
-    int temp_s1 = arg0 * sizeof(unkstruct_1F8001D4);
+    int off = arg0 * sizeof(unkstruct_1F8001D4);
 
-    ((unkstruct_1F8001D4*)(TASK_TABLE + temp_s1))->unk0 = 2;
+    ((unkstruct_1F8001D4*)(TASK_TABLE + off))->unk0 = 2;
     EnterCriticalSection();
-    *(int*)(0x801FD804 + temp_s1) = OpenTh(func,
-                                           *(int*)(0x801FD808 + temp_s1),
-                                           *(int*)(0x801FD810 + temp_s1));
+    *(int*)(0x801FD804 + off) = OpenTh(func,
+                                           *(int*)(0x801FD808 + off),
+                                           *(int*)(0x801FD810 + off));
     ExitCriticalSection();
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800171D4);
 void func_800171D4(s16 arg0)
 {
-    unkstruct_1F8001D4* temp_v1;
+    unkstruct_1F8001D4* task;
 
-    temp_v1 = CURRENT_TASK;
-    temp_v1->unk2 = arg0;
-    temp_v1->unk0 = 1;
+    task = CURRENT_TASK;
+    task->unk2 = arg0;
+    task->unk0 = 1;
     ChangeTh(DescTH);
 }
 
@@ -439,11 +438,11 @@ void func_80017258(s32 id)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setTask);
 void setTask(s32 arg0)
 {
-    unkstruct_1F8001D4* temp_v0;
+    unkstruct_1F8001D4* task;
 
-    temp_v0 = CURRENT_TASK;
-    temp_v0->unk0 = 3;
-    temp_v0->task_func = arg0;
+    task = CURRENT_TASK;
+    task->unk0 = 3;
+    task->task_func = arg0;
     EnterCriticalSection();
     CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);
     ExitCriticalSection();
@@ -748,14 +747,14 @@ void func_80017EEC(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017F1C);
 void func_80017F1C(void)
 {
-    s32 var_a0;
-    s32 var_v1;
+    s32 i;
+    s32 off;
 
     *(s32** )0x1F800264 = *(s32** )0x1F800220 = &D_800B0680;
     *(s16* )0x1F80024A = *(s16* )0x1F800252 = 0;
-    for (var_a0 = 7; 0 <= var_a0; --var_a0) {
-        var_v1 = var_a0 * 0x8C;
-        *(s16*)&D_800A3348[var_v1] = 0xFFFF;
+    for (i = 7; 0 <= i; --i) {
+        off = i * 0x8C;
+        *(s16*)&D_800A3348[off] = 0xFFFF;
     }
     func_80018D7C();
     return;
@@ -898,30 +897,29 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D40);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018D7C);
 void func_80018D7C(void)
 {
-    int var_v1_2;
-    int var_a0;
-    int var_a2;
+    int u;
+    int v;
 
     int i;
     
-    var_a0 = 0;
-    var_a2 = 0x6A;
+    u = 0;
+    v = 0x6A;
     
     for (i = 0; i < 60; i++) {
-        D_800A5140[i].val[0] = var_a0;
+        D_800A5140[i].val[0] = u;
         D_800A5140[i].unk0 = -1;
         D_800A5140[i].unk2 = 0;
-        D_800A5140[i].val[1] = var_a2;
+        D_800A5140[i].val[1] = v;
         D_800A5140[i].val[2] = 4;
         D_800A5140[i].val[3] = 16;
         D_800A5140[i].val[4] = 0;
         D_800A5140[i].val[5] = 0;
 
-        var_a0 += 4;
+        u += 4;
         
-        if (var_a0 >= 61) {
-            var_a0 = 0;
-            var_a2 += 16;
+        if (u >= 61) {
+            u = 0;
+            v += 16;
         }
     }
     for (i=0; i < 8; i+=2) {
@@ -933,41 +931,41 @@ void func_80018D7C(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018E58);
 void func_80018E58(void)
 {
-    int var_a0;
-    int var_a2;
+    int u;
+    int v;
 
     int i;
     
-    var_a0 = 0;
-    var_a2 = 0x9E;
+    u = 0;
+    v = 0x9E;
     
     for (i = 0; i < 48; i++) {
-        D_800AFF18[i].val[0] = var_a0;
+        D_800AFF18[i].val[0] = u;
         D_800AFF18[i].unk0 = -1;
         D_800AFF18[i].unk2 = 0;
-        D_800AFF18[i].val[1] = var_a2;
+        D_800AFF18[i].val[1] = v;
         D_800AFF18[i].val[2] = 4;
         D_800AFF18[i].val[3] = 24;
         D_800AFF18[i].val[4] = 0;
         D_800AFF18[i].val[5] = 0;
 
-        var_a0 += 4;
+        u += 4;
         
-        if (var_a0 >= 60) {
-            var_a0 = 0;
-            var_a2 += 24;
+        if (u >= 60) {
+            u = 0;
+            v += 24;
         }
     }
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80018F04);
 void func_80018F04(void) {
-    int var_a0;
-    int var_v0;
+    int u;
+    int p;
 
     if (D_8009CA04 == 0) return;
-    var_v0 = &D_8009EBA8;
-    func_8003B478(var_v0);
+    p = &D_8009EBA8;
+    func_8003B478(p);
             
     switch(GAME.selectedArea&0xFFFF) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -975,9 +973,9 @@ void func_80018F04(void) {
                 case AREA00_SECTION00_VILLAGEOFALLBEGINNINGS:
                 case AREA00_SECTION01_FORESTOFALLBEGINNINGS:
                 case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
-                    var_a0 = *(int* )0x1F8002B8;
-                    func_8003B2C8(var_a0, var_v0);
-                    func_8003B410(var_v0, 0);
+                    u = *(int* )0x1F8002B8;
+                    func_8003B2C8(u, p);
+                    func_8003B410(p, 0);
                     break;
             }
             break;
@@ -988,24 +986,24 @@ void func_80018F04(void) {
                  case AREA01_SECTION02_WOBBLYWHARF:
                  case AREA01_SECTION03_WATCHTOWER:
                  case AREA01_SECTION04_CHARITYSQUARE:
-                    var_a0 = *(int* )0x1F8002B8;
-                    func_8003B2C8(var_a0, var_v0);
-                    func_8003B410(var_v0, 0);
+                    u = *(int* )0x1F8002B8;
+                    func_8003B2C8(u, p);
+                    func_8003B410(p, 0);
                     break;
             }
             break;
         case AREA02_DWARFVILLAGE:
             switch(GAME.selectedSection) {
                 case AREA02_SECTION00_DWARFVILLAGE:
-                    var_a0 = *(int* )0x1F8002BC;
-                    func_8003B2C8(var_a0, var_v0);
-                    func_8003B410(var_v0, 0);
+                    u = *(int* )0x1F8002BC;
+                    func_8003B2C8(u, p);
+                    func_8003B410(p, 0);
                     break;
                  case AREA02_SECTION01_DWARFELDERSHUT:
                  case AREA02_SECTION02_UNDERGROUNDPRISON:
-                    var_a0 = *(int* )0x1F8002B8;
-                    func_8003B2C8(var_a0, var_v0);
-                    func_8003B410(var_v0, 0);
+                    u = *(int* )0x1F8002B8;
+                    func_8003B2C8(u, p);
+                    func_8003B410(p, 0);
                     break;
             }
             break;
@@ -1041,21 +1039,16 @@ void memCardInit(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800191E0);
 void func_800191E0(void)
 {
-    u16 temp_v0_4;
-    u16 temp_v0_5;
-    u16 temp_v0_6;
-    u16 temp_v1;
-    u16 temp_v1_3;
-    u16 temp_v1_4;
-    unkstruct_1F8001D4* temp_a0;
-    unkstruct_1F8001D4* temp_a0_2;
-    unkstruct_1F8001D4* temp_a1;
-    unkstruct_1F8001D4* temp_a1_2;
-    unkstruct_1F8001D4* temp_v0;
-    unkstruct_1F8001D4* temp_v0_2;
-    unkstruct_1F8001D4* temp_v0_3;
-    unkstruct_1F8001D4* temp_v0_7;
-    unkstruct_1F8001D4* temp_v1_2;
+    u16 state;
+    unkstruct_1F8001D4* task5;
+    unkstruct_1F8001D4* task6;
+    unkstruct_1F8001D4* task7;
+    unkstruct_1F8001D4* task8;
+    unkstruct_1F8001D4* task;
+    unkstruct_1F8001D4* task2;
+    unkstruct_1F8001D4* task3;
+    unkstruct_1F8001D4* task4;
+    unkstruct_1F8001D4* task9;
 
     D_8009D6DD = 0;
     D_8009D6DE = 0;
@@ -1069,14 +1062,14 @@ void func_800191E0(void)
     D_8009C9E4 = 1;
     D_8009E450 = 0;
     func_80023A3C();
-    temp_v0 = CURRENT_TASK;
-    temp_v0->state0 = 9U;
-    temp_v0->state1 = 0U;
-    temp_v0->state2 = 0;
+    task = CURRENT_TASK;
+    task->state0 = 9U;
+    task->state1 = 0U;
+    task->state2 = 0;
     SetDispMask(0);
     do {
-        temp_v1 = (CURRENT_TASK)->state0;
-        switch (temp_v1) {
+        state = (CURRENT_TASK)->state0;
+        switch (state) {
             case 0:
                 *(u8* )0x1F8001CE = 0;
                 func_800223A0(0);
@@ -1085,8 +1078,8 @@ void func_800191E0(void)
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
                 memset(&D_1F8001A0, 0, 0x24);
-                temp_v1_2 = CURRENT_TASK;
-                temp_v1_2->state0++;
+                task9 = CURRENT_TASK;
+                task9->state0++;
                 break;
             case 1:
                 if (*(u8* )0x1F8001CE != 0) {
@@ -1096,25 +1089,25 @@ void func_800191E0(void)
                 break;
             case 2:
                 SetDispMask(1);
-                temp_a0 = CURRENT_TASK;
-                temp_a0->timer = 120;
-                temp_a0->state0++;
+                task5 = CURRENT_TASK;
+                task5->timer = 120;
+                task5->state0++;
                 break;
             case 3:
-                temp_a1 = CURRENT_TASK;
+                task7 = CURRENT_TASK;
                 *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
-                temp_a1->timer--;
-                if ((s16) temp_a1->timer == -1) {
-                    temp_a1->state0++;
+                task7->timer--;
+                if ((s16) task7->timer == -1) {
+                    task7->state0++;
                 }
                 FontDebugPrintf(0x50, 0x60, 0, &D_80010000);
                 FontDebugPrintf(0x50, 0x70, 0, &D_80010008);
                 break;
             case 4:
-                temp_v0_2 = CURRENT_TASK;
-                temp_v0_2->state0 = 0U;
-                temp_v0_2->state1 = 1U;
-                temp_v0_2->state2 = 0;
+                task2 = CURRENT_TASK;
+                task2->state0 = 0U;
+                task2->state1 = 1U;
+                task2->state2 = 0;
                 setTask((s32*)func_80019844);
                 break;
             case 9:
@@ -1128,50 +1121,50 @@ void func_800191E0(void)
                     SetDispMask(0);
                     initDisplay2x(0U, 0U, 0U);
                     SetDispMask(1);
-                    temp_v0_3 = CURRENT_TASK;
-                    temp_v0_3->timer = 240;
-                    temp_v0_3->state0 = 0xBU;
-                    temp_v0_3->state1 = 0U;
+                    task3 = CURRENT_TASK;
+                    task3->timer = 240;
+                    task3->state0 = 0xBU;
+                    task3->state1 = 0U;
                 }
                 break;
             case 11:
-                temp_a1_2 = CURRENT_TASK;
+                task8 = CURRENT_TASK;
                 *(int* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
-                switch (temp_a1_2->state1) {                    // switch 1; irregular
+                switch (task8->state1) {                    // switch 1; irregular
                     case 0:                             // switch 1
-                        temp_a1_2->unk5A = 1U;
-                        temp_a1_2->state1++;
+                        task8->unk5A = 1U;
+                        task8->state1++;
                         break;
                     case 1:                             // switch 1
-                        temp_a1_2->unk5A++;
-                        if ((s16) temp_a1_2->unk5A >= 0x80) {
-                            temp_a1_2->timer = 0xB4U;
-                            temp_a1_2->state1++;
+                        task8->unk5A++;
+                        if ((s16) task8->unk5A >= 0x80) {
+                            task8->timer = 0xB4U;
+                            task8->state1++;
                             break;
                         }
                         break;
                     case 2:                             // switch 1
-                        temp_a1_2->timer--;
-                        if ((s16) temp_a1_2->timer == -1) {
-                            temp_a1_2->state1++;
+                        task8->timer--;
+                        if ((s16) task8->timer == -1) {
+                            task8->state1++;
                         }
                         break;
                     case 3:                             // switch 1
-                        temp_a1_2->unk5A--;
-                        if ((s16)temp_a1_2->unk5A == 0) {
+                        task8->unk5A--;
+                        if ((s16)task8->unk5A == 0) {
                             SetDispMask(0);
                             initDisplay(0U, 0U, 0U);
-                            temp_v0_7 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             *(byte* )0x1F8001D1 = 0;
                             *(s16* )0x1F8001F6 = 0;
-                            temp_v0_7->state0 = 0U;
-                            temp_v0_7->state1 = 0U;
+                            task4->state0 = 0U;
+                            task4->state1 = 0U;
                         }
                         break;
                 }
-                temp_a0_2 = CURRENT_TASK;
-                if (*(u16*)&temp_a0_2->state0 == 0xB) {
-                    func_8001964C((u8) temp_a0_2->unk5A, 1);
+                task6 = CURRENT_TASK;
+                if (*(u16*)&task6->state0 == 0xB) {
+                    func_8001964C((u8) task6->unk5A, 1);
                 }
                 break;
         }
@@ -1198,10 +1191,10 @@ void func_80019844(void)
     } scratchpad;
     
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)scratch->unk1D4;
+    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)scratch->unk1D4;
 
     u32 sp10[2];
-    u16 temp_a0;
+    u16 state;
 
     *(s8* )&scratch->unk1D1 = 1;
     *(s8* )&scratch->unk1D0 = 0;
@@ -1211,12 +1204,12 @@ void func_80019844(void)
         *(u16* )0x1F8001F8 = *(u16* )(D_1F8000F8+0x100) + 1;
         asm("");
         func_800223E0();
-        temp_v1 = CURRENT_TASK;
-        temp_a0 = temp_v1->state0;
-        if ((temp_a0 >= 3U) && (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) && (temp_a0 != 4)) {
-            temp_v1->state0 = 4U;
-            temp_v1->state1 = 0;
-            temp_v1->state2 = 0;
+        task = CURRENT_TASK;
+        state = task->state0;
+        if ((state >= 3U) && (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) && (state != 4)) {
+            task->state0 = 4U;
+            task->state1 = 0;
+            task->state2 = 0;
             sp10[0] = 1;
             func_80020C00(0);
             if (*(u8* )0x1F8001CC != 0) {
@@ -1247,36 +1240,36 @@ void func_80019844(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800199B8);
 void func_800199B8(void)
 {
-    u16 temp_a0;
-    u16 temp_v0;
-    u16 temp_v1;
-    unkstruct_1F8001D4* temp_a0_2;
-    unkstruct_1F8001D4* temp_a2;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
-    unkstruct_1F8001D4* temp_v1_4;
-    unkstruct_1F8001D4* temp_v1_5;
-    unkstruct_1F8001D4* temp_v1_6;
-    unkstruct_1F8001D4* temp_v1_7;
+    u16 state2;
+    u16 timer;
+    u16 state1;
+    unkstruct_1F8001D4* task;
+    unkstruct_1F8001D4* task2;
+    unkstruct_1F8001D4* task3;
+    unkstruct_1F8001D4* task4;
+    unkstruct_1F8001D4* task5;
+    unkstruct_1F8001D4* task6;
+    unkstruct_1F8001D4* task7;
+    unkstruct_1F8001D4* task8;
 
-    temp_v1 = (CURRENT_TASK)->state1;
-    switch (temp_v1) {
+    state1 = (CURRENT_TASK)->state1;
+    switch (state1) {
         case 0:
-            temp_v1_2 = CURRENT_TASK;
-            temp_a0 = temp_v1_2->state2;
-            switch (temp_a0) {                      // switch 1; irregular
+            task3 = CURRENT_TASK;
+            state2 = task3->state2;
+            switch (state2) {                      // switch 1; irregular
                 case 0:                             // switch 1
                     SetDispMask(0);
                     *(u8* )0x1F8001CE = 0U;
                     func_800223A0(1);
                     func_800222B8(1, 1);
-                    temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                    temp_v1_3->state2++;
+                    task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                    task4->state2++;
                     return;
                 case 1:                             // switch 1
                     if (*(u8* )0x1F8001CE != 0) {
-                        temp_v1_2->state1 = 2U;
-                        temp_v1_2->state2 = 0U;
+                        task3->state1 = 2U;
+                        task3->state2 = 0U;
                         func_800E7D5C();
                         return;
                     }
@@ -1287,22 +1280,22 @@ void func_800199B8(void)
         case 1:
             SetDispMask(0);
             func_800E7D5C();
-            temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_4->state1++;
+            task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            task5->state1++;
             return;
         case 2:
-            temp_a2 = CURRENT_TASK;
+            task2 = CURRENT_TASK;
             *(u8* )0x1F8001CC = 1;
             *(s8* )0x1F8001CD = 0x15;
-            temp_a2->state1++;
+            task2->state1++;
             func_80017154(1, func_8001F1C0);
             return;
         case 3:
             if (*(u8* )0x1F8001CC != 0) {
                 return;
             }
-            temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_4->state1++;
+            task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            task5->state1++;
             return;
         case 4:
             SetDispMask(0);
@@ -1310,40 +1303,40 @@ void func_800199B8(void)
             SetDispMask(1);
             *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
-            temp_a0_2 = CURRENT_TASK;
-            temp_a0_2->timer = 120;
-            temp_a0_2->state1++;
+            task = CURRENT_TASK;
+            task->timer = 120;
+            task->state1++;
             return;
         case 5:
             *(s32* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
             func_800E7D74();
-            temp_v1_5 = CURRENT_TASK;
-            temp_v0 = temp_v1_5->timer - 1;
-            temp_v1_5->timer = temp_v0;
-            if ((temp_v0 << 0x10) <= 0) {
+            task6 = CURRENT_TASK;
+            timer = task6->timer - 1;
+            task6->timer = timer;
+            if ((timer << 0x10) <= 0) {
                 func_80020C00(0);
                 SetDispMask(0);
                 initDisplay(0U, 0U, 0U);
                 *(u8* )0x1F8001CE = 0U;
                 func_800223A0(2);
                 func_800222B8(2, 1);
-                temp_v1_4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                temp_v1_4->state1++;
+                task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                task5->state1++;
                 return;
             }
             break;
         case 6:
             if (*(u8* )0x1F8001CE != 0) {
-                temp_v1_6 = CURRENT_TASK;
-                temp_v1_6->state1++;
+                task7 = CURRENT_TASK;
+                task7->state1++;
                 func_8001F158(0);
                 return;
             }
             break;
         case 7:
-            temp_v1_7 = CURRENT_TASK;
-            temp_v1_7->state0 = 3;
-            temp_v1_7->state1 = 0U;
+            task8 = CURRENT_TASK;
+            task8->state0 = 3;
+            task8->state1 = 0U;
             break;
     }
 }
@@ -1361,12 +1354,11 @@ void func_80019CA4(void)
         unkstruct_1F8001D4* unk1D4;
     } scratchpad;
     
-    u8 temp_v0;
-    unkstruct_1F8001D4* temp_v1;
+    unkstruct_1F8001D4* task2;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_a1 = scratch->unk1D4;
+    unkstruct_1F8001D4* task = scratch->unk1D4;
 
-    switch (temp_a1->state1) {                              // irregular
+    switch (task->state1) {                              // irregular
         case 0:
             SetDispMask(0);
              *(u8* )&scratch->unk1CE = 0;
@@ -1376,15 +1368,15 @@ void func_80019CA4(void)
             return;
         case 1:
             if (*(u8* )&scratch->unk1CE != 0) {
-                temp_a1->state1++;
+                task->state1++;
                 func_8001F158(0);
                 return;
             }
             return;
         case 2:
-            temp_v1 = *(u_long**)&scratch->unk1D4;
-            temp_v1->state0 = 4;
-            temp_v1->state1 = 0;
+            task2 = *(u_long**)&scratch->unk1D4;
+            task2->state0 = 4;
+            task2->state1 = 0;
             break;
     }
 }
@@ -1403,11 +1395,11 @@ void func_80019D78(void)
     } scratchpad;
     
     u8 temp_v0;
-    unkstruct_1F8001D4* temp_v1;
+    unkstruct_1F8001D4* task2;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_a1 = scratch->unk1D4;
+    unkstruct_1F8001D4* task = scratch->unk1D4;
     
-    switch (temp_a1->state1) {
+    switch (task->state1) {
         case 0:
             SetDispMask(0);
             initDisplay(0U, 0U, 0U);
@@ -1419,15 +1411,15 @@ void func_80019D78(void)
         case 1:
             temp_v0 = *(u_long**)&scratch->unk1CC;
             if (temp_v0 == 0) {
-                temp_a1->state1++;
+                task->state1++;
                 return;
             }
             break;
         case 2:
             func_80020C00(0);
-            temp_v1 = *(u_long**)&scratch->unk1D4;
-            temp_v1->state0 = 4;
-            temp_v1->state1 = 0;
+            task2 = *(u_long**)&scratch->unk1D4;
+            task2->state0 = 4;
+            task2->state1 = 0;
             break;
     }
     return;
@@ -1567,10 +1559,10 @@ void loopTitleScreen(int* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_8001A328);
 void func_8001A328(void)
 {
-    u_short temp_v1_3;
-    unkstruct_1F8001D4* temp_a0;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_4;
+    u_short state2;
+    unkstruct_1F8001D4* task;
+    unkstruct_1F8001D4* task2;
+    unkstruct_1F8001D4* task3;
 
     *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
     switch ((CURRENT_TASK)->state1) {
@@ -1587,32 +1579,32 @@ void func_8001A328(void)
                 SetDispMask(1);
                 func_800E75C4();
                 func_80020AF0(0);
-                temp_v1_2 = CURRENT_TASK;
-                temp_v1_2->state2 = 0U;
+                task2 = CURRENT_TASK;
+                task2->state2 = 0U;
                 (CURRENT_TASK)->state1++;
                 return;
             }
         default:
             return;
         case 2:
-            temp_a0 = CURRENT_TASK;
-            temp_v1_3 = temp_a0->state2;
-            switch (temp_v1_3) {                    // switch 1; irregular
+            task = CURRENT_TASK;
+            state2 = task->state2;
+            switch (state2) {                    // switch 1; irregular
                 case 0:                             // switch 1
-                    temp_a0->unk4E.value = 0;
-                    temp_a0->state2++;
+                    task->unk4E.value = 0;
+                    task->state2++;
                     // fallthrough
                 case 1:                             // switch 1
-                    if (func_800E75CC(temp_a0) != 0) {
+                    if (func_800E75CC(task) != 0) {
                     (CURRENT_TASK)->state1++;
                     return;
                     }
                     break;
                 case 2:                             // switch 1
-                    func_800E7960(temp_a0);
+                    func_800E7960(task);
                     return;
                 case 3:                             // switch 1
-                    func_800E7A48(temp_a0);
+                    func_800E7A48(task);
                     return;
             }
             break;
@@ -1626,9 +1618,9 @@ void func_8001A328(void)
             return;
         case 4:
             if (*(u_char* )0x1F8001CE != 0) {
-                temp_v1_4 = CURRENT_TASK;
-                temp_v1_4->state0 = 4;
-                temp_v1_4->state1 = 0U;
+                task3 = CURRENT_TASK;
+                task3->state0 = 4;
+                task3->state1 = 0U;
             }
             break;
     }
@@ -1653,16 +1645,16 @@ void func_8001A51C(void)
         short unk1FC;
     } scratchpad;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_v0 = *(unkstruct_1F8001D4**)&scratch->unk1D4;
-    int temp_v1;
+    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)&scratch->unk1D4;
+    int state;
 
     scratch->unk1D1 = 0;
     scratch->unk1D0 = 1;
-    temp_v0->state0 = 0;
-    temp_v0->state1 = 0;
-    temp_v0->state2 = 0;
-    temp_v0->unk4E.value = 0;
-    temp_v0->unk6A = 0;
+    task->state0 = 0;
+    task->state1 = 0;
+    task->state2 = 0;
+    task->unk4E.value = 0;
+    task->unk6A = 0;
     setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
     setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
     scratch->unk1DC = -1;
@@ -1674,8 +1666,8 @@ void func_8001A51C(void)
     scratch->unk1FC  = 0;
     while (true){
         func_800223E0();
-        temp_v1 = (CURRENT_TASK)->state0;
-        switch ((u_short)temp_v1) {
+        state = (CURRENT_TASK)->state0;
+        switch ((u_short)state) {
             case 0:
                 func_8001A670(); // New Game
                 break;
@@ -1703,39 +1695,38 @@ void func_8001A670(void)
     
     RECT rect;
     s16 var_v0;
-    u16 temp_v0;
-    u16 temp_v1;
+    u16 timer;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_a0 = *(u_long**)&scratch->unk1D4;
+    unkstruct_1F8001D4* task = *(u_long**)&scratch->unk1D4;
 
-    switch (temp_a0->state1) {                              // irregular
+    switch (task->state1) {                              // irregular
         case 0:
-            temp_a0->unk5A = 1U;
-            temp_a0->state1 += 1;
+            task->unk5A = 1U;
+            task->state1 += 1;
             setRECT(&rect, 0, 0, 64, 256);
             ClearImage((RECT* ) &rect, 0U, 0U, 0U);
             initGameConfig();
             scratch->unk1CF = 0;
             return;
         case 1:
-            temp_v0 = temp_a0->unk5A - 1;
-            temp_a0->unk5A = temp_v0;
-            if ((short)temp_v0 <= 0) {
-                temp_a0->state1 += 1;
+            timer = task->unk5A - 1;
+            task->unk5A = timer;
+            if ((short)timer <= 0) {
+                task->state1 += 1;
                 return;
             }
             return;
         case 2:
-            temp_a0->state2 = 0;
-            temp_a0->unk4E.value = 0;
-            if (temp_a0->loadGameSelected != 0) {
+            task->state2 = 0;
+            task->unk4E.value = 0;
+            if (task->loadGameSelected != 0) {
                 var_v0 = 2;
             } else {
                 var_v0 = 1;
                 asm("");
             }
-            temp_a0->state0 = var_v0;
-            temp_a0->state1 = 0U;
+            task->state0 = var_v0;
+            task->state1 = 0U;
             break;
     }
 }
