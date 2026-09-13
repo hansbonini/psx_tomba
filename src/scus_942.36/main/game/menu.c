@@ -14,36 +14,36 @@ void func_8001A774(void)
     unkstruct_1F8001D4* temp_v0_3;
     unkstruct_1F8001D4* temp_v1_2;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
+    temp_v1 = (CURRENT_TASK)->state1;
     switch (temp_v1) {
         case 0:
             SetDispMask(0);
             func_80028CE4();
-            *(u_char* )0x1F8001CE = 0;
+            LOAD_COMPLETE = 0;
             func_800223A0(3);
             func_800222B8(5, 1);
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state1++;;
             return;
         case 1:
-            if (*(u_char* )0x1F8001CE != 0) {
+            if (LOAD_COMPLETE != 0) {
                 func_8001821C();
                 D_800A3952 = 5;
                 func_80020AF0(0);
                 SetDispMask(1);
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state1++;;
                 return;
             }
         default:
             return;
         case 2:
-            *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             temp_v0 = func_800E9438();
             if (temp_v0 == 1) {
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->state1++;
+                (CURRENT_TASK)->state1++;
             } else {
-                if (temp_v0 == -1) (*(unkstruct_1F8001D4** )0x1F8001D4)->state1 = 4;
+                if (temp_v0 == -1) (CURRENT_TASK)->state1 = 4;
             }
             func_800E9EF8();
             func_8001F6D4();
@@ -52,7 +52,7 @@ void func_8001A774(void)
             GAME.unk14 = 0;
             GAME.unk7 = 0;
             func_80020C00(0);
-            temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v0_2 = CURRENT_TASK;
             temp_v0_2->state0 = 1;
             temp_v0_2->state1 = 1U;
             temp_v0_2->state2 = 0;
@@ -60,7 +60,7 @@ void func_8001A774(void)
             return;
         case 4:
             func_80020C00(0);
-            temp_v0_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v0_3 = CURRENT_TASK;
             *(char* )0x1F8001D0 = 0;
             temp_v0_3->state0 = 1;
             temp_v0_3->state1 = 0U;
@@ -76,7 +76,7 @@ void func_8001A954(void)
 {
     u_short temp_v1;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state1;
+    temp_v1 = (CURRENT_TASK)->state1;
     switch (temp_v1) {
         case 0:
             func_8001A9F0();
@@ -102,16 +102,16 @@ void func_8001A9F0(void)
     unkstruct_1F8001D4* temp_v1_2;
     unkstruct_1F8001D4* temp_v1_3;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state2;
+    temp_v1 = (CURRENT_TASK)->state2;
     switch (temp_v1) {
         case 0:
             func_800222B8(9, 1);
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state2++;
             return;
         case 1:
-            if (*(u_char* )0x1F8001CE != 0) {
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            if (LOAD_COMPLETE != 0) {
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state2++;
                 return;
             }
@@ -120,52 +120,52 @@ void func_8001A9F0(void)
         case 2:
             if (*(u_char* )0x1F8001B4 == 0) {
                 D_8009EB4C = 0;
-                *(u_char* )0x1F8001CE = 0U;
+                LOAD_COMPLETE = 0U;
                 func_8001CE80(1);
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state2++;
                 return;
             }
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->state2 = 7U;
+            (CURRENT_TASK)->state2 = 7U;
             return;
         case 3:
             displayLoadingScreen();
-            if (*(u_char* )0x1F8001CE != 0) {
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            if (LOAD_COMPLETE != 0) {
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state2++;
                 return;
             }
             break;
         case 4:
-            *(u_char* )0x1F8001CC = 1;
+            MOVIE_PLAY_STATE = 1;
             *(char* )0x1F8001CD = 1;
             openTask(1, &moviePlayerTask);
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state2++;
             return;
         case 5:
-            if (*(u_char* )0x1F8001CC != 0) {
+            if (MOVIE_PLAY_STATE != 0) {
                 if (*(u_short* )(&SCRATCHPAD+0x1FC) & (JOY_CROSS | JOY_START)) {
                     *(char* )0x1F8001D3 = 1;
-                    *(u_short* )0x1F8001FC = 0U;
-                    (*(unkstruct_1F8001D4** )0x1F8001D4)->state2 = 6U;
+                    JOYPAD_STATE = 0U;
+                    (CURRENT_TASK)->state2 = 6U;
                     return;
                 }
             } else {
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->state2 = 7U;
+                (CURRENT_TASK)->state2 = 7U;
                 return;
             }
             break;
         case 6:
-            if (*(u_char* )0x1F8001CC == 0) {
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->state2 = 7U;
+            if (MOVIE_PLAY_STATE == 0) {
+                (CURRENT_TASK)->state2 = 7U;
                 return;
             }
             break;
         case 7:
             temp1 = (u_char*)&GAME.unk14;
             *temp1 = 1;
-            temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_3 = CURRENT_TASK;
             *(u_short*)&temp_v1_3->state2 = 1;
             if (*(u_char* )0x1F8001B4 != 0) {
                 temp_v1_3->state2 = 0U;
@@ -188,7 +188,7 @@ void func_8001AC00(void)
     u_short temp_v1;
     unkstruct_1F8001D4* temp_v0_2;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->state2;
+    temp_v1 = (CURRENT_TASK)->state2;
     switch (temp_v1) {
         case 0:
             func_8001B0A4();
@@ -219,8 +219,8 @@ void func_8001AC00(void)
             break;
     }
     temp_v0 = *(short* )0x1F8001DC;
-    if ((temp_v0 >= 0) && ((*(u_char* )0x1F8001CE) != 0)) {
-        temp_v0_2 = (*(unkstruct_1F8001D4** )0x1F8001D4);
+    if ((temp_v0 >= 0) && ((LOAD_COMPLETE) != 0)) {
+        temp_v0_2 = (CURRENT_TASK);
         *(short* )(&SCRATCHPAD+0x1DC) = -1;
         temp_v0_2->state2 = (u_short) temp_v0;
         temp_v0_2->unk4E = (u_short) *(u_short* )0x1F8001DE;
@@ -232,7 +232,7 @@ void func_8001AD1C(void)
 {
     unkstruct_1F8001D4* temp_v1;
 
-    temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_v1 = CURRENT_TASK;
     temp_v1->unk4E.value++;
     initDrawLists();
     *(char* )0x1F8001CF = 0;
@@ -368,20 +368,20 @@ void func_8001B0A4(void)
     u_char* temp1;
     u_char* temp2;
 
-    switch ((*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value) {
+    switch ((CURRENT_TASK)->unk4E.value) {
         case 0:
             func_800222B8(9, 1);
-            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+            (CURRENT_TASK)->unk4E.value++;
             return;
         case 1:
-            if (*(u_char* )0x1F8001CE != 0) {
-                (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+            if (LOAD_COMPLETE != 0) {
+                (CURRENT_TASK)->unk4E.value++;
                 return;
             }
         default:
             return;
         case 2:
-            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+            (CURRENT_TASK)->unk4E.value++;
             initDrawLists();
             *(char* )0x1F8001CF = 0;
             return;
@@ -393,15 +393,15 @@ void func_8001B0A4(void)
             (*(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4))->unk4E.value++;
             initDrawLists();
             *(u_char*)&(*(u_long**)0x1F8001CF) = 0;
-            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E = 0x78U;
-            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk64 = 0U;
+            (CURRENT_TASK)->unk5E = 0x78U;
+            (CURRENT_TASK)->unk64 = 0U;
             return;
         case 6:
             p = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
             *(u_short*)&p->unk64=((p->unk64+12)&0xFF);
             drawNowLoading(p->unk64);
-            (*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E--;
-            if (((*(unkstruct_1F8001D4**)0x1F8001D4)->unk5E << 0x10) == 0) {
+            (CURRENT_TASK)->unk5E--;
+            if (((CURRENT_TASK)->unk5E << 0x10) == 0) {
                 var_a0 = 1;
                 temp1 = (u_char*)&GAME.unk14;
                 if (*temp1 == 0) {
@@ -418,7 +418,7 @@ void func_8001B0A4(void)
                     func_8001CE80(var_a0);
                 }
                 D_8009EB4C = 0;
-                (*(unkstruct_1F8001D4**)0x1F8001D4)->unk4E.value++;
+                (CURRENT_TASK)->unk4E.value++;
             }
             break;
         case 4:
@@ -438,7 +438,7 @@ void func_8001B2B4(void)
     unkstruct_1F8001D4* temp_a0_2;
     unkstruct_1F8001D4* temp_v1_2;
 
-    temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+    temp_a0 = CURRENT_TASK;
     temp_v1 = temp_a0->unk4E.value;
     switch (temp_v1) {                              // irregular
         case 0:
@@ -612,22 +612,22 @@ void func_8001B944(void)
     u_short var_a1;
     unkstruct_1F8001D4* temp_v1;
 
-    *(int* )0x1F800164 = (int) ((*(short* )(0x1F8001F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (*(u_char* )0x1F8001CC == 0)) {
+    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == 0)) {
         *(short* )0x1F8001C6 = 0;
     }
     func_8001D6C0();
     if (GAME.inventoryScreen == 0xFF) {
         GAME.inventoryScreen = 0;
-        temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+        temp_v1 = CURRENT_TASK;
         var_a0 = *(u_short*)&temp_v1->state2;
-        var_a1 = *(u_short*)&(*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+        var_a1 = *(u_short*)&(CURRENT_TASK)->unk4E.value;
         D_800A3952 = 6;
         D_800A3954 = 0;
         D_800A3956 = 0;
         D_800A3940 = 0;
         temp_v1->state2 = 3U;
-        (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 0U;
+        (CURRENT_TASK)->unk4E.value = 0U;
         *(short* )0x1F8003B8 = (short)var_a0;
         *(u_short* )0x1F8003BA = var_a1;
     }
@@ -673,7 +673,7 @@ void func_8001BB1C(void)
     unkstruct_1F8001D4* temp_v1_2;
     unkstruct_1F8001D4* temp_v1_3;
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->unk4E.value;
     switch (temp_v1) {                              // switch 1
         case 0:                                     // switch 1
             *(s8* )0x1F8001CF = 1;
@@ -689,11 +689,11 @@ void func_8001BB1C(void)
             D_8009B000 = drawenv.r0;
             D_8009B004 = drawenv.g0;
             D_8009B008 = drawenv.b0;
-            temp_a0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_a0 = CURRENT_TASK;
             temp_a0->unk4E.value++;
             return;
         case 1:                                     // switch 1
-            *(u8* )0x1F8001CE = 0;
+            LOAD_COMPLETE = 0;
             switch (D_800A3952) {                   // switch 2
                 case 0:                             // switch 2
                 case 1:                             // switch 2
@@ -714,11 +714,11 @@ void func_8001BB1C(void)
                     func_800222B8(7, 1);
                     break;
             }
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2 = CURRENT_TASK;
             temp_v1_2->unk4E.value++;
             return;
         case 2:                                     // switch 1
-            if (*(u8* )0x1F8001CE != 0) {
+            if (LOAD_COMPLETE != 0) {
                 EnterCriticalSection();
                 FlushCache();
                 ExitCriticalSection();
@@ -726,7 +726,7 @@ void func_8001BB1C(void)
                 func_8001821C();
                 *(s16*)&(*(volatile u16**)&D_800A3952) = temp_s1;
                 SetDispMask(1);
-                temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->unk4E.value++;
                 return;
             }
@@ -735,7 +735,7 @@ void func_8001BB1C(void)
         case 3:                                     // switch 1
             func_8001BF90();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 6U;
+                (CURRENT_TASK)->unk4E.value = 6U;
                 return;
             }
             break;
@@ -750,16 +750,16 @@ void func_8001BB1C(void)
             setRGB0((DRAWENV*)(D_8009E3D4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
             var_a0 = ((&D_80076FAC)[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
             func_800222B8(((s16*)var_a0)[GAME.selectedSection], 1);
-            temp_v1_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_2 = CURRENT_TASK;
             temp_v1_2->unk4E.value++;
             return;
         case 5:                                     // switch 1
-            if ((*(u8* )0x1F8001CE) != 0) {
+            if ((LOAD_COMPLETE) != 0) {
                 EnterCriticalSection();
                 FlushCache();
                 ExitCriticalSection();
                 SetDispMask(1);
-                temp_v0 = *(unkstruct_1F8001D4** )0x1F8001D4;
+                temp_v0 = CURRENT_TASK;
                 *(s16* )0x1F8001C6 = 0;
                 temp_v0->state2 = (u16) *(u16* )0x1F8003B8;
                 temp_v0->unk4E.value = (u16) *(u16* )0x1F8003BA;
@@ -767,7 +767,7 @@ void func_8001BB1C(void)
             }
             break;
         case 6:                                     // switch 1
-            temp_v1_3 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1_3 = CURRENT_TASK;
             temp_v1_3->state2 = 8U;
             temp_v1_3->unk4E.value = 0U;
             return;
@@ -777,7 +777,7 @@ void func_8001BB1C(void)
             func_80020C00(0);
             setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
             setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->loadGameSelected = 1;
+            (CURRENT_TASK)->loadGameSelected = 1;
             temp_v0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             temp_v0_2->state0 = 1;
             temp_v0_2->state1 = 1;
@@ -794,7 +794,7 @@ void func_8001BF90(void)
     s32 var_s0;
 
     *(u16* )(&SCRATCHPAD+0x1F8)=*(u16* )(0x1F8001F8)+1;
-    *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     switch (D_800A3952) {
         case 0:
         case 1:
@@ -822,18 +822,18 @@ void func_8001BF90(void)
     }
     if (D_800A3952 == 5) {
         if (var_s0 == 1) {
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 7U;
+            (CURRENT_TASK)->unk4E.value = 7U;
         } else {
             if (var_s0 != 0) {
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value++; 
+                (CURRENT_TASK)->unk4E.value++; 
             }
         }
     } else {
         if (var_s0 == 2) {
             SetDispMask(0);
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 1;
+            (CURRENT_TASK)->unk4E.value = 1;
         }else if (var_s0 != 0) {
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value++;
+            (CURRENT_TASK)->unk4E.value++;
         }
     }
     func_8001F6D4();
@@ -848,7 +848,7 @@ void func_8001C104(void)
     unkstruct_1F8001D4* temp_v1_3;
     char pad[2]; // ?? fixes the stack, but there's probably a better way
 
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->unk4E.value;
 
     switch (temp_v1) {
         case 0:
@@ -902,7 +902,7 @@ void func_8001C104(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C2E8);
 void func_8001C2E8(void)
 {
-    *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     func_8001D6C0();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
@@ -941,7 +941,7 @@ void func_8001C434(void)
     unkstruct_1F8001D4* temp_v1_3;
     char pad[2]; // ?? fixes the stack, but there's probably a better way
     
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->unk4E.value;
     switch (temp_v1) {
         case 0:
             initDrawLists();
@@ -994,7 +994,7 @@ void func_8001C434(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C618);
 void func_8001C618(void)
 {
-    *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     func_8001D6C0();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
@@ -1032,7 +1032,7 @@ void func_8001C75C(void)
     unkstruct_1F8001D4* temp_v1_3;
     char pad[2]; // ?? fixes the stack, but there's probably a better way
     
-    temp_v1 = (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->unk4E.value;
     switch (temp_v1) {
         case 0:
             initDrawLists();
@@ -1085,7 +1085,7 @@ void func_8001C75C(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C940);
 void func_8001C940(void)
 {
-    *(s32* )0x1F800164 = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     func_8001D6C0();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(s16* )(&SCRATCHPAD+0x1F8))++;
@@ -1125,7 +1125,7 @@ void displayLoadingScreen(void)
 
     switch (D_8009EB4C) {                           // irregular
         case 0:
-            temp_v1 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v1 = CURRENT_TASK;
             temp_v1->unk62 = 0;
             temp_v1->unk60 = 0xFU;
             temp_v1->unk64 = 0U;
@@ -1140,7 +1140,7 @@ void displayLoadingScreen(void)
                 temp_a0->unk60 = 0xFU; // sprite refresh rate?
                 temp_a0->unk62 = (short) ((u_short) temp_a0->unk62 ^ 1); // is even frame?
             }
-            temp_v0_2 = *(unkstruct_1F8001D4** )0x1F8001D4;
+            temp_v0_2 = CURRENT_TASK;
             *(u_short*)&temp_v0_2->unk64 = ((temp_v0_2->unk64 + 12) & 0xFF);
             drawLoadingSprites(temp_v0_2->unk62, temp_v0_2->unk64);
             return;

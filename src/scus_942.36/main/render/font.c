@@ -41,7 +41,7 @@ void drawUiSprite(short x, short y, short sprt_id)
     setUV0(sprt, *(u_short*)&D_8007B2F4[sprt_ofs], *(u_short*)(&D_8007B2F6[sprt_ofs]));
     setWH(sprt, *(u_short*)(&D_8007B2F8[sprt_ofs]), *(u_short*)(&D_8007B2FA[sprt_ofs]));
     setClut(sprt, (short) *(&D_8007B2FC[sprt_ofs]), (short) *(&D_8007B2FE[sprt_ofs]));
-    addPrim(*(u_long*)(0x1F8001E0), sprt);
+    addPrim(CURRENT_OT, sprt);
     D_8009C8A8 += sizeof(SPRT);
 }
 

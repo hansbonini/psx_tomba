@@ -19,7 +19,19 @@
  * Macros
  */
 
-#define CURRENT_TASK *(unkstruct_1F8001D4**)0x1F8001D4
+/* Scratchpad fields reached from code that has no `scratchpad*` handy.
+   Each expands to exactly the cast it replaced, so the generated code is
+   unchanged; the names mirror the fields of `struct scratchpad`. */
+#define NEXT_PRIM          (*(int*)0x1F800164)      /* 0x164 */
+#define MOVIE_PLAY_STATE   (*(u8*)0x1F8001CC)       /* 0x1CC */
+#define LOAD_COMPLETE      (*(u8*)0x1F8001CE)       /* 0x1CE */
+#define CURRENT_OT         (*(u_long*)0x1F8001E0)   /* 0x1E0 */
+#define PAUSE_TOGGLE       (*(u16*)0x1F8001EE)      /* 0x1EE */
+#define PAUSE_FLAGS        (*(u16*)0x1F8001F0)      /* 0x1F0 */
+#define FRAME_BUFFER_INDEX (*(s16*)0x1F8001F4)      /* 0x1F4 */
+#define JOYPAD_STATE       (*(u16*)0x1F8001FC)      /* 0x1FC */
+
+#define CURRENT_TASK       (*(unkstruct_1F8001D4**)0x1F8001D4)
 #define TASK_TABLE  0x801FD800
 
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)

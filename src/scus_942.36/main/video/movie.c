@@ -21,17 +21,17 @@ void moviePlayerTask(void)
     unkstruct_1F8001D4* gameControl;
     unkstruct_1F8001D4* gameControlTemp;
 
-    gameControl = *(unkstruct_1F8001D4** )0x1F8001D4;
-    *(u_char* )0x1F8001CC = 1;
+    gameControl = CURRENT_TASK;
+    MOVIE_PLAY_STATE = 1;
     gameControl->state0 = 0;
     gameControl->unk4E.value = 0;
     gameControl->loadGameSelected = 0;
     do {
         if (*(u_char* )0x1F8001D3 == 1) {
-            (*(unkstruct_1F8001D4** )0x1F8001D4)->state0 = 3;
+            (CURRENT_TASK)->state0 = 3;
             CdMix(&D_80077758);
         }
-        gameControlTemp = *(unkstruct_1F8001D4** )0x1F8001D4;
+        gameControlTemp = CURRENT_TASK;
         state = gameControlTemp->state0;
         switch (state) {
             case 0:
@@ -43,21 +43,21 @@ void moviePlayerTask(void)
                 } while (func_8001EFE8(&D_8009B010) == 0);
                 break;
             case 1:
-                *(char* )0x1F8001CC = 2;
+                MOVIE_PLAY_STATE = 2;
                 gameControlTemp->state0 = 2;
             case 2:
-                while ((*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value == 0) {
+                while ((CURRENT_TASK)->unk4E.value == 0) {
                     func_8001EFE8(&D_8009B010);
                 }
                 DecDCTin(*(D_8009B018 + &D_8009B010), 2);
-                *(int*)&D_8009B034->disp.w = *(short*)0x1F8001F4;
-                D_8009B034->screen.x = ((short*)&D_8009B028)[(*(short*)0x1F8001F4) * 4];
-                D_8009B034->screen.y = ((short*)&D_8009B02A)[(*(short*)0x1F8001F4) * 4];
+                *(int*)&D_8009B034->disp.w = FRAME_BUFFER_INDEX;
+                D_8009B034->screen.x = ((short*)&D_8009B028)[(FRAME_BUFFER_INDEX) * 4];
+                D_8009B034->screen.y = ((short*)&D_8009B02A)[(FRAME_BUFFER_INDEX) * 4];
                 DecDCTout(
                     *(u_long**)&D_8009B01C[D_8009B024],
                     (D_8009B034->screen.w * D_8009B034->screen.h) / 2
                 );
-                (*(unkstruct_1F8001D4** )0x1F8001D4)->unk4E.value = 0;
+                (CURRENT_TASK)->unk4E.value = 0;
                 while (func_8001EFE8(&D_8009B010) == 0) {
                     if (*(int*)&D_8009B034->isinter == 1) {
                         break;
@@ -69,7 +69,7 @@ void moviePlayerTask(void)
                 }
                 SetDispMask(1);
                 *(int*)&D_8009B034->isinter = 0;
-                *(char* )0x1F8001CC = 3;
+                MOVIE_PLAY_STATE = 3;
                 *(short* )0x1F8001E8 = 0;
                 break;
             case 3:
@@ -77,7 +77,7 @@ void moviePlayerTask(void)
                 StUnSetRing();
                 StClearRing();
                 CdControlB(9, 0, 0);
-                *(char* )0x1F8001CC = 0;
+                MOVIE_PLAY_STATE = 0;
                 *(char* )(&SCRATCHPAD+0x1D3) = 0;
                 exitTask();
                 break;

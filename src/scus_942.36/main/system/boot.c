@@ -62,7 +62,7 @@ void bootSequenceTask(void)
         state = (CURRENT_TASK)->state0;
         switch (state) {
             case 0:
-                *(u8* )0x1F8001CE = 0;
+                LOAD_COMPLETE = 0;
                 func_800223A0(0);
                 func_800223A0(1);
                 func_800222B8(0, 1);
@@ -73,7 +73,7 @@ void bootSequenceTask(void)
                 task9->state0++;
                 break;
             case 1:
-                if (*(u8* )0x1F8001CE != 0) {
+                if (LOAD_COMPLETE != 0) {
                     cdSeekStream(0x15);
                     (CURRENT_TASK)->state0 = 4U;
                 }
@@ -86,7 +86,7 @@ void bootSequenceTask(void)
                 break;
             case 3:
                 task7 = CURRENT_TASK;
-                *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+                NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
                 task7->timer--;
                 if ((s16) task7->timer == -1) {
                     task7->state0++;
@@ -108,7 +108,7 @@ void bootSequenceTask(void)
                 (CURRENT_TASK)->state0 = 0xAU;
                 break;
             case 10:
-                if (*(u8* )0x1F8001CE != 0) {
+                if (LOAD_COMPLETE != 0) {
                     SetDispMask(0);
                     initDisplay2x(0U, 0U, 0U);
                     SetDispMask(1);
@@ -120,7 +120,7 @@ void bootSequenceTask(void)
                 break;
             case 11:
                 task8 = CURRENT_TASK;
-                *(int* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
+                NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF);
                 switch (task8->state1) {                    // switch 1; irregular
                     case 0:                             // switch 1
                         task8->unk5A = 1U;
@@ -184,13 +184,13 @@ void titleSequenceTask(void)
         func_800223E0();
         task = CURRENT_TASK;
         state = task->state0;
-        if ((state >= 3U) && (*(u16* )0x1F8001FC & (JOY_CROSS | JOY_START)) && (state != 4)) {
+        if ((state >= 3U) && (JOYPAD_STATE & (JOY_CROSS | JOY_START)) && (state != 4)) {
             task->state0 = 4U;
             task->state1 = 0;
             task->state2 = 0;
             sp10[0] = 1;
             func_80020C00(0);
-            if (*(u8* )0x1F8001CC != 0) {
+            if (MOVIE_PLAY_STATE != 0) {
                 *(s8* )0x1F8001D3 = 1;
             }
         }
@@ -238,14 +238,14 @@ void func_800199B8(void)
             switch (state2) {                      // switch 1; irregular
                 case 0:                             // switch 1
                     SetDispMask(0);
-                    *(u8* )0x1F8001CE = 0U;
+                    LOAD_COMPLETE = 0U;
                     func_800223A0(1);
                     func_800222B8(1, 1);
                     task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
                     return;
                 case 1:                             // switch 1
-                    if (*(u8* )0x1F8001CE != 0) {
+                    if (LOAD_COMPLETE != 0) {
                         task3->state1 = 2U;
                         task3->state2 = 0U;
                         func_800E7D5C();
@@ -263,13 +263,13 @@ void func_800199B8(void)
             return;
         case 2:
             task2 = CURRENT_TASK;
-            *(u8* )0x1F8001CC = 1;
+            MOVIE_PLAY_STATE = 1;
             *(s8* )0x1F8001CD = 0x15;
             task2->state1++;
             openTask(1, moviePlayerTask);
             return;
         case 3:
-            if (*(u8* )0x1F8001CC != 0) {
+            if (MOVIE_PLAY_STATE != 0) {
                 return;
             }
             task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -279,14 +279,14 @@ void func_800199B8(void)
             SetDispMask(0);
             initDisplay2x(240U, 240U, 240U);
             SetDispMask(1);
-            *(s32* )0x1F800164 = (s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
             task = CURRENT_TASK;
             task->timer = 120;
             task->state1++;
             return;
         case 5:
-            *(s32* )0x1F800164 = (s32) ((s32) ((*(s16* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF);
+            NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF);
             func_800E7D74();
             task6 = CURRENT_TASK;
             timer = task6->timer - 1;
@@ -295,7 +295,7 @@ void func_800199B8(void)
                 func_80020C00(0);
                 SetDispMask(0);
                 initDisplay(0U, 0U, 0U);
-                *(u8* )0x1F8001CE = 0U;
+                LOAD_COMPLETE = 0U;
                 func_800223A0(2);
                 func_800222B8(2, 1);
                 task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -304,7 +304,7 @@ void func_800199B8(void)
             }
             break;
         case 6:
-            if (*(u8* )0x1F8001CE != 0) {
+            if (LOAD_COMPLETE != 0) {
                 task7 = CURRENT_TASK;
                 task7->state1++;
                 cdSeekStream(0);
@@ -403,7 +403,7 @@ void loopTitleScreen(int* arg0)
             gameControl->state2 = 0U;
             gameControl->state1++;
         case 1:
-            if (*(u_char* )0x1F8001CC == 0) {
+            if (MOVIE_PLAY_STATE == 0) {
                 initDisplay(0U, 0U, 0U);
                 gameControl = CURRENT_TASK;
                 gameControl->state1++;
@@ -427,7 +427,7 @@ void loopTitleScreen(int* arg0)
             return;
         case 3:
             gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
-            *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             gameControlTemp5->timer--;
             if ((short)gameControlTemp5->timer <= 0) {
                 gameControlTemp5->state1++;
@@ -439,7 +439,7 @@ void loopTitleScreen(int* arg0)
             gameControlTemp2 = CURRENT_TASK;
             switch ((u_short)gameControlTemp2->state2) {                    // switch 1; irregular
                 case 0:                             // switch 1
-                    if (*(u_short* )0x1F8001FC & JOY_LEFT) {
+                    if (JOYPAD_STATE & JOY_LEFT) {
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
@@ -449,7 +449,7 @@ void loopTitleScreen(int* arg0)
                             playSFX(8);
                         }
                     }
-                    if (*(u_short* )0x1F8001FC & JOY_RIGHT) {
+                    if (JOYPAD_STATE & JOY_RIGHT) {
                         gameControlTemp3 = CURRENT_TASK;;
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
@@ -460,7 +460,7 @@ void loopTitleScreen(int* arg0)
                             playSFX(8);
                         }
                     }
-                    if (*(u_short* )0x1F8001FC & (JOY_CROSS | JOY_START)) {
+                    if (JOYPAD_STATE & (JOY_CROSS | JOY_START)) {
                         func_80020C00(0);
                         gameControlTemp6 = CURRENT_TASK;
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
@@ -522,18 +522,18 @@ void func_8001A328(void)
     unkstruct_1F8001D4* task2;
     unkstruct_1F8001D4* task3;
 
-    *(int* )0x1F800164 = (int) ((*(short* )0x1F8001F4 * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
     switch ((CURRENT_TASK)->state1) {
         case 0:
             func_80020C00(0);
             SetDispMask(0);
-            *(u_char* )0x1F8001CE = 0;
+            LOAD_COMPLETE = 0;
             func_800223A0(3);
             func_800222B8(8, 1);
             (CURRENT_TASK)->state1++;
             return;
         case 1:
-            if (*(u_char* )0x1F8001CE != 0) {
+            if (LOAD_COMPLETE != 0) {
                 SetDispMask(1);
                 func_800E75C4();
                 func_80020AF0(0);
@@ -569,13 +569,13 @@ void func_8001A328(void)
         case 3:
             func_80020C00(0);
             SetDispMask(0);
-            *(u_char* )0x1F8001CE = 0U;
+            LOAD_COMPLETE = 0U;
             func_800223A0(2);
             func_800222B8(2, 1);
             (CURRENT_TASK)->state1++;
             return;
         case 4:
-            if (*(u_char* )0x1F8001CE != 0) {
+            if (LOAD_COMPLETE != 0) {
                 task3 = CURRENT_TASK;
                 task3->state0 = 4;
                 task3->state1 = 0U;
