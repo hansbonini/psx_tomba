@@ -386,7 +386,12 @@ void func_80017024(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800170F8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_800170F8);
+void func_800170F8(s32 id, int fn)
+{
+    func_80017418((unkstruct_01*)(0x801FD80C + id * 0x70), fn);
+    func_80017154(id, ((unkstruct_1F8001D4*)(0x801FD800 + id * 0x70))->task_func);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", func_80017154);
 void func_80017154(s32 arg0, long (*func)())
