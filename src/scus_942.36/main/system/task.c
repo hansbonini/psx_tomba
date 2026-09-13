@@ -53,7 +53,7 @@ void dispatchTasks(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", startTask);
 void startTask(s32 id, int fn)
 {
-    setTaskEntry((unkstruct_01*)(0x801FD80C + id * 0x70), fn);
+    setTaskEntry((unkstruct_01*)((TASK_TABLE + 0xC) + id * 0x70), fn);
     openTask(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * 0x70))->task_func);
 }
 
@@ -64,9 +64,9 @@ void openTask(s32 arg0, long (*func)())
 
     ((unkstruct_1F8001D4*)(TASK_TABLE + off))->unk0 = 2;
     EnterCriticalSection();
-    *(int*)(0x801FD804 + off) = OpenTh(func,
-                                           *(int*)(0x801FD808 + off),
-                                           *(int*)(0x801FD810 + off));
+    *(int*)((TASK_TABLE + 0x4) + off) = OpenTh(func,
+                                           *(int*)((TASK_TABLE + 0x8) + off),
+                                           *(int*)((TASK_TABLE + 0x10) + off));
     ExitCriticalSection();
 }
 
@@ -103,7 +103,7 @@ void closeTask(s32 id)
     if (*flag != 0) {
         *flag = 0;
         EnterCriticalSection();
-        CloseTh(*(s32*)(0x801FD804 + off));
+        CloseTh(*(s32*)((TASK_TABLE + 0x4) + off));
         ExitCriticalSection();
     }
 }

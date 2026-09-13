@@ -45,7 +45,7 @@ void main(void)
     while (true) {
         *(u16*)((byte*)&D_1F8001A0+0x48) = 0;
         if (*(u16*)(&SCRATCHPAD+0x1F0) < 0x4001U) {
-            D_8009C8A8 = (*(s16*)0x1F8001F4 * 0x780) + &D_800A1890;
+            D_8009C8A8 = (FRAME_BUFFER_INDEX * 0x780) + &D_800A1890;
             dispatchTasks();
         }
         if (*(u16*)0x1F8001EC != 0) {
@@ -77,19 +77,19 @@ void main(void)
             }
         }
 
-        switch (*(u8*)0x1F8001CC) {
+        switch (MOVIE_PLAY_STATE) {
             case 2:
                 break;
             case 0:
             case 1:
-                if (*(u16*)0x1F8001F0 <= 0x4000) {
+                if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
                     tickTaskTimers();
                 }
                 break;
             case 3:
                 *(u8*)(&SCRATCHPAD+0x1CC) = 2;
-                if (*(u16*)0x1F8001F0 <= 0x4000) {
+                if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
                     tickTaskTimers();
                 }
@@ -97,32 +97,32 @@ void main(void)
         }
 
         if (*(u8*)0x1F8001BF != 0) {
-            if ((*(u8*)0x1F8001CC == 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (*(u8*)0x1F8001CE == 1) && (*(u16*)0x1F8001FC & JOY_L1)) {
-                *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - *(u16*)0x1F8001F0);
+            if ((MOVIE_PLAY_STATE == 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
+                *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - PAUSE_FLAGS);
             }
-        } else if (*(u8*)0x1F8001BE != 0 && *(u8*)0x1F8001CC == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
-            dbgMode = *(u8*)0x1F8001CE;
+        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
+            dbgMode = LOAD_COMPLETE;
             if (dbgMode == 1) {
-                joypad_state = *(u16*)0x1F8001FC;
+                joypad_state = JOYPAD_STATE;
                 if (joypad_state & JOY_L1) {
-                    toggled = 1 - *(u16*)0x1F8001EE;
+                    toggled = 1 - PAUSE_TOGGLE;
                     *(u16*)(&SCRATCHPAD+0x1EE) = toggled;
-                    *(u16*)0x1F8001F0 = (u16)(toggled << 0xF);
+                    PAUSE_FLAGS = (u16)(toggled << 0xF);
                 }
-                if (*(u16*)(0x1F8001EE) != 0) {
-                    *(u16*)0x1F8001F0 = 0x8000U;
+                if (PAUSE_TOGGLE != 0) {
+                    PAUSE_FLAGS = 0x8000U;
                     if (joypad_state & JOY_L2) {
                         *(u16*)(&SCRATCHPAD+0x1F0) = 0U;
                     }
                 } else if (joypad_state & JOY_L2) {
-                    flags = *(u16*)0x1F8001F0;
+                    flags = PAUSE_FLAGS;
                     newFlags = (~flags & 0x4000) | (flags & 0xBFFF);
                     *(u16*)(&D_1F800118[0]+0xD8) = newFlags;
                     if (!(newFlags & 0x4000)) {
                         *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(newFlags & 0xFFF0);
                     }
                 } else {
-                    curFlags = *(u16*)0x1F8001F0;
+                    curFlags = PAUSE_FLAGS;
                     if (curFlags & 0x4000) {
                         *(u16*)(&SCRATCHPAD+0x1F0) = (u16)((curFlags + 1) & 0xFFF3);
                     }
@@ -146,7 +146,7 @@ void flipFrameBuffer(void)
     *(u_long* )(&SCRATCHPAD+0x1E0) = ot;
     *(u_long** )(&SCRATCHPAD+0x1E4) = prevOt;
     PutDispEnv(ot + 0x328);
-    PutDrawEnv(*(u_long* )0x1F8001E0 + 0xCB4);
+    PutDrawEnv(CURRENT_OT + 0xCB4);
     compactOrderingTable(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
     DrawOTag(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
     ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), 0x328);
