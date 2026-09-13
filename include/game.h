@@ -19,6 +19,9 @@
  * Macros
  */
 
+#define CURRENT_TASK *(unkstruct_1F8001D4**)0x1F8001D4
+#define TASK_TABLE  0x801FD800
+
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define D_8009E3D4 ((void*)0x8009E3D4)
 
