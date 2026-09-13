@@ -132,10 +132,12 @@ endif
 # Utils
 
 # Function to find matching .s files for a target name.
-find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" 2> /dev/null)
+find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" \
+                     $(if $(findstring overlays,$1),,-not -path "*/overlays/*") 2> /dev/null)
 
 # Function to find matching .c files for a target name.
-find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/null)
+find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" \
+                     $(if $(findstring overlays,$1),,-not -path "*/overlays/*") 2> /dev/null)
 
 # Function to generate matching .o files for target name in build directory.
 gen_o_files = $(addprefix $(BUILD_DIR)/, \
@@ -145,7 +147,7 @@ gen_o_files = $(addprefix $(BUILD_DIR)/, \
 # get_target_out = $(addprefix $(OUT_DIR)/,$1)
 
 # Function to get path to .yaml file for given target.
-get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
+get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$(notdir $1)))
 
 # Function to get target output path for given target.
 get_target_out = $(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1)))
@@ -173,9 +175,9 @@ $2.elf: $(call gen_o_files, $1)
 	@mkdir -p $(dir $2)
 	$(LD) $(LD_FLAGS) \
 		-Map $2.map \
-		-T $(LINKER_DIR)/$1.ld \
-		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
-		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-T $(LINKER_DIR)/$(notdir $1).ld \
+		-T $(LINKER_DIR)/undefined_syms_auto.$(notdir $1).txt \
+		-T $(LINKER_DIR)/undefined_funcs_auto.$(notdir $1).txt \
 		-o $$@
 endef
 
@@ -193,15 +195,15 @@ $(error Invalid VERSION specified: $(VERSION))
 endif
 
 ifeq ($(BUILD_OVERLAYS), 1)
-#TARGET_OVERLAYS := field
+TARGET_OVERLAYS := scus_942.36/overlays/optsub00
 endif
 
 # Source Definitions
-TARGET_IN  := $(TARGET_MAIN)
+TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 SYMBOLS_DIR  := symbols/$(BASE_DIR)
 SYMBOL_FILES := $(wildcard $(SYMBOLS_DIR)/*.txt)
-LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
+LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(notdir $(TARGET_IN))))
 
 # Rules
 default: all
