@@ -261,10 +261,10 @@ permuter-setup:
 	$(PYTHON) -m pip install --upgrade pynacl toml Levenshtein
 
 permuter-import:
-	@test -n "$(FUNC)" || { echo 'uso: make permuter-import FUNC=<funcao> SRC=<arquivo.c>'; exit 1; }
-	@test -n "$(SRC)"  || { echo 'uso: make permuter-import FUNC=<funcao> SRC=<arquivo.c>'; exit 1; }
-	@test -d $(PERMUTER) || { echo 'faltando $(PERMUTER); rode: make permuter-setup'; exit 1; }
-	@test -n "$(call permuter_asm,$(FUNC))" || { echo 'asm de $(FUNC) nao encontrado em $(ASM_DIR)/$(BASE_DIR)/nonmatchings'; exit 1; }
+	@test -n "$(FUNC)" || { echo 'usage: make permuter-import FUNC=<function> SRC=<file.c>'; exit 1; }
+	@test -n "$(SRC)"  || { echo 'usage: make permuter-import FUNC=<function> SRC=<file.c>'; exit 1; }
+	@test -d $(PERMUTER) || { echo 'missing $(PERMUTER); run: make permuter-setup'; exit 1; }
+	@test -n "$(call permuter_asm,$(FUNC))" || { echo 'asm for $(FUNC) not found in $(ASM_DIR)/$(BASE_DIR)/nonmatchings'; exit 1; }
 	@mkdir -p $(PERMUTER_DIR)/$(FUNC)
 	$(MAKE) $(BUILD_DIR)/$(SRC:.c=.i)
 	cp $(BUILD_DIR)/$(SRC:.c=.i) $(PERMUTER_DIR)/$(FUNC)/base.c
@@ -273,24 +273,35 @@ permuter-import:
 	@cat $(call permuter_asm,$(FUNC)) >> $(PERMUTER_DIR)/$(FUNC)/target.s
 	$(AS) $(AS_FLAGS) -o $(PERMUTER_DIR)/$(FUNC)/target.o $(PERMUTER_DIR)/$(FUNC)/target.s
 	@install -m 755 $(TOOLS_DIR)/permuter_compile.sh $(PERMUTER_DIR)/$(FUNC)/compile.sh
-	@printf 'func_name = "%s"\ncompiler_type = "gcc"\n' '$(FUNC)' > $(PERMUTER_DIR)/$(FUNC)/settings.toml
-	@echo '==> $(PERMUTER_DIR)/$(FUNC) pronto; rode: make permuter-run FUNC=$(FUNC)'
+	@{ \
+	  echo 'func_name = "$(FUNC)"'; \
+	  echo 'compiler_type = "gcc"'; \
+	  echo ''; \
+	  echo '[weight_overrides]'; \
+	  echo 'perm_reorder_stmts = 0'; \
+	  echo 'perm_duplicate_assignment = 0'; \
+	  echo 'perm_ins_block = 0'; \
+	  echo 'perm_var_cond_block = 0'; \
+	  echo 'perm_remove_var = 0'; \
+	  echo 'perm_remove_ast = 0'; \
+	} > $(PERMUTER_DIR)/$(FUNC)/settings.toml
+	@echo '==> $(PERMUTER_DIR)/$(FUNC) ready; run: make permuter-run FUNC=$(FUNC)'
 
 permuter-run:
-	@test -n "$(FUNC)" || { echo 'uso: make permuter-run FUNC=<funcao>'; exit 1; }
-	@test -d $(PERMUTER_DIR)/$(FUNC) || { echo 'rode antes: make permuter-import FUNC=$(FUNC) SRC=<arquivo.c>'; exit 1; }
+	@test -n "$(FUNC)" || { echo 'usage: make permuter-run FUNC=<function>'; exit 1; }
+	@test -d $(PERMUTER_DIR)/$(FUNC) || { echo 'run first: make permuter-import FUNC=$(FUNC) SRC=<file.c>'; exit 1; }
 	$(PYTHON) $(PERMUTER)/permuter.py -j $(PERMUTER_JOBS) $(PERMUTER_DIR)/$(FUNC)
 
 # make permuter-reseed FUNC=func_80016F5C OUT=output-345-2
 permuter-reseed:
-	@test -n "$(FUNC)" || { echo 'uso: make permuter-reseed FUNC=<funcao> OUT=<output-dir>'; exit 1; }
-	@test -n "$(OUT)"  || { echo 'uso: make permuter-reseed FUNC=<funcao> OUT=<output-dir>'; exit 1; }
-	@test -f $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c || { echo 'nao existe: $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c'; exit 1; }
+	@test -n "$(FUNC)" || { echo 'usage: make permuter-reseed FUNC=<function> OUT=<output-dir>'; exit 1; }
+	@test -n "$(OUT)"  || { echo 'usage: make permuter-reseed FUNC=<function> OUT=<output-dir>'; exit 1; }
+	@test -f $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c || { echo 'not found: $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c'; exit 1; }
 	cp $(PERMUTER_DIR)/$(FUNC)/base.c $(PERMUTER_DIR)/$(FUNC)/base.c.bak
 	cp $(PERMUTER_DIR)/$(FUNC)/$(OUT)/source.c $(PERMUTER_DIR)/$(FUNC)/base.c
 	rm -rf $(PERMUTER_DIR)/$(FUNC)/output-*
-	@echo '==> base.c reposto a partir de $(OUT) (backup em base.c.bak)'
-	@echo '==> rode: make permuter-run FUNC=$(FUNC)'
+	@echo '==> base.c reseeded from $(OUT) (backup in base.c.bak)'
+	@echo '==> run: make permuter-run FUNC=$(FUNC)'
 
 permuter-clean:
 	rm -rf $(PERMUTER_DIR)
