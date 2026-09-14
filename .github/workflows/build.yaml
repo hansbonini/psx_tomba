@@ -29,12 +29,32 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install splat64[mips]==0.35.2 spimdisasm==1.36.0
           sudo apt-get update
-          sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu
+          sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu megatools cmake
+
+      - name: Build dumpsxiso
+        run: |
+          cmake -S tools/mkpsxiso -B "$RUNNER_TEMP/mkpsxiso" -DCMAKE_BUILD_TYPE=Release
+          cmake --build "$RUNNER_TEMP/mkpsxiso" --target dumpsxiso -j"$(nproc)"
+          echo "DUMPSXISO=$(find "$RUNNER_TEMP/mkpsxiso" -type f -name dumpsxiso -perm -u+x | head -n1)" >> "$GITHUB_ENV"
 
       - name: Setup build environment
         run: |
+          tmp="$(mktemp -d)"
+          megadl --path "$tmp" "${{ secrets.SCUS_94236_URL }}"
+          img="$(find "$tmp" -type f \( -iname '*.bin' -o -iname '*.img' -o -iname '*.iso' \) | head -n1)"
+          if [ -z "$img" ]; then echo "No disc image in the download:"; ls -lR "$tmp"; exit 1; fi
           mkdir -p iso/us
-          curl -L -o iso/us/SCUS_942.36 "${{ secrets.SCUS_94236_URL }}"
+          "$DUMPSXISO" -x iso/us -s "$tmp/tomba-us.xml" "$img"
+          rm -rf "$tmp"
+          # Fail here rather than deep inside splat if the image is the wrong
+          # dump. Every splat config carries the hash of what it expects, so
+          # this covers overlays too, with nothing extra to keep in sync.
+          for cfg in config/scus_942.36/*.yaml; do
+            sha1="$(grep -m1 '^sha1:' "$cfg" | awk '{print $2}')"
+            path="$(grep -m1 '^  target_path:' "$cfg" | awk '{print $2}')"
+            [ -n "$sha1" ] && [ -n "$path" ] || continue
+            echo "$sha1  ${path#./}" | sha1sum -c -
+          done
           chmod +x ./tools/gcc-2.7.2-psx -R
           chmod +x ./tools/objdiff -R
       
