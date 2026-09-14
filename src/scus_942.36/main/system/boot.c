@@ -630,7 +630,6 @@ void func_8001A670(void)
 {
 
     RECT rect;
-    s16 var_v0;
     u16 timer;
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* task = *(u_long**)&scratch->currentTask;
@@ -656,12 +655,10 @@ void func_8001A670(void)
             task->state2 = 0;
             task->unk4E.value = 0;
             if (task->loadGameSelected != 0) {
-                var_v0 = 2;
+                task->state0 = 2;
             } else {
-                var_v0 = 1;
-                asm("");
+                task->state0 = 1;
             }
-            task->state0 = var_v0;
             task->state1 = 0U;
             break;
     }
