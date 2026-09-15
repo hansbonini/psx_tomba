@@ -5,6 +5,10 @@ extern u8    D_8009C9E4;
 extern u8    D_8009E450;
 extern s32   D_800E9D08;
 extern u8    D_800E9648;
+extern u8    D_800E9DBC;
+extern s32   D_800E9C90;
+extern s32   D_800E9CF4;
+void func_800E9348(void);
 extern u8    D_800E9C64;
 
 typedef struct optsubRequest {
@@ -13,7 +17,7 @@ typedef struct optsubRequest {
     /* 0x04 */ s16   unk4;
     /* 0x08 */ s32   unk8;
     /* 0x0C */ void* unkC;
-    /* 0x10 */ s32   unk10;
+    /* 0x10 */ void* unk10;
     /* 0x14 */ s32   unk14;
 } optsubRequest;
 
@@ -100,7 +104,19 @@ INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E
 
 INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E8814);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", printTitleScreenMessage);
+// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", printTitleScreenMessage);
+void printTitleScreenMessage(s16 arg0, s16 arg1, s32 arg2)
+{
+    optsubRequest req;
+
+    req.unk0 = arg0;
+    req.unk2 = arg1;
+    req.unk4 = 6;
+    req.unk8 = (&D_800E9C90)[arg2];
+    req.unkC = &func_800E9348;
+    req.unk10 = (void*)(&D_800E9CF4)[arg2];
+    func_800E8B6C(&req, 0, 1, 1);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E8908);
 void func_800E8908(s16 arg0, s16 arg1, s32 arg2)
@@ -115,7 +131,19 @@ void func_800E8908(s16 arg0, s16 arg1, s32 arg2)
     func_800E8B6C(&req, 0, 1, 0);
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E8964);
+// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E8964);
+void func_800E8964(s16 arg0, s16 arg1, s32 arg2)
+{
+    optsubRequest req;
+
+    req.unk0 = arg0;
+    req.unk2 = arg1;
+    req.unk4 = 2;
+    req.unk8 = (&D_800E9D08)[arg2];
+    req.unkC = &D_800E9648;
+    req.unk10 = &D_800E9DBC;
+    func_800E8B6C(&req, 0, 1, 2);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E89CC);
 void func_800E89CC(s16 arg0, s16 arg1, s32 arg2, s32 arg3)
