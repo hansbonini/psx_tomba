@@ -225,21 +225,120 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018614);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018694);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800186E0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800186E0);
+void func_800186E0(s32* arg0)
+{
+    ((u8*)arg0)[0x1C] &= 0x7F;
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    D_1F800236++;
+    *--D_1F800204 = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001872C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001872C);
+void func_8001872C(s32* arg0)
+{
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    asm("");
+    ((u8*)arg0)[0x1C] = 0;
+    ((u8*)arg0)[0x9C] = 0;
+    ((u8*)arg0)[0x9D] = 0;
+    ((u8*)arg0)[0x9E] = 0;
+    ((u8*)arg0)[0x9F] = 0;
+    D_1F800238++;
+    *--D_1F800208 = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018780);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018780);
+void func_80018780(s32* arg0)
+{
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    asm("");
+    ((u8*)arg0)[0x1C] = 0;
+    ((u8*)arg0)[0x9C] = 0;
+    ((u8*)arg0)[0x9D] = 0;
+    ((u8*)arg0)[0x9E] = 0;
+    ((u8*)arg0)[0x9F] = 0;
+    D_1F800238++;
+    *--D_1F800208 = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800187D4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800187D4);
+void func_800187D4(s32* arg0)
+{
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    asm("");
+    ((u8*)arg0)[0x1C] = 0;
+    ((u8*)arg0)[0x9C] = 0;
+    ((u8*)arg0)[0x9D] = 0;
+    ((u8*)arg0)[0x9E] = 0;
+    ((u8*)arg0)[0x9F] = 0;
+    D_1F800238++;
+    *--D_1F800208 = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018828);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018828);
+void func_80018828(s32* arg0)
+{
+    ((u8*)arg0)[0x1C] &= 0x7F;
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    ((u8*)arg0)[0x9C] = 0;
+    ((u8*)arg0)[0x9D] = 0;
+    D_1F80023A++;
+    *--D_1F80020C = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001887C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001887C);
+void func_8001887C(s32* arg0)
+{
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    asm("");
+    ((u8*)arg0)[0x1C] = 0;
+    ((u8*)arg0)[0x9C] = 0;
+    ((u8*)arg0)[0x9D] = 0;
+    ((u8*)arg0)[0x9E] = 0;
+    ((u8*)arg0)[0x9F] = 0;
+    D_1F800238++;
+    *--D_1F800208 = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800188D0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800188D0);
+void func_800188D0(s32* arg0)
+{
+    ((u8*)arg0)[0x1C] &= 0x7F;
+    arg0[0] = 0;
+    arg0[1] = 0;
+    arg0[2] = 0;
+    arg0[3] = 0;
+    D_1F80023C++;
+    *--D_1F800214 = (s32)arg0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001891C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001891C);
+void func_8001891C(s32* arg0)
+{
+    arg0[0] = 0;
+    arg0[1] = 0;
+    D_1F80023E++;
+    *--D_1F800210 = (s32)arg0;
+}
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010000);
 
