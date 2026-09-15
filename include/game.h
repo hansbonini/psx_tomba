@@ -2200,6 +2200,9 @@ extern int  D_80077D50;
 extern u_char D_80077FA8;
 extern short D_80078F80;
 extern int D_8007912C[];
+extern s16  D_8007D788;
+extern s16  D_8007D988;
+extern s16  D_8007DB88;
 extern int D_800791A0; // FileLinkArray
 extern int  D_800791A4;
 extern u_short D_8007B290;
