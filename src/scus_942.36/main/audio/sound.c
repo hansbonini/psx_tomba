@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psyq/libspu.h"
 
 #define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
 #define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
@@ -34,13 +35,25 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020434);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", playSFXAndSetNote);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002059C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002059C);
+void func_8002059C(s32 arg0)
+{
+    func_80020EEC((arg0 & 0xFF) | 0x1000, arg0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800205C4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002065C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002065C);
+void func_8002065C(void)
+{
+    func_80020778(-1);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002067C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002067C);
+void func_8002067C(s16 arg0)
+{
+    func_80020778(arg0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800206A0);
 
@@ -64,7 +77,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021148);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021180);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021180);
+void func_80021180(void)
+{
+    SpuSetKey(0, 0xFF0000);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800211A4);
 void func_800211A4(void)
