@@ -9,6 +9,7 @@ extern u8    D_800E9DBC;
 extern s32   D_800E9C90;
 extern s32   D_800E9CF4;
 void func_800E9348(void);
+extern s16   D_800EA2EC;
 extern u8    D_800E9C64;
 
 typedef struct optsubRequest {

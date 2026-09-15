@@ -3,9 +3,25 @@
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002E964);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB3C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB3C);
+void func_8002EB3C(u8* self)
+{
+    *(void**)(self + 0x24) = &D_80014C94;
+    func_800229FC(self);
+    self[4] = 1;
+    self[5] = 0;
+    self[6] = 0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB80);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB80);
+void func_8002EB80(u8* self)
+{
+    *(void**)(self + 0x24) = &D_80014C8C;
+    func_800229FC(self);
+    self[4] = 1;
+    self[5] = 1;
+    self[6] = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EBC4);
 

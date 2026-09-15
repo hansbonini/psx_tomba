@@ -135,7 +135,14 @@ void func_8003DF10(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DF3C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DF88);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DF88);
+void func_8003DF88(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+
+    printInfoMessage(*(s32*)((u8*)p + 0x1190), 2);
+    p->unk8A++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DFCC);
 void func_8003DFCC(void)
@@ -153,7 +160,14 @@ void func_8003DFF0(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E014);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E0A4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E0A4);
+void func_8003E0A4(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+
+    printInfoMessage(*(s32*)((u8*)p + 0x1190), 2);
+    p->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E0E8);
 

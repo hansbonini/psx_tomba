@@ -17,7 +17,14 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036440);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036494);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_800365DC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_800365DC);
+void func_800365DC(u8* self)
+{
+    if (self[6] == 0) {
+        *(s16*)(self + 0x22) = 0;
+        func_800384F0(self, D_8009C61A - 5);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036618);
 

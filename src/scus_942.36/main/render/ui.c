@@ -31,7 +31,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80026E48);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80027600);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_800279E8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_800279E8);
+void func_800279E8(u8* arg0, s32 arg1, s32 arg2)
+{
+    u8* r;
+
+    arg0 += 4;
+    r = func_80024EEC(arg2, arg0, arg0 + 4, arg1);
+    func_80025C14(r + 0x14, r + 0x18, arg1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80027A30);
 

@@ -116,7 +116,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BC34);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BD28);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BF18);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BF18);
+void func_8003BF18(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8 v = D_8009C974[p->unk8A + 1];
+
+    *(s32*)((u8*)p + 0x11D0) = 0;
+    *((u8*)p + 0x88) = 2;
+    p->unk8A += 2;
+    *(s32*)((u8*)p + 0x11D4) = v;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BF58);
 
