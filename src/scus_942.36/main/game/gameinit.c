@@ -227,7 +227,20 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018594);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018614);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018694);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018694);
+u8* func_80018694(void)
+{
+    s16  n = D_1F80023E;
+    s32* p;
+
+    if (n > 0) {
+        p = D_1F800210;
+        D_1F80023E = n - 1;
+        D_1F800210 = p + 1;
+        return (u8*)*p;
+    }
+    return NULL;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800186E0);
 void func_800186E0(s32* arg0)

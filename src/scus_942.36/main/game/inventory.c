@@ -209,7 +209,25 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002ABC0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AD74);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AF44);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AF44);
+s32 func_8002AF44(u8* self)
+{
+    s32 v = *(s32*)(self + 0x24);
+
+    if (v != 0) {
+        if (v > 0) {
+            v -= 0x80;
+        } else {
+            v += 0x80;
+        }
+        *(s32*)(self + 0x24) = v;
+        return 0;
+    }
+    self[0x71] = 0;
+    self[0x72] = 0;
+    self[0x73] = 0;
+    return 1;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AF8C);
 
@@ -242,7 +260,24 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B3E8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B5A4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B664);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B664);
+s32 func_8002B664(u8* self)
+{
+    s32 v = *(s32*)(self + 0x20);
+
+    if (v != 0) {
+        if (v > 0) {
+            v -= 0x100;
+        } else {
+            v += 0x100;
+        }
+        *(s32*)(self + 0x20) = v;
+        return 0;
+    }
+    self[0x6E] = 0;
+    self[0x6F] = 0;
+    return 1;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B6A8);
 

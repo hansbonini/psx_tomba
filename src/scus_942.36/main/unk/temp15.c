@@ -30,7 +30,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005975C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059A40);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059B1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059B1C);
+void func_80059B1C(void)
+{
+    if (GAME.selectedArea == 0) {
+        func_80125C84();
+    } else {
+        func_8011F188();
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059B58);
 
@@ -38,7 +46,17 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059F7C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A074);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A108);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A108);
+void func_8005A108(u8 arg0)
+{
+    u8* p = func_80018694();
+
+    if (p != NULL) {
+        p[0] = 1;
+        p[2] = arg0;
+        func_8005A184(p);
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A148);
 void func_8005A148(u8 arg0)
