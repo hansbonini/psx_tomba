@@ -9,9 +9,23 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D0E4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D1B0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D20C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D20C);
+void func_8003D20C(void)
+{
+    D_800A53D8[1] = *(s32*)((u8*)D_8009E458 + 0x1190);
+    D_800A53AE = *(s32*)((u8*)D_8009E458 + 0x1194);
+    D_800A53DC[1] = *(s32*)((u8*)D_8009E458 + 0x1198);
+    D_8009E458->unk8A++;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D25C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D25C);
+void func_8003D25C(void)
+{
+    *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A53D8[1];
+    *(s32*)((u8*)D_8009E458 + 0x1194) = D_800A53AE;
+    *(s32*)((u8*)D_8009E458 + 0x1198) = D_800A53DC[1];
+    D_8009E458->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D2A8);
 
@@ -21,23 +35,53 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D648);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D6C0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D72C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D72C);
+void func_8003D72C(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* obj = (&D_8009E640)[*(s32*)((u8*)p + 0x1190)];
+
+    if (obj != NULL) {
+        *(s16*)(obj + 0x2E) = *(s32*)((u8*)p + 0x1194);
+    }
+    p->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D77C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D7CC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D824);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D824);
+void func_8003D824(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* obj = (&D_8009E640)[*(s32*)((u8*)p + 0x1190)];
+
+    if (obj != NULL) {
+        *(u8*)(obj + 0x0) = *(s32*)((u8*)p + 0x1194);
+    }
+    p->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D874);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D8EC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D920);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D920);
+void func_8003D920(void)
+{
+    *(s32*)((u8*)D_8009E458 + 0x1190) = (&D_8009C10C)[*(s32*)((u8*)D_8009E458 + 0x1190)];
+    D_8009E458->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D950);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D9C4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D9C4);
+void func_8003D9C4(void)
+{
+    *(s32*)((u8*)D_8009E458 + 0x1190) = (&D_8009C20C)[*(s32*)((u8*)D_8009E458 + 0x1190)];
+    D_8009E458->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D9F4);
 
@@ -87,9 +131,29 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E12C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E1A8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E1F8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E1F8);
+void func_8003E1F8(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* obj = (&D_8009E640)[*(s32*)((u8*)p + 0x1190)];
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E248);
+    if (obj != NULL) {
+        *(u8*)(obj + 0x69) = *(s32*)((u8*)p + 0x1194);
+    }
+    p->unk8A++;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E248);
+void func_8003E248(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* obj = (&D_8009E640)[*(s32*)((u8*)p + 0x1190)];
+
+    if (obj != NULL) {
+        *(u8*)(obj + 0x9C) = *(s32*)((u8*)p + 0x1194);
+    }
+    p->unk8A++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E298);
 void func_8003E298(void)
