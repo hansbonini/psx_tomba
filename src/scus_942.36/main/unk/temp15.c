@@ -1,6 +1,14 @@
 #include "common.h"
+#include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80057C3C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80057C3C);
+void func_80057C3C(u8* self, s16 arg1)
+{
+    *(s16*)(self + 0xAC) = arg1;
+    *(s32*)(self + 0x24) =
+        *(s32*)(*(u8**)(self + 0xA8) + arg1 * 4);
+    func_800229FC(self);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80057C74);
 
@@ -52,7 +60,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B1A4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B1F8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B350);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B350);
+void func_8005B350(u8* self)
+{
+    (&D_8007F988)[self[3]]();
+}
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/unk/temp15", D_800151E0);
 

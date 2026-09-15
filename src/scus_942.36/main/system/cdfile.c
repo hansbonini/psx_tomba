@@ -308,7 +308,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022474);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224B0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224CC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224CC);
+void func_800224CC(u8* self, s32 arg1)
+{
+    if (self[1] != 0) {
+        playSFX(arg1);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224FC);
 

@@ -164,7 +164,11 @@ void func_80018094(void)
     *(short* )0x1F800248 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800180C4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800180C4);
+void func_800180C4(void)
+{
+    memset(&D_800A38B8, 0, 0x84);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800180F0);
 void func_800180F0(void)
