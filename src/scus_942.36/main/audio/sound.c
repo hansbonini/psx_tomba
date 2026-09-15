@@ -73,7 +73,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020FAC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800210A8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
+void func_80021110(void)
+{
+    D_8009B074 = 1;
+    SsSeqSetVol(D_800A2790, 0, 0);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021148);
 

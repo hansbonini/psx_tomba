@@ -5,7 +5,19 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8004FD28);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8004FE24);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505B0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505B0);
+void func_800505B0(u8* self, u8 arg1)
+{
+    s16 v = *(s16*)(self + 0x98);
+
+    if (v != 0) {
+        v -= arg1;
+        *(s16*)(self + 0x98) = v;
+        if (v <= 0) {
+            *(s16*)(self + 0x98) = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505E8);
 

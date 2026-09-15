@@ -57,7 +57,19 @@ s32 func_8003B4D8(u8* src)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B510);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B574);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B574);
+void func_8003B574(s32 arg0)
+{
+    unkstruct_8009E458* p = D_8009E458;
+
+    if (arg0 == 0) {
+        *((u8*)p + 0x89) = 0;
+    } else if (arg0 >= 0) {
+        *((u8*)p + 0x89) = 2;
+    } else {
+        *((u8*)p + 0x89) = 1;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B5A4);
 void func_8003B5A4(void)
