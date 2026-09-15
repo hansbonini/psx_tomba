@@ -2304,6 +2304,8 @@ extern u8*  D_8007EB44;
 extern u8   D_8009BCDD;
 extern u8   D_8009BCA4;
 extern u8   D_8009BCDE;
+extern s16  D_800A2818;
+extern s16  D_8009C9F8;
 extern unkstruct_8009E458* D_8009E458;
 extern s32  D_8009E73C;
 extern u8*  D_8009E640;
