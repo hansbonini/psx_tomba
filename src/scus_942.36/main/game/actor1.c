@@ -47,7 +47,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80052100);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800521E0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800522B4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800522B4);
+void func_800522B4(void)
+{
+    func_80051090();
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800522D4);
 
@@ -95,7 +99,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053AF0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B94);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B94);
+void func_80053B94(void)
+{
+    func_80051284();
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053BB4);
 

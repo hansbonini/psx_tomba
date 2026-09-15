@@ -1,7 +1,68 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", compactOrderingTable);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", compactOrderingTable);
+void compactOrderingTable(u_long* ot)
+{
+    s32     n;
+    u_long* p;
+    u_long* hole;
+    u_long* next;
+    u_long  val;
+    u_long  cur;
+    u_long  prev;
+    int     differs;
+
+    n = 0x327;
+    hole = (u_long*)(((u_long)ot) & 0xFFFFFF);
+    p = hole;
+
+loop1:
+    val = *p;
+    prev = (u_long)(p - 1);
+    if ((*p) == prev) {
+        goto found;
+    }
+    val = (n--) == 0;
+    if (val) {
+        return;
+    }
+    p--;
+    goto loop1;
+
+found:
+    hole = p;
+    if ((n--) == 0) {
+        return;
+    }
+    p++;
+    p--;
+    p--;
+
+loop2:
+    val = *p;
+    cur = val;
+    prev = (u_long)(p - 1);
+    differs = cur != prev;
+    next = (u_long*)val;
+    if (differs) {
+        goto link;
+    }
+    if ((n--) == 0) {
+        return;
+    }
+    p = next;
+    goto loop2;
+
+link:
+    *hole = (u_long)p;
+    prev = (n--) == 0;
+    if (prev) {
+        return;
+    }
+    p--;
+    goto loop1;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", initTasks);
 void initTasks(void)

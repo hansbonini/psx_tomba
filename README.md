@@ -258,6 +258,7 @@ uploading it to decomp.me.
 
 - [Environment Setup](docs/setup.md)
 - [Game File Formats](docs/game-formats.md)
+- [CD File Loading](docs/cd-file-loading.md)
 - [File Analysis](docs/file-analysis.md)
 - [Function Analysis](docs/function-analysis.md)
 
