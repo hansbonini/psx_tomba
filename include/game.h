@@ -2164,6 +2164,7 @@ extern s32* D_1F800210;
 extern u16  D_1F80023E;
 extern s32* D_1F800214;
 extern u16  D_1F80023C;
+extern s16  D_1F80016A;
 extern s32* D_1F800218;
 extern s32* D_1F80021C;
 extern s32* D_1F800224;
