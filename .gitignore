@@ -1,4 +1,5 @@
 .sentry-native
+.vscode
 asm
 build
 expected
