@@ -1,0 +1,2748 @@
+{
+  "build_base": true,
+  "build_target": false,
+  "custom_make": "make",
+  "custom_args": [
+    "progress"
+  ],
+  "units": [
+    {
+      "name": "scus_942.36/main/main",
+      "base_path": "build/src/scus_942.36/main/main.c.o",
+      "target_path": "expected/asm/scus_942.36/main/main.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/audio/sound",
+      "base_path": "build/src/scus_942.36/main/audio/sound.c.o",
+      "target_path": "expected/asm/scus_942.36/main/audio/sound.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/actor1",
+      "base_path": "build/src/scus_942.36/main/game/actor1.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/actor1.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/actor2",
+      "base_path": "build/src/scus_942.36/main/game/actor2.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/actor2.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/entity",
+      "base_path": "build/src/scus_942.36/main/game/entity.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/entity.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/event",
+      "base_path": "build/src/scus_942.36/main/game/event.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/event.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/gameinit",
+      "base_path": "build/src/scus_942.36/main/game/gameinit.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/gameinit.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/inventory",
+      "base_path": "build/src/scus_942.36/main/game/inventory.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/inventory.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/itemspawn",
+      "base_path": "build/src/scus_942.36/main/game/itemspawn.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/itemspawn.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/menu",
+      "base_path": "build/src/scus_942.36/main/game/menu.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/menu.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/message",
+      "base_path": "build/src/scus_942.36/main/game/message.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/message.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/reward",
+      "base_path": "build/src/scus_942.36/main/game/reward.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/reward.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/actorrender1",
+      "base_path": "build/src/scus_942.36/main/render/actorrender1.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/actorrender1.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/actorrender2",
+      "base_path": "build/src/scus_942.36/main/render/actorrender2.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/actorrender2.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/actorrender3",
+      "base_path": "build/src/scus_942.36/main/render/actorrender3.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/actorrender3.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/camera",
+      "base_path": "build/src/scus_942.36/main/render/camera.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/camera.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/font",
+      "base_path": "build/src/scus_942.36/main/render/font.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/font.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/matrix",
+      "base_path": "build/src/scus_942.36/main/render/matrix.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/matrix.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/sprite",
+      "base_path": "build/src/scus_942.36/main/render/sprite.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/sprite.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/render/ui",
+      "base_path": "build/src/scus_942.36/main/render/ui.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/ui.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/boot",
+      "base_path": "build/src/scus_942.36/main/system/boot.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/boot.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/cdfile",
+      "base_path": "build/src/scus_942.36/main/system/cdfile.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/cdfile.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/gfxinit",
+      "base_path": "build/src/scus_942.36/main/system/gfxinit.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/gfxinit.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/lz",
+      "base_path": "build/src/scus_942.36/main/system/lz.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/lz.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/resource",
+      "base_path": "build/src/scus_942.36/main/system/resource.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/resource.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/task",
+      "base_path": "build/src/scus_942.36/main/system/task.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/task.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp10",
+      "base_path": "build/src/scus_942.36/main/unk/temp10.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp10.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp14",
+      "base_path": "build/src/scus_942.36/main/unk/temp14.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp14.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp15",
+      "base_path": "build/src/scus_942.36/main/unk/temp15.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp15.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp5",
+      "base_path": "build/src/scus_942.36/main/unk/temp5.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp5.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp6",
+      "base_path": "build/src/scus_942.36/main/unk/temp6.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp6.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp7",
+      "base_path": "build/src/scus_942.36/main/unk/temp7.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp7.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp8",
+      "base_path": "build/src/scus_942.36/main/unk/temp8.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp8.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp9a",
+      "base_path": "build/src/scus_942.36/main/unk/temp9a.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp9a.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/unk/temp9b",
+      "base_path": "build/src/scus_942.36/main/unk/temp9b.c.o",
+      "target_path": "expected/asm/scus_942.36/main/unk/temp9b.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/video/movie",
+      "base_path": "build/src/scus_942.36/main/video/movie.c.o",
+      "target_path": "expected/asm/scus_942.36/main/video/movie.s.o",
+      "metadata": {
+        "progress_categories": [
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/overlays/optsub00/optsub00",
+      "base_path": "build/src/scus_942.36/overlays/optsub00/optsub00.c.o",
+      "target_path": "expected/asm/scus_942.36/overlays/optsub00/optsub00.s.o",
+      "metadata": {
+        "progress_categories": [
+          "overlays"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a08",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a08.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a08.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a09",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a09.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a09.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a10",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a10.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a10.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a11",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a11.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a11.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a12",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a12.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a12.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a13",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a13.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a13.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a14",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a14.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a14.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a15",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a15.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a15.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a16",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a16.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a16.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a23",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a23.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a23.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a24",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a24.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a24.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a25",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a25.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a25.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a36",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a36.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a36.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a37",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a37.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a37.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a50",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a50.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a50.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a51",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a51.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a51.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a52",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a52.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a52.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a53",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a53.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a53.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a54",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a54.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a54.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a65",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a65.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a65.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a66",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a66.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a66.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a67",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a67.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a67.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a69",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a69.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a69.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a91",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a91.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a91.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/a94",
+      "base_path": "build/src/scus_942.36/psyq/libapi/a94.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/a94.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/c112",
+      "base_path": "build/src/scus_942.36/psyq/libapi/c112.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/c112.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/c68",
+      "base_path": "build/src/scus_942.36/psyq/libapi/c68.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/c68.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/func_8005B4CC",
+      "base_path": "build/src/scus_942.36/psyq/libapi/func_8005B4CC.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/func_8005B4CC.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/func_8005B668",
+      "base_path": "build/src/scus_942.36/psyq/libapi/func_8005B668.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/func_8005B668.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/l10",
+      "base_path": "build/src/scus_942.36/psyq/libapi/l10.hasm.s.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/l10.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/bcopy",
+      "base_path": "build/src/scus_942.36/psyq/libc2/bcopy.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/bcopy.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/bzero",
+      "base_path": "build/src/scus_942.36/psyq/libc2/bzero.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/bzero.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/ctype",
+      "base_path": "build/src/scus_942.36/psyq/libc2/ctype.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/ctype.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/memchr",
+      "base_path": "build/src/scus_942.36/psyq/libc2/memchr.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/memchr.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/memcpy",
+      "base_path": "build/src/scus_942.36/psyq/libc2/memcpy.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/memcpy.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/memmove",
+      "base_path": "build/src/scus_942.36/psyq/libc2/memmove.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/memmove.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/memset",
+      "base_path": "build/src/scus_942.36/psyq/libc2/memset.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/memset.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/printf",
+      "base_path": "build/src/scus_942.36/psyq/libc2/printf.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/printf.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/prnt",
+      "base_path": "build/src/scus_942.36/psyq/libc2/prnt.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/prnt.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/putchar",
+      "base_path": "build/src/scus_942.36/psyq/libc2/putchar.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/putchar.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/puts",
+      "base_path": "build/src/scus_942.36/psyq/libc2/puts.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/puts.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/rand",
+      "base_path": "build/src/scus_942.36/psyq/libc2/rand.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/rand.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/setjmp",
+      "base_path": "build/src/scus_942.36/psyq/libc2/setjmp.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/setjmp.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/sprintf",
+      "base_path": "build/src/scus_942.36/psyq/libc2/sprintf.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/sprintf.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strcat",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strcat.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strcat.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strcmp",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strcmp.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strcmp.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strcpy",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strcpy.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strcpy.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strlen",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strlen.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strlen.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strncat",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strncat.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strncat.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strncpy",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strncpy.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strncpy.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libc2/strstr",
+      "base_path": "build/src/scus_942.36/psyq/libc2/strstr.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libc2/strstr.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/a74",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/a74.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/a75",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/a75.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/a76",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/a76.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/a78",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/a78.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/a80",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/a80.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/c171",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/c171.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/c172",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/c172.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/card",
+      "base_path": "build/src/scus_942.36/psyq/libcard/card.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/card.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/init",
+      "base_path": "build/src/scus_942.36/psyq/libcard/init.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/init.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcard/patch",
+      "base_path": "build/src/scus_942.36/psyq/libcard/patch.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcard/patch.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/a07",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/a07.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/bios",
+      "base_path": "build/src/scus_942.36/psyq/libcd/bios.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/bios.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/cdread",
+      "base_path": "build/src/scus_942.36/psyq/libcd/cdread.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/cdread.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/cdread2",
+      "base_path": "build/src/scus_942.36/psyq/libcd/cdread2.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/cdread2.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/cdrom",
+      "base_path": "build/src/scus_942.36/psyq/libcd/cdrom.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/cdrom.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_002",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_002.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_002.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_003",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_003.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_003.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_005",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_005.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_005.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_007",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_007.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_007.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_008",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_008.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_008.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_009",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_009.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_009.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_010",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_010.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_010.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/c_011",
+      "base_path": "build/src/scus_942.36/psyq/libcd/c_011.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/c_011.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/event",
+      "base_path": "build/src/scus_942.36/psyq/libcd/event.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/event.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libcd/sys",
+      "base_path": "build/src/scus_942.36/psyq/libcd/sys.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libcd/sys.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libetc/intr",
+      "base_path": "build/src/scus_942.36/psyq/libetc/intr.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libetc/intr.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libetc/intr_dma",
+      "base_path": "build/src/scus_942.36/psyq/libetc/intr_dma.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libetc/intr_dma.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libetc/intr_vb",
+      "base_path": "build/src/scus_942.36/psyq/libetc/intr_vb.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libetc/intr_vb.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libetc/vmode",
+      "base_path": "build/src/scus_942.36/psyq/libetc/vmode.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libetc/vmode.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libetc/vsync",
+      "base_path": "build/src/scus_942.36/psyq/libetc/vsync.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libetc/vsync.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgpu/c73",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libgpu/c73.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgpu/ext",
+      "base_path": "build/src/scus_942.36/psyq/libgpu/ext.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgpu/ext.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgpu/prim",
+      "base_path": "build/src/scus_942.36/psyq/libgpu/prim.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgpu/prim.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgpu/sys",
+      "base_path": "build/src/scus_942.36/psyq/libgpu/sys.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgpu/sys.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgpu/tmd",
+      "base_path": "build/src/scus_942.36/psyq/libgpu/tmd.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgpu/tmd.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/cor_05",
+      "base_path": "build/src/scus_942.36/psyq/libgte/cor_05.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/cor_05.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/fgo_04",
+      "base_path": "build/src/scus_942.36/psyq/libgte/fgo_04.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/fgo_04.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/fgo_05",
+      "base_path": "build/src/scus_942.36/psyq/libgte/fgo_05.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/fgo_05.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/fgo_06",
+      "base_path": "build/src/scus_942.36/psyq/libgte/fgo_06.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/fgo_06.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/fog_01",
+      "base_path": "build/src/scus_942.36/psyq/libgte/fog_01.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/fog_01.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/geo_00",
+      "base_path": "build/src/scus_942.36/psyq/libgte/geo_00.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/geo_00.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/geo_01",
+      "base_path": "build/src/scus_942.36/psyq/libgte/geo_01.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/geo_01.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/msc00",
+      "base_path": "build/src/scus_942.36/psyq/libgte/msc00.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/msc00.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/msc01",
+      "base_path": "build/src/scus_942.36/psyq/libgte/msc01.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/msc01.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/mtx_000",
+      "base_path": "build/src/scus_942.36/psyq/libgte/mtx_000.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/mtx_000.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/mtx_09",
+      "base_path": "build/src/scus_942.36/psyq/libgte/mtx_09.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/mtx_09.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/mtx_12",
+      "base_path": "build/src/scus_942.36/psyq/libgte/mtx_12.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/mtx_12.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/ratan",
+      "base_path": "build/src/scus_942.36/psyq/libgte/ratan.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/ratan.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/reg10",
+      "base_path": "build/src/scus_942.36/psyq/libgte/reg10.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/reg10.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/reg11",
+      "base_path": "build/src/scus_942.36/psyq/libgte/reg11.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/reg11.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/reg12",
+      "base_path": "build/src/scus_942.36/psyq/libgte/reg12.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/reg12.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libgte/reg13",
+      "base_path": "build/src/scus_942.36/psyq/libgte/reg13.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libgte/reg13.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpress/libpress",
+      "base_path": "build/src/scus_942.36/psyq/libpress/libpress.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpress/libpress.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpress/vlc",
+      "base_path": "build/src/scus_942.36/psyq/libpress/vlc.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpress/vlc.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ccadsr",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ccadsr.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ccadsr.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_0",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_0.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_0.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_10",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_10.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_10.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_100",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_100.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_100.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_101",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_101.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_101.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_121",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_121.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_121.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_6",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_6.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_6.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_64",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_64.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_64.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_7",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_7.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_7.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_91",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_91.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_91.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_98",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_98.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_98.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cc_99",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cc_99.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cc_99.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/cres",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/cres.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/cres.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/decres",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/decres.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/decres.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_0",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_0.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_0.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_1",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_1.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_1.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_10",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_10.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_10.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_11",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_11.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_11.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_12",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_12.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_12.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_13",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_13.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_13.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_14",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_14.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_14.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_15",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_15.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_15.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_16",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_16.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_16.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_2",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_2.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_2.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_3",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_3.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_3.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_4",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_4.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_4.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_5",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_5.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_5.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_6",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_6.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_6.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_7",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_7.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_7.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_8",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_8.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_8.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/de_9",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/de_9.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/de_9.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/midibend",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/midibend.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/midibend.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/midicc",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/midicc.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/midicc.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/midimeta",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/midimeta.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/midimeta.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/midinote",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/midinote.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/midinote.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/midiprog",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/midiprog.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/midiprog.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/midiread",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/midiread.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/midiread.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/miditime",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/miditime.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/miditime.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/next",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/next.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/next.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/pause",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/pause.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/pause.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/play",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/play.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/play.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/playmode",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/playmode.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/playmode.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/replay",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/replay.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/replay.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/seqinit",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/seqinit.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/seqinit.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/sscall",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/sscall.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/sscall.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssclose",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssclose.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssclose.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssinit",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssinit.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssinit.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssloop",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssloop.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssloop.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssopenq",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssopenq.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssopenq.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssplay",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssplay.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssplay.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/sssmv",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/sssmv.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/sssmv.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssstart",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssstart.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssstart.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssstop",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssstop.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssstop.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/sstable",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/sstable.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/sstable.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/sstick",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/sstick.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/sstick.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ssvol",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ssvol.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ssvol.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/tempo",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/tempo.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/tempo.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_cp",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_cp.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_cp.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_gpa",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_gpa.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_gpa.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_gva",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_gva.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_gva.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_keyv",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_keyv.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_keyv.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_rdel",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_rdel.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_rdel.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_rdep",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_rdep.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_rdep.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_rev",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_rev.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_rev.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_rfb",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_rfb.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_rfb.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_roff",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_roff.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_roff.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_ron",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_ron.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_ron.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/ut_sva",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/ut_sva.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/ut_sva.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_aloc1",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_aloc1.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_aloc1.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_aloc2",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_aloc2.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_aloc2.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_don",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_don.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_don.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_f",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_f.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_f.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_init",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_init.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_init.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_key",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_key.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_key.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_no1",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_no1.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_no1.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_noff",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_noff.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_noff.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_nowof",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_nowof.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_nowof.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_nowon",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_nowon.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_nowon.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_pb",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_pb.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_pb.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_seq",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_seq.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_seq.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_stav",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_stav.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_stav.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_vol",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_vol.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_vol.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vm_vsu",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vm_vsu.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vm_vsu.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vs_mono",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vs_mono.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vs_mono.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vs_srv",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vs_srv.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vs_srv.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vs_vab",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vs_vab.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vs_vab.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vs_vfb",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vs_vfb.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vs_vfb.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsnd/vs_vh",
+      "base_path": "build/src/scus_942.36/psyq/libsnd/vs_vh.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsnd/vs_vh.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/spu",
+      "base_path": "build/src/scus_942.36/psyq/libspu/spu.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/spu.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/sr_gaks",
+      "base_path": "build/src/scus_942.36/psyq/libspu/sr_gaks.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/sr_gaks.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_crwa",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_crwa.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_crwa.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_dcb",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_dcb.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_dcb.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_ini",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_ini.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_ini.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_it",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_it.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_it.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_itc",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_itc.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_itc.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_m_f",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_m_f.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_m_f.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_m_init",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_m_init.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_m_init.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_m_m",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_m_m.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_m_m.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_q",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_q.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_q.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_r",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_r.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_r.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_rrwa",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_rrwa.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_rrwa.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_sav",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_sav.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_sav.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_sca",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_sca.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_sca.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_sk",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_sk.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_sk.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_snv",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_snv.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_snv.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_sr",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_sr.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_sr.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_srmp",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_srmp.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_srmp.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_srv",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_srv.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_srv.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libspu/s_stsa",
+      "base_path": "build/src/scus_942.36/psyq/libspu/s_stsa.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libspu/s_stsa.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "main"
+        ]
+      }
+    }
+  ],
+  "progress_categories": [
+    {
+      "id": "sdk",
+      "name": "Psy-Q SDK"
+    },
+    {
+      "id": "main",
+      "name": "Main Executable"
+    },
+    {
+      "id": "overlays",
+      "name": "Overlays"
+    }
+  ]
+}

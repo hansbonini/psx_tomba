@@ -247,19 +247,49 @@ INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010008);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018954);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018BC8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018BC8);
+void func_80018BC8(s32 arg0)
+{
+    *--D_1F800218 = arg0;
+    D_1F800244++;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C04);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C04);
+void func_80018C04(s32 arg0)
+{
+    *--D_1F80021C = arg0;
+    D_1F800246++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C40);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C8C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C8C);
+void func_80018C8C(s32 arg0)
+{
+    *--D_1F800224 = arg0;
+    D_1F80024C++;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018CC8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018CC8);
+void func_80018CC8(s32 arg0)
+{
+    *--D_1F800230 = arg0;
+    D_1F800242++;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D04);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D04);
+void func_80018D04(s32 arg0)
+{
+    *--D_1F800228 = arg0;
+    D_1F800248++;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D40);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D40);
+void func_80018D40(s32 arg0)
+{
+    *--D_1F80022C = arg0;
+    D_1F800240++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D7C);
 void func_80018D7C(void)

@@ -919,6 +919,21 @@ typedef struct scratchpad {
 
 /* Item definition entry, reached through D_8007E6E4[D_8007E61C[item_id]].
    Holds the sprite/CLUT/animation description for one item. */
+/* Cabecalho de arquivo do CD, apontado pela entrada da fila em D_8009E748.
+   Derivado de func_80021340, a unica leitora da FileLinkArray (D_800791A0):
+   a posicao de seek sai de &D_800791A0 + fileId * 8. */
+typedef struct cdFileHeader {
+    /* 0x00 */ s16 fileId;      /* indexa a FileLinkArray */
+    /* 0x02 */ u8  unk2;
+    /* 0x03 */ u8  subType;     /* nibble alto: 0x10 ou 0x90 */
+    /* 0x04 */ u8  unk4[4];
+    /* 0x08 */ s16 x;           /* destino em VRAM, quando o tipo e grafico */
+    /* 0x0A */ s16 y;
+    /* 0x0C */ s16 w;
+    /* 0x0E */ s16 h;           /* tambem indexa D_80077D50 por h * 8 */
+    /* 0x10 */ u32 flags;       /* nibble baixo = tipo; bit 0x10 = qual buffer */
+} cdFileHeader;
+
 typedef struct itemDef {
     /* 0x00 */ u_char unk0;
     /* 0x01 */ u_char unk1;
@@ -2139,6 +2154,19 @@ extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
 extern int D_1F8001A0;
 extern int D_1F8002C8[];
+extern s32* D_1F800218;
+extern s32* D_1F80021C;
+extern s32* D_1F800224;
+extern s32* D_1F800228;
+extern s32* D_1F80022C;
+extern s32* D_1F800230;
+extern u16  D_1F800240;
+extern u16  D_1F800242;
+extern u16  D_1F800244;
+extern u16  D_1F800246;
+extern u16  D_1F800248;
+extern u16  D_1F80024C;
+extern s16  D_1F8003A8;
 extern short D_1F8003B6;
 
 /* --- RAM / ROM data 0x8001____ --- */
@@ -2157,10 +2185,12 @@ extern u_char EVENT_COMPLETE_AP_TABLE;
 extern int D_80077754;
 extern int D_80077758;
 extern u_char D_8007775C[];
+extern int  D_80077D50;
 extern u_char D_80077FA8;
 extern short D_80078F80;
 extern int D_8007912C[];
 extern int D_800791A0; // FileLinkArray
+extern int  D_800791A4;
 extern u_short D_8007B290;
 extern int D_8007B294;
 extern int D_8007B2F4[];
@@ -2209,9 +2239,13 @@ extern char D_8009BCDB;
 extern u_char D_8009BCDF;
 extern short D_8009BCEA;
 extern u_char D_8009C3F8;
+extern int  D_8009C658;
+extern int  D_8009C65C;
+extern int  D_8009C758;
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
+extern int  D_8009C8B0;
 extern short D_8009C940;
 extern volatile u_short D_8009C9D8;
 extern short D_8009C9DA;
@@ -2241,6 +2275,7 @@ extern long MEMCARD_SW_TIMEOUT;
 extern long MEMCARD_SW_NEW_DEVICE;
 extern short D_8009E638;
 extern u_short D_8009E744;
+extern int  D_8009E748;
 extern int D_8009EB4C;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;

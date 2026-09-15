@@ -178,6 +178,7 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/$(notdir $1).ld \
 		-T $(LINKER_DIR)/undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(notdir $1).txt \
+		$(if $(MANUAL_SYMS),-T $(MANUAL_SYMS)) \
 		-o $$@
 endef
 
@@ -203,6 +204,7 @@ TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 SYMBOLS_DIR  := symbols/$(BASE_DIR)
 SYMBOL_FILES := $(wildcard $(SYMBOLS_DIR)/*.txt)
+MANUAL_SYMS  := $(wildcard $(SYMBOLS_DIR)/undefined_syms.txt)
 LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(notdir $(TARGET_IN))))
 
 # Rules
@@ -262,7 +264,10 @@ permuter_asm    = $(shell find $(ASM_DIR)/$(BASE_DIR)/nonmatchings -name '$(1).s
 
 permuter-setup:
 	@test -d $(PERMUTER) || git clone --depth 1 https://github.com/simonlindholm/decomp-permuter $(PERMUTER)
-	$(PYTHON) -m pip install --upgrade pynacl toml Levenshtein
+	@# distros PEP 668 (Ubuntu 24.04+) recusam o install global; cai para --user
+	$(PYTHON) -m pip install --upgrade pynacl toml Levenshtein \
+	  || $(PYTHON) -m pip install --upgrade --user pynacl toml Levenshtein \
+	  || $(PYTHON) -m pip install --upgrade --user --break-system-packages pynacl toml Levenshtein
 
 permuter-import:
 	@test -n "$(FUNC)" || { echo 'usage: make permuter-import FUNC=<function> SRC=<file.c>'; exit 1; }
