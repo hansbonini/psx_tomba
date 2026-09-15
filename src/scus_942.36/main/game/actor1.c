@@ -5,7 +5,19 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8004FD28);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8004FE24);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505B0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505B0);
+void func_800505B0(u8* self, u8 arg1)
+{
+    s16 v = *(s16*)(self + 0x98);
+
+    if (v != 0) {
+        v -= arg1;
+        *(s16*)(self + 0x98) = v;
+        if (v <= 0) {
+            *(s16*)(self + 0x98) = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505E8);
 
@@ -89,13 +101,37 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005368C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053808);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800539E0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800539E0);
+void func_800539E0(void)
+{
+    if (GAME.selectedArea == 0) {
+        func_801242E8();
+    } else {
+        func_8011F158();
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A1C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A1C);
+void func_80053A1C(void)
+{
+    if (GAME.selectedArea == 0) {
+        func_80124CC8();
+    } else {
+        func_8011F218();
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A58);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053AF0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053AF0);
+void func_80053AF0(void)
+{
+    if (GAME.selectedArea == 1) {
+        func_80123748();
+    } else {
+        func_8011D178();
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
 

@@ -9,7 +9,14 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001F6D4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FAE4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FCE4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FCE4);
+s32 func_8001FCE4(u16 arg0)
+{
+    u8 a = (&D_800778E4)[arg0 * 2];
+    u8 b = (&D_800778E5)[arg0 * 2];
+
+    return (&D_80077AEC)[a] + b * 8;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD20);
 
@@ -73,9 +80,19 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020FAC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800210A8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
+void func_80021110(void)
+{
+    D_8009B074 = 1;
+    SsSeqSetVol(D_800A2790, 0, 0);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021148);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021148);
+void func_80021148(void)
+{
+    D_8009B074 = 0;
+    SsSeqSetVol(D_800A2790, D_8009B078, D_8009B078);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021180);
 void func_80021180(void)

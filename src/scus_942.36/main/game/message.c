@@ -1,11 +1,37 @@
 #include "common.h"
 #include "game.h"
 
+typedef struct msgBox {
+    /* 0x00 */ s16 unk0;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+} msgBox;
+
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002E964);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB3C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB3C);
+void func_8002EB3C(u8* self)
+{
+    *(void**)(self + 0x24) = &D_80014C94;
+    func_800229FC(self);
+    self[4] = 1;
+    self[5] = 0;
+    self[6] = 0;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB80);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EB80);
+void func_8002EB80(u8* self)
+{
+    *(void**)(self + 0x24) = &D_80014C8C;
+    func_800229FC(self);
+    self[4] = 1;
+    self[5] = 1;
+    self[6] = 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002EBC4);
 
@@ -23,7 +49,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F404);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F56C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F7C8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F7C8);
+void func_8002F7C8(u8* self)
+{
+    (&D_8007C848)[self[3]]();
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F804);
 
@@ -31,9 +61,27 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F948);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002FA24);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_80030734);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_80030734);
+void func_80030734(s32 arg0, s32 arg1, s16 arg2, s16 arg3)
+{
+    msgBox box;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8003076C);
+    box.unk2 = arg2;
+    box.unk6 = arg3;
+    box.unkA = 0;
+    func_80030800(arg0, arg1, &box, 0, -1);
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8003076C);
+void func_8003076C(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4)
+{
+    msgBox box;
+
+    box.unk2 = arg2;
+    box.unk6 = arg3;
+    box.unkA = 0;
+    func_80030800(arg0, arg1, &box, 0, arg4);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_800307AC);
 void func_800307AC(s32 arg0, s32 arg1, s32 arg2)
