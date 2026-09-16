@@ -47,9 +47,25 @@ void func_80041904(short arg0, short arg1, int arg2)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041940);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041D24);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041D24);
+void func_80041D24(void)
+{
+    if (GAME.selectedArea == 0) {
+        func_80122688();
+    } else if (GAME.selectedArea == 4) {
+        func_8011D498();
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041D6C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041D6C);
+void func_80041D6C(void)
+{
+    if (GAME.selectedArea == 0) {
+        func_8012298C();
+    } else if (GAME.selectedArea == 4) {
+        func_8011D79C();
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041DB4);
 

@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-#include "psyq/libgte.h"
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/resource", D_80013798);
 
@@ -150,9 +149,31 @@ void func_8003B5A4(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B5D8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B68C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B68C);
+void func_8003B68C(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8*  q = (u8*)(p->unk8A + (s32)D_8009C974);
+    s32* a = (s32*)(q[1] * 4 + (s32)p + 0x1090);
+    s32* b = (s32*)(q[2] * 4 + (s32)p + 0x1090);
+    s32  x = *b;
+    s32  y = *a;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B6E4);
+    *a = x;
+    *b = y;
+    p->unk8A += 3;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B6E4);
+void func_8003B6E4(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* script = D_8009C974;
+    s32 idx = script[p->unk8A + 1];
+
+    *(s32*)(idx * 4 + (s32)p + 0x1090) = func_80022570();
+    p->unk8A += 2;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B750);
 

@@ -133,7 +133,17 @@ void func_80053AF0(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
+void func_80053B30(u8* arg0, u8* arg1)
+{
+    s32* q;
+
+    arg1[0x69] = 0;
+    if (func_80051284() == 1) {
+        q = *(s32**)(arg0 + 0x40);
+        *q = *q + (*(s16*)(arg1 + 0x80) << 8);
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B94);
 void func_80053B94(void)

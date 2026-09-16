@@ -128,7 +128,28 @@ void func_8003D920(void)
     D_8009E458->unk8A++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D950);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D950);
+void func_8003D950(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* obj = (&D_8009E640)[*(s32*)((u8*)p + 0x1190)];
+    u8  k;
+
+    if (obj != NULL) {
+        k = obj[2] & 0x7F;
+        switch (k) {
+        case 0x18:
+            *(s32*)((u8*)p + 0x1190) = obj[0x68];
+            break;
+        case 0x19:
+            *(s32*)((u8*)p + 0x1190) = obj[0x68];
+            break;
+        }
+    } else {
+        *(s32*)((u8*)p + 0x1190) = 0;
+    }
+    p->unk8A++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D9C4);
 void func_8003D9C4(void)
@@ -146,9 +167,38 @@ void func_8003D9F4(void)
     q->unk8A++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DA28);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DA28);
+void func_8003DA28(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DA9C);
+    if (D_8009C618 != 3) {
+        func_800EBD5C(&D_800A5398, *(s16*)((u8*)D_800A53D8 + 2), D_800A53AE);
+    }
+    *(s32*)((u8*)p + 0x1190) = D_800A5400;
+    p->unk8A++;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DA9C);
+void func_8003DA9C(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+
+    if (D_8009C618 != 3) {
+        switch (*(s32*)((u8*)p + 0x1190)) {
+        case 0:
+            D_800A5403 = 0;
+            break;
+        case 1:
+            D_800A5403 = 1;
+            break;
+        default:
+            D_800A5403 = 2;
+            break;
+        }
+    }
+    p->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DB04);
 
