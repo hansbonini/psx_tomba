@@ -13,7 +13,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80034AB8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80034C14);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036440);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036440);
+void func_80036440(u8* self)
+{
+    switch (self[5]) {
+    case 0:
+        func_80034C14(self);
+        break;
+    case 1:
+        func_80034C14(self);
+        break;
+    case 2:
+        func_80034C14(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036494);
 
@@ -94,7 +108,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036DF8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036F98);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80038358);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80038358);
+void func_80038358(u8* self)
+{
+    switch (self[5]) {
+    case 0:
+        func_80036F98(self);
+        break;
+    case 1:
+        func_80036F98(self);
+        break;
+    case 2:
+        func_80036F98(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_800383AC);
 

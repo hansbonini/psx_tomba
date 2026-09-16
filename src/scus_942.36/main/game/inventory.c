@@ -450,7 +450,20 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DEC4);
 void func_8002E3A8(void) {
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002E3B0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002E3B0);
+void func_8002E3B0(u8 arg0)
+{
+    u8* p;
+
+    if (D_8009BCBC == 0) {
+        p = allocObjectLayer3();
+        if (p != NULL) {
+            p[0] = 1;
+            p[2] = 0xD;
+            p[0xC] = arg0;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002E404);
 

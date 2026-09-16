@@ -1,17 +1,63 @@
 #include "common.h"
 #include "game.h"
+#include "psyq/libgte.h"
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/resource", D_80013798);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B0D4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B214);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B214);
+s32 func_8003B214(s32 arg0, s16* arg1)
+{
+    SVECTOR v;
+    s32 sxy;
+    s32 p;
+    s32 flag;
+    s32 v2;
+    s32 r;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B26C);
+    v.vx = 0;
+    v.vy = 0;
+    v.vz = 0;
+    r = RotTransPers(&v, &sxy, &p, &flag);
+    v2 = sxy;
+    arg1[0] = v2;
+    arg1[1] = v2 >> 16;
+    return r;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B26C);
+void func_8003B26C(s32 arg0)
+{
+    u8* base = *(u8**)0x1F800354;
+
+    lzDecompress(base + *(s32*)(base + (arg0 << 2)), (byte*)0x801FBE00);
+    loadTIM((u_long*)0x801FBE00, 0x20, 0, 0x80, 0x1EF);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B2C8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B410);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B410);
+s32 func_8003B410(u8* self, s32 idx)
+{
+    s32 i;
+    u16 e;
+
+    if (self[0x88] != 0) {
+        return 1;
+    }
+    if (*(u16*)(self + idx * 2) == 0) {
+        return 2;
+    }
+    self[0x88] = 1;
+    e = *(u16*)(self + idx * 2);
+    *(u16*)(self + 0x8C) = 0;
+    *(u16*)(self + 0x8A) = e - 1;
+    for (i = 0x4F; i >= 0; i--) {
+        *(s32*)(self + i * 4 + 0x1090) = 0;
+    }
+    return 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B478);
 void func_8003B478(u8* self)
@@ -57,7 +103,24 @@ s32 func_8003B4D8(u8* src)
     return *(s32*)buf;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B510);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B510);
+s32 func_8003B510(u8* src, u8 kind)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8  buf[4];
+    u8* d;
+
+    if (kind == 0) {
+        return *(s32*)((u8*)p + src[0] * 4 + 0x1090);
+    }
+    d = buf;
+    do {
+        *d = *src;
+        d++;
+        src++;
+    } while ((s32)d < (s32)&buf[4]);
+    return *(s32*)buf;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B574);
 void func_8003B574(s32 arg0)
@@ -144,7 +207,18 @@ void func_8003B860(u8 op)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B968);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BA00);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BA00);
+void func_8003BA00(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* script = D_8009C974;
+
+    s32 v = p->unk8A + 2;
+
+    *(s32*)((u8*)p + *(u16*)((u8*)p + 0x8C) * 4 + 0x90) = v;
+    *(u16*)((u8*)p + 0x8C) = *(u16*)((u8*)p + 0x8C) + 1;
+    p->unk8A = *(u16*)((u8*)p + script[p->unk8A + 1] * 2) - 1;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BA60);
 void func_8003BA60(void)
@@ -173,7 +247,21 @@ void func_8003BA94(void)
     p->unk8A++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BAF0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BAF0);
+void func_8003BAF0(void)
+{
+    unkstruct_8009E458* p = D_8009E458;
+    u8* q = (u8*)p;
+    s32 i;
+    u16 n;
+
+    for (i = 0x3F; i >= 0; i--) {
+        n = *(u16*)(q + 0x8C) - 1;
+        *(u16*)(q + 0x8C) = n;
+        *(s32*)(q + i * 4 + 0x1090) = *(s32*)(q + n * 4 + 0x90);
+    }
+    p->unk8A++;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BB48);
 

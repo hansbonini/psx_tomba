@@ -83,7 +83,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005AA98);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005AF70);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B1A4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B1A4);
+void func_8005B1A4(u8* self)
+{
+    if (self[4] == 0) {
+        *(s16*)(self + 0xC) = GAME.selectedArea;
+        self[0xE] = D_8009BCCA;
+        self[4] = self[4] + 1;
+        func_8005B1F8(self);
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B1F8);
 

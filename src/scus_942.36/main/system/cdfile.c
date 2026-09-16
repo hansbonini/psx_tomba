@@ -2,6 +2,11 @@
 #include "game.h"
 //#include "psyq/libcd.h"
 
+s32 func_8002293C(s16 arg0, s16 arg1);
+s32 func_8002296C(s16 arg0, s16 arg1);
+s32 func_8002299C(s16 arg0, s16 arg1);
+s32 func_800229CC(s16 arg0, s16 arg1);
+
 #define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
 #define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
@@ -348,7 +353,14 @@ void func_800224CC(u8* self, s32 arg1)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224FC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022570);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022570);
+u16 func_80022570(void)
+{
+    s32 seed = D_1F800200 * 0x41C64E6D + 0x3039;
+
+    D_1F800200 = seed;
+    return seed / 0x10000;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800225B0);
 void func_800225B0(u8* self, u16 arg1)
@@ -434,11 +446,35 @@ void func_80022714(u8* self, s16* tab)
     *p += *tab << 8;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002273C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002273C);
+void func_8002273C(u8* self, s16 arg1, s16 arg2)
+{
+    s16 a = func_800229CC(arg1, arg2);
+    s16 b = func_8002299C(arg1, arg2);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800227A4);
+    *(s16*)(self + 0x80) = a;
+    *(s16*)(self + 0x82) = b;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002280C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800227A4);
+void func_800227A4(u8* self, s16 arg1, s16 arg2)
+{
+    s16 a = func_8002296C(arg1, arg2);
+    s16 b = func_8002293C(arg1, arg2);
+
+    *(s16*)(self + 0x80) = a;
+    *(s16*)(self + 0x82) = b;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002280C);
+void func_8002280C(u8* self, s16 arg1, s16 arg2)
+{
+    s16 a = func_8002296C(arg1, arg2);
+    s16 b = func_8002293C(arg1, arg2);
+
+    *(s16*)(self + 0x7C) = a;
+    *(s16*)(self + 0x7E) = b;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022874);
 void func_80022874(u8* self)

@@ -25,7 +25,13 @@ void func_80024624(u8* self)
     *(u16*)(self + 0x32) = row[1];
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_8002467C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_8002467C);
+void func_8002467C(u8* self)
+{
+    u16* row = (u16*)((&D_8007B680)[GAME.selectedArea] + D_8009BCCA * 8);
+
+    *(u16*)(self + 0x32) = row[3];
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_800246B0);
 
