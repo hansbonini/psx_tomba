@@ -1,13 +1,29 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_80024254);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_80024254);
+void func_80024254(void)
+{
+    u8*  row = (&D_8007C110)[GAME.selectedArea] + D_8009BCCA * 2;
+    u16* dst = (u16*)((u8*)&GAME + 0x964 + row[0] * 2);
+
+    *dst |= 1 << row[1];
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_800242AC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_800243E8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_80024624);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_80024624);
+void func_80024624(u8* self)
+{
+    u16* row = (u16*)((&D_8007B680)[GAME.selectedArea] + D_8009BCCA * 8);
+
+    *(u16*)(self + 0x2C) = *row++;
+    *(u16*)(self + 0x2E) = *row++;
+    *(u16*)(self + 0x30) = *row;
+    *(u16*)(self + 0x32) = row[1];
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_8002467C);
 

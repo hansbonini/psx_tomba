@@ -31,7 +31,19 @@ void addPlayerAP(int arg0) {
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029734);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029734);
+void func_80029734(s32 arg0, u8 arg1)
+{
+    u8* p;
+
+    (&D_800B07CC)[arg0] = arg1;
+    p = allocObjectLayer3();
+    if (p != NULL) {
+        p[0] = 1;
+        p[2] = 0x20;
+        p[0xC] = arg0;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", addItemToInventory);
 u_char addItemToInventory(u_long item_id, u_char qty, bool printMessage)
