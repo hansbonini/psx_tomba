@@ -1,6 +1,8 @@
 #include "common.h"
 #include "game.h"
 
+INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/resource", D_80013798);
+
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B0D4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B214);
@@ -91,7 +93,54 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B6E4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B750);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B860);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B860);
+void func_8003B860(u8 op)
+{
+    u8* script = D_8009C974;
+    unkstruct_8009E458* p = D_8009E458;
+    u8  cond;
+    u8  buf[2];
+    u8* d;
+    u8* s;
+
+    switch (op) {
+    case 8:
+        cond = 1;
+        break;
+    case 9:
+    case 11:
+        cond = (*((u8*)p + 0x89) == 0);
+        break;
+    case 10:
+    case 12:
+        cond = (*((u8*)p + 0x89) != 0);
+        break;
+    case 14:
+        cond = ((*((u8*)p + 0x89) ^ 2) == 0);
+        break;
+    case 16:
+        cond = ((*((u8*)p + 0x89) ^ 1) != 0);
+        break;
+    case 13:
+        cond = ((*((u8*)p + 0x89) ^ 1) == 0);
+        break;
+    case 15:
+        cond = ((*((u8*)p + 0x89) ^ 2) != 0);
+        break;
+    }
+    if (cond) {
+        d = buf;
+        s = (u8*)(p->unk8A + (s32)script + 1);
+        do {
+            *d = *s;
+            d++;
+            s++;
+        } while ((s32)d < (s32)&buf[2]);
+        p->unk8A = *(u16*)buf;
+    } else {
+        p->unk8A += 3;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B968);
 
@@ -145,5 +194,3 @@ void func_8003BF18(void)
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BF58);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/resource", D_80013798);

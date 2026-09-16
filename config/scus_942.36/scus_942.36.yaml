@@ -81,7 +81,7 @@ segments:
       - [0x3624, .rodata, main/unk/temp9a]
       - [0x3A64, .rodata, main/unk/temp9b]
       - [0x3F98, .rodata, main/system/resource]
-      - [0x3FA8, .rodata, main/unk/temp10]
+      - [0x4050, .rodata, main/unk/temp10]
       - [0x4164, .rodata, main/system/lz]
       - [0x42A0, .rodata, main/game/reward]
       - [0x4304, .rodata, main/game/itemspawn]
