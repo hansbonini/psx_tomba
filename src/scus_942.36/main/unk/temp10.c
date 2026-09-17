@@ -8,7 +8,7 @@ void func_8003C5A4(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* script = D_8009C974;
-    u8  op = script[p->unk8A];
+    u8  op = script[p->pc];
 
     if (op < 0x80) {
         func_8003C124(op);

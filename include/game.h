@@ -1016,12 +1016,17 @@ typedef struct unkstruct_80033FB0 {
 } unkstruct_80033FB0;
 
 typedef struct unkstruct_8009E458 {
-    byte data[0x8A];
-    u_short unk8A;
-    byte pad[0x1104];
-    short unk1190;
-    short unk1192;
-    short unk1194;
+    /* 0x0000 */ byte    data[0x88];
+    /* 0x0088 */ u_char  state;
+    /* 0x0089 */ u_char  cmpFlag;
+    /* 0x008A */ u_short pc;
+    /* 0x008C */ u_short sp;
+    /* 0x008E */ byte    unk8E[2];
+    /* 0x0090 */ int     stack[0x400];
+    /* 0x1090 */ int     vars[0x40];
+    /* 0x1190 */ short   unk1190;
+    /* 0x1192 */ short   unk1192;
+    /* 0x1194 */ short   unk1194;
 } unkstruct_8009E458;
 
 
@@ -2362,7 +2367,6 @@ extern u8*  D_1F8001D4;
 extern s16  D_1F8003B8;
 extern s16  D_1F8003BA;
 extern s32  D_8009BCBC;
-extern s32  D_1F8001E0;
 extern u8   D_8009E438;
 extern s8   D_8009C618;
 extern u8   D_800A5403;
@@ -2396,7 +2400,6 @@ extern u16  D_800A53B8;
 extern s32  D_8009BCFC;
 extern s32  D_1F800198;
 extern u8   D_800B0B88;
-extern u16  D_1F8001FC;
 extern u8   D_800A5438;
 extern u8   D_800A55C8;
 extern u8   D_800A57E4;

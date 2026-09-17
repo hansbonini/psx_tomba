@@ -127,11 +127,11 @@ void func_8003B574(s32 arg0)
     unkstruct_8009E458* p = D_8009E458;
 
     if (arg0 == 0) {
-        *((u8*)p + 0x89) = 0;
+        p->cmpFlag = 0;
     } else if (arg0 >= 0) {
-        *((u8*)p + 0x89) = 2;
+        p->cmpFlag = 2;
     } else {
-        *((u8*)p + 0x89) = 1;
+        p->cmpFlag = 1;
     }
 }
 
@@ -143,7 +143,7 @@ void func_8003B5A4(void)
 
     *(u32*)((u8*)p + 0x11D0) = n;
     if (n >= *(u32*)((u8*)p + 0x11D4)) {
-        *((u8*)p + 0x88) = 1;
+        p->state = 1;
     }
 }
 
@@ -153,7 +153,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B5D8);
 void func_8003B68C(void)
 {
     unkstruct_8009E458* p = D_8009E458;
-    u8*  q = (u8*)(p->unk8A + (s32)D_8009C974);
+    u8*  q = (u8*)(p->pc + (s32)D_8009C974);
     s32* a = (s32*)(q[1] * 4 + (s32)p + 0x1090);
     s32* b = (s32*)(q[2] * 4 + (s32)p + 0x1090);
     s32  x = *b;
@@ -161,7 +161,7 @@ void func_8003B68C(void)
 
     *a = x;
     *b = y;
-    p->unk8A += 3;
+    p->pc += 3;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B6E4);
@@ -169,10 +169,10 @@ void func_8003B6E4(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* script = D_8009C974;
-    s32 idx = script[p->unk8A + 1];
+    s32 idx = script[p->pc + 1];
 
     *(s32*)(idx * 4 + (s32)p + 0x1090) = func_80022570();
-    p->unk8A += 2;
+    p->pc += 2;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B750);
@@ -193,36 +193,36 @@ void func_8003B860(u8 op)
         break;
     case 9:
     case 11:
-        cond = (*((u8*)p + 0x89) == 0);
+        cond = (p->cmpFlag == 0);
         break;
     case 10:
     case 12:
-        cond = (*((u8*)p + 0x89) != 0);
+        cond = (p->cmpFlag != 0);
         break;
     case 14:
-        cond = ((*((u8*)p + 0x89) ^ 2) == 0);
+        cond = ((p->cmpFlag ^ 2) == 0);
         break;
     case 16:
-        cond = ((*((u8*)p + 0x89) ^ 1) != 0);
+        cond = ((p->cmpFlag ^ 1) != 0);
         break;
     case 13:
-        cond = ((*((u8*)p + 0x89) ^ 1) == 0);
+        cond = ((p->cmpFlag ^ 1) == 0);
         break;
     case 15:
-        cond = ((*((u8*)p + 0x89) ^ 2) != 0);
+        cond = ((p->cmpFlag ^ 2) != 0);
         break;
     }
     if (cond) {
         d = buf;
-        s = (u8*)(p->unk8A + (s32)script + 1);
+        s = (u8*)(p->pc + (s32)script + 1);
         do {
             *d = *s;
             d++;
             s++;
         } while ((s32)d < (s32)&buf[2]);
-        p->unk8A = *(u16*)buf;
+        p->pc = *(u16*)buf;
     } else {
-        p->unk8A += 3;
+        p->pc += 3;
     }
 }
 
@@ -234,11 +234,11 @@ void func_8003BA00(void)
     unkstruct_8009E458* p = D_8009E458;
     u8* script = D_8009C974;
 
-    s32 v = p->unk8A + 2;
+    s32 v = p->pc + 2;
 
-    *(s32*)((u8*)p + *(u16*)((u8*)p + 0x8C) * 4 + 0x90) = v;
-    *(u16*)((u8*)p + 0x8C) = *(u16*)((u8*)p + 0x8C) + 1;
-    p->unk8A = *(u16*)((u8*)p + script[p->unk8A + 1] * 2) - 1;
+    *(s32*)((u8*)p + p->sp * 4 + 0x90) = v;
+    p->sp = p->sp + 1;
+    p->pc = *(u16*)((u8*)p + script[p->pc + 1] * 2) - 1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BA60);
@@ -246,8 +246,8 @@ void func_8003BA60(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
-    *(u16*)((u8*)p + 0x8C) = *(u16*)((u8*)p + 0x8C) - 1;
-    p->unk8A = *(u16*)((u8*)p + *(u16*)((u8*)p + 0x8C) * 4 + 0x90);
+    p->sp = p->sp - 1;
+    p->pc = *(u16*)((u8*)p + p->sp * 4 + 0x90);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BA94);
@@ -265,7 +265,7 @@ void func_8003BA94(void)
         *(u16*)(q + 0x8C) = *(u16*)(q + 0x8C) + 1;
         s += 4;
     }
-    p->unk8A++;
+    p->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BAF0);
@@ -281,7 +281,7 @@ void func_8003BAF0(void)
         *(u16*)(q + 0x8C) = n;
         *(s32*)(q + i * 4 + 0x1090) = *(s32*)(q + n * 4 + 0x90);
     }
-    p->unk8A++;
+    p->pc++;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BB48);
@@ -294,11 +294,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BD28);
 void func_8003BF18(void)
 {
     unkstruct_8009E458* p = D_8009E458;
-    u8 v = D_8009C974[p->unk8A + 1];
+    u8 v = D_8009C974[p->pc + 1];
 
     *(s32*)((u8*)p + 0x11D0) = 0;
     *((u8*)p + 0x88) = 2;
-    p->unk8A += 2;
+    p->pc += 2;
     *(s32*)((u8*)p + 0x11D4) = v;
 }
 

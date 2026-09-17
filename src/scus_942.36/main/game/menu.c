@@ -449,7 +449,7 @@ void func_8001B2B4(void)
             temp_a0_2->unk4E.value++;
             func_800243E8();
             func_800246B0();
-            if (*(u_long*)&GAME.selectedArea == 6) {
+            if (*(u_long*)&GAME.selectedArea == AREA06_DIRTMOTOCROSS) {
                 func_8011AF40();
             } else {
                 func_80028EF4();
@@ -1156,30 +1156,30 @@ s32 func_8001CB54(void)
 
     var_a1 = 0;
     switch (GAME.selectedArea) {
-        case 7:
+        case AREA07_DWARFFORESTPURIFIED:
             if ((u16)D_8009EBA0 != 6) {
                 var_a1 = 1;
             }
             GAME.purifiedAreas |= GAME.selectedArea = 1;
             D_8009EBA0 = 6;
             break;
-        case 1:
+        case AREA01_DWARFFOREST:
             if (GAME.purifiedAreas & 1) {
                 if (*(u16*)&D_8009EBA0 != 6) {
                     var_a1 = 1;
                 }
                 D_8009EBA0 = 6;
             } else {
-            case 0:
-            case 6:
-            case 8:
-            case 9:
-            case 11:
-            case 13:
-            case 14:
+            case AREA00_VILLAGEOFALLBEGINNINGS:
+            case AREA06_DIRTMOTOCROSS:
+            case AREA08_BACCUSLAKE:
+            case AREA09_MUSHROOMVILLAGE:
+            case AREA11_VILLAGEOFCIVILIZATION:
+            case AREA13_PIGISLAND:
+            case AREA14_EVILPIGS:
             case 15:
-            case 16:
-            case 17:
+            case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
+            case AREA17_VILLAGEOFCIVILIZATIONIRONTOWER:
             case 18:
                 if (*(u16*)&D_8009EBA0 != 0) {
                     var_a1 = 1;
@@ -1201,7 +1201,7 @@ s32 func_8001CB54(void)
                 D_8009EBA0 = 0;
             }
             break;
-        case 2:
+        case AREA02_DWARFVILLAGE:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
@@ -1211,7 +1211,7 @@ s32 func_8001CB54(void)
                 GAME.selectedArea = 2;
             }
             break;
-        case 3:
+        case AREA03_PHOENIXMOUNTAIN:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
@@ -1224,14 +1224,14 @@ s32 func_8001CB54(void)
                 }
             }
             break;
-        case 12:
+        case AREA12_HAUNTEDMANSIONPURIFIED:
             if (*(u16*)&D_8009EBA0 != 8) {
                 var_a1 = 1;
             }
             GAME.purifiedAreas |= 8, GAME.selectedArea = 4;
             D_8009EBA0 = 8;
             break;
-        case 4:
+        case AREA04_HAUNTEDMANSION:
             if (GAME.purifiedAreas & 8) {
                 if (*(u16*)&D_8009EBA0 != 8) {
                     var_a1 = 1;
@@ -1244,7 +1244,7 @@ s32 func_8001CB54(void)
                 D_8009EBA0 = 0;
             }
             break;
-        case 5:
+        case AREA05_BACCUSVILLAGE:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
@@ -1254,7 +1254,7 @@ s32 func_8001CB54(void)
                 GAME.selectedSection = var_v0_2;
             }
             break;
-        case 10:
+        case AREA10_DEEPJUNGLE:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
@@ -1281,10 +1281,10 @@ void func_8001CF7C(void)
 {
     u8* row = (&D_80077084)[GAME.selectedArea + (u16)D_8009EBA0];
     u8  v = row[D_8009BCCA];
-    u8* p = D_1F8001D4;
+    unkstruct_1F8001D4* p = CURRENT_TASK;
 
-    *(u16*)(p + 0x4E) = 0;
-    *(u16*)(p + 0x4C) = v;
+    p->unk4E.value = 0;
+    p->state2 = v;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CFCC);
@@ -1327,14 +1327,14 @@ void func_8001D610(s16 arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D668);
 void func_8001D668(s16 arg0, s16 arg1, s16 arg2)
 {
-    u8* p = D_1F8001D4;
+    unkstruct_1F8001D4* p = CURRENT_TASK;
 
     D_800A3952 = arg0;
     D_800A3954 = arg1;
     D_800A3956 = arg2;
     D_800A3940 = 0;
-    *(u16*)(p + 0x4C) = 3;
-    *(u16*)(p + 0x4E) = 0;
+    p->state2 = 3;
+    p->unk4E.value = 0;
     func_80020058(10, 10);
 }
 

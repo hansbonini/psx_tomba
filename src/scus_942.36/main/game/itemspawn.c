@@ -50,9 +50,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041940);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041D24);
 void func_80041D24(void)
 {
-    if (GAME.selectedArea == 0) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80122688();
-    } else if (GAME.selectedArea == 4) {
+    } else if (GAME.selectedArea == AREA04_HAUNTEDMANSION) {
         func_8011D498();
     }
 }
@@ -60,9 +60,9 @@ void func_80041D24(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041D6C);
 void func_80041D6C(void)
 {
-    if (GAME.selectedArea == 0) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_8012298C();
-    } else if (GAME.selectedArea == 4) {
+    } else if (GAME.selectedArea == AREA04_HAUNTEDMANSION) {
         func_8011D79C();
     }
 }
@@ -78,13 +78,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042478);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042598);
 void func_80042598(void)
 {
-    if (GAME.selectedArea == 0) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80122F64();
-    } else if (GAME.selectedArea == 4) {
+    } else if (GAME.selectedArea == AREA04_HAUNTEDMANSION) {
         func_8011D844();
-    } else if (GAME.selectedArea == 0xA) {
+    } else if (GAME.selectedArea == AREA10_DEEPJUNGLE) {
         func_8011CD70();
-    } else if (GAME.selectedArea == 0xD) {
+    } else if (GAME.selectedArea == AREA13_PIGISLAND) {
         func_8011602C();
     }
 }

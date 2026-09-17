@@ -93,16 +93,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800530F0);
 void func_800532B4(void)
 {
     switch (GAME.selectedArea) {
-    case 0:
+    case AREA00_VILLAGEOFALLBEGINNINGS:
         func_80124B38();
         break;
-    case 1:
+    case AREA01_DWARFFOREST:
         func_801233E0();
         break;
-    case 3:
+    case AREA03_PHOENIXMOUNTAIN:
         func_8011EC1C();
         break;
-    case 4:
+    case AREA04_HAUNTEDMANSION:
         func_8011E254();
         break;
     }
@@ -114,13 +114,13 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005334C);
 void func_80053588(void)
 {
     switch (GAME.selectedArea) {
-    case 0:
+    case AREA00_VILLAGEOFALLBEGINNINGS:
         func_801248A0();
         break;
-    case 4:
+    case AREA04_HAUNTEDMANSION:
         func_8011E3E4();
         break;
-    case 0xA:
+    case AREA10_DEEPJUNGLE:
         func_8011FC7C();
         break;
     }
@@ -135,7 +135,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053808);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800539E0);
 void func_800539E0(void)
 {
-    if (GAME.selectedArea == 0) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_801242E8();
     } else {
         func_8011F158();
@@ -145,7 +145,7 @@ void func_800539E0(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A1C);
 void func_80053A1C(void)
 {
-    if (GAME.selectedArea == 0) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80124CC8();
     } else {
         func_8011F218();
@@ -156,16 +156,16 @@ void func_80053A1C(void)
 void func_80053A58(void)
 {
     switch (GAME.selectedArea) {
-    case 0:
+    case AREA00_VILLAGEOFALLBEGINNINGS:
         func_80123D24();
         break;
-    case 3:
+    case AREA03_PHOENIXMOUNTAIN:
         func_8011EF08();
         break;
-    case 4:
+    case AREA04_HAUNTEDMANSION:
         func_8011E170();
         break;
-    case 9:
+    case AREA09_MUSHROOMVILLAGE:
         func_8011F650();
         break;
     }
@@ -174,7 +174,7 @@ void func_80053A58(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053AF0);
 void func_80053AF0(void)
 {
-    if (GAME.selectedArea == 1) {
+    if (GAME.selectedArea == AREA01_DWARFFOREST) {
         func_80123748();
     } else {
         func_8011D178();

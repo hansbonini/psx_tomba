@@ -23,10 +23,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056BBC);
 void func_80056C84(void)
 {
     switch (GAME.selectedArea) {
-    case 0:
+    case AREA00_VILLAGEOFALLBEGINNINGS:
         func_80125FE8();
         break;
-    case 3:
+    case AREA03_PHOENIXMOUNTAIN:
         func_8011F67C();
         break;
     }
@@ -36,10 +36,10 @@ void func_80056C84(void)
 void func_80056CD4(void)
 {
     switch (GAME.selectedArea) {
-    case 0:
+    case AREA00_VILLAGEOFALLBEGINNINGS:
         func_80126048();
         break;
-    case 3:
+    case AREA03_PHOENIXMOUNTAIN:
         func_8011F6DC();
         break;
     }
@@ -61,16 +61,16 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_800574BC);
 void func_800577F4(void)
 {
     switch (GAME.selectedArea) {
-    case 0:
+    case AREA00_VILLAGEOFALLBEGINNINGS:
         func_8012C03C();
         break;
-    case 1:
+    case AREA01_DWARFFOREST:
         func_8012E2FC();
         break;
-    case 3:
+    case AREA03_PHOENIXMOUNTAIN:
         func_80123EC8();
         break;
-    case 4:
+    case AREA04_HAUNTEDMANSION:
         func_80122A00();
         break;
     }

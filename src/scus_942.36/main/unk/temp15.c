@@ -33,7 +33,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059A40);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059B1C);
 void func_80059B1C(void)
 {
-    if (GAME.selectedArea == 0) {
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80125C84();
     } else {
         func_8011F188();

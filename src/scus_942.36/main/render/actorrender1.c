@@ -15,7 +15,7 @@ s32 func_80045BA4(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
         off = 0;
     }
     off += (s32)arg1;
-    if ((u32)(off - D_1F8001E0) >= 0xCA0) {
+    if ((u32)(off - CURRENT_OT) >= 0xCA0) {
         return 1;
     }
     prev = *(s32*)off;
@@ -34,7 +34,7 @@ s32 func_80045C00(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
         off = 0;
     }
     off += (s32)arg1;
-    if ((u32)(off - D_1F8001E0) >= 0xCA0) {
+    if ((u32)(off - CURRENT_OT) >= 0xCA0) {
         return 1;
     }
     prev = *(s32*)off;

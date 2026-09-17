@@ -416,7 +416,7 @@ s32 func_8002BAB8(u8* self)
 {
     s8 st;
 
-    if ((D_1F8001FC & 0x10) && D_800A5438 != 4) {
+    if ((JOYPAD_STATE & JOY_UP) && D_800A5438 != 4) {
         st = *(s8*)(self + 0x6E);
         if (st == 1) {
             return 1;
@@ -434,7 +434,7 @@ s32 func_8002BAB8(u8* self)
         }
         return 0;
     }
-    if (D_1F8001FC & 0x40) {
+    if (JOYPAD_STATE & JOY_DOWN) {
         st = *(s8*)(self + 0x6E);
         if (st == 2) {
             return 1;
