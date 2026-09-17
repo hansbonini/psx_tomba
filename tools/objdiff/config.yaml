@@ -3,7 +3,7 @@ categories:
     name: Psy-Q SDK
     paths:
       - scus_942.36/psyq
-  - id: main
+  - id: executable
     name: Main Executable
     paths:
       - scus_942.36
