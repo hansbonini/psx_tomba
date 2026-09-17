@@ -75,7 +75,19 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042204);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042478);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042598);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042598);
+void func_80042598(void)
+{
+    if (GAME.selectedArea == 0) {
+        func_80122F64();
+    } else if (GAME.selectedArea == 4) {
+        func_8011D844();
+    } else if (GAME.selectedArea == 0xA) {
+        func_8011CD70();
+    } else if (GAME.selectedArea == 0xD) {
+        func_8011602C();
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042610);
 

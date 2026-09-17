@@ -93,7 +93,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800532B4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005334C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053588);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053588);
+void func_80053588(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_801248A0();
+        break;
+    case 4:
+        func_8011E3E4();
+        break;
+    case 0xA:
+        func_8011FC7C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053608);
 
