@@ -89,7 +89,20 @@ void func_800340FC(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", func_800341AC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", func_8003438C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", func_8003438C);
+void func_8003438C(void)
+{
+    u8* p = &D_800A3D08;
+
+    D_1F800198 = 0;
+    do {
+        if (p[0] != 0) {
+            (&D_8007D57C)[p[2]](p);
+        }
+        D_1F800198 = D_1F800198 + 1;
+        p += 0x6C;
+    } while (D_1F800198 < 0xA);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", func_80034420);
 

@@ -44,7 +44,20 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059B58);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059F7C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A074);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A074);
+void func_8005A074(void)
+{
+    u8* p = &D_800A55C8;
+
+    D_1F800198 = 0;
+    do {
+        if (p[0] != 0) {
+            (&D_8007F6F4)[p[2]](p);
+        }
+        D_1F800198 = D_1F800198 + 1;
+        p += 0x3C;
+    } while (D_1F800198 < 0xA);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A108);
 void func_8005A108(u8 arg0)

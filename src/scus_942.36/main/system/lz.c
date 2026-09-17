@@ -541,4 +541,17 @@ void func_8003F124(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003F1D4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003F1D4);
+void func_8003F1D4(void)
+{
+    u8* p = &D_800B07D8;
+
+    D_1F800198 = 0;
+    do {
+        if (p[0] != 0) {
+            (&D_8007D6A4)[p[2]](p);
+        }
+        D_1F800198 = D_1F800198 + 1;
+        p += 0xEC;
+    } while (D_1F800198 < 0x4);
+}
