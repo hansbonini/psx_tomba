@@ -7,8 +7,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003CE18);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D0E4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D1B0);
-void func_8003D1B0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpKillObject);
+void scriptOpKillObject(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8** slot = D_8009E640 + *(s32*)((u8*)p + 0x1190);
@@ -26,8 +26,8 @@ void func_8003D1B0(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D20C);
-void func_8003D20C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpWritePosition);
+void scriptOpWritePosition(void)
 {
     D_800A53D8[1] = *(s32*)((u8*)D_8009E458 + 0x1190);
     D_800A53AE = *(s32*)((u8*)D_8009E458 + 0x1194);
@@ -35,8 +35,8 @@ void func_8003D20C(void)
     D_8009E458->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D25C);
-void func_8003D25C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpReadPosition);
+void scriptOpReadPosition(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A53D8[1];
     *(s32*)((u8*)D_8009E458 + 0x1194) = D_800A53AE;
@@ -46,8 +46,8 @@ void func_8003D25C(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D2A8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D5F8);
-void func_8003D5F8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetObjLayer);
+void scriptOpGetObjLayer(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -58,8 +58,8 @@ void func_8003D5F8(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D648);
-void func_8003D648(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetObjPosition);
+void scriptOpGetObjPosition(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -74,8 +74,8 @@ void func_8003D648(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D6C0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D72C);
-void func_8003D72C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetObjFrame);
+void scriptOpSetObjFrame(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -86,8 +86,8 @@ void func_8003D72C(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D77C);
-void func_8003D77C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetObjFrame);
+void scriptOpGetObjFrame(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -98,8 +98,8 @@ void func_8003D77C(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D7CC);
-void func_8003D7CC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpCheckObjActive);
+void scriptOpCheckObjActive(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -110,8 +110,8 @@ void func_8003D7CC(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D824);
-void func_8003D824(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetObjEnabled);
+void scriptOpSetObjEnabled(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -122,8 +122,8 @@ void func_8003D824(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D874);
-void func_8003D874(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpCallObjHandler);
+void scriptOpCallObjHandler(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -135,8 +135,8 @@ void func_8003D874(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D8EC);
-void func_8003D8EC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpWriteFlag);
+void scriptOpWriteFlag(void)
 {
     unkstruct_8009E458* q = D_8009E458;
 
@@ -144,15 +144,15 @@ void func_8003D8EC(void)
     q->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D920);
-void func_8003D920(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpReadFlag);
+void scriptOpReadFlag(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009C10C[*(s32*)((u8*)D_8009E458 + 0x1190)];
     D_8009E458->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D950);
-void func_8003D950(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetObjSubtype);
+void scriptOpGetObjSubtype(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -174,15 +174,15 @@ void func_8003D950(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D9C4);
-void func_8003D9C4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpReadGlobal);
+void scriptOpReadGlobal(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009C20C[*(s32*)((u8*)D_8009E458 + 0x1190)];
     D_8009E458->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003D9F4);
-void func_8003D9F4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpWriteGlobal);
+void scriptOpWriteGlobal(void)
 {
     unkstruct_8009E458* q = D_8009E458;
 
@@ -190,8 +190,8 @@ void func_8003D9F4(void)
     q->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DA28);
-void func_8003DA28(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpLoadBackground);
+void scriptOpLoadBackground(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
@@ -202,8 +202,8 @@ void func_8003DA28(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DA9C);
-void func_8003DA9C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetProgressFlag);
+void scriptOpSetProgressFlag(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
@@ -225,8 +225,8 @@ void func_8003DA9C(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DB04);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DB70);
-void func_8003DB70(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetObjAnim);
+void scriptOpSetObjAnim(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -257,8 +257,8 @@ void func_8003DB70(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DC38);
-void func_8003DC38(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetAreaConfig);
+void scriptOpSetAreaConfig(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     s32 a = *(s32*)((u8*)p + 0x1190);
@@ -290,8 +290,8 @@ void func_8003DC38(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DCF0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DE90);
-void func_8003DE90(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetCameraTarget);
+void scriptOpSetCameraTarget(void)
 {
     unkstruct_8009E458* q = D_8009E458;
 
@@ -300,8 +300,8 @@ void func_8003DE90(void)
     q->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DEBC);
-void func_8003DEBC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpAwardEvent);
+void scriptOpAwardEvent(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
@@ -315,8 +315,8 @@ void func_8003DEBC(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DF10);
-void func_8003DF10(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetDialogId);
+void scriptOpSetDialogId(void)
 {
     unkstruct_8009E458* q = D_8009E458;
 
@@ -325,8 +325,8 @@ void func_8003DF10(void)
     q->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DF3C);
-void func_8003DF3C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpPlaySound);
+void scriptOpPlaySound(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
@@ -336,8 +336,8 @@ void func_8003DF3C(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DF88);
-void func_8003DF88(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpShowMessage);
+void scriptOpShowMessage(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
@@ -345,15 +345,15 @@ void func_8003DF88(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DFCC);
-void func_8003DFCC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetAreaStatus);
+void scriptOpGetAreaStatus(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A5401;
     D_8009E458->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003DFF0);
-void func_8003DFF0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetAreaFlag);
+void scriptOpGetAreaFlag(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A5436;
     D_8009E458->pc++;
@@ -361,8 +361,8 @@ void func_8003DFF0(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E014);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E0A4);
-void func_8003E0A4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpShowMessage2);
+void scriptOpShowMessage2(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
@@ -370,8 +370,8 @@ void func_8003E0A4(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E0E8);
-void func_8003E0E8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetFadeEffect);
+void scriptOpSetFadeEffect(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     s32 a = *(s32*)((u8*)p + 0x1190);
@@ -386,8 +386,8 @@ void func_8003E0E8(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E12C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E1A8);
-void func_8003E1A8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetObjState);
+void scriptOpGetObjState(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -398,8 +398,8 @@ void func_8003E1A8(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E1F8);
-void func_8003E1F8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetObjState);
+void scriptOpSetObjState(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -410,8 +410,8 @@ void func_8003E1F8(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E248);
-void func_8003E248(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpSetObjParam);
+void scriptOpSetObjParam(void)
 {
     unkstruct_8009E458* p = D_8009E458;
     u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
@@ -422,8 +422,8 @@ void func_8003E248(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E298);
-void func_8003E298(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpMoveCamera);
+void scriptOpMoveCamera(void)
 {
     unkstruct_8009E458* temp_s0;
 
@@ -432,15 +432,15 @@ void func_8003E298(void)
     temp_s0->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E2E8);
-void func_8003E2E8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetAreaId);
+void scriptOpGetAreaId(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009C619;
     D_8009E458->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003E30C);
-void func_8003E30C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", scriptOpGetWeather);
+void scriptOpGetWeather(void)
 {
     *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A547A;
     D_8009E458->pc++;
@@ -541,8 +541,8 @@ void func_8003F124(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", func_8003F1D4);
-void func_8003F1D4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/lz", updateObjectsLayer1);
+void updateObjectsLayer1(void)
 {
     u8* p = &D_800B07D8;
 

@@ -31,8 +31,8 @@ void addPlayerAP(int arg0) {
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029734);
-void func_80029734(s32 arg0, u8 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", spawnItemNotification);
+void spawnItemNotification(s32 arg0, u8 arg1)
 {
     u8* p;
 
@@ -155,8 +155,8 @@ u8 applyGoldenBowl(void)
     return GAME.playerHealth;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029BD8);
-int func_80029BD8(int arg0, char arg1, int arg2) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", tryStartItemInteraction);
+int tryStartItemInteraction(int arg0, char arg1, int arg2) {
     GAME.disableSelectMenu = 0;
     if ((GAME.playerEquips.weapon != 3) && (GAME.fadeScreenControl != 2)) {
         GAME.playerEquips.weapon = 0;
@@ -169,8 +169,8 @@ int func_80029BD8(int arg0, char arg1, int arg2) {
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029C48);
-void func_80029C48(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", updateInventoryOverlay);
+void updateInventoryOverlay(void)
 {
     if (*(u_char*)&D_800A38B8 != 0) {
         func_8002D784(&D_800A38B8);
@@ -181,10 +181,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029C80);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029CDC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A008);
-void func_8002A008(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchAreaItemHandler);
+void dispatchAreaItemHandler(s32 arg0)
 {
-    func_8002467C();
+    loadSectionHeight();
     switch (GAME.selectedArea) {                    // irregular
         case AREA00_VILLAGEOFALLBEGINNINGS:
             func_80115AA8(arg0);
@@ -203,8 +203,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A0A0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A240);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A31C);
-void func_8002A31C(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", syncObjectTargetY);
+void syncObjectTargetY(u8* self)
 {
     (*(s16**)(self + 0x38))[1] = D_800A53DC[1];
 }
@@ -221,8 +221,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002ABC0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AD74);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AF44);
-s32 func_8002AF44(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepScrollReturnY);
+s32 stepScrollReturnY(u8* self)
 {
     s32 v = *(s32*)(self + 0x24);
 
@@ -241,8 +241,8 @@ s32 func_8002AF44(u8* self)
     return 1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AF8C);
-s32 func_8002AF8C(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepScrollApproachY);
+s32 stepScrollApproachY(u8* self)
 {
     s32 t;
     s32 cur;
@@ -268,8 +268,8 @@ s32 func_8002AF8C(u8* self)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AFFC);
-s32 func_8002AFFC(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepScrollApproachX);
+s32 stepScrollApproachX(u8* self)
 {
     s32 t;
     s32 cur;
@@ -295,8 +295,8 @@ s32 func_8002AFFC(u8* self)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B06C);
-s32 func_8002B06C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dampCameraAngle);
+s32 dampCameraAngle(void)
 {
     s16* p = &D_1F8000E6;
     s16  v = *p;
@@ -320,8 +320,8 @@ s32 func_8002B06C(void)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B0D4);
-s32 func_8002B0D4(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepScrollReturnX);
+s32 stepScrollReturnX(u8* self)
 {
     s32 v = *(s32*)(self + 0x20);
 
@@ -343,8 +343,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B278);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B3E8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B5A4);
-s32 func_8002B5A4(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepScrollAndAngle);
+s32 stepScrollAndAngle(u8* self)
 {
     s32 w = *(s32*)(self + 0x20);
     s16 v;
@@ -388,8 +388,8 @@ s32 func_8002B5A4(u8* self)
     return 1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B664);
-s32 func_8002B664(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepScrollClearX);
+s32 stepScrollClearX(u8* self)
 {
     s32 v = *(s32*)(self + 0x20);
 
@@ -411,8 +411,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B6A8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B704);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002BAB8);
-s32 func_8002BAB8(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", handleInventoryScroll);
+s32 handleInventoryScroll(u8* self)
 {
     s8 st;
 
@@ -461,8 +461,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002C7D8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CA40);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CB58);
-void func_8002CB58(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", updateInventoryAnimation);
+void updateInventoryAnimation(u8* self)
 {
     s16 v = D_1F8000E6;
     s32 w;
@@ -506,8 +506,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CEF8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CFF4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D4C8);
-void func_8002D4C8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionInit);
+void dispatchSectionInit(void)
 {
     switch (GAME.selectedSection) {
         case 0:
@@ -527,8 +527,8 @@ void func_8002D4C8(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D534);
-void func_8002D534(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionUpdate);
+void dispatchSectionUpdate(void)
 {
     switch (GAME.selectedSection) {                     // irregular
         case 2:
@@ -542,8 +542,8 @@ void func_8002D534(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D5AC);
-void func_8002D5AC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionDraw);
+void dispatchSectionDraw(void)
 {
     switch (GAME.selectedSection) {                     // irregular
         case 2:
@@ -557,8 +557,8 @@ void func_8002D5AC(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D624);
-void func_8002D624(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionInput);
+void dispatchSectionInput(void)
 {
     if (GAME.selectedSection == 0) {
         func_800E80E0();
@@ -567,8 +567,8 @@ void func_8002D624(void)
     func_80115310();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D660);
-void func_8002D660(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionScroll);
+void dispatchSectionScroll(void)
 {
     if (GAME.selectedSection == 0) {
         func_800E821C();
@@ -577,8 +577,8 @@ void func_8002D660(void)
     func_801152D8();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D69C);
-void func_8002D69C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionSelect);
+void dispatchSectionSelect(void)
 {
     if (GAME.selectedSection == 0) {
         func_800E8388();
@@ -587,8 +587,8 @@ void func_8002D69C(void)
     func_8011546C();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D6D8);
-void func_8002D6D8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionClose);
+void dispatchSectionClose(void)
 {
     if (GAME.selectedSection == 0) {
         func_80115584();
@@ -597,8 +597,8 @@ void func_8002D6D8(void)
     func_80115628();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D714);
-void func_8002D714(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionConfirm);
+void dispatchSectionConfirm(void)
 {
     switch (GAME.selectedSection) {                     // irregular
         case 1:
@@ -613,8 +613,8 @@ void func_8002D714(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D784);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D964);
-s16 func_8002D964(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", getScrollOffsetX);
+s16 getScrollOffsetX(void)
 {
     s32 x = D_800A38DC;
     s32 v = D_8007D988[(x >> 8) / 360];
@@ -628,8 +628,8 @@ s16 func_8002D964(void)
     return r;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D9D4);
-s32 func_8002D9D4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", getScrollOffsetY);
+s32 getScrollOffsetY(void)
 {
     s16 v = D_8007D988[(D_800A38DC >> 8) / 360];
 
@@ -638,12 +638,12 @@ s32 func_8002D9D4(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DA2C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DB34);
-void func_8002DB34(void) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stubInventory1);
+void stubInventory1(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DB3C);
-void func_8002DB3C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", updateObjectsLayer8);
+void updateObjectsLayer8(void)
 {
     u8* p = &D_800B0B88;
 
@@ -657,20 +657,20 @@ void func_8002DB3C(void)
     } while (D_1F800198 < 0x2D);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DBD0);
-void func_8002DBD0(void) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stubInventory2);
+void stubInventory2(void) {
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DBD8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DEC4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002E3A8);
-void func_8002E3A8(void) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stubInventory3);
+void stubInventory3(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002E3B0);
-void func_8002E3B0(u8 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", spawnItemPickupObject);
+void spawnItemPickupObject(u8 arg0)
 {
     u8* p;
 
@@ -684,8 +684,8 @@ void func_8002E3B0(u8 arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002E404);
-void func_8002E404(u8* src)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", cloneItemPickupObject);
+void cloneItemPickupObject(u8* src)
 {
     u8* p = allocObjectLayer3();
 

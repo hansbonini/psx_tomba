@@ -966,7 +966,7 @@ typedef struct itemDef {
 } itemDef;
 
 /* Views over the object returned by the allocator family
-   (allocObjectLayer3 / func_80018474 / func_80018614). They describe the same
+   (allocObjectLayer3 / allocObjectLayer4 / allocObjectLayer7). They describe the same
    block through different field subsets and cannot be merged into a single
    struct: offset 0x10 is u_char in unkstruct_1F800214 and int in
    unkstruct_80018474. */
@@ -2504,7 +2504,7 @@ void func_8003C124(u8 op);
 void func_8003E408(u8 op);
 s16 func_80051284();
 void func_80076364(SpuReverbAttr* attr);
-u16 func_80022570(void);
+u16 nextRandom(void);
 void func_800EBD5C(u8* arg0, s16 arg1, s16 arg2);
 void func_8006A9EC(u8* a, u8* b);
 s16 func_80036618(u8* self);
@@ -2534,6 +2534,6 @@ void func_80122A00(void);
 s32 func_8001FF28(void);
 s32 func_80020EEC(s32 a, s32 b);
 void func_80021340(void);
-// void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
+// void applyAnimVelocityX(unkstruct_800A6D50* arg0, u16 arg1);
 
 #endif // GAME_H

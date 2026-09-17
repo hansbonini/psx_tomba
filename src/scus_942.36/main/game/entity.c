@@ -9,8 +9,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80022E44);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80022F6C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80022FD8);
-s32 func_80022FD8(s16 x, s16 y)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", isOnScreen);
+s32 isOnScreen(s16 x, s16 y)
 {
     if ((u16)(x - D_1F800176 + 0x40) < 0x1C1) {
         return (u16)(D_1F800186 - y + 0x40) < 0x171;
@@ -26,8 +26,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023168);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_8002331C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_8002337C);
-void func_8002337C(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", setEntityDoubleBuffer);
+void setEntityDoubleBuffer(u8* self)
 {
     if ((*(u16*)0x1F8001C8 & 1) == 0) {
         *(u8**)(self + 0x40) = self + 0x10;
@@ -48,8 +48,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_800236F4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023794);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023840);
-void func_80023840(s32 n, u32* arr)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", insertionSortU32);
+void insertionSortU32(s32 n, u32* arr)
 {
     s32 i;
     s32 j;
@@ -68,8 +68,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_800238B0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023928);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023A3C);
-void func_80023A3C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", loadCollisionBounds);
+void loadCollisionBounds(void)
 {
     s32 i = (s16)D_8009E744 * 4;
 

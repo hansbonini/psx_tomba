@@ -31,7 +31,7 @@ void main(void)
     CD_QUEUE_HEAD = 0;
     initGraphics();
     GsSetOrigin(1, 1);
-    func_800211A4();
+    shutdownSound();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
     memCardInit();
     joypadInit();

@@ -29,7 +29,7 @@ void func_80033FF0(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
     unkstruct_80018474* temp_v0;
 
-    temp_v0 = func_80018474();
+    temp_v0 = allocObjectLayer4();
     if (temp_v0 != NULL) {
         temp_v0->unk0 = 1;
         temp_v0->unk2 = 32;
@@ -89,8 +89,8 @@ void func_800340FC(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", func_800341AC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", func_8003438C);
-void func_8003438C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp8", updateObjectsLayer7);
+void updateObjectsLayer7(void)
 {
     u8* p = &D_800A3D08;
 

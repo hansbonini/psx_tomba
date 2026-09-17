@@ -19,8 +19,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056970);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056BBC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056C84);
-void func_80056C84(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", dispatchAreaEnemyInit);
+void dispatchAreaEnemyInit(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -32,8 +32,8 @@ void func_80056C84(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056CD4);
-void func_80056CD4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", dispatchAreaEnemyUpdate);
+void dispatchAreaEnemyUpdate(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -57,8 +57,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80057188);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_800574BC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_800577F4);
-void func_800577F4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", dispatchAreaEnemyDraw);
+void dispatchAreaEnemyDraw(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:

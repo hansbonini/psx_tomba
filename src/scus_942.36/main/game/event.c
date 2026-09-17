@@ -11,7 +11,7 @@ u_char awardEventProgress(EVENT event_id, int ap_table, int state)
             func_8001E3EC(event_id, 0, 0x3C, state);
             printEventMessage(event_id, 0);
             playSFX(42);
-            func_8002E3B0(0);
+            spawnItemPickupObject(0);
         }
     } else {
         addPlayerAP(AP_TABLE[EVENT_COMPLETE_AP_TABLE[event_id]]);
@@ -19,7 +19,7 @@ u_char awardEventProgress(EVENT event_id, int ap_table, int state)
             func_8001E3EC(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
             func_80020DDC(2);
-            func_80021110();
+            muteBgm();
         }
     }
     return GAME.event[event_id];
@@ -41,7 +41,7 @@ u_char setEventStarted(EVENT event_id, int arg1, int state)
             func_8001E3EC(event_id, 0, 0x3C, state);
             printEventMessage(event_id, 0);
             playSFX(42);
-            func_8002E3B0(0);
+            spawnItemPickupObject(0);
         }        
     }
     return GAME.event[event_id];
@@ -57,7 +57,7 @@ u_char setEventComplete(EVENT event_id, int state)
             func_8001E3EC(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
             func_80020DDC(2);
-            func_80021110();
+            muteBgm();
         }
     }
     return GAME.event[event_id];

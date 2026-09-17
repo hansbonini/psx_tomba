@@ -2,10 +2,10 @@
 #include "game.h"
 //#include "psyq/libcd.h"
 
-s32 func_8002293C(s16 arg0, s16 arg1);
-s32 func_8002296C(s16 arg0, s16 arg1);
-s32 func_8002299C(s16 arg0, s16 arg1);
-s32 func_800229CC(s16 arg0, s16 arg1);
+s32 fixedMulSin(s16 arg0, s16 arg1);
+s32 fixedMulCos(s16 arg0, s16 arg1);
+s32 fixedMulSin2(s16 arg0, s16 arg1);
+s32 fixedMulCos2(s16 arg0, s16 arg1);
 
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
@@ -274,14 +274,14 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
 // }
 
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021B7C);
-int func_80021B7C(void)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", stubCdFunction);
+int stubCdFunction(void)
 {
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021B84);
-void func_80021B84(u8* dst, s16* hdr)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", enqueueCdRead);
+void enqueueCdRead(u8* dst, s16* hdr)
 {
     s32 head = D_1F80029C;
 
@@ -290,8 +290,8 @@ void func_80021B84(u8* dst, s16* hdr)
     D_1F80029C = (head + 1) & 0x7F;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021BC4);
-void func_80021BC4(int arg1, int arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", loadSoundBank);
+void loadSoundBank(int arg1, int arg2)
 {
     func_80021D70((D_8007912C)[arg2]);
 }
@@ -311,8 +311,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021D70);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800222B8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223A0);
-void func_800223A0(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", loadAreaResources);
+void loadAreaResources(s32 arg0)
 {
     func_80021D70(D_80078EB0[arg0]);
     D_1F8002AC = D_1F800298;
@@ -320,8 +320,8 @@ void func_800223A0(s32 arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223E0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022474);
-void func_80022474(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", checkObjectBelowGround);
+void checkObjectBelowGround(u8* self)
 {
     u8* q = self;
     s16 a = *(s16*)(*(u8**)(self + 0x40) + 2);
@@ -333,16 +333,16 @@ void func_80022474(u8* self)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224B0);
-s32 func_800224B0(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", isObjectBelowGround);
+s32 isObjectBelowGround(u8* self)
 {
     s16 a = *(s16*)(*(u8**)(self + 0x40) + 2);
 
     return a > *(s16*)0x1F80016A;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224CC);
-void func_800224CC(u8* self, s32 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", playObjectSfx);
+void playObjectSfx(u8* self, s32 arg1)
 {
     if (self[1] != 0) {
         playSFX(arg1);
@@ -351,8 +351,8 @@ void func_800224CC(u8* self, s32 arg1)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224FC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022570);
-u16 func_80022570(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", nextRandom);
+u16 nextRandom(void)
 {
     s32 seed = D_1F800200 * 0x41C64E6D + 0x3039;
 
@@ -360,8 +360,8 @@ u16 func_80022570(void)
     return seed / 0x10000;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800225B0);
-void func_800225B0(u8* self, u16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyAnimVelocityXY);
+void applyAnimVelocityXY(u8* self, u16 arg1)
 {
     s16* row = (s16*)(*(u8**)(self + 0x28) + arg1 * 4);
     s32* p = *(s32**)(self + 0x40);
@@ -373,16 +373,16 @@ void func_800225B0(u8* self, u16 arg1)
     *(s32*)(self + 0x14) += t;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800225F0);
-void func_800225F0(u8* self, u16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyAnimVelocityY);
+void applyAnimVelocityY(u8* self, u16 arg1)
 {
     u8* row = *(u8**)(self + 0x28) + arg1 * 4;
 
     *(s32*)(self + 0x14) += *(s16*)(row + 2) << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022618);
-void func_80022618(u8* self, u16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyAnimVelocityX);
+void applyAnimVelocityX(u8* self, u16 arg1)
 {
     u8*  row = *(u8**)(self + 0x28) + arg1 * 4;
     s32* p = *(s32**)(self + 0x40);
@@ -390,8 +390,8 @@ void func_80022618(u8* self, u16 arg1)
     *p += *(s16*)row << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022644);
-void func_80022644(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyFrameVelocityXY);
+void applyFrameVelocityXY(u8* self)
 {
     s16* row = (s16*)(*(u8**)(self + 0x28) + *(u16*)(self + 0x2E) * 4);
     s32* p = *(s32**)(self + 0x40);
@@ -403,8 +403,8 @@ void func_80022644(u8* self)
     *(s32*)(self + 0x14) += t;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022684);
-void func_80022684(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyFrameVelocityX);
+void applyFrameVelocityX(u8* self)
 {
     u8*  row = *(u8**)(self + 0x28) + *(u16*)(self + 0x2E) * 4;
     s32* p = *(s32**)(self + 0x40);
@@ -412,16 +412,16 @@ void func_80022684(u8* self)
     *p += *(s16*)row << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800226B0);
-void func_800226B0(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyFrameVelocityY);
+void applyFrameVelocityY(u8* self)
 {
     u8* row = *(u8**)(self + 0x28) + *(u16*)(self + 0x2E) * 4;
 
     *(s32*)(self + 0x14) += *(s16*)(row + 2) << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800226D8);
-void func_800226D8(u8* self, s16* row)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyTableVelocityXY);
+void applyTableVelocityXY(u8* self, s16* row)
 {
     s32* p = *(s32**)(self + 0x40);
     s32  t;
@@ -434,8 +434,8 @@ void func_800226D8(u8* self, s16* row)
     *(s32*)(self + 0x14) += t;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022714);
-void func_80022714(u8* self, s16* tab)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyTableVelocityX);
+void applyTableVelocityX(u8* self, s16* tab)
 {
     s32* p = *(s32**)(self + 0x40);
 
@@ -444,38 +444,38 @@ void func_80022714(u8* self, s16* tab)
     *p += *tab << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002273C);
-void func_8002273C(u8* self, s16 arg1, s16 arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", setObjectSpeedPolar);
+void setObjectSpeedPolar(u8* self, s16 arg1, s16 arg2)
 {
-    s16 a = func_800229CC(arg1, arg2);
-    s16 b = func_8002299C(arg1, arg2);
+    s16 a = fixedMulCos2(arg1, arg2);
+    s16 b = fixedMulSin2(arg1, arg2);
 
     *(s16*)(self + 0x80) = a;
     *(s16*)(self + 0x82) = b;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800227A4);
-void func_800227A4(u8* self, s16 arg1, s16 arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", setObjectSpeedPolar2);
+void setObjectSpeedPolar2(u8* self, s16 arg1, s16 arg2)
 {
-    s16 a = func_8002296C(arg1, arg2);
-    s16 b = func_8002293C(arg1, arg2);
+    s16 a = fixedMulCos(arg1, arg2);
+    s16 b = fixedMulSin(arg1, arg2);
 
     *(s16*)(self + 0x80) = a;
     *(s16*)(self + 0x82) = b;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002280C);
-void func_8002280C(u8* self, s16 arg1, s16 arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", setObjectAltSpeedPolar);
+void setObjectAltSpeedPolar(u8* self, s16 arg1, s16 arg2)
 {
-    s16 a = func_8002296C(arg1, arg2);
-    s16 b = func_8002293C(arg1, arg2);
+    s16 a = fixedMulCos(arg1, arg2);
+    s16 b = fixedMulSin(arg1, arg2);
 
     *(s16*)(self + 0x7C) = a;
     *(s16*)(self + 0x7E) = b;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022874);
-void func_80022874(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectSpeedXY);
+void applyObjectSpeedXY(u8* self)
 {
     s32* p = *(s32**)(self + 0x40);
 
@@ -483,22 +483,22 @@ void func_80022874(u8* self)
     *(s32*)(self + 0x14) += *(s16*)(self + 0x82) << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800228A4);
-void func_800228A4(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectSpeedX);
+void applyObjectSpeedX(u8* self)
 {
     s32* p = *(s32**)(self + 0x40);
 
     *p += *(s16*)(self + 0x80) << 8;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800228C0);
-void func_800228C0(u_short* id)
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectSpeedVertical);
+void applyObjectSpeedVertical(u_short* id)
 {
     ((u_int*)(id))[0x5] = (int)(((u_int*)(id))[0x5] + (((short*)(id))[0x41] << 8));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800228D8);
-void func_800228D8(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectAltSpeedXY);
+void applyObjectAltSpeedXY(u8* self)
 {
     s32* p = *(s32**)(self + 0x40);
 
@@ -506,59 +506,59 @@ void func_800228D8(u8* self)
     *(s32*)(self + 0x14) += *(s16*)(self + 0x7E) << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022908);
-void func_80022908(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectAltSpeedX);
+void applyObjectAltSpeedX(u8* self)
 {
     s32* p = *(s32**)(self + 0x40);
 
     *p += *(s16*)(self + 0x7C) << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022924);
-void func_80022924(short* id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectAltSpeedVertical);
+void applyObjectAltSpeedVertical(short* id)
 {
     ((u_int*)(id))[0x5] = (int) (((u_int*)(id))[0x5] + (((short*)(id))[0x3F] << 8));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002293C);
-s32 func_8002293C(s16 arg0, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", fixedMulSin);
+s32 fixedMulSin(s16 arg0, s16 arg1)
 {
     return ((D_8007D788[arg0] * arg1) << 4) >> 16;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002296C);
-s32 func_8002296C(s16 arg0, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", fixedMulCos);
+s32 fixedMulCos(s16 arg0, s16 arg1)
 {
     return ((D_8007DB88[arg0] * arg1) << 4) >> 16;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002299C);
-s32 func_8002299C(s16 arg0, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", fixedMulSin2);
+s32 fixedMulSin2(s16 arg0, s16 arg1)
 {
     return ((D_8007D988[arg0] * arg1) << 4) >> 16;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800229CC);
-s32 func_800229CC(s16 arg0, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", fixedMulCos2);
+s32 fixedMulCos2(s16 arg0, s16 arg1)
 {
     return ((D_8007DB88[arg0] * arg1) << 4) >> 16;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800229FC);
-void func_800229FC(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", readAnimFrameCount);
+void readAnimFrameCount(u8* self)
 {
     *(s16*)(self + 0x2C) =
         *(u16*)(*(u8**)(self + 0x24) + 6) & 0x3FFF;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022A18);
-void func_80022A18(u_short* id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", syncObjectFrame);
+void syncObjectFrame(u_short* id)
 {
     ((u_short*)(id))[0x16] = ((u_short*)(id))[0x10];
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022A24);
-void func_80022A24(u8* self, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", advanceAnimFrame);
+void advanceAnimFrame(u8* self, s16 arg1)
 {
     s32 off = arg1 * 8;
 

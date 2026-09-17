@@ -36,23 +36,23 @@ void loadTIM(u_long* address, short x, short y, short x2, short y2)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/gfxinit", initDrawLists);
-void initDrawLists(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/gfxinit", initObjectPools);
+void initObjectPools(void)
 {
-    func_80017CA0();
-    func_80017D70();
-    func_80017E44();
-    func_80017EEC();
-    func_80017F1C();
-    func_80017F88();
-    func_80017FB8();
-    func_80018094();
-    func_800180F0();
-    func_8001811C();
-    func_800180C4();
-    func_80017CCC();
-    func_800181F0();
-    func_8001821C();
+    clearAreaConfig();
+    initObjectPoolLayer1();
+    initObjectPool();
+    initLayer1DrawList();
+    initMainDrawList();
+    initLayer4DrawList();
+    initObjectPoolLayer8();
+    initLayer5DrawList();
+    clearOtBuffer();
+    initObjectPoolLayer7();
+    clearLayer1Buffer();
+    initObjectPoolUnlayered();
+    clearMenuState();
+    clearMenuParams();
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/gfxinit", resetDrawLists);

@@ -7,8 +7,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001F6D4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FAE4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FCE4);
-s32 func_8001FCE4(u16 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", getSfxVabOffset);
+s32 getSfxVabOffset(u16 arg0)
 {
     u8 a = D_800778E4[arg0 * 2];
     u8 b = D_800778E5[arg0 * 2];
@@ -16,8 +16,8 @@ s32 func_8001FCE4(u16 arg0)
     return D_80077AEC[a] + b * 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD20);
-s16 func_8001FD20(s16 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", keyOffSfxVoice);
+s16 keyOffSfxVoice(s16 arg0)
 {
     u16 i = arg0;
 
@@ -28,8 +28,8 @@ s16 func_8001FD20(s16 arg0)
     return -1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD80);
-s32 func_8001FD80(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", setSoundChannel);
+s32 setSoundChannel(s32 arg0)
 {
     switch (arg0 & 0xF00) {
     case 0x000:
@@ -62,22 +62,22 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020434);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", playSFXAndSetNote);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002059C);
-void func_8002059C(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", playSfxWrapped);
+void playSfxWrapped(s32 arg0)
 {
     func_80020EEC((arg0 & 0xFF) | 0x1000, arg0);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800205C4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002065C);
-void func_8002065C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", startAreaBgm);
+void startAreaBgm(void)
 {
     func_80020778(-1);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8002067C);
-void func_8002067C(s16 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", startBgmById);
+void startBgmById(s16 arg0)
 {
     func_80020778(arg0);
 }
@@ -98,8 +98,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020EEC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020FAC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800210A8);
-void func_800210A8(s32 arg0, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", setReverbMode);
+void setReverbMode(s32 arg0, s16 arg1)
 {
     SpuReverbAttr attr;
 
@@ -115,28 +115,28 @@ void func_800210A8(s32 arg0, s16 arg1)
     SpuSetReverbVoice(SPU_OFF, 0xFF0000);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
-void func_80021110(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", muteBgm);
+void muteBgm(void)
 {
     D_8009B074 = 1;
     SsSeqSetVol(D_800A2790, 0, 0);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021148);
-void func_80021148(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", unmuteBgm);
+void unmuteBgm(void)
 {
     D_8009B074 = 0;
     SsSeqSetVol(D_800A2790, D_8009B078, D_8009B078);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021180);
-void func_80021180(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", keyOffSfxAll);
+void keyOffSfxAll(void)
 {
     SpuSetKey(SPU_OFF, 0xFF0000);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800211A4);
-void func_800211A4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", shutdownSound);
+void shutdownSound(void)
 {
     s32 i;
 

@@ -7,7 +7,7 @@ void func_80057C3C(u8* self, s16 arg1)
     *(s16*)(self + 0xAC) = arg1;
     *(s32*)(self + 0x24) =
         *(s32*)(*(u8**)(self + 0xA8) + arg1 * 4);
-    func_800229FC(self);
+    readAnimFrameCount(self);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80057C74);
@@ -44,8 +44,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059B58);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_80059F7C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A074);
-void func_8005A074(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", updateObjectsUnlayered);
+void updateObjectsUnlayered(void)
 {
     u8* p = &D_800A55C8;
 
@@ -62,7 +62,7 @@ void func_8005A074(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A108);
 void func_8005A108(u8 arg0)
 {
-    u8* p = func_80018694();
+    u8* p = allocObjectUnlayered();
 
     if (p != NULL) {
         p[0] = 1;
@@ -74,7 +74,7 @@ void func_8005A108(u8 arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005A148);
 void func_8005A148(u8 arg0)
 {
-    u8* p = func_80018694();
+    u8* p = allocObjectUnlayered();
 
     if (p != NULL) {
         p[0] = 1;

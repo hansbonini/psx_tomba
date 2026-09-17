@@ -30,9 +30,9 @@ void updateItemPickupAnim(unkstruct_800A6D50* arg0)
         case 1:
             temp_a1 = arg0->unk2E;
             if (temp_a1 & 2) {
-                func_80022618(arg0, temp_a1 & 1);
+                applyAnimVelocityX(arg0, temp_a1 & 1);
             } else {
-                func_80022618(arg0, (temp_v1 - temp_a1) & 0xFFFF);
+                applyAnimVelocityX(arg0, (temp_v1 - temp_a1) & 0xFFFF);
             }
             temp_v0 = arg0->unk82 + 64;
             arg0->unk82 = temp_v0;
@@ -63,28 +63,28 @@ void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3,
     if (func_800236F4(arg0->item_id) == ITEM_CHICK) {
         switch (arg0->unk0) {
             case 0:
-                func_80041754(arg0->unk1, arg0->unk2, arg1);
+                spawnItem(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 1:
-                func_80041790(arg0->unk1, arg0->unk2, arg1);
+                spawnItemDrop(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 2:
-                func_800417CC(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemAtPos(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 3:
-                func_80041820(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemDropAtPos(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 4:
-                func_80041874(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemBounce(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 5:
-                func_800418C8(arg0->unk1, arg0->unk2, arg1);
+                spawnItemFixed(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 6:
                 func_80123188(arg1, arg0->item_id, arg2, arg3);
                 break;
             case 8:
-                func_80041904(arg0->unk1, arg0->unk2, arg1);
+                spawnItemChest(arg0->unk1, arg0->unk2, arg1);
                 break;
         }
         if (arg4 != 0) {
@@ -182,7 +182,7 @@ void initItemObject(unkstruct_800A6D50* arg0)
             arg0->unk24 = (int) *var_v0;
             break;
     }
-    func_800229FC(arg0);
+    readAnimFrameCount(arg0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardNone);

@@ -5,8 +5,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8004FD28);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8004FE24);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800505B0);
-void func_800505B0(u8* self, u8 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", decreaseObjectTimer);
+void decreaseObjectTimer(u8* self, u8 arg1)
 {
     s16 v = *(s16*)(self + 0x98);
 
@@ -89,8 +89,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80052F20);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800530F0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800532B4);
-void func_800532B4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", dispatchAreaActorInit);
+void dispatchAreaActorInit(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -110,8 +110,8 @@ void func_800532B4(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005334C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053588);
-void func_80053588(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", dispatchAreaActorUpdate);
+void dispatchAreaActorUpdate(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -132,8 +132,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005368C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053808);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800539E0);
-void func_800539E0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", dispatchAreaActorDraw1);
+void dispatchAreaActorDraw1(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_801242E8();
@@ -142,8 +142,8 @@ void func_800539E0(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A1C);
-void func_80053A1C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", dispatchAreaActorDraw2);
+void dispatchAreaActorDraw2(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80124CC8();
@@ -152,8 +152,8 @@ void func_80053A1C(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A58);
-void func_80053A58(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", dispatchAreaActorSpawn);
+void dispatchAreaActorSpawn(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -171,8 +171,8 @@ void func_80053A58(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053AF0);
-void func_80053AF0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", dispatchAreaNpcInit);
+void dispatchAreaNpcInit(void)
 {
     if (GAME.selectedArea == AREA01_DWARFFOREST) {
         func_80123748();
@@ -181,8 +181,8 @@ void func_80053AF0(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
-void func_80053B30(u8* arg0, u8* arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", applyObjectPush);
+void applyObjectPush(u8* arg0, u8* arg1)
 {
     s32* q;
 
@@ -193,8 +193,8 @@ void func_80053B30(u8* arg0, u8* arg1)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B94);
-void func_80053B94(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", callObjectInteraction);
+void callObjectInteraction(void)
 {
     func_80051284();
 }

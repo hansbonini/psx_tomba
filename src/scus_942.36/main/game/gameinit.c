@@ -93,7 +93,7 @@ void initHud(void)
     GAME.fadeScreenControl = 1;
     *(s8* )0x1F8003D0 = 0;
     GAME.playerIdleState = 0;
-    func_80018F04();
+    initAreaScripts();
     func_80020CB0();
     
     tmp = D_800B07AC;
@@ -107,14 +107,14 @@ void initHud(void)
     *tmp++ = (GAME.playerAP / 1       ) % 10;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017CA0);
-void func_80017CA0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearAreaConfig);
+void clearAreaConfig(void)
 {
     memset(D_800A5398, 0, sizeof(D_800A5398));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017CCC);
-void func_80017CCC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPoolUnlayered);
+void initObjectPoolUnlayered(void)
 {
     s32 i;
     u8* p;
@@ -138,8 +138,8 @@ void func_80017CCC(void)
     D_1F80023E = 10;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017D70);
-void func_80017D70(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPoolLayer1);
+void initObjectPoolLayer1(void)
 {
     s32 i;
     u8* p;
@@ -168,8 +168,8 @@ void func_80017D70(void)
     D_1F800244 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017E44);
-void func_80017E44(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPool);
+void initObjectPool(void)
 {
     s32 i;
     u8* p;
@@ -194,8 +194,8 @@ void func_80017E44(void)
     D_1F800238 = 0xC8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017EEC);
-void func_80017EEC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initLayer1DrawList);
+void initLayer1DrawList(void)
 {
     *(int* )0x1F80021C = &D_800A5970;
     *(int* )0x1F800260 = &D_800A5970;
@@ -203,8 +203,8 @@ void func_80017EEC(void)
     *(short* )0x1F800246 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017F1C);
-void func_80017F1C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initMainDrawList);
+void initMainDrawList(void)
 {
     s32 i;
     s32 off;
@@ -215,12 +215,12 @@ void func_80017F1C(void)
         off = i * 0x8C;
         *(s16*)&D_800A3348[off] = 0xFFFF;
     }
-    func_80018D7C();
+    initSpriteSlots();
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017F88);
-void func_80017F88(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initLayer4DrawList);
+void initLayer4DrawList(void)
 {
     *(int** )0x1F800224 = &D_800B0470;
     *(int** )0x1F800268 = &D_800B0470;
@@ -228,8 +228,8 @@ void func_80017F88(void)
     *(short* )0x1F80024C = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017FB8);
-void func_80017FB8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPoolLayer8);
+void initObjectPoolLayer8(void)
 {
     s32 i;
     u8* p;
@@ -256,11 +256,11 @@ void func_80017FB8(void)
     D_1F800274 = (s32*)&D_800B3184;
     D_1F800258 = 0;
     D_1F800242 = 0;
-    func_80018E58();
+    initSpriteSlots8();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018094);
-void func_80018094(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initLayer5DrawList);
+void initLayer5DrawList(void)
 {
     *(int** )0x1F800228 = &D_800B04F0;
     *(int** )0x1F80026C = &D_800B04F0;
@@ -268,20 +268,20 @@ void func_80018094(void)
     *(short* )0x1F800248 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800180C4);
-void func_800180C4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearLayer1Buffer);
+void clearLayer1Buffer(void)
 {
     memset(&D_800A38B8, 0, 0x84);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800180F0);
-void func_800180F0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearOtBuffer);
+void clearOtBuffer(void)
 {
     memset(D_800B00F8, 0, sizeof(D_800B00F8));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001811C);
-void func_8001811C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPoolLayer7);
+void initObjectPoolLayer7(void)
 {
     s32 i;
     u8* p;
@@ -310,19 +310,19 @@ void func_8001811C(void)
     D_1F800240 = 0;
 }
 
-void func_800181F0(void)
+void clearMenuState(void)
 {
     memset(D_800B0770, 0, sizeof(D_800B0770));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001821C);
-void func_8001821C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearMenuParams);
+void clearMenuParams(void)
 {
     memset(D_800A3940, 0, sizeof(D_800A3940));
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018248);
-void* func_80018248(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer1);
+void* allocObjectLayer1(void)
 {
     s16  n = D_1F800236;
     s32* p;
@@ -345,8 +345,8 @@ void* func_80018248(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800182C8);
-void* func_800182C8(u8 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer);
+void* allocObjectLayer(u8 arg0)
 {
     s16  n = D_1F800238;
     s32* p;
@@ -370,8 +370,8 @@ void* func_800182C8(u8 arg0)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018354);
-void* func_80018354(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer2);
+void* allocObjectLayer2(void)
 {
     s16  n = D_1F800238;
     s32* p;
@@ -420,8 +420,8 @@ void* allocObjectLayer3(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018474);
-void* func_80018474(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer4);
+void* allocObjectLayer4(void)
 {
     s16  n = D_1F800238;
     s32* p;
@@ -446,8 +446,8 @@ void* func_80018474(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018504);
-void* func_80018504(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer5);
+void* allocObjectLayer5(void)
 {
     s16  n = D_1F800238;
     s32* p;
@@ -472,8 +472,8 @@ void* func_80018504(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018594);
-void* func_80018594(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer8);
+void* allocObjectLayer8(void)
 {
     s16  n = D_1F80023A;
     s32* p;
@@ -496,8 +496,8 @@ void* func_80018594(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018614);
-void* func_80018614(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer7);
+void* allocObjectLayer7(void)
 {
     s16  n = D_1F80023C;
     s32* p;
@@ -520,8 +520,8 @@ void* func_80018614(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018694);
-u8* func_80018694(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectUnlayered);
+u8* allocObjectUnlayered(void)
 {
     s16  n = D_1F80023E;
     s32* p;
@@ -535,8 +535,8 @@ u8* func_80018694(void)
     return NULL;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800186E0);
-void func_800186E0(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer1);
+void freeObjectLayer1(s32* arg0)
 {
     ((u8*)arg0)[0x1C] &= 0x7F;
     arg0[0] = 0;
@@ -547,8 +547,8 @@ void func_800186E0(s32* arg0)
     *--D_1F800204 = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001872C);
-void func_8001872C(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer2);
+void freeObjectLayer2(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -564,8 +564,8 @@ void func_8001872C(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018780);
-void func_80018780(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer3);
+void freeObjectLayer3(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -581,8 +581,8 @@ void func_80018780(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800187D4);
-void func_800187D4(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer4);
+void freeObjectLayer4(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -598,8 +598,8 @@ void func_800187D4(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018828);
-void func_80018828(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer8);
+void freeObjectLayer8(s32* arg0)
 {
     ((u8*)arg0)[0x1C] &= 0x7F;
     arg0[0] = 0;
@@ -612,8 +612,8 @@ void func_80018828(s32* arg0)
     *--D_1F80020C = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001887C);
-void func_8001887C(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer5);
+void freeObjectLayer5(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -629,8 +629,8 @@ void func_8001887C(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800188D0);
-void func_800188D0(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectLayer7);
+void freeObjectLayer7(s32* arg0)
 {
     ((u8*)arg0)[0x1C] &= 0x7F;
     arg0[0] = 0;
@@ -641,8 +641,8 @@ void func_800188D0(s32* arg0)
     *--D_1F800214 = (s32)arg0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001891C);
-void func_8001891C(s32* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectUnlayered);
+void freeObjectUnlayered(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -654,8 +654,8 @@ INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010000);
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010008);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018954);
-void func_80018954(s32* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectByLayer);
+void freeObjectByLayer(s32* self)
 {
     switch (((u8*)self)[0x1C] & 0x7F) {
     case 1:
@@ -746,15 +746,15 @@ void func_80018954(s32* self)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018BC8);
-void func_80018BC8(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListLayer1);
+void pushDrawListLayer1(s32 arg0)
 {
     *--D_1F800218 = arg0;
     D_1F800244++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C04);
-void func_80018C04(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListMain);
+void pushDrawListMain(s32 arg0)
 {
     *--D_1F80021C = arg0;
     D_1F800246++;
@@ -762,36 +762,36 @@ void func_80018C04(s32 arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C40);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C8C);
-void func_80018C8C(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListLayer4);
+void pushDrawListLayer4(s32 arg0)
 {
     *--D_1F800224 = arg0;
     D_1F80024C++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018CC8);
-void func_80018CC8(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListLayer8);
+void pushDrawListLayer8(s32 arg0)
 {
     *--D_1F800230 = arg0;
     D_1F800242++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D04);
-void func_80018D04(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListLayer5);
+void pushDrawListLayer5(s32 arg0)
 {
     *--D_1F800228 = arg0;
     D_1F800248++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D40);
-void func_80018D40(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListLayer7);
+void pushDrawListLayer7(s32 arg0)
 {
     *--D_1F80022C = arg0;
     D_1F800240++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018D7C);
-void func_80018D7C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initSpriteSlots);
+void initSpriteSlots(void)
 {
     int u;
     int v;
@@ -824,8 +824,8 @@ void func_80018D7C(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018E58);
-void func_80018E58(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initSpriteSlots8);
+void initSpriteSlots8(void)
 {
     int u;
     int v;
@@ -854,14 +854,14 @@ void func_80018E58(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018F04);
-void func_80018F04(void) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initAreaScripts);
+void initAreaScripts(void) {
     int u;
     int p;
 
     if (D_8009CA04 == 0) return;
     p = &D_8009EBA8;
-    func_8003B478(p);
+    scriptReset(p);
             
     switch(GAME.selectedArea&0xFFFF) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
@@ -871,7 +871,7 @@ void func_80018F04(void) {
                 case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
                     u = *(int* )0x1F8002B8;
                     func_8003B2C8(u, p);
-                    func_8003B410(p, 0);
+                    scriptStart(p, 0);
                     break;
             }
             break;
@@ -884,7 +884,7 @@ void func_80018F04(void) {
                  case AREA01_SECTION04_CHARITYSQUARE:
                     u = *(int* )0x1F8002B8;
                     func_8003B2C8(u, p);
-                    func_8003B410(p, 0);
+                    scriptStart(p, 0);
                     break;
             }
             break;
@@ -893,13 +893,13 @@ void func_80018F04(void) {
                 case AREA02_SECTION00_DWARFVILLAGE:
                     u = *(int* )0x1F8002BC;
                     func_8003B2C8(u, p);
-                    func_8003B410(p, 0);
+                    scriptStart(p, 0);
                     break;
                  case AREA02_SECTION01_DWARFELDERSHUT:
                  case AREA02_SECTION02_UNDERGROUNDPRISON:
                     u = *(int* )0x1F8002B8;
                     func_8003B2C8(u, p);
-                    func_8003B410(p, 0);
+                    scriptStart(p, 0);
                     break;
             }
             break;

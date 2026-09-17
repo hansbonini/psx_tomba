@@ -52,7 +52,7 @@ void bootSequenceTask(void)
     D_8009E744 = 0;
     D_8009C9E4 = 1;
     D_8009E450 = 0;
-    func_80023A3C();
+    loadCollisionBounds();
     task = CURRENT_TASK;
     task->state0 = 9U;
     task->state1 = 0U;
@@ -63,8 +63,8 @@ void bootSequenceTask(void)
         switch (state) {
             case 0:
                 LOAD_COMPLETE = 0;
-                func_800223A0(0);
-                func_800223A0(1);
+                loadAreaResources(0);
+                loadAreaResources(1);
                 func_800222B8(0, 1);
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
@@ -239,7 +239,7 @@ void func_800199B8(void)
                 case 0:                             // switch 1
                     SetDispMask(0);
                     LOAD_COMPLETE = 0U;
-                    func_800223A0(1);
+                    loadAreaResources(1);
                     func_800222B8(1, 1);
                     task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
@@ -296,7 +296,7 @@ void func_800199B8(void)
                 SetDispMask(0);
                 initDisplay(0U, 0U, 0U);
                 LOAD_COMPLETE = 0U;
-                func_800223A0(2);
+                loadAreaResources(2);
                 func_800222B8(2, 1);
                 task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 task5->state1++;
@@ -330,7 +330,7 @@ void func_80019CA4(void)
         case 0:
             SetDispMask(0);
              *(u8* )&scratch->loadComplete = 0;
-            func_800223A0(2);
+            loadAreaResources(2);
             func_800222B8(2, 1);
             scratch->currentTask->state1++;
             return;
@@ -528,7 +528,7 @@ void func_8001A328(void)
             func_80020C00(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0;
-            func_800223A0(3);
+            loadAreaResources(3);
             func_800222B8(8, 1);
             (CURRENT_TASK)->state1++;
             return;
@@ -570,7 +570,7 @@ void func_8001A328(void)
             func_80020C00(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0U;
-            func_800223A0(2);
+            loadAreaResources(2);
             func_800222B8(2, 1);
             (CURRENT_TASK)->state1++;
             return;
@@ -615,10 +615,10 @@ void func_8001A51C(void)
                 func_8001A670(); // New Game
                 break;
             case 1:
-                func_8001A954(); // Debug
+                gameStateDispatcher(); // Debug
                 break;
             case 2:
-                func_8001A774(); // Load Game
+                titleScreenHandler(); // Load Game
                 break;
         }
         sleepTask(1);
