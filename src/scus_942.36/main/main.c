@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psyq/libcd.h"
 
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
@@ -23,11 +24,11 @@ void main(void)
     SetGraphDebug(0);
     InitGeom();
     CdInit();
-    cdMode = 0x80;
-    while (CdControl(0xE, &cdMode, 0) == 0);
+    cdMode = CdlModeSpeed;
+    while (CdControl(CdlSetmode, &cdMode, 0) == 0);
     DecDCTReset(0);
-    *(s32*)0x1F8002A0 = 0;
-    *(s32*)0x1F80029C = 0;
+    CD_QUEUE_TAIL = 0;
+    CD_QUEUE_HEAD = 0;
     initGraphics();
     GsSetOrigin(1, 1);
     func_800211A4();

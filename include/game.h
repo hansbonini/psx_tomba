@@ -25,6 +25,10 @@
 #define NEXT_PRIM          (*(int*)0x1F800164)      /* 0x164 */
 #define MOVIE_PLAY_STATE   (*(u8*)0x1F8001CC)       /* 0x1CC */
 #define LOAD_COMPLETE      (*(u8*)0x1F8001CE)       /* 0x1CE */
+#define MOVIE_ID           (*(u_char*)0x1F8001CD)      /* 0x1CD */
+#define MOVIE_SKIP_REQUEST (*(u_char*)0x1F8001D3)      /* 0x1D3 */
+#define CD_QUEUE_HEAD      (*(s32*)0x1F80029C)        /* 0x29C */
+#define CD_QUEUE_TAIL      (*(s32*)0x1F8002A0)        /* 0x2A0 */
 #define CURRENT_OT         (*(u_long*)0x1F8001E0)   /* 0x1E0 */
 #define PAUSE_TOGGLE       (*(u16*)0x1F8001EE)      /* 0x1EE */
 #define PAUSE_FLAGS        (*(u16*)0x1F8001F0)      /* 0x1F0 */

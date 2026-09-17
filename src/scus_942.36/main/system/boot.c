@@ -191,7 +191,7 @@ void titleSequenceTask(void)
             sp10[0] = 1;
             func_80020C00(0);
             if (MOVIE_PLAY_STATE != 0) {
-                *(s8* )0x1F8001D3 = 1;
+                MOVIE_SKIP_REQUEST = 1;
             }
         }
         switch ((u16)(CURRENT_TASK)->state0) {
@@ -264,7 +264,7 @@ void func_800199B8(void)
         case 2:
             task2 = CURRENT_TASK;
             MOVIE_PLAY_STATE = 1;
-            *(s8* )0x1F8001CD = 0x15;
+            MOVIE_ID = 0x15;
             task2->state1++;
             openTask(1, moviePlayerTask);
             return;

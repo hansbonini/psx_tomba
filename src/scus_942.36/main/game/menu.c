@@ -138,7 +138,7 @@ void func_8001A9F0(void)
             break;
         case 4:
             MOVIE_PLAY_STATE = 1;
-            *(char* )0x1F8001CD = 1;
+            MOVIE_ID = 1;
             openTask(1, &moviePlayerTask);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state2++;
@@ -146,7 +146,7 @@ void func_8001A9F0(void)
         case 5:
             if (MOVIE_PLAY_STATE != 0) {
                 if (*(u_short* )(&SCRATCHPAD+0x1FC) & (JOY_CROSS | JOY_START)) {
-                    *(char* )0x1F8001D3 = 1;
+                    MOVIE_SKIP_REQUEST = 1;
                     JOYPAD_STATE = 0U;
                     (CURRENT_TASK)->state2 = 6U;
                     return;
