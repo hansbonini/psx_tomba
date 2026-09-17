@@ -6,7 +6,7 @@ void initGameConfig(void)
 {
     CAMERA* camera = (CAMERA*)0x1F8000E2;
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
-    memset(&D_8009BC98, 0, 0x2C);
+    memset(D_8009BC98, 0, sizeof(D_8009BC98));
     getBaseMatrix((MATRIX* ) D_1F8000C0);
     camera->vrz = -544; 
     camera->vpx = 160;
@@ -88,7 +88,7 @@ void initHud(void)
 {
     char *tmp;
 
-    memset(&D_8009BC98, 0, 0x2C);
+    memset(D_8009BC98, 0, sizeof(D_8009BC98));
     *(s16* )0x1F8001C6 = 0;
     GAME.fadeScreenControl = 1;
     *(s8* )0x1F8003D0 = 0;
@@ -110,7 +110,7 @@ void initHud(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017CA0);
 void func_80017CA0(void)
 {
-    memset(&D_800A5398, 0, 0x178);
+    memset(D_800A5398, 0, sizeof(D_800A5398));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017CCC);
@@ -127,7 +127,7 @@ void func_80017CCC(void)
         p += 0x3C;
         i++;
     } while (i < 10);
-    q = &D_800A57E4;
+    q = &D_800A55C8 + 0x21C;
     D_1F800210 = (s32*)&D_800B0518;
     i = 0;
     do {
@@ -152,7 +152,7 @@ void func_80017D70(void)
         p += 0xEC;
         i++;
     } while (i < 0x4);
-    q = &D_800B0A9C;
+    q = &D_800B07D8 + 0x2C4;
     D_1F800204 = (s32*)D_800A38B8;
     i = 0;
     do {
@@ -182,7 +182,7 @@ void func_80017E44(void)
         p += 0xD4;
         i++;
     } while (i < 0xC8);
-    q = &D_800AFE3C;
+    q = (u8*)&D_800A5970 + 0xA4CC;
     D_1F800208 = (s32*)&D_800A3D08;
     i = 0;
     do {
@@ -242,7 +242,7 @@ void func_80017FB8(void)
         p += 0xD4;
         i++;
     } while (i < 0x2D);
-    q = &D_800B2FF8;
+    q = &D_800B0B88 + 0x2470;
     D_1F80020C = (s32*)&D_800A55C4;
     i = 0;
     do {
@@ -277,7 +277,7 @@ void func_800180C4(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800180F0);
 void func_800180F0(void)
 {
-    memset(&D_800B00F8, 0, 0x16C);
+    memset(D_800B00F8, 0, sizeof(D_800B00F8));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001811C);
@@ -294,7 +294,7 @@ void func_8001811C(void)
         p += 0x6C;
         i++;
     } while (i < 0xA);
-    q = &D_800A40D4;
+    q = &D_800A3D08 + 0x3CC;
     D_1F800214 = (s32*)&D_800A37D0;
     i = 0;
     do {
@@ -312,13 +312,13 @@ void func_8001811C(void)
 
 void func_800181F0(void)
 {
-    memset(&D_800B0770, 0, 0x68);
+    memset(D_800B0770, 0, sizeof(D_800B0770));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001821C);
 void func_8001821C(void)
 {
-    memset(&D_800A3940, 0, 0x70);
+    memset(D_800A3940, 0, sizeof(D_800A3940));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018248);

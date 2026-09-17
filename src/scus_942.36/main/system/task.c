@@ -95,7 +95,7 @@ void dispatchTasks(void)
     *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
     for (task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); task <= 0x801FD94FU; task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
         tid = 2;
-        switch ((u16)(*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34))->unk0) {
+        switch ((u16)(*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34))->unk0) {
             case 3:
                 EnterCriticalSection();
                 task2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);

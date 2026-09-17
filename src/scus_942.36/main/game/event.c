@@ -1,14 +1,12 @@
 #include "common.h"
 #include "game.h"
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/event", awardEventProgress);
 u_char awardEventProgress(EVENT event_id, int ap_table, int state)
 {
     if (ap_table == 0) {
-        addPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
+        addPlayerAP(AP_TABLE[EVENT_STARTED_AP_TABLE[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, state);
             printEventMessage(event_id, 0);
@@ -16,7 +14,7 @@ u_char awardEventProgress(EVENT event_id, int ap_table, int state)
             func_8002E3B0(0);
         }
     } else {
-        addPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
+        addPlayerAP(AP_TABLE[EVENT_COMPLETE_AP_TABLE[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
@@ -38,7 +36,7 @@ u_char setEventStarted(EVENT event_id, int arg1, int state)
         } else {
             GAME.event[event_id] += 1;
         }
-        addPlayerAP((&AP_TABLE)[(&EVENT_STARTED_AP_TABLE)[event_id]]);
+        addPlayerAP(AP_TABLE[EVENT_STARTED_AP_TABLE[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 0, 0x3C, state);
             printEventMessage(event_id, 0);
@@ -54,7 +52,7 @@ u_char setEventComplete(EVENT event_id, int state)
 {
     if (GAME.event[event_id] != 0xFF) {
         GAME.event[event_id] = 0xFF;
-        addPlayerAP((&AP_TABLE)[(&EVENT_COMPLETE_AP_TABLE)[event_id]]);
+        addPlayerAP(AP_TABLE[EVENT_COMPLETE_AP_TABLE[event_id]]);
         if (event_id != EVENT_TALEOFTHEEVILPIGS) {
             func_8001E3EC(event_id, 1, 1, state);
             printEventMessage(event_id, 1);

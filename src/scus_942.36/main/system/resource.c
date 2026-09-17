@@ -61,14 +61,10 @@ s32 func_8003B410(u8* self, s32 idx)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B478);
 void func_8003B478(u8* self)
 {
-    s32  i;
-    s32* p;
+    s32 i;
 
-    i = 0x3F;
-    p = &D_8009E73C;
-    for (; i >= 0; i--) {
-        *p = 0;
-        p--;
+    for (i = 0x3F; i >= 0; i--) {
+        D_8009E640[i] = NULL;
     }
     *(u8*)(self + 0x88) = 0;
     *(s16*)(self + 0x8A) = 0;

@@ -36,7 +36,7 @@ void func_80029734(s32 arg0, u8 arg1)
 {
     u8* p;
 
-    (&D_800B07CC)[arg0] = arg1;
+    D_800B07CC[arg0] = arg1;
     p = allocObjectLayer3();
     if (p != NULL) {
         p[0] = 1;
@@ -617,7 +617,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D784);
 s16 func_8002D964(void)
 {
     s32 x = D_800A38DC;
-    s32 v = (&D_8007D988)[(x >> 8) / 360];
+    s32 v = D_8007D988[(x >> 8) / 360];
     s32 r = (v * 567) >> 12;
 
     if (x > 0) {
@@ -631,7 +631,7 @@ s16 func_8002D964(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D9D4);
 s32 func_8002D9D4(void)
 {
-    s16 v = (&D_8007D988)[(D_800A38DC >> 8) / 360];
+    s16 v = D_8007D988[(D_800A38DC >> 8) / 360];
 
     return (v * 1027) >> 12;
 }
@@ -650,7 +650,7 @@ void func_8002DB3C(void)
     D_1F800198 = 0;
     do {
         if (p[0] != 0) {
-            (&D_8007C68C)[p[2]](p);
+            D_8007C68C[p[2]](p);
         }
         D_1F800198 = D_1F800198 + 1;
         p += 0xD4;

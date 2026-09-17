@@ -7,8 +7,6 @@ s32 func_8002296C(s16 arg0, s16 arg1);
 s32 func_8002299C(s16 arg0, s16 arg1);
 s32 func_800229CC(s16 arg0, s16 arg1);
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
 // #define CD_REQ   (*(u8**)0x1F800288)   /* entrada corrente da fila */
@@ -83,7 +81,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
 
 //         case 3:
 //             flags = CD_FLAGS;
-//             CD_NSEC = (u32)((&D_800791A4)[*CD_HDR * 2] + 0x7FF) >> 11;
+//             CD_NSEC = (u32)(D_800791A4[*CD_HDR * 2] + 0x7FF) >> 11;
 //             switch (flags & 0xF) {
 //             case 0:
 //             case 3:
@@ -202,7 +200,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
 //                 i = 0;
 //                 if (nvag > 0) {
 //                     do {
-//                         vabId = (&D_1F8003A8)[base + i];
+//                         vabId = D_1F8003A8[base + i];
 //                         if (vabId != -1) {
 //                             SsVabClose(vabId);
 //                         }
@@ -213,7 +211,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
 //                 i = 0;
 //                 if (nvag > 0) {
 //                     do {
-//                         (&D_8009C758)[base + i] = (s32)(vagTop + *(s32*)vagCur);
+//                         D_8009C758[base + i] = (s32)(vagTop + *(s32*)vagCur);
 //                         i++;
 //                         vagCur += 4;
 //                     } while (i < nvag);
@@ -222,30 +220,30 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80021340);
 //                 i = 0;
 //                 if (nprog > 0) {
 //                     do {
-//                         (&D_8009C658)[base + i] = (s32)(progTop + *(s32*)progCur);
+//                         D_8009C658[base + i] = (s32)(progTop + *(s32*)progCur);
 //                         i++;
 //                         progCur += 4;
 //                     } while (i < nprog);
 //                 }
 
-//                 spuAddr = (&D_80077D50)[CD_HDR[7] * 2];
+//                 spuAddr = D_80077D50[CD_HDR[7] * 2];
 //                 i = 0;
 //                 if (nvag > 0) {
 //                     do {
 //                         if (i == (nvag - 1)) {
-//                             a = (u8*)(&D_8009C658)[base + i];
+//                             a = (u8*)D_8009C658[base + i];
 //                             b = progTop + *(s32*)progCur;
 //                         } else {
-//                             b = (u8*)(&D_8009C65C)[base + i];
-//                             a = (u8*)(&D_8009C658)[base + i];
+//                             b = (u8*)D_8009C65C[base + i];
+//                             a = (u8*)D_8009C658[base + i];
 //                         }
 //                         len = b - a;
 //                         SpuSetTransferStartAddr(spuAddr);
-//                         SpuRead((u_char*)(&D_8009C658)[base + i], len);
+//                         SpuRead((u_char*)D_8009C658[base + i], len);
 //                         SpuIsTransferCompleted(1);
-//                         vabId = SsVabFakeHead((u_char*)(&D_8009C758)[base + i], -1, spuAddr);
+//                         vabId = SsVabFakeHead((u_char*)D_8009C758[base + i], -1, spuAddr);
 //                         spuAddr += len;
-//                         (&D_1F8003A8)[base + i] = vabId;
+//                         D_1F8003A8[base + i] = vabId;
 //                         SsVabFakeBody(vabId);
 //                         i++;
 //                     } while (i < nvag);
@@ -287,8 +285,8 @@ void func_80021B84(u8* dst, s16* hdr)
 {
     s32 head = D_1F80029C;
 
-    (&D_8009E748)[head * 2] = (s32)hdr;
-    (&D_8009E74C)[head * 2] = (s32)dst;
+    D_8009E748[head * 2] = (s32)hdr;
+    D_8009E74C[head * 2] = (s32)dst;
     D_1F80029C = (head + 1) & 0x7F;
 }
 
@@ -316,7 +314,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800222B8);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223A0);
 void func_800223A0(s32 arg0)
 {
-    func_80021D70((&D_80078EB0)[arg0]);
+    func_80021D70(D_80078EB0[arg0]);
     D_1F8002AC = D_1F800298;
 }
 
@@ -525,25 +523,25 @@ void func_80022924(short* id)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002293C);
 s32 func_8002293C(s16 arg0, s16 arg1)
 {
-    return (((&D_8007D788)[arg0] * arg1) << 4) >> 16;
+    return ((D_8007D788[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002296C);
 s32 func_8002296C(s16 arg0, s16 arg1)
 {
-    return (((&D_8007DB88)[arg0] * arg1) << 4) >> 16;
+    return ((D_8007DB88[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_8002299C);
 s32 func_8002299C(s16 arg0, s16 arg1)
 {
-    return (((&D_8007D988)[arg0] * arg1) << 4) >> 16;
+    return ((D_8007D988[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800229CC);
 s32 func_800229CC(s16 arg0, s16 arg1)
 {
-    return (((&D_8007DB88)[arg0] * arg1) << 4) >> 16;
+    return ((D_8007DB88[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800229FC);

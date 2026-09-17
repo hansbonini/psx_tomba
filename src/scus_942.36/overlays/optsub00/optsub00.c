@@ -3,11 +3,11 @@
 extern s16   D_8009E744;
 extern u8    D_8009C9E4;
 extern u8    D_8009E450;
-extern s32   D_800E9D08;
+extern s32   D_800E9D08[];
 extern u8    D_800E9648;
 extern u8    D_800E9DBC;
-extern s32   D_800E9C90;
-extern s32   D_800E9CF4;
+extern s32   D_800E9C90[];
+extern s32   D_800E9CF4[];
 void func_800E9348(void);
 extern s16   D_800EA2EC;
 extern u8    D_800E9C64;
@@ -113,9 +113,9 @@ void printTitleScreenMessage(s16 arg0, s16 arg1, s32 arg2)
     req.unk0 = arg0;
     req.unk2 = arg1;
     req.unk4 = 6;
-    req.unk8 = (&D_800E9C90)[arg2];
+    req.unk8 = D_800E9C90[arg2];
     req.unkC = &func_800E9348;
-    req.unk10 = (void*)(&D_800E9CF4)[arg2];
+    req.unk10 = (void*)D_800E9CF4[arg2];
     func_800E8B6C(&req, 0, 1, 1);
 }
 
@@ -127,7 +127,7 @@ void func_800E8908(s16 arg0, s16 arg1, s32 arg2)
     req.unk0 = arg0;
     req.unk2 = arg1;
     req.unk4 = 9;
-    req.unk8 = (&D_800E9D08)[arg2];
+    req.unk8 = D_800E9D08[arg2];
     req.unkC = &D_800E9648;
     func_800E8B6C(&req, 0, 1, 0);
 }
@@ -140,7 +140,7 @@ void func_800E8964(s16 arg0, s16 arg1, s32 arg2)
     req.unk0 = arg0;
     req.unk2 = arg1;
     req.unk4 = 2;
-    req.unk8 = (&D_800E9D08)[arg2];
+    req.unk8 = D_800E9D08[arg2];
     req.unkC = &D_800E9648;
     req.unk10 = &D_800E9DBC;
     func_800E8B6C(&req, 0, 1, 2);
@@ -154,7 +154,7 @@ void func_800E89CC(s16 arg0, s16 arg1, s32 arg2, s32 arg3)
     req.unk0 = arg0;
     req.unk2 = arg1;
     req.unk4 = 9;
-    req.unk8 = (&D_800E9D08)[arg2];
+    req.unk8 = D_800E9D08[arg2];
     req.unkC = &D_800E9648;
     func_800E8B6C(&req, 0, 1, arg3);
 }

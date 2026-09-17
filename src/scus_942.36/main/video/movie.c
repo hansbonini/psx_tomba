@@ -2,15 +2,13 @@
 #include "game.h"
 #include "psyq/libcd.h"
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001EFE8);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", cdSeekStream);
 void cdSeekStream(short file_id)
 {
-    if (CdControl(CdlSetloc, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
+    if (CdControl(CdlSetloc, (u_char*)&D_800791A0[D_80078F80[D_8007775C[file_id]]], 0) != 0) {
         CdControlF(CdlSeekL, 0);
     }
 }
@@ -37,7 +35,7 @@ void moviePlayerTask(void)
         switch (state) {
             case 0:
                 func_8001F5D0(&D_8009B010, 384, 256, 704, 256);
-                startMovieStream((int) (((&D_80078F80)[D_8007775C[MOVIE_ID]] * 2) + &D_800791A0));
+                startMovieStream((int)&D_800791A0[D_80078F80[D_8007775C[MOVIE_ID]]]);
                 gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 gameControl->state0+=1;
                 do {

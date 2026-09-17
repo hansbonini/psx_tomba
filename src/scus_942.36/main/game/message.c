@@ -52,7 +52,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F56C);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F7C8);
 void func_8002F7C8(u8* self)
 {
-    (&D_8007C848)[self[3]]();
+    D_8007C848[self[3]]();
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F804);

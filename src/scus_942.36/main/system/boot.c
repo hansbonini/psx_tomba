@@ -68,7 +68,7 @@ void bootSequenceTask(void)
                 func_800222B8(0, 1);
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
-                memset(&D_1F8001A0, 0, 0x24);
+                memset(D_1F8001A0, 0, sizeof(D_1F8001A0));
                 task9 = CURRENT_TASK;
                 task9->state0++;
                 break;
@@ -417,16 +417,16 @@ void loopTitleScreen(int* arg0)
             func_80020AF0(0);
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
             (CURRENT_TASK)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
-            gameControl = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
-            gameControl->unk6A = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl = (*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34));
+            gameControl->unk6A = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
             gameControlTemp = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             gameControlTemp->timer = 972;
             gameControlTemp->state1++;
             return;
         case 3:
-            gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
+            gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34);
             NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             gameControlTemp5->timer--;
             if ((short)gameControlTemp5->timer <= 0) {
@@ -443,7 +443,7 @@ void loopTitleScreen(int* arg0)
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
                             gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
@@ -454,7 +454,7 @@ void loopTitleScreen(int* arg0)
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
                             gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);

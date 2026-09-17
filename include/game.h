@@ -9,11 +9,17 @@
 #define LANGUAGE_C 1
 #include "psyq/kernel.h"
 #include "psyq/libetc.h"
+#include "psyq/libcd.h"
 #include "psyq/libpress.h"
 #include "psyq/libgpu.h"
 #include "psyq/libgte.h"
 #include "psyq/libspu.h"
 #include "psyq/libsnd.h"
+
+typedef struct fileLink {
+    /* 0x0 */ CdlLOC loc;
+    /* 0x4 */ int    size;
+} fileLink;
 
 /* ========================================================================
  * Macros
@@ -39,6 +45,8 @@
 #define TASK_TABLE  0x801FD800
 #define TIM_SCRATCH ((u_long*)0x801FBE00)
 
+#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
+#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define D_8009E3D4 ((void*)0x8009E3D4)
 
@@ -2162,7 +2170,7 @@ extern u_char SCRATCHPAD;
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
-extern int D_1F8001A0;
+extern u_char D_1F8001A0[0x24];
 extern int D_1F8002C8[];
 extern u16  D_1F8001C8;
 extern s32* D_1F800204;
@@ -2197,7 +2205,7 @@ extern u16  D_1F800244;
 extern u16  D_1F800246;
 extern u16  D_1F800248;
 extern u16  D_1F80024C;
-extern s16  D_1F8003A8;
+extern s16  D_1F8003A8[];
 extern short D_1F8003B6;
 
 /* --- RAM / ROM data 0x8001____ --- */
@@ -2206,25 +2214,25 @@ extern char D_80010008;
 extern int D_800121C8;
 
 /* --- RAM / ROM data 0x8007____ --- */
-extern u_short D_80076E80;
-extern int D_80076FAC;
+extern u_short D_80076E80[];
+extern int D_80076FAC[];
 extern int D_800771FC;
 extern int D_8007722C;
-extern int AP_TABLE;
-extern u_char EVENT_STARTED_AP_TABLE;
-extern u_char EVENT_COMPLETE_AP_TABLE;
+extern int AP_TABLE[];
+extern u_char EVENT_STARTED_AP_TABLE[];
+extern u_char EVENT_COMPLETE_AP_TABLE[];
 extern int D_80077754;
 extern int D_80077758;
 extern u_char D_8007775C[];
-extern int  D_80077D50;
+extern int  D_80077D50[];
 extern u_char D_80077FA8;
-extern short D_80078F80;
+extern short D_80078F80[];
 extern int D_8007912C[];
-extern s16  D_8007D788;
-extern s16  D_8007D988;
-extern s16  D_8007DB88;
-extern int D_800791A0; // FileLinkArray
-extern int  D_800791A4;
+extern s16  D_8007D788[];
+extern s16  D_8007D988[];
+extern s16  D_8007DB88[];
+extern fileLink D_800791A0[]; // FileLinkArray
+extern int  D_800791A4[];
 extern u_short D_8007B290;
 extern int D_8007B294;
 extern int D_8007B2F4[];
@@ -2262,8 +2270,8 @@ extern short D_8009B094;
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
 extern byte D_8009B6A8; // SELECTED ROW
-extern short D_8009BC28;
-extern int D_8009BC98;
+extern short D_8009BC28[];
+extern u_char D_8009BC98[0x2C];
 extern u_char D_8009BCA0;
 extern char D_8009BCA7;
 extern char D_8009BCAA;
@@ -2273,9 +2281,9 @@ extern char D_8009BCDB;
 extern u_char D_8009BCDF;
 extern short D_8009BCEA;
 extern u_char D_8009C3F8;
-extern int  D_8009C658;
-extern int  D_8009C65C;
-extern int  D_8009C758;
+extern int  D_8009C658[];
+extern int  D_8009C65C[];
+extern int  D_8009C758[];
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
@@ -2298,23 +2306,23 @@ extern char D_8009E3EE;
 extern char D_8009E3EF;
 extern short D_8009E430;
 extern char D_8009E450;
-extern void (*D_8007C68C)(u8* self);
-extern void (*D_8007D6A4)(u8* self);
-extern void (*D_8007F6F4)(u8* self);
-extern void (*D_8007D57C)(u8* self);
-extern void (*D_8007F988)(void);
-extern void (*D_8007C848)(void);
-extern u8*  D_8007B680;
+extern void (*D_8007C68C[])(u8* self);
+extern void (*D_8007D6A4[])(u8* self);
+extern void (*D_8007F6F4[])(u8* self);
+extern void (*D_8007D57C[])(u8* self);
+extern void (*D_8007F988[])(void);
+extern void (*D_8007C848[])(void);
+extern u8*  D_8007B680[];
 extern u16  D_8009BCCA;
 extern s16  D_8009B074;
 extern u8   D_80014C94;
 extern u8   D_80014C8C;
 extern u8*  D_8009C974;
-extern int  D_8009E74C;
-extern u8   D_800778E4;
-extern u8   D_800778E5;
-extern s32  D_80077AEC;
-extern s32  D_80078EB0;
+extern int  D_8009E74C[];
+extern u8   D_800778E4[];
+extern u8   D_800778E5[];
+extern s32  D_80077AEC[];
+extern s32  D_80078EB0[];
 extern u8   D_8009C61A;
 extern u8*  D_8007EB44;
 extern u8   D_8009BCDD;
@@ -2322,18 +2330,17 @@ extern u8   D_8009BCA4;
 extern u8   D_8009BCDE;
 extern s16  D_800A2818;
 extern s16  D_8009C9F8;
-extern u8*  D_8007C110;
-extern u8*  D_80077084;
-extern u8   D_800B07CC;
+extern u8*  D_8007C110[];
+extern u8*  D_80077084[];
+extern u8   D_800B07CC[];
 extern s32  D_800A38DC;
 extern unkstruct_8009E458* D_8009E458;
-extern s32  D_8009E73C;
-extern u8*  D_8009E640;
+extern u8*  D_8009E640[];
 extern s16* D_800A53D8;
 extern s16* D_800A53DC;
 extern s16  D_800A53AE;
-extern u8   D_8009C10C;
-extern u8   D_8009C20C;
+extern u8   D_8009C10C[];
+extern u8   D_8009C20C[];
 extern u8   D_800A5401;
 extern u8   D_800A5436;
 extern u8   D_8009C619;
@@ -2349,7 +2356,7 @@ extern long MEMCARD_SW_TIMEOUT;
 extern long MEMCARD_SW_NEW_DEVICE;
 extern short D_8009E638;
 extern u_short D_8009E744;
-extern int  D_8009E748;
+extern int  D_8009E748[];
 extern int D_8009EB4C;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;
@@ -2362,17 +2369,17 @@ extern char* SPRINTF_BUFFER_MSG[];
 extern char D_800A15D8; // SPU_SEQ_TABLE
 extern char D_800A1890;
 extern short D_800A2790;
-extern short D_800A3030;
+extern short D_800A3030[];
 extern short D_800A32F8;
 extern byte D_800A3348[0x3D4];
 extern u_char D_800A38B8[];
-extern u_char D_800A3940;
+extern u_char D_800A3940[0x70];
 extern u_char D_800A3941;
 extern u8*  D_1F8001D4;
 extern s16  D_1F8003B8;
 extern s16  D_1F8003BA;
 extern s32  D_8009BCBC;
-extern u8   D_8009E438;
+extern u8   D_8009E438[];
 extern s8   D_8009C618;
 extern u8   D_800A5403;
 extern s16  D_1F8000E6;
@@ -2380,10 +2387,10 @@ extern s16  D_1F8003C4;
 extern s16  D_1F8003C6;
 extern s16  D_1F8003C8;
 extern s16  D_1F8003CA;
-extern u16  D_8007B2C4;
-extern u16  D_8007B2C6;
-extern u16  D_8007B2C8;
-extern u16  D_8007B2CA;
+extern u16  D_8007B2C4[];
+extern u16  D_8007B2C6[];
+extern u16  D_8007B2C8[];
+extern u16  D_8007B2CA[];
 extern char D_800C3188;
 extern char D_800D3188;
 extern char D_800D5188;
@@ -2397,7 +2404,7 @@ extern u8   D_8009C982;
 extern u8   D_8009C983;
 extern u8   D_8009EB58;
 extern s16  D_1F8000F2;
-extern s32  D_80012368;
+extern s32  D_80012368[];
 extern void* D_1F8002D8;
 extern s32  D_1F800278;
 extern u16  D_800A544A;
@@ -2407,17 +2414,12 @@ extern s32  D_1F800198;
 extern u8   D_800B0B88;
 extern u8   D_800A5438;
 extern u8   D_800A55C8;
-extern u8   D_800A57E4;
 extern u8   D_800B0518;
-extern u8   D_800AFE3C;
 extern u8   D_800A3D08;
 extern u8   D_800B07D8;
-extern u8   D_800B0A9C;
 extern s32* D_1F80025C;
 extern u16  D_1F80024E;
-extern u8   D_800B2FF8;
 extern u8   D_800A55C4;
-extern u8   D_800A40D4;
 extern u8   D_800A37D0;
 extern s32* D_1F800274;
 extern u16  D_1F800258;
@@ -2428,7 +2430,7 @@ extern short D_800A3954;
 extern short D_800A3956;
 extern unkstruct_800A39B0 D_800A39B0[];
 extern unkstruct_800AFF18 D_800A5140[];
-extern u_char D_800A5398;
+extern u_char D_800A5398[0x178];
 extern char D_800A539C;
 extern char D_800A539D;
 extern char D_800A539E;
@@ -2441,12 +2443,12 @@ extern int D_800A5970;
 extern unkstruct_800AFF18 D_800AFF18[];
 
 /* --- RAM / ROM data 0x800B____ --- */
-extern u_char D_800B00F8;
+extern u_char D_800B00F8[0x16C];
 extern int D_800B0470;
 extern int D_800B04F0;
 extern int D_800B0528;
 extern int D_800B0680;
-extern u_char D_800B0770;
+extern u_char D_800B0770[0x68];
 extern u_char* D_800B078C;
 extern char D_800B07AC[8];
 extern char D_800B07CD;

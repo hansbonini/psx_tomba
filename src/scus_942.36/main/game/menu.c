@@ -1,8 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A774);
 void func_8001A774(void)
@@ -552,7 +550,7 @@ void func_8001B5A8(void)
         func_8002DB3C();
     }
     // Hack to match (using this instead SCRATCHPAD to access 1F8001C6)
-    if (*(s16* )((byte*)&D_1F8001A0+0x26) != 2) {
+    if (*(s16* )((byte*)D_1F8001A0+0x26) != 2) {
         func_80046264();
     } else {
         resetDrawLists();
@@ -577,7 +575,7 @@ void func_8001B780(void)
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 2;
+            D_800B0770[0] = 2;
             if ((GAME.unk7 != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
                 func_8002065C();
             }
@@ -625,7 +623,7 @@ void func_8001B944(void)
         D_800A3952 = 6;
         D_800A3954 = 0;
         D_800A3956 = 0;
-        D_800A3940 = 0;
+        D_800A3940[0] = 0;
         temp_v1->state2 = 3U;
         (CURRENT_TASK)->unk4E.value = 0U;
         *(short* )0x1F8003B8 = (short)var_a0;
@@ -748,7 +746,7 @@ void func_8001BB1C(void)
             *(s8* )0x1F8001CE = 0U;
             setRGB0((DRAWENV*)(&D_8009D6C4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
             setRGB0((DRAWENV*)(D_8009E3D4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
-            var_a0 = ((&D_80076FAC)[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
+            var_a0 = (D_80076FAC[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
             func_800222B8(((s16*)var_a0)[GAME.selectedSection], 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->unk4E.value++;
@@ -858,7 +856,7 @@ void func_8001C104(void)
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 0;
+            D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
             if (GAME.unk7 != 1) {
                 func_8002065C();
@@ -950,7 +948,7 @@ void func_8001C434(void)
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 0;
+            D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
             if (GAME.unk7 != 1) {
                 func_8002065C();
@@ -1041,7 +1039,7 @@ void func_8001C75C(void)
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 0;
+            D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
             if (GAME.unk7 != 1) {
                 func_8002065C();
@@ -1279,7 +1277,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CE80);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CF7C);
 void func_8001CF7C(void)
 {
-    u8* row = (&D_80077084)[GAME.selectedArea + (u16)D_8009EBA0];
+    u8* row = D_80077084[GAME.selectedArea + (u16)D_8009EBA0];
     u8  v = row[D_8009BCCA];
     unkstruct_1F8001D4* p = CURRENT_TASK;
 
@@ -1314,7 +1312,7 @@ void func_8001D610(s16 arg0)
     u16 a = *(u16*)(p + 0x4C);
     u16 b = *(u16*)(p + 0x4E);
 
-    D_800A3940 = 0;
+    D_800A3940[0] = 0;
     D_800A3941 = 0;
     D_800A3952 = arg0;
     D_800A3956 = 0;
@@ -1332,7 +1330,7 @@ void func_8001D668(s16 arg0, s16 arg1, s16 arg2)
     D_800A3952 = arg0;
     D_800A3954 = arg1;
     D_800A3956 = arg2;
-    D_800A3940 = 0;
+    D_800A3940[0] = 0;
     p->state2 = 3;
     p->unk4E.value = 0;
     func_80020058(10, 10);

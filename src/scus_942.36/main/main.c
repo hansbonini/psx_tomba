@@ -44,7 +44,7 @@ void main(void)
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
     SetDispMask(1);
     while (true) {
-        *(u16*)((byte*)&D_1F8001A0+0x48) = 0;
+        *(u16*)((byte*)D_1F8001A0+0x48) = 0;
         if (*(u16*)(&SCRATCHPAD+0x1F0) < 0x4001U) {
             D_8009C8A8 = (FRAME_BUFFER_INDEX * 0x780) + &D_800A1890;
             dispatchTasks();

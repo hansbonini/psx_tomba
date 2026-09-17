@@ -2,8 +2,6 @@
 #include "game.h"
 #include "psyq/libspu.h"
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001F6D4);
 
@@ -12,10 +10,10 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FAE4);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FCE4);
 s32 func_8001FCE4(u16 arg0)
 {
-    u8 a = (&D_800778E4)[arg0 * 2];
-    u8 b = (&D_800778E5)[arg0 * 2];
+    u8 a = D_800778E4[arg0 * 2];
+    u8 b = D_800778E5[arg0 * 2];
 
-    return (&D_80077AEC)[a] + b * 8;
+    return D_80077AEC[a] + b * 8;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD20);
@@ -23,8 +21,8 @@ s16 func_8001FD20(s16 arg0)
 {
     u16 i = arg0;
 
-    if ((&D_8009E438)[i] != 0) {
-        (&D_8009BC28)[i] = 0xF;
+    if (D_8009E438[i] != 0) {
+        D_8009BC28[i] = 0xF;
         return SsUtKeyOffV(arg0);
     }
     return -1;
@@ -173,8 +171,8 @@ void func_800211A4(void)
     D_8009B07C = 0;
     D_8009B094 = 0;
     for (i = 0; i < 0x18; ++i) {
-        (&D_8009BC28)[i] = 0xF;
-        (&D_800A3030)[i] = -1;
+        D_8009BC28[i] = 0xF;
+        D_800A3030[i] = -1;
     }
     for (i = 0; i < 0x8; ++i) {
         (&D_1F8003B6-7)[i] = -1;

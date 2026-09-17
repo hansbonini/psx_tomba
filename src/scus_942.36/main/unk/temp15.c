@@ -52,7 +52,7 @@ void func_8005A074(void)
     D_1F800198 = 0;
     do {
         if (p[0] != 0) {
-            (&D_8007F6F4)[p[2]](p);
+            D_8007F6F4[p[2]](p);
         }
         D_1F800198 = D_1F800198 + 1;
         p += 0x3C;
@@ -112,7 +112,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B1F8);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp15", func_8005B350);
 void func_8005B350(u8* self)
 {
-    (&D_8007F988)[self[3]]();
+    D_8007F988[self[3]]();
 }
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/unk/temp15", D_800151E0);

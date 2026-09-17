@@ -22,7 +22,7 @@ void func_80032230(u8* self)
     self[0xD] = 0x80;
     self[0xB] = 0;
     *(void**)(self + 0x3C) = D_1F8002D8;
-    *(s32*)(self + 0x24) = (&D_80012368)[*(s16*)(self + 0xAC)];
+    *(s32*)(self + 0x24) = D_80012368[*(s16*)(self + 0xAC)];
     func_800229FC(self);
 }
 
