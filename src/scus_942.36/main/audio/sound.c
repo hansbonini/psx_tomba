@@ -105,16 +105,16 @@ void func_800210A8(s32 arg0, s16 arg1)
 {
     SpuReverbAttr attr;
 
-    attr.mask = 7;
-    attr.mode = arg0 | 0x100;
+    attr.mask = SPU_REV_MODE | SPU_REV_DEPTHL | SPU_REV_DEPTHR;
+    attr.mode = arg0 | SPU_REV_MODE_CLEAR_WA;
     attr.depth.left = arg1;
     attr.depth.right = arg1;
-    SpuReserveReverbWorkArea(1);
+    SpuReserveReverbWorkArea(SPU_ON);
     SpuSetReverbModeParam(&attr);
-    SpuSetReverb(1);
+    SpuSetReverb(SPU_ON);
     func_80076364(&attr);
-    SpuSetReverbVoice(1, 0xFFFF);
-    SpuSetReverbVoice(0, 0xFF0000);
+    SpuSetReverbVoice(SPU_ON, 0xFFFF);
+    SpuSetReverbVoice(SPU_OFF, 0xFF0000);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
@@ -134,7 +134,7 @@ void func_80021148(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021180);
 void func_80021180(void)
 {
-    SpuSetKey(0, 0xFF0000);
+    SpuSetKey(SPU_OFF, 0xFF0000);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800211A4);
@@ -149,7 +149,7 @@ void func_800211A4(void)
     SsSetTableSize(&D_800A15D8, 4, 1);
     SsSetTickMode(SS_TICK60);
     SsSetAutoKeyOffMode(0);
-    SpuSetKey(SPU_OFF, 0xFFFFFF);
+    SpuSetKey(SPU_OFF, SPU_ALLCH);
     SsSetReservedVoice(0x10);
     D_8009B048.mask = (
         SPU_COMMON_CDMIX |

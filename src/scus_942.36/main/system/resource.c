@@ -9,11 +9,11 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B0D4);
 s32 func_8003B214(s32 arg0, s16* arg1)
 {
     SVECTOR v;
-    s32 sxy;
-    s32 p;
-    s32 flag;
-    s32 v2;
-    s32 r;
+    long sxy;
+    long p;
+    long flag;
+    long v2;
+    long r;
 
     v.vx = 0;
     v.vy = 0;
@@ -30,8 +30,8 @@ void func_8003B26C(s32 arg0)
 {
     u8* base = *(u8**)0x1F800354;
 
-    lzDecompress(base + *(s32*)(base + (arg0 << 2)), (byte*)0x801FBE00);
-    loadTIM((u_long*)0x801FBE00, 0x20, 0, 0x80, 0x1EF);
+    lzDecompress(base + *(s32*)(base + (arg0 << 2)), (byte*)TIM_SCRATCH);
+    loadTIM(TIM_SCRATCH, 0x20, 0, 0x80, 0x1EF);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B2C8);

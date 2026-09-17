@@ -33,6 +33,7 @@
 
 #define CURRENT_TASK       (*(unkstruct_1F8001D4**)0x1F8001D4)
 #define TASK_TABLE  0x801FD800
+#define TIM_SCRATCH ((u_long*)0x801FBE00)
 
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define D_8009E3D4 ((void*)0x8009E3D4)

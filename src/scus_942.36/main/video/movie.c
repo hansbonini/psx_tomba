@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psyq/libcd.h"
 
 #define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
 #define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
@@ -10,7 +11,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001EFE8);
 void cdSeekStream(short file_id)
 {
     if (CdControl(2, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
-        CdControlF(0x15, 0);
+        CdControlF(CdlSeekL, 0);
     }
 }
 
