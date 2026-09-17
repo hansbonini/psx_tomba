@@ -18,9 +18,31 @@ s32 func_8001FCE4(u16 arg0)
     return (&D_80077AEC)[a] + b * 8;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD20);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD20);
+s16 func_8001FD20(s16 arg0)
+{
+    u16 i = arg0;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD80);
+    if ((&D_8009E438)[i] != 0) {
+        (&D_8009BC28)[i] = 0xF;
+        return SsUtKeyOffV(arg0);
+    }
+    return -1;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FD80);
+s32 func_8001FD80(s32 arg0)
+{
+    switch (arg0 & 0xF00) {
+    case 0x000:
+        D_800A2818 = arg0 & 0xFF;
+        break;
+    case 0x100:
+        D_8009C9F8 = arg0 & 0xFF;
+        break;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_8001FDC4);
 
@@ -78,7 +100,22 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020EEC);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80020FAC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800210A8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_800210A8);
+void func_800210A8(s32 arg0, s16 arg1)
+{
+    SpuReverbAttr attr;
+
+    attr.mask = 7;
+    attr.mode = arg0 | 0x100;
+    attr.depth.left = arg1;
+    attr.depth.right = arg1;
+    SpuReserveReverbWorkArea(1);
+    SpuSetReverbModeParam(&attr);
+    SpuSetReverb(1);
+    func_80076364(&attr);
+    SpuSetReverbVoice(1, 0xFFFF);
+    SpuSetReverbVoice(0, 0xFF0000);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", func_80021110);
 void func_80021110(void)

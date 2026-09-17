@@ -13,7 +13,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80034AB8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80034C14);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036440);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036440);
+void func_80036440(u8* self)
+{
+    switch (self[5]) {
+    case 0:
+        func_80034C14(self);
+        break;
+    case 1:
+        func_80034C14(self);
+        break;
+    case 2:
+        func_80034C14(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036494);
 
@@ -28,13 +42,42 @@ void func_800365DC(u8* self)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036618);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_800369BC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_800369BC);
+s32 func_800369BC(u8* self, s16 arg1, s16 arg2)
+{
+    u16 dx;
+    u16 dy;
+
+    dx = arg1 + (*(u16*)((u8*)D_800A53D8 + 2) - *(u16*)(*(u8**)(self + 0x40) + 2));
+    if ((s32)dx <= arg1 * 2) {
+        dy = arg2 + (D_800A53AE - *(u16*)(self + 0x16));
+        return (s32)dy <= arg2 * 2;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036A28);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036A8C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036C14);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036C14);
+s32 func_80036C14(u8* self)
+{
+    s32 r = 0;
+    s16 v = func_80036618(self);
+
+    switch (v) {
+    case 0:
+    case 1:
+        *(s16*)(self + 0x20) = 5;
+        break;
+    case 2:
+        *(s16*)(self + 0x20) = 5;
+        r = 1;
+        break;
+    }
+    return r;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036C88);
 
@@ -94,7 +137,21 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036DF8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80036F98);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80038358);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_80038358);
+void func_80038358(u8* self)
+{
+    switch (self[5]) {
+    case 0:
+        func_80036F98(self);
+        break;
+    case 1:
+        func_80036F98(self);
+        break;
+    case 2:
+        func_80036F98(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/unk/temp9a", func_800383AC);
 

@@ -89,11 +89,42 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80052F20);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800530F0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800532B4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800532B4);
+void func_800532B4(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_80124B38();
+        break;
+    case 1:
+        func_801233E0();
+        break;
+    case 3:
+        func_8011EC1C();
+        break;
+    case 4:
+        func_8011E254();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005334C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053588);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053588);
+void func_80053588(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_801248A0();
+        break;
+    case 4:
+        func_8011E3E4();
+        break;
+    case 0xA:
+        func_8011FC7C();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053608);
 
@@ -121,7 +152,24 @@ void func_80053A1C(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A58);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053A58);
+void func_80053A58(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_80123D24();
+        break;
+    case 3:
+        func_8011EF08();
+        break;
+    case 4:
+        func_8011E170();
+        break;
+    case 9:
+        func_8011F650();
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053AF0);
 void func_80053AF0(void)
@@ -133,7 +181,17 @@ void func_80053AF0(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B30);
+void func_80053B30(u8* arg0, u8* arg1)
+{
+    s32* q;
+
+    arg1[0x69] = 0;
+    if (func_80051284() == 1) {
+        q = *(s32**)(arg0 + 0x40);
+        *q = *q + (*(s16*)(arg1 + 0x80) << 8);
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053B94);
 void func_80053B94(void)

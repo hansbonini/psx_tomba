@@ -19,9 +19,31 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056970);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056BBC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056C84);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056C84);
+void func_80056C84(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_80125FE8();
+        break;
+    case 3:
+        func_8011F67C();
+        break;
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056CD4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056CD4);
+void func_80056CD4(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_80126048();
+        break;
+    case 3:
+        func_8011F6DC();
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056D24);
 
@@ -35,7 +57,24 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80057188);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_800574BC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_800577F4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_800577F4);
+void func_800577F4(void)
+{
+    switch (GAME.selectedArea) {
+    case 0:
+        func_8012C03C();
+        break;
+    case 1:
+        func_8012E2FC();
+        break;
+    case 3:
+        func_80123EC8();
+        break;
+    case 4:
+        func_80122A00();
+        break;
+    }
+}
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/actor2", D_80014C8C);
 
