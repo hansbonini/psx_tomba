@@ -7,6 +7,19 @@ categories:
     name: Main Executable
     paths:
       - scus_942.36
+  - id: main
+    name: Main Code
+    paths:
+      - scus_942.36/main
+  - id: overlays
+    name: Overlays
+    paths:
+      - scus_942.36/overlays
+  - id: optsub00
+    name: OPTSUB00
+    paths:
+      - scus_942.36/overlays/optsub00
+
 
 expected_paths:
   asm: expected/asm
