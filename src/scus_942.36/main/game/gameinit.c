@@ -113,11 +113,86 @@ void func_80017CA0(void)
     memset(&D_800A5398, 0, 0x178);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017CCC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017CCC);
+void func_80017CCC(void)
+{
+    s32 i;
+    u8* p;
+    u8* q;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017D70);
+    i = 0;
+    p = &D_800A55C8;
+    do {
+        memset(p, 0, 0x3C);
+        p += 0x3C;
+        i++;
+    } while (i < 10);
+    q = &D_800A57E4;
+    D_1F800210 = (s32*)&D_800B0518;
+    i = 0;
+    do {
+        *--D_1F800210 = (s32)q;
+        q -= 0x3C;
+        i++;
+    } while (i < 10);
+    D_1F80023E = 10;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017E44);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017D70);
+void func_80017D70(void)
+{
+    s32 i;
+    u8* p;
+    u8* q;
+
+    i = 0;
+    p = &D_800B07D8;
+    do {
+        memset(p, 0, 0xEC);
+        p += 0xEC;
+        i++;
+    } while (i < 0x4);
+    q = &D_800B0A9C;
+    D_1F800204 = (s32*)D_800A38B8;
+    i = 0;
+    do {
+        q[0x1C] = 1;
+        *--D_1F800204 = (s32)q;
+        q -= 0xEC;
+        i++;
+    } while (i < 0x4);
+    D_1F800236 = 0x4;
+    D_1F800218 = (s32*)&D_800B0528;
+    D_1F80025C = (s32*)&D_800B0528;
+    D_1F80024E = 0;
+    D_1F800244 = 0;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017E44);
+void func_80017E44(void)
+{
+    s32 i;
+    u8* p;
+    u8* q;
+
+    i = 0;
+    p = &D_800A5970;
+    do {
+        memset(p, 0, 0xD4);
+        p += 0xD4;
+        i++;
+    } while (i < 0xC8);
+    q = &D_800AFE3C;
+    D_1F800208 = (s32*)&D_800A3D08;
+    i = 0;
+    do {
+        q[0x1C] = 0;
+        *--D_1F800208 = (s32)q;
+        q -= 0xD4;
+        i++;
+    } while (i < 0xC8);
+    D_1F800238 = 0xC8;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017EEC);
 void func_80017EEC(void)
@@ -153,7 +228,36 @@ void func_80017F88(void)
     *(short* )0x1F80024C = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017FB8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80017FB8);
+void func_80017FB8(void)
+{
+    s32 i;
+    u8* p;
+    u8* q;
+
+    i = 0;
+    p = &D_800B0B88;
+    do {
+        memset(p, 0, 0xD4);
+        p += 0xD4;
+        i++;
+    } while (i < 0x2D);
+    q = &D_800B2FF8;
+    D_1F80020C = (s32*)&D_800A55C4;
+    i = 0;
+    do {
+        q[0x1C] = 8;
+        *--D_1F80020C = (s32)q;
+        q -= 0xD4;
+        i++;
+    } while (i < 0x2D);
+    D_1F80023A = 0x2D;
+    D_1F800230 = (s32*)&D_800B3184;
+    D_1F800274 = (s32*)&D_800B3184;
+    D_1F800258 = 0;
+    D_1F800242 = 0;
+    func_80018E58();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018094);
 void func_80018094(void)
@@ -176,7 +280,35 @@ void func_800180F0(void)
     memset(&D_800B00F8, 0, 0x16C);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001811C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_8001811C);
+void func_8001811C(void)
+{
+    s32 i;
+    u8* p;
+    u8* q;
+
+    i = 0;
+    p = &D_800A3D08;
+    do {
+        memset(p, 0, 0x6C);
+        p += 0x6C;
+        i++;
+    } while (i < 0xA);
+    q = &D_800A40D4;
+    D_1F800214 = (s32*)&D_800A37D0;
+    i = 0;
+    do {
+        q[0x1C] = 7;
+        *--D_1F800214 = (s32)q;
+        q -= 0x6C;
+        i++;
+    } while (i < 0xA);
+    D_1F80023C = 0xA;
+    D_1F80022C = (s32*)&D_800A5858;
+    D_1F800270 = (s32*)&D_800A5858;
+    D_1F80025A = 0;
+    D_1F800240 = 0;
+}
 
 void func_800181F0(void)
 {
@@ -189,11 +321,80 @@ void func_8001821C(void)
     memset(&D_800A3940, 0, 0x70);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018248);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018248);
+u8* func_80018248(void)
+{
+    s16  n = D_1F800236;
+    s32* p;
+    u8*  obj;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800182C8);
+    if (n > 0) {
+        p = D_1F800204;
+        D_1F800236 = n - 1;
+        D_1F800204 = p + 1;
+        obj = (u8*)*p;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018354);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_800182C8);
+u8* func_800182C8(u8 arg0)
+{
+    s16  n = D_1F800238;
+    s32* p;
+    u8*  obj;
+
+    if (n > 0) {
+        p = D_1F800208;
+        D_1F800238 = n - 1;
+        D_1F800208 = p + 1;
+        obj = (u8*)*p;
+        obj[0x1C] = arg0;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018354);
+u8* func_80018354(void)
+{
+    s16  n = D_1F800238;
+    s32* p;
+    u8*  obj;
+    u8   layer = 2;
+
+    if (n > 0) {
+        p = D_1F800208;
+        D_1F800238 = n - 1;
+        D_1F800208 = p + 1;
+        obj = (u8*)*p;
+        obj[0x1C] = layer;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer3);
 void* allocObjectLayer3(void)
@@ -219,13 +420,105 @@ void* allocObjectLayer3(void)
     return NULL;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018474);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018474);
+u8* func_80018474(void)
+{
+    s16  n = D_1F800238;
+    s32* p;
+    u8*  obj;
+    u8   layer = 4;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018504);
+    if (n > 0) {
+        p = D_1F800208;
+        D_1F800238 = n - 1;
+        D_1F800208 = p + 1;
+        obj = (u8*)*p;
+        obj[0x1C] = layer;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018594);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018504);
+u8* func_80018504(void)
+{
+    s16  n = D_1F800238;
+    s32* p;
+    u8*  obj;
+    u8   layer = 5;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018614);
+    if (n > 0) {
+        p = D_1F800208;
+        D_1F800238 = n - 1;
+        D_1F800208 = p + 1;
+        obj = (u8*)*p;
+        obj[0x1C] = layer;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018594);
+u8* func_80018594(void)
+{
+    s16  n = D_1F80023A;
+    s32* p;
+    u8*  obj;
+
+    if (n > 0) {
+        p = D_1F80020C;
+        D_1F80023A = n - 1;
+        D_1F80020C = p + 1;
+        obj = (u8*)*p;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018614);
+u8* func_80018614(void)
+{
+    s16  n = D_1F80023C;
+    s32* p;
+    u8*  obj;
+
+    if (n > 0) {
+        p = D_1F800214;
+        D_1F80023C = n - 1;
+        D_1F800214 = p + 1;
+        obj = (u8*)*p;
+        if ((D_1F8001C8 & 1) == 0) {
+            *(u8**)(obj + 0x40) = obj + 0x10;
+            *(u8**)(obj + 0x44) = obj + 0x18;
+        } else {
+            *(u8**)(obj + 0x44) = obj + 0x10;
+            *(u8**)(obj + 0x40) = obj + 0x18;
+        }
+        return obj;
+    }
+    return NULL;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018694);
 u8* func_80018694(void)
