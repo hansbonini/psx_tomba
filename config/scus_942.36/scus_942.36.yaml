@@ -67,7 +67,7 @@ segments:
     subsegments:
       - [0x800, .rodata, main/game/gameinit]
       - [0x830, .rodata, main/system/boot]
-      - [0x8C4, .rodata, main/game/menu]
+      - [0x8C4, .rodata, main/game/gamestate]
       - [0xA3C, .rodata, main/game/event]
       - [0xAA4, .rodata, main/system/cdfile]
       - [0xB08, .rodata, main/game/entity]
@@ -116,7 +116,7 @@ segments:
       - [0x7C5C, c, main/system/gfxinit]
       - [0x7FD8, c, main/game/gameinit]
       - [0x9820, c, main/system/boot]
-      - [0xAF74, c, main/game/menu]
+      - [0xAF74, c, main/game/gamestate]
       - [0xE918, c, main/game/event]
       - [0xF7E8, c, main/video/movie]
       - [0xFED4, c, main/audio/sound]
