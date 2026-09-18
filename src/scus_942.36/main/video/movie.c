@@ -1,16 +1,15 @@
 #include "common.h"
 #include "game.h"
+#include "psyq/libcd.h"
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001EFE8);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", cdSeekStream);
 void cdSeekStream(short file_id)
 {
-    if (CdControl(2, (*(&D_80078F80 + (*(&D_8007775C[file_id]) * 1)) * 2) + &D_800791A0, 0) != 0) {
-        CdControlF(0x15, 0);
+    if (CdControl(CdlSetloc, (u_char*)&D_800791A0[D_80078F80[D_8007775C[file_id]]], 0) != 0) {
+        CdControlF(CdlSeekL, 0);
     }
 }
 
@@ -22,12 +21,12 @@ void moviePlayerTask(void)
     unkstruct_1F8001D4* gameControlTemp;
 
     gameControl = CURRENT_TASK;
-    MOVIE_PLAY_STATE = 1;
+    MOVIE_PLAY_STATE = MOVIE_STARTING;
     gameControl->state0 = 0;
     gameControl->unk4E.value = 0;
     gameControl->loadGameSelected = 0;
     do {
-        if (*(u_char* )0x1F8001D3 == 1) {
+        if (MOVIE_SKIP_REQUEST == 1) {
             (CURRENT_TASK)->state0 = 3;
             CdMix(&D_80077758);
         }
@@ -36,14 +35,14 @@ void moviePlayerTask(void)
         switch (state) {
             case 0:
                 func_8001F5D0(&D_8009B010, 384, 256, 704, 256);
-                startMovieStream((int) (((&D_80078F80)[D_8007775C[*(u_char* )0x1F8001CD]] * 2) + &D_800791A0));
+                startMovieStream((int)&D_800791A0[D_80078F80[D_8007775C[MOVIE_ID]]]);
                 gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 gameControl->state0+=1;
                 do {
                 } while (func_8001EFE8(&D_8009B010) == 0);
                 break;
             case 1:
-                MOVIE_PLAY_STATE = 2;
+                MOVIE_PLAY_STATE = MOVIE_PLAYING;
                 gameControlTemp->state0 = 2;
             case 2:
                 while ((CURRENT_TASK)->unk4E.value == 0) {
@@ -69,15 +68,15 @@ void moviePlayerTask(void)
                 }
                 SetDispMask(1);
                 *(int*)&D_8009B034->isinter = 0;
-                MOVIE_PLAY_STATE = 3;
+                MOVIE_PLAY_STATE = MOVIE_ENDING;
                 *(short* )0x1F8001E8 = 0;
                 break;
             case 3:
                 DecDCToutCallback(NULL);
                 StUnSetRing();
                 StClearRing();
-                CdControlB(9, 0, 0);
-                MOVIE_PLAY_STATE = 0;
+                CdControlB(CdlPause, 0, 0);
+                MOVIE_PLAY_STATE = MOVIE_IDLE;
                 *(char* )(&SCRATCHPAD+0x1D3) = 0;
                 exitTask();
                 break;
@@ -137,8 +136,8 @@ void startMovieStream(s32 arg0)
     StSetStream(0, 1, -1, 0, 0);
     do {
 
-    } while (CdControl(2, arg0, 0) == 0);
-    mode = 0x1C0;
+    } while (CdControl(CdlSetloc, arg0, 0) == 0);
+    mode = CdlModeStream | CdlModeSpeed | CdlModeRT;
     do {
         
     } while (CdRead2(mode) == 0);

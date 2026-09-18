@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/font", fontDebugPrintf);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", fontDebugPrintf);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/font", drawLoadingSprites);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawLoadingSprites);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/font", drawNowLoading);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawNowLoading);
 void drawNowLoading(short arg0)
 {
     int graphType = GetGraphType();
@@ -24,7 +24,7 @@ void drawNowLoading(short arg0)
     return;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/font", drawUiSprite);
+//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawUiSprite);
 void drawUiSprite(short x, short y, short sprt_id)
 {   
     u_int sprt_ofs;
@@ -45,4 +45,4 @@ void drawUiSprite(short x, short y, short sprt_id)
     D_8009C8A8 += sizeof(SPRT);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/font", drawNowLoadingSprite);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawNowLoadingSprite);

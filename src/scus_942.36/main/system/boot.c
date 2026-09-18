@@ -52,7 +52,7 @@ void bootSequenceTask(void)
     D_8009E744 = 0;
     D_8009C9E4 = 1;
     D_8009E450 = 0;
-    func_80023A3C();
+    loadCollisionBounds();
     task = CURRENT_TASK;
     task->state0 = 9U;
     task->state1 = 0U;
@@ -63,12 +63,12 @@ void bootSequenceTask(void)
         switch (state) {
             case 0:
                 LOAD_COMPLETE = 0;
-                func_800223A0(0);
-                func_800223A0(1);
+                loadAreaResources(0);
+                loadAreaResources(1);
                 func_800222B8(0, 1);
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
-                memset(&D_1F8001A0, 0, 0x24);
+                memset(D_1F8001A0, 0, sizeof(D_1F8001A0));
                 task9 = CURRENT_TASK;
                 task9->state0++;
                 break;
@@ -190,8 +190,8 @@ void titleSequenceTask(void)
             task->state2 = 0;
             sp10[0] = 1;
             func_80020C00(0);
-            if (MOVIE_PLAY_STATE != 0) {
-                *(s8* )0x1F8001D3 = 1;
+            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
+                MOVIE_SKIP_REQUEST = 1;
             }
         }
         switch ((u16)(CURRENT_TASK)->state0) {
@@ -239,7 +239,7 @@ void func_800199B8(void)
                 case 0:                             // switch 1
                     SetDispMask(0);
                     LOAD_COMPLETE = 0U;
-                    func_800223A0(1);
+                    loadAreaResources(1);
                     func_800222B8(1, 1);
                     task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
@@ -263,13 +263,13 @@ void func_800199B8(void)
             return;
         case 2:
             task2 = CURRENT_TASK;
-            MOVIE_PLAY_STATE = 1;
-            *(s8* )0x1F8001CD = 0x15;
+            MOVIE_PLAY_STATE = MOVIE_STARTING;
+            MOVIE_ID = 0x15;
             task2->state1++;
             openTask(1, moviePlayerTask);
             return;
         case 3:
-            if (MOVIE_PLAY_STATE != 0) {
+            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
                 return;
             }
             task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -296,7 +296,7 @@ void func_800199B8(void)
                 SetDispMask(0);
                 initDisplay(0U, 0U, 0U);
                 LOAD_COMPLETE = 0U;
-                func_800223A0(2);
+                loadAreaResources(2);
                 func_800222B8(2, 1);
                 task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 task5->state1++;
@@ -330,7 +330,7 @@ void func_80019CA4(void)
         case 0:
             SetDispMask(0);
              *(u8* )&scratch->loadComplete = 0;
-            func_800223A0(2);
+            loadAreaResources(2);
             func_800222B8(2, 1);
             scratch->currentTask->state1++;
             return;
@@ -403,7 +403,7 @@ void loopTitleScreen(int* arg0)
             gameControl->state2 = 0U;
             gameControl->state1++;
         case 1:
-            if (MOVIE_PLAY_STATE == 0) {
+            if (MOVIE_PLAY_STATE == MOVIE_IDLE) {
                 initDisplay(0U, 0U, 0U);
                 gameControl = CURRENT_TASK;
                 gameControl->state1++;
@@ -417,16 +417,16 @@ void loopTitleScreen(int* arg0)
             func_80020AF0(0);
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
             (CURRENT_TASK)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
-            gameControl = (*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34));
-            gameControl->unk6A = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl = (*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34));
+            gameControl->unk6A = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+            gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
             gameControlTemp = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             gameControlTemp->timer = 972;
             gameControlTemp->state1++;
             return;
         case 3:
-            gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34);
+            gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34);
             NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             gameControlTemp5->timer--;
             if ((short)gameControlTemp5->timer <= 0) {
@@ -443,7 +443,7 @@ void loopTitleScreen(int* arg0)
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
                             gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
@@ -454,7 +454,7 @@ void loopTitleScreen(int* arg0)
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
                             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
-                            gameControl->unk6B = (u_char) (&D_80076E80)[gameControl->titleScreenSelectedOption];
+                            gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
                             gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
@@ -528,7 +528,7 @@ void func_8001A328(void)
             func_80020C00(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0;
-            func_800223A0(3);
+            loadAreaResources(3);
             func_800222B8(8, 1);
             (CURRENT_TASK)->state1++;
             return;
@@ -570,7 +570,7 @@ void func_8001A328(void)
             func_80020C00(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0U;
-            func_800223A0(2);
+            loadAreaResources(2);
             func_800222B8(2, 1);
             (CURRENT_TASK)->state1++;
             return;
@@ -615,10 +615,10 @@ void func_8001A51C(void)
                 func_8001A670(); // New Game
                 break;
             case 1:
-                func_8001A954(); // Debug
+                gameStateDispatcher(); // Debug
                 break;
             case 2:
-                func_8001A774(); // Load Game
+                titleScreenHandler(); // Load Game
                 break;
         }
         sleepTask(1);

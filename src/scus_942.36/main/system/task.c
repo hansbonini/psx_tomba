@@ -76,7 +76,7 @@ void initTasks(void)
 
     for (i = 0; i < 3; i++) {
         tcb++;
-        task->unk0    = 0;
+        task->status    = 0;
         task->task_sp = 0x801FE400 + i * 0x800;
         task++;
         tcb->reg[R_SR] = 0x40000404;
@@ -95,7 +95,7 @@ void dispatchTasks(void)
     *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
     for (task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); task <= 0x801FD94FU; task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
         tid = 2;
-        switch ((u16)(*(unkstruct_1F8001D4** )((byte*)&D_1F8001A0+0x34))->unk0) {
+        switch ((u16)(*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34))->status) {
             case 3:
                 EnterCriticalSection();
                 task2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
@@ -103,7 +103,7 @@ void dispatchTasks(void)
                 ExitCriticalSection();
             case 2:
                 task3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                task3->unk0 = tid*2;
+                task3->status = tid*2;
                 ChangeTh(task3->task_id);
                 break;
         }
@@ -123,7 +123,7 @@ void openTask(s32 arg0, long (*func)())
 {
     int off = arg0 * sizeof(unkstruct_1F8001D4);
 
-    ((unkstruct_1F8001D4*)(TASK_TABLE + off))->unk0 = 2;
+    ((unkstruct_1F8001D4*)(TASK_TABLE + off))->status = 2;
     EnterCriticalSection();
     *(int*)((TASK_TABLE + 0x4) + off) = OpenTh(func,
                                            *(int*)((TASK_TABLE + 0x8) + off),
@@ -137,15 +137,15 @@ void sleepTask(s16 arg0)
     unkstruct_1F8001D4* task;
 
     task = CURRENT_TASK;
-    task->unk2 = arg0;
-    task->unk0 = 1;
+    task->sleepTimer = arg0;
+    task->status = 1;
     ChangeTh(DescTH);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", exitTask);
 void exitTask(void)
 {
-    (CURRENT_TASK)->unk0 = 0;
+    (CURRENT_TASK)->status = 0;
     EnterCriticalSection();
     CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);
     ExitCriticalSection();
@@ -176,7 +176,7 @@ void setTask(s32 arg0)
     unkstruct_1F8001D4* task;
 
     task = CURRENT_TASK;
-    task->unk0 = 3;
+    task->status = 3;
     task->task_func = arg0;
     EnterCriticalSection();
     CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);

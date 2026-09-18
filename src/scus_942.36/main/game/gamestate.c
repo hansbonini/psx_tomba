@@ -1,11 +1,9 @@
 #include "common.h"
 #include "game.h"
 
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A774);
-void func_8001A774(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", titleScreenHandler);
+void titleScreenHandler(void)
 {
     short var_v0;
     int temp_v0;
@@ -20,14 +18,14 @@ void func_8001A774(void)
             SetDispMask(0);
             func_80028CE4();
             LOAD_COMPLETE = 0;
-            func_800223A0(3);
+            loadAreaResources(3);
             func_800222B8(5, 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state1++;;
             return;
         case 1:
             if (LOAD_COMPLETE != 0) {
-                func_8001821C();
+                clearMenuParams();
                 D_800A3952 = 5;
                 func_80020AF0(0);
                 SetDispMask(1);
@@ -49,8 +47,8 @@ void func_8001A774(void)
             func_8001F6D4();
             return;
         case 3:
-            GAME.unk14 = 0;
-            GAME.unk7 = 0;
+            GAME.areaTransition = 0;
+            GAME.keepBgm = 0;
             func_80020C00(0);
             temp_v0_2 = CURRENT_TASK;
             temp_v0_2->state0 = 1;
@@ -71,18 +69,18 @@ void func_8001A774(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A954);
-void func_8001A954(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", gameStateDispatcher);
+void gameStateDispatcher(void)
 {
     u_short temp_v1;
 
     temp_v1 = (CURRENT_TASK)->state1;
     switch (temp_v1) {
         case 0:
-            func_8001A9F0();
+            introSequenceHandler();
             return;
         case 1:
-            func_8001AC00();
+            gameplayStateDispatcher();
             return;
         case 2:
             func_8001D2F0();
@@ -93,8 +91,8 @@ void func_8001A954(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001A9F0);
-void func_8001A9F0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", introSequenceHandler);
+void introSequenceHandler(void)
 {
     u_short temp_v1;
     u_char* temp1;
@@ -137,16 +135,16 @@ void func_8001A9F0(void)
             }
             break;
         case 4:
-            MOVIE_PLAY_STATE = 1;
-            *(char* )0x1F8001CD = 1;
+            MOVIE_PLAY_STATE = MOVIE_STARTING;
+            MOVIE_ID = 1;
             openTask(1, &moviePlayerTask);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state2++;
             return;
         case 5:
-            if (MOVIE_PLAY_STATE != 0) {
+            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
                 if (*(u_short* )(&SCRATCHPAD+0x1FC) & (JOY_CROSS | JOY_START)) {
-                    *(char* )0x1F8001D3 = 1;
+                    MOVIE_SKIP_REQUEST = 1;
                     JOYPAD_STATE = 0U;
                     (CURRENT_TASK)->state2 = 6U;
                     return;
@@ -157,13 +155,13 @@ void func_8001A9F0(void)
             }
             break;
         case 6:
-            if (MOVIE_PLAY_STATE == 0) {
+            if (MOVIE_PLAY_STATE == MOVIE_IDLE) {
                 (CURRENT_TASK)->state2 = 7U;
                 return;
             }
             break;
         case 7:
-            temp1 = (u_char*)&GAME.unk14;
+            temp1 = (u_char*)&GAME.areaTransition;
             *temp1 = 1;
             temp_v1_3 = CURRENT_TASK;
             *(u_short*)&temp_v1_3->state2 = 1;
@@ -181,8 +179,8 @@ void func_8001A9F0(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001AC00);
-void func_8001AC00(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", gameplayStateDispatcher);
+void gameplayStateDispatcher(void)
 {
     short temp_v0;
     u_short temp_v1;
@@ -191,31 +189,31 @@ void func_8001AC00(void)
     temp_v1 = (CURRENT_TASK)->state2;
     switch (temp_v1) {
         case 0:
-            func_8001B0A4();
+            debugSelectHandler();
             break;
         case 1:
-            func_8001B2B4();
+            gameplayMainHandler();
             break;
         case 2:
-            func_8001B780();
+            phoenixMountainHandler();
             break;
         case 3:
-            func_8001BB1C();
+            inventoryScreenHandler();
             break;
         case 4:
-            func_8001C104();
+            cutsceneAreaHandler();
             break;
         case 5:
-            func_8001C434();
+            specialAreaHandler();
             break;
         case 6:
-            func_8001C75C();
+            eventAreaHandler();
             break;
         case 7:
             func_8001CFCC();
             break;
         case 8:
-            func_8001D29C();
+            transitionToGameOver();
             break;
     }
     temp_v0 = *(short* )0x1F8001DC;
@@ -227,18 +225,18 @@ void func_8001AC00(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001AD1C);
-void func_8001AD1C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", advanceAndResetPools);
+void advanceAndResetPools(void)
 {
     unkstruct_1F8001D4* temp_v1;
 
     temp_v1 = CURRENT_TASK;
     temp_v1->unk4E.value++;
-    initDrawLists();
+    initObjectPools();
     *(char* )0x1F8001CF = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", displayDebugScreen);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", displayDebugScreen);
 void displayDebugScreen(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
@@ -316,7 +314,7 @@ void displayDebugScreen(void)
         GAME.nextSection = GAME.selectedSection;
         GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
         // If any action button (CIRCLE or START) is pressed
-        if (scratch->joypad_state & 0x2008) {
+        if (scratch->joypad_state & (JOY_CIRCLE | JOY_START)) {
             // Handle area and section exceptions cases
             /* If selected area is not VILLAGE OF ALL BEGINNINGS or DWARF FOREST
                and selected section is not VILLAGE OF ALL BEGINNINGS or FOREST OF 100 FLOWERS */
@@ -340,7 +338,7 @@ void displayDebugScreen(void)
         } else return;
     }
 
-    temp2 = (u_char*)(&GAME.unk14);
+    temp2 = (u_char*)(&GAME.areaTransition);
     var_a0 = 1;
     if (*temp2 == 0) {
         *temp2 = 1;
@@ -349,7 +347,7 @@ void displayDebugScreen(void)
     } else {
         var_a0 = 0;
         if (GAME.selectedSection == GAME.currentSection) {
-            func_8001CF7C();
+            setAreaSubState();
             return;
         }
     }
@@ -360,8 +358,8 @@ void displayDebugScreen(void)
     (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value=temp_v1_3+1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B0A4);
-void func_8001B0A4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", debugSelectHandler);
+void debugSelectHandler(void)
 {
     int var_a0;
     unkstruct_1F8001D4* p;
@@ -382,7 +380,7 @@ void func_8001B0A4(void)
             return;
         case 2:
             (CURRENT_TASK)->unk4E.value++;
-            initDrawLists();
+            initObjectPools();
             *(char* )0x1F8001CF = 0;
             return;
         case 3:
@@ -391,7 +389,7 @@ void func_8001B0A4(void)
         case 5:
             func_80020FAC();
             (*(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4))->unk4E.value++;
-            initDrawLists();
+            initObjectPools();
             *(u_char*)&(*(u_long**)0x1F8001CF) = 0;
             (CURRENT_TASK)->unk5E = 0x78U;
             (CURRENT_TASK)->unk64 = 0U;
@@ -403,7 +401,7 @@ void func_8001B0A4(void)
             (CURRENT_TASK)->unk5E--;
             if (((CURRENT_TASK)->unk5E << 0x10) == 0) {
                 var_a0 = 1;
-                temp1 = (u_char*)&GAME.unk14;
+                temp1 = (u_char*)&GAME.areaTransition;
                 if (*temp1 == 0) {
                    *temp1 = 1;
                     func_8001CE80(var_a0);
@@ -411,7 +409,7 @@ void func_8001B0A4(void)
                     if (GAME.selectedArea == GAME.currentArea) {
                         var_a0 = 0;
                         if (GAME.selectedSection == GAME.currentSection) {
-                            func_8001CF7C(0);
+                            setAreaSubState(0);
                             return;
                         }
                     }
@@ -429,8 +427,8 @@ void func_8001B0A4(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B2B4);
-void func_8001B2B4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", gameplayMainHandler);
+void gameplayMainHandler(void)
 {
     u_short temp_v1;
     u_char temp_v0;
@@ -442,21 +440,21 @@ void func_8001B2B4(void)
     temp_v1 = temp_a0->unk4E.value;
     switch (temp_v1) {                              // irregular
         case 0:
-            initDrawLists(temp_a0);
+            initObjectPools(temp_a0);
             initHud();
             temp_a0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             *(char* )0x1F8001CF = 1;
             temp_a0_2->unk4E.value++;
             func_800243E8();
             func_800246B0();
-            if (*(u_long*)&GAME.selectedArea == 6) {
+            if (*(u_long*)&GAME.selectedArea == AREA06_DIRTMOTOCROSS) {
                 func_8011AF40();
             } else {
                 func_80028EF4();
             }
             func_80059F7C();
-            if (GAME.unk7 != 1) {
-                func_8002065C();
+            if (GAME.keepBgm != 1) {
+                startAreaBgm();
             }
             GAME.unk21 = 1;
             *(&D_8009C9D8) = D_8009C9DC = 0;
@@ -464,7 +462,7 @@ void func_8001B2B4(void)
             return;
         case 1:
             GAME.totalTimePlayed++;
-            func_8001B5A8(temp_a0);
+            gameplayTick(temp_a0);
             if (D_8009BCA0 == 2) {
                 temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 temp_v1_2->unk4E.value++;
@@ -487,7 +485,7 @@ void func_8001B2B4(void)
             }
             GAME.displayExpBar = 0;
             D_800B07CD = 0;
-            GAME.unk7 = 0;
+            GAME.keepBgm = 0;
             D_8009D6DD = 0;
             D_8009D6DE = 0;
             D_8009D6DF = 0;
@@ -511,8 +509,8 @@ void func_8001B2B4(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B5A8);
-void func_8001B5A8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", gameplayTick);
+void gameplayTick(void)
 {
     *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 2) {
@@ -539,20 +537,20 @@ void func_8001B5A8(void)
         if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
             func_8003C9D4();
             func_8001DFD4();
-            func_8003438C();
-            func_8005A074();
+            updateObjectsLayer7();
+            updateObjectsUnlayered();
             func_80055BA0();
         }
     }
     if (*(s16* )0x1F8001C6 != 1) {
-        func_80029C48();
+        updateInventoryOverlay();
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         func_8002DA2C();
-        func_8002DB3C();
+        updateObjectsLayer8();
     }
     // Hack to match (using this instead SCRATCHPAD to access 1F8001C6)
-    if (*(s16* )((byte*)&D_1F8001A0+0x26) != 2) {
+    if (*(s16* )((byte*)D_1F8001A0+0x26) != 2) {
         func_80046264();
     } else {
         resetDrawLists();
@@ -561,8 +559,8 @@ void func_8001B5A8(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B780);
-void func_8001B780(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", phoenixMountainHandler);
+void phoenixMountainHandler(void)
 {
     char pad[4];
     scratchpad* scratch = PSX_SCRATCH;
@@ -570,16 +568,16 @@ void func_8001B780(void)
     
     switch(scratch->currentTask->unk4E.value) {
         case 0:
-            initDrawLists();
+            initObjectPools();
             initHud();
             scratch->unk1CF = 1;
             func_800243E8();
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 2;
-            if ((GAME.unk7 != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
-                func_8002065C();
+            D_800B0770[0] = 2;
+            if ((GAME.keepBgm != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
+                startAreaBgm();
             }
             *(short* )0x1F8001FC = 0;
             scratch->currentTask->unk4E.volatile_value+=1;
@@ -587,7 +585,7 @@ void func_8001B780(void)
             break;
         case 1:
             GAME.totalTimePlayed++;
-            func_8001B944();
+            phoenixMountainTick();
             if (scratch->unk1C2 != 0) {
                 volatile u_short *temp_v1 = (volatile int* )&D_8009C9D8;
                 if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
@@ -605,15 +603,15 @@ void func_8001B780(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001B944);
-void func_8001B944(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", phoenixMountainTick);
+void phoenixMountainTick(void)
 {
     char* var_a0;
     u_short var_a1;
     unkstruct_1F8001D4* temp_v1;
 
     NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == 0)) {
+    if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == MOVIE_IDLE)) {
         *(short* )0x1F8001C6 = 0;
     }
     func_8001D6C0();
@@ -625,7 +623,7 @@ void func_8001B944(void)
         D_800A3952 = 6;
         D_800A3954 = 0;
         D_800A3956 = 0;
-        D_800A3940 = 0;
+        D_800A3940[0] = 0;
         temp_v1->state2 = 3U;
         (CURRENT_TASK)->unk4E.value = 0U;
         *(short* )0x1F8003B8 = (short)var_a0;
@@ -637,18 +635,18 @@ void func_8001B944(void)
         func_80029008();
         if (*(short* )0x1F8001C6 == 0) {
             func_8003C9D4();
-            func_8003438C();
+            updateObjectsLayer7();
             func_8001DFD4();
-            func_8005A074();
+            updateObjectsUnlayered();
             func_80055BA0();
         }
     }
     if (*(short* )(&D_1F8000C0[0]+0x106) != 1) {
-        func_80029C48();
+        updateInventoryOverlay();
     }
     if (*(short* )(&SCRATCHPAD+0x1C6) == 0) {
         func_8002DA2C();
-        func_8002DB3C();
+        updateObjectsLayer8();
     }
     if (*(short* )0x1F8001C6 != 2) {
         func_80046264();
@@ -658,8 +656,8 @@ void func_8001B944(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001BB1C);
-void func_8001BB1C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", inventoryScreenHandler);
+void inventoryScreenHandler(void)
 {
     DRAWENV drawenv;
     RECT rect;
@@ -723,7 +721,7 @@ void func_8001BB1C(void)
                 FlushCache();
                 ExitCriticalSection();
                 temp_s1 = *(volatile u16*)&D_800A3952;
-                func_8001821C();
+                clearMenuParams();
                 *(s16*)&(*(volatile u16**)&D_800A3952) = temp_s1;
                 SetDispMask(1);
                 temp_v1_2 = CURRENT_TASK;
@@ -733,7 +731,7 @@ void func_8001BB1C(void)
         default:                                    // switch 1
             return;
         case 3:                                     // switch 1
-            func_8001BF90();
+            inventoryScreenTick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (CURRENT_TASK)->unk4E.value = 6U;
                 return;
@@ -748,7 +746,7 @@ void func_8001BB1C(void)
             *(s8* )0x1F8001CE = 0U;
             setRGB0((DRAWENV*)(&D_8009D6C4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
             setRGB0((DRAWENV*)(D_8009E3D4), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
-            var_a0 = ((&D_80076FAC)[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
+            var_a0 = (D_80076FAC[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
             func_800222B8(((s16*)var_a0)[GAME.selectedSection], 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->unk4E.value++;
@@ -772,8 +770,8 @@ void func_8001BB1C(void)
             temp_v1_3->unk4E.value = 0U;
             return;
         case 7:                                     // switch 1
-            GAME.unk14 = 0;
-            GAME.unk7 = 0;
+            GAME.areaTransition = 0;
+            GAME.keepBgm = 0;
             func_80020C00(0);
             setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
             setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
@@ -788,8 +786,8 @@ void func_8001BB1C(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001BF90);
-void func_8001BF90(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", inventoryScreenTick);
+void inventoryScreenTick(void)
 {
     s32 var_s0;
 
@@ -839,8 +837,8 @@ void func_8001BF90(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C104);
-void func_8001C104(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", cutsceneAreaHandler);
+void cutsceneAreaHandler(void)
 {
     u16 temp_v1;
     unkstruct_1F800214* temp_v0;
@@ -852,20 +850,20 @@ void func_8001C104(void)
 
     switch (temp_v1) {
         case 0:
-            initDrawLists();
+            initObjectPools();
             initHud();
             func_800243E8();
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 0;
+            D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.unk7 != 1) {
-                func_8002065C();
+            if (GAME.keepBgm != 1) {
+                startAreaBgm();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             temp_v1_2->unk4E.value++;
-            temp_v0 = (unkstruct_1F800214*)func_80018614();
+            temp_v0 = (unkstruct_1F800214*)allocObjectLayer7();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 5;
@@ -880,7 +878,7 @@ void func_8001C104(void)
 
         case 1:
             GAME.totalTimePlayed += 1;
-            func_8001C2E8();
+            cutsceneAreaTick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
                 return;
@@ -899,8 +897,8 @@ void func_8001C104(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C2E8);
-void func_8001C2E8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", cutsceneAreaTick);
+void cutsceneAreaTick(void)
 {
     NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     func_8001D6C0();
@@ -910,18 +908,18 @@ void func_8001C2E8(void)
         if (*(s16*)(&SCRATCHPAD+0x1C6) == 0) {
             func_8003C9D4();
             func_8001DFD4();
-            func_8005A074();
+            updateObjectsUnlayered();
             func_800EB804();
         }
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 1) {
-        func_80029C48();
+        updateInventoryOverlay();
     }
     if (*(s16* )(&D_1F8000C0[0]+0x106) == 0) {
-        func_8002DB3C();
+        updateObjectsLayer8();
         if (*(s16* )0x1F8001C6 == 0) {
             func_800EAED4();
-            func_8003438C();
+            updateObjectsLayer7();
         }
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 2) {
@@ -932,8 +930,8 @@ void func_8001C2E8(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C434);
-void func_8001C434(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", specialAreaHandler);
+void specialAreaHandler(void)
 {
     u16 temp_v1;
     unkstruct_1F800214* temp_v0;
@@ -944,20 +942,20 @@ void func_8001C434(void)
     temp_v1 = (CURRENT_TASK)->unk4E.value;
     switch (temp_v1) {
         case 0:
-            initDrawLists();
+            initObjectPools();
             initHud();
             func_800243E8();
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 0;
+            D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.unk7 != 1) {
-                func_8002065C();
+            if (GAME.keepBgm != 1) {
+                startAreaBgm();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             temp_v1_2->unk4E.value++;
-            temp_v0 = (unkstruct_1F800214*)func_80018614();
+            temp_v0 = (unkstruct_1F800214*)allocObjectLayer7();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 10;
@@ -972,7 +970,7 @@ void func_8001C434(void)
     
         case 1:
             GAME.totalTimePlayed += 1;
-            func_8001C618();
+            specialAreaTick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
                 return;
@@ -991,8 +989,8 @@ void func_8001C434(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C618);
-void func_8001C618(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", specialAreaTick);
+void specialAreaTick(void)
 {
     NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     func_8001D6C0();
@@ -1001,18 +999,18 @@ void func_8001C618(void)
         func_80034524();
         if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
             func_8001DFD4();
-            func_8005A074();
+            updateObjectsUnlayered();
             func_800ECEEC();
         }
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 1) {
-        func_80029C48();
+        updateInventoryOverlay();
     }
     if (*(s16* )(&D_1F8000C0[0]+0x106) == 0) {
-        func_8002DB3C();
+        updateObjectsLayer8();
         if (*(s16* )0x1F8001C6 == 0) {
             func_800EC588();
-            func_8003438C();
+            updateObjectsLayer7();
         }
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 2) {
@@ -1023,8 +1021,8 @@ void func_8001C618(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C75C);
-void func_8001C75C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", eventAreaHandler);
+void eventAreaHandler(void)
 {
     u16 temp_v1;
     unkstruct_1F800214* temp_v0;
@@ -1035,20 +1033,20 @@ void func_8001C75C(void)
     temp_v1 = (CURRENT_TASK)->unk4E.value;
     switch (temp_v1) {
         case 0:
-            initDrawLists();
+            initObjectPools();
             initHud();
             func_800243E8();
             func_800246B0();
             func_80059F7C();
             func_80028EF4();
-            D_800B0770 = 0;
+            D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.unk7 != 1) {
-                func_8002065C();
+            if (GAME.keepBgm != 1) {
+                startAreaBgm();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
             temp_v1_2->unk4E.value++;
-            temp_v0 = (unkstruct_1F800214*)func_80018614();
+            temp_v0 = (unkstruct_1F800214*)allocObjectLayer7();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 13;
@@ -1063,7 +1061,7 @@ void func_8001C75C(void)
     
         case 1:
             GAME.totalTimePlayed += 1;
-            func_8001C940();
+            eventAreaTick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
                 (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
                 return;
@@ -1082,8 +1080,8 @@ void func_8001C75C(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001C940);
-void func_8001C940(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", eventAreaTick);
+void eventAreaTick(void)
 {
     NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
     func_8001D6C0();
@@ -1092,18 +1090,18 @@ void func_8001C940(void)
         func_80034524();
         if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
             func_8001DFD4();
-            func_8005A074();
+            updateObjectsUnlayered();
             func_800EB5B8();
         }
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 1) {
-        func_80029C48();
+        updateInventoryOverlay();
     }
     if (*(s16* )(&D_1F8000C0[0]+0x106) == 0) {
         func_8002DA2C();
-        func_8002DB3C();
+        updateObjectsLayer8();
         if (*(s16* )0x1F8001C6 == 0) {
-            func_8003438C();
+            updateObjectsLayer7();
         }
     }
     if (*(s16* )(&SCRATCHPAD+0x1C6) != 2) {
@@ -1114,7 +1112,7 @@ void func_8001C940(void)
     func_8001F6D4();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", displayLoadingScreen);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", displayLoadingScreen);
 void displayLoadingScreen(void)
 {
     u_short temp_a1;
@@ -1147,8 +1145,8 @@ void displayLoadingScreen(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CB54);
-s32 func_8001CB54(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", resolveAreaVariant);
+s32 resolveAreaVariant(void)
 {
     s32 var_a1;
     s32 var_v0;
@@ -1156,44 +1154,44 @@ s32 func_8001CB54(void)
 
     var_a1 = 0;
     switch (GAME.selectedArea) {
-        case 7:
+        case AREA07_DWARFFORESTPURIFIED:
             if ((u16)D_8009EBA0 != 6) {
                 var_a1 = 1;
             }
-            GAME.purifiedAreas |= GAME.selectedArea = 1;
+            GAME.purifiedAreas |= GAME.selectedArea = AREA01_DWARFFOREST;
             D_8009EBA0 = 6;
             break;
-        case 1:
-            if (GAME.purifiedAreas & 1) {
+        case AREA01_DWARFFOREST:
+            if (GAME.purifiedAreas & PURIFIED_DWARFFOREST) {
                 if (*(u16*)&D_8009EBA0 != 6) {
                     var_a1 = 1;
                 }
                 D_8009EBA0 = 6;
             } else {
-            case 0:
-            case 6:
-            case 8:
-            case 9:
-            case 11:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
+            case AREA00_VILLAGEOFALLBEGINNINGS:
+            case AREA06_DIRTMOTOCROSS:
+            case AREA08_BACCUSLAKE:
+            case AREA09_MUSHROOMVILLAGE:
+            case AREA11_VILLAGEOFCIVILIZATION:
+            case AREA13_PIGISLAND:
+            case AREA14_EVILPIGS:
+            case AREA15_UNKNOWN:
+            case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
+            case AREA17_VILLAGEOFCIVILIZATIONIRONTOWER:
+            case AREA18_VILLAGEOFCIVILIZATIONYCROSSING:
                 if (*(u16*)&D_8009EBA0 != 0) {
                     var_a1 = 1;
                 }
                 D_8009EBA0 = 0;
             }
             break;
-        case 19:
-            if (GAME.selectedSection != 2) {
+        case AREA19_VILLAGEOFCIVILIZATIONPURIFIED:
+            if (GAME.selectedSection != AREA19_SECTION02_HIDDENVILLAGE) {
                 if (*(u16*)&D_8009EBA0 != 0x11) {
                     var_a1 = 1;
                 }
                 D_8009EBA0 = 17;
-                GAME.selectedArea = 2;
+                GAME.selectedArea = AREA02_DWARFVILLAGE;
             } else {
                 if (*(u16*)&D_8009EBA0 != 0) {
                     var_a1 = 1;
@@ -1201,22 +1199,22 @@ s32 func_8001CB54(void)
                 D_8009EBA0 = 0;
             }
             break;
-        case 2:
+        case AREA02_DWARFVILLAGE:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if ((GAME.purifiedAreas & 1) && ((u16) GAME.selectedSection < 2U)) {
+            if ((GAME.purifiedAreas & PURIFIED_DWARFFOREST) && ((u16) GAME.selectedSection < 2U)) {
                 D_8009EBA0 = 17;
-                GAME.selectedArea = 2;
+                GAME.selectedArea = AREA02_DWARFVILLAGE;
             }
             break;
-        case 3:
+        case AREA03_PHOENIXMOUNTAIN:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if (GAME.purifiedAreas & 2) {
+            if (GAME.purifiedAreas & PURIFIED_PHOENIXMOUNTAIN) {
                 var_v0 = (u16) GAME.selectedSection < 2U;
                 if (var_v0 != 0) {
                     var_v0_2 = GAME.selectedSection + 4;
@@ -1224,15 +1222,15 @@ s32 func_8001CB54(void)
                 }
             }
             break;
-        case 12:
+        case AREA12_HAUNTEDMANSIONPURIFIED:
             if (*(u16*)&D_8009EBA0 != 8) {
                 var_a1 = 1;
             }
-            GAME.purifiedAreas |= 8, GAME.selectedArea = 4;
+            GAME.purifiedAreas |= PURIFIED_HAUNTEDMANSION, GAME.selectedArea = AREA04_HAUNTEDMANSION;
             D_8009EBA0 = 8;
             break;
-        case 4:
-            if (GAME.purifiedAreas & 8) {
+        case AREA04_HAUNTEDMANSION:
+            if (GAME.purifiedAreas & PURIFIED_HAUNTEDMANSION) {
                 if (*(u16*)&D_8009EBA0 != 8) {
                     var_a1 = 1;
                 }
@@ -1244,25 +1242,25 @@ s32 func_8001CB54(void)
                 D_8009EBA0 = 0;
             }
             break;
-        case 5:
+        case AREA05_BACCUSVILLAGE:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if ((GAME.purifiedAreas & 0x10) && ((u16) GAME.selectedSection < 2U)) {
+            if ((GAME.purifiedAreas & PURIFIED_BACCUSVILLAGE) && ((u16) GAME.selectedSection < 2U)) {
                 var_v0_2 = GAME.selectedSection + 2;
                 GAME.selectedSection = var_v0_2;
             }
             break;
-        case 10:
+        case AREA10_DEEPJUNGLE:
             if (*(u16*)&D_8009EBA0 != 0) {
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if ((GAME.purifiedAreas & 0x40) && (GAME.selectedSection == 3)) {
-                GAME.selectedSection = 7;
+            if ((GAME.purifiedAreas & PURIFIED_TRICKVILLAGE) && (GAME.selectedSection == AREA10_SECTION03_TRICKVILLAGE)) {
+                GAME.selectedSection = AREA10_SECTION07_TRICKVILLAGEPURIFIED;
             }
-            if (GAME.purifiedAreas & 0x20) {
+            if (GAME.purifiedAreas & PURIFIED_DEEPJUNGLE) {
                 var_v0 = (u16) GAME.selectedSection < 3U;
                 if (var_v0 != 0) {
                     var_v0_2 = GAME.selectedSection + 4;
@@ -1274,23 +1272,23 @@ s32 func_8001CB54(void)
     return var_a1;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CE80);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CE80);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CF7C);
-void func_8001CF7C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", setAreaSubState);
+void setAreaSubState(void)
 {
-    u8* row = (&D_80077084)[GAME.selectedArea + (u16)D_8009EBA0];
+    u8* row = D_80077084[GAME.selectedArea + (u16)D_8009EBA0];
     u8  v = row[D_8009BCCA];
-    u8* p = D_1F8001D4;
+    unkstruct_1F8001D4* p = CURRENT_TASK;
 
-    *(u16*)(p + 0x4E) = 0;
-    *(u16*)(p + 0x4C) = v;
+    p->unk4E.value = 0;
+    p->state2 = v;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001CFCC);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CFCC);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D29C);
-void func_8001D29C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", transitionToGameOver);
+void transitionToGameOver(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* temp_v1;
@@ -1303,18 +1301,18 @@ void func_8001D29C(void)
     temp_v1->state2 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D2F0);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D2F0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D480);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D480);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D610);
-void func_8001D610(s16 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", openMenuScreen);
+void openMenuScreen(s16 arg0)
 {
     u8* p = D_1F8001D4;
     u16 a = *(u16*)(p + 0x4C);
     u16 b = *(u16*)(p + 0x4E);
 
-    D_800A3940 = 0;
+    D_800A3940[0] = 0;
     D_800A3941 = 0;
     D_800A3952 = arg0;
     D_800A3956 = 0;
@@ -1324,22 +1322,22 @@ void func_8001D610(s16 arg0)
     D_1F8003BA = b;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D668);
-void func_8001D668(s16 arg0, s16 arg1, s16 arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", openMenuScreenEx);
+void openMenuScreenEx(s16 arg0, s16 arg1, s16 arg2)
 {
-    u8* p = D_1F8001D4;
+    unkstruct_1F8001D4* p = CURRENT_TASK;
 
     D_800A3952 = arg0;
     D_800A3954 = arg1;
     D_800A3956 = arg2;
-    D_800A3940 = 0;
-    *(u16*)(p + 0x4C) = 3;
-    *(u16*)(p + 0x4E) = 0;
+    D_800A3940[0] = 0;
+    p->state2 = 3;
+    p->unk4E.value = 0;
     func_80020058(10, 10);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001D6C0);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D6C0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001DE24);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DE24);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/menu", func_8001DFD4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DFD4);

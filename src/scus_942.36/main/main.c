@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "psyq/libcd.h"
 
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
@@ -23,14 +24,14 @@ void main(void)
     SetGraphDebug(0);
     InitGeom();
     CdInit();
-    cdMode = 0x80;
-    while (CdControl(0xE, &cdMode, 0) == 0);
+    cdMode = CdlModeSpeed;
+    while (CdControl(CdlSetmode, &cdMode, 0) == 0);
     DecDCTReset(0);
-    *(s32*)0x1F8002A0 = 0;
-    *(s32*)0x1F80029C = 0;
+    CD_QUEUE_TAIL = 0;
+    CD_QUEUE_HEAD = 0;
     initGraphics();
     GsSetOrigin(1, 1);
-    func_800211A4();
+    shutdownSound();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
     memCardInit();
     joypadInit();
@@ -43,7 +44,7 @@ void main(void)
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
     SetDispMask(1);
     while (true) {
-        *(u16*)((byte*)&D_1F8001A0+0x48) = 0;
+        *(u16*)((byte*)D_1F8001A0+0x48) = 0;
         if (*(u16*)(&SCRATCHPAD+0x1F0) < 0x4001U) {
             D_8009C8A8 = (FRAME_BUFFER_INDEX * 0x780) + &D_800A1890;
             dispatchTasks();
@@ -78,16 +79,16 @@ void main(void)
         }
 
         switch (MOVIE_PLAY_STATE) {
-            case 2:
+            case MOVIE_PLAYING:
                 break;
-            case 0:
-            case 1:
+            case MOVIE_IDLE:
+            case MOVIE_STARTING:
                 if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
                     tickTaskTimers();
                 }
                 break;
-            case 3:
+            case MOVIE_ENDING:
                 *(u8*)(&SCRATCHPAD+0x1CC) = 2;
                 if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
@@ -97,10 +98,10 @@ void main(void)
         }
 
         if (*(u8*)0x1F8001BF != 0) {
-            if ((MOVIE_PLAY_STATE == 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
+            if ((MOVIE_PLAY_STATE == MOVIE_IDLE) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
                 *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - PAUSE_FLAGS);
             }
-        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
+        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == MOVIE_IDLE && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
             dbgMode = LOAD_COMPLETE;
             if (dbgMode == 1) {
                 joypad_state = JOYPAD_STATE;

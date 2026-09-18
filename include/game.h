@@ -9,11 +9,17 @@
 #define LANGUAGE_C 1
 #include "psyq/kernel.h"
 #include "psyq/libetc.h"
+#include "psyq/libcd.h"
 #include "psyq/libpress.h"
 #include "psyq/libgpu.h"
 #include "psyq/libgte.h"
 #include "psyq/libspu.h"
 #include "psyq/libsnd.h"
+
+typedef struct fileLink {
+    /* 0x0 */ CdlLOC loc;
+    /* 0x4 */ int    size;
+} fileLink;
 
 /* ========================================================================
  * Macros
@@ -25,6 +31,10 @@
 #define NEXT_PRIM          (*(int*)0x1F800164)      /* 0x164 */
 #define MOVIE_PLAY_STATE   (*(u8*)0x1F8001CC)       /* 0x1CC */
 #define LOAD_COMPLETE      (*(u8*)0x1F8001CE)       /* 0x1CE */
+#define MOVIE_ID           (*(u_char*)0x1F8001CD)      /* 0x1CD */
+#define MOVIE_SKIP_REQUEST (*(u_char*)0x1F8001D3)      /* 0x1D3 */
+#define CD_QUEUE_HEAD      (*(s32*)0x1F80029C)        /* 0x29C */
+#define CD_QUEUE_TAIL      (*(s32*)0x1F8002A0)        /* 0x2A0 */
 #define CURRENT_OT         (*(u_long*)0x1F8001E0)   /* 0x1E0 */
 #define PAUSE_TOGGLE       (*(u16*)0x1F8001EE)      /* 0x1EE */
 #define PAUSE_FLAGS        (*(u16*)0x1F8001F0)      /* 0x1F0 */
@@ -33,7 +43,10 @@
 
 #define CURRENT_TASK       (*(unkstruct_1F8001D4**)0x1F8001D4)
 #define TASK_TABLE  0x801FD800
+#define TIM_SCRATCH ((u_long*)0x801FBE00)
 
+#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
+#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define D_8009E3D4 ((void*)0x8009E3D4)
 
@@ -747,6 +760,48 @@ typedef enum {
     JOY_SQUARE   = 0x8000,
 } JOYPAD_BUTTONS;
 
+typedef enum {
+    OBJECT_LAYER_1 = 1,
+    OBJECT_LAYER_2 = 2,
+    OBJECT_LAYER_3 = 3,
+    OBJECT_LAYER_4 = 4,
+    OBJECT_LAYER_5 = 5,
+    OBJECT_LAYER_7 = 7,
+    OBJECT_LAYER_8 = 8,
+} OBJECT_LAYER;
+
+typedef enum {
+    MOVIE_IDLE     = 0,
+    MOVIE_STARTING = 1,
+    MOVIE_PLAYING  = 2,
+    MOVIE_ENDING   = 3,
+} MOVIE_STATE;
+
+typedef enum {
+    PURIFIED_DWARFFOREST     = 0x01,
+    PURIFIED_PHOENIXMOUNTAIN = 0x02,
+    PURIFIED_HAUNTEDMANSION  = 0x08,
+    PURIFIED_BACCUSVILLAGE   = 0x10,
+    PURIFIED_DEEPJUNGLE      = 0x20,
+    PURIFIED_TRICKVILLAGE    = 0x40,
+} PURIFIED_AREA_FLAG;
+
+typedef enum {
+    MSG_ANIMALDASH_ACQUIRED    = 0x0C,
+    MSG_EFFECT_NOTICE          = 0x0F,
+    MSG_ONEUP_ACQUIRED         = 0x14,
+    MSG_VITALITYMAXUP_ACQUIRED = 0x15,
+    MSG_LOSTANDFOUND_STARTED   = 0x16,
+    MSG_LOSTANDFOUND_PROGRESS  = 0x17,
+    MSG_ITS_LOCKED             = 0x26,
+} INFO_MESSAGE;
+
+typedef enum {
+    MSG_TYPE_ITEM   = 0,
+    MSG_TYPE_INFO   = 2,
+    MSG_TYPE_REWARD = 3,
+} INFO_MESSAGE_TYPE;
+
 /* ========================================================================
  * Structs
  */
@@ -762,8 +817,8 @@ typedef struct unkstruct_01 {
 } unkstruct_01;
 
 typedef struct unkstruct_1F8001D4 {
-    short unk0;
-    short unk2;
+    short status;
+    short sleepTimer;
     int task_id;
     int task_sp;
     int task_func;
@@ -953,7 +1008,7 @@ typedef struct itemDef {
 } itemDef;
 
 /* Views over the object returned by the allocator family
-   (allocObjectLayer3 / func_80018474 / func_80018614). They describe the same
+   (allocObjectLayer3 / allocObjectLayer4 / allocObjectLayer7). They describe the same
    block through different field subsets and cannot be merged into a single
    struct: offset 0x10 is u_char in unkstruct_1F800214 and int in
    unkstruct_80018474. */
@@ -985,10 +1040,10 @@ typedef struct unkstruct_1F800214 {
 
 typedef struct unkstruct_800183E4 {
     byte  data[0x1C];
-    byte  unk1C;
+    byte  layer;
     byte  pad0[0x23];
-    void* unk40;
-    void* unk44;
+    void* drawBufA;
+    void* drawBufB;
 } unkstruct_800183E4;
 
 typedef struct unkstruct_80018474 {
@@ -1003,9 +1058,9 @@ typedef struct unkstruct_80018474 {
     byte  unkD;
     byte  unkE;
     byte  unkF;
-    int   unk10;
-    int   unk14;
-    int   unk18;
+    int   posX;
+    int   posY;
+    int   posZ;
     byte  pad2[0x11];
     short unk2E;
 } unkstruct_80018474;
@@ -1016,12 +1071,17 @@ typedef struct unkstruct_80033FB0 {
 } unkstruct_80033FB0;
 
 typedef struct unkstruct_8009E458 {
-    byte data[0x8A];
-    u_short unk8A;
-    byte pad[0x1104];
-    short unk1190;
-    short unk1192;
-    short unk1194;
+    /* 0x0000 */ byte    data[0x88];
+    /* 0x0088 */ u_char  state;
+    /* 0x0089 */ u_char  cmpFlag;
+    /* 0x008A */ u_short pc;
+    /* 0x008C */ u_short sp;
+    /* 0x008E */ byte    unk8E[2];
+    /* 0x0090 */ int     stack[0x400];
+    /* 0x1090 */ int     vars[0x40];
+    /* 0x1190 */ short   unk1190;
+    /* 0x1192 */ short   unk1192;
+    /* 0x1194 */ short   unk1194;
 } unkstruct_8009E458;
 
 
@@ -1032,12 +1092,12 @@ typedef struct unkstruct_800A39B0 {
 
 
 typedef struct {
-    u_char unk0;
+    u_char spawnMode;
     u_char unk1;
     u_char unk2;
     u_char item_id;
-    u_char unk4;
-    u_char unk5;
+    u_char state;
+    u_char subState;
     u_char unk6;
     u_char unk7;
     short clut;
@@ -1057,7 +1117,7 @@ typedef struct {
     u_char unk1D;
     short unk1E;
     short unk20;
-    u_short unk22;
+    u_short cooldownTimer;
     int unk24;
     short unk28;
     short unk2A;
@@ -1070,7 +1130,7 @@ typedef struct {
     u_char unk68;
     u_char unk69;
     u_char unk6A;
-    u_char unk6B;
+    u_char objectIndex;
     short unk6C;
     short unk6E;
     short unk70;
@@ -1109,14 +1169,14 @@ typedef struct gameConfig {
     byte selectedPlane;
     byte area00_fogControl;
     byte unk6;
-    u_char unk7;
+    u_char keepBgm;
     int totalTimePlayed;
     u_long playerAP;
     u_char playerHealth;
     u_char playerHealthDisplayed;
     char unk12;
     char unk13;
-    u_char unk14;
+    u_char areaTransition;
     u_char fadeScreenControl;
     byte fadeScreenAmount;
     u_char saveSlot;
@@ -2035,7 +2095,7 @@ typedef struct gameConfig {
     byte unk71d;
     byte unk71e;
     u_char goldenBowlState;
-    u_char unk720;
+    u_char bonusHealth;
     byte unk721;
     byte unk722;
     byte unk723;
@@ -2152,7 +2212,7 @@ extern u_char SCRATCHPAD;
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
-extern int D_1F8001A0;
+extern u_char D_1F8001A0[0x24];
 extern int D_1F8002C8[];
 extern u16  D_1F8001C8;
 extern s32* D_1F800204;
@@ -2187,7 +2247,7 @@ extern u16  D_1F800244;
 extern u16  D_1F800246;
 extern u16  D_1F800248;
 extern u16  D_1F80024C;
-extern s16  D_1F8003A8;
+extern s16  D_1F8003A8[];
 extern short D_1F8003B6;
 
 /* --- RAM / ROM data 0x8001____ --- */
@@ -2196,25 +2256,25 @@ extern char D_80010008;
 extern int D_800121C8;
 
 /* --- RAM / ROM data 0x8007____ --- */
-extern u_short D_80076E80;
-extern int D_80076FAC;
+extern u_short D_80076E80[];
+extern int D_80076FAC[];
 extern int D_800771FC;
 extern int D_8007722C;
-extern int AP_TABLE;
-extern u_char EVENT_STARTED_AP_TABLE;
-extern u_char EVENT_COMPLETE_AP_TABLE;
+extern int AP_TABLE[];
+extern u_char EVENT_STARTED_AP_TABLE[];
+extern u_char EVENT_COMPLETE_AP_TABLE[];
 extern int D_80077754;
 extern int D_80077758;
 extern u_char D_8007775C[];
-extern int  D_80077D50;
+extern int  D_80077D50[];
 extern u_char D_80077FA8;
-extern short D_80078F80;
+extern short D_80078F80[];
 extern int D_8007912C[];
-extern s16  D_8007D788;
-extern s16  D_8007D988;
-extern s16  D_8007DB88;
-extern int D_800791A0; // FileLinkArray
-extern int  D_800791A4;
+extern s16  D_8007D788[];
+extern s16  D_8007D988[];
+extern s16  D_8007DB88[];
+extern fileLink D_800791A0[]; // FileLinkArray
+extern int  D_800791A4[];
 extern u_short D_8007B290;
 extern int D_8007B294;
 extern int D_8007B2F4[];
@@ -2252,8 +2312,8 @@ extern short D_8009B094;
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
 extern byte D_8009B6A8; // SELECTED ROW
-extern short D_8009BC28;
-extern int D_8009BC98;
+extern short D_8009BC28[];
+extern u_char D_8009BC98[0x2C];
 extern u_char D_8009BCA0;
 extern char D_8009BCA7;
 extern char D_8009BCAA;
@@ -2263,9 +2323,9 @@ extern char D_8009BCDB;
 extern u_char D_8009BCDF;
 extern short D_8009BCEA;
 extern u_char D_8009C3F8;
-extern int  D_8009C658;
-extern int  D_8009C65C;
-extern int  D_8009C758;
+extern int  D_8009C658[];
+extern int  D_8009C65C[];
+extern int  D_8009C758[];
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
@@ -2288,23 +2348,23 @@ extern char D_8009E3EE;
 extern char D_8009E3EF;
 extern short D_8009E430;
 extern char D_8009E450;
-extern void (*D_8007C68C)(u8* self);
-extern void (*D_8007D6A4)(u8* self);
-extern void (*D_8007F6F4)(u8* self);
-extern void (*D_8007D57C)(u8* self);
-extern void (*D_8007F988)(void);
-extern void (*D_8007C848)(void);
-extern u8*  D_8007B680;
+extern void (*D_8007C68C[])(u8* self);
+extern void (*D_8007D6A4[])(u8* self);
+extern void (*D_8007F6F4[])(u8* self);
+extern void (*D_8007D57C[])(u8* self);
+extern void (*D_8007F988[])(void);
+extern void (*D_8007C848[])(void);
+extern u8*  D_8007B680[];
 extern u16  D_8009BCCA;
 extern s16  D_8009B074;
 extern u8   D_80014C94;
 extern u8   D_80014C8C;
 extern u8*  D_8009C974;
-extern int  D_8009E74C;
-extern u8   D_800778E4;
-extern u8   D_800778E5;
-extern s32  D_80077AEC;
-extern s32  D_80078EB0;
+extern int  D_8009E74C[];
+extern u8   D_800778E4[];
+extern u8   D_800778E5[];
+extern s32  D_80077AEC[];
+extern s32  D_80078EB0[];
 extern u8   D_8009C61A;
 extern u8*  D_8007EB44;
 extern u8   D_8009BCDD;
@@ -2312,18 +2372,17 @@ extern u8   D_8009BCA4;
 extern u8   D_8009BCDE;
 extern s16  D_800A2818;
 extern s16  D_8009C9F8;
-extern u8*  D_8007C110;
-extern u8*  D_80077084;
-extern u8   D_800B07CC;
+extern u8*  D_8007C110[];
+extern u8*  D_80077084[];
+extern u8   D_800B07CC[];
 extern s32  D_800A38DC;
 extern unkstruct_8009E458* D_8009E458;
-extern s32  D_8009E73C;
-extern u8*  D_8009E640;
+extern u8*  D_8009E640[];
 extern s16* D_800A53D8;
 extern s16* D_800A53DC;
 extern s16  D_800A53AE;
-extern u8   D_8009C10C;
-extern u8   D_8009C20C;
+extern u8   D_8009C10C[];
+extern u8   D_8009C20C[];
 extern u8   D_800A5401;
 extern u8   D_800A5436;
 extern u8   D_8009C619;
@@ -2339,7 +2398,7 @@ extern long MEMCARD_SW_TIMEOUT;
 extern long MEMCARD_SW_NEW_DEVICE;
 extern short D_8009E638;
 extern u_short D_8009E744;
-extern int  D_8009E748;
+extern int  D_8009E748[];
 extern int D_8009EB4C;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;
@@ -2352,18 +2411,17 @@ extern char* SPRINTF_BUFFER_MSG[];
 extern char D_800A15D8; // SPU_SEQ_TABLE
 extern char D_800A1890;
 extern short D_800A2790;
-extern short D_800A3030;
+extern short D_800A3030[];
 extern short D_800A32F8;
 extern byte D_800A3348[0x3D4];
 extern u_char D_800A38B8[];
-extern u_char D_800A3940;
+extern u_char D_800A3940[0x70];
 extern u_char D_800A3941;
 extern u8*  D_1F8001D4;
 extern s16  D_1F8003B8;
 extern s16  D_1F8003BA;
 extern s32  D_8009BCBC;
-extern s32  D_1F8001E0;
-extern u8   D_8009E438;
+extern u8   D_8009E438[];
 extern s8   D_8009C618;
 extern u8   D_800A5403;
 extern s16  D_1F8000E6;
@@ -2371,10 +2429,10 @@ extern s16  D_1F8003C4;
 extern s16  D_1F8003C6;
 extern s16  D_1F8003C8;
 extern s16  D_1F8003CA;
-extern u16  D_8007B2C4;
-extern u16  D_8007B2C6;
-extern u16  D_8007B2C8;
-extern u16  D_8007B2CA;
+extern u16  D_8007B2C4[];
+extern u16  D_8007B2C6[];
+extern u16  D_8007B2C8[];
+extern u16  D_8007B2CA[];
 extern char D_800C3188;
 extern char D_800D3188;
 extern char D_800D5188;
@@ -2388,7 +2446,7 @@ extern u8   D_8009C982;
 extern u8   D_8009C983;
 extern u8   D_8009EB58;
 extern s16  D_1F8000F2;
-extern s32  D_80012368;
+extern s32  D_80012368[];
 extern void* D_1F8002D8;
 extern s32  D_1F800278;
 extern u16  D_800A544A;
@@ -2396,20 +2454,14 @@ extern u16  D_800A53B8;
 extern s32  D_8009BCFC;
 extern s32  D_1F800198;
 extern u8   D_800B0B88;
-extern u16  D_1F8001FC;
 extern u8   D_800A5438;
 extern u8   D_800A55C8;
-extern u8   D_800A57E4;
 extern u8   D_800B0518;
-extern u8   D_800AFE3C;
 extern u8   D_800A3D08;
 extern u8   D_800B07D8;
-extern u8   D_800B0A9C;
 extern s32* D_1F80025C;
 extern u16  D_1F80024E;
-extern u8   D_800B2FF8;
 extern u8   D_800A55C4;
-extern u8   D_800A40D4;
 extern u8   D_800A37D0;
 extern s32* D_1F800274;
 extern u16  D_1F800258;
@@ -2420,7 +2472,7 @@ extern short D_800A3954;
 extern short D_800A3956;
 extern unkstruct_800A39B0 D_800A39B0[];
 extern unkstruct_800AFF18 D_800A5140[];
-extern u_char D_800A5398;
+extern u_char D_800A5398[0x178];
 extern char D_800A539C;
 extern char D_800A539D;
 extern char D_800A539E;
@@ -2433,12 +2485,12 @@ extern int D_800A5970;
 extern unkstruct_800AFF18 D_800AFF18[];
 
 /* --- RAM / ROM data 0x800B____ --- */
-extern u_char D_800B00F8;
+extern u_char D_800B00F8[0x16C];
 extern int D_800B0470;
 extern int D_800B04F0;
 extern int D_800B0528;
 extern int D_800B0680;
-extern u_char D_800B0770;
+extern u_char D_800B0770[0x68];
 extern u_char* D_800B078C;
 extern char D_800B07AC[8];
 extern char D_800B07CD;
@@ -2494,7 +2546,7 @@ void func_8003C124(u8 op);
 void func_8003E408(u8 op);
 s16 func_80051284();
 void func_80076364(SpuReverbAttr* attr);
-u16 func_80022570(void);
+u16 nextRandom(void);
 void func_800EBD5C(u8* arg0, s16 arg1, s16 arg2);
 void func_8006A9EC(u8* a, u8* b);
 s16 func_80036618(u8* self);
@@ -2524,6 +2576,6 @@ void func_80122A00(void);
 s32 func_8001FF28(void);
 s32 func_80020EEC(s32 a, s32 b);
 void func_80021340(void);
-// void func_80022618(unkstruct_800A6D50* arg0, u16 arg1);
+// void applyAnimVelocityX(unkstruct_800A6D50* arg0, u16 arg1);
 
 #endif // GAME_H

@@ -30,9 +30,9 @@ void updateItemPickupAnim(unkstruct_800A6D50* arg0)
         case 1:
             temp_a1 = arg0->unk2E;
             if (temp_a1 & 2) {
-                func_80022618(arg0, temp_a1 & 1);
+                applyAnimVelocityX(arg0, temp_a1 & 1);
             } else {
-                func_80022618(arg0, (temp_v1 - temp_a1) & 0xFFFF);
+                applyAnimVelocityX(arg0, (temp_v1 - temp_a1) & 0xFFFF);
             }
             temp_v0 = arg0->unk82 + 64;
             arg0->unk82 = temp_v0;
@@ -61,36 +61,36 @@ void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3,
 {
 
     if (func_800236F4(arg0->item_id) == ITEM_CHICK) {
-        switch (arg0->unk0) {
+        switch (arg0->spawnMode) {
             case 0:
-                func_80041754(arg0->unk1, arg0->unk2, arg1);
+                spawnItem(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 1:
-                func_80041790(arg0->unk1, arg0->unk2, arg1);
+                spawnItemDrop(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 2:
-                func_800417CC(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemAtPos(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 3:
-                func_80041820(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemDropAtPos(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 4:
-                func_80041874(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemBounce(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
                 break;
             case 5:
-                func_800418C8(arg0->unk1, arg0->unk2, arg1);
+                spawnItemFixed(arg0->unk1, arg0->unk2, arg1);
                 break;
             case 6:
                 func_80123188(arg1, arg0->item_id, arg2, arg3);
                 break;
             case 8:
-                func_80041904(arg0->unk1, arg0->unk2, arg1);
+                spawnItemChest(arg0->unk1, arg0->unk2, arg1);
                 break;
         }
         if (arg4 != 0) {
             func_80023794(arg0->item_id);
         }
-        if (arg0->unk5 == 0) {
+        if (arg0->subState == 0) {
             playSFX(21);
         }
     }
@@ -111,7 +111,7 @@ void initItemObject(unkstruct_800A6D50* arg0)
     itemDef* temp_s1;
 
     if ((arg0->item_id == ITEM_JEWELOFWIND) && (GAME.event[EVENT_THEJUNGLEPIGBAG] == 0)) {
-        arg0->unk4 = 2;
+        arg0->state = 2;
         return;
     }
     arg0->unk68 = 0;
@@ -182,16 +182,16 @@ void initItemObject(unkstruct_800A6D50* arg0)
             arg0->unk24 = (int) *var_v0;
             break;
     }
-    func_800229FC(arg0);
+    readAnimFrameCount(arg0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardNone);
 void rewardNone(unkstruct_800A6D50* arg0)
 {
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardItem);
@@ -204,7 +204,7 @@ void rewardItem(unkstruct_800A6D50* arg0)
 
     addItemToInventory(arg0->item_id, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
     current_item = arg0->item_id;
     switch (current_item) {
@@ -234,7 +234,7 @@ void rewardItem(unkstruct_800A6D50* arg0)
             setEventStarted(EVENT_THEMERMAIDNECKLACE, 0, 0);
             break;
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardHeart);
@@ -244,7 +244,7 @@ void rewardHeart(unkstruct_800A6D50* arg0)
         func_800E92D4(0x64, arg0->unk12, arg0->unk16, arg0->unk1A);
         playSFX(9);
         if (!(arg0->unkC & 0x80)) {
-            func_8002367C(arg0->unk6B);
+            func_8002367C(arg0->objectIndex);
         }
         if (!(arg0->unkC & 0x7F)) {
             *(short*)&D_800A5430+=1;
@@ -259,7 +259,7 @@ void rewardHeart(unkstruct_800A6D50* arg0)
         }
         D_800A5432 = D_800A5430;
         GAME.playerHealth = (u_char) D_800A5430;
-        arg0->unk4++;
+        arg0->state++;
     }
 }
 
@@ -268,10 +268,10 @@ void rewardEffectOnly(unkstruct_800A6D50* arg0)
 {
     func_800E92D4(*(&D_8007E868 + ((arg0->unkC & 0x7F) * 2)), arg0->unk12, arg0->unk16, arg0->unk1A);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
     playSFX(9);
-    arg0->unk4+=1;
+    arg0->state+=1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardBakedYam);
@@ -282,9 +282,9 @@ void rewardBakedYam(unkstruct_800A6D50* arg0)
         GAME.event[EVENT_SOMETHINGCOOKIN] += 1;
     }
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B, &GAME.event[EVENT_SOMETHINGCOOKIN]);
+        func_8002367C(arg0->objectIndex, &GAME.event[EVENT_SOMETHINGCOOKIN]);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardDirtyMirror);
@@ -294,9 +294,9 @@ void rewardDirtyMirror(unkstruct_800A6D50* arg0)
     addItemToInventory(ITEM_DIRTYMIRROR, 1, true);
     setEventStarted(EVENT_AMAGICMIRROR, 0, 0);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardVitalityMaxUp);
@@ -304,12 +304,12 @@ void rewardVitalityMaxUp(unkstruct_800A6D50* arg0)
 {
     if (D_8009BCA0 == 0) {
         increaseMaxHealth();
-        printInfoMessage(0x15, 3); // Vitality Max +1 Adquired
+        printInfoMessage(MSG_VITALITYMAXUP_ACQUIRED, MSG_TYPE_REWARD);
         playSFX(10);
         if (!(arg0->unkC & 0x80)) {
-            func_8002367C(arg0->unk6B);
+            func_8002367C(arg0->objectIndex);
         }
-        arg0->unk4++;
+        arg0->state++;
     }
 }
 
@@ -318,9 +318,9 @@ void rewardWoodBoomerang(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_WOODBOOMERANG, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardStoneBoomerang);
@@ -328,9 +328,9 @@ void rewardStoneBoomerang(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_STONEBOOMERANG, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardIronBoomerang);
@@ -338,9 +338,9 @@ void rewardIronBoomerang(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_IRONBOOMERANG, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardOneUp);
@@ -349,13 +349,13 @@ void rewardOneUp(unkstruct_800A6D50* arg0)
     u_char lives = GAME.playerLives;
     if (lives < 99) {
         GAME.playerLives = (u_char)(lives+1);
-        printInfoMessage(0x14, 3); // "1UP Adquired"
+        printInfoMessage(MSG_ONEUP_ACQUIRED, MSG_TYPE_REWARD);
         playSFX(10);
     }
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGoldenBowl);
@@ -366,7 +366,7 @@ void rewardGoldenBowl(unkstruct_800A6D50* arg0)
     if (D_8009BCA0 == 0) {
         health = GAME.playerHealthDisplayed;
         if (health < 16) {
-            health += GAME.unk720;
+            health += GAME.bonusHealth;
             GAME.playerHealthDisplayed = health;
             if ((u_long) ((byte)health & 0xFF) >= 17) {
                 GAME.playerHealthDisplayed = 16;
@@ -380,9 +380,9 @@ void rewardGoldenBowl(unkstruct_800A6D50* arg0)
         D_800B078C = &D_800121C8;
         playSFX(10);
         if (!(arg0->unkC & 0x80)) {
-            func_8002367C(arg0->unk6B);
+            func_8002367C(arg0->objectIndex);
         }
-        arg0->unk4++;
+        arg0->state++;
     }
 }
 
@@ -392,7 +392,7 @@ void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
     u_short temp_v0;
     u_char temp_v1;
 
-    temp_v1 = arg0->unk5;
+    temp_v1 = arg0->subState;
     switch (temp_v1) {
         case 0:
             addItemToInventory(ITEM_BITINGPLANTFLOWER, 1, true);
@@ -401,9 +401,9 @@ void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
                 GAME.bittingPlantFlowerState = 2;
             }
             if (!(arg0->unkC & 0x80)) {
-                func_8002367C(arg0->unk6B);
+                func_8002367C(arg0->objectIndex);
             }
-            arg0->unk22 = 0x12CU;
+            arg0->cooldownTimer = 0x12CU;
             asm("");
             D_8009BCA7 = 1;
             D_8009BCAA = 1;
@@ -411,11 +411,11 @@ void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
             D_800A539D = 0;
             D_800A539E = 0;
             D_800A539F = 0;
-            arg0->unk5++;
+            arg0->subState++;
             return;
         case 1:
-            temp_v0 = arg0->unk22 - 1;
-            arg0->unk22 = temp_v0;
+            temp_v0 = arg0->cooldownTimer - 1;
+            arg0->cooldownTimer = temp_v0;
             if ((temp_v0 << 0x10) == 0) {
                 D_8009BCA7 = 0;
                 D_8009BCAA = 0;
@@ -423,7 +423,7 @@ void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
                 D_800A539D = 0;
                 D_800A539E = 0;
                 D_800A539F = 0;
-                arg0->unk4++;
+                arg0->state++;
             }
             return;
     }
@@ -435,9 +435,9 @@ void rewardGrapple(unkstruct_800A6D50* arg0)
     addItemToInventory(ITEM_GRAPPLE, 1, true);
     setEventComplete(EVENT_APRECIOUSTREASURECHEST, 0);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGrappleJack);
@@ -445,9 +445,9 @@ void rewardGrappleJack(unkstruct_800A6D50* arg0)
 {
     addItemToInventory(ITEM_GRAPPLEJACK, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardCrystalBalls);
@@ -456,10 +456,10 @@ void rewardCrystalBalls(unkstruct_800A6D50* arg0)
     switch (GAME.event[EVENT_LOSTANDFOUND]) {
         case 0:
             setEventStarted(EVENT_LOSTANDFOUND, 0, 0);
-            printInfoMessage(0x16, 3);
+            printInfoMessage(MSG_LOSTANDFOUND_STARTED, MSG_TYPE_REWARD);
             break;
         case 1:
-            printInfoMessage(0x17, 3);
+            printInfoMessage(MSG_LOSTANDFOUND_PROGRESS, MSG_TYPE_REWARD);
             GAME.event[EVENT_LOSTANDFOUND]+= 1;
             break;
         case 2:
@@ -468,9 +468,9 @@ void rewardCrystalBalls(unkstruct_800A6D50* arg0)
             break;
     }
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardMysteriousMushroom);
@@ -479,9 +479,9 @@ void rewardMysteriousMushroom(unkstruct_800A6D50* arg0)
     setEventComplete(EVENT_THEMISTERIOUSMUSHROOM, 0);
     addItemToInventory(arg0->item_id, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardFlowerSeeds);
@@ -489,10 +489,10 @@ void rewardFlowerSeeds(unkstruct_800A6D50* arg0)
 {
     setEventStarted(EVENT_FLOWERSEEDS, 0, 0);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
     addItemToInventory(arg0->item_id, 1, true);
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardPigBag);
@@ -500,11 +500,11 @@ void rewardPigBag(unkstruct_800A6D50* arg0)
 {
     int temp;
 
-    switch (arg0->unk5) {                              // switch 3; irregular
+    switch (arg0->subState) {                              // switch 3; irregular
         case 0:                                     // switch 3
             addItemToInventory(arg0->item_id, 1, true);
             if (!(arg0->unkC & 0x80)) {
-                func_8002367C(arg0->unk6B);
+                func_8002367C(arg0->objectIndex);
             }
             switch (arg0->item_id) {
                 case ITEM_REDPIGBAG:
@@ -529,12 +529,12 @@ void rewardPigBag(unkstruct_800A6D50* arg0)
                     setEventComplete(EVENT_THEHAUNTEDPIGBAG, 2);
                     break;
             }
-            arg0->unk22 = 0x168U;
-            arg0->unk5++;
+            arg0->cooldownTimer = 0x168U;
+            arg0->subState++;
             return;
         case 1:
-            temp = arg0->unk22 - 1;
-            arg0->unk22 = temp;
+            temp = arg0->cooldownTimer - 1;
+            arg0->cooldownTimer = temp;
             if ((temp << 0x10) == 0) {
                 switch (arg0->item_id) {
                     case ITEM_REDPIGBAG:        
@@ -559,7 +559,7 @@ void rewardPigBag(unkstruct_800A6D50* arg0)
                         setEventStarted(EVENT_THEHAUNTEDMANSION, 0, 3);
                         break;
                 }
-                arg0->unk4++;
+                arg0->state++;
             }
             return;
     }
@@ -572,9 +572,9 @@ void rewardConditionalItem(unkstruct_800A6D50* arg0)
         addItemToInventory(arg0->item_id, 1, true);
     }
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardJewel);
@@ -593,16 +593,16 @@ void rewardJewel(unkstruct_800A6D50* arg0)
                 addItemToInventory(arg0->item_id, 1, true);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
-                    func_8002367C(arg0->unk6B);
+                    func_8002367C(arg0->objectIndex);
                     asm("");
                 }
-                arg0->unk4++;
+                arg0->state++;
             } else {
-                if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2); // "It's Locked"
-                    arg0->unk22 = 0x78;
+                if ((short)arg0->cooldownTimer == 0) {
+                    printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
+                    arg0->cooldownTimer = 0x78;
                 } 
-                arg0->unk4--;
+                arg0->state--;
             }
             break;
         case ITEM_JEWELOFWATER: 
@@ -611,17 +611,17 @@ void rewardJewel(unkstruct_800A6D50* arg0)
                 addItemToInventory(arg0->item_id, 1, true);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
-                    func_8002367C(arg0->unk6B);
+                    func_8002367C(arg0->objectIndex);
                     asm("");
                 }
-                arg0->unk4++;
+                arg0->state++;
             } else {
                 setEventStarted(EVENT_BLUEHIDDENPOWERS, 0, 0);
-                if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2);
-                    arg0->unk22 = 0x78;
+                if ((short)arg0->cooldownTimer == 0) {
+                    printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
+                    arg0->cooldownTimer = 0x78;
                 } 
-                arg0->unk4--;
+                arg0->state--;
             }
             break;
         case ITEM_JEWELOFWIND:
@@ -629,16 +629,16 @@ void rewardJewel(unkstruct_800A6D50* arg0)
                 setEventComplete(EVENT_GREENHIDDENPOWERS, 1);
                 addItemToInventory(arg0->item_id, 1, true);
                 if (!(arg0->unkC & 0x80)) {
-                    func_8002367C(arg0->unk6B);
+                    func_8002367C(arg0->objectIndex);
                 }
-                arg0->unk4++;
+                arg0->state++;
             } else {
                 setEventStarted(EVENT_GREENHIDDENPOWERS, 0, 1);
-                if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2);
-                    arg0->unk22 = 0x78;
+                if ((short)arg0->cooldownTimer == 0) {
+                    printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
+                    arg0->cooldownTimer = 0x78;
                 } 
-                arg0->unk4--;
+                arg0->state--;
             }
             break;
     }
@@ -651,23 +651,23 @@ void rewardSafeMushroom(unkstruct_800A6D50* arg0)
     setEventComplete(EVENT_ASAFEMUSHROOM, 0);
     addItemToInventory(arg0->item_id, 1, true);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardAnimalDash);
 void rewardAnimalDash(unkstruct_800A6D50* arg0)
 {
-    printInfoMessage(0xC, 3); // "Animal Dash Adquired"
+    printInfoMessage(MSG_ANIMALDASH_ACQUIRED, MSG_TYPE_REWARD);
     GAME.area00_eventControl |= 0x40;
     playSFX(10);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
     GAME.unk6ad = 1;
     GAME.unk736 = 1;
-    arg0->unk4++;
+    arg0->state++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardPants);
@@ -682,7 +682,7 @@ void rewardPants(unkstruct_800A6D50* arg0)
     }
     playSFX(10);
     if (!(arg0->unkC & 0x80)) {
-        func_8002367C(arg0->unk6B);
+        func_8002367C(arg0->objectIndex);
     }
-    arg0->unk4++;
+    arg0->state++;
 }
