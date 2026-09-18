@@ -135,14 +135,14 @@ void introSequenceHandler(void)
             }
             break;
         case 4:
-            MOVIE_PLAY_STATE = 1;
+            MOVIE_PLAY_STATE = MOVIE_STARTING;
             MOVIE_ID = 1;
             openTask(1, &moviePlayerTask);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state2++;
             return;
         case 5:
-            if (MOVIE_PLAY_STATE != 0) {
+            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
                 if (*(u_short* )(&SCRATCHPAD+0x1FC) & (JOY_CROSS | JOY_START)) {
                     MOVIE_SKIP_REQUEST = 1;
                     JOYPAD_STATE = 0U;
@@ -155,7 +155,7 @@ void introSequenceHandler(void)
             }
             break;
         case 6:
-            if (MOVIE_PLAY_STATE == 0) {
+            if (MOVIE_PLAY_STATE == MOVIE_IDLE) {
                 (CURRENT_TASK)->state2 = 7U;
                 return;
             }
@@ -314,7 +314,7 @@ void displayDebugScreen(void)
         GAME.nextSection = GAME.selectedSection;
         GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
         // If any action button (CIRCLE or START) is pressed
-        if (scratch->joypad_state & 0x2008) {
+        if (scratch->joypad_state & (JOY_CIRCLE | JOY_START)) {
             // Handle area and section exceptions cases
             /* If selected area is not VILLAGE OF ALL BEGINNINGS or DWARF FOREST
                and selected section is not VILLAGE OF ALL BEGINNINGS or FOREST OF 100 FLOWERS */
@@ -611,7 +611,7 @@ void phoenixMountainTick(void)
     unkstruct_1F8001D4* temp_v1;
 
     NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == 0)) {
+    if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == MOVIE_IDLE)) {
         *(short* )0x1F8001C6 = 0;
     }
     func_8001D6C0();
@@ -1158,11 +1158,11 @@ s32 resolveAreaVariant(void)
             if ((u16)D_8009EBA0 != 6) {
                 var_a1 = 1;
             }
-            GAME.purifiedAreas |= GAME.selectedArea = 1;
+            GAME.purifiedAreas |= GAME.selectedArea = AREA01_DWARFFOREST;
             D_8009EBA0 = 6;
             break;
         case AREA01_DWARFFOREST:
-            if (GAME.purifiedAreas & 1) {
+            if (GAME.purifiedAreas & PURIFIED_DWARFFOREST) {
                 if (*(u16*)&D_8009EBA0 != 6) {
                     var_a1 = 1;
                 }
@@ -1175,23 +1175,23 @@ s32 resolveAreaVariant(void)
             case AREA11_VILLAGEOFCIVILIZATION:
             case AREA13_PIGISLAND:
             case AREA14_EVILPIGS:
-            case 15:
+            case AREA15_UNKNOWN:
             case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
             case AREA17_VILLAGEOFCIVILIZATIONIRONTOWER:
-            case 18:
+            case AREA18_VILLAGEOFCIVILIZATIONYCROSSING:
                 if (*(u16*)&D_8009EBA0 != 0) {
                     var_a1 = 1;
                 }
                 D_8009EBA0 = 0;
             }
             break;
-        case 19:
-            if (GAME.selectedSection != 2) {
+        case AREA19_VILLAGEOFCIVILIZATIONPURIFIED:
+            if (GAME.selectedSection != AREA19_SECTION02_HIDDENVILLAGE) {
                 if (*(u16*)&D_8009EBA0 != 0x11) {
                     var_a1 = 1;
                 }
                 D_8009EBA0 = 17;
-                GAME.selectedArea = 2;
+                GAME.selectedArea = AREA02_DWARFVILLAGE;
             } else {
                 if (*(u16*)&D_8009EBA0 != 0) {
                     var_a1 = 1;
@@ -1204,9 +1204,9 @@ s32 resolveAreaVariant(void)
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if ((GAME.purifiedAreas & 1) && ((u16) GAME.selectedSection < 2U)) {
+            if ((GAME.purifiedAreas & PURIFIED_DWARFFOREST) && ((u16) GAME.selectedSection < 2U)) {
                 D_8009EBA0 = 17;
-                GAME.selectedArea = 2;
+                GAME.selectedArea = AREA02_DWARFVILLAGE;
             }
             break;
         case AREA03_PHOENIXMOUNTAIN:
@@ -1214,7 +1214,7 @@ s32 resolveAreaVariant(void)
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if (GAME.purifiedAreas & 2) {
+            if (GAME.purifiedAreas & PURIFIED_PHOENIXMOUNTAIN) {
                 var_v0 = (u16) GAME.selectedSection < 2U;
                 if (var_v0 != 0) {
                     var_v0_2 = GAME.selectedSection + 4;
@@ -1226,11 +1226,11 @@ s32 resolveAreaVariant(void)
             if (*(u16*)&D_8009EBA0 != 8) {
                 var_a1 = 1;
             }
-            GAME.purifiedAreas |= 8, GAME.selectedArea = 4;
+            GAME.purifiedAreas |= PURIFIED_HAUNTEDMANSION, GAME.selectedArea = AREA04_HAUNTEDMANSION;
             D_8009EBA0 = 8;
             break;
         case AREA04_HAUNTEDMANSION:
-            if (GAME.purifiedAreas & 8) {
+            if (GAME.purifiedAreas & PURIFIED_HAUNTEDMANSION) {
                 if (*(u16*)&D_8009EBA0 != 8) {
                     var_a1 = 1;
                 }
@@ -1247,7 +1247,7 @@ s32 resolveAreaVariant(void)
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if ((GAME.purifiedAreas & 0x10) && ((u16) GAME.selectedSection < 2U)) {
+            if ((GAME.purifiedAreas & PURIFIED_BACCUSVILLAGE) && ((u16) GAME.selectedSection < 2U)) {
                 var_v0_2 = GAME.selectedSection + 2;
                 GAME.selectedSection = var_v0_2;
             }
@@ -1257,10 +1257,10 @@ s32 resolveAreaVariant(void)
                 var_a1 = 1;
             }
             D_8009EBA0 = 0;
-            if ((GAME.purifiedAreas & 0x40) && (GAME.selectedSection == 3)) {
-                GAME.selectedSection = 7;
+            if ((GAME.purifiedAreas & PURIFIED_TRICKVILLAGE) && (GAME.selectedSection == AREA10_SECTION03_TRICKVILLAGE)) {
+                GAME.selectedSection = AREA10_SECTION07_TRICKVILLAGEPURIFIED;
             }
-            if (GAME.purifiedAreas & 0x20) {
+            if (GAME.purifiedAreas & PURIFIED_DEEPJUNGLE) {
                 var_v0 = (u16) GAME.selectedSection < 3U;
                 if (var_v0 != 0) {
                     var_v0_2 = GAME.selectedSection + 4;

@@ -304,7 +304,7 @@ void rewardVitalityMaxUp(unkstruct_800A6D50* arg0)
 {
     if (D_8009BCA0 == 0) {
         increaseMaxHealth();
-        printInfoMessage(0x15, 3); // Vitality Max +1 Adquired
+        printInfoMessage(MSG_VITALITYMAXUP_ACQUIRED, MSG_TYPE_REWARD);
         playSFX(10);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->unk6B);
@@ -349,7 +349,7 @@ void rewardOneUp(unkstruct_800A6D50* arg0)
     u_char lives = GAME.playerLives;
     if (lives < 99) {
         GAME.playerLives = (u_char)(lives+1);
-        printInfoMessage(0x14, 3); // "1UP Adquired"
+        printInfoMessage(MSG_ONEUP_ACQUIRED, MSG_TYPE_REWARD);
         playSFX(10);
     }
     if (!(arg0->unkC & 0x80)) {
@@ -456,10 +456,10 @@ void rewardCrystalBalls(unkstruct_800A6D50* arg0)
     switch (GAME.event[EVENT_LOSTANDFOUND]) {
         case 0:
             setEventStarted(EVENT_LOSTANDFOUND, 0, 0);
-            printInfoMessage(0x16, 3);
+            printInfoMessage(MSG_LOSTANDFOUND_STARTED, MSG_TYPE_REWARD);
             break;
         case 1:
-            printInfoMessage(0x17, 3);
+            printInfoMessage(MSG_LOSTANDFOUND_PROGRESS, MSG_TYPE_REWARD);
             GAME.event[EVENT_LOSTANDFOUND]+= 1;
             break;
         case 2:
@@ -599,7 +599,7 @@ void rewardJewel(unkstruct_800A6D50* arg0)
                 arg0->unk4++;
             } else {
                 if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2); // "It's Locked"
+                    printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
                     arg0->unk22 = 0x78;
                 } 
                 arg0->unk4--;
@@ -618,7 +618,7 @@ void rewardJewel(unkstruct_800A6D50* arg0)
             } else {
                 setEventStarted(EVENT_BLUEHIDDENPOWERS, 0, 0);
                 if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2);
+                    printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
                     arg0->unk22 = 0x78;
                 } 
                 arg0->unk4--;
@@ -635,7 +635,7 @@ void rewardJewel(unkstruct_800A6D50* arg0)
             } else {
                 setEventStarted(EVENT_GREENHIDDENPOWERS, 0, 1);
                 if ((short)arg0->unk22 == 0) {
-                    printInfoMessage(0x26, 2);
+                    printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
                     arg0->unk22 = 0x78;
                 } 
                 arg0->unk4--;
@@ -659,7 +659,7 @@ void rewardSafeMushroom(unkstruct_800A6D50* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardAnimalDash);
 void rewardAnimalDash(unkstruct_800A6D50* arg0)
 {
-    printInfoMessage(0xC, 3); // "Animal Dash Adquired"
+    printInfoMessage(MSG_ANIMALDASH_ACQUIRED, MSG_TYPE_REWARD);
     GAME.area00_eventControl |= 0x40;
     playSFX(10);
     if (!(arg0->unkC & 0x80)) {

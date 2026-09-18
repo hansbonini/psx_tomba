@@ -760,6 +760,48 @@ typedef enum {
     JOY_SQUARE   = 0x8000,
 } JOYPAD_BUTTONS;
 
+typedef enum {
+    OBJECT_LAYER_1 = 1,
+    OBJECT_LAYER_2 = 2,
+    OBJECT_LAYER_3 = 3,
+    OBJECT_LAYER_4 = 4,
+    OBJECT_LAYER_5 = 5,
+    OBJECT_LAYER_7 = 7,
+    OBJECT_LAYER_8 = 8,
+} OBJECT_LAYER;
+
+typedef enum {
+    MOVIE_IDLE     = 0,
+    MOVIE_STARTING = 1,
+    MOVIE_PLAYING  = 2,
+    MOVIE_ENDING   = 3,
+} MOVIE_STATE;
+
+typedef enum {
+    PURIFIED_DWARFFOREST     = 0x01,
+    PURIFIED_PHOENIXMOUNTAIN = 0x02,
+    PURIFIED_HAUNTEDMANSION  = 0x08,
+    PURIFIED_BACCUSVILLAGE   = 0x10,
+    PURIFIED_DEEPJUNGLE      = 0x20,
+    PURIFIED_TRICKVILLAGE    = 0x40,
+} PURIFIED_AREA_FLAG;
+
+typedef enum {
+    MSG_ANIMALDASH_ACQUIRED    = 0x0C,
+    MSG_EFFECT_NOTICE          = 0x0F,
+    MSG_ONEUP_ACQUIRED         = 0x14,
+    MSG_VITALITYMAXUP_ACQUIRED = 0x15,
+    MSG_LOSTANDFOUND_STARTED   = 0x16,
+    MSG_LOSTANDFOUND_PROGRESS  = 0x17,
+    MSG_ITS_LOCKED             = 0x26,
+} INFO_MESSAGE;
+
+typedef enum {
+    MSG_TYPE_ITEM   = 0,
+    MSG_TYPE_INFO   = 2,
+    MSG_TYPE_REWARD = 3,
+} INFO_MESSAGE_TYPE;
+
 /* ========================================================================
  * Structs
  */

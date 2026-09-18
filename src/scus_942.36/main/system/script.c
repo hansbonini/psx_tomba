@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/resource", D_80013798);
+INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/script", D_80013798);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B0D4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B0D4);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", projectOriginToScreen);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", projectOriginToScreen);
 s32 projectOriginToScreen(s32 arg0, s16* arg1)
 {
     SVECTOR v;
@@ -25,7 +25,7 @@ s32 projectOriginToScreen(s32 arg0, s16* arg1)
     return r;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", loadCompressedTIM);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", loadCompressedTIM);
 void loadCompressedTIM(s32 arg0)
 {
     u8* base = *(u8**)0x1F800354;
@@ -34,9 +34,9 @@ void loadCompressedTIM(s32 arg0)
     loadTIM(TIM_SCRATCH, 0x20, 0, 0x80, 0x1EF);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B2C8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B2C8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptStart);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptStart);
 s32 scriptStart(u8* self, s32 idx)
 {
     s32 i;
@@ -58,7 +58,7 @@ s32 scriptStart(u8* self, s32 idx)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptReset);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptReset);
 void scriptReset(u8* self)
 {
     s32 i;
@@ -70,7 +70,7 @@ void scriptReset(u8* self)
     *(s16*)(self + 0x8A) = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", readUnalignedU16);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", readUnalignedU16);
 u16 readUnalignedU16(u8* src)
 {
     u8  buf[2];
@@ -84,7 +84,7 @@ u16 readUnalignedU16(u8* src)
     return *(u16*)buf;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", readUnalignedS32);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", readUnalignedS32);
 s32 readUnalignedS32(u8* src)
 {
     u8  buf[4];
@@ -98,7 +98,7 @@ s32 readUnalignedS32(u8* src)
     return *(s32*)buf;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptReadOperand);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptReadOperand);
 s32 scriptReadOperand(u8* src, u8 kind)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -117,7 +117,7 @@ s32 scriptReadOperand(u8* src, u8 kind)
     return *(s32*)buf;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptSetCompareFlag);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptSetCompareFlag);
 void scriptSetCompareFlag(s32 arg0)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -131,7 +131,7 @@ void scriptSetCompareFlag(s32 arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptTickWait);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptTickWait);
 void scriptTickWait(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -143,9 +143,9 @@ void scriptTickWait(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B5D8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B5D8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpSwapVars);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpSwapVars);
 void scriptOpSwapVars(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -160,7 +160,7 @@ void scriptOpSwapVars(void)
     p->pc += 3;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpRandom);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpRandom);
 void scriptOpRandom(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -171,9 +171,9 @@ void scriptOpRandom(void)
     p->pc += 2;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B750);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B750);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpBranch);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpBranch);
 void scriptOpBranch(u8 op)
 {
     u8* script = D_8009C974;
@@ -222,9 +222,9 @@ void scriptOpBranch(u8 op)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003B968);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B968);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpCall);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpCall);
 void scriptOpCall(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -237,7 +237,7 @@ void scriptOpCall(void)
     p->pc = *(u16*)((u8*)p + script[p->pc + 1] * 2) - 1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpReturn);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpReturn);
 void scriptOpReturn(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -246,7 +246,7 @@ void scriptOpReturn(void)
     p->pc = *(u16*)((u8*)p + p->sp * 4 + 0x90);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpPushVars);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpPushVars);
 void scriptOpPushVars(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -264,7 +264,7 @@ void scriptOpPushVars(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpPopVars);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpPopVars);
 void scriptOpPopVars(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -280,13 +280,13 @@ void scriptOpPopVars(void)
     p->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BB48);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BB48);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BC34);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BC34);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BD28);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BD28);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", scriptOpWait);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpWait);
 void scriptOpWait(void)
 {
     unkstruct_8009E458* p = D_8009E458;
@@ -298,4 +298,4 @@ void scriptOpWait(void)
     *(s32*)((u8*)p + 0x11D4) = v;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/resource", func_8003BF58);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BF58);

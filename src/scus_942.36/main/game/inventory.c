@@ -61,7 +61,7 @@ u_char addItemToInventory(u_long item_id, u_char qty, bool printMessage)
         }
     }
     if (printMessage != false) {
-        printInfoMessage(item_id, 0);
+        printInfoMessage(item_id, MSG_TYPE_ITEM);
     }
     for(i = 0; i < GAME.inventory.counter; ++i)
     {
@@ -144,7 +144,7 @@ u8 applyGoldenBowl(void)
         if ((u32) (health & 0xFF) >= 0x11U) {
             GAME.playerHealthDisplayed = 0x10;
         }
-        printInfoMessage(0x87, 0);
+        printInfoMessage(ITEM_GOLDENBOWL, MSG_TYPE_ITEM);
         playSFX(10);
         (u16*)D_800A5430 = GAME.playerHealthDisplayed;
         D_800A5432 = GAME.playerHealthDisplayed;

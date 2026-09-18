@@ -79,16 +79,16 @@ void main(void)
         }
 
         switch (MOVIE_PLAY_STATE) {
-            case 2:
+            case MOVIE_PLAYING:
                 break;
-            case 0:
-            case 1:
+            case MOVIE_IDLE:
+            case MOVIE_STARTING:
                 if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
                     tickTaskTimers();
                 }
                 break;
-            case 3:
+            case MOVIE_ENDING:
                 *(u8*)(&SCRATCHPAD+0x1CC) = 2;
                 if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
@@ -98,10 +98,10 @@ void main(void)
         }
 
         if (*(u8*)0x1F8001BF != 0) {
-            if ((MOVIE_PLAY_STATE == 0) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
+            if ((MOVIE_PLAY_STATE == MOVIE_IDLE) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
                 *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - PAUSE_FLAGS);
             }
-        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == 0 && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
+        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == MOVIE_IDLE && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
             dbgMode = LOAD_COMPLETE;
             if (dbgMode == 1) {
                 joypad_state = JOYPAD_STATE;

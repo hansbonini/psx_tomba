@@ -21,7 +21,7 @@ void moviePlayerTask(void)
     unkstruct_1F8001D4* gameControlTemp;
 
     gameControl = CURRENT_TASK;
-    MOVIE_PLAY_STATE = 1;
+    MOVIE_PLAY_STATE = MOVIE_STARTING;
     gameControl->state0 = 0;
     gameControl->unk4E.value = 0;
     gameControl->loadGameSelected = 0;
@@ -42,7 +42,7 @@ void moviePlayerTask(void)
                 } while (func_8001EFE8(&D_8009B010) == 0);
                 break;
             case 1:
-                MOVIE_PLAY_STATE = 2;
+                MOVIE_PLAY_STATE = MOVIE_PLAYING;
                 gameControlTemp->state0 = 2;
             case 2:
                 while ((CURRENT_TASK)->unk4E.value == 0) {
@@ -68,7 +68,7 @@ void moviePlayerTask(void)
                 }
                 SetDispMask(1);
                 *(int*)&D_8009B034->isinter = 0;
-                MOVIE_PLAY_STATE = 3;
+                MOVIE_PLAY_STATE = MOVIE_ENDING;
                 *(short* )0x1F8001E8 = 0;
                 break;
             case 3:
@@ -76,7 +76,7 @@ void moviePlayerTask(void)
                 StUnSetRing();
                 StClearRing();
                 CdControlB(CdlPause, 0, 0);
-                MOVIE_PLAY_STATE = 0;
+                MOVIE_PLAY_STATE = MOVIE_IDLE;
                 *(char* )(&SCRATCHPAD+0x1D3) = 0;
                 exitTask();
                 break;

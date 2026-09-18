@@ -190,7 +190,7 @@ void titleSequenceTask(void)
             task->state2 = 0;
             sp10[0] = 1;
             func_80020C00(0);
-            if (MOVIE_PLAY_STATE != 0) {
+            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
                 MOVIE_SKIP_REQUEST = 1;
             }
         }
@@ -263,13 +263,13 @@ void func_800199B8(void)
             return;
         case 2:
             task2 = CURRENT_TASK;
-            MOVIE_PLAY_STATE = 1;
+            MOVIE_PLAY_STATE = MOVIE_STARTING;
             MOVIE_ID = 0x15;
             task2->state1++;
             openTask(1, moviePlayerTask);
             return;
         case 3:
-            if (MOVIE_PLAY_STATE != 0) {
+            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
                 return;
             }
             task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -403,7 +403,7 @@ void loopTitleScreen(int* arg0)
             gameControl->state2 = 0U;
             gameControl->state1++;
         case 1:
-            if (MOVIE_PLAY_STATE == 0) {
+            if (MOVIE_PLAY_STATE == MOVIE_IDLE) {
                 initDisplay(0U, 0U, 0U);
                 gameControl = CURRENT_TASK;
                 gameControl->state1++;

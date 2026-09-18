@@ -376,7 +376,7 @@ void* allocObjectLayer2(void)
     s16  n = D_1F800238;
     s32* p;
     unkstruct_800183E4* obj;
-    u8   layer = 2;
+    u8   layer = OBJECT_LAYER_2;
 
     if (n > 0) {
         p = D_1F800208;
@@ -401,7 +401,7 @@ void* allocObjectLayer3(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_800183E4* obj;
-    u_char layer = 3;
+    u_char layer = OBJECT_LAYER_3;
 
     if (scratch->freeObjectCount > 0) {
         scratch->freeObjectCount -= 1;
@@ -426,7 +426,7 @@ void* allocObjectLayer4(void)
     s16  n = D_1F800238;
     s32* p;
     unkstruct_800183E4* obj;
-    u8   layer = 4;
+    u8   layer = OBJECT_LAYER_4;
 
     if (n > 0) {
         p = D_1F800208;
@@ -452,7 +452,7 @@ void* allocObjectLayer5(void)
     s16  n = D_1F800238;
     s32* p;
     unkstruct_800183E4* obj;
-    u8   layer = 5;
+    u8   layer = OBJECT_LAYER_5;
 
     if (n > 0) {
         p = D_1F800208;
@@ -658,7 +658,7 @@ INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010008);
 void freeObjectByLayer(s32* self)
 {
     switch (((u8*)self)[0x1C] & 0x7F) {
-    case 1:
+    case OBJECT_LAYER_1:
         ((u8*)self)[0x1C] &= 0x7F;
         self[0] = 0;
         self[1] = 0;
@@ -667,7 +667,7 @@ void freeObjectByLayer(s32* self)
         D_1F800236++;
         *--D_1F800204 = (s32)self;
         break;
-    case 2:
+    case OBJECT_LAYER_2:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -681,7 +681,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case 3:
+    case OBJECT_LAYER_3:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -695,7 +695,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case 4:
+    case OBJECT_LAYER_4:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -709,7 +709,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case 5:
+    case OBJECT_LAYER_5:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -723,7 +723,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case 7:
+    case OBJECT_LAYER_7:
         ((u8*)self)[0x1C] &= 0x7F;
         self[0] = 0;
         self[1] = 0;
@@ -732,7 +732,7 @@ void freeObjectByLayer(s32* self)
         D_1F80023C++;
         *--D_1F800214 = (s32)self;
         break;
-    case 8:
+    case OBJECT_LAYER_8:
         ((u8*)self)[0x1C] &= 0x7F;
         self[0] = 0;
         self[1] = 0;
