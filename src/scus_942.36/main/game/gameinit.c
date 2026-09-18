@@ -156,7 +156,7 @@ void initObjectPoolLayer1(void)
     D_1F800204 = (s32*)D_800A38B8;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->unk1C = 1;
+        ((unkstruct_800183E4*)q)->layer = 1;
         *--D_1F800204 = (s32)q;
         q -= 0xEC;
         i++;
@@ -186,7 +186,7 @@ void initObjectPool(void)
     D_1F800208 = (s32*)&D_800A3D08;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->unk1C = 0;
+        ((unkstruct_800183E4*)q)->layer = 0;
         *--D_1F800208 = (s32)q;
         q -= 0xD4;
         i++;
@@ -246,7 +246,7 @@ void initObjectPoolLayer8(void)
     D_1F80020C = (s32*)&D_800A55C4;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->unk1C = 8;
+        ((unkstruct_800183E4*)q)->layer = 8;
         *--D_1F80020C = (s32)q;
         q -= 0xD4;
         i++;
@@ -298,7 +298,7 @@ void initObjectPoolLayer7(void)
     D_1F800214 = (s32*)&D_800A37D0;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->unk1C = 7;
+        ((unkstruct_800183E4*)q)->layer = 7;
         *--D_1F800214 = (s32)q;
         q -= 0x6C;
         i++;
@@ -334,11 +334,11 @@ void* allocObjectLayer1(void)
         D_1F800204 = p + 1;
         obj = (unkstruct_800183E4*)*p;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -357,13 +357,13 @@ void* allocObjectLayer(u8 arg0)
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (unkstruct_800183E4*)*p;
-        obj->unk1C = arg0;
+        obj->layer = arg0;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -383,13 +383,13 @@ void* allocObjectLayer2(void)
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (unkstruct_800183E4*)*p;
-        obj->unk1C = layer;
+        obj->layer = layer;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -406,14 +406,14 @@ void* allocObjectLayer3(void)
     if (scratch->freeObjectCount > 0) {
         scratch->freeObjectCount -= 1;
         obj = *scratch->freeObjects++;
-        obj->unk1C = layer;
+        obj->layer = layer;
 
         if ((scratch->unk1C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -433,13 +433,13 @@ void* allocObjectLayer4(void)
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (unkstruct_800183E4*)*p;
-        obj->unk1C = layer;
+        obj->layer = layer;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -459,13 +459,13 @@ void* allocObjectLayer5(void)
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (unkstruct_800183E4*)*p;
-        obj->unk1C = layer;
+        obj->layer = layer;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -485,11 +485,11 @@ void* allocObjectLayer8(void)
         D_1F80020C = p + 1;
         obj = (unkstruct_800183E4*)*p;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }
@@ -509,11 +509,11 @@ void* allocObjectLayer7(void)
         D_1F800214 = p + 1;
         obj = (unkstruct_800183E4*)*p;
         if ((D_1F8001C8 & 1) == 0) {
-            obj->unk40 = &obj->data[0x10];
-            obj->unk44 = &obj->data[0x18];
+            obj->drawBufA = &obj->data[0x10];
+            obj->drawBufB = &obj->data[0x18];
         } else {
-            obj->unk44 = &obj->data[0x10];
-            obj->unk40 = &obj->data[0x18];
+            obj->drawBufB = &obj->data[0x10];
+            obj->drawBufA = &obj->data[0x18];
         }
         return obj;
     }

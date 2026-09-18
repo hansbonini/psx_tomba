@@ -47,8 +47,8 @@ void titleScreenHandler(void)
             func_8001F6D4();
             return;
         case 3:
-            GAME.unk14 = 0;
-            GAME.unk7 = 0;
+            GAME.areaTransition = 0;
+            GAME.keepBgm = 0;
             func_80020C00(0);
             temp_v0_2 = CURRENT_TASK;
             temp_v0_2->state0 = 1;
@@ -161,7 +161,7 @@ void introSequenceHandler(void)
             }
             break;
         case 7:
-            temp1 = (u_char*)&GAME.unk14;
+            temp1 = (u_char*)&GAME.areaTransition;
             *temp1 = 1;
             temp_v1_3 = CURRENT_TASK;
             *(u_short*)&temp_v1_3->state2 = 1;
@@ -338,7 +338,7 @@ void displayDebugScreen(void)
         } else return;
     }
 
-    temp2 = (u_char*)(&GAME.unk14);
+    temp2 = (u_char*)(&GAME.areaTransition);
     var_a0 = 1;
     if (*temp2 == 0) {
         *temp2 = 1;
@@ -401,7 +401,7 @@ void debugSelectHandler(void)
             (CURRENT_TASK)->unk5E--;
             if (((CURRENT_TASK)->unk5E << 0x10) == 0) {
                 var_a0 = 1;
-                temp1 = (u_char*)&GAME.unk14;
+                temp1 = (u_char*)&GAME.areaTransition;
                 if (*temp1 == 0) {
                    *temp1 = 1;
                     func_8001CE80(var_a0);
@@ -453,7 +453,7 @@ void gameplayMainHandler(void)
                 func_80028EF4();
             }
             func_80059F7C();
-            if (GAME.unk7 != 1) {
+            if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
             GAME.unk21 = 1;
@@ -485,7 +485,7 @@ void gameplayMainHandler(void)
             }
             GAME.displayExpBar = 0;
             D_800B07CD = 0;
-            GAME.unk7 = 0;
+            GAME.keepBgm = 0;
             D_8009D6DD = 0;
             D_8009D6DE = 0;
             D_8009D6DF = 0;
@@ -576,7 +576,7 @@ void phoenixMountainHandler(void)
             func_80059F7C();
             func_80028EF4();
             D_800B0770[0] = 2;
-            if ((GAME.unk7 != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
+            if ((GAME.keepBgm != 1) || (*(u_long *)&GAME == ((AREA03_PHOENIXMOUNTAIN << 16) | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS))) {
                 startAreaBgm();
             }
             *(short* )0x1F8001FC = 0;
@@ -770,8 +770,8 @@ void inventoryScreenHandler(void)
             temp_v1_3->unk4E.value = 0U;
             return;
         case 7:                                     // switch 1
-            GAME.unk14 = 0;
-            GAME.unk7 = 0;
+            GAME.areaTransition = 0;
+            GAME.keepBgm = 0;
             func_80020C00(0);
             setRGB0((DRAWENV*)(&D_8009D6C4), 0, 0, 0);
             setRGB0((DRAWENV*)(D_8009E3D4), 0, 0, 0);
@@ -858,7 +858,7 @@ void cutsceneAreaHandler(void)
             func_80028EF4();
             D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.unk7 != 1) {
+            if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -950,7 +950,7 @@ void specialAreaHandler(void)
             func_80028EF4();
             D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.unk7 != 1) {
+            if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -1041,7 +1041,7 @@ void eventAreaHandler(void)
             func_80028EF4();
             D_800B0770[0] = 0;
             *(s8* )0x1F8001CF = 1;
-            if (GAME.unk7 != 1) {
+            if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
             temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);

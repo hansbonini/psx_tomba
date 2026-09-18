@@ -817,8 +817,8 @@ typedef struct unkstruct_01 {
 } unkstruct_01;
 
 typedef struct unkstruct_1F8001D4 {
-    short unk0;
-    short unk2;
+    short status;
+    short sleepTimer;
     int task_id;
     int task_sp;
     int task_func;
@@ -1040,10 +1040,10 @@ typedef struct unkstruct_1F800214 {
 
 typedef struct unkstruct_800183E4 {
     byte  data[0x1C];
-    byte  unk1C;
+    byte  layer;
     byte  pad0[0x23];
-    void* unk40;
-    void* unk44;
+    void* drawBufA;
+    void* drawBufB;
 } unkstruct_800183E4;
 
 typedef struct unkstruct_80018474 {
@@ -1058,9 +1058,9 @@ typedef struct unkstruct_80018474 {
     byte  unkD;
     byte  unkE;
     byte  unkF;
-    int   unk10;
-    int   unk14;
-    int   unk18;
+    int   posX;
+    int   posY;
+    int   posZ;
     byte  pad2[0x11];
     short unk2E;
 } unkstruct_80018474;
@@ -1092,12 +1092,12 @@ typedef struct unkstruct_800A39B0 {
 
 
 typedef struct {
-    u_char unk0;
+    u_char spawnMode;
     u_char unk1;
     u_char unk2;
     u_char item_id;
-    u_char unk4;
-    u_char unk5;
+    u_char state;
+    u_char subState;
     u_char unk6;
     u_char unk7;
     short clut;
@@ -1117,7 +1117,7 @@ typedef struct {
     u_char unk1D;
     short unk1E;
     short unk20;
-    u_short unk22;
+    u_short cooldownTimer;
     int unk24;
     short unk28;
     short unk2A;
@@ -1130,7 +1130,7 @@ typedef struct {
     u_char unk68;
     u_char unk69;
     u_char unk6A;
-    u_char unk6B;
+    u_char objectIndex;
     short unk6C;
     short unk6E;
     short unk70;
@@ -1169,14 +1169,14 @@ typedef struct gameConfig {
     byte selectedPlane;
     byte area00_fogControl;
     byte unk6;
-    u_char unk7;
+    u_char keepBgm;
     int totalTimePlayed;
     u_long playerAP;
     u_char playerHealth;
     u_char playerHealthDisplayed;
     char unk12;
     char unk13;
-    u_char unk14;
+    u_char areaTransition;
     u_char fadeScreenControl;
     byte fadeScreenAmount;
     u_char saveSlot;
@@ -2095,7 +2095,7 @@ typedef struct gameConfig {
     byte unk71d;
     byte unk71e;
     u_char goldenBowlState;
-    u_char unk720;
+    u_char bonusHealth;
     byte unk721;
     byte unk722;
     byte unk723;

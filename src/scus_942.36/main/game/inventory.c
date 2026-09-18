@@ -122,7 +122,7 @@ u_long increaseMaxHealth(void)
         if (GAME.playerHealthDisplayed < 8) {
             GAME.playerHealthDisplayed++;
         } else {
-            GAME.unk720++;
+            GAME.bonusHealth++;
         }
     } else {
         if (GAME.playerHealthDisplayed < 16) {
@@ -139,7 +139,7 @@ u8 applyGoldenBowl(void)
     u8 health;
 
     if ((u8) GAME.playerHealthDisplayed < 0x10U) {
-        health = GAME.playerHealthDisplayed + GAME.unk720;
+        health = GAME.playerHealthDisplayed + GAME.bonusHealth;
         GAME.playerHealthDisplayed = health;
         if ((u32) (health & 0xFF) >= 0x11U) {
             GAME.playerHealthDisplayed = 0x10;
