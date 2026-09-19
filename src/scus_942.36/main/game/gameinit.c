@@ -760,7 +760,14 @@ void pushDrawListMain(s32 arg0)
     D_1F800246++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C40);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C40);
+void func_80018C40(s32 arg0)
+{
+    if (D_1F80024A < 0x56) {
+        *--D_1F800220 = arg0;
+        D_1F80024A++;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListLayer4);
 void pushDrawListLayer4(s32 arg0)

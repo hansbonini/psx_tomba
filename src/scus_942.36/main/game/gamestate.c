@@ -1272,7 +1272,31 @@ s32 resolveAreaVariant(void)
     return var_a1;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CE80);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CE80);
+void func_8001CE80(s16 arg0)
+{
+    s32 variant;
+    s32 val;
+
+    variant = resolveAreaVariant() & 0xFF;
+
+    val = D_80077084[GAME.selectedArea + (u16)D_8009EBA0][GAME.selectedSection];
+    *(short*)0x1F8001DE = 0;
+    D_8009C610 = GAME.selectedArea;
+    D_8009C612 = GAME.selectedSection;
+    D_8009C614 = D_8009BCEA;
+    *(short*)0x1F8001DC = val;
+
+    func_80021C24(GAME.selectedArea + (u16)D_8009EBA0);
+
+    if (func_8001DE24((s16)arg0) != -1) {
+        D_8009BCCF = 2;
+    }
+
+    func_80021CC8(GAME.selectedArea + (u16)D_8009EBA0, GAME.selectedSection, (s16)(arg0 | variant));
+    func_8003C78C();
+    startSoundTask();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", setAreaSubState);
 void setAreaSubState(void)
@@ -1285,7 +1309,93 @@ void setAreaSubState(void)
     p->state2 = v;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CFCC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CFCC);
+void func_8001CFCC(void)
+{
+    switch (CURRENT_TASK->unk4E.value) {
+    case 0:
+        func_800222B8(9, 1);
+        goto advance;
+    case 1:
+        if (*(u8*)0x1F8001CE == 0) break;
+    advance:
+        CURRENT_TASK->unk4E.value++;
+        break;
+    case 2:
+        CURRENT_TASK->unk4E.value++;
+        asm("");
+        D_8009BCCF = 1;
+        D_8009BCE9 = 1;
+        break;
+    case 3:
+    {
+        gameConfig* gp;
+        s32 areaChanged;
+        s32 variant;
+        s32 val;
+
+        gp = &GAME;
+        areaChanged = gp->selectedArea != D_8009C0FC;
+        {
+            unkstruct_1F8001D4* task;
+            task = CURRENT_TASK;
+            task->unk4E.value = 4;
+
+            if (areaChanged) {
+                D_8009BCCF = 2;
+                func_80020FAC();
+                (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4))->unk4E.value = 5;
+                asm("");
+                if (D_8009C0FC == 0) {
+                    if ((u32)(D_8009C0FE - 1) < 2) {
+                        D_8009BCE9 = 1;
+                    }
+                } else if (D_8009C0FC == 1) {
+                    if (D_8009C0FE == 1) {
+                        D_8009BCE9 = 1;
+                    }
+                } else {
+                    D_8009BCE9 = 0;
+                }
+            } else {
+                if (gp->selectedArea == 2) {
+                    if (D_8009BCCA + D_8009C0FE == 1) {
+                        task->unk4E.value = 5;
+                    }
+                }
+            }
+        }
+
+        gp->selectedArea = gp->nextArea;
+        gp->selectedSection = gp->nextSection;
+        gp->selectedSpawnPoint = gp->nextSpawnPoint;
+
+        variant = resolveAreaVariant() & 0xFF;
+
+        val = D_80077084[GAME_A + (u16)D_8009EBA0][D_8009BCCA];
+        *(short*)0x1F8001DE = 0;
+        D_8009C610 = GAME_A;
+        D_8009C612 = D_8009BCCA;
+        D_8009C614 = D_8009BCEA;
+        *(short*)0x1F8001DC = val;
+
+        func_80021C24(GAME_A + (u16)D_8009EBA0);
+
+        if (func_8001DE24(areaChanged) != -1) {
+            D_8009BCCF = 2;
+        }
+
+        func_80021CC8(GAME_B + (u16)D_8009EBA0, D_8009BCCA, variant | areaChanged);
+        func_8003C78C();
+        startSoundTask();
+        D_8009EB4C = 0;
+        break;
+    }
+    case 5:
+        displayLoadingScreen();
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", transitionToGameOver);
 void transitionToGameOver(void)
@@ -1301,9 +1411,116 @@ void transitionToGameOver(void)
     temp_v1->state2 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D2F0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D2F0);
+void func_8001D2F0(void)
+{
+    unkstruct_1F8001D4* task = (unkstruct_1F8001D4*)D_1F8001D4;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D480);
+    switch ((u_short)task->state2) {
+    case 0:
+        task->unk5C = 0xF0;
+        task->unk4E.value = 0;
+        *(u8*)0x1F8001CE = 0;
+        task->state2++;
+        func_800222B8(0x5D, 1);
+        break;
+    case 1:
+        if (*(u8*)0x1F8001CE == 0) break;
+        task->state2++;
+        break;
+    case 2:
+    {
+        unkstruct_1F8001D4* t2;
+        s16 val;
+        func_800E7E68();
+        t2 = (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4));
+        val = --t2->unk5C;
+        if (val == -1) {
+            t2->state2++;
+        } else {
+            if (val >= 0x3D) {
+                if (*(u16*)0x1F8001FC & 0x6008) {
+                    t2->unk5C = 0x3C;
+                }
+            }
+            if ((s16)CURRENT_TASK->unk5C == 0x3C) {
+                func_80020C00(1);
+            }
+        }
+        func_8001F6D4();
+        break;
+    }
+    case 3:
+    {
+        unkstruct_1F8001D4* t;
+        func_80020FAC();
+        t = TASK_C;
+        *(char*)0x1F8001D0 = 0;
+        t->state0 = 1;
+        t->state1 = 0;
+        t->state2 = 0;
+        t->unk4E.value = 0;
+        setTask(&titleSequenceTask);
+        break;
+    }
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D480);
+void func_8001D480(void)
+{
+    unkstruct_1F8001D4* task = (unkstruct_1F8001D4*)D_1F8001D4;
+
+    switch ((u_short)task->state2) {
+    case 0:
+    {
+        unkstruct_1F8001D4* t0;
+        func_80028CE4();
+        func_80020C00(0);
+        t0 = (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4));
+        t0->unk5C = 0xF0;
+        t0->unk4E.value = 0;
+        t0->state2++;
+        func_80020FAC();
+        *(u8*)0x1F8001CE = 0;
+        func_800222B8(0x5D, 1);
+        break;
+    }
+    case 1:
+    {
+        unkstruct_1F8001D4* t1;
+        if (*(u8*)0x1F8001CE == 0) break;
+        SetDispMask(1);
+        t1 = CURRENT_TASK;
+        t1->state2++;
+        break;
+    }
+    case 2:
+    {
+        unkstruct_1F8001D4* t2;
+        s16 val;
+        func_800E7CDC();
+        t2 = TASK_C;
+        val = --t2->unk5C;
+        if (val == -1) {
+            t2->state2++;
+        } else if (val < 0xC8) {
+            if (*(u16*)0x1F8001FC & 0x6008) {
+                t2->unk5C = 0;
+            }
+        }
+        break;
+    }
+    case 3:
+        task->state0 = 1;
+        task->state1 = 0;
+        task->state2 = 0;
+        task->unk4E.value = 0;
+        *(char*)0x1F8001D0 = 0;
+        setTask(&titleSequenceTask);
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", openMenuScreen);
 void openMenuScreen(s16 arg0)
@@ -1338,6 +1555,76 @@ void openMenuScreenEx(s16 arg0, s16 arg1, s16 arg2)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D6C0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DE24);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DE24);
+s32 func_8001DE24(s32 arg)
+{
+    gameConfig* gp = &GAME;
+    u32 s2 = gp->selectedArea + (u16)D_8009EBA0;
+    u32 _t;
+    u8 s1 = (_t = D_8007716C[s2], *(u8*)(_t + D_8009BCCA));
+    s32 s4 = -1;
+    u8 s0;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DFD4);
+    if (s1 == 9) {
+        if (D_8009C62B & 2) {
+            s1 = 0xA;
+        }
+    }
+    if (s1 == 0xB) {
+        if (D_8009C62B & 4) {
+            s1 = 0xC;
+        }
+    }
+
+    s0 = s1;
+
+    if (*(u8*)0x1F8003D3 != s0 || arg != 0) {
+        loadAreaResources(s0);
+        s4 = s0;
+        func_80020FAC();
+        *(&SCRATCHPAD + 0x3D3) = s1;
+    }
+
+    if (s2 == 1 || s2 == 7) {
+        func_800205C4();
+        loadAreaResources(D_800771BC[gp->selectedSection]);
+    } else if (s2 == 0xA && gp->selectedSection != 3 && gp->selectedSection != 7) {
+        func_800205C4();
+        loadAreaResources(D_800771C4[gp->selectedSection]);
+    } else if (s2 == 0xC) {
+        func_800205C4();
+        loadAreaResources(D_800771D0[gp->selectedSection]);
+    }
+
+    return s4;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DFD4);
+void func_8001DFD4(void)
+{
+    u8* s0 = (u8*)&D_800A5970;
+    u8* s1 = s0 + 2;
+
+    *(s32*)&D_1F800198 = 0;
+
+    do {
+        if (*s0 != 0) {
+            switch (s1[0x1A] & 0x7F) {
+            case 2:
+                ((void (*)(u8*))D_800772BC[*s1])(s0);
+                break;
+            case 3:
+                ((void (*)(u8*))D_8007C6B0[*s1])(s0);
+                break;
+            case 4:
+                ((void (*)(u8*))D_8007D30C[*s1])(s0);
+                break;
+            case 5:
+                ((void (*)(u8*))D_8007E8A8[*s1])(s0);
+                break;
+            }
+        }
+        s1 += 0xD4;
+        s0 += 0xD4;
+    } while (++(*(s32*)&D_1F800198) < 0xC8);
+}

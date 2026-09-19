@@ -122,7 +122,28 @@ void mdecSliceCallback(void)
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001F5D0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001F5D0);
+void func_8001F5D0(u8* arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    register s32 arg4 asm("$3");
+
+    *(int*)arg0 = (int)&D_800B3188;
+    *(int*)(arg0 + 4) = (int)&D_800C3188;
+    *(int*)(arg0 + 0xC) = (int)&D_800D3188;
+    *(int*)(arg0 + 0x10) = (int)&D_800D5188;
+    *(int*)(arg0 + 8) = 0;
+    *(int*)(arg0 + 0x14) = 0;
+    *(s16*)(arg0 + 0x18) = arg1;
+    *(s16*)(arg0 + 0x1A) = arg2;
+    *(s16*)(arg0 + 0x20) = arg3;
+    *(int*)(arg0 + 0x34) = 0;
+    *(s16*)(arg0 + 0x30) = 0x10;
+    asm("");
+    asm("lw $3, 16($sp)" : "=r"(arg4));
+    asm("");
+    *(s16*)(arg0 + 0x32) = 0xE0;
+    *(s16*)(arg0 + 0x22) = arg4;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", startMovieStream);
 void startMovieStream(s32 arg0)
