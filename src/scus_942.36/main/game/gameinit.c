@@ -650,9 +650,9 @@ void freeObjectUnlayered(s32* arg0)
     *--D_1F800210 = (s32)arg0;
 }
 
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010000);
+const char BUILD_DATE[] asm("D_80010000") = "98/3/22";
 
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/gameinit", D_80010008);
+const char BUILD_TIME[] asm("D_80010008") = "21:11";
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", freeObjectByLayer);
 void freeObjectByLayer(s32* self)

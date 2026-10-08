@@ -50,11 +50,246 @@ void updateItemPickupAnim(unkstruct_800A6D50* arg0)
     arg0->unk8C = (int) (var_v0 & 0xFF);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F3D4);
+extern int D_80077274;
+extern int D_8013A44C;
+extern int D_80134018;
+extern u8 D_8009C263;
+extern u8 D_8009C616;
+extern int D_80131D84[];
+extern int D_8007728C;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F78C);
+typedef struct {
+    int x;
+    int y;
+    int z;
+} VEC3;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F9A4);
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;
+    s16 unk6;
+    int* unk8;
+} unk_8007D6E0;
+
+extern unk_8007D6E0 D_8007D6E0[];
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F3D4);
+void func_8003F3D4(u8* self)
+{
+    u8 state;
+
+    state = self[4];
+    switch (state) {
+    case 0:
+        self[4] = state + 1;
+        *(s16*)(self + 0x6C) = D_8007D6E0[self[3]].unk0;
+        *(s16*)(self + 0x6E) = D_8007D6E0[self[3]].unk1;
+        *(s16*)(self + 0x70) = D_8007D6E0[self[3]].unk2;
+        *(s16*)(self + 0x72) = D_8007D6E0[self[3]].unk3;
+        *(s16*)(self + 0x1E) = D_8007D6E0[self[3]].unk4;
+        *(int*)(self + 0x3C) = D_1F8002C8[D_8007D6E0[self[3]].unk6];
+        *(s16*)(self + 0xA6) = D_8007D6E0[self[3]].unk5;
+        *(int*)(self + 0x24) = D_8007D6E0[self[3]].unk8[*(s16*)(self + 0xA6)];
+        switch (self[3]) {
+        case 1:
+            func_8012FA34(0xE, 0);
+            self[0xD] = 1;
+            *(s16*)(self + 8) = GetClut(0xE0, 0x1F0);
+            *(s16*)(self + 0x1E) = GetTPage(0, 0, 0x1C0, 0);
+            break;
+        case 4:
+            if (self[0xD] != 0) {
+                *(s16*)(self + 8) = GetClut(0x120, 0x1ED);
+            }
+            break;
+        case 9:
+            self[0xD] = 1;
+            *(s16*)(self + 8) = GetClut(0xE0, 0x1F0);
+            break;
+        case 0xD:
+            *(int*)(self + 0x24) = D_80131D84[self[0xC]];
+            readAnimFrameCount(self);
+            break;
+        }
+        *(s16*)(self + 0x98) = 3;
+        *(int*)(self + 0x28) = (int)&D_8007728C;
+        self[0xA5] = 1;
+        self[0xA] = 2;
+        *(int*)(self + 0x8C) = 0;
+        readAnimFrameCount(self);
+        break;
+    case 1:
+        if (self[3] == 3) {
+            if (*(u16*)(self + 0x2E) & 1) {
+                *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) - 0x20) & 0xFF;
+            } else {
+                *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) + 0x20) & 0xFF;
+            }
+        } else {
+            if (*(u16*)(self + 0x2E) & 1) {
+                *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) + 0x14) & 0xFF;
+            } else {
+                *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) - 0x14) & 0xFF;
+            }
+        }
+        if (*(u16*)(self + 0x2E) & 2) {
+            *(int*)(self + 0x14) += 0x50000;
+        } else {
+            applyFrameVelocityX(self);
+        }
+        if ((s16)func_80044620(self, *(s16*)(*(int*)(self + 0x40) + 2), *(s16*)(self + 0x16)) != 0) {
+            self[0] = 2;
+            self[0xA5] = 0;
+            *(int*)(self + 0x8C) = (-*(s16*)0x1F80027E << 2) & 0xFF;
+            self[4] = 2;
+            self[5] = 0;
+            self[6] = 0;
+        }
+        if (func_80022E44(self) == 0) {
+            self[4] = 3;
+        }
+        break;
+    case 2:
+        updateItemPickupAnim((unkstruct_800A6D50*)self);
+        if (func_80022E44(self) == 0) {
+            self[4] = 3;
+        }
+        break;
+    case 3:
+        freeObjectLayer1(self);
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F78C);
+void func_8003F78C(u8* self)
+{
+    switch (self[5]) {
+    case 0:
+        if (*(u16*)(self + 0x2E) & 2) {
+            *(s16*)(self + 0x7E) = 0x200;
+        } else {
+            *(s16*)(self + 0x7E) = -0x200;
+        }
+        *(int*)(self + 0x28) = (int)&D_80077274;
+        self[5]++;
+        if (GAME.selectedArea == 0) {
+            *(int*)(self + 0x24) = D_8013A44C;
+        } else {
+            *(int*)(self + 0x24) = D_80134018;
+        }
+        readAnimFrameCount(self);
+    case 1:
+        if (*(u16*)(self + 0x2E) & 1) {
+            *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) - 0x14) & 0xFF;
+        } else {
+            *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) + 0x14) & 0xFF;
+        }
+        if (!(*(u16*)(self + 0x2E) & 2)) {
+            applyFrameVelocityX(self);
+        }
+        *(int*)(self + 0x14) += *(s16*)(self + 0x7E) << 8;
+        if ((*(s16*)(self + 0x7E) += (*(u16*)(self + 0x2E) & 2) ? 0x50 : 0x20) > 0) {
+            self[5]++;
+        }
+        break;
+    case 2:
+        if (*(u16*)(self + 0x2E) & 1) {
+            *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) - 0x14) & 0xFF;
+        } else {
+            *(int*)(self + 0x8C) = (*(int*)(self + 0x8C) + 0x14) & 0xFF;
+        }
+        if (!(*(u16*)(self + 0x2E) & 2)) {
+            applyFrameVelocityX(self);
+        }
+        *(int*)(self + 0x14) += *(s16*)(self + 0x7E) << 8;
+        *(s16*)(self + 0x7E) += 0x20;
+        if ((s16)func_80044620(self, *(s16*)(*(int*)(self + 0x40) + 2), (s16)(*(u16*)(self + 0x16) + 0x14)) != 0) {
+            self[4] = 2;
+            self[5] = 0;
+        }
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", func_8003F9A4);
+void func_8003F9A4(u8* self)
+{
+    u8* obj;
+    int sfx;
+
+    switch (self[4]) {
+    case 0:
+        self[0] = 2;
+        self[0xA] = 2;
+        self[0xA5] = 1;
+        self[0xD] = 0;
+        *(int*)(self + 0x8C) = 0;
+        *(s16*)(self + 0x6C) = 10;
+        *(s16*)(self + 0x6E) = 0x14;
+        *(s16*)(self + 0x70) = 0x10;
+        *(s16*)(self + 0x72) = 0x20;
+        self[4]++;
+        *(int*)(self + 0x3C) = *(int*)0x1F8002D4;
+        if (GAME.selectedArea == 0) {
+            *(s16*)(self + 0x1E) = 10;
+            *(int*)(self + 0x24) = D_8013A44C;
+        } else {
+            *(s16*)(self + 0x1E) = 8;
+            *(int*)(self + 0x24) = D_80134018;
+        }
+        readAnimFrameCount(self);
+        func_80022E44(self);
+        break;
+    case 1:
+        if (func_80022E44(self) != 0) {
+            func_8003F78C(self);
+        }
+        break;
+    case 2:
+        if (func_80022E44(self) != 0) {
+            if (GAME.selectedArea == 4) {
+                D_8009C263++;
+                func_80126760(self[3]);
+                if (D_8009BCCA < 4) {
+                    sfx = 0xF7;
+                } else {
+                    sfx = 0xF9;
+                }
+            } else {
+                sfx = 0x34;
+            }
+            playSFX(sfx);
+            func_800E98A4(self, *(s16*)(self + 0x12), *(s16*)(self + 0x16), *(s16*)(self + 0x1A));
+            if (GAME.selectedArea == 0) {
+                D_8009C616 |= 1 << self[3];
+                obj = allocObjectLayer2();
+                if (obj != NULL) {
+                    obj[0] = 1;
+                    obj[2] = 3;
+                    obj[3] = self[3];
+                    obj[0xC] = self[0xC];
+                    *(VEC3*)(obj + 0x10) = *(VEC3*)(self + 0x10);
+                    obj[0x6B] = self[0x6B];
+                    obj[0x1D] = self[0x1D];
+                    *(s16*)(obj + 0x7A) = 0;
+                    obj[4] = 0;
+                    obj[5] = 0;
+                    obj[6] = 0;
+                }
+            }
+            self[4] = 3;
+        }
+        break;
+    case 3:
+        freeObjectLayer1(self);
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", applyItemEffect);
 void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3, int arg4)

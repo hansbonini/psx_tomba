@@ -1,9 +1,85 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", fontDebugPrintf);
+extern u_char D_800A1FF8[];
+extern u_char D_800A2008[];
+typedef struct {
+    u_short u;
+    u_short v;
+    u_short w;
+    u_short h;
+    short clutX;
+    short clutY;
+} UiSpriteDef;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawLoadingSprites);
+extern UiSpriteDef D_8007B30C[];
+
+void drawUiSprite(short x, short y, short sprt_id);
+void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4);
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", fontDebugPrintf);
+void fontDebugPrintf(short x, short y, short color, char* fmt)
+{
+    SPRT_8 buf;
+    SPRT_8* sprt;
+    SPRT_8* dst;
+    DR_MODE* mode;
+
+    sprt = &buf;
+    while (*fmt != 0) {
+        if ((u_int)D_8009C8A8 >= (u_int)(D_800A1FF8 + D_1F8001F4 * 0x780)) {
+            break;
+        }
+        setlen(sprt, 3);
+        setcode(sprt, 0x75);
+        setRGB0(sprt, 128, 128, 128);
+        setXY0(sprt, x, y);
+        sprt->code = (u_char) (sprt->code & 0xFD);
+        setUV0(sprt, (*fmt & 0xF) << 3, (*fmt >> 4) << 3);
+        setClut(sprt, 0x170, color + 0x1F0);
+        dst = D_8009C8A8;
+        *dst = *sprt;
+        addPrim(D_1F8001E0, dst);
+        D_8009C8A8 += sizeof(SPRT_8);
+        fmt++;
+        x += 8;
+    }
+
+    mode = D_8009C8A8;
+    if ((u_int)mode < (u_int)(D_800A2008 + D_1F8001F4 * 0x780)) {
+        SetDrawMode(mode, 0, 0, 0x15, NULL);
+        addPrim(CURRENT_OT, mode);
+        D_8009C8A8 += sizeof(DR_MODE);
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawLoadingSprites);
+void drawLoadingSprites(int arg0, int arg1)
+{
+    int i;
+    int j;
+    DR_MODE* mode;
+
+    if (GetGraphType() != 1) {
+        GetGraphType();
+    }
+    drawNowLoadingSprite(192, 128, 0, 0, arg1);
+
+    for (i = 0; i < 6; i++) {
+        for (j = 0; j < 7; j++) {
+            if ((j + i) & 1) {
+                drawUiSprite(j * 48, i * 48, 1 - arg0);
+            } else {
+                drawUiSprite(j * 48, i * 48, arg0);
+            }
+        }
+    }
+
+    mode = D_8009C8A8;
+    SetDrawMode(mode, 0, 0, 0, NULL);
+    addPrim(CURRENT_OT, mode);
+    D_8009C8A8 += sizeof(DR_MODE);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawNowLoading);
 void drawNowLoading(short arg0)
@@ -45,4 +121,49 @@ void drawUiSprite(short x, short y, short sprt_id)
     D_8009C8A8 += sizeof(SPRT);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawNowLoadingSprite);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawNowLoadingSprite);
+void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4)
+{
+    int pad;
+    int w;
+    int h;
+    POLY_FT4* poly;
+
+    if (sprt_id == 0) {
+        int scale = D_8007D988[arg4];
+        pad = (u_int)scale >> 11;
+    } else {
+        int scale = D_8007D988[arg4];
+        pad = ((scale << 6) >> 16) + 4;
+    }
+
+    poly = D_8009C8A8;
+    setlen(poly, 9);
+    setcode(poly, 0x2C);
+    setRGB0(poly, 128, 128, 128);
+    poly->code = (u_char) (poly->code & 0xFD);
+    poly->x0 = x - pad;
+    poly->y0 = y - pad;
+    w = D_8007B30C[sprt_id].w;
+    poly->x1 = pad + (x + w);
+    poly->y1 = y - pad;
+    poly->x2 = x - pad;
+    h = D_8007B30C[sprt_id].h;
+    poly->y2 = pad + (y + h);
+    w = D_8007B30C[sprt_id].w;
+    poly->x3 = pad + (x + w);
+    h = D_8007B30C[sprt_id].h;
+    poly->y3 = pad + (y + h);
+    poly->u0 = D_8007B30C[sprt_id].u;
+    poly->v0 = D_8007B30C[sprt_id].v;
+    poly->u1 = poly->u0 + D_8007B30C[sprt_id].w - 1;
+    poly->v1 = poly->v0;
+    poly->u2 = poly->u0;
+    poly->v2 = poly->v0 + D_8007B30C[sprt_id].h - 1;
+    poly->u3 = poly->u1;
+    poly->v3 = poly->v2;
+    setClut(poly, D_8007B30C[sprt_id].clutX, D_8007B30C[sprt_id].clutY);
+    poly->tpage = tpage;
+    addPrim(CURRENT_OT, poly);
+    D_8009C8A8 += sizeof(POLY_FT4);
+}

@@ -87,7 +87,394 @@ void func_800340FC(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800341AC);
+extern u8 D_8009C1C0;
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800341AC);
+void func_800341AC(u8* self)
+{
+    u8 state;
+
+    state = self[4];
+    switch (state) {
+    case 0:
+        self[4] = state + 1;
+        *(int*)(self + 0xA0) = 0;
+        switch (self[0xC]) {
+        case 0:
+            *(s16*)(self + 0x6C) = 0x50;
+            *(s16*)(self + 0x6E) = 0xA0;
+            *(s16*)(self + 0x70) = 0x40;
+            *(s16*)(self + 0x72) = 0x5C;
+            break;
+        case 1:
+            *(s16*)(self + 0x6C) = 0x50;
+            *(s16*)(self + 0x6E) = 0xA0;
+            *(s16*)(self + 0x70) = 0x18;
+            *(s16*)(self + 0x72) = 0x24;
+            break;
+        case 2:
+            *(s16*)(self + 0x6C) = 0x50;
+            *(s16*)(self + 0x6E) = 0xA0;
+            *(s16*)(self + 0x70) = 0x50;
+            *(s16*)(self + 0x72) = 0xA0;
+            break;
+        case 3:
+            *(s16*)(self + 0x6C) = 0xA;
+            *(s16*)(self + 0x6E) = 0x14;
+            *(s16*)(self + 0x70) = 8;
+            *(s16*)(self + 0x72) = 0x10;
+            break;
+        case 4:
+            if (self[3] == 0) {
+                *(s16*)(self + 0x6C) = 0x24;
+                *(s16*)(self + 0x6E) = 0x36;
+                *(s16*)(self + 0x70) = 8;
+                *(s16*)(self + 0x72) = 0x2E;
+            } else {
+                *(s16*)(self + 0x6C) = 0x10;
+                *(s16*)(self + 0x6E) = 0x28;
+                *(s16*)(self + 0x70) = 6;
+                *(s16*)(self + 0x72) = 0x26;
+            }
+            break;
+        }
+        break;
+    case 1:
+        switch (self[0xC]) {
+        case 0:
+            self[1] = 1;
+            pushDrawListLayer4(self);
+            break;
+        case 2:
+            if (D_8009C1C0 != 0) {
+                self[4] = 3;
+                break;
+            }
+        case 1:
+        case 3:
+        case 4:
+            func_80022E44(self);
+            break;
+        }
+        break;
+    case 2:
+        break;
+    case 3:
+        freeObjectLayer4(self);
+        break;
+    }
+}
+
+extern const u32 D_800108AC[];
+extern const u32 D_800108C8[];
+extern const u32 D_80010974[];
+extern const u32 D_800109E8[];
+extern const u32 D_80010A6C[];
+extern const u32 D_80010B10[];
+extern const u32 D_80010BFC[];
+extern const u32 D_80010D48[];
+extern const u32 D_80010D6C[];
+extern const u32 D_80010E48[];
+extern const u32 D_80010E7C[];
+extern const u32 D_80010ED8[];
+extern const u32 D_80010F0C[];
+extern const u32 D_80010F58[];
+extern const u32 D_80010FBC[];
+extern const u32 D_80010FE0[];
+extern const u32 D_80011000[];
+extern const u32 D_80011020[];
+extern const u32 D_80011040[];
+extern const u32 D_80011048[];
+extern const u32 D_80011050[];
+extern const u32 D_80011058[];
+extern const u32 D_80011060[];
+extern const u32 D_80011068[];
+extern const u32 D_80011070[];
+extern const u32 D_80011090[];
+extern const u32 D_800110B0[];
+extern const u32 D_800110D0[];
+extern const u32 D_800110D8[];
+extern const u32 D_800110E0[];
+extern const u32 D_800110E8[];
+extern const u32 D_800110F0[];
+extern const u32 D_800110F8[];
+extern const u32 D_800111A8[];
+extern const u32 D_800111E4[];
+extern const u32 D_800111F8[];
+extern const u32 D_80011244[];
+extern const u32 D_800112A8[];
+extern const u32 D_800112DC[];
+extern const u32 D_80011340[];
+extern const u32 D_80011384[];
+extern const u32 D_800113B8[];
+extern const u32 D_800113FC[];
+extern const u32 D_80011440[];
+extern const u32 D_8001153C[];
+extern const u32 D_80011678[];
+extern const u32 D_800116DC[];
+extern const u32 D_80011760[];
+extern const u32 D_80011794[];
+extern const u32 D_800117C8[];
+extern const u32 D_80011804[];
+extern const u32 D_800118F0[];
+extern const u32 D_80011934[];
+extern const u32 D_80011978[];
+extern const u32 D_800119BC[];
+extern const u32 D_80011A00[];
+extern const u32 D_80011A44[];
+extern const u32 D_80011A88[];
+extern const u32 D_80011ACC[];
+extern const u32 D_80011B10[];
+extern const u32 D_80011B54[];
+extern const u32 D_80011B98[];
+extern const u32 D_80011BDC[];
+extern const u32 D_80011C20[];
+extern const u32 D_80011C64[];
+extern const u32 D_80011CA8[];
+extern const u32 D_80011CEC[];
+extern const u32 D_80011CFC[];
+extern const u32 D_80011D0C[];
+extern const u32 D_80011D1C[];
+extern const u32 D_80011D3C[];
+extern const u32 D_80011D5C[];
+extern const u32 D_80011D7C[];
+extern const u32 D_80011D9C[];
+extern const u32 D_80011DA4[];
+extern const u32 D_80011DAC[];
+extern const u32 D_80011DB4[];
+extern const u32 D_80011DCC[];
+extern const u32 D_80011DE4[];
+extern const u32 D_80011DFC[];
+extern const u32 D_80011E1C[];
+extern const u32 D_80011E3C[];
+extern const u32 D_80011E5C[];
+extern const u32 D_80011E6C[];
+extern const u32 D_80011E7C[];
+extern const u32 D_80011E8C[];
+extern const u32 D_80011EB4[];
+extern const u32 D_80011EDC[];
+extern const u8 D_80011F0C[];
+extern const u32 D_80011F10[];
+extern const u8 D_80012014[];
+extern const u32 D_80012194[];
+extern const u32 D_800121A8[];
+extern const u32 D_800121C8[];
+extern const u32 D_80012208[];
+extern const u32 D_8001224C[];
+extern const u32 D_80012260[];
+extern const u32 D_800122B0[];
+extern const u32 D_80012310[];
+extern const u32 D_80012314[];
+extern const u32 D_80012318[];
+extern const u32 D_8001232C[];
+extern const u32 D_80012330[];
+extern const u32 D_80012334[];
+extern const u32 D_80012354[];
+extern const u32 D_80012364[];
+extern const u32 D_80012368_ro[] asm("D_80012368");
+extern const u32 D_800123C8[];
+extern const u32 D_800123CC[];
+extern const u32 D_800123E4[];
+extern const u32 D_800123F0[];
+extern const u32 D_800123F8[];
+extern const u32 D_80012400[];
+extern const u32 D_80012408[];
+extern const u32 D_80012410[];
+extern const u32 D_80012418[];
+extern const u32 D_80012420[];
+extern const u32 D_80012428[];
+extern const u32 D_80012430[];
+extern const u32 D_80012438[];
+extern const u32 D_80012440[];
+extern const u32 D_80012448[];
+extern const u32 D_80012450[];
+extern const u32 D_80012490[];
+extern const u32 D_800124C0[];
+extern const u32 D_800124C8[];
+extern const u32 D_800124D0[];
+extern const u32 D_800124D8[];
+extern const u32 D_800124E0[];
+extern const u32 D_800124E8[];
+extern const u32 D_800124F0[];
+extern const u32 D_800124F8[];
+extern const u32 D_80012500[];
+extern const u32 D_80012508[];
+extern const u32 D_80012510[];
+extern const u32 D_80012518[];
+extern const u32 D_80012520[];
+extern const u32 D_80012528[];
+extern const u32 D_80012530[];
+extern const u32 D_80012538[];
+extern const u32 D_80012540[];
+extern const u32 D_80012548[];
+extern const u32 D_80012550[];
+extern const u32 D_80012558[];
+extern const u32 D_80012560[];
+extern const u32 D_80012568[];
+extern const u32 D_80012570[];
+extern const u32 D_80012578[];
+extern const u32 D_80012580[];
+extern const u32 D_80012588[];
+extern const u32 D_80012590[];
+extern const u32 D_80012598[];
+extern const u32 D_800125A0[];
+extern const u32 D_800125A8[];
+extern const u32 D_800125B0[];
+extern const u32 D_800125B8[];
+extern const u32 D_800125C0[];
+extern const u32 D_800125C8[];
+extern const u32 D_800125D0[];
+extern const u32 D_800125D8[];
+extern const u32 D_800125E0[];
+extern const u32 D_800125E8[];
+extern const u32 D_800125F0[];
+extern const u32 D_800125F8[];
+extern const u32 D_80012600[];
+extern const u32 D_80012608[];
+extern const u32 D_80012610[];
+extern const u32 D_80012650[];
+extern const u32 D_80012658[];
+extern const u32 D_80012660[];
+extern const u32 D_80012668[];
+extern const u32 D_80012670[];
+extern const u32 D_80012678[];
+extern const u32 D_80012680[];
+extern const u32 D_80012688[];
+extern const u32 D_80012698[];
+extern const u32 D_800126A0[];
+extern const u32 D_800126A8[];
+extern const u32 D_800126B0[];
+extern const u32 D_800126B8[];
+extern const u32 D_800126C0[];
+extern const u32 D_800126C8[];
+extern const u32 D_800126D0[];
+extern const u32 D_800126D8[];
+extern const u32 D_800126E0[];
+extern const u32 D_800126E8[];
+extern const u32 D_800126F0[];
+extern const u32 D_800126F8[];
+extern const u32 D_80012700[];
+extern const u32 D_80012708[];
+extern const u32 D_80012710[];
+extern const u32 D_80012718[];
+extern const u32 D_80012720[];
+extern const u32 D_80012728[];
+extern const u32 D_80012730[];
+extern const u32 D_80012780[];
+extern const u32 D_800127D0[];
+extern const u32 D_800127D8[];
+extern const u32 D_800127E0[];
+extern const u32 D_800127E8[];
+extern const u32 D_800127F0[];
+extern const u32 D_800127F8[];
+extern const u32 D_80012800[];
+extern const u32 D_80012808[];
+extern const u32 D_80012810[];
+extern const u32 D_80012818[];
+extern const u32 D_80012820[];
+extern const u32 D_80012828[];
+extern const u32 D_80012830[];
+extern const u32 D_80012854[];
+extern const u32 D_8001287C[];
+extern const u32 D_80012894[];
+extern const u32 D_800128AC[];
+extern const u32 D_800128B4[];
+extern const u32 D_800128BC[];
+extern const u32 D_800128C4[];
+extern const u32 D_800128CC[];
+extern const u32 D_800128D4[];
+extern const u32 D_800128DC[];
+extern const u32 D_800128E4[];
+extern const u32 D_800128EC[];
+extern const u32 D_800128F4[];
+extern const u32 D_800128FC[];
+extern const u32 D_80012904[];
+extern const u32 D_8001290C[];
+extern const u32 D_80012914[];
+extern const u32 D_80012954[];
+extern const u32 D_8001296C[];
+extern const u32 D_8001298C[];
+extern const u32 D_80012994[];
+extern const u32 D_800129B4[];
+extern const u32 D_800129BC[];
+extern const u32 D_800129DC[];
+extern const u32 D_800129E4[];
+extern const u32 D_800129EC[];
+extern const u32 D_800129F4[];
+extern const u32 D_800129FC[];
+extern const u32 D_80012A04[];
+extern const u32 D_80012A0C[];
+extern const u32 D_80012A14[];
+extern const u32 D_80012A1C[];
+extern const u32 D_80012A24[];
+extern const u32 D_80012A2C[];
+extern const u32 D_80012A34[];
+extern const u32 D_80012A98[];
+extern const u32 D_80012AA0[];
+extern const u32 D_80012AA8[];
+extern const u32 D_80012B68[];
+extern const u32 D_80012B9C[];
+extern const u32 D_80012BB8[];
+extern const u32 D_80012BFC[];
+extern const u32 D_80012C18[];
+extern const u32 D_80012C34[];
+extern const u32 D_80012C5C[];
+extern const u32 D_80012C80[];
+extern const u32 D_80012C98[];
+extern const u32 D_80012CBC[];
+extern const u32 D_80012CC4[];
+extern const u32 D_80012CCC[];
+extern const u32 D_80012CD4[];
+extern const u32 D_80012CE8[];
+extern const u32 D_80012D0C[];
+extern const u32 D_80012D20[];
+extern const u32 D_80012D28[];
+extern const u32 D_80012D78[];
+extern const u32 D_80012D80[];
+extern const u32 D_80012D88[];
+extern const u32 D_80012DAC[];
+extern const u32 D_80012DE0[];
+
+const u32 D_80010814[] = {
+    (u32)D_80011B98,
+    (u32)D_80011BDC,
+    (u32)D_80011C20,
+    (u32)D_80011C64,
+    (u32)D_80011CA8,
+    (u32)D_800118F0,
+    (u32)D_80011934,
+    (u32)D_80011978,
+    (u32)D_800119BC,
+    (u32)D_80011A00,
+    (u32)D_80011A44,
+    (u32)D_80011A88,
+    (u32)D_80011ACC,
+    (u32)D_80011B10,
+    (u32)D_80011B54,
+    (u32)D_80011CEC,
+    (u32)D_80011CFC,
+    (u32)D_80011D0C,
+    (u32)D_80011D1C,
+    (u32)D_80011D3C,
+    (u32)D_80011D5C,
+    (u32)D_80011D7C,
+    (u32)D_80011D9C,
+    (u32)D_80011DA4,
+    (u32)D_80011DAC,
+    (u32)D_80011DB4,
+    (u32)D_80011DCC,
+    (u32)D_80011DE4,
+    (u32)D_80011DFC,
+    (u32)D_80011E1C,
+    (u32)D_80011E3C,
+    (u32)D_80011E5C,
+    (u32)D_80011E6C,
+    (u32)D_80011E7C,
+    (u32)D_80011E8C,
+    (u32)D_80011EB4,
+    (u32)D_80011EDC,
+    0x00000000,
+};
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateObjectsLayer7);
 void updateObjectsLayer7(void)
@@ -104,542 +491,2651 @@ void updateObjectsLayer7(void)
     } while (D_1F800198 < 0xA);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80034420);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80034524);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800346A8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800108AC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800108C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010974);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800109E8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010A6C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010B10);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010BFC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010D48);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010D6C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010E48);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010E7C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010ED8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010F0C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010F58);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010FBC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80010FE0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011000);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011020);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011040);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011048);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011050);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011058);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011060);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011068);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011070);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011090);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110B0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110D0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110D8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110E0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110E8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800110F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800111A8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800111E4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800111F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011244);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800112A8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800112DC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011340);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011384);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800113B8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800113FC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011440);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001153C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011678);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800116DC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011760);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011794);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800117C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80011804);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L800118F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011934);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011978);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L800119BC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011A00);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011A44);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011A88);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011ACC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011B10);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011B54);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011B98);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011BDC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011C20);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011C64);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011CA8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011CEC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011CFC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011D0C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011D1C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011D3C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011D5C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011D7C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011D9C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011DA4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011DAC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011DB4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011DCC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011DE4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011DFC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011E1C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011E3C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011E5C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011E6C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011E7C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011E8C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011EB4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", .L80011EDC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012014);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012194);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800121A8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800121C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012208);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001224C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012260);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800122B0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012310);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012314);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012318);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001232C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012330);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012334);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012354);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012364);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012368);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800123C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800123CC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800123E4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800123F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800123F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012400);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012408);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012410);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012418);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012420);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012428);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012430);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012438);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012440);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012448);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012450);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012490);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124C0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124D0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124D8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124E0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124E8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800124F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012500);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012508);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012510);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012518);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012520);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012528);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012530);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012538);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012540);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012548);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012550);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012558);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012560);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012568);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012570);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012578);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012580);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012588);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012590);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012598);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125A0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125A8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125B0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125B8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125C0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125D0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125D8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125E0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125E8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800125F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012600);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012608);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012610);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012650);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012658);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012660);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012668);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012670);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012678);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012680);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012688);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012698);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126A0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126A8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126B0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126B8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126C0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126C8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126D0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126D8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126E0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126E8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800126F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012700);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012708);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012710);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012718);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012720);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012728);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012730);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012780);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800127D0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800127D8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800127E0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800127E8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800127F0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800127F8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012800);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012808);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012810);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012818);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012820);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012828);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012830);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012854);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001287C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012894);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128AC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128B4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128BC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128C4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128CC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128D4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128DC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128E4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128EC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128F4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800128FC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012904);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001290C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012914);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012954);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001296C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_8001298C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012994);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129B4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129BC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129DC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129E4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129EC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129F4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_800129FC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A04);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A0C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A14);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A1C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A24);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A2C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A34);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012A98);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012AA0);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012AA8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012B68);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012B9C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012BB8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012BFC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012C18);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012C34);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012C5C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012C80);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012C98);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012CBC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012CC4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012CCC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012CD4);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012CE8);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012D0C);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012D20);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012D28);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012D78);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012D80);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012D88);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012DAC);
-
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/game/effect", D_80012DE0);
+extern u8 D_8009C3F0;
+extern u8 D_8009BCA6;
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80034420);
+void func_80034420(u8* self)
+{
+    u8 state;
+
+    state = self[4];
+    switch (state) {
+    case 0:
+        self[0xD] = 1;
+        self[0xF] = 0;
+        *(int*)(self + 0x30) = *(s16*)(self + 0x12);
+        *(int*)(self + 0x34) = *(s16*)(self + 0x16);
+        self[4]++;
+        break;
+    case 1:
+        if (self[3] == 0x1B && D_8009C3F0 == 0xFF) {
+            break;
+        }
+        self[1] = 1;
+        *(s16*)(self + 0x12) = *(int*)(self + 0x30) - *(u16*)0x1F800176;
+        *(s16*)(self + 0x16) = *(int*)(self + 0x34) - *(u16*)0x1F800186;
+        pushDrawListLayer7(self);
+        break;
+    case 2:
+        self[4] = state + 1;
+        break;
+    case 3:
+        freeObjectLayer7(self);
+        break;
+    }
+}
+
+void func_800346A8(u8* self);
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80034524);
+void func_80034524(void)
+{
+    u8* p;
+
+    p = D_800A5398;
+    p[2] = 0;
+    switch (GAME.selectedArea) {
+    case 2:
+        switch (D_8009BCCA) {
+        case 0:
+            p[2] = 1;
+            break;
+        case 3:
+            p[2] = 3;
+            break;
+        }
+        break;
+    case 5:
+    case 8:
+        switch (D_8009BCCA) {
+        case 0:
+        case 2:
+            p[2] = 2;
+            break;
+        }
+        break;
+    case 0x13:
+        switch (D_8009BCCA) {
+        case 0:
+            p[2] = 1;
+            break;
+        case 2:
+            p[2] = 2;
+            break;
+        }
+        break;
+    }
+
+    if (GAME.selectedArea == 6 && D_8009BCCA == 0) {
+        return;
+    }
+    if (GAME.selectedArea == 9 && D_8009BCCA >= 6) {
+        return;
+    }
+    if (p[0] != 0) {
+        func_800346A8(p);
+    }
+    if (D_8009BCCA == 7 && D_8009BCA6 != 0) {
+        return;
+    }
+    updateObjectsLayer1();
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800346A8);
+void func_800346A8(u8* self)
+{
+    switch (self[2]) {
+    case 0:
+        func_80101574(self);
+        break;
+    case 1:
+        func_800E92C0(self);
+        break;
+    case 2:
+        func_800EA898(self);
+        break;
+    case 3:
+        func_800E9ED0(self);
+        break;
+    }
+}
+
+const u32 D_800108AC[] = {
+    0x01680000, 0x0000010D, 0x00060000, 0x0000010E,
+    0x00050000, 0x0000010F, 0x00180000,
+};
+
+const u32 D_800108C8[] = {
+    0x00000110,
+    0x00300000,
+    0x00000111,
+    0x00060000,
+    0x00000112,
+    0x00060000,
+    0x00000113,
+    0x00400000,
+    0x00000112,
+    0x00060000,
+    0x00000111,
+    0x40060000,
+    (u32)D_800108C8,
+    0x00000001,
+    0x803C0000,
+    0x00000002,
+    0x803C0000,
+    0x00000003,
+    0x803C0000,
+    0x00000004,
+    0x803C0000,
+    0x00000005,
+    0x803C0000,
+    0x00000006,
+    0x803C0000,
+    0x00000007,
+    0x803C0000,
+    0x00000002,
+    0x00010000,
+    0x00000003,
+    0x00010000,
+    0x00000004,
+    0x00010000,
+    0x00000005,
+    0x00010000,
+    0x00000006,
+    0x00010000,
+    0x00000007,
+    0x00010000,
+    0x00000001,
+    0x80010000,
+    0x00000008,
+    0x803C0000,
+};
+
+const u32 D_80010974[] = {
+    0x00000009,
+    0x00010000,
+    0x0000000A,
+    0x00020000,
+    0x0000000C,
+    0x00020000,
+    0x0000000D,
+    0x00020000,
+    0x0000000E,
+    0x00020000,
+    0x0000000F,
+    0x00020000,
+    0x00000010,
+    0x00010000,
+    0x00000011,
+    0x00010000,
+    0x00000012,
+    0x00020000,
+    0x00000013,
+    0x00020000,
+    0x00000014,
+    0x00020000,
+    0x00000015,
+    0x00020000,
+    0x00000016,
+    0x00020000,
+    0x00000018,
+    0x40010000,
+    (u32)D_80010974,
+};
+
+const u32 D_800109E8[] = {
+    0x00000009,
+    0x00010000,
+    0x0000000A,
+    0x00020000,
+    0x0000000B,
+    0x00020000,
+    0x0000000C,
+    0x00020000,
+    0x0000000D,
+    0x00020000,
+    0x0000000E,
+    0x00020000,
+    0x0000000F,
+    0x00020000,
+    0x00000010,
+    0x00010000,
+    0x00000011,
+    0x00010000,
+    0x00000012,
+    0x00010000,
+    0x00000013,
+    0x00020000,
+    0x00000014,
+    0x00020000,
+    0x00000015,
+    0x00020000,
+    0x00000016,
+    0x00020000,
+    0x00000017,
+    0x00010000,
+    0x00000018,
+    0x40010000,
+    (u32)D_800109E8,
+};
+
+const u32 D_80010A6C[] = {
+    0x00000019,
+    0x00010000,
+    0x0000001A,
+    0x00020000,
+    0x0000001B,
+    0x00020000,
+    0x0000001C,
+    0x00020000,
+    0x0000001D,
+    0x00020000,
+    0x0000001E,
+    0x00020000,
+    0x0000001F,
+    0x00010000,
+    0x00000020,
+    0x00010000,
+    0x00000021,
+    0x00010000,
+    0x00000022,
+    0x00020000,
+    0x00000023,
+    0x00020000,
+    0x00000024,
+    0x00020000,
+    0x00000025,
+    0x00020000,
+    0x00000026,
+    0x00020000,
+    0x00000027,
+    0x00010000,
+    0x00000028,
+    0x40010000,
+    (u32)D_80010A6C,
+    0x00000029,
+    0x00030000,
+    0x0000002A,
+    0x80500000,
+    0x00000029,
+    0x00030000,
+    0x0000002A,
+    0x80400000,
+};
+
+const u32 D_80010B10[] = {
+    0x0000002B,
+    0x00080000,
+    0x0000002C,
+    0x00060000,
+    0x0000002D,
+    0x00040000,
+    0x0000002C,
+    0x00020000,
+    0x0000002E,
+    0x00040001,
+    0x0000002C,
+    0x00020000,
+    0x0000002D,
+    0x00040000,
+    0x0000002C,
+    0x00020000,
+    0x0000002E,
+    0x00040001,
+    0x0000002C,
+    0x40020000,
+    (u32)D_80010B10,
+    0x0007002F,
+    0x803C0000,
+    0x00000030,
+    0x00060000,
+    0x00000031,
+    0x00050000,
+    0x00000032,
+    0x00040000,
+    0x00000033,
+    0x80030000,
+    0x00000030,
+    0x00080000,
+    0x00000031,
+    0x80040000,
+    0x00000032,
+    0x00060000,
+    0x00000033,
+    0x80140000,
+    0x00000034,
+    0x803C0003,
+    0x00010035,
+    0x000A0000,
+    0x00010036,
+    0x00FF0000,
+    0x00010037,
+    0x00060000,
+    0x00010038,
+    0x00180000,
+    0x0001003A,
+    0x00100000,
+    0x00010039,
+    0x00100000,
+    0x0001003A,
+    0x00080000,
+    0x0001003B,
+    0x00040000,
+    0x0001003C,
+    0x80040000,
+};
+
+const u32 D_80010BFC[] = {
+    0x0000003D,
+    0x00040000,
+    0x0000003E,
+    0x00040000,
+    0x0000003F,
+    0x00040001,
+    0x00000040,
+    0x00040001,
+    0x0000003F,
+    0x00040001,
+    0x0000003E,
+    0x40040000,
+    (u32)D_80010BFC,
+    0x00000041,
+    0x00040000,
+    0x00000042,
+    0x00040000,
+    0x00000043,
+    0x80040000,
+    0x00010044,
+    0x00140000,
+    0x00060045,
+    0x00080001,
+    0x00060046,
+    0x00FF0002,
+    0x00060047,
+    0x803C0003,
+    0x00010044,
+    0x803C0000,
+    0x00050048,
+    0x00050000,
+    0x00050049,
+    0x80050000,
+    0x0000004A,
+    0x000200C8,
+    0x0000004B,
+    0x000200C6,
+    0x0000004C,
+    0x000200C0,
+    0x0000004D,
+    0x000200BE,
+    0x0000004E,
+    0x000100A8,
+    0x0000004F,
+    0x00010090,
+    0x00000050,
+    0x00010088,
+    0x00000051,
+    0x00010080,
+    0x00000052,
+    0x00010060,
+    0x00000053,
+    0x00010020,
+    0x00000054,
+    0x80010000,
+    0x00070061,
+    0x80020000,
+    0x0000004A,
+    0x000200C8,
+    0x0000004B,
+    0x000200C6,
+    0x0000004C,
+    0x000200C0,
+    0x0000004D,
+    0x000200BE,
+    0x0000004E,
+    0x000100A8,
+    0x0000004F,
+    0x00010090,
+    0x00000050,
+    0x00010088,
+    0x00000051,
+    0x00010080,
+    0x00000052,
+    0x00010060,
+    0x00000053,
+    0x00010020,
+    0x00000054,
+    0x00010020,
+    0x00000055,
+    0x800100D0,
+    0x00050056,
+    0x803C0000,
+};
+
+const u32 D_80010D48[] = {
+    0x00000057,
+    0x00060000,
+    0x00000058,
+    0x00060000,
+    0x00000059,
+    0x00060000,
+    0x00000058,
+    0x40060000,
+    (u32)D_80010D48,
+};
+
+const u32 D_80010D6C[] = {
+    0x0000005C,
+    0x00050000,
+    0x0000005B,
+    0x00050000,
+    0x0000005A,
+    0x00050000,
+    0x0000005B,
+    0x00050000,
+    0x0000005C,
+    0x00050000,
+    0x0000005D,
+    0x00050000,
+    0x0000005E,
+    0x00050000,
+    0x0000005D,
+    0x40050000,
+    (u32)D_80010D6C,
+    0x0000005F,
+    0x0004FFF2,
+    0x00000060,
+    0x0004FFD8,
+    0x00070061,
+    0x00030000,
+    0x00000062,
+    0x00030000,
+    0x00000063,
+    0x80030000,
+    0x0000005F,
+    0x00040000,
+    0x00000060,
+    0x00040000,
+    0x00000061,
+    0x80040000,
+    0x00000062,
+    0x00040000,
+    0x00000063,
+    0x80040000,
+    0x00000065,
+    0x00050000,
+    0x00000066,
+    0x00040000,
+    0x00000067,
+    0x00040000,
+    0x00000068,
+    0x00020000,
+    0x00000069,
+    0x80080000,
+    0x0000006A,
+    0x00020000,
+    0x0000006B,
+    0x00020000,
+    0x0000006C,
+    0x80040000,
+    0x0005006D,
+    0x80010000,
+};
+
+const u32 D_80010E48[] = {
+    0x0005006E,
+    0x000A0000,
+    0x0005006F,
+    0x00040000,
+    0x00050070,
+    0x00030000,
+    0x00050071,
+    0x000A0000,
+    0x00050070,
+    0x00040000,
+    0x0005006F,
+    0x40030000,
+    (u32)D_80010E48,
+};
+
+const u32 D_80010E7C[] = {
+    0x0005006E,
+    0x00040000,
+    0x0005006F,
+    0x00040000,
+    0x00050070,
+    0x00020000,
+    0x00050071,
+    0x00040000,
+    0x00050070,
+    0x00020000,
+    0x0005006F,
+    0x40020000,
+    (u32)D_80010E7C,
+    0x00050072,
+    0x00080000,
+    0x00050073,
+    0x80080000,
+    0x00000074,
+    0x803C0000,
+    0x00050075,
+    0x01680000,
+    0x00050149,
+    0x00060000,
+};
+
+const u32 D_80010ED8[] = {
+    0x0005014A,
+    0x000C0000,
+    0x0005014B,
+    0x000C0000,
+    0x0005014A,
+    0x00F00000,
+    0x0005014B,
+    0x000C0000,
+    0x0005014A,
+    0x003C0000,
+    0x0005014B,
+    0x400C0000,
+    (u32)D_80010ED8,
+};
+
+const u32 D_80010F0C[] = {
+    0x00050075,
+    0x00020000,
+    0x00050076,
+    0x00020000,
+    0x00050077,
+    0x00020000,
+    0x00050078,
+    0x00020001,
+    0x00050079,
+    0x00020001,
+    0x0005007A,
+    0x40020001,
+    (u32)D_80010F0C,
+    0x0000007B,
+    0x803C0000,
+    0x0000007C,
+    0x803C0000,
+    0x0000007D,
+    0x803C0000,
+};
+
+const u32 D_80010F58[] = {
+    0x0000007E,
+    0x00070000,
+    0x0000007F,
+    0x00070000,
+    0x00000080,
+    0x00070000,
+    0x00000081,
+    0x00070000,
+    0x00000080,
+    0x00070000,
+    0x0000007F,
+    0x40070000,
+    (u32)D_80010F58,
+    0x00000082,
+    0x803C0000,
+    0x00000083,
+    0x00080000,
+    0x00000084,
+    0x00FF0000,
+    0x00000085,
+    0x00030000,
+    0x00000086,
+    0x00030000,
+    0x00000087,
+    0x80040000,
+};
+
+const u32 D_80010FBC[] = {
+    0x00000088,
+    0x00060000,
+    0x00000089,
+    0x00040000,
+    0x0000008A,
+    0x00060000,
+    0x00000089,
+    0x40040000,
+    (u32)D_80010FBC,
+};
+
+const u32 D_80010FE0[] = {
+    0x0000008B, 0x00060000, 0x0000008C, 0x00060000,
+    0x0000008D, 0x00060000, 0x0000008C, 0x80060000,
+};
+
+const u32 D_80011000[] = {
+    0x0000008E, 0x00060000, 0x0000008F, 0x00060000,
+    0x00000090, 0x00060000, 0x0000008F, 0x80060000,
+};
+
+const u32 D_80011020[] = {
+    0x00000091, 0x00060000, 0x00000092, 0x00060000,
+    0x00000093, 0x00060000, 0x00000092, 0x80060000,
+};
+
+const u32 D_80011040[] = {
+    0x00000094, 0x803C0000,
+};
+
+const u32 D_80011048[] = {
+    0x00000095, 0x803C0000,
+};
+
+const u32 D_80011050[] = {
+    0x00000096, 0x803C0000,
+};
+
+const u32 D_80011058[] = {
+    0x00000097, 0x803C0000,
+};
+
+const u32 D_80011060[] = {
+    0x00000098, 0x803C0000,
+};
+
+const u32 D_80011068[] = {
+    0x00000099, 0x803C0000,
+};
+
+const u32 D_80011070[] = {
+    0x0000009A, 0x00060000, 0x0000009B, 0x00060000,
+    0x0000009C, 0x00060000, 0x0000009B, 0x80060000,
+};
+
+const u32 D_80011090[] = {
+    0x0000009D, 0x00060000, 0x0000009E, 0x00060000,
+    0x0000009F, 0x00060000, 0x0000009E, 0x80060000,
+};
+
+const u32 D_800110B0[] = {
+    0x000000A0, 0x00060000, 0x000000A1, 0x00060000,
+    0x000000A2, 0x00060000, 0x000000A1, 0x80060000,
+};
+
+const u32 D_800110D0[] = {
+    0x000000A3, 0x803C0000,
+};
+
+const u32 D_800110D8[] = {
+    0x000000A4, 0x803C0000,
+};
+
+const u32 D_800110E0[] = {
+    0x000000A5, 0x803C0000,
+};
+
+const u32 D_800110E8[] = {
+    0x000000A6, 0x803C0000,
+};
+
+const u32 D_800110F0[] = {
+    0x000000A7, 0x803C0000,
+};
+
+const u32 D_800110F8[] = {
+    0x000000A8, 0x803C0000, 0x000B00AB, 0x00020000,
+    0x000B00A9, 0x00040000, 0x000B00AA, 0x00040000,
+    0x000B00AB, 0x00020000, 0x000B00AC, 0x00020000,
+    0x000B00AC, 0x00020000, 0x000900AD, 0x00020000,
+    0x000900AD, 0x00020000, 0x000A00AE, 0x00020000,
+    0x000A00AE, 0x00020000, 0x000B00AF, 0x00020000,
+    0x000B00AF, 0x00020000, 0x000B00B0, 0x00020000,
+    0x000B00B1, 0x00040000, 0x000B00B2, 0x00020000,
+    0x000B00B2, 0x80020000, 0x000000B3, 0x00060000,
+    0x000000B4, 0x00040000, 0x000000B5, 0x803C0000,
+    0x000000B6, 0x000A0000, 0x000000B7, 0x800A0000,
+};
+
+const u32 D_800111A8[] = {
+    0x000000B8,
+    0x00060000,
+    0x000000B9,
+    0x00060000,
+    0x000000B8,
+    0x00060000,
+    0x000000BA,
+    0x40060000,
+    (u32)D_800111A8,
+    0x000000BB,
+    0x00200000,
+    0x000000BC,
+    0x00040000,
+    0x000000BD,
+    0x80180000,
+};
+
+const u32 D_800111E4[] = {
+    0x000000BE,
+    0x00040000,
+    0x000000BF,
+    0x40040000,
+    (u32)D_800111E4,
+};
+
+const u32 D_800111F8[] = {
+    0x000000C0,
+    0x000A0000,
+    0x000000C1,
+    0x000C0000,
+    0x000000C2,
+    0x000A0000,
+    0x000000C3,
+    0x400C0000,
+    (u32)D_800111F8,
+    0x000000C4,
+    0x00030000,
+    0x000000C5,
+    0x00030000,
+    0x000000C6,
+    0x00040000,
+    0x000000C7,
+    0x00050000,
+    0x000000C8,
+    0x80070000,
+};
+
+const u32 D_80011244[] = {
+    0x000800C5,
+    0x40040000,
+    (u32)D_80011244,
+    0x000000C6,
+    0x00040000,
+    0x000000C7,
+    0x00080000,
+    0x000000C8,
+    0x80040000,
+    0x000000C9,
+    0x00040000,
+    0x000000CA,
+    0x00040000,
+    0x000000CB,
+    0x00040000,
+    0x000000CC,
+    0x00040000,
+    0x000000CD,
+    0x80040000,
+    0x000000CE,
+    0x00060000,
+    0x000000CF,
+    0x00060001,
+    0x000300D0,
+    0x80060003,
+};
+
+const u32 D_800112A8[] = {
+    0x000000D1,
+    0x00050000,
+    0x000000D2,
+    0x00050000,
+    0x000000D3,
+    0x00050000,
+    0x000000D4,
+    0x00050000,
+    0x000000D5,
+    0x00050000,
+    0x000000D6,
+    0x40050000,
+    (u32)D_800112A8,
+};
+
+const u32 D_800112DC[] = {
+    0x000000D7,
+    0x00060000,
+    0x000000D8,
+    0x00060000,
+    0x000000D9,
+    0x00060000,
+    0x000000DA,
+    0x40060000,
+    (u32)D_800112DC,
+    0x000000D1,
+    0x00020000,
+    0x000000D7,
+    0x00020000,
+    0x000000D8,
+    0x00020000,
+    0x000000D9,
+    0x80020000,
+    0x000000DB,
+    0x00050000,
+    0x000000DC,
+    0x00020000,
+    0x000000DD,
+    0x00040000,
+    0x000000DE,
+    0x80040000,
+};
+
+const u32 D_80011340[] = {
+    0x000000DF,
+    0x00030000,
+    0x000000E0,
+    0x00020000,
+    0x000000E1,
+    0x00020000,
+    0x000000E2,
+    0x00020000,
+    0x000000E3,
+    0x00010000,
+    0x000000E4,
+    0x00030000,
+    0x000000E5,
+    0x00020000,
+    0x000000E6,
+    0x40010000,
+    (u32)D_80011340,
+};
+
+const u32 D_80011384[] = {
+    0x000000E7,
+    0x00180000,
+    0x000000E8,
+    0x00040000,
+    0x000000E9,
+    0x001E0000,
+    0x000000E8,
+    0x000C0000,
+    0x000000E9,
+    0x001E0000,
+    0x000000E8,
+    0x40050000,
+    (u32)D_80011384,
+};
+
+const u32 D_800113B8[] = {
+    0x000000EA,
+    0x00050000,
+    0x000000EB,
+    0x00050000,
+    0x000000EC,
+    0x00050000,
+    0x000000ED,
+    0x00050000,
+    0x000000EE,
+    0x00050000,
+    0x000000EF,
+    0x00050000,
+    0x000000F0,
+    0x00050000,
+    0x000000F1,
+    0x40050000,
+    (u32)D_800113B8,
+};
+
+const u32 D_800113FC[] = {
+    0x000000F2,
+    0x00050000,
+    0x000000F3,
+    0x00050000,
+    0x000000F4,
+    0x00050000,
+    0x000000F5,
+    0x00050000,
+    0x000000F6,
+    0x00050000,
+    0x000000F7,
+    0x00050000,
+    0x000000F8,
+    0x00050000,
+    0x000000F9,
+    0x40050000,
+    (u32)D_800113FC,
+};
+
+const u32 D_80011440[] = {
+    0x000600FA,
+    0x00060000,
+    0x000600FB,
+    0x00040000,
+    0x000600FC,
+    0x00060000,
+    0x000600FB,
+    0x40040000,
+    (u32)D_80011440,
+    0x000000FD,
+    0x00020000,
+    0x000000FE,
+    0x00020000,
+    0x000000FF,
+    0x00020000,
+    0x00000100,
+    0x00020000,
+    0x00000101,
+    0x00020000,
+    0x00000102,
+    0x00020000,
+    0x00000103,
+    0x00020000,
+    0x00000104,
+    0x00020000,
+    0x00000105,
+    0x00020000,
+    0x00000106,
+    0x00020000,
+    0x00000107,
+    0x00020000,
+    0x00000108,
+    0x00020000,
+    0x00000109,
+    0x00020000,
+    0x0000010A,
+    0x00020000,
+    0x0000010B,
+    0x00020000,
+    0x0000010C,
+    0x80020000,
+    0x0000010D,
+    0x00060000,
+    0x0000010E,
+    0x00050000,
+    0x0000010F,
+    0x80180000,
+    0x00000110,
+    0x00300000,
+    0x00000111,
+    0x00060000,
+    0x00000112,
+    0x00060000,
+    0x00000113,
+    0x00400000,
+    0x00000112,
+    0x00060000,
+    0x00000111,
+    0x80060000,
+    0x00000114,
+    0x00030000,
+    0x00000115,
+    0x80050000,
+};
+
+const u32 D_8001153C[] = {
+    0x00000116,
+    0x000C0000,
+    0x00000117,
+    0x00030000,
+    0x00000118,
+    0x00060000,
+    0x00000119,
+    0x00080000,
+    0x0000011A,
+    0x40060000,
+    (u32)D_8001153C,
+    0x0000011B,
+    0x00050000,
+    0x0000011C,
+    0x80080000,
+    0x0000011D,
+    0x00080000,
+    0x0000011E,
+    0x803C0000,
+    0x0000011F,
+    0x803C0000,
+    0x00000120,
+    0x00080000,
+    0x00000121,
+    0x80FF0000,
+    0x00000122,
+    0x00080000,
+    0x00000123,
+    0x00030000,
+    0x00000124,
+    0x00030000,
+    0x00000125,
+    0x80040000,
+    0x00000126,
+    0x003C0000,
+    0x00000000,
+    0x80080000,
+    0x00000127,
+    0x001E0000,
+    0x00000128,
+    0x00050000,
+    0x00000129,
+    0x001E0000,
+    0x00000128,
+    0x00050000,
+    0x00000127,
+    0x001E0000,
+    0x00000128,
+    0x00050000,
+    0x00000129,
+    0x001E0000,
+    0x00000128,
+    0x00050000,
+    0x00000000,
+    0x80080000,
+    0x000C012A,
+    0x00010000,
+    0x000C012B,
+    0x00010000,
+    0x000C012C,
+    0x00010000,
+    0x000C012D,
+    0x00010000,
+    0x000C012E,
+    0x00010000,
+    0x000C012F,
+    0x00010000,
+    0x000C0130,
+    0x00010000,
+    0x000C0131,
+    0x00010000,
+    0x000C0132,
+    0x00010000,
+    0x000C0133,
+    0x00010000,
+    0x000C0134,
+    0x00010000,
+    0x000C0135,
+    0x80010000,
+};
+
+const u32 D_80011678[] = {
+    0x000C012A,
+    0x00030000,
+    0x000C012B,
+    0x00030000,
+    0x000C012C,
+    0x00030000,
+    0x000C012D,
+    0x00030000,
+    0x000C012E,
+    0x00030000,
+    0x000C012F,
+    0x00030000,
+    0x000C0130,
+    0x00030000,
+    0x000C0131,
+    0x00030000,
+    0x000C0132,
+    0x00030000,
+    0x000C0133,
+    0x00030000,
+    0x000C0134,
+    0x00030000,
+    0x000C0135,
+    0x40030000,
+    (u32)D_80011678,
+};
+
+const u32 D_800116DC[] = {
+    0x000C0136,
+    0x00060000,
+    0x000C0137,
+    0x00060000,
+    0x000C0138,
+    0x00060000,
+    0x000C0139,
+    0x00060000,
+    0x000C0138,
+    0x00060000,
+    0x000C0137,
+    0x40060000,
+    (u32)D_800116DC,
+    0x000C013A,
+    0x00020000,
+    0x000C013B,
+    0x00020000,
+    0x000C013C,
+    0x00020000,
+    0x000C013D,
+    0x00020000,
+    0x000C013E,
+    0x00020000,
+    0x000C013F,
+    0x80020000,
+    0x00000140,
+    0x00060000,
+    0x00000141,
+    0x00060000,
+    0x00000142,
+    0x00060000,
+    0x00000143,
+    0x80060000,
+};
+
+const u32 D_80011760[] = {
+    0x00000144,
+    0x00180000,
+    0x00000145,
+    0x00040000,
+    0x00000146,
+    0x001E0000,
+    0x00000145,
+    0x000C0000,
+    0x00000146,
+    0x001E0000,
+    0x00000145,
+    0x40050000,
+    (u32)D_80011760,
+};
+
+const u32 D_80011794[] = {
+    0x00000147,
+    0x00040000,
+    0x00000148,
+    0x40040000,
+    (u32)D_80011794,
+    0x00000149,
+    0x00060000,
+    0x0000014A,
+    0x000C0000,
+    0x0000014B,
+    0x800C0000,
+    0x0000014C,
+    0x00060000,
+};
+
+const u32 D_800117C8[] = {
+    0x0000014D,
+    0x00080000,
+    0x0000014E,
+    0x40080000,
+    (u32)D_800117C8,
+    0x0000014F,
+    0x00080000,
+    0x00000150,
+    0x001E0000,
+    0x00000000,
+    0x80080000,
+    0x00000151,
+    0x00080000,
+    0x00000000,
+    0x80080000,
+};
+
+const u32 D_80011804[] = {
+    0x00000152,
+    0x00040000,
+    0x00000153,
+    0x40040000,
+    (u32)D_80011804,
+    0x00000154,
+    0x00060000,
+    0x00000155,
+    0x00060000,
+    0x00000156,
+    0x00060000,
+    0x00000157,
+    0x00060000,
+    0x00000158,
+    0x00040000,
+    0x00000159,
+    0x00060000,
+    0x00000158,
+    0x00040000,
+    0x00000157,
+    0x00060000,
+    0x00000158,
+    0x00040000,
+    0x00000159,
+    0x00060000,
+    0x00000158,
+    0x80040000,
+    0x00000157,
+    0x00060000,
+    0x00000158,
+    0x00040000,
+    0x00000159,
+    0x00060000,
+    0x00000158,
+    0x80040000,
+    0x0000015A,
+    0x00050000,
+    0x0000015B,
+    0x803C0000,
+    0x0000015C,
+    0x00080000,
+    0x0000015D,
+    0x803C0000,
+    0x0000015E,
+    0x803C0000,
+    0x0000015F,
+    0x00080000,
+    0x00000160,
+    0x801E0000,
+    0x00000161,
+    0x803C0000,
+    0x00000162,
+    0x00060000,
+    0x00000163,
+    0x00050000,
+    0x00000164,
+    0x00040000,
+    0x00000165,
+    0x80030000,
+};
+
+const u32 D_800118F0[] = {
+    0x00000000,
+    0x00060000,
+    0x00000001,
+    0x00060000,
+    0x00000002,
+    0x00060000,
+    0x00000003,
+    0x00060000,
+    0x00000004,
+    0x00060000,
+    0x00000003,
+    0x00060000,
+    0x00000002,
+    0x00060000,
+    0x00000001,
+    0x40060000,
+    (u32)D_800118F0,
+};
+
+const u32 D_80011934[] = {
+    0x00000005,
+    0x00060000,
+    0x00000006,
+    0x00060000,
+    0x00000007,
+    0x00060000,
+    0x00000008,
+    0x00060000,
+    0x00000009,
+    0x00060000,
+    0x00000008,
+    0x00060000,
+    0x00000007,
+    0x00060000,
+    0x00000006,
+    0x40060000,
+    (u32)D_80011934,
+};
+
+const u32 D_80011978[] = {
+    0x0000000A,
+    0x00060000,
+    0x0000000B,
+    0x00060000,
+    0x0000000C,
+    0x00060000,
+    0x0000000D,
+    0x00060000,
+    0x0000000E,
+    0x00060000,
+    0x0000000D,
+    0x00060000,
+    0x0000000C,
+    0x00060000,
+    0x0000000B,
+    0x40060000,
+    (u32)D_80011978,
+};
+
+const u32 D_800119BC[] = {
+    0x0000000F,
+    0x00060000,
+    0x00000010,
+    0x00060000,
+    0x00000011,
+    0x00060000,
+    0x00000012,
+    0x00060000,
+    0x00000013,
+    0x00060000,
+    0x00000012,
+    0x00060000,
+    0x00000011,
+    0x00060000,
+    0x00000010,
+    0x40060000,
+    (u32)D_800119BC,
+};
+
+const u32 D_80011A00[] = {
+    0x00000014,
+    0x00060000,
+    0x00000015,
+    0x00060000,
+    0x00000016,
+    0x00060000,
+    0x00000017,
+    0x00060000,
+    0x00000018,
+    0x00060000,
+    0x00000017,
+    0x00060000,
+    0x00000016,
+    0x00060000,
+    0x00000015,
+    0x40060000,
+    (u32)D_80011A00,
+};
+
+const u32 D_80011A44[] = {
+    0x00000019,
+    0x00040000,
+    0x0000001A,
+    0x00040000,
+    0x0000001B,
+    0x00040000,
+    0x0000001C,
+    0x00040000,
+    0x0000001D,
+    0x00040000,
+    0x0000001E,
+    0x00040000,
+    0x0000001F,
+    0x00040000,
+    0x00000020,
+    0x40040000,
+    (u32)D_80011A44,
+};
+
+const u32 D_80011A88[] = {
+    0x00000021,
+    0x00040000,
+    0x00000022,
+    0x00040000,
+    0x00000023,
+    0x00040000,
+    0x00000024,
+    0x00040000,
+    0x00000025,
+    0x00040000,
+    0x00000026,
+    0x00040000,
+    0x00000027,
+    0x00040000,
+    0x00000028,
+    0x40040000,
+    (u32)D_80011A88,
+};
+
+const u32 D_80011ACC[] = {
+    0x00000029,
+    0x00040000,
+    0x0000002A,
+    0x00040000,
+    0x0000002B,
+    0x00040000,
+    0x0000002C,
+    0x00040000,
+    0x0000002D,
+    0x00040000,
+    0x0000002E,
+    0x00040000,
+    0x0000002F,
+    0x00040000,
+    0x00000030,
+    0x40040000,
+    (u32)D_80011ACC,
+};
+
+const u32 D_80011B10[] = {
+    0x00000031,
+    0x00040000,
+    0x00000032,
+    0x00040000,
+    0x00000033,
+    0x00040000,
+    0x00000034,
+    0x00040000,
+    0x00000035,
+    0x00040000,
+    0x00000036,
+    0x00040000,
+    0x00000037,
+    0x00040000,
+    0x00000038,
+    0x40040000,
+    (u32)D_80011B10,
+};
+
+const u32 D_80011B54[] = {
+    0x00000039,
+    0x00040000,
+    0x0000003A,
+    0x00040000,
+    0x0000003B,
+    0x00040000,
+    0x0000003C,
+    0x00040000,
+    0x0000003D,
+    0x00040000,
+    0x0000003E,
+    0x00040000,
+    0x0000003F,
+    0x00040000,
+    0x00000040,
+    0x40040000,
+    (u32)D_80011B54,
+};
+
+const u32 D_80011B98[] = {
+    0x00000041, 0x01680000, 0x00000057, 0x00060000,
+    0x00000058, 0x00050000, 0x00000059, 0x00180000,
+    0x00000060, 0x00300000, 0x00000061, 0x00060000,
+    0x00000062, 0x00400000, 0x00000061, 0x40060000,
+    0x80011BB8,
+};
+
+const u32 D_80011BDC[] = {
+    0x00000042, 0x01680000, 0x0000005A, 0x00060000,
+    0x0000005B, 0x00050000, 0x0000005C, 0x00180000,
+    0x00000063, 0x00300000, 0x00000064, 0x00060000,
+    0x00000065, 0x00400000, 0x00000064, 0x40060000,
+    0x80011BFC,
+};
+
+const u32 D_80011C20[] = {
+    0x00000043, 0x01680000, 0x0000005A, 0x00060000,
+    0x0000005B, 0x00050000, 0x0000005C, 0x00180000,
+    0x00000063, 0x00300000, 0x00000064, 0x00060000,
+    0x00000065, 0x00400000, 0x00000064, 0x40060000,
+    0x80011C40,
+};
+
+const u32 D_80011C64[] = {
+    0x00000044, 0x01680000, 0x0000005A, 0x00060000,
+    0x0000005B, 0x00050000, 0x0000005C, 0x00180000,
+    0x00000063, 0x00300000, 0x00000064, 0x00060000,
+    0x00000065, 0x00400000, 0x00000064, 0x40060000,
+    0x80011C84,
+};
+
+const u32 D_80011CA8[] = {
+    0x00000045, 0x01680000, 0x0000005D, 0x00060000,
+    0x0000005E, 0x00050000, 0x0000005F, 0x00180000,
+    0x00000066, 0x00300000, 0x00000067, 0x00060000,
+    0x00000068, 0x00400000, 0x00000067, 0x40060000,
+    0x80011CC8,
+};
+
+const u32 D_80011CEC[] = {
+    0x0000007E, 0x000A0000, 0x00000041, 0x803C0000,
+};
+
+const u32 D_80011CFC[] = {
+    0x00000046, 0x000A0000, 0x00000043, 0x803C0000,
+};
+
+const u32 D_80011D0C[] = {
+    0x00000047, 0x000A0000, 0x00000045, 0x803C0000,
+};
+
+const u32 D_80011D1C[] = {
+    0x00000048, 0x00100000, 0x00000049, 0x00090000,
+    0x0000004A, 0x000A0000, 0x00000049, 0x80040000,
+};
+
+const u32 D_80011D3C[] = {
+    0x0000004C, 0x00050000, 0x0000004B, 0x001E0000,
+    0x0000004C, 0x00050000, 0x0000004D, 0x801E0000,
+};
+
+const u32 D_80011D5C[] = {
+    0x0000004F, 0x00050000, 0x0000004E, 0x001E0000,
+    0x0000004F, 0x00050000, 0x00000050, 0x801E0000,
+};
+
+const u32 D_80011D7C[] = {
+    0x00000052, 0x00050000, 0x00000051, 0x001E0000,
+    0x00000052, 0x00050000, 0x00000053, 0x801E0000,
+};
+
+const u32 D_80011D9C[] = {
+    0x00000054, 0x803C0000,
+};
+
+const u32 D_80011DA4[] = {
+    0x00000055, 0x803C0000,
+};
+
+const u32 D_80011DAC[] = {
+    0x00000056, 0x803C0000,
+};
+
+const u32 D_80011DB4[] = {
+    0x00000057, 0x00060000, 0x00000058, 0x00050000,
+    0x00000059, 0x80180000,
+};
+
+const u32 D_80011DCC[] = {
+    0x0000005A, 0x00060000, 0x0000005B, 0x00050000,
+    0x0000005C, 0x80180000,
+};
+
+const u32 D_80011DE4[] = {
+    0x0000005D, 0x00060000, 0x0000005E, 0x00050000,
+    0x0000005F, 0x80180000,
+};
+
+const u32 D_80011DFC[] = {
+    0x00000060, 0x00300000, 0x00000061, 0x00060000,
+    0x00000062, 0x00400000, 0x00000061, 0x80060000,
+};
+
+const u32 D_80011E1C[] = {
+    0x00000063, 0x00300000, 0x00000064, 0x00060000,
+    0x00000065, 0x00400000, 0x00000064, 0x80060000,
+};
+
+const u32 D_80011E3C[] = {
+    0x00000066, 0x00300000, 0x00000067, 0x00060000,
+    0x00000068, 0x00400000, 0x00000067, 0x80060000,
+};
+
+const u32 D_80011E5C[] = {
+    0x00000069, 0x00030000, 0x0000006A, 0x80050000,
+};
+
+const u32 D_80011E6C[] = {
+    0x0000006B, 0x00030000, 0x0000006C, 0x80050000,
+};
+
+const u32 D_80011E7C[] = {
+    0x0000006D, 0x00030000, 0x0000006E, 0x80050000,
+};
+
+const u32 D_80011E8C[] = {
+    0x0000006F, 0x000C0000, 0x00000070, 0x00030000,
+    0x00000071, 0x00060000, 0x00000072, 0x00080000,
+    0x00000073, 0x80060000,
+};
+
+const u32 D_80011EB4[] = {
+    0x00000074, 0x000C0000, 0x00000075, 0x00030000,
+    0x00000076, 0x00060000, 0x00000077, 0x00080000,
+    0x00000078, 0x80060000,
+};
+
+const u32 D_80011EDC[] = {
+    0x00000079, 0x000C0000, 0x0000007A, 0x00030000,
+    0x0000007B, 0x00060000, 0x0000007C, 0x00080000,
+    0x0000007D, 0x80060000, 0x00000000, 0x80000000,
+};
+
+const u8 D_80011F0C[] = {
+    0x05, 0x01, 0x70, 0x0A,
+};
+
+const u32 D_80011F10[] = {
+    0x0A7F0106, 0x0240FE07, 0x00000107, 0x0C400100,
+    0x147F0105, 0xFE300100, 0x08300100, 0x18400100,
+    0x0140FF00, 0x1000FF00, 0x0C600101, 0x0E600100,
+    0x0240FE02, 0x00000100, 0x0E400102, 0x0C600101,
+    0xFE300102, 0x08300102, 0x0E400102, 0x0140FF00,
+    0x1000FF00, 0x0C700103, 0x0CE80106, 0x0240FE04,
+    0x00000105, 0x0A400100, 0x0C7F0103, 0xFE300100,
+    0x08300100, 0x0A400100, 0x0140FF00, 0x1000FF00,
+    0x10700100, 0x10700100, 0x0240FE00, 0x00000100,
+    0x12400100, 0x107F0100, 0xFE300100, 0x08300100,
+    0x12400100, 0x0140FF00, 0x1000FF00, 0x10700100,
+    0x087F0100, 0x0240FE00, 0x00000100, 0x12400100,
+    0x107F0100, 0xFE300100, 0x08300100, 0x12400100,
+    0x0140FF00, 0x1000FF00, 0x10700100, 0x087F0100,
+    0x0240FE00, 0x00000100, 0x12400100, 0x107F0100,
+    0xFE300100, 0x08300100, 0x12400100, 0x0140FF00,
+    0x1000FF00,
+};
+
+const u8 D_80012014[] = {
+    0x01, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04,
+    0x04, 0x00, 0x00, 0x04, 0x04, 0x00, 0x08, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x00,
+    0x04, 0x00, 0x00, 0x00, 0x00, 0x02, 0x02, 0x03, 0x03, 0x02, 0x00, 0x05, 0x04, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02,
+    0x02, 0x02, 0x03, 0x03, 0x03, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01,
+    0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x0A, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x03, 0x03,
+    0x03, 0x03, 0x03, 0x03, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x04, 0x04, 0x04, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x88, 0x26, 0x01, 0x80, 0xC0, 0x24, 0x01, 0x80, 0xE4, 0x29, 0x01, 0x80, 0xF0, 0x23, 0x01, 0x80,
+};
+
+const u32 D_80012194[] = {
+    (u32)D_80012730,
+    (u32)D_80012450,
+    (u32)D_80012490,
+    (u32)D_80012780,
+    (u32)D_80012610,
+};
+
+const u32 D_800121A8[] = {
+    (u32)D_80012588,
+    (u32)D_80012580,
+    (u32)D_80012578,
+    (u32)D_80012570,
+    (u32)D_80012568,
+    (u32)D_80012560,
+    (u32)D_80012558,
+    (u32)D_80012550,
+};
+
+const u32 D_800121C8[] = {
+    (u32)D_80012608,
+    (u32)D_80012600,
+    (u32)D_800125F8,
+    (u32)D_800125F0,
+    (u32)D_800125E8,
+    (u32)D_800125E0,
+    (u32)D_800125D8,
+    (u32)D_800125D0,
+    (u32)D_800125C8,
+    (u32)D_800125C0,
+    (u32)D_800125B8,
+    (u32)D_800125B0,
+    (u32)D_800125A8,
+    (u32)D_800125A0,
+    (u32)D_80012598,
+    (u32)D_80012590,
+};
+
+const u32 D_80012208[] = {
+    (u32)D_80012508,
+    (u32)D_80012500,
+    (u32)D_800124F8,
+    (u32)D_800124F0,
+    (u32)D_800124E8,
+    (u32)D_800124E0,
+    (u32)D_800124D8,
+    (u32)D_800124D0,
+    (u32)D_800124C8,
+    (u32)D_80012548,
+    (u32)D_80012540,
+    (u32)D_80012538,
+    (u32)D_80012530,
+    (u32)D_80012528,
+    (u32)D_80012520,
+    (u32)D_80012518,
+    (u32)D_80012510,
+};
+
+const u32 D_8001224C[] = {
+    (u32)D_80012658,
+    (u32)D_80012660,
+    (u32)D_80012668,
+    (u32)D_80012670,
+    (u32)D_80012678,
+};
+
+const u32 D_80012260[] = {
+    (u32)D_80012400,
+    (u32)D_80012408,
+    (u32)D_80012410,
+    (u32)D_80012418,
+    (u32)D_80012420,
+    (u32)D_80012428,
+    (u32)D_80012430,
+    (u32)D_80012438,
+    (u32)D_80012440,
+    (u32)D_80012448,
+    (u32)D_80012698,
+    (u32)D_800126A0,
+    (u32)D_800126A8,
+    (u32)D_800126B0,
+    (u32)D_800126B8,
+    (u32)D_800126C0,
+    (u32)D_800126C8,
+    (u32)D_800126D0,
+    (u32)D_800126D8,
+    (u32)D_800126E0,
+};
+
+const u32 D_800122B0[] = {
+    (u32)D_80012828,
+    (u32)D_800127D8,
+    (u32)D_800127E0,
+    (u32)D_800127E8,
+    (u32)D_800127F0,
+    (u32)D_800127F8,
+    (u32)D_80012800,
+    (u32)D_80012808,
+    (u32)D_80012810,
+    (u32)D_80012818,
+    (u32)D_80012820,
+    (u32)D_80012830,
+    (u32)D_80012A04,
+    (u32)D_80012A0C,
+    (u32)D_80012A14,
+    (u32)D_80012A1C,
+    (u32)D_80012A24,
+    (u32)D_80012A2C,
+    (u32)D_800126E8,
+    (u32)D_800126F0,
+    (u32)D_800126F8,
+    (u32)D_800128E4,
+    (u32)D_800128EC,
+    (u32)D_800128F4,
+};
+
+const u32 D_80012310[] = {
+    (u32)D_800128FC,
+};
+
+const u32 D_80012314[] = {
+    (u32)D_800129FC,
+};
+
+const u32 D_80012318[] = {
+    (u32)D_800129DC,
+    (u32)D_80012904,
+    (u32)D_8001290C,
+    (u32)D_80012700,
+    (u32)D_80012708,
+};
+
+const u32 D_8001232C[] = {
+    (u32)D_80012710,
+};
+
+const u32 D_80012330[] = {
+    (u32)D_80012718,
+};
+
+const u32 D_80012334[] = {
+    (u32)D_80012720,
+    (u32)D_800128DC,
+    (u32)D_800128AC,
+    (u32)D_800128B4,
+    (u32)D_800128BC,
+    (u32)D_800128C4,
+    (u32)D_800128CC,
+    (u32)D_800128D4,
+};
+
+const u32 D_80012354[] = {
+    (u32)D_800129F4,
+    (u32)D_80012854,
+    (u32)D_8001287C,
+    (u32)D_80012894,
+};
+
+const u32 D_80012364[] = {
+    (u32)D_80012914,
+};
+
+const u32 D_80012368_ro[] = {
+    (u32)D_8001296C,
+    (u32)D_80012954,
+    (u32)D_80012728,
+    (u32)D_8001298C,
+    (u32)D_80012994,
+    (u32)D_800129B4,
+    (u32)D_800129BC,
+    (u32)D_800129EC,
+    (u32)D_80012BFC,
+    (u32)D_80012C18,
+    (u32)D_80012C5C,
+    (u32)D_80012BB8,
+    (u32)D_80012B68,
+    (u32)D_80012C34,
+    (u32)D_80012C98,
+    (u32)D_80012D20,
+    (u32)D_80012D0C,
+    (u32)D_80012CD4,
+    (u32)D_80012CE8,
+    (u32)D_80012CBC,
+    (u32)D_80012CC4,
+    (u32)D_80012CCC,
+    (u32)D_80012B9C,
+    (u32)D_80012C80,
+};
+
+const u32 D_800123C8[] = {
+    (u32)D_80012D28,
+};
+
+const u32 D_800123CC[] = {
+    (u32)D_80012A34,
+    (u32)D_80012D78,
+    (u32)D_80012D80,
+    (u32)D_80012D88,
+    (u32)D_80012DAC,
+    (u32)D_80012DE0,
+};
+
+const u32 D_800123E4[] = {
+    (u32)D_80012A98,
+    (u32)D_80012AA0,
+    (u32)D_80012AA8,
+};
+
+const u32 D_800123F0[] = {
+    0x00000000, 0x803C0000,
+};
+
+const u32 D_800123F8[] = {
+    0x0000001D, 0x803C0000,
+};
+
+const u32 D_80012400[] = {
+    0x0000001F, 0x803C0000,
+};
+
+const u32 D_80012408[] = {
+    0x00000020, 0x803C0000,
+};
+
+const u32 D_80012410[] = {
+    0x00000021, 0x803C0000,
+};
+
+const u32 D_80012418[] = {
+    0x00000022, 0x803C0000,
+};
+
+const u32 D_80012420[] = {
+    0x00000023, 0x803C0000,
+};
+
+const u32 D_80012428[] = {
+    0x00000024, 0x803C0000,
+};
+
+const u32 D_80012430[] = {
+    0x00000025, 0x803C0000,
+};
+
+const u32 D_80012438[] = {
+    0x00000026, 0x803C0000,
+};
+
+const u32 D_80012440[] = {
+    0x00000027, 0x803C0000,
+};
+
+const u32 D_80012448[] = {
+    0x00000028, 0x803C0000,
+};
+
+const u32 D_80012450[] = {
+    0x00000015, 0x00010000, 0x00000016, 0x00020000,
+    0x00000015, 0x00010000, 0x00000017, 0x00020000,
+    0x00000018, 0x00020000, 0x00000019, 0x00020000,
+    0x0000001A, 0x00020000, 0x0000001B, 0x80020000,
+};
+
+const u32 D_80012490[] = {
+    0x00000029, 0x00020000, 0x0000002A, 0x00020000,
+    0x0000002B, 0x00010000, 0x0000002C, 0x00020000,
+    0x0000002D, 0x00020000, 0x0000002E, 0x80020000,
+};
+
+const u32 D_800124C0[] = {
+    0x00000001, 0x803C0000,
+};
+
+const u32 D_800124C8[] = {
+    0x00000002, 0x803C0000,
+};
+
+const u32 D_800124D0[] = {
+    0x00000003, 0x803C0000,
+};
+
+const u32 D_800124D8[] = {
+    0x00000004, 0x803C0000,
+};
+
+const u32 D_800124E0[] = {
+    0x00000005, 0x803C0000,
+};
+
+const u32 D_800124E8[] = {
+    0x00000006, 0x803C0000,
+};
+
+const u32 D_800124F0[] = {
+    0x00000007, 0x803C0000,
+};
+
+const u32 D_800124F8[] = {
+    0x00000008, 0x803C0000,
+};
+
+const u32 D_80012500[] = {
+    0x00000009, 0x803C0000,
+};
+
+const u32 D_80012508[] = {
+    0x00000034, 0x803C0000,
+};
+
+const u32 D_80012510[] = {
+    0x0000003B, 0x803C0000,
+};
+
+const u32 D_80012518[] = {
+    0x0000003C, 0x803C0000,
+};
+
+const u32 D_80012520[] = {
+    0x0000003D, 0x803C0000,
+};
+
+const u32 D_80012528[] = {
+    0x0000003E, 0x803C0000,
+};
+
+const u32 D_80012530[] = {
+    0x0000003F, 0x803C0000,
+};
+
+const u32 D_80012538[] = {
+    0x00000040, 0x803C0000,
+};
+
+const u32 D_80012540[] = {
+    0x00000041, 0x803C0000,
+};
+
+const u32 D_80012548[] = {
+    0x00000042, 0x803C0000,
+};
+
+const u32 D_80012550[] = {
+    0x00000055, 0x803C0000,
+};
+
+const u32 D_80012558[] = {
+    0x00000056, 0x803C0000,
+};
+
+const u32 D_80012560[] = {
+    0x00000057, 0x803C0000,
+};
+
+const u32 D_80012568[] = {
+    0x00000058, 0x803C0000,
+};
+
+const u32 D_80012570[] = {
+    0x00000059, 0x803C0000,
+};
+
+const u32 D_80012578[] = {
+    0x0000005A, 0x803C0000,
+};
+
+const u32 D_80012580[] = {
+    0x0000005B, 0x803C0000,
+};
+
+const u32 D_80012588[] = {
+    0x0000005C, 0x803C0000,
+};
+
+const u32 D_80012590[] = {
+    0x0000005D, 0x803C0000,
+};
+
+const u32 D_80012598[] = {
+    0x0000005E, 0x803C0000,
+};
+
+const u32 D_800125A0[] = {
+    0x0000005F, 0x803C0000,
+};
+
+const u32 D_800125A8[] = {
+    0x00000060, 0x803C0000,
+};
+
+const u32 D_800125B0[] = {
+    0x00000061, 0x803C0000,
+};
+
+const u32 D_800125B8[] = {
+    0x00000062, 0x803C0000,
+};
+
+const u32 D_800125C0[] = {
+    0x00000063, 0x803C0000,
+};
+
+const u32 D_800125C8[] = {
+    0x00000064, 0x803C0000,
+};
+
+const u32 D_800125D0[] = {
+    0x00000065, 0x803C0000,
+};
+
+const u32 D_800125D8[] = {
+    0x00000066, 0x803C0000,
+};
+
+const u32 D_800125E0[] = {
+    0x00000067, 0x803C0000,
+};
+
+const u32 D_800125E8[] = {
+    0x00000068, 0x803C0000,
+};
+
+const u32 D_800125F0[] = {
+    0x00000069, 0x803C0000,
+};
+
+const u32 D_800125F8[] = {
+    0x0000006A, 0x803C0000,
+};
+
+const u32 D_80012600[] = {
+    0x0000006B, 0x803C0000,
+};
+
+const u32 D_80012608[] = {
+    0x0000006C, 0x803C0000,
+};
+
+const u32 D_80012610[] = {
+    0x0000000F, 0x00010000, 0x00000010, 0x00020000,
+    0x0000000F, 0x00010000, 0x00000011, 0x00020000,
+    0x00000010, 0x00010000, 0x00000012, 0x00020000,
+    0x00000013, 0x00030000, 0x00000014, 0x80030000,
+};
+
+const u32 D_80012650[] = {
+    0x0000000A, 0x803C0000,
+};
+
+const u32 D_80012658[] = {
+    0x0000000B, 0x803C0000,
+};
+
+const u32 D_80012660[] = {
+    0x0000000C, 0x803C0000,
+};
+
+const u32 D_80012668[] = {
+    0x0000000D, 0x803C0000,
+};
+
+const u32 D_80012670[] = {
+    0x0000000E, 0x803C0000,
+};
+
+const u32 D_80012678[] = {
+    0x0000001E, 0x803C0000,
+};
+
+const u32 D_80012680[] = {
+    0x0000001C, 0x803C0000,
+};
+
+const u32 D_80012688[] = {
+    0x00000030, 0x803C0000, 0x00000031, 0x803C0000,
+};
+
+const u32 D_80012698[] = {
+    0x0000004B, 0x803C0000,
+};
+
+const u32 D_800126A0[] = {
+    0x0000004C, 0x803C0000,
+};
+
+const u32 D_800126A8[] = {
+    0x0000004D, 0x803C0000,
+};
+
+const u32 D_800126B0[] = {
+    0x0000004E, 0x803C0000,
+};
+
+const u32 D_800126B8[] = {
+    0x0000004F, 0x803C0000,
+};
+
+const u32 D_800126C0[] = {
+    0x00000050, 0x803C0000,
+};
+
+const u32 D_800126C8[] = {
+    0x00000051, 0x803C0000,
+};
+
+const u32 D_800126D0[] = {
+    0x00000052, 0x803C0000,
+};
+
+const u32 D_800126D8[] = {
+    0x00000053, 0x803C0000,
+};
+
+const u32 D_800126E0[] = {
+    0x00000054, 0x803C0000,
+};
+
+const u32 D_800126E8[] = {
+    0x0000002F, 0x803C0000,
+};
+
+const u32 D_800126F0[] = {
+    0x00000032, 0x803C0000,
+};
+
+const u32 D_800126F8[] = {
+    0x00000033, 0x803C0000,
+};
+
+const u32 D_80012700[] = {
+    0x00000039, 0x803C0000,
+};
+
+const u32 D_80012708[] = {
+    0x00000038, 0x803C0000,
+};
+
+const u32 D_80012710[] = {
+    0x00000035, 0x803C0000,
+};
+
+const u32 D_80012718[] = {
+    0x00000036, 0x803C0000,
+};
+
+const u32 D_80012720[] = {
+    0x00000037, 0x803C0000,
+};
+
+const u32 D_80012728[] = {
+    0x0000003A, 0x803C0000,
+};
+
+const u32 D_80012730[] = {
+    0x00000084, 0x00020000, 0x00000085, 0x00020000,
+    0x00000086, 0x00010000, 0x00000087, 0x00010000,
+    0x00000088, 0x00020000, 0x00000089, 0x00020000,
+    0x00000088, 0x00020000, 0x0000008A, 0x00020000,
+    0x0000008B, 0x00020000, 0x0000008C, 0x80020000,
+};
+
+const u32 D_80012780[] = {
+    0x0000006D, 0x00010000, 0x0000006E, 0x00020000,
+    0x00000074, 0x00010000, 0x0000006D, 0x00010000,
+    0x0000006F, 0x00030000, 0x00000070, 0x00010000,
+    0x00000071, 0x00030000, 0x00000072, 0x00010000,
+    0x00000073, 0x00020000, 0x00000074, 0x80020000,
+};
+
+const u32 D_800127D0[] = {
+    0x00000075, 0x803C0000,
+};
+
+const u32 D_800127D8[] = {
+    0x00000076, 0x803C0000,
+};
+
+const u32 D_800127E0[] = {
+    0x00000077, 0x803C0000,
+};
+
+const u32 D_800127E8[] = {
+    0x00000078, 0x803C0000,
+};
+
+const u32 D_800127F0[] = {
+    0x00000079, 0x803C0000,
+};
+
+const u32 D_800127F8[] = {
+    0x0000007A, 0x803C0000,
+};
+
+const u32 D_80012800[] = {
+    0x0000007B, 0x803C0000,
+};
+
+const u32 D_80012808[] = {
+    0x0000007C, 0x803C0000,
+};
+
+const u32 D_80012810[] = {
+    0x0000007D, 0x803C0000,
+};
+
+const u32 D_80012818[] = {
+    0x0000007E, 0x803C0000,
+};
+
+const u32 D_80012820[] = {
+    0x0000007F, 0x803C0000,
+};
+
+const u32 D_80012828[] = {
+    0x000000BD, 0x803C0000,
+};
+
+const u32 D_80012830[] = {
+    0x00000080,
+    0x00050000,
+    0x00000081,
+    0x00060000,
+    0x00000082,
+    0x00050000,
+    0x00000083,
+    0x40060000,
+    (u32)D_80012830,
+};
+
+const u32 D_80012854[] = {
+    0x0000008D, 0x00020000, 0x0000008E, 0x00020000,
+    0x0000008F, 0x00020000, 0x00000090, 0x00020000,
+    0x00000091, 0x80020000,
+};
+
+const u32 D_8001287C[] = {
+    0x00000092, 0x00020000, 0x00000093, 0x00020000,
+    0x00000094, 0x80020000,
+};
+
+const u32 D_80012894[] = {
+    0x00000095, 0x00020000, 0x00000096, 0x00020000,
+    0x00000097, 0x80020000,
+};
+
+const u32 D_800128AC[] = {
+    0x00000098, 0x803C0000,
+};
+
+const u32 D_800128B4[] = {
+    0x0000009B, 0x803C0000,
+};
+
+const u32 D_800128BC[] = {
+    0x00000099, 0x803C0000,
+};
+
+const u32 D_800128C4[] = {
+    0x0000009C, 0x803C0000,
+};
+
+const u32 D_800128CC[] = {
+    0x0000009A, 0x803C0000,
+};
+
+const u32 D_800128D4[] = {
+    0x0000009E, 0x803C0000,
+};
+
+const u32 D_800128DC[] = {
+    0x0000009D, 0x803C0000,
+};
+
+const u32 D_800128E4[] = {
+    0x000000AD, 0x803C0000,
+};
+
+const u32 D_800128EC[] = {
+    0x000000AF, 0x803C0000,
+};
+
+const u32 D_800128F4[] = {
+    0x000000AE, 0x803C0000,
+};
+
+const u32 D_800128FC[] = {
+    0x000000AA, 0x803C0000,
+};
+
+const u32 D_80012904[] = {
+    0x000000AB, 0x803C0000,
+};
+
+const u32 D_8001290C[] = {
+    0x000000AC, 0x803C0000,
+};
+
+const u32 D_80012914[] = {
+    0x000000B0, 0x00010000, 0x000000B1, 0x00020000,
+    0x000000B2, 0x00020000, 0x000000B3, 0x00010000,
+    0x000000B0, 0x00020000, 0x000000B1, 0x00020000,
+    0x000000B2, 0x00020000, 0x000000B3, 0x80020000,
+};
+
+const u32 D_80012954[] = {
+    0x000000B4, 0x00030000, 0x000000B5, 0x00030000,
+    0x000000B6, 0x80030000,
+};
+
+const u32 D_8001296C[] = {
+    0x000000B7, 0x00030000, 0x000000B8, 0x00030000,
+    0x000000B9, 0x00030000, 0x000000BA, 0x80030000,
+};
+
+const u32 D_8001298C[] = {
+    0x0000009F, 0x803C0000,
+};
+
+const u32 D_80012994[] = {
+    0x000000A0, 0x00010000, 0x000000A1, 0x00010000,
+    0x000000A2, 0x00010000, 0x000000A2, 0x80010000,
+};
+
+const u32 D_800129B4[] = {
+    0x000000A4, 0x803C0000,
+};
+
+const u32 D_800129BC[] = {
+    0x000000A5, 0x00010000, 0x000000A6, 0x00010000,
+    0x000000A7, 0x00010000, 0x000000A8, 0x80010000,
+};
+
+const u32 D_800129DC[] = {
+    0x000000BB, 0x803C0000,
+};
+
+const u32 D_800129E4[] = {
+    0x000000BC, 0x803C0000,
+};
+
+const u32 D_800129EC[] = {
+    0x000000BE, 0x803C0000,
+};
+
+const u32 D_800129F4[] = {
+    0x000000BF, 0x803C0000,
+};
+
+const u32 D_800129FC[] = {
+    0x000000C0, 0x803C0000,
+};
+
+const u32 D_80012A04[] = {
+    0x000000C1, 0x803C0000,
+};
+
+const u32 D_80012A0C[] = {
+    0x000000C2, 0x803C0000,
+};
+
+const u32 D_80012A14[] = {
+    0x000000C3, 0x803C0000,
+};
+
+const u32 D_80012A1C[] = {
+    0x000000C4, 0x803C0000,
+};
+
+const u32 D_80012A24[] = {
+    0x000000C5, 0x803C0000,
+};
+
+const u32 D_80012A2C[] = {
+    0x000000C6, 0x803C0000,
+};
+
+const u32 D_80012A34[] = {
+    0x000000C7,
+    0x00070000,
+    0x000000C8,
+    0x00070000,
+    0x000000C9,
+    0x00070000,
+    0x000000CA,
+    0x00070000,
+    0x000000CB,
+    0x00070000,
+    0x000000CC,
+    0x00070000,
+    0x000000C7,
+    0x00070000,
+    0x000000CD,
+    0x00070000,
+    0x000000CE,
+    0x00070000,
+    0x000000CF,
+    0x00070000,
+    0x000000D0,
+    0x00070000,
+    0x000000D1,
+    0x40070000,
+    (u32)D_80012A34,
+};
+
+const u32 D_80012A98[] = {
+    0x000000D3, 0x803C0000,
+};
+
+const u32 D_80012AA0[] = {
+    0x000000D4, 0x803C0000,
+};
+
+const u32 D_80012AA8[] = {
+    0x000000D5, 0x803C0000, 0x000000D6, 0x803C0000,
+    0x000000D7, 0x803C0000, 0x000000D8, 0x803C0000,
+    0x000000D9, 0x00040000, 0x000000DA, 0x00040000,
+    0x000000DB, 0x00040000, 0x000000DC, 0x00040000,
+    0x000000DD, 0x00040000, 0x000000DE, 0x80040000,
+    0x000000E5, 0x00030000, 0x000000E6, 0x00030000,
+    0x000000E7, 0x00030000, 0x000000E8, 0x00030000,
+    0x000000E9, 0x00030000, 0x000000E8, 0x00030000,
+    0x000000E7, 0x00030000, 0x000000E6, 0x80030000,
+    0x000000DF, 0x803C0000, 0x000000E0, 0x803C0000,
+    0x000000E1, 0x803C0000, 0x000000E2, 0x00020000,
+    0x000000E3, 0x00020000, 0x000000E4, 0x80020000,
+};
+
+const u32 D_80012B68[] = {
+    0x000000D6,
+    0x00060000,
+    0x000000D7,
+    0x00060000,
+    0x000000D8,
+    0x00060000,
+    0x000000D9,
+    0x00060000,
+    0x000000DA,
+    0x00060000,
+    0x000000DB,
+    0x40060000,
+    (u32)D_80012B68,
+};
+
+const u32 D_80012B9C[] = {
+    0x000000DC,
+    0x00020000,
+    0x000000DD,
+    0x00020000,
+    0x000000DE,
+    0x40020000,
+    (u32)D_80012B9C,
+};
+
+const u32 D_80012BB8[] = {
+    0x000000DF,
+    0x00040000,
+    0x000000E0,
+    0x00040000,
+    0x000000E1,
+    0x00040000,
+    0x000000E2,
+    0x00040000,
+    0x000000E3,
+    0x00040000,
+    0x000000E2,
+    0x00040000,
+    0x000000E1,
+    0x00040000,
+    0x000000E0,
+    0x40040000,
+    (u32)D_80012BB8,
+};
+
+const u32 D_80012BFC[] = {
+    0x000000E4,
+    0x00030000,
+    0x000000E5,
+    0x00030000,
+    0x000000E6,
+    0x40030000,
+    (u32)D_80012BFC,
+};
+
+const u32 D_80012C18[] = {
+    0x000000E7,
+    0x00030000,
+    0x000000E8,
+    0x00030000,
+    0x000000E9,
+    0x40030000,
+    (u32)D_80012C18,
+};
+
+const u32 D_80012C34[] = {
+    0x000000EC, 0x00020000, 0x000000EB, 0x00020000,
+    0x000000EA, 0x00020000, 0x000000EB, 0x00020000,
+    0x000000EC, 0x80020000,
+};
+
+const u32 D_80012C5C[] = {
+    0x000000ED,
+    0x00040000,
+    0x000000EE,
+    0x00040000,
+    0x000000EF,
+    0x00040000,
+    0x000000F0,
+    0x40040000,
+    (u32)D_80012C5C,
+};
+
+const u32 D_80012C80[] = {
+    0x000000F1, 0x00020000, 0x000000F2, 0x00020000,
+    0x000000F3, 0x80020000,
+};
+
+const u32 D_80012C98[] = {
+    0x000000F4,
+    0x00090000,
+    0x000000F5,
+    0x00090000,
+    0x000000F6,
+    0x00090000,
+    0x000000F5,
+    0x40090000,
+    (u32)D_80012C98,
+};
+
+const u32 D_80012CBC[] = {
+    0x000000F7, 0x80060000,
+};
+
+const u32 D_80012CC4[] = {
+    0x000000F8, 0x80060000,
+};
+
+const u32 D_80012CCC[] = {
+    0x000000F9, 0x80060000,
+};
+
+const u32 D_80012CD4[] = {
+    0x000000FA,
+    0x00030000,
+    0x000000FB,
+    0x40030000,
+    (u32)D_80012CD4,
+};
+
+const u32 D_80012CE8[] = {
+    0x000000FC,
+    0x00030000,
+    0x000000FD,
+    0x00030000,
+    0x000000FE,
+    0x00030000,
+    0x000000FF,
+    0x40030000,
+    (u32)D_80012CE8,
+};
+
+const u32 D_80012D0C[] = {
+    0x00000100,
+    0x00030000,
+    0x00000101,
+    0x40030000,
+    (u32)D_80012D0C,
+};
+
+const u32 D_80012D20[] = {
+    0x00000102, 0x80030000,
+};
+
+const u32 D_80012D28[] = {
+    0x000000FA, 0x00020000, 0x000000FB, 0x00030000,
+    0x000000FA, 0x00010000, 0x00000100, 0x00020000,
+    0x000000FC, 0x00020000, 0x000000FD, 0x00020000,
+    0x00000100, 0x00020000, 0x000000FE, 0x00020000,
+    0x00000101, 0x00010000, 0x000000FF, 0x80010000,
+};
+
+const u32 D_80012D78[] = {
+    0x000000DF, 0x80020000,
+};
+
+const u32 D_80012D80[] = {
+    0x0000010B, 0x80020000,
+};
+
+const u32 D_80012D88[] = {
+    0x0000010D,
+    0x00030000,
+    0x0000010E,
+    0x00030000,
+    0x0000010F,
+    0x00030000,
+    0x00000110,
+    0x40030000,
+    (u32)D_80012D88,
+};
+
+const u32 D_80012DAC[] = {
+    0x00000111,
+    0x00030000,
+    0x00000112,
+    0x00030000,
+    0x00000113,
+    0x00030000,
+    0x00000114,
+    0x00030000,
+    0x00000115,
+    0x00030000,
+    0x00000116,
+    0x40030000,
+    (u32)D_80012DAC,
+};
+
+const u32 D_80012DE0[] = {
+    0x00000117,
+    0x00050000,
+    0x00000118,
+    0x00050000,
+    0x00000119,
+    0x00050000,
+    0x0000011A,
+    0x00050000,
+    0x0000011B,
+    0x00050000,
+    0x0000011C,
+    0x00050000,
+    0x0000011D,
+    0x00050000,
+    0x0000011E,
+    0x40050000,
+    (u32)D_80012DE0,
+};

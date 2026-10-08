@@ -3,7 +3,44 @@
 #include "psyq/libcd.h"
 
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001EFE8);
+extern short D_80077728[];
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001EFE8);
+int func_8001EFE8(int* dec)
+{
+    u_long* addr;
+    StHEADER* header;
+    register u_long* next asm("$16");
+
+    do {
+        if (StGetNext(&addr, (u_long**)&header) != 0) {
+            next = NULL;
+            break;
+        }
+        if (header->frameCount >= D_80077728[MOVIE_ID] - 3) {
+            (CURRENT_TASK)->state0 = 3;
+            CdMix(&D_80077758);
+        }
+        if (*(&SCRATCHPAD + 0x1CD) == 0x15 && (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4))->loadGameSelected == 0 && header->frameCount >= 0xF) {
+            func_80020AF0(0);
+            (CURRENT_TASK)->loadGameSelected = 1;
+        }
+        next = addr;
+        *(s16*)((u8*)dec + 0x1C) = *(s16*)((u8*)dec + 0x24) = header->width;
+        *(s16*)((u8*)dec + 0x1E) = *(s16*)((u8*)dec + 0x26) = header->height;
+        *(s16*)((u8*)dec + 0x32) = header->height;
+    } while (0);
+
+    if (next == NULL) {
+        asm("" : : : "$16");
+        return 0;
+    }
+    dec[2] = 1 - dec[2];
+    DecDCTvlc(next, (u_long*)dec[dec[2]]);
+    StFreeRing(next);
+    (CURRENT_TASK)->unk4E.value = 1;
+    return 1;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", cdSeekStream);
 void cdSeekStream(short file_id)
