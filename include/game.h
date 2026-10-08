@@ -2234,6 +2234,9 @@ extern u16  D_1F800186;
 extern s32* D_1F800220;
 extern s16  D_1F80024A;
 extern u8*  D_1F800354;
+extern int  D_1F800164;
+extern u_long D_1F8001E0;
+extern s16  D_1F8001F4;
 extern s32* D_1F800218;
 extern s32* D_1F80021C;
 extern s32* D_1F800224;
@@ -2252,7 +2255,7 @@ extern short D_1F8003B6;
 /* --- RAM / ROM data 0x8001____ --- */
 extern char D_80010000;
 extern char D_80010008;
-extern int D_800121C8;
+extern const u32 D_800121C8[];
 
 /* --- RAM / ROM data 0x8007____ --- */
 extern u_short D_80076E80[];
@@ -2564,8 +2567,8 @@ void func_80122688(void);
 void func_8011D498(void);
 void func_8012298C(void);
 void func_8011D79C(void);
-void func_8003C124(u8 op);
-void func_8003E408(u8 op);
+int func_8003C124(u8 op);
+int func_8003E408(u8 op);
 s16 func_80051284();
 void func_80076364(SpuReverbAttr* attr);
 u16 nextRandom(void);
@@ -2576,7 +2579,7 @@ void func_80122F64(void);
 void func_8011D844(void);
 void func_8011CD70(void);
 void func_8011602C(void);
-void func_80022E44(u8* self);
+int func_80022E44(u8* self);
 s32 func_80042654(s16 a, s16 b);
 s16 func_8004339C(u8* self, s16 a, s16 b);
 s16 func_800443CC(u8* self, s16 a, s16 b);

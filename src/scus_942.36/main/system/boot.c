@@ -163,7 +163,54 @@ void bootSequenceTask(void)
     } while(true);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001964C);
+typedef struct {
+    s16 x;
+    s16 y;
+    u8 u;
+    u8 v;
+    s16 w;
+    s16 h;
+    s16 tpage;
+    s16 clutX;
+    s16 clutY;
+} unk_80076E40;
+
+extern unk_80076E40 D_80076E40[];
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001964C);
+void func_8001964C(u8 color, int arg1)
+{
+    unk_80076E40* entry;
+    SPRT* sprt;
+    SPRT* prim;
+    SPRT* next;
+    DR_MODE* mode;
+
+    entry = D_80076E40;
+    sprt = (SPRT*)0x1F800000;
+    while (entry->x != -1) {
+        setlen(sprt, 4);
+        setcode(sprt, 0x64);
+        setRGB0(sprt, color, color, color);
+        sprt->x0 = entry->x;
+        sprt->y0 = entry->y;
+        sprt->u0 = entry->u;
+        sprt->v0 = entry->v;
+        sprt->w = entry->w;
+        sprt->h = entry->h;
+        sprt->clut = GetClut(entry->clutX, entry->clutY);
+        prim = (SPRT*)D_1F800164;
+        *prim = *sprt;
+        next = (SPRT*)D_1F800164;
+        mode = (DR_MODE*)(next + 1);
+        D_1F800164 = (int)mode;
+        addPrim(D_1F8001E0 + 4, prim);
+        SetDrawMode(mode, arg1, 0, entry->tpage, NULL);
+        addPrim(D_1F8001E0 + 4, mode);
+        D_1F800164 += sizeof(DR_MODE);
+        entry++;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", titleSequenceTask);
 void titleSequenceTask(void)
