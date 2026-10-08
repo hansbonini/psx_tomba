@@ -330,7 +330,7 @@ void scriptOpPlaySound(void)
 {
     unkstruct_8009E458* p = D_8009E458;
 
-    func_80020180(*(s32*)((u8*)p + 0x1190),
+    playSFXWithNoteAndVolume(*(s32*)((u8*)p + 0x1190),
                   *(s32*)((u8*)p + 0x1194),
                   *(s32*)((u8*)p + 0x1198));
     p->pc++;
@@ -455,13 +455,13 @@ void func_8003E3C4(void)
     D_8009E458->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E3E8);
-void func_8003E3E8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", opNop);
+void opNop(void)
 {
     D_8009E458->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E408);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", execGameOpcode);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", lzDecompress);
 void lzDecompress(byte *src, byte *dest)

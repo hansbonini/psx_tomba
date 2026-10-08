@@ -114,8 +114,8 @@ void dispatchTasks(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", startTask);
 void startTask(s32 id, int fn)
 {
-    setTaskEntry((unkstruct_01*)((TASK_TABLE + 0xC) + id * 0x70), fn);
-    openTask(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * 0x70))->task_func);
+    setTaskEntry((unkstruct_01*)((TASK_TABLE + 0xC) + id * sizeof(unkstruct_1F8001D4)), fn);
+    openTask(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * sizeof(unkstruct_1F8001D4)))->task_func);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", openTask);
@@ -158,7 +158,7 @@ void closeTask(s32 id)
     s32  off;
     u16* flag;
 
-    off  = id * 0x70;
+    off  = id * sizeof(unkstruct_1F8001D4);
     flag = (u16*)(TASK_TABLE + off);
 
     if (*flag != 0) {
@@ -189,7 +189,7 @@ void setTaskFlag10(s32 id)
 {
     u16* p;
 
-    p = (u16*)(TASK_TABLE + id * 0x70);
+    p = (u16*)(TASK_TABLE + id * sizeof(unkstruct_1F8001D4));
     *p |= 0x10;
 }
 
@@ -198,7 +198,7 @@ void clearTaskFlag10(s32 id)
 {
     u16* p;
 
-    p = (u16*)(TASK_TABLE + id * 0x70);
+    p = (u16*)(TASK_TABLE + id * sizeof(unkstruct_1F8001D4));
     *p &= ~0x10;
 }
 
@@ -214,11 +214,11 @@ void vblankHandler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", tickTaskTimers);
 void tickTaskTimers(void)
 {
-    #define D_801FD800 ((void*)TASK_TABLE)
+    #define TASK_TABLE_PTR ((void*)TASK_TABLE)
     u16* p;
     u16  t;
 
-    p = (u16*)(D_801FD800);
+    p = (u16*)(TASK_TABLE_PTR);
     do {
         if (*p == 1) {
             t = p[1] - 1;
@@ -227,8 +227,8 @@ void tickTaskTimers(void)
                 *p = 2;
             }
         }
-        p += 0x38;
-    } while (p <= (u16*)(D_801FD800 + 0x14F));
+        p += sizeof(unkstruct_1F8001D4) / sizeof(u16);
+    } while (p <= (u16*)(TASK_TABLE_PTR + 0x14F));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", setTaskEntry);

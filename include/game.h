@@ -45,10 +45,10 @@ typedef struct fileLink {
 #define TASK_TABLE  0x801FD800
 #define TIM_SCRATCH ((u_long*)0x801FBE00)
 
-#define D_8009B01C ((u_long*)((byte*)&D_8009B010+0xC))
-#define D_8009B034 ((DISPENV*)((byte*)&D_8009B010+0x24))
+#define MOVIE_DEC_IMGBUF ((u_long*)((byte*)&MOVIE_DEC_ENV+0xC))
+#define MOVIE_DEC_DISPENV ((DISPENV*)((byte*)&MOVIE_DEC_ENV+0x24))
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
-#define D_8009E3D4 ((void*)0x8009E3D4)
+#define DRAW_ENV_2 ((void*)0x8009E3D4)
 
 #define READ32(_dst, _src) { \
     _dst = (((u_char *)_src)[1] << 8) | (((u_char *)_src)[0] << 0) \
@@ -723,17 +723,17 @@ typedef enum {
 } INVENTORY_SCREEN_ID;
 
 typedef enum {
-    SORT_MODE_1,
-    SORT_MODE_2,
-    SORT_MODE_3,
-    SORT_MODE_4,
-    SORT_MODE_DEFAULT = 0x8000,
+    INVENTORY_SORT_MODE_1,
+    INVENTORY_SORT_MODE_2,
+    INVENTORY_SORT_MODE_3,
+    INVENTORY_SORT_MODE_4,
+    INVENTORY_SORT_MODE_DEFAULT = 0x8000,
 } INVENTORY_SORT_MODE_ID;
 
 typedef enum {
-    TITLESCREEN_NEWGAME,
-    TITLESCREEN_LOADGAME,
-    TITLESCREEN_OPTIONS
+    TITLESCREEN_OPTION_NEWGAME,
+    TITLESCREEN_OPTION_LOADGAME,
+    TITLESCREEN_OPTION_OPTIONS
 } TITLESCREEN_OPTION_ID;
 
 typedef enum {
@@ -771,10 +771,10 @@ typedef enum {
 } OBJECT_LAYER;
 
 typedef enum {
-    MOVIE_IDLE     = 0,
-    MOVIE_STARTING = 1,
-    MOVIE_PLAYING  = 2,
-    MOVIE_ENDING   = 3,
+    MOVIE_STATE_IDLE     = 0,
+    MOVIE_STATE_STARTING = 1,
+    MOVIE_STATE_PLAYING  = 2,
+    MOVIE_STATE_ENDING   = 3,
 } MOVIE_STATE;
 
 typedef enum {
@@ -913,7 +913,7 @@ typedef struct unkstruct_1F8001D4 {
 typedef struct scratchpad {
     /* 0x000  Shared scratch area -- NOT a stable layout. These bytes are reused
        with a different shape by each user, so do not name fields in here:
-         - func_8001964C / func_8004BDE4 / func_8004C258 assemble a SPRT at
+         - drawBootLogo / func_8004BDE4 / func_8004C258 assemble a SPRT at
            0x000-0x013 (code 0x003, rgb 0x004-0x006, xy 0x008/0x00A,
            uv 0x00C/0x00D, clut 0x00E, wh 0x010/0x012) writing it field by field
            and reading it back word-wise to copy into the OT;
@@ -963,7 +963,9 @@ typedef struct scratchpad {
     /* 0x208 */ void**  freeObjects;
     /* 0x20C */ u_char  unk20C[0x2C];
     /* 0x238 */ short   freeObjectCount;
-    /* 0x23A */ u_char  unk23A[0x192];
+    /* 0x23A */ u_char  unk23A[0x162];
+    /* 0x39C */ u_short* unk39C;
+    /* 0x3A0 */ u_char  unk3A0[0x2C];
     /* 0x3CC */ u_char  unk3CC;
     /* 0x3CD */ u_char  unk3CD[5];
     /* 0x3D2 */ u_char  unk3D2;
@@ -1144,11 +1146,11 @@ typedef struct {
     u_char unkA5;
 } unkstruct_800A6D50;
 
-typedef struct unkstruct_800AFF18 {
-    short unk0;
-    short unk2;
+typedef struct SpriteSlot {
+    short id;
+    short refCount;
     char val[6];
-} unkstruct_800AFF18;
+} SpriteSlot;
 
 
 struct inventory {
@@ -2270,11 +2272,11 @@ extern int D_8007722C;
 extern int AP_TABLE[];
 extern u_char EVENT_STARTED_AP_TABLE[];
 extern u_char EVENT_COMPLETE_AP_TABLE[];
-extern int D_80077754;
-extern int D_80077758;
+extern CdlATV D_80077754;
+extern CdlATV D_80077758;
 extern u_char D_8007775C[];
 extern int  D_80077D50[];
-extern u_char D_80077FA8;
+extern u_char SOUND_INITIALIZED;
 extern short D_80078F80[];
 extern int D_8007912C[];
 extern u32 D_8007C6B0[];
@@ -2308,21 +2310,21 @@ extern DISPENV D_8009AFE8;
 extern u_char D_8009B000;
 extern u_char D_8009B004;
 extern u_char D_8009B008;
-extern int D_8009B010;
-extern int D_8009B018;
-extern int D_8009B024;
-extern int D_8009B028;
-extern int D_8009B02A;
-extern int D_8009B02C;
+extern int MOVIE_DEC_ENV;
+extern int MOVIE_DEC_VLCID;
+extern int MOVIE_DEC_IMGID;
+extern int MOVIE_DEC_RECT_X;
+extern int MOVIE_DEC_RECT_Y;
+extern int MOVIE_DEC_RECT_W;
 extern int D_8009B03C;
 extern SpuCommonAttr D_8009B048; // SPU_ATTR
-extern short D_8009B078;
-extern short D_8009B07C;
-extern short D_8009B094;
+extern short BGM_VOLUME;
+extern short BGM_FADE_ACTIVE;
+extern short PITCH_SLIDE_ACTIVE;
 extern u_char LZ_CURRENT_BIT;
 extern u_short LZ_BITMASK;
 extern byte D_8009B6A8; // SELECTED ROW
-extern short D_8009BC28[];
+extern short VOICE_PRIORITY[];
 extern u_char D_8009BC98[0x2C];
 extern u_char D_8009BCA0;
 extern u8   D_8009BCA2;
@@ -2349,17 +2351,17 @@ extern short D_8009C9DA;
 extern volatile u_short D_8009C9DC;
 extern short D_8009C9DE;
 extern char D_8009C9E4;
-extern short D_8009C9F0;
+extern short SOUND_QUEUE_COUNT;
 extern int D_8009CA04;
 extern u_long OT_FRAMEBUFFER;
-extern DRAWENV* D_8009D6C4;
+extern DRAWENV* DRAW_ENV_1;
 extern char D_8009D6DD;
 extern char D_8009D6DE;
 extern char D_8009D6DF;
 extern char D_8009E3ED;
 extern char D_8009E3EE;
 extern char D_8009E3EF;
-extern short D_8009E430;
+extern short JINGLE_SEQ_ID;
 extern char D_8009E450;
 extern void (*D_8007C68C[])(u8* self);
 extern void (*D_8007D6A4[])(u8* self);
@@ -2369,14 +2371,14 @@ extern void (*D_8007F988[])(void);
 extern void (*D_8007C848[])(void);
 extern u8*  D_8007B680[];
 extern u16  D_8009BCCA;
-extern s16  D_8009B074;
+extern s16  BGM_MUTED;
 extern u8   D_80014C94;
 extern u8   D_80014C8C;
 extern u8*  D_8009C974;
 extern int  D_8009E74C[];
 extern u8   D_800778E4[];
 extern u8   D_800778E5[];
-extern s32  D_80077AEC[];
+extern s32  SFX_BANKS[];
 extern s32  D_80078EB0[];
 extern u8   D_8009C61A;
 extern short D_8009C610;
@@ -2390,8 +2392,8 @@ extern u8*  D_8007EB44;
 extern u8   D_8009BCDD;
 extern u8   D_8009BCA4;
 extern u8   D_8009BCDE;
-extern s16  D_800A2818;
-extern s16  D_8009C9F8;
+extern s16  SFX_NOTE_OVERRIDE;
+extern s16  SFX_VOLUME_OVERRIDE;
 extern u8*  D_8007C110[];
 extern u8*  D_80077084[];
 extern u8   D_800B07CC[];
@@ -2419,7 +2421,7 @@ extern long MEMCARD_SW_END_IO;
 extern long MEMCARD_SW_END_ERROR;
 extern long MEMCARD_SW_TIMEOUT;
 extern long MEMCARD_SW_NEW_DEVICE;
-extern short D_8009E638;
+extern short SOUND_QUEUE_TAIL;
 extern u_short D_8009E744;
 extern int  D_8009E748[];
 extern int D_8009EB4C;
@@ -2433,9 +2435,9 @@ extern int D_8009EBA8;
 extern char* SPRINTF_BUFFER_MSG[];
 extern char D_800A15D8; // SPU_SEQ_TABLE
 extern char D_800A1890;
-extern short D_800A2790;
-extern short D_800A3030[];
-extern short D_800A32F8;
+extern short BGM_SEQ_ID;
+extern short VOICE_SFX_ID[];
+extern short SOUND_QUEUE_HEAD;
 extern byte D_800A3348[0x3D4];
 extern u_char D_800A38B8[];
 extern u_char D_800A3940[0x70];
@@ -2445,7 +2447,7 @@ extern unkstruct_1F8001D4* TASK_C;
 extern s16  D_1F8003B8;
 extern s16  D_1F8003BA;
 extern s32  D_8009BCBC;
-extern u8   D_8009E438[];
+extern u8   VOICE_KEY_STATUS[];
 extern s8   D_8009C618;
 extern u8   D_800A5403;
 extern s16  D_1F8000E6;
@@ -2495,7 +2497,7 @@ extern short D_800A3952;
 extern short D_800A3954;
 extern short D_800A3956;
 extern unkstruct_800A39B0 D_800A39B0[];
-extern unkstruct_800AFF18 D_800A5140[];
+extern SpriteSlot D_800A5140[];
 extern u_char D_800A5398[0x178];
 extern char D_800A539C;
 extern char D_800A539D;
@@ -2507,7 +2509,7 @@ extern u_short D_800A5432;
 extern u8   D_800A5462;
 extern int D_800A5858;
 extern int D_800A5970;
-extern unkstruct_800AFF18 D_800AFF18[];
+extern SpriteSlot SPRITE_SLOTS[];
 
 /* --- RAM / ROM data 0x800B____ --- */
 extern u_char D_800B00F8[0x16C];
@@ -2526,7 +2528,7 @@ extern char D_800B3188;
 extern int D_800D7188;
 
 /* --- Task table (0x801FD800) --- */
-extern unkstruct_1F8001D4* D_801FD800;
+extern unkstruct_1F8001D4* TASK_TABLE_BASE;
 extern int D_801FD804;
 extern int D_801FD808;
 extern int D_801FD80C;
@@ -2549,7 +2551,7 @@ void fontDebugPrintf(short x, short y, short color, char* fmt);
 void vblankHandler(void);
 void bootSequenceTask(void);
 void titleSequenceTask(void);
-void func_8001A51C(void);
+void gameTask(void);
 void moviePlayerTask(void);
 void mdecSliceCallback(void);
 void lzDecompress(byte* src, byte* dest);
@@ -2559,7 +2561,7 @@ void func_80125FE8(void);
 void func_8011F67C(void);
 void func_80126048(void);
 void func_8011F6DC(void);
-s32 func_80020058(s32 arg0, s32 arg1);
+s32 playSFXWithNote(s32 arg0, s32 arg1);
 void func_80034C14(u8* self);
 void func_8005B1F8(u8* self);
 void func_80036F98(u8* self);
@@ -2567,10 +2569,9 @@ void func_80122688(void);
 void func_8011D498(void);
 void func_8012298C(void);
 void func_8011D79C(void);
-int func_8003C124(u8 op);
-int func_8003E408(u8 op);
+int execCoreOpcode(u8 op);
+int execGameOpcode(u8 op);
 s16 func_80051284();
-void func_80076364(SpuReverbAttr* attr);
 u16 nextRandom(void);
 void func_800EBD5C(u8* arg0, s16 arg1, s16 arg2);
 void func_8006A9EC(u8* a, u8* b);
@@ -2598,8 +2599,8 @@ void func_8012C03C(void);
 void func_8012E2FC(void);
 void func_80123EC8(void);
 void func_80122A00(void);
-s32 func_8001FF28(void);
-s32 func_80020EEC(s32 a, s32 b);
+s32 allocSfxVoice();
+s32 queueSoundCommand();
 void func_80021340(void);
 // void applyAnimVelocityX(unkstruct_800A6D50* arg0, u16 arg1);
 

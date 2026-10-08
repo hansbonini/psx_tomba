@@ -13,8 +13,8 @@ void setSpawnAreaFlag(void)
 extern int** D_8007BF78[];
 extern u8 D_8009C617;
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_800242AC);
-void func_800242AC(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", loadSpawnPosition);
+void loadSpawnPosition(u8* self)
 {
     s16* row = (s16*)((u8*)D_8007BF78[GAME.selectedArea][GAME.selectedSection] + (u16)D_8009BCEA * 8);
 
@@ -55,8 +55,8 @@ typedef struct {
 
 extern VEC3 D_8009C61C;
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_800243E8);
-void func_800243E8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initPlayerAtSpawn);
+void initPlayerAtSpawn(void)
 {
     u8* p = D_800A5398;
     s16* row;
@@ -94,7 +94,7 @@ void func_800243E8(void)
         *dst |= 1 << r[1];
     }
     if (D_8009C618 == 3 || D_8009C617 == 0) {
-        func_800242AC(p);
+        loadSpawnPosition(p);
         *(s16*)(p + 0x12) = *(u16*)(p + 0xEE);
         *(s16*)(p + 0x16) -= 0x104;
     } else if ((CURRENT_TASK)->loadGameSelected != 0) {
@@ -154,10 +154,10 @@ void getBaseMatrix(MATRIX* dst)
     return;
 }
 
-void func_80024BD4(u8* self);
+void applyLighting(u8* self);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_80024B3C);
-void func_80024B3C(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initLighting);
+void initLighting(u8* self)
 {
     *(s16*)(self + 0x44) = 0x638;
     *(s16*)(self + 0x46) = 0x800;
@@ -169,11 +169,11 @@ void func_80024B3C(u8* self)
     self[0x40] = 0xC0;
     self[0x41] = 0xC0;
     self[0x42] = 0xC0;
-    func_80024BD4(self);
+    applyLighting(self);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", func_80024BD4);
-void func_80024BD4(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", applyLighting);
+void applyLighting(u8* self)
 {
     SVECTOR v;
     VECTOR out;

@@ -23,7 +23,7 @@ typedef struct optsubRequest {
 } optsubRequest;
 
 extern u8    D_800E9DD4;
-extern void* D_8009C998;
+extern void* SEQ_DATA;
 extern s16   D_800EA36C;
 extern s16   D_800EA370;
 extern s16   D_800EA374;
@@ -44,7 +44,7 @@ INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E7D5C);
 void func_800E7D5C(void)
 {
-    D_8009C998 = &D_800E9C64;
+    SEQ_DATA = &D_800E9C64;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E7D74);

@@ -80,7 +80,7 @@ u_char addItemToInventory(u_long item_id, u_char qty, bool printMessage)
     GAME.item[item_id] = qty;
     GAME.inventory.counter += 1;
     playSFX(10);
-    GAME.inventory.sortMode |= SORT_MODE_DEFAULT;
+    GAME.inventory.sortMode |= INVENTORY_SORT_MODE_DEFAULT;
     return GAME.item[item_id];
 }
 

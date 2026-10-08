@@ -70,14 +70,14 @@ void initGameConfig(void)
             GAME.item[ITEM_100YEAROLDKEY] = 1;
             GAME.item[ITEM_1000YEAROLDKEY] = 1;
             GAME.item[ITEM_FUNKYPARASOL] = 1;
-            GAME.inventory.sortMode = SORT_MODE_DEFAULT;
+            GAME.inventory.sortMode = INVENTORY_SORT_MODE_DEFAULT;
         } else {
             GAME.inventory.slots[0] = ITEM_BLACKJACK;
             GAME.inventory.slots[1] = ITEM_NORMALPANTS;
             GAME.inventory.counter = 2;
             GAME.item[ITEM_BLACKJACK] = 1;
             GAME.item[ITEM_NORMALPANTS] = 1;
-            GAME.inventory.sortMode = SORT_MODE_DEFAULT;
+            GAME.inventory.sortMode = INVENTORY_SORT_MODE_DEFAULT;
         }
     }
     return;
@@ -94,7 +94,7 @@ void initHud(void)
     *(s8* )0x1F8003D0 = 0;
     GAME.playerIdleState = 0;
     initAreaScripts();
-    func_80020CB0();
+    restoreAreaBgmVolume();
     
     tmp = D_800B07AC;
     *tmp++ = (GAME.playerAP / 10000000) % 10;
@@ -760,8 +760,8 @@ void pushDrawListMain(s32 arg0)
     D_1F800246++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", func_80018C40);
-void func_80018C40(s32 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", pushDrawListCapped);
+void pushDrawListCapped(s32 arg0)
 {
     if (D_1F80024A < 0x56) {
         *--D_1F800220 = arg0;
@@ -810,8 +810,8 @@ void initSpriteSlots(void)
     
     for (i = 0; i < 60; i++) {
         D_800A5140[i].val[0] = u;
-        D_800A5140[i].unk0 = -1;
-        D_800A5140[i].unk2 = 0;
+        D_800A5140[i].id = -1;
+        D_800A5140[i].refCount = 0;
         D_800A5140[i].val[1] = v;
         D_800A5140[i].val[2] = 4;
         D_800A5140[i].val[3] = 16;
@@ -843,14 +843,14 @@ void initSpriteSlots8(void)
     v = 0x9E;
     
     for (i = 0; i < 48; i++) {
-        D_800AFF18[i].val[0] = u;
-        D_800AFF18[i].unk0 = -1;
-        D_800AFF18[i].unk2 = 0;
-        D_800AFF18[i].val[1] = v;
-        D_800AFF18[i].val[2] = 4;
-        D_800AFF18[i].val[3] = 24;
-        D_800AFF18[i].val[4] = 0;
-        D_800AFF18[i].val[5] = 0;
+        SPRITE_SLOTS[i].val[0] = u;
+        SPRITE_SLOTS[i].id = -1;
+        SPRITE_SLOTS[i].refCount = 0;
+        SPRITE_SLOTS[i].val[1] = v;
+        SPRITE_SLOTS[i].val[2] = 4;
+        SPRITE_SLOTS[i].val[3] = 24;
+        SPRITE_SLOTS[i].val[4] = 0;
+        SPRITE_SLOTS[i].val[5] = 0;
 
         u += 4;
         

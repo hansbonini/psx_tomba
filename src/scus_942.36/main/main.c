@@ -2,6 +2,9 @@
 #include "game.h"
 #include "psyq/libcd.h"
 
+u_long _ramsize = 0x00200000;
+u_long _stacksize = 0x00000400;
+
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", main);
 void main(void)
@@ -79,16 +82,16 @@ void main(void)
         }
 
         switch (MOVIE_PLAY_STATE) {
-            case MOVIE_PLAYING:
+            case MOVIE_STATE_PLAYING:
                 break;
-            case MOVIE_IDLE:
-            case MOVIE_STARTING:
+            case MOVIE_STATE_IDLE:
+            case MOVIE_STATE_STARTING:
                 if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
                     tickTaskTimers();
                 }
                 break;
-            case MOVIE_ENDING:
+            case MOVIE_STATE_ENDING:
                 *(u8*)(&SCRATCHPAD+0x1CC) = 2;
                 if (PAUSE_FLAGS <= 0x4000) {
                     flipFrameBuffer();
@@ -98,10 +101,10 @@ void main(void)
         }
 
         if (*(u8*)0x1F8001BF != 0) {
-            if ((MOVIE_PLAY_STATE == MOVIE_IDLE) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
+            if ((MOVIE_PLAY_STATE == MOVIE_STATE_IDLE) && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
                 *(u16*)(&SCRATCHPAD+0x1F0) = (u16)(0x8000 - PAUSE_FLAGS);
             }
-        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == MOVIE_IDLE && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
+        } else if (*(u8*)0x1F8001BE != 0 && MOVIE_PLAY_STATE == MOVIE_STATE_IDLE && ((*(u8*)0x1F8001D1 | *(u8*)0x1F8001D0) != 0)) {
             dbgMode = LOAD_COMPLETE;
             if (dbgMode == 1) {
                 joypad_state = JOYPAD_STATE;
@@ -222,7 +225,7 @@ void initGraphics(void)
     camera->vpx = 0;
     camera->vpy = 0;
     camera->vpz = 0;
-    func_80024B3C((MATRIX*)(&D_1F800118));
+    initLighting((MATRIX*)(&D_1F800118));
     initDisplay(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
     ClearImage(&rect, 0U, 0U, 0U);
@@ -240,10 +243,10 @@ void initDisplay(u_char r0, u_char g0, u_char b0)
     DRAWENV* drawenv1;
     DRAWENV* drawenv2;
 
-    drawenv1 = (DRAWENV*)&D_8009D6C4;
-    dispenv1 = (DISPENV*)((byte*)(&D_8009D6C4) - sizeof(DISPENV));
-    drawenv2 = (DRAWENV*)((byte*)(&D_8009D6C4) + 0xD10);
-    dispenv2 = (DISPENV*)((byte*)(&D_8009D6C4) + 0xD10 - sizeof(DISPENV));
+    drawenv1 = (DRAWENV*)&DRAW_ENV_1;
+    dispenv1 = (DISPENV*)((byte*)(&DRAW_ENV_1) - sizeof(DISPENV));
+    drawenv2 = (DRAWENV*)((byte*)(&DRAW_ENV_1) + 0xD10);
+    dispenv2 = (DISPENV*)((byte*)(&DRAW_ENV_1) + 0xD10 - sizeof(DISPENV));
     SetDefDrawEnv(drawenv1, 384, 256, 320, 224);
     SetDefDispEnv(dispenv1, 704, 256, 320, 224);
     SetDefDrawEnv(drawenv2, 704, 256, 320, 224);
@@ -270,10 +273,10 @@ void initDisplay2x(u_char r0, u_char g0, u_char b0)
     DRAWENV* drawenv1;
     DRAWENV* drawenv2;
 
-    drawenv1 = (DRAWENV*)&D_8009D6C4;
-    dispenv1 = (DISPENV*)((byte*)(&D_8009D6C4) - sizeof(DISPENV));
-    drawenv2 = (DRAWENV*)((byte*)(&D_8009D6C4) + 0xD10);
-    dispenv2 = (DISPENV*)((byte*)(&D_8009D6C4) + 0xD10 - sizeof(DISPENV));
+    drawenv1 = (DRAWENV*)&DRAW_ENV_1;
+    dispenv1 = (DISPENV*)((byte*)(&DRAW_ENV_1) - sizeof(DISPENV));
+    drawenv2 = (DRAWENV*)((byte*)(&DRAW_ENV_1) + 0xD10);
+    dispenv2 = (DISPENV*)((byte*)(&DRAW_ENV_1) + 0xD10 - sizeof(DISPENV));
     SetDefDrawEnv(drawenv1, 384, 0, 640, 480);
     SetDefDispEnv(dispenv1, 384, 0, 640, 480);
     SetDefDrawEnv(drawenv2, 384, 0, 640, 480);

@@ -2,11 +2,37 @@
 #include "game.h"
 #include "psyq/libcd.h"
 
+short D_80077728[0x16] = {
+    1414, 366, 316, 467, 110, 152, 181, 181,
+    182, 227, 230, 227, 157, 231, 232, 232,
+    232, 232, 232, 316, 943, 94
+};
+
+CdlATV D_80077754 = { 0x7F, 0, 0x7F, 0 };
+
+CdlATV D_80077758 = { 0, 0, 0, 0 };
+
+u_char D_8007775C[0x18] = {
+    2, 3, 0, 1, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF,
+    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x15, 0x15
+};
+
 
 extern short D_80077728[];
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001EFE8);
-int func_8001EFE8(int* dec)
+typedef struct {
+    u_long* vlcbuf[2];
+    int vlcid;
+    u_short* imgbuf[2];
+    int imgid;
+    RECT rect[2];
+    int rectid;
+    RECT slice;
+    int isdone;
+} DecEnv;
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", movieDecodeNextFrame);
+int movieDecodeNextFrame(DecEnv* dec)
 {
     u_long* addr;
     StHEADER* header;
@@ -22,21 +48,21 @@ int func_8001EFE8(int* dec)
             CdMix(&D_80077758);
         }
         if (*(&SCRATCHPAD + 0x1CD) == 0x15 && (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4))->loadGameSelected == 0 && header->frameCount >= 0xF) {
-            func_80020AF0(0);
+            startBgmTrack(0);
             (CURRENT_TASK)->loadGameSelected = 1;
         }
         next = addr;
-        *(s16*)((u8*)dec + 0x1C) = *(s16*)((u8*)dec + 0x24) = header->width;
-        *(s16*)((u8*)dec + 0x1E) = *(s16*)((u8*)dec + 0x26) = header->height;
-        *(s16*)((u8*)dec + 0x32) = header->height;
+        dec->rect[0].w = dec->rect[1].w = header->width;
+        dec->rect[0].h = dec->rect[1].h = header->height;
+        dec->slice.h = header->height;
     } while (0);
 
     if (next == NULL) {
         asm("" : : : "$16");
         return 0;
     }
-    dec[2] = 1 - dec[2];
-    DecDCTvlc(next, (u_long*)dec[dec[2]]);
+    dec->vlcid = 1 - dec->vlcid;
+    DecDCTvlc(next, dec->vlcbuf[dec->vlcid]);
     StFreeRing(next);
     (CURRENT_TASK)->unk4E.value = 1;
     return 1;
@@ -58,7 +84,7 @@ void moviePlayerTask(void)
     unkstruct_1F8001D4* gameControlTemp;
 
     gameControl = CURRENT_TASK;
-    MOVIE_PLAY_STATE = MOVIE_STARTING;
+    MOVIE_PLAY_STATE = MOVIE_STATE_STARTING;
     gameControl->state0 = 0;
     gameControl->unk4E.value = 0;
     gameControl->loadGameSelected = 0;
@@ -71,41 +97,41 @@ void moviePlayerTask(void)
         state = gameControlTemp->state0;
         switch (state) {
             case 0:
-                func_8001F5D0(&D_8009B010, 384, 256, 704, 256);
+                movieInitDecodeEnv((DecEnv*)&MOVIE_DEC_ENV, 384, 256, 704, 256);
                 startMovieStream((int)&D_800791A0[D_80078F80[D_8007775C[MOVIE_ID]]]);
                 gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
                 gameControl->state0+=1;
                 do {
-                } while (func_8001EFE8(&D_8009B010) == 0);
+                } while (movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV) == 0);
                 break;
             case 1:
-                MOVIE_PLAY_STATE = MOVIE_PLAYING;
+                MOVIE_PLAY_STATE = MOVIE_STATE_PLAYING;
                 gameControlTemp->state0 = 2;
             case 2:
                 while ((CURRENT_TASK)->unk4E.value == 0) {
-                    func_8001EFE8(&D_8009B010);
+                    movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV);
                 }
-                DecDCTin(*(D_8009B018 + &D_8009B010), 2);
-                *(int*)&D_8009B034->disp.w = FRAME_BUFFER_INDEX;
-                D_8009B034->screen.x = ((short*)&D_8009B028)[(FRAME_BUFFER_INDEX) * 4];
-                D_8009B034->screen.y = ((short*)&D_8009B02A)[(FRAME_BUFFER_INDEX) * 4];
+                DecDCTin(*(MOVIE_DEC_VLCID + &MOVIE_DEC_ENV), 2);
+                *(int*)&MOVIE_DEC_DISPENV->disp.w = FRAME_BUFFER_INDEX;
+                MOVIE_DEC_DISPENV->screen.x = ((short*)&MOVIE_DEC_RECT_X)[(FRAME_BUFFER_INDEX) * 4];
+                MOVIE_DEC_DISPENV->screen.y = ((short*)&MOVIE_DEC_RECT_Y)[(FRAME_BUFFER_INDEX) * 4];
                 DecDCTout(
-                    *(u_long**)&D_8009B01C[D_8009B024],
-                    (D_8009B034->screen.w * D_8009B034->screen.h) / 2
+                    *(u_long**)&MOVIE_DEC_IMGBUF[MOVIE_DEC_IMGID],
+                    (MOVIE_DEC_DISPENV->screen.w * MOVIE_DEC_DISPENV->screen.h) / 2
                 );
                 (CURRENT_TASK)->unk4E.value = 0;
-                while (func_8001EFE8(&D_8009B010) == 0) {
-                    if (*(int*)&D_8009B034->isinter == 1) {
+                while (movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV) == 0) {
+                    if (*(int*)&MOVIE_DEC_DISPENV->isinter == 1) {
                         break;
                     }
                 }
-                if (*(int*)&D_8009B034->isinter == 0) {
+                if (*(int*)&MOVIE_DEC_DISPENV->isinter == 0) {
                     do {
-                    } while (*(int*)&D_8009B034->isinter == 0);
+                    } while (*(int*)&MOVIE_DEC_DISPENV->isinter == 0);
                 }
                 SetDispMask(1);
-                *(int*)&D_8009B034->isinter = 0;
-                MOVIE_PLAY_STATE = MOVIE_ENDING;
+                *(int*)&MOVIE_DEC_DISPENV->isinter = 0;
+                MOVIE_PLAY_STATE = MOVIE_STATE_ENDING;
                 *(short* )0x1F8001E8 = 0;
                 break;
             case 3:
@@ -113,7 +139,7 @@ void moviePlayerTask(void)
                 StUnSetRing();
                 StClearRing();
                 CdControlB(CdlPause, 0, 0);
-                MOVIE_PLAY_STATE = MOVIE_IDLE;
+                MOVIE_PLAY_STATE = MOVIE_STATE_IDLE;
                 *(char* )(&SCRATCHPAD+0x1D3) = 0;
                 exitTask();
                 break;
@@ -125,61 +151,61 @@ void moviePlayerTask(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", mdecSliceCallback);
 void mdecSliceCallback(void)
 {
-    u_long* sliceRect = &D_8009B034->screen;
+    u_long* sliceRect = &MOVIE_DEC_DISPENV->screen;
     u_long* mdecImage = sliceRect - 0x8;
     int sliceSize;
     short screenX;
     int temp_v1;
     
-    LoadImage(sliceRect, *(u_long**)&mdecImage[D_8009B024]);
-    D_8009B024 = 1 - D_8009B024;
-    screenX = D_8009B034->screen.x;
-    D_8009B034->screen.x += 0x10;
+    LoadImage(sliceRect, *(u_long**)&mdecImage[MOVIE_DEC_IMGID]);
+    MOVIE_DEC_IMGID = 1 - MOVIE_DEC_IMGID;
+    screenX = MOVIE_DEC_DISPENV->screen.x;
+    MOVIE_DEC_DISPENV->screen.x += 0x10;
 
     asm("");
-    temp_v1 = *(int*)&D_8009B034->disp.w * 4;
+    temp_v1 = *(int*)&MOVIE_DEC_DISPENV->disp.w * 4;
     asm("");
 
     if (
-            D_8009B034->screen.x <
+            MOVIE_DEC_DISPENV->screen.x <
             (
-                (((short*)&D_8009B028)[temp_v1]) +
-                (((short*)&D_8009B02C)[temp_v1])
+                (((short*)&MOVIE_DEC_RECT_X)[temp_v1]) +
+                (((short*)&MOVIE_DEC_RECT_W)[temp_v1])
             )
     ) {
-        sliceSize = (D_8009B034->screen.w * D_8009B034->screen.h) / 2;
+        sliceSize = (MOVIE_DEC_DISPENV->screen.w * MOVIE_DEC_DISPENV->screen.h) / 2;
         DecDCTout(
-            *(u_long**)&mdecImage[D_8009B024],
+            *(u_long**)&mdecImage[MOVIE_DEC_IMGID],
             sliceSize
         );
         return;
     }
-    *(int*)&D_8009B034->isinter = 1;
-    D_8009B034->screen.x = screenX;
+    *(int*)&MOVIE_DEC_DISPENV->isinter = 1;
+    MOVIE_DEC_DISPENV->screen.x = screenX;
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", func_8001F5D0);
-void func_8001F5D0(u8* arg0, s32 arg1, s32 arg2, s32 arg3)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", movieInitDecodeEnv);
+void movieInitDecodeEnv(DecEnv* dec, s32 x0, s32 y0, s32 x1)
 {
-    register s32 arg4 asm("$3");
+    register s32 y1 asm("$3");
 
-    *(int*)arg0 = (int)&D_800B3188;
-    *(int*)(arg0 + 4) = (int)&D_800C3188;
-    *(int*)(arg0 + 0xC) = (int)&D_800D3188;
-    *(int*)(arg0 + 0x10) = (int)&D_800D5188;
-    *(int*)(arg0 + 8) = 0;
-    *(int*)(arg0 + 0x14) = 0;
-    *(s16*)(arg0 + 0x18) = arg1;
-    *(s16*)(arg0 + 0x1A) = arg2;
-    *(s16*)(arg0 + 0x20) = arg3;
-    *(int*)(arg0 + 0x34) = 0;
-    *(s16*)(arg0 + 0x30) = 0x10;
+    dec->vlcbuf[0] = (u_long*)&D_800B3188;
+    dec->vlcbuf[1] = (u_long*)&D_800C3188;
+    dec->imgbuf[0] = (u_short*)&D_800D3188;
+    dec->imgbuf[1] = (u_short*)&D_800D5188;
+    dec->vlcid = 0;
+    dec->imgid = 0;
+    dec->rect[0].x = x0;
+    dec->rect[0].y = y0;
+    dec->rect[1].x = x1;
+    dec->isdone = 0;
+    dec->slice.w = 0x10;
     asm("");
-    asm("lw $3, 16($sp)" : "=r"(arg4));
+    asm("lw $3, 16($sp)" : "=r"(y1));
     asm("");
-    *(s16*)(arg0 + 0x32) = 0xE0;
-    *(s16*)(arg0 + 0x22) = arg4;
+    dec->slice.h = 0xE0;
+    dec->rect[1].y = y1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", startMovieStream);

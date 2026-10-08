@@ -62,8 +62,8 @@ static inline void opLoop(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", func_8003C124);
-int func_8003C124(u8 op)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", execCoreOpcode);
+int execCoreOpcode(u8 op)
 {
     unkstruct_8009E458* self = D_8009E458;
     int ret;
@@ -251,14 +251,14 @@ void scriptRunOpcode(void)
     u8  op = script[p->pc];
 
     if (op < 0x80) {
-        func_8003C124(op);
+        execCoreOpcode(op);
     } else {
-        func_8003E408(op);
+        execGameOpcode(op);
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", func_8003C604);
-u_char func_8003C604(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", runScript);
+u_char runScript(void)
 {
     unkstruct_8009E458* p;
     int ret;
@@ -279,16 +279,16 @@ u_char func_8003C604(void)
         u8 op = script[q->pc];
 
         if (op < 0x80) {
-            ret = func_8003C124(op);
+            ret = execCoreOpcode(op);
         } else {
-            ret = func_8003E408(op);
+            ret = execGameOpcode(op);
         }
     } while (ret != 0);
     return p->state;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", func_8003C6C0);
-u_char func_8003C6C0(unkstruct_8009E458* ctx)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", runScriptContext);
+u_char runScriptContext(unkstruct_8009E458* ctx)
 {
     unkstruct_8009E458* p;
     u8* base;
@@ -313,9 +313,9 @@ u_char func_8003C6C0(unkstruct_8009E458* ctx)
         u8 op = script[q->pc];
 
         if (op < 0x80) {
-            ret = func_8003C124(op);
+            ret = execCoreOpcode(op);
         } else {
-            ret = func_8003E408(op);
+            ret = execGameOpcode(op);
         }
     } while (ret != 0);
     return p->state;
@@ -326,8 +326,8 @@ extern u8 D_8009C120;
 extern u8 D_8009C121;
 extern u8 D_8009C245;
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", func_8003C78C);
-void func_8003C78C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", loadAreaSoundBank);
+void loadAreaSoundBank(void)
 {
     D_8009CA04 = 0;
     switch (GAME.selectedArea + (u16)D_8009EBA0) {

@@ -14,6 +14,23 @@ typedef struct {
 
 extern UiSpriteDef D_8007B30C[];
 
+UiSpriteDef D_8007B2F4_data[2] asm("D_8007B2F4") = {
+    { 0x70, 0, 0x30, 0x30, 0x30, 0x47 },
+    { 0xA0, 0, 0x30, 0x30, 0x30, 0x47 }
+};
+
+asm(".globl D_8007B2F6\nD_8007B2F6 = D_8007B2F4 + 2");
+asm(".globl D_8007B2F8\nD_8007B2F8 = D_8007B2F4 + 4");
+asm(".globl D_8007B2FA\nD_8007B2FA = D_8007B2F4 + 6");
+asm(".globl D_8007B2FC\nD_8007B2FC = D_8007B2F4 + 8");
+asm(".globl D_8007B2FE\nD_8007B2FE = D_8007B2F4 + 10");
+
+UiSpriteDef D_8007B30C[3] = {
+    { 0, 0, 0x70, 0x47, 0x10, 0x47 },
+    { 0xB8, 0xC0, 0x28, 0x10, 0x160, 0x1FD },
+    { 0xB8, 0xD0, 0x38, 0x10, 0x160, 0x1FD }
+};
+
 void drawUiSprite(short x, short y, short sprt_id);
 void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4);
 
@@ -34,7 +51,7 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
         setcode(sprt, 0x75);
         setRGB0(sprt, 128, 128, 128);
         setXY0(sprt, x, y);
-        sprt->code = (u_char) (sprt->code & 0xFD);
+        setSemiTrans(sprt, 0);
         setUV0(sprt, (*fmt & 0xF) << 3, (*fmt >> 4) << 3);
         setClut(sprt, 0x170, color + 0x1F0);
         dst = D_8009C8A8;
@@ -113,7 +130,7 @@ void drawUiSprite(short x, short y, short sprt_id)
     setRGB0(sprt, 128, 128, 128);
     sprt_ofs = sprt_id * 0x3;
     setXY0(sprt, x, y);
-    sprt->code = (u_char) (sprt->code & 0xFD);
+    setSemiTrans(sprt, 0);
     setUV0(sprt, *(u_short*)&D_8007B2F4[sprt_ofs], *(u_short*)(&D_8007B2F6[sprt_ofs]));
     setWH(sprt, *(u_short*)(&D_8007B2F8[sprt_ofs]), *(u_short*)(&D_8007B2FA[sprt_ofs]));
     setClut(sprt, (short) *(&D_8007B2FC[sprt_ofs]), (short) *(&D_8007B2FE[sprt_ofs]));
@@ -138,10 +155,9 @@ void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4)
     }
 
     poly = D_8009C8A8;
-    setlen(poly, 9);
-    setcode(poly, 0x2C);
+    setPolyFT4(poly);
     setRGB0(poly, 128, 128, 128);
-    poly->code = (u_char) (poly->code & 0xFD);
+    setSemiTrans(poly, 0);
     poly->x0 = x - pad;
     poly->y0 = y - pad;
     w = D_8007B30C[sprt_id].w;

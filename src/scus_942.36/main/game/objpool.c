@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80057C3C);
-void func_80057C3C(u8* self, s16 arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", setAnimation);
+void setAnimation(u8* self, s16 arg1)
 {
     *(s16*)(self + 0xAC) = arg1;
     *(s32*)(self + 0x24) =
