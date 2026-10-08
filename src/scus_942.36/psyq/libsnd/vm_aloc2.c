@@ -142,4 +142,6 @@ void _SsVmDoAllocate(void) {
     _svm_sreg_dirty[_svm_cur.voice] |= 0x30;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_aloc2", _SsVmDamperOff);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_aloc2", _SsVmDamperOff);
+
+void _SsVmDamperOff(void) { _svm_damper = 0; }

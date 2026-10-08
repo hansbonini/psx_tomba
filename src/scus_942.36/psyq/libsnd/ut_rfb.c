@@ -15,4 +15,6 @@ void SsUtSetReverbFeedback(s16 feedback) {
 
 void SsUtReverbOff(void) { SpuSetReverb(0); }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/ut_rfb", func_80070884);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/ut_rfb", SsUtReverbOn);
+
+void SsUtReverbOn(void) { SpuSetReverb(1); }

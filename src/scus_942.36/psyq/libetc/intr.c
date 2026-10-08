@@ -1,5 +1,13 @@
 #include "common.h"
 
+#define JB_SP 1
+extern int setjmp(jmp_buf);
+long long startIntrDMA();
+void* startIntrVSync();
+void trapIntr();
+static void memclr(s32* mem, int len);
+void memclr(s32* mem, int len);
+
 typedef int jmp_buf[12];
 struct Intr {
     u16 unk0;
@@ -74,7 +82,27 @@ int SetIntrMask(int mask) {
     return prev;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr", startIntr);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr", startIntr);
+
+void* startIntr(void) {
+    if (D_80096418.unk0) {
+        return NULL;
+    }
+    *D_800974A4 = *D_800974A8 = 0;
+    *D_800974AC = 0x33333333;
+    memclr(&D_80096418, sizeof(D_80096418) / sizeof(s32));
+    if (setjmp(D_80096418.env)) {
+        trapIntr();
+    }
+    D_80096418.env[JB_SP] = &D_80096418.stack[0x3EC];
+    HookEntryInt(D_80096418.env);
+    D_80096418.unk0 = 1;
+    D_800974A0->unk14 = startIntrVSync();
+    D_800974A0->cb = startIntrDMA();
+    _96_remove();
+    ExitCriticalSection();
+    return &D_80096418.unk0;
+}
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/psyq/libetc/intr", D_800161F8);
 
@@ -125,7 +153,7 @@ void memclr(s32* mem, int len) {
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr", func_80068534);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr", func_8006853C);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/intr", _96_remove);
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/psyq/libetc/intr", D_80016264);
 

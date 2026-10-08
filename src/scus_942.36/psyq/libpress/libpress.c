@@ -1,5 +1,20 @@
 #include "common.h"
 
+extern u_int volatile* d1_madr;
+extern u_int volatile* d1_bcr;
+
+extern u_int volatile* d0_madr;
+extern u_int volatile* d0_bcr;
+extern u_int volatile* d0_chcr;
+extern u_int volatile* mdec0;
+extern u_int volatile* d_pcr;
+
+extern u_int volatile* d1_chcr;
+static int timeout(char* arg0);
+int timeout(char* arg0);
+
+extern volatile u_long* mdec1;
+
 typedef struct {
     u_char iq_y[64];
     u_char iq_c[64];
@@ -117,17 +132,87 @@ int DecDCTinCallback(void (*cb)()) { return DMACallback(0, cb); }
 
 int DecDCToutCallback(void (*cb)()) { return DMACallback(1, cb); }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_reset);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_reset);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_in);
+void MDEC_reset(int mode) {
+    switch (mode) {
+    case 0:
+        *mdec1 = 0x80000000;
+        *d0_chcr = 0;
+        *d1_chcr = 0;
+        *mdec1 = 0x60000000;
+        MDEC_in((u_long*)mdec_iq, 32);
+        MDEC_in((u_long*)mdec_coef, 32);
+        return;
+    case 1:
+        *mdec1 = 0x80000000;
+        *d0_chcr = 0;
+        *d1_chcr = 0;
+        *d1_chcr;
+        *mdec1 = 0x60000000;
+        return;
+    default:
+        printf("MDEC_rest:bad option(%d)\n", mode);
+        return;
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_out);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_in);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_in_sync);
+void MDEC_in(u_long* buf, int size) {
+    MDEC_in_sync();
+    *d_pcr |= 0x88;
+    *d0_madr = (u_int)(buf + 1);
+    *d0_bcr = (((u_int)size >> 5) << 0x10) | 0x20;
+    *mdec0 = *buf;
+    *d0_chcr = 0x01000201;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_out_sync);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_out);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_status);
+void MDEC_out(u_long* buf, int size) {
+    MDEC_out_sync();
+    *d_pcr |= 0x88;
+    *d1_chcr = 0;
+    *d1_madr = (u_int)buf;
+    *d1_bcr = (((u_int)size >> 5) << 0x10) | 0x20;
+    *d1_chcr = 0x01000200;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_in_sync);
+
+int MDEC_in_sync(void) {
+    volatile int retries = 0x100000;
+
+    while (*mdec1 & 0x20000000) {
+        if (--retries == -1) {
+            timeout("MDEC_in_sync");
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_out_sync);
+
+int MDEC_out_sync(void)
+{
+    volatile int retries = 0x100000;
+
+    while (*d1_chcr & 0x01000000) {
+        if (--retries == -1) {
+            timeout("MDEC_out_sync");
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", MDEC_status);
+
+u_long MDEC_status(void) { return *mdec1; }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", timeout);
 
