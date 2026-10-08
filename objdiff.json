@@ -12,6 +12,7 @@
       "target_path": "expected/asm/scus_942.36/main/main.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -22,6 +23,7 @@
       "target_path": "expected/asm/scus_942.36/main/audio/sound.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -32,6 +34,7 @@
       "target_path": "expected/asm/scus_942.36/main/game/actor1.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -42,6 +45,51 @@
       "target_path": "expected/asm/scus_942.36/main/game/actor2.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/areainit",
+      "base_path": "build/src/scus_942.36/main/game/areainit.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/areainit.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/areamisc",
+      "base_path": "build/src/scus_942.36/main/game/areamisc.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/areamisc.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/collision",
+      "base_path": "build/src/scus_942.36/main/game/collision.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/collision.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/effect",
+      "base_path": "build/src/scus_942.36/main/game/effect.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/effect.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -52,6 +100,7 @@
       "target_path": "expected/asm/scus_942.36/main/game/entity.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -62,6 +111,7 @@
       "target_path": "expected/asm/scus_942.36/main/game/event.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -72,6 +122,18 @@
       "target_path": "expected/asm/scus_942.36/main/game/gameinit.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/gamestate",
+      "base_path": "build/src/scus_942.36/main/game/gamestate.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/gamestate.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -82,6 +144,7 @@
       "target_path": "expected/asm/scus_942.36/main/game/inventory.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -92,16 +155,7 @@
       "target_path": "expected/asm/scus_942.36/main/game/itemspawn.s.o",
       "metadata": {
         "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/game/menu",
-      "base_path": "build/src/scus_942.36/main/game/menu.c.o",
-      "target_path": "expected/asm/scus_942.36/main/game/menu.s.o",
-      "metadata": {
-        "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -112,6 +166,51 @@
       "target_path": "expected/asm/scus_942.36/main/game/message.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/objlogic",
+      "base_path": "build/src/scus_942.36/main/game/objlogic.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/objlogic.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/objpool",
+      "base_path": "build/src/scus_942.36/main/game/objpool.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/objpool.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/objsetup",
+      "base_path": "build/src/scus_942.36/main/game/objsetup.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/objsetup.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/game/objutil",
+      "base_path": "build/src/scus_942.36/main/game/objutil.c.o",
+      "target_path": "expected/asm/scus_942.36/main/game/objutil.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -122,6 +221,7 @@
       "target_path": "expected/asm/scus_942.36/main/game/reward.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -132,6 +232,7 @@
       "target_path": "expected/asm/scus_942.36/main/render/actorrender1.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -142,6 +243,7 @@
       "target_path": "expected/asm/scus_942.36/main/render/actorrender2.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -152,6 +254,7 @@
       "target_path": "expected/asm/scus_942.36/main/render/actorrender3.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -162,16 +265,18 @@
       "target_path": "expected/asm/scus_942.36/main/render/camera.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
     },
     {
-      "name": "scus_942.36/main/render/font",
-      "base_path": "build/src/scus_942.36/main/render/font.c.o",
-      "target_path": "expected/asm/scus_942.36/main/render/font.s.o",
+      "name": "scus_942.36/main/render/drawutil",
+      "base_path": "build/src/scus_942.36/main/render/drawutil.c.o",
+      "target_path": "expected/asm/scus_942.36/main/render/drawutil.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -182,6 +287,7 @@
       "target_path": "expected/asm/scus_942.36/main/render/matrix.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -192,6 +298,7 @@
       "target_path": "expected/asm/scus_942.36/main/render/sprite.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -202,6 +309,7 @@
       "target_path": "expected/asm/scus_942.36/main/render/ui.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -212,6 +320,7 @@
       "target_path": "expected/asm/scus_942.36/main/system/boot.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -222,6 +331,7 @@
       "target_path": "expected/asm/scus_942.36/main/system/cdfile.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -232,26 +342,40 @@
       "target_path": "expected/asm/scus_942.36/main/system/gfxinit.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
     },
     {
-      "name": "scus_942.36/main/system/lz",
-      "base_path": "build/src/scus_942.36/main/system/lz.c.o",
-      "target_path": "expected/asm/scus_942.36/main/system/lz.s.o",
+      "name": "scus_942.36/main/system/script",
+      "base_path": "build/src/scus_942.36/main/system/script.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/script.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
     },
     {
-      "name": "scus_942.36/main/system/resource",
-      "base_path": "build/src/scus_942.36/main/system/resource.c.o",
-      "target_path": "expected/asm/scus_942.36/main/system/resource.s.o",
+      "name": "scus_942.36/main/system/scriptexec",
+      "base_path": "build/src/scus_942.36/main/system/scriptexec.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/scriptexec.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
+          "main"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/main/system/scriptop",
+      "base_path": "build/src/scus_942.36/main/system/scriptop.c.o",
+      "target_path": "expected/asm/scus_942.36/main/system/scriptop.s.o",
+      "metadata": {
+        "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -262,96 +386,7 @@
       "target_path": "expected/asm/scus_942.36/main/system/task.s.o",
       "metadata": {
         "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp10",
-      "base_path": "build/src/scus_942.36/main/unk/temp10.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp10.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp14",
-      "base_path": "build/src/scus_942.36/main/unk/temp14.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp14.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp15",
-      "base_path": "build/src/scus_942.36/main/unk/temp15.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp15.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp5",
-      "base_path": "build/src/scus_942.36/main/unk/temp5.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp5.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp6",
-      "base_path": "build/src/scus_942.36/main/unk/temp6.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp6.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp7",
-      "base_path": "build/src/scus_942.36/main/unk/temp7.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp7.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp8",
-      "base_path": "build/src/scus_942.36/main/unk/temp8.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp8.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp9a",
-      "base_path": "build/src/scus_942.36/main/unk/temp9a.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp9a.s.o",
-      "metadata": {
-        "progress_categories": [
-          "main"
-        ]
-      }
-    },
-    {
-      "name": "scus_942.36/main/unk/temp9b",
-      "base_path": "build/src/scus_942.36/main/unk/temp9b.c.o",
-      "target_path": "expected/asm/scus_942.36/main/unk/temp9b.s.o",
-      "metadata": {
-        "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -362,6 +397,7 @@
       "target_path": "expected/asm/scus_942.36/main/video/movie.s.o",
       "metadata": {
         "progress_categories": [
+          "executable",
           "main"
         ]
       }
@@ -372,7 +408,8 @@
       "target_path": "expected/asm/scus_942.36/overlays/optsub00/optsub00.s.o",
       "metadata": {
         "progress_categories": [
-          "overlays"
+          "overlays",
+          "optsub00"
         ]
       }
     },
@@ -383,7 +420,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -394,7 +431,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -405,7 +442,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -416,7 +453,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -427,7 +464,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -438,7 +475,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -449,7 +486,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -460,7 +497,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -471,7 +508,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -482,7 +519,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -493,7 +530,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -504,7 +541,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -515,7 +552,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -526,7 +563,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -537,7 +574,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -548,7 +585,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -559,7 +596,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -570,7 +607,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -581,7 +618,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -592,7 +629,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -603,7 +640,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -614,7 +651,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -625,7 +662,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -636,7 +673,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -647,7 +684,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -658,7 +695,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -669,7 +706,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -680,7 +717,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -691,7 +728,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -702,7 +739,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -713,7 +750,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -724,7 +761,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -735,7 +772,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -746,7 +783,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -757,7 +794,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -768,7 +805,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -779,7 +816,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -790,7 +827,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -801,7 +838,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -812,7 +849,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -823,7 +860,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -834,7 +871,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -845,7 +882,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -856,7 +893,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -867,7 +904,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -878,7 +915,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -889,7 +926,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -900,7 +937,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -911,7 +948,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -922,7 +959,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -933,7 +970,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -944,7 +981,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -955,7 +992,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -966,7 +1003,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -977,7 +1014,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -988,7 +1025,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -999,7 +1036,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1010,7 +1047,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1021,7 +1058,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1032,7 +1069,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1043,7 +1080,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1054,7 +1091,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1065,7 +1102,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1076,7 +1113,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1087,7 +1124,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1098,7 +1135,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1109,7 +1146,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1120,7 +1157,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1131,7 +1168,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1142,7 +1179,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1153,7 +1190,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1164,7 +1201,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1175,7 +1212,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1186,7 +1223,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1197,7 +1234,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1208,7 +1245,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1219,7 +1256,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1230,7 +1267,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1241,7 +1278,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1252,7 +1289,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1263,7 +1300,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1274,7 +1311,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1285,7 +1322,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1296,7 +1333,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1307,7 +1344,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1318,7 +1355,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1329,7 +1366,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1340,7 +1377,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1351,7 +1388,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1362,7 +1399,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1373,7 +1410,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1384,7 +1421,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1395,7 +1432,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1406,7 +1443,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1417,7 +1454,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1428,7 +1465,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1439,7 +1476,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1450,7 +1487,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1461,7 +1498,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1472,7 +1509,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1483,7 +1520,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1494,7 +1531,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1505,7 +1542,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1516,7 +1553,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1527,7 +1564,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1538,7 +1575,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1549,7 +1586,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1560,7 +1597,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1571,7 +1608,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1582,7 +1619,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1593,7 +1630,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1604,7 +1641,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1615,7 +1652,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1626,7 +1663,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1637,7 +1674,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1648,7 +1685,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1659,7 +1696,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1670,7 +1707,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1681,7 +1718,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1692,7 +1729,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1703,7 +1740,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1714,7 +1751,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1725,7 +1762,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1736,7 +1773,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1747,7 +1784,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1758,7 +1795,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1769,7 +1806,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1780,7 +1817,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1791,7 +1828,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1802,7 +1839,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1813,7 +1850,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1824,7 +1861,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1835,7 +1872,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1846,7 +1883,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1857,7 +1894,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1868,7 +1905,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1879,7 +1916,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1890,7 +1927,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1901,7 +1938,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1912,7 +1949,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1923,7 +1960,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1934,7 +1971,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1945,7 +1982,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1956,7 +1993,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1967,7 +2004,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1978,7 +2015,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -1989,7 +2026,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2000,7 +2037,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2011,7 +2048,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2022,7 +2059,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2033,7 +2070,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2044,7 +2081,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2055,7 +2092,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2066,7 +2103,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2077,7 +2114,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2088,7 +2125,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2099,7 +2136,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2110,7 +2147,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2121,7 +2158,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2132,7 +2169,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2143,7 +2180,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2154,7 +2191,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2165,7 +2202,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2176,7 +2213,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2187,7 +2224,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2198,7 +2235,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2209,7 +2246,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2220,7 +2257,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2231,7 +2268,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2242,7 +2279,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2253,7 +2290,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2264,7 +2301,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2275,7 +2312,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2286,7 +2323,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2297,7 +2334,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2308,7 +2345,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2319,7 +2356,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2330,7 +2367,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2341,7 +2378,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2352,7 +2389,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2363,7 +2400,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2374,7 +2411,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2385,7 +2422,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2396,7 +2433,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2407,7 +2444,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2418,7 +2455,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2429,7 +2466,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2440,7 +2477,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2451,7 +2488,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2462,7 +2499,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2473,7 +2510,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2484,7 +2521,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2495,7 +2532,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2506,7 +2543,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2517,7 +2554,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2528,7 +2565,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2539,7 +2576,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2550,7 +2587,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2561,7 +2598,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2572,7 +2609,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2583,7 +2620,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2594,7 +2631,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2605,7 +2642,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2616,7 +2653,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2627,7 +2664,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2638,7 +2675,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2649,7 +2686,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2660,7 +2697,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2671,7 +2708,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2682,7 +2719,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2693,7 +2730,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2704,7 +2741,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2715,7 +2752,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     },
@@ -2726,7 +2763,7 @@
       "metadata": {
         "progress_categories": [
           "sdk",
-          "main"
+          "executable"
         ]
       }
     }
@@ -2737,12 +2774,20 @@
       "name": "Psy-Q SDK"
     },
     {
-      "id": "main",
+      "id": "executable",
       "name": "Main Executable"
+    },
+    {
+      "id": "main",
+      "name": "Main Code"
     },
     {
       "id": "overlays",
       "name": "Overlays"
+    },
+    {
+      "id": "optsub00",
+      "name": "OPTSUB00"
     }
   ]
 }
