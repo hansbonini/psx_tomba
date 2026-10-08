@@ -31,15 +31,15 @@ void memCardInit(void)
 void bootSequenceTask(void)
 {
     u16 state;
-    unkstruct_1F8001D4* task5;
-    unkstruct_1F8001D4* task6;
-    unkstruct_1F8001D4* task7;
-    unkstruct_1F8001D4* task8;
-    unkstruct_1F8001D4* task;
-    unkstruct_1F8001D4* task2;
-    unkstruct_1F8001D4* task3;
-    unkstruct_1F8001D4* task4;
-    unkstruct_1F8001D4* task9;
+    Task* task5;
+    Task* task6;
+    Task* task7;
+    Task* task8;
+    Task* task;
+    Task* task2;
+    Task* task3;
+    Task* task4;
+    Task* task9;
 
     D_8009D6DD = 0;
     D_8009D6DE = 0;
@@ -110,7 +110,7 @@ void bootSequenceTask(void)
             case 10:
                 if (LOAD_COMPLETE != 0) {
                     SetDispMask(0);
-                    initDisplay2x(0U, 0U, 0U);
+                    initDisplayHiRes(0U, 0U, 0U);
                     SetDispMask(1);
                     task3 = CURRENT_TASK;
                     task3->timer = 240;
@@ -145,7 +145,7 @@ void bootSequenceTask(void)
                         if ((s16)task8->unk5A == 0) {
                             SetDispMask(0);
                             initDisplay(0U, 0U, 0U);
-                            task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            task4 = *(Task** )(&SCRATCHPAD+0x1D4);
                             *(byte* )0x1F8001D1 = 0;
                             *(s16* )0x1F8001F6 = 0;
                             task4->state0 = 0U;
@@ -224,7 +224,7 @@ void drawBootLogo(u8 color, int arg1)
 void titleSequenceTask(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)scratch->currentTask;
+    Task* task = *(Task**)scratch->currentTask;
 
     u32 sp10[2];
     u16 state;
@@ -276,14 +276,14 @@ void func_800199B8(void)
     u16 state2;
     u16 timer;
     u16 state1;
-    unkstruct_1F8001D4* task;
-    unkstruct_1F8001D4* task2;
-    unkstruct_1F8001D4* task3;
-    unkstruct_1F8001D4* task4;
-    unkstruct_1F8001D4* task5;
-    unkstruct_1F8001D4* task6;
-    unkstruct_1F8001D4* task7;
-    unkstruct_1F8001D4* task8;
+    Task* task;
+    Task* task2;
+    Task* task3;
+    Task* task4;
+    Task* task5;
+    Task* task6;
+    Task* task7;
+    Task* task8;
 
     state1 = (CURRENT_TASK)->state1;
     switch (state1) {
@@ -296,7 +296,7 @@ void func_800199B8(void)
                     LOAD_COMPLETE = 0U;
                     loadAreaResources(1);
                     func_800222B8(1, 1);
-                    task4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                    task4 = *(Task** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
                     return;
                 case 1:                             // switch 1
@@ -313,7 +313,7 @@ void func_800199B8(void)
         case 1:
             SetDispMask(0);
             func_800E7D5C();
-            task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            task5 = *(Task** )(&SCRATCHPAD+0x1D4);
             task5->state1++;
             return;
         case 2:
@@ -327,12 +327,12 @@ void func_800199B8(void)
             if (MOVIE_PLAY_STATE != MOVIE_STATE_IDLE) {
                 return;
             }
-            task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            task5 = *(Task** )(&SCRATCHPAD+0x1D4);
             task5->state1++;
             return;
         case 4:
             SetDispMask(0);
-            initDisplay2x(240U, 240U, 240U);
+            initDisplayHiRes(240U, 240U, 240U);
             SetDispMask(1);
             NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             func_800E7D74();
@@ -353,7 +353,7 @@ void func_800199B8(void)
                 LOAD_COMPLETE = 0U;
                 loadAreaResources(2);
                 func_800222B8(2, 1);
-                task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                task5 = *(Task** )(&SCRATCHPAD+0x1D4);
                 task5->state1++;
                 return;
             }
@@ -377,9 +377,9 @@ void func_800199B8(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", bootLoadMovieResources);
 void bootLoadMovieResources(void)
 {
-    unkstruct_1F8001D4* task2;
+    Task* task2;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = scratch->currentTask;
+    Task* task = scratch->currentTask;
 
     switch (task->state1) {                              // irregular
         case 0:
@@ -408,9 +408,9 @@ void bootLoadMovieResources(void)
 void bootPlayIntroMovie(void)
 {
     u8 temp_v0;
-    unkstruct_1F8001D4* task2;
+    Task* task2;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = scratch->currentTask;
+    Task* task = scratch->currentTask;
     
     switch (task->state1) {
         case 0:
@@ -442,14 +442,14 @@ void bootPlayIntroMovie(void)
 void loopTitleScreen(int* arg0)
 {
     int amount;
-    unkstruct_1F8001D4* gameControl;
-    unkstruct_1F8001D4* gameControlTemp;
-    unkstruct_1F8001D4* gameControlTemp2;
-    unkstruct_1F8001D4* gameControlTemp3;
-    unkstruct_1F8001D4* gameControlTemp4;
-    unkstruct_1F8001D4* gameControlTemp5;
-    unkstruct_1F8001D4* gameControlTemp6;
-    unkstruct_1F8001D4* gameControlTemp7;
+    Task* gameControl;
+    Task* gameControlTemp;
+    Task* gameControlTemp2;
+    Task* gameControlTemp3;
+    Task* gameControlTemp4;
+    Task* gameControlTemp5;
+    Task* gameControlTemp6;
+    Task* gameControlTemp7;
 
     switch ((CURRENT_TASK)->state1) {
         case 0:
@@ -472,16 +472,16 @@ void loopTitleScreen(int* arg0)
             startBgmTrack(0);
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
             (CURRENT_TASK)->titleScreenSelectedOption = TITLESCREEN_OPTION_NEWGAME;
-            gameControl = (*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34));
+            gameControl = (*(Task** )((byte*)D_1F8001A0+0x34));
             gameControl->unk6A = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-            gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+            gameControl = *(Task** )(&D_1F8000C0[0]+0x114);
             gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-            gameControlTemp = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            gameControlTemp = *(Task** )(&SCRATCHPAD+0x1D4);
             gameControlTemp->timer = 972;
             gameControlTemp->state1++;
             return;
         case 3:
-            gameControlTemp5 = *(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34);
+            gameControlTemp5 = *(Task** )((byte*)D_1F8001A0+0x34);
             NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
             gameControlTemp5->timer--;
             if ((short)gameControlTemp5->timer <= 0) {
@@ -489,7 +489,7 @@ void loopTitleScreen(int* arg0)
             }
             func_800E7DDC(arg0);
             if (*&D_8009C9D8 != 0) {
-                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->timer = 972;
+                (*(Task** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
             gameControlTemp2 = CURRENT_TASK;
             switch ((u_short)gameControlTemp2->state2) {                    // switch 1; irregular
@@ -497,9 +497,9 @@ void loopTitleScreen(int* arg0)
                     if (JOYPAD_STATE & JOY_LEFT) {
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
-                            gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            gameControl = *(Task** )(&D_1F8000C0[0]+0x114);
                             gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-                            gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
                         }
@@ -508,9 +508,9 @@ void loopTitleScreen(int* arg0)
                         gameControlTemp3 = CURRENT_TASK;;
                         if (gameControlTemp3->titleScreenSelectedOption < 2U) {
                             gameControlTemp3->titleScreenSelectedOption++;
-                            gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                            gameControl = *(Task** )(&D_1F8000C0[0]+0x114);
                             gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-                            gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                            gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
                             gameControl->state2++;
                             playSFX(8);
                         }
@@ -544,7 +544,7 @@ void loopTitleScreen(int* arg0)
                             amount = 4;
                         }
                         gameControlTemp2->unk6A += amount;
-                        gameControlTemp4 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                        gameControlTemp4 = *(Task** )(&SCRATCHPAD+0x1D4);
                         if (gameControlTemp4->unk6B == gameControlTemp4->unk6A) {
                             gameControlTemp4->state2--;
                         }
@@ -573,9 +573,9 @@ void loopTitleScreen(int* arg0)
 void func_8001A328(void)
 {
     u_short state2;
-    unkstruct_1F8001D4* task;
-    unkstruct_1F8001D4* task2;
-    unkstruct_1F8001D4* task3;
+    Task* task;
+    Task* task2;
+    Task* task3;
 
     NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
     switch ((CURRENT_TASK)->state1) {
@@ -604,7 +604,7 @@ void func_8001A328(void)
             state2 = task->state2;
             switch (state2) {                    // switch 1; irregular
                 case 0:                             // switch 1
-                    task->unk4E.value = 0;
+                    task->step.value = 0;
                     task->state2++;
                     // fallthrough
                 case 1:                             // switch 1
@@ -643,7 +643,7 @@ void func_8001A328(void)
 void gameTask(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)&scratch->currentTask;
+    Task* task = *(Task**)&scratch->currentTask;
     int state;
 
     scratch->unk1D1 = 0;
@@ -651,7 +651,7 @@ void gameTask(void)
     task->state0 = 0;
     task->state1 = 0;
     task->state2 = 0;
-    task->unk4E.value = 0;
+    task->step.value = 0;
     task->unk6A = 0;
     setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
     setRGB0((DRAWENV*)DRAW_ENV_2, 0, 0, 0);
@@ -687,7 +687,7 @@ void gameInitState(void)
     RECT rect;
     u16 timer;
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* task = *(u_long**)&scratch->currentTask;
+    Task* task = *(u_long**)&scratch->currentTask;
 
     switch (task->state1) {                              // irregular
         case 0:
@@ -708,7 +708,7 @@ void gameInitState(void)
             return;
         case 2:
             task->state2 = 0;
-            task->unk4E.value = 0;
+            task->step.value = 0;
             if (task->loadGameSelected != 0) {
                 task->state0 = 2;
             } else {

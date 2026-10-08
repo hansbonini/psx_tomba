@@ -328,10 +328,10 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
             if (event_id == 1) {
                 *(int*)(obj + 0x10) = (x - 0xA0) << 16;
                 *(int*)(obj + 0x14) = y << 16;
-                *(int*)(obj + 0x18) = (((s16*)D_800A5398)[0xD] + 10) << 16;
+                *(int*)(obj + 0x18) = (((s16*)PLAYER)[0xD] + 10) << 16;
                 *(int*)(obj + 0x30) = (x - 0xA0) << 16;
                 *(int*)(obj + 0x34) = y << 16;
-                *(int*)(obj + 0x38) = (((s16*)D_800A5398)[0xD] + 10) << 16;
+                *(int*)(obj + 0x38) = (((s16*)PLAYER)[0xD] + 10) << 16;
             } else {
                 *(int*)(obj + 0x10) = D_800774F0[1] << 16;
                 *(int*)(obj + 0x14) = D_800774F0[2] << 16;
@@ -357,11 +357,11 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
                     *(u16*)(obj + 0xD0) = D_8009BC98[0xF];
                     D_8009BC98[0xF] = 1;
                     D_8009BCAA = 1;
-                    if (state != 4 && (D_800A5398[0x9E] == 0 || D_800A5398[0xAC] < 2)) {
-                        D_800A5398[4] = 5;
-                        D_800A5398[5] = 0;
-                        D_800A5398[6] = 0;
-                        D_800A5398[7] = 0;
+                    if (state != 4 && (PLAYER[0x9E] == 0 || PLAYER[0xAC] < 2)) {
+                        PLAYER[4] = 5;
+                        PLAYER[5] = 0;
+                        PLAYER[6] = 0;
+                        PLAYER[7] = 0;
                     } else if (D_8009BCA8 == 0) {
                         D_8009BCA6 = 1;
                     }

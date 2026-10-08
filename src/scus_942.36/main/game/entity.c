@@ -26,8 +26,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023168);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_8002331C);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", setEntityDoubleBuffer);
-void setEntityDoubleBuffer(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", setObjectAxisPointers);
+void setObjectAxisPointers(u8* self)
 {
     if ((*(u16*)0x1F8001C8 & 1) == 0) {
         *(u8**)(self + 0x40) = self + 0x10;

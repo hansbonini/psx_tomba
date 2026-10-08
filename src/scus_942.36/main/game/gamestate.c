@@ -390,9 +390,9 @@ void titleScreenHandler(void)
     short var_v0;
     int temp_v0;
     u_short temp_v1;
-    unkstruct_1F8001D4* temp_v0_2;
-    unkstruct_1F8001D4* temp_v0_3;
-    unkstruct_1F8001D4* temp_v1_2;
+    Task* temp_v0_2;
+    Task* temp_v0_3;
+    Task* temp_v1_2;
 
     temp_v1 = (CURRENT_TASK)->state1;
     switch (temp_v1) {
@@ -436,7 +436,7 @@ void titleScreenHandler(void)
             temp_v0_2->state0 = 1;
             temp_v0_2->state1 = 1U;
             temp_v0_2->state2 = 0;
-            temp_v0_2->unk4E.value = 0;
+            temp_v0_2->step.value = 0;
             return;
         case 4:
             stopBgm(0);
@@ -445,7 +445,7 @@ void titleScreenHandler(void)
             temp_v0_3->state0 = 1;
             temp_v0_3->state1 = 0U;
             temp_v0_3->state2 = 0;
-            temp_v0_3->unk4E.value = 0;
+            temp_v0_3->step.value = 0;
             setTask(&titleSequenceTask);
             break;
     }
@@ -478,9 +478,9 @@ void introSequenceHandler(void)
 {
     u_short temp_v1;
     u_char* temp1;
-    unkstruct_1F8001D4* temp_v0;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
+    Task* temp_v0;
+    Task* temp_v1_2;
+    Task* temp_v1_3;
 
     temp_v1 = (CURRENT_TASK)->state2;
     switch (temp_v1) {
@@ -501,7 +501,7 @@ void introSequenceHandler(void)
             if (*(u_char* )0x1F8001B4 == 0) {
                 D_8009EB4C = 0;
                 LOAD_COMPLETE = 0U;
-                func_8001CE80(1);
+                loadCurrentArea(1);
                 temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->state2++;
                 return;
@@ -551,9 +551,9 @@ void introSequenceHandler(void)
                 temp_v1_3->state2 = 0U;
                 *temp1 = 0;
             }
-            temp_v0 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v0 = *(Task** )(&SCRATCHPAD+0x1D4);
             temp_v0->state1 = 1;
-            temp_v0->unk4E.value = 0;
+            temp_v0->step.value = 0;
             GAME.currentArea = GAME.selectedArea;
             GAME.currentSection = GAME.selectedSection;
             GAME.currentSpawnPoint = GAME.selectedSpawnPoint;
@@ -566,7 +566,7 @@ void gameplayStateDispatcher(void)
 {
     short temp_v0;
     u_short temp_v1;
-    unkstruct_1F8001D4* temp_v0_2;
+    Task* temp_v0_2;
 
     temp_v1 = (CURRENT_TASK)->state2;
     switch (temp_v1) {
@@ -577,22 +577,22 @@ void gameplayStateDispatcher(void)
             gameplayMainHandler();
             break;
         case 2:
-            phoenixMountainHandler();
+            areaMode2Handler();
             break;
         case 3:
             inventoryScreenHandler();
             break;
         case 4:
-            cutsceneAreaHandler();
+            areaMode4Handler();
             break;
         case 5:
-            specialAreaHandler();
+            areaMode5Handler();
             break;
         case 6:
-            eventAreaHandler();
+            areaMode6Handler();
             break;
         case 7:
-            func_8001CFCC();
+            areaTransitionHandler();
             break;
         case 8:
             transitionToGameOver();
@@ -603,17 +603,17 @@ void gameplayStateDispatcher(void)
         temp_v0_2 = (CURRENT_TASK);
         *(short* )(&SCRATCHPAD+0x1DC) = -1;
         temp_v0_2->state2 = (u_short) temp_v0;
-        temp_v0_2->unk4E = (u_short) *(u_short* )0x1F8001DE;
+        temp_v0_2->step = (u_short) *(u_short* )0x1F8001DE;
     }
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", advanceAndResetPools);
 void advanceAndResetPools(void)
 {
-    unkstruct_1F8001D4* temp_v1;
+    Task* temp_v1;
 
     temp_v1 = CURRENT_TASK;
-    temp_v1->unk4E.value++;
+    temp_v1->step.value++;
     initObjectPools();
     *(char* )0x1F8001CF = 0;
 }
@@ -622,7 +622,7 @@ void advanceAndResetPools(void)
 void displayDebugScreen(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_v1 = *(unkstruct_1F8001D4**)&scratch->currentTask;
+    Task* temp_v1 = *(Task**)&scratch->currentTask;
     u_short var_a0;
     int* var_v1;
     u_short temp_a0;
@@ -729,39 +729,39 @@ void displayDebugScreen(void)
     } else {
         var_a0 = 0;
         if (GAME.selectedSection == GAME.currentSection) {
-            setAreaSubState();
+            setAreaModeFromSection();
             return;
         }
     }
-    func_8001CE80(var_a0);
+    loadCurrentArea(var_a0);
 
-    temp_v1_3 = (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value;
+    temp_v1_3 = (*(Task**)(&PSX_SCRATCH[0x1D4]))->step.value;
     *(u_long*)&D_8009EB4C = 0;
-    (*(unkstruct_1F8001D4**)(&PSX_SCRATCH[0x1D4]))->unk4E.value=temp_v1_3+1;
+    (*(Task**)(&PSX_SCRATCH[0x1D4]))->step.value=temp_v1_3+1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", debugSelectHandler);
 void debugSelectHandler(void)
 {
     int var_a0;
-    unkstruct_1F8001D4* p;
+    Task* p;
     u_char* temp1;
     u_char* temp2;
 
-    switch ((CURRENT_TASK)->unk4E.value) {
+    switch ((CURRENT_TASK)->step.value) {
         case 0:
             func_800222B8(9, 1);
-            (CURRENT_TASK)->unk4E.value++;
+            (CURRENT_TASK)->step.value++;
             return;
         case 1:
             if (LOAD_COMPLETE != 0) {
-                (CURRENT_TASK)->unk4E.value++;
+                (CURRENT_TASK)->step.value++;
                 return;
             }
         default:
             return;
         case 2:
-            (CURRENT_TASK)->unk4E.value++;
+            (CURRENT_TASK)->step.value++;
             initObjectPools();
             *(char* )0x1F8001CF = 0;
             return;
@@ -770,14 +770,14 @@ void debugSelectHandler(void)
             return;
         case 5:
             stopAllSound();
-            (*(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4))->unk4E.value++;
+            (*(Task**)(&SCRATCHPAD+0x1D4))->step.value++;
             initObjectPools();
             *(u_char*)&(*(u_long**)0x1F8001CF) = 0;
             (CURRENT_TASK)->unk5E = 0x78U;
             (CURRENT_TASK)->unk64 = 0U;
             return;
         case 6:
-            p = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
+            p = *(Task**)(&SCRATCHPAD+0x1D4);
             *(u_short*)&p->unk64=((p->unk64+12)&0xFF);
             drawNowLoading(p->unk64);
             (CURRENT_TASK)->unk5E--;
@@ -786,19 +786,19 @@ void debugSelectHandler(void)
                 temp1 = (u_char*)&GAME.areaTransition;
                 if (*temp1 == 0) {
                    *temp1 = 1;
-                    func_8001CE80(var_a0);
+                    loadCurrentArea(var_a0);
                 } else {
                     if (GAME.selectedArea == GAME.currentArea) {
                         var_a0 = 0;
                         if (GAME.selectedSection == GAME.currentSection) {
-                            setAreaSubState(0);
+                            setAreaModeFromSection(0);
                             return;
                         }
                     }
-                    func_8001CE80(var_a0);
+                    loadCurrentArea(var_a0);
                 }
                 D_8009EB4C = 0;
-                (CURRENT_TASK)->unk4E.value++;
+                (CURRENT_TASK)->step.value++;
             }
             break;
         case 4:
@@ -814,19 +814,19 @@ void gameplayMainHandler(void)
 {
     u_short temp_v1;
     u_char temp_v0;
-    unkstruct_1F8001D4* temp_a0;
-    unkstruct_1F8001D4* temp_a0_2;
-    unkstruct_1F8001D4* temp_v1_2;
+    Task* temp_a0;
+    Task* temp_a0_2;
+    Task* temp_v1_2;
 
     temp_a0 = CURRENT_TASK;
-    temp_v1 = temp_a0->unk4E.value;
+    temp_v1 = temp_a0->step.value;
     switch (temp_v1) {                              // irregular
         case 0:
             initObjectPools(temp_a0);
             initHud();
-            temp_a0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_a0_2 = *(Task** )(&SCRATCHPAD+0x1D4);
             *(char* )0x1F8001CF = 1;
-            temp_a0_2->unk4E.value++;
+            temp_a0_2->step.value++;
             initPlayerAtSpawn();
             func_800246B0();
             if (*(u_long*)&GAME.selectedArea == AREA06_DIRTMOTOCROSS) {
@@ -846,21 +846,21 @@ void gameplayMainHandler(void)
             GAME.totalTimePlayed++;
             gameplayTick(temp_a0);
             if (D_8009BCA0 == 2) {
-                temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-                temp_v1_2->unk4E.value++;
+                temp_v1_2 = *(Task** )(&SCRATCHPAD+0x1D4);
+                temp_v1_2->step.value++;
                 stopBgm(1);
             }
             if ((*(u_char* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
-                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
+                (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
             return;
         case 2:
             if ((*(u_char* )0x1F8001BB == 0) && (temp_v0 = GAME.playerLives - 1, GAME.playerLives = temp_v0, ((temp_v0 & 0xFF) == 0))) {
-                temp_a0->unk4E.value = 3U;
+                temp_a0->step.value = 3U;
             } else {
                 temp_a0->state2 = 0;
-                temp_a0->unk4E.value = 5U;
+                temp_a0->step.value = 5U;
                 GAME.selectedSpawnPoint = 0;
                 GAME.nextSpawnPoint = 0;
                 GAME.playerHealth = GAME.playerHealthDisplayed;
@@ -886,7 +886,7 @@ void gameplayMainHandler(void)
             D_8009E3EE = 0;
             D_8009E3EF = 0;
             temp_a0->state2 = 8;
-            temp_a0->unk4E.value = 0U;
+            temp_a0->step.value = 0U;
             break;
     }
 }
@@ -911,14 +911,14 @@ void gameplayTick(void)
             *(u8* )(&SCRATCHPAD+0x3D0) = 0U;
         }
     }
-    func_8001D6C0();
+    updatePauseMenu();
     if (*(s16* )0x1F8001C6 == 0) {
         (*(s16* )(&SCRATCHPAD+0x1F8))=(*(s16* )0x1F8001F8)+1;
-        func_80034524();
+        updateAreaScreenEffect();
         func_80029008();
         if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
             func_8003C9D4();
-            func_8001DFD4();
+            updateMainObjects();
             updateObjectsLayer7();
             updateObjectsUnlayered();
             func_80055BA0();
@@ -941,14 +941,14 @@ void gameplayTick(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", phoenixMountainHandler);
-void phoenixMountainHandler(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode2Handler);
+void areaMode2Handler(void)
 {
     char pad[4];
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_a0 = scratch->currentTask;
+    Task* temp_a0 = scratch->currentTask;
     
-    switch(scratch->currentTask->unk4E.value) {
+    switch(scratch->currentTask->step.value) {
         case 0:
             initObjectPools();
             initHud();
@@ -962,16 +962,16 @@ void phoenixMountainHandler(void)
                 startAreaBgm();
             }
             *(short* )0x1F8001FC = 0;
-            scratch->currentTask->unk4E.volatile_value+=1;
+            scratch->currentTask->step.volatile_value+=1;
             *(volatile u_short*)&D_8009C9D8 = D_8009C9DC = 0;
             break;
         case 1:
             GAME.totalTimePlayed++;
-            phoenixMountainTick();
+            areaMode2Tick();
             if (scratch->unk1C2 != 0) {
                 volatile u_short *temp_v1 = (volatile int* )&D_8009C9D8;
                 if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
-                    scratch->currentTask->unk4E.value = 2;
+                    scratch->currentTask->step.value = 2;
                 }
             }
             break;
@@ -979,46 +979,46 @@ void phoenixMountainHandler(void)
             setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
             setRGB0((DRAWENV*)DRAW_ENV_2, 0, 0, 0);
             temp_a0->state2 = 8;
-            temp_a0->unk4E.value = 0;
+            temp_a0->step.value = 0;
             break;
     }
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", phoenixMountainTick);
-void phoenixMountainTick(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode2Tick);
+void areaMode2Tick(void)
 {
     char* var_a0;
     u_short var_a1;
-    unkstruct_1F8001D4* temp_v1;
+    Task* temp_v1;
 
     NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
     if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == MOVIE_STATE_IDLE)) {
         *(short* )0x1F8001C6 = 0;
     }
-    func_8001D6C0();
+    updatePauseMenu();
     if (GAME.inventoryScreen == 0xFF) {
         GAME.inventoryScreen = 0;
         temp_v1 = CURRENT_TASK;
         var_a0 = *(u_short*)&temp_v1->state2;
-        var_a1 = *(u_short*)&(CURRENT_TASK)->unk4E.value;
+        var_a1 = *(u_short*)&(CURRENT_TASK)->step.value;
         D_800A3952 = 6;
         D_800A3954 = 0;
         D_800A3956 = 0;
         D_800A3940[0] = 0;
         temp_v1->state2 = 3U;
-        (CURRENT_TASK)->unk4E.value = 0U;
+        (CURRENT_TASK)->step.value = 0U;
         *(short* )0x1F8003B8 = (short)var_a0;
         *(u_short* )0x1F8003BA = var_a1;
     }
     if (*(short* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u_short* )(&SCRATCHPAD+0x1F8))++;
-        func_80034524();
+        updateAreaScreenEffect();
         func_80029008();
         if (*(short* )0x1F8001C6 == 0) {
             func_8003C9D4();
             updateObjectsLayer7();
-            func_8001DFD4();
+            updateMainObjects();
             updateObjectsUnlayered();
             func_80055BA0();
         }
@@ -1047,17 +1047,17 @@ void inventoryScreenHandler(void)
     s16* temp_s0;
     u16 temp_s1;
     u16 temp_v1;
-    unkstruct_1F8001D4* temp_a0;
-    unkstruct_1F8001D4* temp_v0;
-    unkstruct_1F8001D4* temp_v0_2;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
+    Task* temp_a0;
+    Task* temp_v0;
+    Task* temp_v0_2;
+    Task* temp_v1_2;
+    Task* temp_v1_3;
 
-    temp_v1 = (CURRENT_TASK)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->step.value;
     switch (temp_v1) {                              // switch 1
         case 0:                                     // switch 1
             *(s8* )0x1F8001CF = 1;
-            (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk6A = 0;
+            (*(Task** )(&SCRATCHPAD+0x1D4))->unk6A = 0;
             SetDispMask(0);
             setRECT(&rect, 288, 480, 48, 31);
             StoreImage((RECT* ) &rect, (u32* )0x801FB000);
@@ -1070,7 +1070,7 @@ void inventoryScreenHandler(void)
             D_8009B004 = drawenv.g0;
             D_8009B008 = drawenv.b0;
             temp_a0 = CURRENT_TASK;
-            temp_a0->unk4E.value++;
+            temp_a0->step.value++;
             return;
         case 1:                                     // switch 1
             LOAD_COMPLETE = 0;
@@ -1095,7 +1095,7 @@ void inventoryScreenHandler(void)
                     break;
             }
             temp_v1_2 = CURRENT_TASK;
-            temp_v1_2->unk4E.value++;
+            temp_v1_2->step.value++;
             return;
         case 2:                                     // switch 1
             if (LOAD_COMPLETE != 0) {
@@ -1107,7 +1107,7 @@ void inventoryScreenHandler(void)
                 *(s16*)&(*(volatile u16**)&D_800A3952) = temp_s1;
                 SetDispMask(1);
                 temp_v1_2 = CURRENT_TASK;
-                temp_v1_2->unk4E.value++;
+                temp_v1_2->step.value++;
                 return;
             }
         default:                                    // switch 1
@@ -1115,7 +1115,7 @@ void inventoryScreenHandler(void)
         case 3:                                     // switch 1
             inventoryScreenTick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
-                (CURRENT_TASK)->unk4E.value = 6U;
+                (CURRENT_TASK)->step.value = 6U;
                 return;
             }
             break;
@@ -1131,7 +1131,7 @@ void inventoryScreenHandler(void)
             var_a0 = (D_80076FAC[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
             func_800222B8(((s16*)var_a0)[GAME.selectedSection], 1);
             temp_v1_2 = CURRENT_TASK;
-            temp_v1_2->unk4E.value++;
+            temp_v1_2->step.value++;
             return;
         case 5:                                     // switch 1
             if ((LOAD_COMPLETE) != 0) {
@@ -1142,14 +1142,14 @@ void inventoryScreenHandler(void)
                 temp_v0 = CURRENT_TASK;
                 *(s16* )0x1F8001C6 = 0;
                 temp_v0->state2 = (u16) *(u16* )0x1F8003B8;
-                temp_v0->unk4E.value = (u16) *(u16* )0x1F8003BA;
+                temp_v0->step.value = (u16) *(u16* )0x1F8003BA;
                 return;
             }
             break;
         case 6:                                     // switch 1
             temp_v1_3 = CURRENT_TASK;
             temp_v1_3->state2 = 8U;
-            temp_v1_3->unk4E.value = 0U;
+            temp_v1_3->step.value = 0U;
             return;
         case 7:                                     // switch 1
             GAME.areaTransition = 0;
@@ -1158,11 +1158,11 @@ void inventoryScreenHandler(void)
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
             setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
             (CURRENT_TASK)->loadGameSelected = 1;
-            temp_v0_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v0_2 = *(Task** )(&SCRATCHPAD+0x1D4);
             temp_v0_2->state0 = 1;
             temp_v0_2->state1 = 1;
             temp_v0_2->state2 = 0U;
-            temp_v0_2->unk4E.value = 0U;
+            temp_v0_2->step.value = 0U;
             break;
     }
     return;
@@ -1202,33 +1202,33 @@ void inventoryScreenTick(void)
     }
     if (D_800A3952 == 5) {
         if (var_s0 == 1) {
-            (CURRENT_TASK)->unk4E.value = 7U;
+            (CURRENT_TASK)->step.value = 7U;
         } else {
             if (var_s0 != 0) {
-                (CURRENT_TASK)->unk4E.value++; 
+                (CURRENT_TASK)->step.value++; 
             }
         }
     } else {
         if (var_s0 == 2) {
             SetDispMask(0);
-            (CURRENT_TASK)->unk4E.value = 1;
+            (CURRENT_TASK)->step.value = 1;
         }else if (var_s0 != 0) {
-            (CURRENT_TASK)->unk4E.value++;
+            (CURRENT_TASK)->step.value++;
         }
     }
     updateSound();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", cutsceneAreaHandler);
-void cutsceneAreaHandler(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode4Handler);
+void areaMode4Handler(void)
 {
     u16 temp_v1;
-    unkstruct_1F800214* temp_v0;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
+    ObjectRawView* temp_v0;
+    Task* temp_v1_2;
+    Task* temp_v1_3;
     char pad[2]; // ?? fixes the stack, but there's probably a better way
 
-    temp_v1 = (CURRENT_TASK)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->step.value;
 
     switch (temp_v1) {
         case 0:
@@ -1243,9 +1243,9 @@ void cutsceneAreaHandler(void)
             if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
-            temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_2->unk4E.value++;
-            temp_v0 = (unkstruct_1F800214*)allocObjectLayer7();
+            temp_v1_2 = *(Task** )(&SCRATCHPAD+0x1D4);
+            temp_v1_2->step.value++;
+            temp_v0 = (ObjectRawView*)allocObjectLayer7();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 5;
@@ -1260,36 +1260,36 @@ void cutsceneAreaHandler(void)
 
         case 1:
             GAME.totalTimePlayed += 1;
-            cutsceneAreaTick();
+            areaMode4Tick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
-                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
+                (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
         break;
 
         case 2:
         case 3:
-            temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v1_3 = *(Task** )(&SCRATCHPAD+0x1D4);
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
             setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
             temp_v1_3->state2 = 8;
-            temp_v1_3->unk4E.value = 0U;
+            temp_v1_3->step.value = 0U;
         break;
     }
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", cutsceneAreaTick);
-void cutsceneAreaTick(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode4Tick);
+void areaMode4Tick(void)
 {
     NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    func_8001D6C0();
+    updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
-        func_80034524();
+        updateAreaScreenEffect();
         if (*(s16*)(&SCRATCHPAD+0x1C6) == 0) {
             func_8003C9D4();
-            func_8001DFD4();
+            updateMainObjects();
             updateObjectsUnlayered();
             func_800EB804();
         }
@@ -1312,16 +1312,16 @@ void cutsceneAreaTick(void)
     updateSound();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", specialAreaHandler);
-void specialAreaHandler(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode5Handler);
+void areaMode5Handler(void)
 {
     u16 temp_v1;
-    unkstruct_1F800214* temp_v0;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
+    ObjectRawView* temp_v0;
+    Task* temp_v1_2;
+    Task* temp_v1_3;
     char pad[2]; // ?? fixes the stack, but there's probably a better way
     
-    temp_v1 = (CURRENT_TASK)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->step.value;
     switch (temp_v1) {
         case 0:
             initObjectPools();
@@ -1335,9 +1335,9 @@ void specialAreaHandler(void)
             if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
-            temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_2->unk4E.value++;
-            temp_v0 = (unkstruct_1F800214*)allocObjectLayer7();
+            temp_v1_2 = *(Task** )(&SCRATCHPAD+0x1D4);
+            temp_v1_2->step.value++;
+            temp_v0 = (ObjectRawView*)allocObjectLayer7();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 10;
@@ -1352,35 +1352,35 @@ void specialAreaHandler(void)
     
         case 1:
             GAME.totalTimePlayed += 1;
-            specialAreaTick();
+            areaMode5Tick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
-                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
+                (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
         break;
     
         case 2:
         case 3:
-            temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v1_3 = *(Task** )(&SCRATCHPAD+0x1D4);
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
             setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
             temp_v1_3->state2 = 8;
-            temp_v1_3->unk4E.value = 0U;
+            temp_v1_3->step.value = 0U;
         break;
     }
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", specialAreaTick);
-void specialAreaTick(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode5Tick);
+void areaMode5Tick(void)
 {
     NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    func_8001D6C0();
+    updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
-        func_80034524();
+        updateAreaScreenEffect();
         if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
-            func_8001DFD4();
+            updateMainObjects();
             updateObjectsUnlayered();
             func_800ECEEC();
         }
@@ -1403,16 +1403,16 @@ void specialAreaTick(void)
     updateSound();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", eventAreaHandler);
-void eventAreaHandler(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode6Handler);
+void areaMode6Handler(void)
 {
     u16 temp_v1;
-    unkstruct_1F800214* temp_v0;
-    unkstruct_1F8001D4* temp_v1_2;
-    unkstruct_1F8001D4* temp_v1_3;
+    ObjectRawView* temp_v0;
+    Task* temp_v1_2;
+    Task* temp_v1_3;
     char pad[2]; // ?? fixes the stack, but there's probably a better way
     
-    temp_v1 = (CURRENT_TASK)->unk4E.value;
+    temp_v1 = (CURRENT_TASK)->step.value;
     switch (temp_v1) {
         case 0:
             initObjectPools();
@@ -1426,9 +1426,9 @@ void eventAreaHandler(void)
             if (GAME.keepBgm != 1) {
                 startAreaBgm();
             }
-            temp_v1_2 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
-            temp_v1_2->unk4E.value++;
-            temp_v0 = (unkstruct_1F800214*)allocObjectLayer7();
+            temp_v1_2 = *(Task** )(&SCRATCHPAD+0x1D4);
+            temp_v1_2->step.value++;
+            temp_v0 = (ObjectRawView*)allocObjectLayer7();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 13;
@@ -1443,35 +1443,35 @@ void eventAreaHandler(void)
     
         case 1:
             GAME.totalTimePlayed += 1;
-            eventAreaTick();
+            areaMode6Tick();
             if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
-                (*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->unk4E.value = 3U;
+                (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
         break;
     
         case 2:
         case 3:
-            temp_v1_3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+            temp_v1_3 = *(Task** )(&SCRATCHPAD+0x1D4);
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
             setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
             temp_v1_3->state2 = 8;
-            temp_v1_3->unk4E.value = 0U;
+            temp_v1_3->step.value = 0U;
         break;
     }
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", eventAreaTick);
-void eventAreaTick(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode6Tick);
+void areaMode6Tick(void)
 {
     NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
-    func_8001D6C0();
+    updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(s16* )(&SCRATCHPAD+0x1F8))++;
-        func_80034524();
+        updateAreaScreenEffect();
         if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
-            func_8001DFD4();
+            updateMainObjects();
             updateObjectsUnlayered();
             func_800EB5B8();
         }
@@ -1499,9 +1499,9 @@ void displayLoadingScreen(void)
 {
     u_short temp_a1;
     u_short temp_v0;
-    unkstruct_1F8001D4* temp_a0;
-    unkstruct_1F8001D4* temp_v0_2;
-    unkstruct_1F8001D4* temp_v1;
+    Task* temp_a0;
+    Task* temp_v0_2;
+    Task* temp_v1;
 
     switch (D_8009EB4C) {                           // irregular
         case 0:
@@ -1513,7 +1513,7 @@ void displayLoadingScreen(void)
             D_8009EB4C += 1;
             // fallthrough
         case 1:
-            temp_a0 = *(unkstruct_1F8001D4**)(&SCRATCHPAD+0x1D4);
+            temp_a0 = *(Task**)(&SCRATCHPAD+0x1D4);
             temp_v0 = temp_a0->unk60 - 1;
             temp_a0->unk60 = temp_v0;
             if ((temp_v0 << 0x10) == 0) {
@@ -1654,8 +1654,8 @@ s32 resolveAreaVariant(void)
     return var_a1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CE80);
-void func_8001CE80(s16 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", loadCurrentArea);
+void loadCurrentArea(s16 arg0)
 {
     s32 variant;
     s32 val;
@@ -1671,7 +1671,7 @@ void func_8001CE80(s16 arg0)
 
     func_80021C24(GAME.selectedArea + (u16)D_8009EBA0);
 
-    if (func_8001DE24((s16)arg0) != -1) {
+    if (loadAreaSectionResources((s16)arg0) != -1) {
         D_8009BCCF = 2;
     }
 
@@ -1680,31 +1680,31 @@ void func_8001CE80(s16 arg0)
     startSoundTask();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", setAreaSubState);
-void setAreaSubState(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", setAreaModeFromSection);
+void setAreaModeFromSection(void)
 {
     u8* row = D_80077084[GAME.selectedArea + (u16)D_8009EBA0];
     u8  v = row[D_8009BCCA];
-    unkstruct_1F8001D4* p = CURRENT_TASK;
+    Task* p = CURRENT_TASK;
 
-    p->unk4E.value = 0;
+    p->step.value = 0;
     p->state2 = v;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001CFCC);
-void func_8001CFCC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaTransitionHandler);
+void areaTransitionHandler(void)
 {
-    switch (CURRENT_TASK->unk4E.value) {
+    switch (CURRENT_TASK->step.value) {
     case 0:
         func_800222B8(9, 1);
         goto advance;
     case 1:
         if (LOAD_COMPLETE == 0) break;
     advance:
-        CURRENT_TASK->unk4E.value++;
+        CURRENT_TASK->step.value++;
         break;
     case 2:
-        CURRENT_TASK->unk4E.value++;
+        CURRENT_TASK->step.value++;
         asm("");
         D_8009BCCF = 1;
         D_8009BCE9 = 1;
@@ -1719,14 +1719,14 @@ void func_8001CFCC(void)
         gp = &GAME;
         areaChanged = gp->selectedArea != D_8009C0FC;
         {
-            unkstruct_1F8001D4* task;
+            Task* task;
             task = CURRENT_TASK;
-            task->unk4E.value = 4;
+            task->step.value = 4;
 
             if (areaChanged) {
                 D_8009BCCF = 2;
                 stopAllSound();
-                (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4))->unk4E.value = 5;
+                (*(Task**)(&SCRATCHPAD + 0x1D4))->step.value = 5;
                 asm("");
                 if (D_8009C0FC == 0) {
                     if ((u32)(D_8009C0FE - 1) < 2) {
@@ -1742,7 +1742,7 @@ void func_8001CFCC(void)
             } else {
                 if (gp->selectedArea == 2) {
                     if (D_8009BCCA + D_8009C0FE == 1) {
-                        task->unk4E.value = 5;
+                        task->step.value = 5;
                     }
                 }
             }
@@ -1763,7 +1763,7 @@ void func_8001CFCC(void)
 
         func_80021C24(GAME_A + (u16)D_8009EBA0);
 
-        if (func_8001DE24(areaChanged) != -1) {
+        if (loadAreaSectionResources(areaChanged) != -1) {
             D_8009BCCF = 2;
         }
 
@@ -1783,7 +1783,7 @@ void func_8001CFCC(void)
 void transitionToGameOver(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_1F8001D4* temp_v1;
+    Task* temp_v1;
 
     temp_v1 = scratch->currentTask;
     scratch->unk1CF = 1;
@@ -1796,12 +1796,12 @@ void transitionToGameOver(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D2F0);
 void func_8001D2F0(void)
 {
-    unkstruct_1F8001D4* task = (unkstruct_1F8001D4*)D_1F8001D4;
+    Task* task = (Task*)D_1F8001D4;
 
     switch ((u_short)task->state2) {
     case 0:
-        task->unk5C = 0xF0;
-        task->unk4E.value = 0;
+        task->countdown = 0xF0;
+        task->step.value = 0;
         LOAD_COMPLETE = 0;
         task->state2++;
         func_800222B8(0x5D, 1);
@@ -1812,20 +1812,20 @@ void func_8001D2F0(void)
         break;
     case 2:
     {
-        unkstruct_1F8001D4* t2;
+        Task* t2;
         s16 val;
         func_800E7E68();
-        t2 = (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4));
-        val = --t2->unk5C;
+        t2 = (*(Task**)(&SCRATCHPAD + 0x1D4));
+        val = --t2->countdown;
         if (val == -1) {
             t2->state2++;
         } else {
             if (val >= 0x3D) {
                 if (JOYPAD_STATE & (JOY_START | JOY_CIRCLE | JOY_CROSS)) {
-                    t2->unk5C = 0x3C;
+                    t2->countdown = 0x3C;
                 }
             }
-            if ((s16)CURRENT_TASK->unk5C == 0x3C) {
+            if ((s16)CURRENT_TASK->countdown == 0x3C) {
                 stopBgm(1);
             }
         }
@@ -1834,14 +1834,14 @@ void func_8001D2F0(void)
     }
     case 3:
     {
-        unkstruct_1F8001D4* t;
+        Task* t;
         stopAllSound();
         t = TASK_C;
         *(char*)0x1F8001D0 = 0;
         t->state0 = 1;
         t->state1 = 0;
         t->state2 = 0;
-        t->unk4E.value = 0;
+        t->step.value = 0;
         setTask(&titleSequenceTask);
         break;
     }
@@ -1851,17 +1851,17 @@ void func_8001D2F0(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D480);
 void func_8001D480(void)
 {
-    unkstruct_1F8001D4* task = (unkstruct_1F8001D4*)D_1F8001D4;
+    Task* task = (Task*)D_1F8001D4;
 
     switch ((u_short)task->state2) {
     case 0:
     {
-        unkstruct_1F8001D4* t0;
+        Task* t0;
         func_80028CE4();
         stopBgm(0);
-        t0 = (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4));
-        t0->unk5C = 0xF0;
-        t0->unk4E.value = 0;
+        t0 = (*(Task**)(&SCRATCHPAD + 0x1D4));
+        t0->countdown = 0xF0;
+        t0->step.value = 0;
         t0->state2++;
         stopAllSound();
         LOAD_COMPLETE = 0;
@@ -1870,7 +1870,7 @@ void func_8001D480(void)
     }
     case 1:
     {
-        unkstruct_1F8001D4* t1;
+        Task* t1;
         if (LOAD_COMPLETE == 0) break;
         SetDispMask(1);
         t1 = CURRENT_TASK;
@@ -1879,16 +1879,16 @@ void func_8001D480(void)
     }
     case 2:
     {
-        unkstruct_1F8001D4* t2;
+        Task* t2;
         s16 val;
         func_800E7CDC();
         t2 = TASK_C;
-        val = --t2->unk5C;
+        val = --t2->countdown;
         if (val == -1) {
             t2->state2++;
         } else if (val < 0xC8) {
             if (JOYPAD_STATE & (JOY_START | JOY_CIRCLE | JOY_CROSS)) {
-                t2->unk5C = 0;
+                t2->countdown = 0;
             }
         }
         break;
@@ -1897,7 +1897,7 @@ void func_8001D480(void)
         task->state0 = 1;
         task->state1 = 0;
         task->state2 = 0;
-        task->unk4E.value = 0;
+        task->step.value = 0;
         *(char*)0x1F8001D0 = 0;
         setTask(&titleSequenceTask);
         break;
@@ -1924,18 +1924,18 @@ void openMenuScreen(s16 arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", openMenuScreenEx);
 void openMenuScreenEx(s16 arg0, s16 arg1, s16 arg2)
 {
-    unkstruct_1F8001D4* p = CURRENT_TASK;
+    Task* p = CURRENT_TASK;
 
     D_800A3952 = arg0;
     D_800A3954 = arg1;
     D_800A3956 = arg2;
     D_800A3940[0] = 0;
     p->state2 = 3;
-    p->unk4E.value = 0;
+    p->step.value = 0;
     playSFXWithNote(10, 10);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001D6C0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", updatePauseMenu);
 typedef struct {
     u8 unk0;
     u8 unk1;
@@ -1946,7 +1946,7 @@ typedef struct {
 } unk_800A3940;
 #define MENU_STATE ((unk_800A3940*)D_800A3940)
 
-void func_8001D6C0(void) {
+void updatePauseMenu(void) {
     if (*(u8*)0x1F8003CE | MOVIE_PLAY_STATE) {
         return;
     }
@@ -2013,19 +2013,19 @@ void func_8001D6C0(void) {
         keyOffSfxAll(0);
 
         {
-            unkstruct_1F8001D4* p;
+            Task* p;
             u16 savedS2;
             u16 savedUn;
             p = CURRENT_TASK;
             savedS2 = p->state2;
-            savedUn = p->unk4E.value;
+            savedUn = p->step.value;
 
             MENU_STATE->unk12 = 7;
             MENU_STATE->unk16 = 4;
             MENU_STATE->unk14 = 0;
             MENU_STATE->unk0 = 0;
             p->state2 = 3;
-            p->unk4E.value = 0;
+            p->step.value = 0;
             *(u16*)0x1F8003B8 = savedS2;
             *(u16*)0x1F8003BA = savedUn;
             playSFXWithNote(10, 10);
@@ -2069,9 +2069,9 @@ void func_8001D6C0(void) {
             }
 
             if (pad & JOY_CROSS) {
-                unkstruct_1F8001D4* task = CURRENT_TASK;
+                Task* task = CURRENT_TASK;
                 u16 s2 = task->state2;
-                u16 un = task->unk4E.value;
+                u16 un = task->step.value;
                 int c10b;
 
                 *(u16*)0x1F8003B8 = s2;
@@ -2085,7 +2085,7 @@ void func_8001D6C0(void) {
                     MENU_STATE->unk14 = 0;
                     MENU_STATE->unk0 = 0;
                     task->state2 = 3;
-                    task->unk4E.value = 0;
+                    task->step.value = 0;
                     playSFXWithNote(10, 10);
                     return;
                 case 1:
@@ -2094,7 +2094,7 @@ void func_8001D6C0(void) {
                     MENU_STATE->unk14 = 0;
                     MENU_STATE->unk0 = 0;
                     task->state2 = 3;
-                    task->unk4E.value = 0;
+                    task->step.value = 0;
                     playSFXWithNote(10, 10);
                     return;
                 case 2:
@@ -2103,7 +2103,7 @@ void func_8001D6C0(void) {
                     MENU_STATE->unk14 = 0;
                     MENU_STATE->unk0 = 0;
                     task->state2 = 3;
-                    task->unk4E.value = 0;
+                    task->step.value = 0;
                     playSFXWithNote(10, 10);
                     return;
                 case 3:
@@ -2112,7 +2112,7 @@ void func_8001D6C0(void) {
                     MENU_STATE->unk14 = 0;
                     MENU_STATE->unk0 = 0;
                     task->state2 = 3;
-                    task->unk4E.value = 0;
+                    task->step.value = 0;
                     playSFXWithNote(10, 10);
                     return;
                 }
@@ -2201,26 +2201,26 @@ void func_8001D6C0(void) {
                         SetDispMask(0);
                         stopAllSound();
                         {
-                            unkstruct_1F8001D4* task = CURRENT_TASK;
+                            Task* task = CURRENT_TASK;
                             task->state0 = 1;
                             task->state1 = 3;
                             task->state2 = 3;
                         }
                     } else {
-                        unkstruct_1F8001D4* task;
+                        Task* task;
                         u16 s2, un;
 
                         playSFXWithNote(10, 10);
                         task = CURRENT_TASK;
                         s2 = task->state2;
-                        un = task->unk4E.value;
+                        un = task->step.value;
 
                         MENU_STATE->unk12 = 5;
                         MENU_STATE->unk0 = 0;
                         MENU_STATE->unk1 = 0;
                         MENU_STATE->unk16 = 0;
                         task->state2 = 3;
-                        task->unk4E.value = 0;
+                        task->step.value = 0;
                         *(u16*)0x1F8003B8 = s2;
                         *(u16*)0x1F8003BA = un;
                     }
@@ -2268,8 +2268,8 @@ void func_8001D6C0(void) {
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DE24);
-s32 func_8001DE24(s32 arg)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", loadAreaSectionResources);
+s32 loadAreaSectionResources(s32 arg)
 {
     gameConfig* gp = &GAME;
     u32 s2 = gp->selectedArea + (u16)D_8009EBA0;
@@ -2312,8 +2312,8 @@ s32 func_8001DE24(s32 arg)
     return s4;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", func_8001DFD4);
-void func_8001DFD4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", updateMainObjects);
+void updateMainObjects(void)
 {
     u8* s0 = (u8*)&D_800A5970;
     u8* s1 = s0 + 2;

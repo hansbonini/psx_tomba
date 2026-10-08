@@ -411,8 +411,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B6A8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B704);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", handleInventoryScroll);
-s32 handleInventoryScroll(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", handleLookScrollInput);
+s32 handleLookScrollInput(u8* self)
 {
     s8 st;
 
@@ -461,8 +461,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002C7D8);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CA40);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", updateInventoryAnimation);
-void updateInventoryAnimation(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", updateLookScroll);
+void updateLookScroll(u8* self)
 {
     s16 v = D_1F8000E6;
     s32 w;

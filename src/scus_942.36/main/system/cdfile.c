@@ -320,8 +320,8 @@ void loadAreaResources(s32 arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223E0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", checkObjectBelowGround);
-void checkObjectBelowGround(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", updateObjectSideFlag);
+void updateObjectSideFlag(u8* self)
 {
     u8* q = self;
     s16 a = *(s16*)(*(u8**)(self + 0x40) + 2);
@@ -333,8 +333,8 @@ void checkObjectBelowGround(u8* self)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", isObjectBelowGround);
-s32 isObjectBelowGround(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", isObjectPastReferenceX);
+s32 isObjectPastReferenceX(u8* self)
 {
     s16 a = *(s16*)(*(u8**)(self + 0x40) + 2);
 
@@ -551,8 +551,8 @@ void readAnimFrameCount(u8* self)
         *(u16*)(*(u8**)(self + 0x24) + 6) & 0x3FFF;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", syncObjectFrame);
-void syncObjectFrame(u_short* id)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", resetAnimTimer);
+void resetAnimTimer(u_short* id)
 {
     ((u_short*)(id))[0x16] = ((u_short*)(id))[0x10];
 }

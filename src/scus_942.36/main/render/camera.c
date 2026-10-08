@@ -58,7 +58,7 @@ extern VEC3 D_8009C61C;
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initPlayerAtSpawn);
 void initPlayerAtSpawn(void)
 {
-    u8* p = D_800A5398;
+    u8* p = PLAYER;
     s16* row;
     u_int flags;
     u_int plane;
@@ -99,7 +99,7 @@ void initPlayerAtSpawn(void)
         *(s16*)(p + 0x16) -= 0x104;
     } else if ((CURRENT_TASK)->loadGameSelected != 0) {
         (CURRENT_TASK)->loadGameSelected = 0;
-        *(VEC3*)&D_800A5398[0x10] = D_8009C61C;
+        *(VEC3*)&PLAYER[0x10] = D_8009C61C;
     }
 }
 

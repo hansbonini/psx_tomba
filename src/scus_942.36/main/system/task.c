@@ -68,11 +68,11 @@ link:
 void initTasks(void)
 {
     struct TCB*         tcb;
-    unkstruct_1F8001D4* task;
+    Task* task;
     s32                 i;
 
     tcb  = *(struct TCB**)0x110;
-    task = (unkstruct_1F8001D4*)TASK_TABLE;
+    task = (Task*)TASK_TABLE;
 
     for (i = 0; i < 3; i++) {
         tcb++;
@@ -88,21 +88,21 @@ void initTasks(void)
 void dispatchTasks(void)
 {
     int tid;
-    unkstruct_1F8001D4* task;
-    unkstruct_1F8001D4* task2;
-    unkstruct_1F8001D4* task3;
+    Task* task;
+    Task* task2;
+    Task* task3;
 
-    *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
-    for (task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4); task <= 0x801FD94FU; task = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(unkstruct_1F8001D4)) {
+    *(Task** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
+    for (task = *(Task** )(&SCRATCHPAD+0x1D4); task <= 0x801FD94FU; task = *(Task** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(Task)) {
         tid = 2;
-        switch ((u16)(*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34))->status) {
+        switch ((u16)(*(Task** )((byte*)D_1F8001A0+0x34))->status) {
             case 3:
                 EnterCriticalSection();
-                task2 = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
+                task2 = *(Task** )(&D_1F8000C0[0]+0x114);
                 (CURRENT_TASK)->task_id = OpenTh(task2->task_func, task2->task_sp, task2->task_gp);
                 ExitCriticalSection();
             case 2:
-                task3 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                task3 = *(Task** )(&SCRATCHPAD+0x1D4);
                 task3->status = tid*2;
                 ChangeTh(task3->task_id);
                 break;
@@ -114,16 +114,16 @@ void dispatchTasks(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", startTask);
 void startTask(s32 id, int fn)
 {
-    setTaskEntry((unkstruct_01*)((TASK_TABLE + 0xC) + id * sizeof(unkstruct_1F8001D4)), fn);
-    openTask(id, ((unkstruct_1F8001D4*)(TASK_TABLE + id * sizeof(unkstruct_1F8001D4)))->task_func);
+    setTaskEntry((TaskEntry*)((TASK_TABLE + 0xC) + id * sizeof(Task)), fn);
+    openTask(id, ((Task*)(TASK_TABLE + id * sizeof(Task)))->task_func);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", openTask);
 void openTask(s32 arg0, long (*func)())
 {
-    int off = arg0 * sizeof(unkstruct_1F8001D4);
+    int off = arg0 * sizeof(Task);
 
-    ((unkstruct_1F8001D4*)(TASK_TABLE + off))->status = 2;
+    ((Task*)(TASK_TABLE + off))->status = 2;
     EnterCriticalSection();
     *(int*)((TASK_TABLE + 0x4) + off) = OpenTh(func,
                                            *(int*)((TASK_TABLE + 0x8) + off),
@@ -134,7 +134,7 @@ void openTask(s32 arg0, long (*func)())
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", sleepTask);
 void sleepTask(s16 arg0)
 {
-    unkstruct_1F8001D4* task;
+    Task* task;
 
     task = CURRENT_TASK;
     task->sleepTimer = arg0;
@@ -147,7 +147,7 @@ void exitTask(void)
 {
     (CURRENT_TASK)->status = 0;
     EnterCriticalSection();
-    CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);
+    CloseTh((*(Task** )(&SCRATCHPAD+0x1D4))->task_id);
     ExitCriticalSection();
     ChangeTh(DescTH);
 }
@@ -158,7 +158,7 @@ void closeTask(s32 id)
     s32  off;
     u16* flag;
 
-    off  = id * sizeof(unkstruct_1F8001D4);
+    off  = id * sizeof(Task);
     flag = (u16*)(TASK_TABLE + off);
 
     if (*flag != 0) {
@@ -173,13 +173,13 @@ void closeTask(s32 id)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", setTask);
 void setTask(s32 arg0)
 {
-    unkstruct_1F8001D4* task;
+    Task* task;
 
     task = CURRENT_TASK;
     task->status = 3;
     task->task_func = arg0;
     EnterCriticalSection();
-    CloseTh((*(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4))->task_id);
+    CloseTh((*(Task** )(&SCRATCHPAD+0x1D4))->task_id);
     ExitCriticalSection();
     ChangeTh(DescTH);
 }
@@ -189,7 +189,7 @@ void setTaskFlag10(s32 id)
 {
     u16* p;
 
-    p = (u16*)(TASK_TABLE + id * sizeof(unkstruct_1F8001D4));
+    p = (u16*)(TASK_TABLE + id * sizeof(Task));
     *p |= 0x10;
 }
 
@@ -198,7 +198,7 @@ void clearTaskFlag10(s32 id)
 {
     u16* p;
 
-    p = (u16*)(TASK_TABLE + id * sizeof(unkstruct_1F8001D4));
+    p = (u16*)(TASK_TABLE + id * sizeof(Task));
     *p &= ~0x10;
 }
 
@@ -227,14 +227,14 @@ void tickTaskTimers(void)
                 *p = 2;
             }
         }
-        p += sizeof(unkstruct_1F8001D4) / sizeof(u16);
+        p += sizeof(Task) / sizeof(u16);
     } while (p <= (u16*)(TASK_TABLE_PTR + 0x14F));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/task", setTaskEntry);
-void setTaskEntry(unkstruct_01* arg0, int arg1)
+void setTaskEntry(TaskEntry* arg0, int arg1)
 {
     DrawSync(0);
-    arg0->unk0 = arg1;
+    arg0->func = arg1;
     arg0->saved_reg_gp = GetGp();
 }

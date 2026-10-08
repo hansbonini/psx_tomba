@@ -41,8 +41,8 @@ void func_800279E8(u8* arg0, s32 arg1, s32 arg2)
     func_80025C14(r + 0x14, r + 0x18, arg1);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80027A30);
-void func_80027A30(u8* dst, u8* src, s32 scale)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", subtractScaledVertices);
+void subtractScaledVertices(u8* dst, u8* src, s32 scale)
 {
     s32 n;
 

@@ -30,8 +30,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005975C);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059A40);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059B1C);
-void func_80059B1C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", dispatchAreaUnlayeredHandler);
+void dispatchAreaUnlayeredHandler(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80125C84();
@@ -59,8 +59,8 @@ void updateObjectsUnlayered(void)
     } while (D_1F800198 < 0xA);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A108);
-void func_8005A108(u8 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", spawnUnlayeredObjectAndInit);
+void spawnUnlayeredObjectAndInit(u8 arg0)
 {
     u8* p = allocObjectUnlayered();
 
@@ -71,8 +71,8 @@ void func_8005A108(u8 arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A148);
-void func_8005A148(u8 arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", spawnUnlayeredObject);
+void spawnUnlayeredObject(u8 arg0)
 {
     u8* p = allocObjectUnlayered();
 
@@ -109,8 +109,8 @@ void func_8005B1A4(u8* self)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005B1F8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005B350);
-void func_8005B350(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", dispatchUnlayeredByVariant);
+void dispatchUnlayeredByVariant(u8* self)
 {
     D_8007F988[self[3]]();
 }

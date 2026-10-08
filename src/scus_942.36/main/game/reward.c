@@ -6,7 +6,7 @@ u_char D_8007D6D0_data[0x10] asm("D_8007D6D0") = {
 };
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", updateItemPickupAnim);
-void updateItemPickupAnim(unkstruct_800A6D50* arg0)
+void updateItemPickupAnim(GameObject* arg0)
 {
     int var_a1;
     int var_v0;
@@ -14,22 +14,22 @@ void updateItemPickupAnim(unkstruct_800A6D50* arg0)
     u_short temp_v0;
     u_char temp_v1;
 
-    temp_v1 = arg0->unk6;
+    temp_v1 = arg0->step;
     switch (temp_v1) {                              // irregular
         case 0:
             playSFX(*(&D_8007D6D0 + arg0->item_id));
-            func_800E92D4(0x1F4, arg0->unk12, arg0->unk16, arg0->unk1A);
+            func_800E92D4(0x1F4, arg0->x, arg0->y, arg0->z);
             arg0->unkA5 = 0;
             if (arg0->item_id != ITEM_FLOWERTEARS) {
                 arg0->unkB = 1;
                 arg0->unkF = 4;
             }
-            arg0->unk82 = -1024;
-            *(int*)&arg0->unk28 = &D_8007722C;
+            arg0->speedY = -1024;
+            *(int*)&arg0->velocityTable = &D_8007722C;
             if (arg0->unk2E & 2) {
-                *(int*)&arg0->unk28 = &D_800771FC;
+                *(int*)&arg0->velocityTable = &D_800771FC;
             }
-            arg0->unk6 = (u_char) (arg0->unk6 + 1);
+            arg0->step = (u_char) (arg0->step + 1);
             break;
         case 1:
             temp_a1 = arg0->unk2E;
@@ -38,12 +38,12 @@ void updateItemPickupAnim(unkstruct_800A6D50* arg0)
             } else {
                 applyAnimVelocityX(arg0, (temp_v1 - temp_a1) & 0xFFFF);
             }
-            temp_v0 = arg0->unk82 + 64;
-            arg0->unk82 = temp_v0;
+            temp_v0 = arg0->speedY + 64;
+            arg0->speedY = temp_v0;
             if ((short) temp_v0 >= 1025) {
-                arg0->unk82 = 1024;
+                arg0->speedY = 1024;
             }
-            *(int*)&arg0->unk14 = (int) (*(int*)&arg0->unk14 + ((short) arg0->unk82 << 8));
+            *(int*)&arg0->unk14 = (int) (*(int*)&arg0->unk14 + ((short) arg0->speedY << 8));
             break;
     }
     if (arg0->unk2E & 1) {
@@ -499,7 +499,7 @@ void func_8003F3D4(u8* self)
         } else {
             applyFrameVelocityX(self);
         }
-        if ((s16)func_80044620(self, *(s16*)(*(int*)(self + 0x40) + 2), *(s16*)(self + 0x16)) != 0) {
+        if ((s16)probeCollisionAtDepthB(self, *(s16*)(*(int*)(self + 0x40) + 2), *(s16*)(self + 0x16)) != 0) {
             self[0] = 2;
             self[0xA5] = 0;
             *(int*)(self + 0x8C) = (-*(s16*)0x1F80027E << 2) & 0xFF;
@@ -512,7 +512,7 @@ void func_8003F3D4(u8* self)
         }
         break;
     case 2:
-        updateItemPickupAnim((unkstruct_800A6D50*)self);
+        updateItemPickupAnim((GameObject*)self);
         if (func_80022E44(self) == 0) {
             self[4] = 3;
         }
@@ -566,7 +566,7 @@ void func_8003F78C(u8* self)
         }
         *(int*)(self + 0x14) += *(s16*)(self + 0x7E) << 8;
         *(s16*)(self + 0x7E) += 0x20;
-        if ((s16)func_80044620(self, *(s16*)(*(int*)(self + 0x40) + 2), (s16)(*(u16*)(self + 0x16) + 0x14)) != 0) {
+        if ((s16)probeCollisionAtDepthB(self, *(s16*)(*(int*)(self + 0x40) + 2), (s16)(*(u16*)(self + 0x16) + 0x14)) != 0) {
             self[4] = 2;
             self[5] = 0;
         }
@@ -650,7 +650,7 @@ void func_8003F9A4(u8* self)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", applyItemEffect);
-void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3, int arg4)
+void applyItemEffect(GameObject* arg0, int arg1, short arg2, short arg3, int arg4)
 {
 
     if (func_800236F4(arg0->item_id) == ITEM_CHICK) {
@@ -690,7 +690,7 @@ void applyItemEffect(unkstruct_800A6D50* arg0, int arg1, short arg2, short arg3,
 }
 
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", initItemObject);
-void initItemObject(unkstruct_800A6D50* arg0)
+void initItemObject(GameObject* arg0)
 {
 
     
@@ -708,26 +708,26 @@ void initItemObject(unkstruct_800A6D50* arg0)
         return;
     }
     arg0->unk68 = 0;
-    arg0->unk69 = 0;
+    arg0->touchFlag = 0;
     temp_s1 = D_8007E6E4[D_8007E61C[arg0->item_id]];
     arg0->unkA = temp_s1->unk0;
-    arg0->unk1E = (short)temp_s1->unk2;
+    arg0->tpage = (short)temp_s1->unk2;
     arg0->unkF = -9;
     arg0->unkD = (u_char)temp_s1->unk5;
-    arg0->unk6C = (short)temp_s1->unkC;
-    arg0->unk6E = (short)temp_s1->unkD;
-    arg0->unk70 = (short)temp_s1->unkE;
-    arg0->unk72 = (short)temp_s1->unkF;
+    arg0->hitOffsetX = (short)temp_s1->unkC;
+    arg0->hitWidth = (short)temp_s1->unkD;
+    arg0->hitOffsetY = (short)temp_s1->unkE;
+    arg0->hitHeight = (short)temp_s1->unkF;
 
-    arg0->unk3C = *(&D_1F8002C8[temp_s1->unk4]);
+    arg0->spriteBank = *(&D_1F8002C8[temp_s1->unk4]);
     arg0->unk2E = 1;
     if (arg0->item_id == 2) {
         if ((u_long) (arg0->unkC & 0x7F) >= 4U) {
             arg0->buffSize = 0x2000;
-            arg0->unk6C = (short) (temp_s1->unkC * 2);
-            arg0->unk6E = (short) (temp_s1->unkD * 2);
-            arg0->unk70 = (short) (temp_s1->unkE * 2);
-            arg0->unk72 = (short) (temp_s1->unkF * 2);
+            arg0->hitOffsetX = (short) (temp_s1->unkC * 2);
+            arg0->hitWidth = (short) (temp_s1->unkD * 2);
+            arg0->hitOffsetY = (short) (temp_s1->unkE * 2);
+            arg0->hitHeight = (short) (temp_s1->unkF * 2);
         } else {
             arg0->buffSize = 0x1000;
         }
@@ -768,18 +768,18 @@ void initItemObject(unkstruct_800A6D50* arg0)
     switch (temp_s1->unk7) {
         case 0:
             var_v0 = temp_s1->unk10;
-            arg0->unk24 = (int) *var_v0;
+            arg0->animData = (int) *var_v0;
             break;
         case 1:
             var_v0 = (int) ((arg0->unkC & 0x7F) * 4) + *(int*)&temp_s1->unk10;
-            arg0->unk24 = (int) *var_v0;
+            arg0->animData = (int) *var_v0;
             break;
     }
     readAnimFrameCount(arg0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardNone);
-void rewardNone(unkstruct_800A6D50* arg0)
+void rewardNone(GameObject* arg0)
 {
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
@@ -788,7 +788,7 @@ void rewardNone(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardItem);
-void rewardItem(unkstruct_800A6D50* arg0)
+void rewardItem(GameObject* arg0)
 {
     int var_a0;
     int var_a1;
@@ -831,10 +831,10 @@ void rewardItem(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardHeart);
-void rewardHeart(unkstruct_800A6D50* arg0)
+void rewardHeart(GameObject* arg0)
 {
     if (D_8009BCA0 == 0) {
-        func_800E92D4(0x64, arg0->unk12, arg0->unk16, arg0->unk1A);
+        func_800E92D4(0x64, arg0->x, arg0->y, arg0->z);
         playSFX(9);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->objectIndex);
@@ -857,9 +857,9 @@ void rewardHeart(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardEffectOnly);
-void rewardEffectOnly(unkstruct_800A6D50* arg0)
+void rewardEffectOnly(GameObject* arg0)
 {
-    func_800E92D4(*(&D_8007E868 + ((arg0->unkC & 0x7F) * 2)), arg0->unk12, arg0->unk16, arg0->unk1A);
+    func_800E92D4(*(&D_8007E868 + ((arg0->unkC & 0x7F) * 2)), arg0->x, arg0->y, arg0->z);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
     }
@@ -868,7 +868,7 @@ void rewardEffectOnly(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardBakedYam);
-void rewardBakedYam(unkstruct_800A6D50* arg0)
+void rewardBakedYam(GameObject* arg0)
 {
     addItemToInventory(ITEM_BAKEDYAM, 1, true);
     if ((GAME.event[EVENT_SOMETHINGCOOKIN] & 0xFF) == 3) {
@@ -881,7 +881,7 @@ void rewardBakedYam(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardDirtyMirror);
-void rewardDirtyMirror(unkstruct_800A6D50* arg0)
+void rewardDirtyMirror(GameObject* arg0)
 {
     GAME.unk54e = 5;
     addItemToInventory(ITEM_DIRTYMIRROR, 1, true);
@@ -893,7 +893,7 @@ void rewardDirtyMirror(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardVitalityMaxUp);
-void rewardVitalityMaxUp(unkstruct_800A6D50* arg0)
+void rewardVitalityMaxUp(GameObject* arg0)
 {
     if (D_8009BCA0 == 0) {
         increaseMaxHealth();
@@ -907,7 +907,7 @@ void rewardVitalityMaxUp(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardWoodBoomerang);
-void rewardWoodBoomerang(unkstruct_800A6D50* arg0)
+void rewardWoodBoomerang(GameObject* arg0)
 {
     addItemToInventory(ITEM_WOODBOOMERANG, 1, true);
     if (!(arg0->unkC & 0x80)) {
@@ -917,7 +917,7 @@ void rewardWoodBoomerang(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardStoneBoomerang);
-void rewardStoneBoomerang(unkstruct_800A6D50* arg0)
+void rewardStoneBoomerang(GameObject* arg0)
 {
     addItemToInventory(ITEM_STONEBOOMERANG, 1, true);
     if (!(arg0->unkC & 0x80)) {
@@ -927,7 +927,7 @@ void rewardStoneBoomerang(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardIronBoomerang);
-void rewardIronBoomerang(unkstruct_800A6D50* arg0)
+void rewardIronBoomerang(GameObject* arg0)
 {
     addItemToInventory(ITEM_IRONBOOMERANG, 1, true);
     if (!(arg0->unkC & 0x80)) {
@@ -937,7 +937,7 @@ void rewardIronBoomerang(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardOneUp);
-void rewardOneUp(unkstruct_800A6D50* arg0)
+void rewardOneUp(GameObject* arg0)
 {
     u_char lives = GAME.playerLives;
     if (lives < 99) {
@@ -952,7 +952,7 @@ void rewardOneUp(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGoldenBowl);
-void rewardGoldenBowl(unkstruct_800A6D50* arg0)
+void rewardGoldenBowl(GameObject* arg0)
 {
     u_char health;
 
@@ -980,7 +980,7 @@ void rewardGoldenBowl(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardBitingPlantFlower);
-void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
+void rewardBitingPlantFlower(GameObject* arg0)
 {
     u_short temp_v0;
     u_char temp_v1;
@@ -1023,7 +1023,7 @@ void rewardBitingPlantFlower(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGrapple);
-void rewardGrapple(unkstruct_800A6D50* arg0)
+void rewardGrapple(GameObject* arg0)
 {
     addItemToInventory(ITEM_GRAPPLE, 1, true);
     setEventComplete(EVENT_APRECIOUSTREASURECHEST, 0);
@@ -1034,7 +1034,7 @@ void rewardGrapple(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardGrappleJack);
-void rewardGrappleJack(unkstruct_800A6D50* arg0)
+void rewardGrappleJack(GameObject* arg0)
 {
     addItemToInventory(ITEM_GRAPPLEJACK, 1, true);
     if (!(arg0->unkC & 0x80)) {
@@ -1044,7 +1044,7 @@ void rewardGrappleJack(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardCrystalBalls);
-void rewardCrystalBalls(unkstruct_800A6D50* arg0)
+void rewardCrystalBalls(GameObject* arg0)
 {
     switch (GAME.event[EVENT_LOSTANDFOUND]) {
         case 0:
@@ -1067,7 +1067,7 @@ void rewardCrystalBalls(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardMysteriousMushroom);
-void rewardMysteriousMushroom(unkstruct_800A6D50* arg0)
+void rewardMysteriousMushroom(GameObject* arg0)
 {
     setEventComplete(EVENT_THEMISTERIOUSMUSHROOM, 0);
     addItemToInventory(arg0->item_id, 1, true);
@@ -1078,7 +1078,7 @@ void rewardMysteriousMushroom(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardFlowerSeeds);
-void rewardFlowerSeeds(unkstruct_800A6D50* arg0)
+void rewardFlowerSeeds(GameObject* arg0)
 {
     setEventStarted(EVENT_FLOWERSEEDS, 0, 0);
     if (!(arg0->unkC & 0x80)) {
@@ -1089,7 +1089,7 @@ void rewardFlowerSeeds(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardPigBag);
-void rewardPigBag(unkstruct_800A6D50* arg0)
+void rewardPigBag(GameObject* arg0)
 {
     int temp;
 
@@ -1159,7 +1159,7 @@ void rewardPigBag(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardConditionalItem);
-void rewardConditionalItem(unkstruct_800A6D50* arg0)
+void rewardConditionalItem(GameObject* arg0)
 {
     if ((GAME.selectedArea == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
         addItemToInventory(arg0->item_id, 1, true);
@@ -1171,7 +1171,7 @@ void rewardConditionalItem(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardJewel);
-void rewardJewel(unkstruct_800A6D50* arg0)
+void rewardJewel(GameObject* arg0)
 {
     int var_a0;
     int var_a2;
@@ -1239,7 +1239,7 @@ void rewardJewel(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardSafeMushroom);
-void rewardSafeMushroom(unkstruct_800A6D50* arg0)
+void rewardSafeMushroom(GameObject* arg0)
 {
     setEventComplete(EVENT_ASAFEMUSHROOM, 0);
     addItemToInventory(arg0->item_id, 1, true);
@@ -1250,7 +1250,7 @@ void rewardSafeMushroom(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardAnimalDash);
-void rewardAnimalDash(unkstruct_800A6D50* arg0)
+void rewardAnimalDash(GameObject* arg0)
 {
     printInfoMessage(MSG_ANIMALDASH_ACQUIRED, MSG_TYPE_REWARD);
     GAME.area00_eventControl |= 0x40;
@@ -1264,7 +1264,7 @@ void rewardAnimalDash(unkstruct_800A6D50* arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardPants);
-void rewardPants(unkstruct_800A6D50* arg0)
+void rewardPants(GameObject* arg0)
 {   
     if (GAME.item[ITEM_JUMPINGPANTS] == 0) {
         addItemToInventory(ITEM_JUMPINGPANTS, 1, true);
