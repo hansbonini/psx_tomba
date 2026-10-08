@@ -1,6 +1,31 @@
 #include "common.h"
 #include "game.h"
 
+void func_80034420(u8* self);
+
+void (*D_8007D57C[16])(u8* self) = {
+    (void (*)(u8*))0x801216BC,
+    (void (*)(u8*))0x80121810,
+    (void (*)(u8*))0x80121A74,
+    func_80034420,
+    (void (*)(u8*))0x8012029C,
+    (void (*)(u8*))0x800EB450,
+    (void (*)(u8*))0x8011C4CC,
+    (void (*)(u8*))0x8012042C,
+    (void (*)(u8*))0x8011CF94,
+    (void (*)(u8*))0x8011C894,
+    (void (*)(u8*))0x800ECB64,
+    (void (*)(u8*))0x8011A328,
+    (void (*)(u8*))0x8011A538,
+    (void (*)(u8*))0x800EB218,
+    (void (*)(u8*))0x8011A38C,
+    (void (*)(u8*))0x8011ABF4
+};
+
+u16 D_8007D5BC[10] = { 0x7808, 0x7848, 0x7908, 0x78C8, 0x7888, 0x7948, 0x7988, 0x79C8, 0x7A08, 0x7A08 };
+
+u16 D_8007D5D0[10] = { 1, 0, 0, 0, 0, 1, 2, 3, 1, 1 };
+
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80033F50);
 void func_80033F50(void)
 {

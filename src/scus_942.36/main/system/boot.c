@@ -155,7 +155,7 @@ void bootSequenceTask(void)
                 }
                 task6 = CURRENT_TASK;
                 if (*(u16*)&task6->state0 == 0xB) {
-                    func_8001964C((u8) task6->unk5A, 1);
+                    drawBootLogo((u8) task6->unk5A, 1);
                 }
                 break;
         }
@@ -177,8 +177,17 @@ typedef struct {
 
 extern unk_80076E40 D_80076E40[];
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001964C);
-void func_8001964C(u8 color, int arg1)
+unk_80076E40 D_80076E40[4] = {
+    { 0, 0xC0, 0, 0xC0, 0x100, 0x28, 0x80, 0x80, 0x1E0 },
+    { 0x100, 0xC0, 0, 0xC0, 0x100, 0x40, 0x82, 0x80, 0x1E0 },
+    { 0x200, 0xC0, 0, 0xC0, 0x80, 0x28, 0x84, 0x80, 0x1E0 },
+    { -1, 0, 0, 0, 0, 0, 0, 0, 0 }
+};
+
+u_short D_80076E80[4] = { 0xE4, 0xAC, 0x74, 0 };
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", drawBootLogo);
+void drawBootLogo(u8 color, int arg1)
 {
     unk_80076E40* entry;
     SPRT* sprt;
@@ -189,8 +198,7 @@ void func_8001964C(u8 color, int arg1)
     entry = D_80076E40;
     sprt = (SPRT*)0x1F800000;
     while (entry->x != -1) {
-        setlen(sprt, 4);
-        setcode(sprt, 0x64);
+        setSprt(sprt);
         setRGB0(sprt, color, color, color);
         sprt->x0 = entry->x;
         sprt->y0 = entry->y;
@@ -236,8 +244,8 @@ void titleSequenceTask(void)
             task->state1 = 0;
             task->state2 = 0;
             sp10[0] = 1;
-            func_80020C00(0);
-            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
+            stopBgm(0);
+            if (MOVIE_PLAY_STATE != MOVIE_STATE_IDLE) {
                 MOVIE_SKIP_REQUEST = 1;
             }
         }
@@ -246,13 +254,13 @@ void titleSequenceTask(void)
                 func_800199B8(sp10);
                 break;
             case 1:
-                func_80019CA4();
+                bootLoadMovieResources();
                 break;
             case 2:
                 func_8001A328();
                 break;
             case 3:
-                func_80019D78();
+                bootPlayIntroMovie();
                 break;
             case 4:
                 loopTitleScreen(sp10);
@@ -310,13 +318,13 @@ void func_800199B8(void)
             return;
         case 2:
             task2 = CURRENT_TASK;
-            MOVIE_PLAY_STATE = MOVIE_STARTING;
+            MOVIE_PLAY_STATE = MOVIE_STATE_STARTING;
             MOVIE_ID = 0x15;
             task2->state1++;
             openTask(1, moviePlayerTask);
             return;
         case 3:
-            if (MOVIE_PLAY_STATE != MOVIE_IDLE) {
+            if (MOVIE_PLAY_STATE != MOVIE_STATE_IDLE) {
                 return;
             }
             task5 = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
@@ -339,7 +347,7 @@ void func_800199B8(void)
             timer = task6->timer - 1;
             task6->timer = timer;
             if ((timer << 0x10) <= 0) {
-                func_80020C00(0);
+                stopBgm(0);
                 SetDispMask(0);
                 initDisplay(0U, 0U, 0U);
                 LOAD_COMPLETE = 0U;
@@ -366,8 +374,8 @@ void func_800199B8(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_80019CA4);
-void func_80019CA4(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", bootLoadMovieResources);
+void bootLoadMovieResources(void)
 {
     unkstruct_1F8001D4* task2;
     scratchpad* scratch = PSX_SCRATCH;
@@ -396,8 +404,8 @@ void func_80019CA4(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_80019D78);
-void func_80019D78(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", bootPlayIntroMovie);
+void bootPlayIntroMovie(void)
 {
     u8 temp_v0;
     unkstruct_1F8001D4* task2;
@@ -421,7 +429,7 @@ void func_80019D78(void)
             }
             break;
         case 2:
-            func_80020C00(0);
+            stopBgm(0);
             task2 = *(u_long**)&scratch->currentTask;
             task2->state0 = 4;
             task2->state1 = 0;
@@ -450,7 +458,7 @@ void loopTitleScreen(int* arg0)
             gameControl->state2 = 0U;
             gameControl->state1++;
         case 1:
-            if (MOVIE_PLAY_STATE == MOVIE_IDLE) {
+            if (MOVIE_PLAY_STATE == MOVIE_STATE_IDLE) {
                 initDisplay(0U, 0U, 0U);
                 gameControl = CURRENT_TASK;
                 gameControl->state1++;
@@ -461,9 +469,9 @@ void loopTitleScreen(int* arg0)
         case 2:
             func_800E7DA4();
             SetDispMask(1);
-            func_80020AF0(0);
+            startBgmTrack(0);
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
-            (CURRENT_TASK)->titleScreenSelectedOption = TITLESCREEN_NEWGAME;
+            (CURRENT_TASK)->titleScreenSelectedOption = TITLESCREEN_OPTION_NEWGAME;
             gameControl = (*(unkstruct_1F8001D4** )((byte*)D_1F8001A0+0x34));
             gameControl->unk6A = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
             gameControl = *(unkstruct_1F8001D4** )(&D_1F8000C0[0]+0x114);
@@ -508,20 +516,20 @@ void loopTitleScreen(int* arg0)
                         }
                     }
                     if (JOYPAD_STATE & (JOY_CROSS | JOY_START)) {
-                        func_80020C00(0);
+                        stopBgm(0);
                         gameControlTemp6 = CURRENT_TASK;
                         switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
-                            case TITLESCREEN_NEWGAME:                 // switch 2
+                            case TITLESCREEN_OPTION_NEWGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 0;
                                 playSFXAndSetNote(10, 10);
-                                setTask(func_8001A51C);
+                                setTask(gameTask);
                                 break;
-                            case TITLESCREEN_LOADGAME:                 // switch 2
+                            case TITLESCREEN_OPTION_LOADGAME:                 // switch 2
                                 gameControlTemp6->loadGameSelected = 1;
                                 playSFXAndSetNote(10, 10);
-                                setTask(func_8001A51C);
+                                setTask(gameTask);
                                 break;
-                            case TITLESCREEN_OPTIONS:                 // switch 2
+                            case TITLESCREEN_OPTION_OPTIONS:                 // switch 2
                                 gameControlTemp6->state0 = 2;
                                 gameControlTemp6->state1 = 0U;
                                 playSFXAndSetNote(10, 10);
@@ -549,10 +557,10 @@ void loopTitleScreen(int* arg0)
             }
             gameControlTemp7 = CURRENT_TASK;
             func_800E8E78(gameControlTemp7->unk6A, gameControlTemp7->titleScreenSelectedOption);
-            func_8001F6D4();
+            updateSound();
             return;
         case 4:
-            func_80020C00(0);
+            stopBgm(0);
             *arg0 = 0;
             gameControl = CURRENT_TASK;
             gameControl->state0 = 3;
@@ -572,7 +580,7 @@ void func_8001A328(void)
     NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
     switch ((CURRENT_TASK)->state1) {
         case 0:
-            func_80020C00(0);
+            stopBgm(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0;
             loadAreaResources(3);
@@ -583,7 +591,7 @@ void func_8001A328(void)
             if (LOAD_COMPLETE != 0) {
                 SetDispMask(1);
                 func_800E75C4();
-                func_80020AF0(0);
+                startBgmTrack(0);
                 task2 = CURRENT_TASK;
                 task2->state2 = 0U;
                 (CURRENT_TASK)->state1++;
@@ -614,7 +622,7 @@ void func_8001A328(void)
             }
             break;
         case 3:
-            func_80020C00(0);
+            stopBgm(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0U;
             loadAreaResources(2);
@@ -631,8 +639,8 @@ void func_8001A328(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001A51C);
-void func_8001A51C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", gameTask);
+void gameTask(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
     unkstruct_1F8001D4* task = *(unkstruct_1F8001D4**)&scratch->currentTask;
@@ -645,21 +653,21 @@ void func_8001A51C(void)
     task->state2 = 0;
     task->unk4E.value = 0;
     task->unk6A = 0;
-    setRGB0((DRAWENV*)&D_8009D6C4, 0, 0, 0);
-    setRGB0((DRAWENV*)D_8009E3D4, 0, 0, 0);
+    setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
+    setRGB0((DRAWENV*)DRAW_ENV_2, 0, 0, 0);
     scratch->unk1DC = -1;
     scratch->unk1DE = 0;
     D_8009EB4C = 0;
     scratch->loadComplete = 0;
     D_8009EBA0 = 0;
-    func_80024B3C(D_1F800118);
+    initLighting(D_1F800118);
     scratch->joypad_state  = 0;
     while (true){
         func_800223E0();
         state = (CURRENT_TASK)->state0;
         switch ((u_short)state) {
             case 0:
-                func_8001A670(); // New Game
+                gameInitState(); // New Game
                 break;
             case 1:
                 gameStateDispatcher(); // Debug
@@ -672,8 +680,8 @@ void func_8001A51C(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001A670);
-void func_8001A670(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", gameInitState);
+void gameInitState(void)
 {
 
     RECT rect;

@@ -27,8 +27,8 @@ void func_8003A604(int id)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A614);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A8A8);
-u8* func_8003A8A8(s32 n, u8* dst, u8 val)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", fillBytesUnrolled);
+u8* fillBytesUnrolled(s32 n, u8* dst, u8 val)
 {
     switch (n) {
     case 255:  *dst++ = val;

@@ -7,8 +7,8 @@ extern long D_1F80008C;
 
 #define gte_rtps_real() __asm__ volatile("nop;" "nop;" ".word 0x4A180001")
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", func_800459E0);
-int func_800459E0(u8* self, long* sxy, long* otz)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", projectActorPosition);
+int projectActorPosition(u8* self, long* sxy, long* otz)
 {
     *(s16*)0x1F800060 = *(u16*)(self + 0x12);
     *(s16*)0x1F800062 = *(u16*)(self + 0x16);
@@ -30,8 +30,8 @@ int func_800459E0(u8* self, long* sxy, long* otz)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", func_80045AF8);
-int func_80045AF8(POLY_FT4* p)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", isPolyFT4OnScreen);
+int isPolyFT4OnScreen(POLY_FT4* p)
 {
     if ((u16)p->y0 >= 0xE0 && (u16)p->y1 >= 0xE0 && (u16)p->y2 >= 0xE0 && (u16)p->y3 >= 0xE0) {
         return 0;
@@ -42,8 +42,8 @@ int func_80045AF8(POLY_FT4* p)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", func_80045BA4);
-s32 func_80045BA4(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", insertPrimWithBias);
+s32 insertPrimWithBias(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
 {
     s32 off = (arg2 << 2) + ((s32)arg3 * 4);
     s32  prev;
@@ -61,8 +61,8 @@ s32 func_80045BA4(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", func_80045C00);
-s32 func_80045C00(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", insertPrim);
+s32 insertPrim(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
 {
     s32 off = arg3 * 4;
     s32  prev;
@@ -80,10 +80,10 @@ s32 func_80045C00(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", func_80045C54);
-void func_80045C54(u8* self, POLY_FT4* p, u_long* uv)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender1", setupActorPolyFT4);
+void setupActorPolyFT4(u8* self, POLY_FT4* p, u_long* uv)
 {
-    p->code = 0x2D;
+    setcode(p, 0x2D);
     SetSemiTrans(p, self[0xD] >> 7);
     *(u_long*)&p->u0 = uv[0];
     *(u_long*)&p->u1 = uv[1];

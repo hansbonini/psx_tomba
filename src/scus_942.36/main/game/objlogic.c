@@ -42,8 +42,8 @@ void func_800365DC(u8* self)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objlogic", func_80036618);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objlogic", func_800369BC);
-s32 func_800369BC(u8* self, s16 arg1, s16 arg2)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objlogic", isPlayerInRange);
+s32 isPlayerInRange(u8* self, s16 arg1, s16 arg2)
 {
     u16 dx;
     u16 dy;
