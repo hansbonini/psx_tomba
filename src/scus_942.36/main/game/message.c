@@ -59,7 +59,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F804);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F948);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002FA24);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", updateMessageBox);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", showMessageBox);
 void showMessageBox(s32 arg0, s32 arg1, s16 arg2, s16 arg3)
@@ -69,7 +69,7 @@ void showMessageBox(s32 arg0, s32 arg1, s16 arg2, s16 arg3)
     box.unk2 = arg2;
     box.unk6 = arg3;
     box.unkA = 0;
-    func_80030800(arg0, arg1, &box, 0, -1);
+    openMessageBox(arg0, arg1, &box, 0, -1);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", showMessageBoxTimed);
@@ -80,30 +80,30 @@ void showMessageBoxTimed(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4)
     box.unk2 = arg2;
     box.unk6 = arg3;
     box.unkA = 0;
-    func_80030800(arg0, arg1, &box, 0, arg4);
+    openMessageBox(arg0, arg1, &box, 0, arg4);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", showMessageBoxDirect);
 void showMessageBoxDirect(s32 arg0, s32 arg1, s32 arg2)
 {
-    func_80030800(arg0, arg1, arg2, 1, -1);
+    openMessageBox(arg0, arg1, arg2, 1, -1);
     return;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", showMessageBoxDirectTimed);
 void showMessageBoxDirectTimed(s32 arg0, s32 arg1, s32 arg2, s16 arg3)
 {
-    func_80030800(arg0, arg1, arg2, 1, arg3);
+    openMessageBox(arg0, arg1, arg2, 1, arg3);
     return;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_80030800);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", openMessageBox);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_80030A54);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", loadMessageGlyph);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_80030E30);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", freeMessageGlyphs);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_80030EF8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", updateInfoMessage);
 
 /*
  0x00 = Adquired
@@ -140,11 +140,11 @@ void drawInfoMessageText(void* obj, s32 stringIndex)
             str += 2;
             continue;
         }
-        func_800316EC(obj, (s16)token);
+        drawMessageGlyph(obj, (s16)token);
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_800316EC);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", drawMessageGlyph);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", dispatchAreaDialogInit);
 void dispatchAreaDialogInit(void)

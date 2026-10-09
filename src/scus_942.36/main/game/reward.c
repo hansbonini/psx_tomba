@@ -598,7 +598,7 @@ void func_8003F3D4(u8* self)
         *(s16*)(self + 0x70) = D_8007D6E0[self[3]].unk2;
         *(s16*)(self + 0x72) = D_8007D6E0[self[3]].unk3;
         *(s16*)(self + 0x1E) = D_8007D6E0[self[3]].unk4;
-        *(int*)(self + 0x3C) = D_1F8002C8[D_8007D6E0[self[3]].unk6];
+        *(int*)(self + 0x3C) = SPR_DATA[D_8007D6E0[self[3]].unk6];
         *(s16*)(self + 0xA6) = D_8007D6E0[self[3]].unk5;
         *(int*)(self + 0x24) = D_8007D6E0[self[3]].unk8[*(s16*)(self + 0xA6)];
         switch (self[3]) {
@@ -868,7 +868,7 @@ void initItemObject(GameObject* arg0)
     arg0->hitOffsetY = (short)temp_s1->unkE;
     arg0->hitHeight = (short)temp_s1->unkF;
 
-    arg0->spriteBank = *(&D_1F8002C8[temp_s1->unk4]);
+    arg0->spriteBank = *(&SPR_DATA[temp_s1->unk4]);
     arg0->unk2E = 1;
     if (arg0->item_id == ITEM_LOSTDWARF) {
         if ((u_long) (arg0->unkC & 0x7F) >= 4U) {

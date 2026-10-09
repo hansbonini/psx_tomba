@@ -5,9 +5,9 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", func_8004B4
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", func_8004BAF0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", func_8004BDE4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", drawMessageBox);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", func_8004C1E4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", drawMessageBoxFrame);
 typedef struct {
     s16 unk0[4];
     s16 unk8[4];
@@ -15,7 +15,7 @@ typedef struct {
     s16 unk12[3];
 } unk_8004C1E4;
 
-void func_8004C1E4(u8* self)
+void drawMessageBoxFrame(u8* self)
 {
     u8 pad[0x60];
     unk_8004C1E4 v;
@@ -26,9 +26,9 @@ void func_8004C1E4(u8* self)
     v.unk8[1] = *(u16*)(self + 0xC0);
     v.unk8[2] = *(u16*)(self + 0xC2);
     v.unk8[3] = *(u16*)(self + 0xC4);
-    func_8004C258(&v, 0, *(s16*)(self + 0x1E));
+    drawBalloonFrame(&v, 0, *(s16*)(self + 0x1E));
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", func_8004C258);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", drawBalloonFrame);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/actorrender3", func_8004CC84);

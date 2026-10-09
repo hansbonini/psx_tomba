@@ -93,6 +93,18 @@ typedef enum {
 } AREA;
 
 typedef enum {
+    /*0x00*/ BALLOON_TAIL_BOTTOM_CENTER,
+    /*0x01*/ BALLOON_TAIL_BOTTOM_LEFT,
+    /*0x02*/ BALLOON_TAIL_LEFT,
+    /*0x03*/ BALLOON_TAIL_TOP_LEFT,
+    /*0x04*/ BALLOON_TAIL_TOP_CENTER,
+    /*0x05*/ BALLOON_TAIL_TOP_RIGHT,
+    /*0x06*/ BALLOON_TAIL_RIGHT,
+    /*0x07*/ BALLOON_TAIL_BOTTOM_RIGHT,
+    /*0x08*/ BALLOON_TAIL_NONE
+} BALLOON_TAIL;
+
+typedef enum {
     /*0x00*/ AREA00_SECTION00_VILLAGEOFALLBEGINNINGS,
     /*0x01*/ AREA00_SECTION01_FORESTOFALLBEGINNINGS,
     /*0x02*/ AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE,
@@ -914,13 +926,13 @@ typedef struct Task {
 typedef struct scratchpad {
     /* 0x000  Shared scratch area -- NOT a stable layout. These bytes are reused
        with a different shape by each user, so do not name fields in here:
-         - drawBootLogo / func_8004BDE4 / func_8004C258 assemble a SPRT at
+         - drawBootLogo / drawMessageBox / drawBalloonFrame assemble a SPRT at
            0x000-0x013 (code 0x003, rgb 0x004-0x006, xy 0x008/0x00A,
            uv 0x00C/0x00D, clut 0x00E, wh 0x010/0x012) writing it field by field
            and reading it back word-wise to copy into the OT;
          - 0x014 / 0x018 / 0x01C hold unrelated 4-byte values for ~10 other
            functions -- 0x018 in particular is one byte of the staged primitive
-           in func_8004C258 and a word everywhere else.
+           in drawBalloonFrame and a word everywhere else.
        Two stable overlays live further up and are reached by explicit cast,
        never through this struct: a CAMERA at 0x0E2 and a MATRIX at 0x0F8. */
     /* 0x000 */ u_char  unk000[0x164];
@@ -976,20 +988,67 @@ typedef struct scratchpad {
 
 /* Item definition entry, reached through D_8007E6E4[D_8007E61C[item_id]].
    Holds the sprite/CLUT/animation description for one item. */
-/* Cabecalho de arquivo do CD, apontado pela entrada da fila em D_8009E748.
-   Derivado de func_80021340, a unica leitora da FileLinkArray (D_800791A0):
-   a posicao de seek sai de &D_800791A0 + fileId * 8. */
-typedef struct cdFileHeader {
-    /* 0x00 */ s16 fileId;      /* indexa a FileLinkArray */
-    /* 0x02 */ u8  unk2;
-    /* 0x03 */ u8  subType;     /* nibble alto: 0x10 ou 0x90 */
-    /* 0x04 */ u8  unk4[4];
-    /* 0x08 */ s16 x;           /* destino em VRAM, quando o tipo e grafico */
-    /* 0x0A */ s16 y;
+/* Load record, walked by queueLoadList until fileId == -1 and consumed by
+   cdLoadTask. A record of type LOAD_TYPE_SUB names a piece inside the file
+   of the record before it. */
+typedef enum {
+    /*0x10*/ LOAD_KIND_GRPX = 0x10, /* pixels sent to VRAM with LoadImage */
+    /*0x20*/ LOAD_KIND_NONE = 0x20, /* nothing is registered */
+    /*0x30*/ LOAD_KIND_SPR = 0x30, /* sprite frame definitions, SPR_DATA[n] */
+    /*0x40*/ LOAD_KIND_FOUR = 0x40, /* unknown, FOUR_DATA[n] */
+    /*0x50*/ LOAD_KIND_WMD = 0x50, /* 3D models, WMD_DATA[n] */
+    /*0x60*/ LOAD_KIND_WPP = 0x60, /* packed sprite frames, WPP_DATA[n] */
+    /*0x70*/ LOAD_KIND_WHM = 0x70, /* collision plane data, WHM_DATA[n] */
+    /*0x80*/ LOAD_KIND_APD = 0x80, /* asset placement data, APD_DATA[n] */
+    /*0x90*/ LOAD_KIND_WVD = 0x90, /* sound bank, WVD_BODIES[n] */
+    /*0xA0*/ LOAD_KIND_UNKA = 0xA0, /* VAB headers of a sound bank, WVD_HEADERS[n] */
+    /*0xB0*/ LOAD_KIND_SEQ = 0xB0, /* sequenced music, SEQ_DATA[n] */
+    /*0xC0*/ LOAD_KIND_WSS = 0xC0, /* AREA15 files, WSS_DATA[n] */
+    /*0xD0*/ LOAD_KIND_WFM3 = 0xD0, /* font and dialogues, WFM3_DATA[n] */
+    /*0xF0*/ LOAD_KIND_INS = 0xF0, /* code overlay, loaded at 0x800E7388 */
+    /*0xF8*/ LOAD_KIND_LDSYS = 0xF8  /* SYS/LDSYS.BIN, loaded at 0x80097FA8 */
+} LoadKind;
+
+typedef enum {
+    /*0x00*/ LOAD_TYPE_STAGING = 0, /* read to the staging buffer; GRPX goes to LoadImage, WVD to the SPU */
+    /*0x01*/ LOAD_TYPE_LZ_TO_VRAM = 1, /* read, lzDecompress to the staging buffer, LoadImage */
+    /*0x02*/ LOAD_TYPE_RAW = 2, /* read to the destination */
+    /*0x03*/ LOAD_TYPE_LZ_TO_RAM = 3, /* read to the staging buffer, lzDecompress to the destination */
+    /*0x04*/ LOAD_TYPE_RAW_4 = 4, /* read to the destination */
+    /*0x10*/ LOAD_TYPE_ALT_BUFFER = 0x10 /* flag: staging buffer is LOAD_BUFFER_ALT */
+} LoadType;
+
+#define LOAD_TYPE_SUB 0xFFFFFFFF
+#define LOAD_XY(x, y) (((y) << 16) | (x))
+#define LOAD_LIST_END { -1, 0, 0, 0, 0, 0, 0, 0 }
+
+typedef struct LoadRecord {
+    /* 0x00 */ s16 fileId; /* CdFile, index into FILE_LINKS */
+    /* 0x02 */ u8  slot;   /* 0xFF none; < 0x80 saves the destination in LOAD_SLOTS, else reads it */
+    /* 0x03 */ u8  kind;   /* LoadKind | index in the table of that kind */
+    /* 0x04 */ u32 addr;   /* destination, 0 = after the previous record */
+    /* 0x08 */ u32 arg;    /* size in bytes, or LOAD_XY(x, y) for LOAD_KIND_GRPX */
     /* 0x0C */ s16 w;
-    /* 0x0E */ s16 h;           /* tambem indexa D_80077D50 por h * 8 */
-    /* 0x10 */ u32 flags;       /* nibble baixo = tipo; bit 0x10 = qual buffer */
-} cdFileHeader;
+    /* 0x0E */ s16 h;      /* for LOAD_KIND_WVD, index into SPU_BANK_ADDRS */
+    /* 0x10 */ u32 type;   /* LoadType, or LOAD_TYPE_SUB */
+} LoadRecord;
+
+/* Control codes of the dialogue streams of a WFM3 file (updateMessageBox). */
+typedef enum {
+    /*0xFFF2*/ MSG_POSE = 0xFFF2,   /* n: TALK_POSE = n */
+    /*0xFFF3*/ MSG_HALT = 0xFFF3,
+    /*0xFFF5*/ MSG_CHOICE = 0xFFF5,
+    /*0xFFF6*/ MSG_MOVE = 0xFFF6,   /* dx, dy */
+    /*0xFFF7*/ MSG_COLOR = 0xFFF7,  /* n */
+    /*0xFFF8*/ MSG_VOICE = 0xFFF8,  /* tone, BALLOON_TAIL << 12 */
+    /*0xFFF9*/ MSG_DELAY = 0xFFF9,  /* frames */
+    /*0xFFFA*/ MSG_BOX = 0xFFFA,    /* w, h */
+    /*0xFFFB*/ MSG_CLEAR = 0xFFFB,
+    /*0xFFFC*/ MSG_WAIT = 0xFFFC,
+    /*0xFFFD*/ MSG_NEWLINE = 0xFFFD,
+    /*0xFFFE*/ MSG_CLOSE = 0xFFFE,
+    /*0xFFFF*/ MSG_END = 0xFFFF
+} MessageCode;
 
 typedef struct itemDef {
     /* 0x00 */ u_char unk0;
@@ -2215,7 +2274,7 @@ extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
 extern u_char D_1F8001A0[0x24];
-extern int D_1F8002C8[];
+extern int SPR_DATA[];
 extern u16  D_1F8001C8;
 extern s32* D_1F800204;
 extern u16  D_1F800236;
@@ -2230,13 +2289,13 @@ extern u16  D_1F80023C;
 extern s16  D_1F80016A;
 extern s32  D_1F80029C;
 extern s32  D_1F800200;
-extern s32  D_1F800298;
+extern s32  LOAD_NEXT_ADDR;
 extern s32  D_1F8002AC;
 extern u16  D_1F800176;
 extern u16  D_1F800186;
 extern s32* D_1F800220;
 extern s16  D_1F80024A;
-extern u8*  D_1F800354;
+extern u8*  WPP_TIM_PACK;
 extern int  D_1F800164;
 extern u_long D_1F8001E0;
 extern s16  D_1F8001F4;
@@ -2252,7 +2311,7 @@ extern u16  D_1F800244;
 extern u16  D_1F800246;
 extern u16  D_1F800248;
 extern u16  D_1F80024C;
-extern s16  D_1F8003A8[];
+extern s16  VAB_IDS[];
 extern short D_1F8003B6;
 
 /* --- RAM / ROM data 0x8001____ --- */
@@ -2276,18 +2335,18 @@ extern u_char EVENT_COMPLETE_AP_TABLE[];
 extern CdlATV D_80077754;
 extern CdlATV D_80077758;
 extern u_char D_8007775C[];
-extern int  D_80077D50[];
+extern int  SPU_BANK_ADDRS[];
 extern u_char SOUND_INITIALIZED;
-extern short D_80078F80[];
-extern int D_8007912C[];
+extern short MOVIE_FILE_IDS[];
+extern int WSS_LOAD_LISTS[];
 extern u32 D_8007C6B0[];
 extern u32 D_8007D30C[];
 extern s16  D_8007D788[];
 extern s16  D_8007D988[];
 extern s16  D_8007DB88[];
 extern u32 D_8007E8A8[];
-extern fileLink D_800791A0[]; // FileLinkArray
-extern int  D_800791A4[];
+extern fileLink FILE_LINKS[]; // FileLinkArray
+extern int  FILE_LINK_SIZES[];
 extern u_short D_8007B290;
 extern int D_8007B294;
 extern int D_8007B2F4[];
@@ -2339,9 +2398,9 @@ extern char D_8009BCDB;
 extern u_char D_8009BCDF;
 extern short D_8009BCEA;
 extern u_char D_8009C3F8;
-extern int  D_8009C658[];
-extern int  D_8009C65C[];
-extern int  D_8009C758[];
+extern int  WVD_BODIES[];
+extern int  WVD_BODIES_NEXT[];
+extern int  WVD_HEADERS[];
 extern u_short D_8009C864;
 extern u_short D_8009C866;
 extern void* D_8009C8A8;
@@ -2376,11 +2435,11 @@ extern s16  BGM_MUTED;
 extern u8   D_80014C94;
 extern u8   D_80014C8C;
 extern u8*  SCRIPT_CODE;
-extern int  D_8009E74C[];
+extern int  CD_QUEUE_DST[];
 extern u8   D_800778E4[];
 extern u8   D_800778E5[];
 extern s32  SFX_BANKS[];
-extern s32  D_80078EB0[];
+extern s32  SOUND_SET_LOAD_LISTS[];
 extern u8   D_8009C61A;
 extern short D_8009C610;
 extern short D_8009C612;
@@ -2424,7 +2483,7 @@ extern long MEMCARD_SW_TIMEOUT;
 extern long MEMCARD_SW_NEW_DEVICE;
 extern short SOUND_QUEUE_TAIL;
 extern u_short D_8009E744;
-extern int  D_8009E748[];
+extern int  CD_QUEUE[];
 extern int D_8009EB4C;
 extern short D_8009EB52;
 extern u_short D_8009EB5A;
@@ -2439,7 +2498,7 @@ extern char D_800A1890;
 extern short BGM_SEQ_ID;
 extern short VOICE_SFX_ID[];
 extern short SOUND_QUEUE_HEAD;
-extern byte D_800A3348[0x3D4];
+extern byte LOAD_BUFFER[0x3D4];
 extern u_char D_800A38B8[];
 extern u_char D_800A3940[0x70];
 extern u_char D_800A3941;
@@ -2523,7 +2582,7 @@ extern u_char* D_800B078C;
 extern char D_800B07AC[8];
 extern char D_800B07CD;
 extern int D_800B3184;
-extern char D_800B3188;
+extern char LOAD_BUFFER_ALT;
 
 /* --- RAM / ROM data 0x800D____ --- */
 extern int D_800D7188;
@@ -2602,7 +2661,7 @@ void func_80123EC8(void);
 void func_80122A00(void);
 s32 allocSfxVoice();
 s32 queueSoundCommand();
-void func_80021340(void);
+void cdLoadTask(void);
 // void applyAnimVelocityX(GameObject* arg0, u16 arg1);
 
 #endif // GAME_H

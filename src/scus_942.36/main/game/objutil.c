@@ -32,7 +32,7 @@ void func_8003A604(int id)
     D_8007D6A0 = id;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A614);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", unpackSpriteFrame);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", fillBytesUnrolled);
 u8* fillBytesUnrolled(s32 n, u8* dst, u8 val)

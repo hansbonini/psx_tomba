@@ -430,7 +430,7 @@ void titleScreenHandler(void)
             SetDispMask(0);
             func_80028CE4();
             LOAD_COMPLETE = 0;
-            loadAreaResources(3);
+            loadSoundSet(3);
             func_800222B8(5, 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state1++;;
@@ -448,7 +448,7 @@ void titleScreenHandler(void)
         default:
             return;
         case 2:
-            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
             temp_v0 = func_800E9438();
             if (temp_v0 == 1) {
                 (CURRENT_TASK)->state1++;
@@ -924,7 +924,7 @@ void gameplayMainHandler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", gameplayTick);
 void gameplayTick(void)
 {
-    *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 2) {
         if (*(u8* )(&SCRATCHPAD+0x1CC) == 0) {
             *(s16* )0x1F8001C6 = 0;
@@ -1022,7 +1022,7 @@ void areaMode2Tick(void)
     u_short var_a1;
     Task* temp_v1;
 
-    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == MOVIE_STATE_IDLE)) {
         *(short* )0x1F8001C6 = 0;
     }
@@ -1204,7 +1204,7 @@ void inventoryScreenTick(void)
     s32 var_s0;
 
     *(u16* )(&SCRATCHPAD+0x1F8)=*(u16* )(0x1F8001F8)+1;
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     switch (D_800A3952) {
         case 0:
         case 1:
@@ -1312,7 +1312,7 @@ void areaMode4Handler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode4Tick);
 void areaMode4Tick(void)
 {
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
@@ -1404,7 +1404,7 @@ void areaMode5Handler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode5Tick);
 void areaMode5Tick(void)
 {
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
@@ -1495,7 +1495,7 @@ void areaMode6Handler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode6Tick);
 void areaMode6Tick(void)
 {
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(s16* )(&SCRATCHPAD+0x1F8))++;
@@ -1699,13 +1699,13 @@ void loadCurrentArea(s16 arg0)
     D_8009C614 = D_8009BCEA;
     *(short*)0x1F8001DC = val;
 
-    func_80021C24(GAME.selectedArea + (u16)D_8009EBA0);
+    loadAreaListFile(GAME.selectedArea + (u16)D_8009EBA0);
 
     if (loadAreaSectionResources((s16)arg0) != -1) {
         D_8009BCCF = 2;
     }
 
-    func_80021CC8(GAME.selectedArea + (u16)D_8009EBA0, GAME.selectedSection, (s16)(arg0 | variant));
+    queueAreaSectionLists(GAME.selectedArea + (u16)D_8009EBA0, GAME.selectedSection, (s16)(arg0 | variant));
     loadAreaSoundBank();
     startSoundTask();
 }
@@ -1791,13 +1791,13 @@ void areaTransitionHandler(void)
         D_8009C614 = D_8009BCEA;
         *(short*)0x1F8001DC = val;
 
-        func_80021C24(GAME_A + (u16)D_8009EBA0);
+        loadAreaListFile(GAME_A + (u16)D_8009EBA0);
 
         if (loadAreaSectionResources(areaChanged) != -1) {
             D_8009BCCF = 2;
         }
 
-        func_80021CC8(GAME_B + (u16)D_8009EBA0, D_8009BCCA, variant | areaChanged);
+        queueAreaSectionLists(GAME_B + (u16)D_8009EBA0, D_8009BCCA, variant | areaChanged);
         loadAreaSoundBank();
         startSoundTask();
         D_8009EB4C = 0;
@@ -2322,7 +2322,7 @@ s32 loadAreaSectionResources(s32 arg)
     s0 = s1;
 
     if (*(u8*)0x1F8003D3 != s0 || arg != 0) {
-        loadAreaResources(s0);
+        loadSoundSet(s0);
         s4 = s0;
         stopAllSound();
         *(&SCRATCHPAD + 0x3D3) = s1;
@@ -2330,13 +2330,13 @@ s32 loadAreaSectionResources(s32 arg)
 
     if (s2 == 1 || s2 == 7) {
         keyOffActiveSfxVoices();
-        loadAreaResources(D_800771BC[gp->selectedSection]);
+        loadSoundSet(D_800771BC[gp->selectedSection]);
     } else if (s2 == 0xA && gp->selectedSection != 3 && gp->selectedSection != 7) {
         keyOffActiveSfxVoices();
-        loadAreaResources(D_800771C4[gp->selectedSection]);
+        loadSoundSet(D_800771C4[gp->selectedSection]);
     } else if (s2 == 0xC) {
         keyOffActiveSfxVoices();
-        loadAreaResources(D_800771D0[gp->selectedSection]);
+        loadSoundSet(D_800771D0[gp->selectedSection]);
     }
 
     return s4;

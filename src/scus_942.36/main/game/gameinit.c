@@ -213,7 +213,7 @@ void initMainDrawList(void)
     *(s16* )0x1F80024A = *(s16* )0x1F800252 = 0;
     for (i = 7; 0 <= i; --i) {
         off = i * 0x8C;
-        *(s16*)&D_800A3348[off] = 0xFFFF;
+        *(s16*)&LOAD_BUFFER[off] = 0xFFFF;
     }
     initSpriteSlots();
     return;
