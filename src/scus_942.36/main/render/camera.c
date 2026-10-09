@@ -49,14 +49,14 @@ void loadSpawnPosition(u8* self)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initPlayerAtSpawn);
 void initPlayerAtSpawn(void)
 {
-    u8* p = PLAYER;
+    u8* p = &PLAYER.obj;
     s16* row;
     u_int flags;
     u_int plane;
 
     p[0] = 3;
     if ((CURRENT_TASK)->loadGameSelected != 0) {
-        D_8009C618 = 4;
+        D_8009C618[0] = 4;
         if (*(u_long*)&GAME.selectedArea == 0x20000) {
             D_8009BCEA = 2;
         }
@@ -84,13 +84,13 @@ void initPlayerAtSpawn(void)
 
         *dst |= 1 << r[1];
     }
-    if (D_8009C618 == 3 || D_8009C617 == 0) {
+    if (D_8009C618[0] == 3 || D_8009C617 == 0) {
         loadSpawnPosition(p);
         *(s16*)(p + 0x12) = *(u16*)(p + 0xEE);
         *(s16*)(p + 0x16) -= 0x104;
     } else if ((CURRENT_TASK)->loadGameSelected != 0) {
         (CURRENT_TASK)->loadGameSelected = 0;
-        *(VEC3*)&PLAYER[0x10] = D_8009C61C;
+        *(VEC3*)&PLAYER.obj.x = D_8009C61C;
     }
 }
 
@@ -138,7 +138,6 @@ void copyMatrix32(s32* src, s32* dst)
     dst[7] = d;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", getBaseMatrix);
 void getBaseMatrix(MATRIX* dst)
 {
     *dst=*SCRATCH_BASE_MATRIX;

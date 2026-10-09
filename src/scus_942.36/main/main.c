@@ -189,8 +189,8 @@ void initGlobalState(void)
     scratch->unk1C4 = 0;
     scratch->unk1C5= 0;
     scratch->unk3CC = 0;
-    D_8009C9DA = 0;
-    D_8009C9DE = 0;
+    (*(short *)&D_8009C9DA) = 0;
+    (*(short *)&D_8009C9DE) = 0;
     D_8009C940 = 0;
     D_8009EB52 = 0;
     D_8009C864 = 0;
@@ -235,7 +235,6 @@ void initGraphics(void)
     *(u_int** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay);
 void initDisplay(u_char r0, u_char g0, u_char b0)
 {
     DISPENV* dispenv1;

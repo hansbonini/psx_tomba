@@ -3,11 +3,9 @@
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", func_80032DB4);
 typedef struct { void **p; s32 a, b; } E12_32DB4;
-extern u16 D_1F8001F8;
 extern u8 D_800A5399;
 extern u8 D_800A5464[];
 extern void readAnimFrameCount(GameObject *);
-extern void func_80028A74(s32, s32, s32, s32);
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 
@@ -36,22 +34,22 @@ void func_80032DB4(GameObject *o)
             func_80028A74(0, 0, 0xff, 2);
         tickAnimation(o);
         o->visible = D_800A5399;
-        o->h->p.whole = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((s16)o->unk84, (s16)o->unk88);
+        o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos((s16)o->unk84, (s16)o->unk88);
         if (o->unkC)
         {
             t = fixedMulSin((s16)o->unk84, 8) + 8;
-            o->y.p.whole = D_800A53AE + t;
+            o->y.p.whole = PLAYER.obj.y.p.whole + t;
         }
         else
         {
             t = fixedMulSin((s16)o->unk84, 8) + 0x18;
-            o->y.p.whole = D_800A53AE + t;
+            o->y.p.whole = PLAYER.obj.y.p.whole + t;
         }
-        o->d->p.whole = (*(Fix16 **)&D_800A53DC)->p.whole + fixedMulSin((s16)o->unk84, (s16)o->unk88);
+        o->d->p.whole = PLAYER.obj.d->p.whole + fixedMulSin((s16)o->unk84, (s16)o->unk88);
         o->unk84 = (o->unk84 + 0x10) & 0xff;
         o->unk88 += o->unk88 < 0xc;
         o->unkF = D_800A53A7[0];
-        if (((u8 *)&D_800A5401)[0])
+        if (((u8 *)&PLAYER.obj.touchFlag)[0])
             o->timer = 0;
         if (--o->timer <= 0) {
             o->timer = 0;
@@ -92,7 +90,6 @@ extern s32 *D_8007D2F0[];
 extern u8 D_800A5399;
 extern u8 D_800A53A7;
 extern u8 D_8009BCF8;
-extern u16 D_1F8001F8;
 
 void func_800330EC(GameObject *o)
 {
@@ -157,7 +154,7 @@ void func_800332CC(GameObject *o)
         func_80032374(o);
         break;
     case 1:
-        if ((*(u8 *)&PLAYER) != 5)
+        if (PLAYER.obj.active != 5)
             func_800330EC(o);
         break;
     case 2:
@@ -171,7 +168,6 @@ void func_800332CC(GameObject *o)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", func_80033374);
 extern s32 D_800A53AC;
-extern s32 D_800A53B0;
 
 void func_80033374(char a, char b, char c)
 {
@@ -212,7 +208,6 @@ void func_80033404(s32 a, s32 b)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", func_80033488);
 typedef struct { s32 a, y, b; } P3_33488;
-extern void func_80110DA0(s32 a, s32 b, s32 c);
 
 static __inline__ void spawn_33488(s16 sub, s32 idx)
 {
@@ -231,7 +226,7 @@ static __inline__ void spawn_33488(s16 sub, s32 idx)
 
 void func_80033488(s16 n)
 {
-    if (n != 2) (*(u8 *)&PLAYER) = 7;
+    if (n != 2) PLAYER.obj.active = 7;
     (*(u8 *)&D_800A5464) = 2;
     switch (n) {
     case 0:

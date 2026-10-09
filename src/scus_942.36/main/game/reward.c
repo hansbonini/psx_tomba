@@ -15,7 +15,7 @@ void updateItemPickupAnim(GameObject* arg0)
     u_char temp_v1;
 
     temp_v1 = arg0->step;
-    switch (temp_v1) {                              // irregular
+    switch (temp_v1) {
         case 0:
             playSFX(*(&D_8007D6D0 + arg0->subtype));
             func_800E92D4(0x1F4, arg0->x.p.whole, arg0->y.p.whole, arg0->z.p.whole);
@@ -810,7 +810,6 @@ void applyItemEffect(GameObject* arg0, int arg1, short arg2, short arg3, int arg
     }
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", initItemObject);
 void initItemObject(GameObject* arg0)
 {
 
@@ -854,7 +853,7 @@ void initItemObject(GameObject* arg0)
         }
     }
 
-    switch (temp_s1->unk6) {                              // irregular
+    switch (temp_s1->unk6) {
         case 0:
             x = temp_s1->x;
             y = temp_s1->y;
@@ -1121,10 +1120,10 @@ void rewardBitingPlantFlower(GameObject* arg0)
             asm("");
             D_8009BCA7 = 1;
             D_8009BCAA = 1;
-            D_800A539C = 5;
-            D_800A539D = 0;
-            D_800A539E = 0;
-            D_800A539F = 0;
+            PLAYER.obj.state = 5;
+            PLAYER.obj.subState = 0;
+            PLAYER.obj.step = 0;
+            PLAYER.obj.unk7 = 0;
             arg0->subState++;
             return;
         case 1:
@@ -1133,10 +1132,10 @@ void rewardBitingPlantFlower(GameObject* arg0)
             if ((temp_v0 << 0x10) == 0) {
                 D_8009BCA7 = 0;
                 D_8009BCAA = 0;
-                D_800A539C = 1;
-                D_800A539D = 0;
-                D_800A539E = 0;
-                D_800A539F = 0;
+                PLAYER.obj.state = 1;
+                PLAYER.obj.subState = 0;
+                PLAYER.obj.step = 0;
+                PLAYER.obj.unk7 = 0;
                 arg0->state++;
             }
             return;
@@ -1214,8 +1213,8 @@ void rewardPigBag(GameObject* arg0)
 {
     int temp;
 
-    switch (arg0->subState) {                              // switch 3; irregular
-        case 0:                                     // switch 3
+    switch (arg0->subState) {
+        case 0:
             addItemToInventory(arg0->subtype, 1, true);
             if (!(arg0->unkC & 0x80)) {
                 func_8002367C(arg0->objectIndex);

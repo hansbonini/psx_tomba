@@ -14,7 +14,7 @@ void initGameConfig(void)
     camera->vrx = 0;
     camera->vry = 0;
     camera->vpz = 0;
-    *(int* )0x1F800200 = 69; // ?
+    *(int* )0x1F800200 = 69;
     LOADED_LIST_FILE = 0xFF;
     LOADED_SOUND_SET = 0xFF;
     GAME.playerAP = 0;
@@ -22,8 +22,8 @@ void initGameConfig(void)
     GAME.playerLives = 3;
     GAME.saveSlot = 0xFF;
     GAME.unk730 = 0xFF;
-    *(char* )0x1F8003CE = 0; // INVENTORY ENABLED
-    *(short* )0x1F8001C8 = 0; // SPRITE ZOOM
+    *(char* )0x1F8003CE = 0;
+    *(short* )0x1F8001C8 = 0;
     *(char* )0x1F8003D1 = 0; 
     D_8009EBA0 = 0;
     GAME.selectedSection = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
@@ -39,7 +39,6 @@ void initGameConfig(void)
     GAME.unk674 = 0x691;
     GAME.unk5bc = D_8009E744;
     if (*(u8* )0x1F8001B3 == 0) {
-        // 0 = NORMAL MODE | 1 = EASY MODE
         if (*(u8* )0x1F8001AB != 0) {
             GAME.inventory.slots[0] = ITEM_BLACKJACK;
             GAME.inventory.slots[1] = ITEM_GRAPPLE;
@@ -110,7 +109,7 @@ void initHud(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearPlayerObject);
 void clearPlayerObject(void)
 {
-    memset(PLAYER, 0, sizeof(PLAYER));
+    memset(&PLAYER, 0, sizeof(PLAYER));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPoolUnlayered);
@@ -396,7 +395,6 @@ void* allocObjectLayer2(void)
     return NULL;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", allocObjectLayer3);
 void* allocObjectLayer3(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
@@ -809,14 +807,14 @@ void initSpriteSlots(void)
     v = 0x6A;
     
     for (i = 0; i < 60; i++) {
-        GLYPH_CACHE[i].val[0] = u;
+        GLYPH_CACHE[i].u = u;
         GLYPH_CACHE[i].id = -1;
-        GLYPH_CACHE[i].refCount = 0;
-        GLYPH_CACHE[i].val[1] = v;
-        GLYPH_CACHE[i].val[2] = 4;
-        GLYPH_CACHE[i].val[3] = 16;
-        GLYPH_CACHE[i].val[4] = 0;
-        GLYPH_CACHE[i].val[5] = 0;
+        GLYPH_CACHE[i].mask = 0;
+        GLYPH_CACHE[i].v = v;
+        GLYPH_CACHE[i].w = 4;
+        GLYPH_CACHE[i].h = 16;
+        GLYPH_CACHE[i].unk8 = 0;
+        GLYPH_CACHE[i].flag = 0;
 
         u += 4;
         
@@ -825,8 +823,8 @@ void initSpriteSlots(void)
             v += 16;
         }
     }
-    for (i=0; i < 8; i+=2) {
-        MESSAGE_SLOTS[i].unk0 = -1;
+    for (i = 0; i < 4; i++) {
+        MESSAGE_SLOTS[i].count = -1;
         MESSAGE_SLOTS[i].unk2 = -1;
     }
 }

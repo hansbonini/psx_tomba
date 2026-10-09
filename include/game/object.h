@@ -198,6 +198,11 @@ typedef struct GameObject {
     /* 0xBF */ u8 unkBF;
 } GameObject;
 
+typedef struct Player {
+    /* 0x00 */ GameObject obj;
+    /* 0xC0 */ u8 unkC0[0xB8];
+} Player;
+
 typedef struct SpriteSlot {
     short id;
     short refCount;

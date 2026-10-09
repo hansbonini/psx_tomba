@@ -700,6 +700,17 @@
       }
     },
     {
+      "name": "scus_942.36/psyq/libapi/c57",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/c57.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
       "name": "scus_942.36/psyq/libapi/c68",
       "base_path": "build/src/scus_942.36/psyq/libapi/c68.hasm.s.o",
       "target_path": "expected/asm/scus_942.36/psyq/libapi/c68.s.o",
@@ -725,6 +736,28 @@
       "name": "scus_942.36/psyq/libapi/func_8005B668",
       "base_path": "build/src/scus_942.36/psyq/libapi/func_8005B668.c.o",
       "target_path": "expected/asm/scus_942.36/psyq/libapi/func_8005B668.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/l02",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/l02.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libapi/l03",
+      "base_path": null,
+      "target_path": "expected/asm/scus_942.36/psyq/libapi/l03.s.o",
       "metadata": {
         "progress_categories": [
           "sdk",
@@ -1547,6 +1580,83 @@
       }
     },
     {
+      "name": "scus_942.36/psyq/libpad/padcmd",
+      "base_path": "build/src/scus_942.36/psyq/libpad/padcmd.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/padcmd.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpad/padentry",
+      "base_path": "build/src/scus_942.36/psyq/libpad/padentry.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/padentry.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpad/padif",
+      "base_path": "build/src/scus_942.36/psyq/libpad/padif.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/padif.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpad/padmain",
+      "base_path": "build/src/scus_942.36/psyq/libpad/padmain.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/padmain.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpad/padportd",
+      "base_path": "build/src/scus_942.36/psyq/libpad/padportd.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/padportd.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpad/padseqd",
+      "base_path": "build/src/scus_942.36/psyq/libpad/padseqd.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/padseqd.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libpad/waitrc2",
+      "base_path": "build/src/scus_942.36/psyq/libpad/waitrc2.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libpad/waitrc2.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
       "name": "scus_942.36/psyq/libpress/libpress",
       "base_path": "build/src/scus_942.36/psyq/libpress/libpress.c.o",
       "target_path": "expected/asm/scus_942.36/psyq/libpress/libpress.s.o",
@@ -1561,6 +1671,17 @@
       "name": "scus_942.36/psyq/libpress/vlc",
       "base_path": "build/src/scus_942.36/psyq/libpress/vlc.c.o",
       "target_path": "expected/asm/scus_942.36/psyq/libpress/vlc.s.o",
+      "metadata": {
+        "progress_categories": [
+          "sdk",
+          "executable"
+        ]
+      }
+    },
+    {
+      "name": "scus_942.36/psyq/libsn/snmain",
+      "base_path": "build/src/scus_942.36/psyq/libsn/snmain.c.o",
+      "target_path": "expected/asm/scus_942.36/psyq/libsn/snmain.s.o",
       "metadata": {
         "progress_categories": [
           "sdk",

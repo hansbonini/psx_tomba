@@ -364,11 +364,7 @@ void func_80056D24(GameObject *o, GameObject *e)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80056E00);
 #define CNT (*(s16 *)0x1f800246)
-extern s16 D_1F80019E;
 #define LST (*(u8 ***)0x1f80021c)
-extern u8 D_8007EE64[];
-extern void func_80120C78(void *);
-extern void func_80120B3C(void *);
 
 void func_80056E00(void)
 {
@@ -441,8 +437,6 @@ s32 func_80056F94(char *a, char *b)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor2", func_80057044);
-extern s16 D_1F80019E;
-extern void func_801262AC(u8 *a, u8 *b);
 
 void func_80057044(void)
 {

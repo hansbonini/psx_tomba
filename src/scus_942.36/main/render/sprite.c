@@ -4,15 +4,7 @@
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004DC34);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004DD14);
-extern s16 D_1F8001C6;
 extern u8 D_800A539A;
-extern void func_8004A300(GameObject *);
-extern void func_8004DFA0(GameObject *);
-extern void func_8004E244(GameObject *);
-extern void func_800EA3A4(GameObject *);
-extern void func_800EBA58(GameObject *);
-extern void func_8011DA28(GameObject *);
-extern void func_80116308(GameObject *);
 
 void func_8004DD14(void)
 {
@@ -93,7 +85,7 @@ void func_8004E3EC(void)
 {
     u8* p = D_800B0770;
 
-    if (D_8009C618 != 3) {
+    if (D_8009C618[0] != 3) {
         if (D_8009BCA7 != 0) {
             D_800B0778 = 0x78;
         }
@@ -103,11 +95,38 @@ void func_8004E3EC(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E468);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E468);
+typedef struct { s16 x, y; } Pt_4E468;
+extern Pt_4E468 D_8007EC5C[];
+extern u8 D_8009BCF8;
+extern char D_800B07C8[];
+
+void func_8004E468(char *o)
+{
+    extern void func_8004ED80(char *, s32, s32);
+    extern void func_8004EB10(char *, s32, s32, s32, s32);
+    extern void func_8004E900(char *, s32, s32, s32);
+    extern void func_8004E590(char *, s32, s32);
+    extern void addDrawModePrim(s32, s32);
+    char env[0x60];
+    s32 i;
+    GetDrawEnv(env);
+    addDrawModePrim(*(s16 *)(env + 0x14), 1);
+    func_8004E590(o, 0x18, 0xD0);
+    func_8004E714(o, 0x12c, 0x10);
+    func_8004E900(o, 0x24, 0x1c, *(s16 *)(o + 0x52));
+    func_8004ED80(o, 0x48, 0x10);
+    for (i = 0; i < 3; i++) {
+        if (D_8009BCF8 == D_8007EC68[i]) {
+            func_8004EB10(o, i, D_8007EC5C[i].x, D_8007EC5C[i].y, 0);
+        } else if (D_800B07C8[i] != 0) {
+            func_8004EB10(o, i, D_8007EC5C[i].x, D_8007EC5C[i].y, 1);
+        }
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E590);
 typedef struct { char p[0x24]; u16 **tbl; char q[0x30 - 0x28]; u16 *dot; } O_4E590;
-extern u8 D_8009BCE8;
 void func_8004E590(O_4E590 *o, s16 x, s16 y)
 {
     extern void func_8004F2CC(O_4E590 *o, s16 x, s16 y, s32 k);
@@ -135,7 +154,6 @@ typedef struct {
     s16 **tbl;
 } SPR_4E900;
 extern u8 D_8009BCD9;
-extern SPRT *D_1F800164__4E900;
 extern void func_8004F3DC(SPR_4E900 *s, s32 x, s32 y, s32 v);
 
 void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
@@ -147,7 +165,7 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 
     for (; i < D_8009BCD9; i++) {
         {
-            p = D_1F800164__4E900;
+            p = (SPRT *)D_1F800164;
             e = s->base + *(s16 *)(*(u8 *volatile *)&s->base + (*s->tbl[i] << 2) + 2);
             SetSprt(p);
             p->code |= 1;
@@ -171,7 +189,7 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
                 p->clut = GetClut(0x170, 0x1f8);
             }
             AddPrim(D_1F8001E0 + 4, p);
-            D_1F800164__4E900 = D_1F800164__4E900 + 1;
+            D_1F800164 = (u8 *)((SPRT *)D_1F800164 + 1);
         }
     }
     func_8004F3DC(s, (s16)x, (s16)y, *((u16 **)&D_80012208)[(s16)n]);
@@ -179,37 +197,21 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004EB10);
-typedef struct {
-    u32 tag;
-    u8 r0, g0, b0, code;
-    s16 x0, y0;
-    u8 u0, v0;
-    u16 clut;
-    u16 w, h;
-} Sprt_4EB10;
 typedef struct { u8 a, pa, b, pb, c, pc; } Col6_4EB10;
-
-extern Sprt_4EB10 *D_1F800164__4EB10;
-extern u8 D_8009C100[];
-extern u8 D_8009C104[];
-extern u8 D_8009C107;
-extern u8 D_8009C40C[];
 extern u8 D_8009BCF8;
-extern s16 D_8007EC70[];
-extern s16 D_8007EC78[];
 extern Col6_4EB10 D_8007EC80[];
 
 void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
 {
     extern void addTilePrim(s16 *, s32, s32, s32);
-    Sprt_4EB10 *p;
+    SPRT *p;
     u8 *s;
     s16 r[4];
     s32 c;
 
     if (flag)
         func_8004F2CC(o, (s16)(x + 8), y, *(u16 *)((void **)o->movetab)[D_8009C100[idx] + 1]);
-    p = D_1F800164__4EB10;
+    p = (SPRT *)D_1F800164;
     s = (u8 *)o->z.raw + *(s16 *)(*(volatile s32 *)&o->z.raw + (*(u16 *)o->unk34 << 2) + 2);
     SetSprt(p);
     p->code |= 1;
@@ -222,7 +224,7 @@ void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
     c = *((u8 *)o + idx + 0x64) + 0x1e4;
     p->clut = GetClut(0x150, idx * 4 + c);
     AddPrim(D_1F8001E0 + 4, p);
-    D_1F800164__4EB10++;
+    ((SPRT *)D_1F800164)++;
     addDrawModePrim(0x14, 1);
     r[0] = x + 0x13;
     r[1] = y + 2;
@@ -240,7 +242,6 @@ void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004ED80);
-extern SPRT *D_1F800164__4ED80;
 
 void func_8004ED80(s32 o, s16 x, s16 y)
 {
@@ -249,7 +250,7 @@ void func_8004ED80(s32 o, s16 x, s16 y)
     s32 m;
     void *ot;
     u8 c;
-    switch (D_8009C61A) {
+    switch (D_8009C61A[0]) {
     case 0:
         func_8004F3DC(o, x, y, *(*(u16 **)&D_80012318));
         addDrawModePrim(0x14, 1);
@@ -271,7 +272,7 @@ void func_8004ED80(s32 o, s16 x, s16 y)
         addDrawModePrim(0x14, 1);
         break;
     case 9:
-        p = D_1F800164__4ED80;
+        p = (SPRT *)D_1F800164;
         q = (u8 *)(*(volatile s32 *)(o + 0x18) + *(s16 *)(*(volatile s32 *)(o + 0x18) + (*(*(u16 **)&D_80012314) << 2) + 2));
         SetSprt(p);
         p->code |= 1;
@@ -286,25 +287,16 @@ void func_8004ED80(s32 o, s16 x, s16 y)
         p->clut = 0x7e14;
         p->h = c;
         AddPrim(ot, p);
-        D_1F800164__4ED80++;
+        ((SPRT *)D_1F800164)++;
         addDrawModePrim(0x14, 1);
         break;
     }
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", drawMessageGlyphs);
-typedef struct { s16 x, y; s16 pad[8]; } DRAWENV__4EFA8;
-typedef struct { s16 n, pad, x, y; } GA_4EFA8;
-typedef struct { u16 f; s16 pad, x, y; } GE_4EFA8;
-typedef struct { u8 u, v, w, h, b4, b5, pad[4]; } GT_4EFA8;
-extern GA_4EFA8 MESSAGE_SLOTS__4EFA8[];
-extern GE_4EFA8 MESSAGE_GLYPHS[][128];
-extern GT_4EFA8 D_800A5144[];
-extern SPRT *D_1F800164__4EFA8;
 
 #define SETUV0(p, u, v) do { (p)->u0 = (u); (p)->v0 = (v); } while (0)
 typedef struct { s16 clip[4]; s16 ofs[2]; s16 tw[4]; u16 tpage; char rest[0x68 - 0x16]; } DRAWENV_4EFA8;
-extern void GetDrawEnv__4EFA8(DRAWENV_4EFA8 *env);
 
 void drawMessageGlyphs(s32 a)
 {
@@ -313,34 +305,34 @@ void drawMessageGlyphs(s32 a)
     s32 i;
     s16 f;
 
-    GetDrawEnv__4EFA8(&env);
+    GetDrawEnv((DRAWENV *)&env);
     addDrawModePrim((s16)env.tpage, 1);
-    for (i = 0; i < MESSAGE_SLOTS__4EFA8[a].n; i++) {
-        f = MESSAGE_GLYPHS[a][i].f;
-        if (*(s16 *)&MESSAGE_GLYPHS[a][i].f & 0x8000) {
-            MESSAGE_GLYPHS[a][i].f = f & 0x7fff;
+    for (i = 0; i < MESSAGE_SLOTS[a].count; i++) {
+        f = MESSAGE_GLYPHS[a][i].id;
+        if (*(s16 *)&MESSAGE_GLYPHS[a][i].id & 0x8000) {
+            MESSAGE_GLYPHS[a][i].id = f & 0x7fff;
             continue;
         }
-        p = D_1F800164__4EFA8;
+        p = (SPRT *)D_1F800164;
         SetSprt(p);
         p->code |= 1;
         f &= 0xfff;
-        if (D_800A5144[f].b5 == 0) {
-            p->x0 = MESSAGE_SLOTS__4EFA8[a].x + MESSAGE_GLYPHS[a][i].x;
-            if (D_800A5144[f].w >= 0xb)
-            { p->y0 = MESSAGE_SLOTS__4EFA8[a].y + MESSAGE_GLYPHS[a][i].y - 2; }
+        if (GLYPH_CACHE[f].flag == 0) {
+            p->x0 = MESSAGE_SLOTS[a].x + MESSAGE_GLYPHS[a][i].x;
+            if (GLYPH_CACHE[f].w >= 0xb)
+            { p->y0 = MESSAGE_SLOTS[a].y + MESSAGE_GLYPHS[a][i].y - 2; }
             else
-            {    p->y0 = MESSAGE_SLOTS__4EFA8[a].y + MESSAGE_GLYPHS[a][i].y; }
+            {    p->y0 = MESSAGE_SLOTS[a].y + MESSAGE_GLYPHS[a][i].y; }
         } else {
-            p->x0 = MESSAGE_SLOTS__4EFA8[a].x + MESSAGE_GLYPHS[a][i].x - 0xb;
-            p->y0 = MESSAGE_SLOTS__4EFA8[a].y + MESSAGE_GLYPHS[a][i].y - 10;
+            p->x0 = MESSAGE_SLOTS[a].x + MESSAGE_GLYPHS[a][i].x - 0xb;
+            p->y0 = MESSAGE_SLOTS[a].y + MESSAGE_GLYPHS[a][i].y - 10;
         }
-        SETUV0(p, D_800A5144[f].u << 2, D_800A5144[f].v);
-        p->w = D_800A5144[f].w;
-        p->h = D_800A5144[f].h;
+        SETUV0(p, GLYPH_CACHE[f].u << 2, GLYPH_CACHE[f].v);
+        p->w = GLYPH_CACHE[f].w;
+        p->h = GLYPH_CACHE[f].h;
         p->clut = GetClut(0x160, 0x1e3);
         AddPrim(D_1F8001E0 + 4, p);
-        D_1F800164__4EFA8++;
+        ((SPRT *)D_1F800164)++;
     }
     addDrawModePrim(0, 1);
 }
@@ -357,7 +349,6 @@ void addDrawModePrim(short tpage, int p) {
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004F2CC);
-extern SPRT *D_1F800164__4F2CC;
 
 void func_8004F2CC(s32 obj, s16 x, s16 y, u16 idx)
 {
@@ -367,7 +358,7 @@ void func_8004F2CC(s32 obj, s16 x, s16 y, u16 idx)
     s32 tb;
     s32 i;
     i = idx * 4;
-    p = D_1F800164__4F2CC;
+    p = (SPRT *)D_1F800164;
     s = (u8 *)(*(volatile s32 *)(obj + 0x18) + *(s16 *)(*(volatile s32 *)(obj + 0x18) + i + 2));
     SetSprt(p);
     p->code = p->code | 1;
@@ -381,7 +372,7 @@ void func_8004F2CC(s32 obj, s16 x, s16 y, u16 idx)
     p->h = s[0xb];
     p->clut = *(u16 *)(s + 2);
     AddPrim((void *)(t + 4), p);
-    D_1F800164__4F2CC = D_1F800164__4F2CC + 1;
+    D_1F800164 = (u8 *)((SPRT *)D_1F800164 + 1);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004F3DC);
@@ -406,4 +397,46 @@ void addTilePrim(short* p, u_char r0, u_char g0, u_char b0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004F5A4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004FB54);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004FB54);
+typedef struct { char p0[0xc]; u8 b0c, b0d, b0e, b0f, b10, b11, b12, b13; s16 s14, s16, s18, s1a; } P_4FB54;
+
+void func_8004FB54(u8 a)
+{
+    P_4FB54 *p;
+    void *r;
+    s32 t, m;
+    r = D_1F800164;
+    SetDrawMode(r, 0, 0, 0, 0);
+    AddPrim(D_1F8001E0 + 0x10, r);
+    p = D_1F800164;
+    r = D_1F800164 = (P_4FB54 *)((char *)p + 0xc);
+    p->s18 = 0x140;
+    p->s1a = 0xF0;
+    p->b0f = 3;
+    p->s14 = 0;
+    p->s16 = 0;
+    p->b13 = 0x60;
+    SetSemiTrans(r, 1);
+    if (D_8009BCA4 == 2) {
+        p->b10 = 0;
+        p->b11 = 0;
+    } else {
+        p->b10 = a;
+        p->b11 = a;
+    }
+    p->b12 = a;
+    AddPrim(D_1F8001E0 + 0x10, r);
+    r = D_1F800164 = (P_4FB54 *)((char *)D_1F800164 + 0x10);
+    if (D_1F8003D1 == 1 || (u32)(D_8009BCA4 - 1) < 2) {
+        if (GetGraphType() == 1) m = 0x80;
+        else if (GetGraphType() == 2) m = 0x80;
+        else m = 0x20;
+    } else {
+        if (GetGraphType() == 1) m = 0x100;
+        else if (GetGraphType() == 2) m = 0x100;
+        else m = 0x40;
+    }
+    SetDrawMode(r, 0, 0, m, 0);
+    AddPrim(D_1F8001E0 + 0x10, r);
+    D_1F800164 = (P_4FB54 *)((char *)D_1F800164 + 0xc);
+}

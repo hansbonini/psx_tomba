@@ -51,10 +51,7 @@ void spawnItemChest(short arg0, short arg1, int arg2)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041940);
 extern GameObject *allocObjectLayer5(void);
-extern u8 D_8007E900[];
-extern Fix16 *D_800A53D8__41940[];
 extern Fix16 D_800A53AC[];
-extern Fix16 *D_800A53DC__41940[];
 
 void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
 {
@@ -80,7 +77,7 @@ void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
     switch (type) {
     case 5:
         if (!(D_1F8001C8 & 1)) {
-            d = (D_800A53D8__41940[0]->p.whole - pos[0].p.whole) << 8;
+            d = (PLAYER.obj.h->p.whole - pos[0].p.whole) << 8;
             d /= 60;
             o->velH = d;
             d = (D_800A53AC[0].p.whole - pos[1].p.whole) << 8;
@@ -90,7 +87,7 @@ void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
             o->unk34 = pos[1].p.whole << 16;
             o->unk38 = pos[2].p.whole << 16;
         } else {
-            d = (D_800A53D8__41940[0]->p.whole - pos[2].p.whole) << 8;
+            d = (PLAYER.obj.h->p.whole - pos[2].p.whole) << 8;
             d /= 60;
             o->velH = d;
             d = (D_800A53AC[0].p.whole - pos[1].p.whole) << 8;
@@ -103,25 +100,25 @@ void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
         break;
     case 8:
         if (!(D_1F8001C8 & 1)) {
-            d = (pos[0].p.whole - D_800A53D8__41940[0]->p.whole) << 8;
+            d = (pos[0].p.whole - PLAYER.obj.h->p.whole) << 8;
             d /= 60;
             o->velH = d;
             d = (pos[1].p.whole - D_800A53AC[0].p.whole) << 8;
             d /= 60;
             o->velV = d;
-            o->unk30 = D_800A53D8__41940[0]->raw;
+            o->unk30 = PLAYER.obj.h->raw;
             o->unk34 = D_800A53AC[0].raw;
-            o->unk38 = D_800A53DC__41940[0]->raw;
+            o->unk38 = PLAYER.obj.d->raw;
         } else {
-            d = (pos[2].p.whole - D_800A53D8__41940[0]->p.whole) << 8;
+            d = (pos[2].p.whole - PLAYER.obj.h->p.whole) << 8;
             d /= 60;
             o->velH = d;
             d = (pos[1].p.whole - D_800A53AC[0].p.whole) << 8;
             d /= 60;
             o->velV = d;
-            o->unk38 = D_800A53D8__41940[0]->raw;
+            o->unk38 = PLAYER.obj.h->raw;
             o->unk34 = D_800A53AC[0].raw;
-            o->unk30 = D_800A53DC__41940[0]->raw;
+            o->unk30 = PLAYER.obj.d->raw;
         }
         break;
     }
@@ -150,12 +147,8 @@ void dispatchAreaItemUpdate(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80041DB4);
 typedef struct { s16 h; s16 v; } VT_41DB4;
 extern VT_41DB4 D_8007E90C[];
-extern u8 D_8007DD88[];
 extern void (*D_8007DE28[])(GameObject *);
-extern void initItemObject(GameObject *);
 extern void applyObjectSpeedXY(GameObject *);
-extern s16 probeCollisionAtDepthA__41DB4(GameObject *, s16, s16);
-extern void func_80023794(s32);
 extern void freeObjectLayer5(GameObject *);
 
 void func_80041DB4(GameObject *o)
@@ -193,7 +186,7 @@ void func_80041DB4(GameObject *o)
                     o->velV = -o->velV / 4;
                 }
             } else if (o->velV >= 0) {
-                if (probeCollisionAtDepthA__41DB4(o, o->h->p.whole, o->y.p.whole + k)) {
+                if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + k)) {
                     if (o->velV <= 0x100) {
                         o->active = 2;
                         o->subState++;
@@ -258,10 +251,7 @@ void spawnItemFromEntry(u8* arg0, s16* arg1, s32 arg2, s32 arg3, u8* arg4) {
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042204);
 typedef struct { u16 a, b; } VP_42204;
 extern VP_42204 D_8007E918[];
-extern u8 D_8007DD88[];
 extern void (*D_8007DE28[])(GameObject *);
-extern void initItemObject(GameObject *);
-extern s16 probeCollisionAtDepthA__42204(GameObject *, s32, s32);
 extern void applyObjectSpeedXY(GameObject *);
 extern s32 tickAnimation(GameObject *);
 extern void freeObjectLayer5(GameObject *);
@@ -299,7 +289,7 @@ void func_80042204(GameObject *o)
             } else {
                 o->velV = -o->velV / 4;
             }
-        } else if (probeCollisionAtDepthA__42204(o, o->h->p.whole, (s16)(o->y.p.whole + 8))) {
+        } else if (((s16 (*)(GameObject *, s32, s32))probeCollisionAtDepthA)(o, o->h->p.whole, (s16)(o->y.p.whole + 8))) {
             o->active = 2;
             if (o->velV <= 0x100) {
                 o->unkB4 = 0;

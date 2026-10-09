@@ -103,7 +103,6 @@ void drawNowLoading(short arg0)
     return;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", drawUiSprite);
 void drawUiSprite(short x, short y, short sprt_id)
 {   
     u_int sprt_ofs;
@@ -112,7 +111,7 @@ void drawUiSprite(short x, short y, short sprt_id)
 
     sprt = D_8009C8A8;
     setlen(sprt, 4),
-    setcode(sprt, 0x65); // which type is? SPRT = 0x64
+    setcode(sprt, 0x65);
     setRGB0(sprt, 128, 128, 128);
     sprt_ofs = sprt_id * 0x3;
     setXY0(sprt, x, y);

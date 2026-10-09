@@ -4,8 +4,8 @@
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", distanceToPlayer);
 s16 distanceToPlayer(u8* self)
 {
-    s32 dx = abs((*(s16**)(self + 0x40))[1] - D_800A53D8[1]);
-    s32 dy = abs(*(s16*)(self + 0x16) - D_800A53AE);
+    s32 dx = abs((*(s16**)(self + 0x40))[1] - PLAYER.obj.h->p.whole);
+    s32 dy = abs(*(s16*)(self + 0x16) - PLAYER.obj.y.p.whole);
 
     return (csqrt((dx * dx + dy * dy) << 12) << 4) >> 16;
 }
@@ -13,13 +13,6 @@ s16 distanceToPlayer(u8* self)
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_800385EC);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_80038748);
-extern u8 D_800A5460;
-extern s32 D_800A53C8;
-extern s32 D_800A53CC;
-extern u8 D_800A5434;
-extern s16 D_800A544C;
-extern s16 D_800A5412;
-extern s32 D_8009BC9C;
 void playSFX(s32 id);
 s32 abs(s32);
 s16 angleToPlayer(u8 *o);
@@ -35,7 +28,7 @@ void func_80038748(u8 *o)
     D_800A53CC = *(s16 *)(o + 0x16) + 4;
     dx = *(s16 *)(*(u8 **)(o + 0x40) + 2) - *(s16 *)((*(u8 **)&D_800A53D8) + 2);
     dx = abs(dx);
-    dy = *(s16 *)(o + 0x16) - D_800A53AE;
+    dy = *(s16 *)(o + 0x16) - PLAYER.obj.y.p.whole;
     dy = abs(dy);
     d = csqrt((dx * dx + dy * dy) << 12) >> 12;
     D_800A544C = d;
@@ -56,7 +49,6 @@ extern void func_800224FC(s32, s16, s16, s16);
 extern s16 func_80045310(void *, s16, s16);
 extern u16 D_1F800282;
 extern u16 D_1F800282;
-extern u16 D_800A5408;
 
 s32 func_8003887C(GameObject *o)
 {
@@ -68,7 +60,7 @@ s32 func_8003887C(GameObject *o)
         o->active = 2;
         o->unkA5 = 0;
         o->touchFlag = 0;
-        if (D_800A5436 == 0) {
+        if (PLAYER.obj.unk9E == 0) {
             if (!(D_1F800282 & 0x800)) {
                 if (D_1F800282 & 2) o->touchFlag = 1;
             }
@@ -87,19 +79,19 @@ s32 func_8003887C(GameObject *o)
         playSFX(5);
         o->unkA8 = 0x4ff;
     }
-    if (o->touchFlag != 0 && D_800A5436 != 4 && D_800A5436 != 7) {
+    if (o->touchFlag != 0 && PLAYER.obj.unk9E != 4 && PLAYER.obj.unk9E != 7) {
     n = 0;
     switch ((s8)D_8009B698->unk7) {
     case 0:
     case 2:
-        if (func_80045310(PLAYER, D_800A53D8[1] + 0x10, D_800A53AE + D_800A5408)) {
+        if (func_80045310(&PLAYER.obj, PLAYER.obj.h->p.whole + 0x10, PLAYER.obj.y.p.whole + D_800A5408)) {
             o->touchFlag = 0;
             n++;
         }
         break;
     case 1:
     case 3:
-        if (func_80045310(PLAYER, D_800A53D8[1] - 0x10, D_800A53AE + D_800A5408)) {
+        if (func_80045310(&PLAYER.obj, PLAYER.obj.h->p.whole - 0x10, PLAYER.obj.y.p.whole + D_800A5408)) {
             o->touchFlag = 0;
             n++;
         }
@@ -117,10 +109,7 @@ s32 func_8003887C(GameObject *o)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_80038AC0);
 typedef struct { s16 x, y; } P_38AC0;
-
-extern GameObject PLAYER__38AC0;
 extern Fix16 *D_800A607C;
-extern GameObject *D_800A547C;
 extern GameObject *D_8009C650;
 typedef struct {
     u8 b0, p1[5], b6, b7, b8, p9[0x22 - 9];
@@ -135,30 +124,17 @@ typedef struct {
     u8 p10[0x20];
     s16 w30, w32, w34, w36;
 } S338_38AC0;
-extern u8 *D_8009E454;
 extern s16 D_8009C968[];
-extern s16 D_8009C96A[];
-extern s16 D_8009C96C[];
-extern s16 D_8007D60A[];
 extern s16 D_8007D5E4[];
-extern u16 D_1F8001F8;
 extern s16 fixedMulCos(s32, s16);
 extern s16 fixedMulSin(s32, s16);
-extern void func_800348FC(GameObject *);
 extern void func_8003473C(GameObject *);
-extern void func_8003481C(GameObject *);
 extern void advanceAnimFrame(GameObject *, s32);
 extern s32 tickAnimation(GameObject *);
 extern void applyObjectSpeedXY(GameObject *);
-extern s16 func_8003887C__38AC0(GameObject *);
 extern s16 angleBetweenPoints(P_38AC0, P_38AC0);
-extern void func_8002F05C(GameObject *, s32, s32, s32);
-extern void func_800EBA70(s32, GameObject *);
-extern void func_80028A74(s32, s32, s32, s32);
-extern void func_800349DC(s16 *, s32, s16 *, s16 *);
-extern void func_800EEF64(GameObject *);
 
-#define G PLAYER__38AC0
+#define G PLAYER.obj
 #define TB(n) D_8007D60A[(s16)(o->animFrame + o->animFrame * 2) + (n) - 1]
 #define TK(n) D_8007D60A[k + (n) - 1]
 
@@ -212,12 +188,12 @@ void func_80038AC0(GameObject *o)
         else va = D_8007D5E4[i] - 0x20;
         vb = D_8007D5E4[i + 1];
         if (o->animFrame >= 6) {
-            x = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((u8)va, vb);
+            x = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
             o->velX = (o->animFrame & 1) ? x - 4 : x + 4;
-            o->velY = D_800A53AE + fixedMulSin((u8)va, vb);
+            o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
         } else {
-            o->velX = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((u8)va, vb);
-            o->velY = D_800A53AE + fixedMulSin((u8)va, vb);
+            o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
+            o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
         }
         o->h->p.whole = o->velX + fixedMulCos(((u16)o->unkAA + 0x80) & 0xff, 0x10);
         o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 0x10);
@@ -276,12 +252,12 @@ void func_80038AC0(GameObject *o)
         else va = D_8007D5E4[i] - 0x20;
         vb = D_8007D5E4[i + 1];
         if (o->animFrame >= 6) {
-            x = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((u8)va, vb);
+            x = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
             o->velX = (o->animFrame & 1) ? x - 4 : x + 4;
-            o->velY = D_800A53AE + fixedMulSin((u8)va, vb);
+            o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
         } else {
-            o->velX = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((u8)va, vb);
-            o->velY = D_800A53AE + fixedMulSin((u8)va, vb);
+            o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
+            o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
         }
         o->h->p.whole = o->velX + fixedMulCos((u8)o->unkAA, 0x10);
         o->y.p.whole = o->velY + fixedMulSin((u8)o->unkAA, 0x10);
@@ -328,7 +304,7 @@ void func_80038AC0(GameObject *o)
         o->velH = fixedMulCos(o->unkAA, o->unkA8);
         o->velV = fixedMulSin(o->unkAA, o->unkA8);
         applyObjectSpeedXY(o);
-        if (func_8003887C__38AC0(o) == 0) {
+        if (((s16 (*)(GameObject *))func_8003887C)(o) == 0) {
             G.unk8C = 0;
             if (o->unkA8 < 0x500) {
                 o->unkAA = TB(2);
@@ -372,19 +348,19 @@ void func_80038AC0(GameObject *o)
                 o->step++;
             }
         }
-        func_8003887C__38AC0(o);
+        ((s16 (*)(GameObject *))func_8003887C)(o);
         break;
     case 5:
-        if (func_8003887C__38AC0(o) == 0) {
+        if (((s16 (*)(GameObject *))func_8003887C)(o) == 0) {
             D_8009B6A0->bd = 0;
             o->unkA8 = 0x2000;
             D_8009B6A0->w30 += 0x20;
             if (D_8009B6A0->w30 > 0x60 - D_8009B698->b0 * 16) D_8009B6A0->w30 = 0x60 - (D_8009B698->b0 << 4);
             D_8009B6A0->w32 -= o->unkA8 >> 8;
             if (D_8009B6A0->w32 < 0) D_8009B6A0->w32 = 0;
-            if (o->animFrame & 1) o->velX = (*(Fix16 **)&D_800A53D8)->p.whole + 0x10;
-            else o->velX = (*(Fix16 **)&D_800A53D8)->p.whole - 0x10;
-            o->velY = D_800A53AE - 0x10;
+            if (o->animFrame & 1) o->velX = PLAYER.obj.h->p.whole + 0x10;
+            else o->velX = PLAYER.obj.h->p.whole - 0x10;
+            o->velY = PLAYER.obj.y.p.whole - 0x10;
             t.x = o->velX + fixedMulCos(D_8009B6A0->we, 0xc);
             t.y = o->velY + fixedMulSin(D_8009B6A0->we, 0xc);
             s.x = o->h->p.whole;
@@ -399,13 +375,13 @@ void func_80038AC0(GameObject *o)
                 if (G.unk9E == 4 || G.unk9E == 7) *(u8 *)o->unk94 = D_8009B698->b6;
                 o->unkAA = TB(2) + 0x80;
                 if (o->animFrame & 1) {
-                    o->velX = (*(Fix16 **)&D_800A53D8)->p.whole + 0x10;
+                    o->velX = PLAYER.obj.h->p.whole + 0x10;
                     o->unkAA = (o->unkAA + 0x40) & 0xff;
                 } else {
-                    o->velX = (*(Fix16 **)&D_800A53D8)->p.whole - 0x10;
+                    o->velX = PLAYER.obj.h->p.whole - 0x10;
                     o->unkAA = (o->unkAA - 0x40) & 0xff;
                 }
-                o->velY = D_800A53AE - 0x10;
+                o->velY = PLAYER.obj.y.p.whole - 0x10;
                 o->h->p.whole = o->velX + fixedMulCos(o->unkAA, 0xc);
                 o->y.p.whole = o->velY + fixedMulSin(o->unkAA, 0xc);
                 D_8009B6A0->w32 = 0;
@@ -413,14 +389,14 @@ void func_80038AC0(GameObject *o)
                 D_8009B6A0->bc = 0;
                 G.unk9D = 0;
                 o->unkA5 = 0;
-                if (!(*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
+                if (!(D_8009C9D8[0] & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
                     D_8009B698->b0 = 0;
                     o->state = 2;
                     o->subState = 0;
                     o->step = 0;
                     D_8009BC9C = 0;
                 } else {
-                    func_800EBA70(D_8009C61A, o);
+                    func_800EBA70(D_8009C61A[0], o);
                     o->unkAA += (o->animFrame & 1) ? -0x40 : 0x40;
                     o->step = 6;
                 }
@@ -459,12 +435,12 @@ void func_80038AC0(GameObject *o)
         if (o->animFrame & 1) va = 0x80 - D_8007D5E4[i];
         else va = D_8007D5E4[i];
         vb = D_8007D5E4[i + 1];
-        o->velX = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((u8)va, vb);
-        o->velY = D_800A53AE + fixedMulSin((u8)va, vb);
+        o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
+        o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
         func_800349DC(D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(D_8009C9D8[0] & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
             G.unk9D = 1;
             D_8009B698->b0 = 2;
             D_8009B698->w22 = 0;
@@ -510,12 +486,12 @@ void func_80038AC0(GameObject *o)
         if (o->animFrame & 1) va = 0x80 - D_8007D5E4[i];
         else va = D_8007D5E4[i];
         vb = D_8007D5E4[i + 1];
-        o->velX = (*(Fix16 **)&D_800A53D8)->p.whole + fixedMulCos((u8)va, vb);
-        o->velY = D_800A53AE + fixedMulSin((u8)va, vb);
+        o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
+        o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
         func_800349DC(D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(D_8009C9D8[0] & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
             D_8009B698->b0 = 1;
             D_8009B698->w22 = 0;
             G.unk9D = 1;
@@ -554,10 +530,7 @@ void func_80038AC0(GameObject *o)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A10C);
 typedef struct { char p0[0xc]; u8 bc; char p1; s16 we; char p2[0x20]; s16 w30; s16 w32; } G338_3A10C;
 extern u8 *D_8009B698;
-extern s32 D_800A53C8__3A10C[];
-extern s32 D_800A5420;
 extern u8 D_800A5435;
-extern u8 D_800A545E;
 
 void func_8003A10C(GameObject *o)
 {
@@ -590,8 +563,8 @@ void func_8003A10C(GameObject *o)
                 dy = t->y.p.whole - o->velY;
             o->h->p.whole += dx;
             o->y.p.whole += dy;
-            D_800A53C8__3A10C[0] += dx;
-            D_800A53C8__3A10C[1] += dy;
+            PLAYER.obj.unk30 += dx;
+            PLAYER.obj.unk34 += dy;
             o->velX = t->h->p.whole;
             if ((t->category & 0x7f) == 2)
                 o->velY = t->y.p.whole + 8;
@@ -601,7 +574,7 @@ void func_8003A10C(GameObject *o)
         o->unk8C = D_800A5420;
         break;
     }
-    if (D_800A539D != 0x32) {
+    if (PLAYER.obj.subState != 0x32) {
         g = D_8009B6A0;
         g->bc = 0;
         g->w32 = 0;
@@ -631,8 +604,6 @@ void func_8003A310(u8 *o)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A384);
-extern void func_80038AC0(GameObject *);
-extern void func_8003A10C(GameObject *);
 
 void func_8003A384(GameObject *o)
 {
@@ -681,7 +652,6 @@ void func_8003A384(GameObject *o)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A4F8);
-extern u8 D_800A545F;
 extern u8 D_800A547B;
 typedef struct { char p[0xc]; u8 b; } G338_3A4F8;
 extern G338_3A4F8 *D_8009B6A0;
