@@ -853,7 +853,6 @@ updateObjectsUnlayered = 0x8005A074;
 spawnUnlayeredObjectAndInit = 0x8005A108;
 spawnUnlayeredObject = 0x8005A148;
 dispatchUnlayeredByVariant = 0x8005B350;
-printTitleScreenMessage = 0x800E889C;
 // libapi
 FlushCache = 0x8005B38C;
 _bu_init = 0x8005B39C;
@@ -1607,10 +1606,6 @@ PLAYER = 0x800A5398;
 SPRITE_SLOTS = 0x800AFF18;
 D_800B0778 = 0x800B0778; // size:0x2
 LOAD_BUFFER_ALT = 0x800B3188;
-drawOptsubSpriteList = 0x800E73C0;
-drawOptsubSprite = 0x800E7F74;
-drawOptsubText = 0x800E8908;
-drawOptsubNumber = 0x800E8A24;
 // RAM area
 TASK_TABLE_BASE = 0x801FD800;
 PadChkVsync = 0x800689FC; // type:func
