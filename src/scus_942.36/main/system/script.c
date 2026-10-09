@@ -64,7 +64,7 @@ void scriptReset(u8* self)
     s32 i;
 
     for (i = 0x3F; i >= 0; i--) {
-        D_8009E640[i] = NULL;
+        SCRIPT_OBJECTS[i] = NULL;
     }
     *(u8*)(self + 0x88) = 0;
     *(s16*)(self + 0x8A) = 0;
@@ -101,7 +101,7 @@ s32 readUnalignedS32(u8* src)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptReadOperand);
 s32 scriptReadOperand(u8* src, u8 kind)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     u8  buf[4];
     u8* d;
 
@@ -120,7 +120,7 @@ s32 scriptReadOperand(u8* src, u8 kind)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptSetCompareFlag);
 void scriptSetCompareFlag(s32 arg0)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     if (arg0 == 0) {
         p->cmpFlag = 0;
@@ -134,7 +134,7 @@ void scriptSetCompareFlag(s32 arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptTickWait);
 void scriptTickWait(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     u32 n = *(u32*)((u8*)p + 0x11D0) + 1;
 
     *(u32*)((u8*)p + 0x11D0) = n;
@@ -148,8 +148,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B5D8);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpSwapVars);
 void scriptOpSwapVars(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8*  q = (u8*)(p->pc + (s32)D_8009C974);
+    ScriptContext* p = SCRIPT_CTX;
+    u8*  q = (u8*)(p->pc + (s32)SCRIPT_CODE);
     s32* a = (s32*)(q[1] * 4 + (s32)p + 0x1090);
     s32* b = (s32*)(q[2] * 4 + (s32)p + 0x1090);
     s32  x = *b;
@@ -163,8 +163,8 @@ void scriptOpSwapVars(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpRandom);
 void scriptOpRandom(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* script = D_8009C974;
+    ScriptContext* p = SCRIPT_CTX;
+    u8* script = SCRIPT_CODE;
     s32 idx = script[p->pc + 1];
 
     *(s32*)(idx * 4 + (s32)p + 0x1090) = nextRandom();
@@ -176,8 +176,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B750);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpBranch);
 void scriptOpBranch(u8 op)
 {
-    u8* script = D_8009C974;
-    unkstruct_8009E458* p = D_8009E458;
+    u8* script = SCRIPT_CODE;
+    ScriptContext* p = SCRIPT_CTX;
     u8  cond;
     u8  buf[2];
     u8* d;
@@ -227,8 +227,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B968);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpCall);
 void scriptOpCall(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* script = D_8009C974;
+    ScriptContext* p = SCRIPT_CTX;
+    u8* script = SCRIPT_CODE;
 
     s32 v = p->pc + 2;
 
@@ -240,7 +240,7 @@ void scriptOpCall(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpReturn);
 void scriptOpReturn(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     p->sp = p->sp - 1;
     p->pc = *(u16*)((u8*)p + p->sp * 4 + 0x90);
@@ -249,7 +249,7 @@ void scriptOpReturn(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpPushVars);
 void scriptOpPushVars(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     u8* q = (u8*)p;
     u8* s = (u8*)p;
     s32 i;
@@ -267,7 +267,7 @@ void scriptOpPushVars(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpPopVars);
 void scriptOpPopVars(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     u8* q = (u8*)p;
     s32 i;
     u16 n;
@@ -289,8 +289,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BD28);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpWait);
 void scriptOpWait(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8 v = D_8009C974[p->pc + 1];
+    ScriptContext* p = SCRIPT_CTX;
+    u8 v = SCRIPT_CODE[p->pc + 1];
 
     *(s32*)((u8*)p + 0x11D0) = 0;
     *((u8*)p + 0x88) = 2;

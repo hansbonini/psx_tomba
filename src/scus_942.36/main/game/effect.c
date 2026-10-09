@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-void func_80034420(u8* self);
+void updateScrollAnchoredEffect(u8* self);
 
 void (*D_8007D57C[16])(u8* self) = {
     (void (*)(u8*))0x801216BC,
     (void (*)(u8*))0x80121810,
     (void (*)(u8*))0x80121A74,
-    func_80034420,
+    updateScrollAnchoredEffect,
     (void (*)(u8*))0x8012029C,
     (void (*)(u8*))0x800EB450,
     (void (*)(u8*))0x8011C4CC,
@@ -26,8 +26,8 @@ u16 D_8007D5BC[10] = { 0x7808, 0x7848, 0x7908, 0x78C8, 0x7888, 0x7948, 0x7988, 0
 
 u16 D_8007D5D0[10] = { 1, 0, 0, 0, 0, 1, 2, 3, 1, 1 };
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80033F50);
-void func_80033F50(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", dispatchAreaEffectA);
+void dispatchAreaEffectA(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80120054();
@@ -39,8 +39,8 @@ void func_80033F50(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80033FB0);
-void func_80033FB0(unkstruct_80033FB0* arg0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", dispatchEffectByVariant);
+void dispatchEffectByVariant(ObjectVariantView* arg0)
 {
     if (arg0->unk3 == 0) {
         func_8011AA0C();
@@ -49,10 +49,10 @@ void func_80033FB0(unkstruct_80033FB0* arg0)
     func_8011EE60();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80033FF0);
-void func_80033FF0(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", spawnEffectObject);
+void spawnEffectObject(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    unkstruct_80018474* temp_v0;
+    ObjectPosView* temp_v0;
 
     temp_v0 = allocObjectLayer4();
     if (temp_v0 != NULL) {
@@ -82,8 +82,8 @@ void func_80033FF0(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800340FC);
-void func_800340FC(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", dispatchAreaEffectB);
+void dispatchAreaEffectB(void)
 {
     switch (GAME.selectedArea) {
         case AREA01_DWARFFOREST:
@@ -114,8 +114,8 @@ void func_800340FC(void)
 
 extern u8 D_8009C1C0;
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800341AC);
-void func_800341AC(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateEffectHitbox);
+void updateEffectHitbox(u8* self)
 {
     u8 state;
 
@@ -519,8 +519,8 @@ void updateObjectsLayer7(void)
 extern u8 D_8009C3F0;
 extern u8 D_8009BCA6;
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80034420);
-void func_80034420(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateScrollAnchoredEffect);
+void updateScrollAnchoredEffect(u8* self)
 {
     u8 state;
 
@@ -551,14 +551,14 @@ void func_80034420(u8* self)
     }
 }
 
-void func_800346A8(u8* self);
+void dispatchScreenEffect(u8* self);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_80034524);
-void func_80034524(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateAreaScreenEffect);
+void updateAreaScreenEffect(void)
 {
     u8* p;
 
-    p = D_800A5398;
+    p = PLAYER;
     p[2] = 0;
     switch (GAME.selectedArea) {
     case 2:
@@ -599,7 +599,7 @@ void func_80034524(void)
         return;
     }
     if (p[0] != 0) {
-        func_800346A8(p);
+        dispatchScreenEffect(p);
     }
     if (D_8009BCCA == 7 && D_8009BCA6 != 0) {
         return;
@@ -607,8 +607,8 @@ void func_80034524(void)
     updateObjectsLayer1();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", func_800346A8);
-void func_800346A8(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", dispatchScreenEffect);
+void dispatchScreenEffect(u8* self)
 {
     switch (self[2]) {
     case 0:

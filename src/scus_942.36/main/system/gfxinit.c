@@ -39,7 +39,7 @@ void loadTIM(u_long* address, short x, short y, short x2, short y2)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/gfxinit", initObjectPools);
 void initObjectPools(void)
 {
-    clearAreaConfig();
+    clearPlayerObject();
     initObjectPoolLayer1();
     initObjectPool();
     initLayer1DrawList();

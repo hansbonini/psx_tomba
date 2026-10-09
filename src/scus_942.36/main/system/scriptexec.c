@@ -3,7 +3,7 @@
 
 static inline s32 readOperand(u8* src, u8 kind)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     u8  buf[4];
     u8* d;
 
@@ -21,8 +21,8 @@ static inline s32 readOperand(u8* src, u8 kind)
 
 static inline void opSet(u8 kind)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* script = D_8009C974;
+    ScriptContext* p = SCRIPT_CTX;
+    u8* script = SCRIPT_CODE;
     s32 dst = script[p->pc + 1];
     u8* q = script + p->pc;
 
@@ -49,8 +49,8 @@ static inline u16 readU16(u8* src)
 
 static inline void opLoop(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* script = D_8009C974;
+    ScriptContext* p = SCRIPT_CTX;
+    u8* script = SCRIPT_CODE;
     s32* v = (s32*)(script[p->pc + 1] * 4 + (s32)p + 0x1090);
     s32 n = *v - 1;
 
@@ -65,7 +65,7 @@ static inline void opLoop(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", execCoreOpcode);
 int execCoreOpcode(u8 op)
 {
-    unkstruct_8009E458* self = D_8009E458;
+    ScriptContext* self = SCRIPT_CTX;
     int ret;
 
     switch (op) {
@@ -73,7 +73,7 @@ int execCoreOpcode(u8 op)
         s32 i;
 
         for (i = 0x3F; i >= 0; i--) {
-            D_8009E640[i] = NULL;
+            SCRIPT_OBJECTS[i] = NULL;
         }
         ret = 0;
         self->state = 0;
@@ -89,8 +89,8 @@ int execCoreOpcode(u8 op)
         ret = 1;
         break;
     case 4: {
-        unkstruct_8009E458* p = D_8009E458;
-        u8*  q = (u8*)(p->pc + (s32)D_8009C974);
+        ScriptContext* p = SCRIPT_CTX;
+        u8*  q = (u8*)(p->pc + (s32)SCRIPT_CODE);
         s32* a = (s32*)(q[1] * 4 + (s32)p + 0x1090);
         s32* b = (s32*)(q[2] * 4 + (s32)p + 0x1090);
         s32  x = *b;
@@ -103,8 +103,8 @@ int execCoreOpcode(u8 op)
         break;
     }
     case 6: {
-        unkstruct_8009E458* p = D_8009E458;
-        u8* script = D_8009C974;
+        ScriptContext* p = SCRIPT_CTX;
+        u8* script = SCRIPT_CODE;
         s32 idx = script[p->pc + 1];
 
         *(s32*)(idx * 4 + (s32)p + 0x1090) = nextRandom();
@@ -133,8 +133,8 @@ int execCoreOpcode(u8 op)
         ret = 1;
         break;
     case 18: {
-        unkstruct_8009E458* p = D_8009E458;
-        u8* script = D_8009C974;
+        ScriptContext* p = SCRIPT_CTX;
+        u8* script = SCRIPT_CODE;
         s32 v = p->pc + 2;
 
         *(s32*)((u8*)p + p->sp * 4 + 0x90) = v;
@@ -144,7 +144,7 @@ int execCoreOpcode(u8 op)
         break;
     }
     case 19: {
-        unkstruct_8009E458* p = D_8009E458;
+        ScriptContext* p = SCRIPT_CTX;
 
         p->sp = p->sp - 1;
         p->pc = *(u16*)((u8*)p + p->sp * 4 + 0x90);
@@ -152,7 +152,7 @@ int execCoreOpcode(u8 op)
         break;
     }
     case 20: {
-        unkstruct_8009E458* p = D_8009E458;
+        ScriptContext* p = SCRIPT_CTX;
         u8* q = (u8*)p;
         u8* s = (u8*)p;
         s32 i;
@@ -169,7 +169,7 @@ int execCoreOpcode(u8 op)
         break;
     }
     case 21: {
-        unkstruct_8009E458* p = D_8009E458;
+        ScriptContext* p = SCRIPT_CTX;
         u8* q = (u8*)p;
         s32 i;
         u16 n;
@@ -218,8 +218,8 @@ int execCoreOpcode(u8 op)
         ret = 1;
         break;
     case 44: {
-        unkstruct_8009E458* p = D_8009E458;
-        u8 v = D_8009C974[p->pc + 1];
+        ScriptContext* p = SCRIPT_CTX;
+        u8 v = SCRIPT_CODE[p->pc + 1];
 
         ret = 0;
         *(s32*)((u8*)p + 0x11D0) = 0;
@@ -232,7 +232,7 @@ int execCoreOpcode(u8 op)
         s32 i;
 
         for (i = 0x3F; i >= 0; i--) {
-            D_8009E640[i] = NULL;
+            SCRIPT_OBJECTS[i] = NULL;
         }
         ret = 0;
         self->state = 0;
@@ -246,8 +246,8 @@ int execCoreOpcode(u8 op)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", scriptRunOpcode);
 void scriptRunOpcode(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* script = D_8009C974;
+    ScriptContext* p = SCRIPT_CTX;
+    u8* script = SCRIPT_CODE;
     u8  op = script[p->pc];
 
     if (op < 0x80) {
@@ -260,10 +260,10 @@ void scriptRunOpcode(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", runScript);
 u_char runScript(void)
 {
-    unkstruct_8009E458* p;
+    ScriptContext* p;
     int ret;
 
-    p = D_8009E458;
+    p = SCRIPT_CTX;
     if (p->state == 2) {
         *(u_int*)((u8*)p + 0x11D0) += 1;
         if (*(u_int*)((u8*)p + 0x11D0) >= *(u_int*)((u8*)p + 0x11D4)) {
@@ -274,8 +274,8 @@ u_char runScript(void)
         return p->state;
     }
     do {
-        unkstruct_8009E458* q = D_8009E458;
-        u8* script = D_8009C974;
+        ScriptContext* q = SCRIPT_CTX;
+        u8* script = SCRIPT_CODE;
         u8 op = script[q->pc];
 
         if (op < 0x80) {
@@ -288,16 +288,16 @@ u_char runScript(void)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", runScriptContext);
-u_char runScriptContext(unkstruct_8009E458* ctx)
+u_char runScriptContext(ScriptContext* ctx)
 {
-    unkstruct_8009E458* p;
+    ScriptContext* p;
     u8* base;
     int ret;
 
     base = *(u8**)((u8*)ctx + 0x84);
-    D_8009E458 = ctx;
-    D_8009C974 = base;
-    p = D_8009E458;
+    SCRIPT_CTX = ctx;
+    SCRIPT_CODE = base;
+    p = SCRIPT_CTX;
     if (p->state == 2) {
         *(u_int*)((u8*)p + 0x11D0) += 1;
         if (*(u_int*)((u8*)p + 0x11D0) >= *(u_int*)((u8*)p + 0x11D4)) {
@@ -308,8 +308,8 @@ u_char runScriptContext(unkstruct_8009E458* ctx)
         return p->state;
     }
     do {
-        unkstruct_8009E458* q = D_8009E458;
-        u8* script = D_8009C974;
+        ScriptContext* q = SCRIPT_CTX;
+        u8* script = SCRIPT_CODE;
         u8 op = script[q->pc];
 
         if (op < 0x80) {

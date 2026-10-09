@@ -47,7 +47,7 @@ int movieDecodeNextFrame(DecEnv* dec)
             (CURRENT_TASK)->state0 = 3;
             CdMix(&D_80077758);
         }
-        if (*(&SCRATCHPAD + 0x1CD) == 0x15 && (*(unkstruct_1F8001D4**)(&SCRATCHPAD + 0x1D4))->loadGameSelected == 0 && header->frameCount >= 0xF) {
+        if (*(&SCRATCHPAD + 0x1CD) == 0x15 && (*(Task**)(&SCRATCHPAD + 0x1D4))->loadGameSelected == 0 && header->frameCount >= 0xF) {
             startBgmTrack(0);
             (CURRENT_TASK)->loadGameSelected = 1;
         }
@@ -64,7 +64,7 @@ int movieDecodeNextFrame(DecEnv* dec)
     dec->vlcid = 1 - dec->vlcid;
     DecDCTvlc(next, dec->vlcbuf[dec->vlcid]);
     StFreeRing(next);
-    (CURRENT_TASK)->unk4E.value = 1;
+    (CURRENT_TASK)->step.value = 1;
     return 1;
 }
 
@@ -80,13 +80,13 @@ void cdSeekStream(short file_id)
 void moviePlayerTask(void)
 {   
     u_short state;
-    unkstruct_1F8001D4* gameControl;
-    unkstruct_1F8001D4* gameControlTemp;
+    Task* gameControl;
+    Task* gameControlTemp;
 
     gameControl = CURRENT_TASK;
     MOVIE_PLAY_STATE = MOVIE_STATE_STARTING;
     gameControl->state0 = 0;
-    gameControl->unk4E.value = 0;
+    gameControl->step.value = 0;
     gameControl->loadGameSelected = 0;
     do {
         if (MOVIE_SKIP_REQUEST == 1) {
@@ -99,7 +99,7 @@ void moviePlayerTask(void)
             case 0:
                 movieInitDecodeEnv((DecEnv*)&MOVIE_DEC_ENV, 384, 256, 704, 256);
                 startMovieStream((int)&D_800791A0[D_80078F80[D_8007775C[MOVIE_ID]]]);
-                gameControl = *(unkstruct_1F8001D4** )(&SCRATCHPAD+0x1D4);
+                gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
                 gameControl->state0+=1;
                 do {
                 } while (movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV) == 0);
@@ -108,7 +108,7 @@ void moviePlayerTask(void)
                 MOVIE_PLAY_STATE = MOVIE_STATE_PLAYING;
                 gameControlTemp->state0 = 2;
             case 2:
-                while ((CURRENT_TASK)->unk4E.value == 0) {
+                while ((CURRENT_TASK)->step.value == 0) {
                     movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV);
                 }
                 DecDCTin(*(MOVIE_DEC_VLCID + &MOVIE_DEC_ENV), 2);
@@ -119,7 +119,7 @@ void moviePlayerTask(void)
                     *(u_long**)&MOVIE_DEC_IMGBUF[MOVIE_DEC_IMGID],
                     (MOVIE_DEC_DISPENV->screen.w * MOVIE_DEC_DISPENV->screen.h) / 2
                 );
-                (CURRENT_TASK)->unk4E.value = 0;
+                (CURRENT_TASK)->step.value = 0;
                 while (movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV) == 0) {
                     if (*(int*)&MOVIE_DEC_DISPENV->isinter == 1) {
                         break;

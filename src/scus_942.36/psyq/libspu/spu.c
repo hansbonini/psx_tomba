@@ -1,5 +1,17 @@
 #include "common.h"
+#include "psyq/stdarg.h"
 #include "libspu_internal.h"
+
+#define SPU_CTRL_MASK_TRANSFER_DMA_READ (3 << 4)
+#define SPU_CTRL_MASK_TRANSFER_DMA_WRITE (2 << 4)
+extern volatile unsigned* dma_spu_madr;
+extern volatile unsigned* dma_spu_bcr;
+extern volatile unsigned* dma_spu_chcr;
+extern int D_80097C98;
+extern int spu_madr;
+extern int spu_bcr;
+void _spu_FsetDelayW(void);
+void _spu_FsetDelayR(void);
 
 #define SPU_CTRL_MASK_SPU_ENABLE (1 << 15)
 #define DMA_PRIORITY_HIGH 3
@@ -183,9 +195,101 @@ void _spu_FiDMA(void) {
     DeliverEvent(HwSPU, EvSpCOMP);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_r_);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_r_);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_t);
+void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
+    _spu_RXX->rxx.trans_addr = arg1;
+    _spu_FwaitFs();
+    _spu_FwaitFs();
+    _spu_RXX->rxx.spucnt |= 0x30;
+    _spu_FwaitFs();
+    _spu_FwaitFs();
+    _spu_FsetDelayR();
+    *dma_spu_madr = arg0;
+    *dma_spu_bcr = (arg2 << 16) | 0x10;
+    D_80097C98 = 1;
+    *dma_spu_chcr = 0x01000200;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_t);
+
+int _spu_t(int arg0, ...) {
+    unsigned channelControl;
+    unsigned i;
+    unsigned addr;
+    va_list args;
+    unsigned arg;
+    u16 mode;
+    u16 cnt;
+
+    va_start(args, arg0);
+    switch (arg0) {
+    case 2:
+        arg = va_arg(args, unsigned);
+        _spu_tsa = arg >> _spu_mem_mode_plus;
+        _spu_RXX->rxx.trans_addr = _spu_tsa;
+        break;
+    case 1:
+        D_80097C98 = 0;
+        i = 0;
+        while (_spu_RXX->rxx.trans_addr != _spu_tsa) {
+            if (++i > 0xF00) {
+                return -2;
+            }
+        }
+        cnt = _spu_RXX->rxx.spucnt;
+        cnt &= ~SPU_CTRL_MASK_SRAM_TRANSFER_MODE;
+        cnt |= SPU_CTRL_MASK_TRANSFER_DMA_WRITE;
+        _spu_RXX->rxx.spucnt = cnt;
+        break;
+    case 0:
+        D_80097C98 = 1;
+        i = 0;
+        while (_spu_RXX->rxx.trans_addr != _spu_tsa) {
+            if (++i > 0xF00) {
+                return -2;
+            }
+        }
+        cnt = _spu_RXX->rxx.spucnt;
+        cnt &= ~SPU_CTRL_MASK_SRAM_TRANSFER_MODE;
+        cnt |= SPU_CTRL_MASK_TRANSFER_DMA_READ;
+        _spu_RXX->rxx.spucnt = cnt;
+        break;
+    case 3:
+        if (D_80097C98 == 1) {
+            mode = SPU_CTRL_MASK_TRANSFER_DMA_READ;
+        } else {
+            mode = SPU_CTRL_MASK_TRANSFER_DMA_WRITE;
+        }
+        i = 0;
+        while (
+            (_spu_RXX->rxx.spucnt & SPU_CTRL_MASK_SRAM_TRANSFER_MODE) != mode) {
+            if (++i > 0xF00) {
+                return -2;
+            }
+        }
+        if (D_80097C98 == 1) {
+            _spu_FsetDelayR();
+        } else {
+            _spu_FsetDelayW();
+        }
+        arg = va_arg(args, unsigned);
+        spu_madr = arg;
+        arg = va_arg(args, unsigned);
+        spu_bcr = arg / 0x40;
+        spu_bcr += (arg % 0x40) ? 1 : 0;
+        *dma_spu_madr = spu_madr;
+        *dma_spu_bcr = (spu_bcr << 0x10) | 0x10;
+        if (D_80097C98 == 1) {
+            channelControl = 0x01000200;
+        } else {
+            channelControl = 0x01000201;
+        }
+        *dma_spu_chcr = channelControl;
+        break;
+    }
+    return 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_write);
 
@@ -274,4 +378,14 @@ void _spu_FsetDelayR(void) {
     *D_80097C5C = (*D_80097C5C & 0xF0FFFFFF) | 0x22000000;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_FwaitFs);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_FwaitFs);
+
+void _spu_FwaitFs(void) {
+    volatile int i;
+    volatile int sp4;
+
+    sp4 = 13;
+    for (i = 0; i < 0xF0; i++) {
+        sp4 *= 3;
+    }
+}

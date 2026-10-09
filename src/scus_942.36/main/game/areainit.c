@@ -18,8 +18,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", func_80033488);
 void func_80033858(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", func_80033860);
-void func_80033860(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", dispatchAreaInitA);
+void dispatchAreaInitA(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
             func_8011BB54();
@@ -29,8 +29,8 @@ void func_80033860(void)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", func_800338A8);
-void func_800338A8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/areainit", dispatchAreaInitB);
+void dispatchAreaInitB(void)
 {
     switch (GAME.selectedArea) {
         case AREA00_VILLAGEOFALLBEGINNINGS:

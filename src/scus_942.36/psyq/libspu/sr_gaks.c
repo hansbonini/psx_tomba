@@ -42,4 +42,8 @@ inline s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
     return 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/sr_gaks", SpuGetAllKeysStatus);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/sr_gaks", SpuGetAllKeysStatus);
+
+void SpuGetAllKeysStatus(s8* status) {
+    SpuRGetAllKeysStatus(0, NUM_SPU_CHANNELS, status);
+}

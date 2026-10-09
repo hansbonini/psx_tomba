@@ -33,7 +33,7 @@ void main(void)
     CD_QUEUE_TAIL = 0;
     CD_QUEUE_HEAD = 0;
     initGraphics();
-    GsSetOrigin(1, 1);
+    setDrawSyncParams(1, 1);
     shutdownSound();
     SetDefDispEnv(&D_8009AFE8, 0, 0, 512, 240);
     memCardInit();
@@ -56,7 +56,7 @@ void main(void)
             DrawSync(0);
         }
         targetFrame = *(u16*)(&D_1F8000C0[0]+0x12A);
-        while (((unkstruct_1F8001D4*)0x1F8001D4)->unk14 < targetFrame) {
+        while (((Task*)0x1F8001D4)->unk14 < targetFrame) {
         }
         if (*(u16*)(&SCRATCHPAD+0x1EC) == 0) {
             ResetGraph(1);
@@ -156,8 +156,8 @@ void flipFrameBuffer(void)
     ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), 0x328);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", GsSetOrigin);
-void GsSetOrigin(short id, short arg1)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setDrawSyncParams);
+void setDrawSyncParams(short id, short arg1)
 {
     scratchpad* scratch = PSX_SCRATCH;
 
@@ -265,8 +265,8 @@ void initDisplay(u_char r0, u_char g0, u_char b0)
     return;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplay2x);
-void initDisplay2x(u_char r0, u_char g0, u_char b0)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", initDisplayHiRes);
+void initDisplayHiRes(u_char r0, u_char g0, u_char b0)
 {
     DISPENV* dispenv1;
     DISPENV* dispenv2;

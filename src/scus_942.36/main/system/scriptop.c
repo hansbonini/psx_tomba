@@ -10,8 +10,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D0E4);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpKillObject);
 void scriptOpKillObject(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8** slot = D_8009E640 + *(s32*)((u8*)p + 0x1190);
+    ScriptContext* p = SCRIPT_CTX;
+    u8** slot = SCRIPT_OBJECTS + *(s32*)((u8*)p + 0x1190);
     u8*  obj = *slot;
     u8*  other;
 
@@ -26,31 +26,31 @@ void scriptOpKillObject(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpWritePosition);
-void scriptOpWritePosition(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetPlayerPosition);
+void scriptOpSetPlayerPosition(void)
 {
-    D_800A53D8[1] = *(s32*)((u8*)D_8009E458 + 0x1190);
-    D_800A53AE = *(s32*)((u8*)D_8009E458 + 0x1194);
-    D_800A53DC[1] = *(s32*)((u8*)D_8009E458 + 0x1198);
-    D_8009E458->pc++;
+    D_800A53D8[1] = *(s32*)((u8*)SCRIPT_CTX + 0x1190);
+    D_800A53AE = *(s32*)((u8*)SCRIPT_CTX + 0x1194);
+    D_800A53DC[1] = *(s32*)((u8*)SCRIPT_CTX + 0x1198);
+    SCRIPT_CTX->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpReadPosition);
-void scriptOpReadPosition(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerPosition);
+void scriptOpGetPlayerPosition(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A53D8[1];
-    *(s32*)((u8*)D_8009E458 + 0x1194) = D_800A53AE;
-    *(s32*)((u8*)D_8009E458 + 0x1198) = D_800A53DC[1];
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A53D8[1];
+    *(s32*)((u8*)SCRIPT_CTX + 0x1194) = D_800A53AE;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1198) = D_800A53DC[1];
+    SCRIPT_CTX->pc++;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D2A8);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjLayer);
-void scriptOpGetObjLayer(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjField6A);
+void scriptOpGetObjField6A(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(s32*)((u8*)p + 0x1190) = *(u8*)(obj + 0x6A);
@@ -61,8 +61,8 @@ void scriptOpGetObjLayer(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjPosition);
 void scriptOpGetObjPosition(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(s32*)((u8*)p + 0x1190) = *(s16*)(*(u8**)(obj + 0x40) + 2);
@@ -72,13 +72,25 @@ void scriptOpGetObjPosition(void)
     p->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D6C0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D6C0);
+void func_8003D6C0(void)
+{
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
+
+    if (obj != NULL) {
+        *(s16*)(*(u8**)(obj + 0x40) + 2) = *(s32*)((u8*)p + 0x1194);
+        *(s16*)(obj + 0x16) = *(s32*)((u8*)p + 0x1198);
+        *(s16*)(*(u8**)(obj + 0x44) + 2) = *(s32*)((u8*)p + 0x119C);
+    }
+    p->pc++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjFrame);
 void scriptOpSetObjFrame(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(s16*)(obj + 0x2E) = *(s32*)((u8*)p + 0x1194);
@@ -89,8 +101,8 @@ void scriptOpSetObjFrame(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjFrame);
 void scriptOpGetObjFrame(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(s32*)((u8*)p + 0x1190) = *(u16*)(obj + 0x2E);
@@ -98,11 +110,11 @@ void scriptOpGetObjFrame(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpCheckObjActive);
-void scriptOpCheckObjActive(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpIsObjInState2);
+void scriptOpIsObjInState2(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(s32*)((u8*)p + 0x1190) = ((obj[4] ^ 2) == 0);
@@ -113,8 +125,8 @@ void scriptOpCheckObjActive(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjEnabled);
 void scriptOpSetObjEnabled(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(u8*)(obj + 0x0) = *(s32*)((u8*)p + 0x1194);
@@ -122,11 +134,11 @@ void scriptOpSetObjEnabled(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpCallObjHandler);
-void scriptOpCallObjHandler(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjVisible);
+void scriptOpGetObjVisible(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         func_80022E44(obj);
@@ -138,24 +150,24 @@ void scriptOpCallObjHandler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpWriteFlag);
 void scriptOpWriteFlag(void)
 {
-    unkstruct_8009E458* q = D_8009E458;
+    ScriptContext* q = SCRIPT_CTX;
 
-    D_8009C10C[*(s32*)((u8*)q + 0x1190)] = *(s32*)((u8*)q + 0x1194);
+    SCRIPT_FLAGS[*(s32*)((u8*)q + 0x1190)] = *(s32*)((u8*)q + 0x1194);
     q->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpReadFlag);
 void scriptOpReadFlag(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009C10C[*(s32*)((u8*)D_8009E458 + 0x1190)];
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = SCRIPT_FLAGS[*(s32*)((u8*)SCRIPT_CTX + 0x1190)];
+    SCRIPT_CTX->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjSubtype);
 void scriptOpGetObjSubtype(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
     u8  k;
 
     if (obj != NULL) {
@@ -177,35 +189,35 @@ void scriptOpGetObjSubtype(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpReadGlobal);
 void scriptOpReadGlobal(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009C20C[*(s32*)((u8*)D_8009E458 + 0x1190)];
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = SCRIPT_GLOBALS[*(s32*)((u8*)SCRIPT_CTX + 0x1190)];
+    SCRIPT_CTX->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpWriteGlobal);
 void scriptOpWriteGlobal(void)
 {
-    unkstruct_8009E458* q = D_8009E458;
+    ScriptContext* q = SCRIPT_CTX;
 
-    D_8009C20C[*(s32*)((u8*)q + 0x1190)] = *(s32*)((u8*)q + 0x1194);
+    SCRIPT_GLOBALS[*(s32*)((u8*)q + 0x1190)] = *(s32*)((u8*)q + 0x1194);
     q->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpLoadBackground);
 void scriptOpLoadBackground(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     if (D_8009C618 != 3) {
-        func_800EBD5C(D_800A5398, *(s16*)((u8*)D_800A53D8 + 2), D_800A53AE);
+        func_800EBD5C(PLAYER, *(s16*)((u8*)D_800A53D8 + 2), D_800A53AE);
     }
     *(s32*)((u8*)p + 0x1190) = D_800A5400;
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetProgressFlag);
-void scriptOpSetProgressFlag(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetPlayerField6B);
+void scriptOpSetPlayerField6B(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     if (D_8009C618 != 3) {
         switch (*(s32*)((u8*)p + 0x1190)) {
@@ -228,8 +240,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003DB04);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjAnim);
 void scriptOpSetObjAnim(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
     u8  k;
     s32 v;
 
@@ -257,10 +269,10 @@ void scriptOpSetObjAnim(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetAreaConfig);
-void scriptOpSetAreaConfig(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetPlayerState);
+void scriptOpSetPlayerState(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     s32 a = *(s32*)((u8*)p + 0x1190);
     s32 b;
 
@@ -271,7 +283,7 @@ void scriptOpSetAreaConfig(void)
     switch ((u8)a) {
     case 1:
         D_8009BCA7 = 0;
-        D_800A5398[0] = 1;
+        PLAYER[0] = 1;
         D_800A5436 = 0;
         break;
     case 4:
@@ -290,10 +302,10 @@ void scriptOpSetAreaConfig(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003DCF0);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetCameraTarget);
-void scriptOpSetCameraTarget(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetPlayerFacing);
+void scriptOpSetPlayerFacing(void)
 {
-    unkstruct_8009E458* q = D_8009E458;
+    ScriptContext* q = SCRIPT_CTX;
 
     D_800A53C6 = *(s32*)((u8*)q + 0x1190);
     asm("");
@@ -303,7 +315,7 @@ void scriptOpSetCameraTarget(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpAwardEvent);
 void scriptOpAwardEvent(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     EVENT id = *(s32*)((u8*)p + 0x1190);
 
@@ -318,7 +330,7 @@ void scriptOpAwardEvent(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetDialogId);
 void scriptOpSetDialogId(void)
 {
-    unkstruct_8009E458* q = D_8009E458;
+    ScriptContext* q = SCRIPT_CTX;
 
     D_8009BCAA = *(s32*)((u8*)q + 0x1190);
     asm("");
@@ -328,7 +340,7 @@ void scriptOpSetDialogId(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpPlaySound);
 void scriptOpPlaySound(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     playSFXWithNoteAndVolume(*(s32*)((u8*)p + 0x1190),
                   *(s32*)((u8*)p + 0x1194),
@@ -339,24 +351,24 @@ void scriptOpPlaySound(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpShowMessage);
 void scriptOpShowMessage(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     printInfoMessage(*(s32*)((u8*)p + 0x1190), MSG_TYPE_INFO);
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetAreaStatus);
-void scriptOpGetAreaStatus(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerTouchFlag);
+void scriptOpGetPlayerTouchFlag(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A5401;
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A5401;
+    SCRIPT_CTX->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetAreaFlag);
-void scriptOpGetAreaFlag(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerHitFlag);
+void scriptOpGetPlayerHitFlag(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A5436;
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A5436;
+    SCRIPT_CTX->pc++;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E014);
@@ -364,7 +376,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E014);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpShowMessage2);
 void scriptOpShowMessage2(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
 
     printInfoMessage(*(s32*)((u8*)p + 0x1190), MSG_TYPE_INFO);
     p->pc++;
@@ -373,7 +385,7 @@ void scriptOpShowMessage2(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetFadeEffect);
 void scriptOpSetFadeEffect(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
+    ScriptContext* p = SCRIPT_CTX;
     s32 a = *(s32*)((u8*)p + 0x1190);
     s32 b = *(s32*)((u8*)p + 0x1194);
 
@@ -384,13 +396,31 @@ void scriptOpSetFadeEffect(void)
     p->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E12C);
-
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjState);
-void scriptOpGetObjState(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E12C);
+void func_8003E12C(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    s32 a = *(s32*)((u8*)p + 0x1190);
+    s32 b = *(s32*)((u8*)p + 0x1194);
+    s32 c = *(s32*)((u8*)p + 0x1198);
+
+    if (a < 0) {
+        if (c != 0) {
+            printInfoMessage(0x15, 3);
+            playSFX(10);
+        }
+        increaseMaxHealth();
+    } else {
+        addItemToInventory(a, b, c);
+    }
+    p->pc++;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjTouchFlag);
+void scriptOpGetObjTouchFlag(void)
+{
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(s32*)((u8*)p + 0x1190) = *(u8*)(obj + 0x69);
@@ -398,11 +428,11 @@ void scriptOpGetObjState(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjState);
-void scriptOpSetObjState(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjTouchFlag);
+void scriptOpSetObjTouchFlag(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(u8*)(obj + 0x69) = *(s32*)((u8*)p + 0x1194);
@@ -413,8 +443,8 @@ void scriptOpSetObjState(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjParam);
 void scriptOpSetObjParam(void)
 {
-    unkstruct_8009E458* p = D_8009E458;
-    u8* obj = D_8009E640[*(s32*)((u8*)p + 0x1190)];
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
         *(u8*)(obj + 0x9C) = *(s32*)((u8*)p + 0x1194);
@@ -425,25 +455,25 @@ void scriptOpSetObjParam(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpMoveCamera);
 void scriptOpMoveCamera(void)
 {
-    unkstruct_8009E458* temp_s0;
+    ScriptContext* temp_s0;
 
-    temp_s0 = D_8009E458;
-    func_800EDE44(D_800A5398, *(s16*)&*(s32*)((u8*)temp_s0 + 0x1190), *(s16*)&*(s32*)((u8*)temp_s0 + 0x1194));
+    temp_s0 = SCRIPT_CTX;
+    func_800EDE44(PLAYER, *(s16*)&*(s32*)((u8*)temp_s0 + 0x1190), *(s16*)&*(s32*)((u8*)temp_s0 + 0x1194));
     temp_s0->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetAreaId);
 void scriptOpGetAreaId(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009C619;
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_8009C619;
+    SCRIPT_CTX->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetWeather);
-void scriptOpGetWeather(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerFieldE2);
+void scriptOpGetPlayerFieldE2(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_800A547A;
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A547A;
+    SCRIPT_CTX->pc++;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E330);
@@ -451,14 +481,14 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E330);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E3C4);
 void func_8003E3C4(void)
 {
-    *(s32*)((u8*)D_8009E458 + 0x1190) = D_8009BCD4;
-    D_8009E458->pc++;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_8009BCD4;
+    SCRIPT_CTX->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", opNop);
 void opNop(void)
 {
-    D_8009E458->pc++;
+    SCRIPT_CTX->pc++;
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", execGameOpcode);

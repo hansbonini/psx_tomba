@@ -84,7 +84,13 @@ void func_8006A3EC(padPort*);
 extern void (*D_80097514)(padPort*);
 extern padPort D_8009B3A0[];
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", SetVideoMode);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", SetVideoMode);
+
+long SetVideoMode(long mode) {
+    long prev = D_80097504;
+    D_80097504 = mode;
+    return prev;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", GetVideoMode);
 
@@ -353,7 +359,11 @@ int func_8006AFF0(padPort* port)
     return 0xFF;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B028);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B028);
+
+padPort* func_8006B028(int port) { return port & 0xF0 ? &D_8009B3A0[1] : D_8009B3A0; }
+
+__asm__("nop");
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B04C);
 
@@ -363,7 +373,23 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B154);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B3B8);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B494);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B494);
+
+int func_8006B494(padPort* port) {
+    int ret;
+
+    if ((port->unkE6 == 0) || (port->unk46 != 0xFF)) {
+        ret = 1;
+    } else {
+        ret = 0;
+    }
+
+    return ret;
+}
+
+__asm__("nop");
+__asm__("nop");
+__asm__("nop");
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libetc/vmode", func_8006B4CC);
 

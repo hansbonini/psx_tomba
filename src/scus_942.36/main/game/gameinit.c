@@ -107,10 +107,10 @@ void initHud(void)
     *tmp++ = (GAME.playerAP / 1       ) % 10;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearAreaConfig);
-void clearAreaConfig(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", clearPlayerObject);
+void clearPlayerObject(void)
 {
-    memset(D_800A5398, 0, sizeof(D_800A5398));
+    memset(PLAYER, 0, sizeof(PLAYER));
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gameinit", initObjectPoolUnlayered);
@@ -156,7 +156,7 @@ void initObjectPoolLayer1(void)
     D_1F800204 = (s32*)D_800A38B8;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->layer = 1;
+        ((ObjectAxisView*)q)->layer = 1;
         *--D_1F800204 = (s32)q;
         q -= 0xEC;
         i++;
@@ -186,7 +186,7 @@ void initObjectPool(void)
     D_1F800208 = (s32*)&D_800A3D08;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->layer = 0;
+        ((ObjectAxisView*)q)->layer = 0;
         *--D_1F800208 = (s32)q;
         q -= 0xD4;
         i++;
@@ -246,7 +246,7 @@ void initObjectPoolLayer8(void)
     D_1F80020C = (s32*)&D_800A55C4;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->layer = 8;
+        ((ObjectAxisView*)q)->layer = 8;
         *--D_1F80020C = (s32)q;
         q -= 0xD4;
         i++;
@@ -298,7 +298,7 @@ void initObjectPoolLayer7(void)
     D_1F800214 = (s32*)&D_800A37D0;
     i = 0;
     do {
-        ((unkstruct_800183E4*)q)->layer = 7;
+        ((ObjectAxisView*)q)->layer = 7;
         *--D_1F800214 = (s32)q;
         q -= 0x6C;
         i++;
@@ -326,13 +326,13 @@ void* allocObjectLayer1(void)
 {
     s16  n = D_1F800236;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
 
     if (n > 0) {
         p = D_1F800204;
         D_1F800236 = n - 1;
         D_1F800204 = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
@@ -350,13 +350,13 @@ void* allocObjectLayer(u8 arg0)
 {
     s16  n = D_1F800238;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         obj->layer = arg0;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
@@ -375,14 +375,14 @@ void* allocObjectLayer2(void)
 {
     s16  n = D_1F800238;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
     u8   layer = OBJECT_LAYER_2;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         obj->layer = layer;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
@@ -400,7 +400,7 @@ void* allocObjectLayer2(void)
 void* allocObjectLayer3(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
     u_char layer = OBJECT_LAYER_3;
 
     if (scratch->freeObjectCount > 0) {
@@ -425,14 +425,14 @@ void* allocObjectLayer4(void)
 {
     s16  n = D_1F800238;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
     u8   layer = OBJECT_LAYER_4;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         obj->layer = layer;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
@@ -451,14 +451,14 @@ void* allocObjectLayer5(void)
 {
     s16  n = D_1F800238;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
     u8   layer = OBJECT_LAYER_5;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         obj->layer = layer;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
@@ -477,13 +477,13 @@ void* allocObjectLayer8(void)
 {
     s16  n = D_1F80023A;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
 
     if (n > 0) {
         p = D_1F80020C;
         D_1F80023A = n - 1;
         D_1F80020C = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
@@ -501,13 +501,13 @@ void* allocObjectLayer7(void)
 {
     s16  n = D_1F80023C;
     s32* p;
-    unkstruct_800183E4* obj;
+    ObjectAxisView* obj;
 
     if (n > 0) {
         p = D_1F800214;
         D_1F80023C = n - 1;
         D_1F800214 = p + 1;
-        obj = (unkstruct_800183E4*)*p;
+        obj = (ObjectAxisView*)*p;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];

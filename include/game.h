@@ -41,7 +41,7 @@ typedef struct fileLink {
 #define FRAME_BUFFER_INDEX (*(s16*)0x1F8001F4)      /* 0x1F4 */
 #define JOYPAD_STATE       (*(u16*)0x1F8001FC)      /* 0x1FC */
 
-#define CURRENT_TASK       (*(unkstruct_1F8001D4**)0x1F8001D4)
+#define CURRENT_TASK       (*(Task**)0x1F8001D4)
 #define TASK_TABLE  0x801FD800
 #define TIM_SCRATCH ((u_long*)0x801FBE00)
 
@@ -811,12 +811,12 @@ typedef struct lz_t {
     int offset;
 } lz_t;
 
-typedef struct unkstruct_01 {
-    int unk0;
+typedef struct TaskEntry {
+    int func;
     int saved_reg_gp;
-} unkstruct_01;
+} TaskEntry;
 
-typedef struct unkstruct_1F8001D4 {
+typedef struct Task {
     short status;
     short sleepTimer;
     int task_id;
@@ -880,7 +880,7 @@ typedef struct unkstruct_1F8001D4 {
     union {
         volatile u_short volatile_value;
         u_short value;
-    } unk4E;
+    } step;
     byte unk50;
     byte unk51;
     byte unk52;
@@ -891,7 +891,7 @@ typedef struct unkstruct_1F8001D4 {
     byte unk57;
     u_short timer;
     u_short unk5A;
-    u_short unk5C;
+    u_short countdown;
     u_short unk5E;
     short unk60;
     short unk62;
@@ -906,7 +906,7 @@ typedef struct unkstruct_1F8001D4 {
     u_char unk6D;
     u_char unk6E;
     u_char unk6F;
-} unkstruct_1F8001D4;
+} Task;
 
 /* PSX scratchpad (data cache) at 0x1F800000, 1 KiB.
    Field offsets were verified against the 14 local definitions this replaces. */
@@ -942,7 +942,7 @@ typedef struct scratchpad {
     /* 0x1D1 */ u_char  unk1D1;
     /* 0x1D2 */ u_char  unk1D2;
     /* 0x1D3 */ u_char  movieSkipRequest;
-    /* 0x1D4 */ unkstruct_1F8001D4* currentTask;
+    /* 0x1D4 */ Task* currentTask;
     /* 0x1D8 */ u_char  unk1D8[4];
     /* 0x1DC */ short   unk1DC;
     /* 0x1DE */ short   unk1DE;
@@ -1011,9 +1011,9 @@ typedef struct itemDef {
 /* Views over the object returned by the allocator family
    (allocObjectLayer3 / allocObjectLayer4 / allocObjectLayer7). They describe the same
    block through different field subsets and cannot be merged into a single
-   struct: offset 0x10 is u_char in unkstruct_1F800214 and int in
-   unkstruct_80018474. */
-typedef struct unkstruct_1F800214 {
+   struct: offset 0x10 is u_char in ObjectRawView and int in
+   ObjectPosView. */
+typedef struct ObjectRawView {
     u_char  unk0;
     u_char  unk1;
     u_char  unk2;
@@ -1037,17 +1037,17 @@ typedef struct unkstruct_1F800214 {
     u_short unk16;
     u_short unk18;
     u_short unk1A;
-} unkstruct_1F800214;
+} ObjectRawView;
 
-typedef struct unkstruct_800183E4 {
+typedef struct ObjectAxisView {
     byte  data[0x1C];
     byte  layer;
     byte  pad0[0x23];
     void* drawBufA;
     void* drawBufB;
-} unkstruct_800183E4;
+} ObjectAxisView;
 
-typedef struct unkstruct_80018474 {
+typedef struct ObjectPosView {
     byte  unk0;
     byte  unk1;
     byte  unk2;
@@ -1064,14 +1064,14 @@ typedef struct unkstruct_80018474 {
     int   posZ;
     byte  pad2[0x11];
     short unk2E;
-} unkstruct_80018474;
+} ObjectPosView;
 
-typedef struct unkstruct_80033FB0 {
+typedef struct ObjectVariantView {
     byte data[3];
     u_char unk3;
-} unkstruct_80033FB0;
+} ObjectVariantView;
 
-typedef struct unkstruct_8009E458 {
+typedef struct ScriptContext {
     /* 0x0000 */ byte    data[0x88];
     /* 0x0088 */ u_char  state;
     /* 0x0089 */ u_char  cmpFlag;
@@ -1080,10 +1080,10 @@ typedef struct unkstruct_8009E458 {
     /* 0x008E */ byte    unk8E[2];
     /* 0x0090 */ int     stack[0x400];
     /* 0x1090 */ int     vars[0x40];
-    /* 0x1190 */ short   unk1190;
+    /* 0x1190 */ short   result;
     /* 0x1192 */ short   unk1192;
     /* 0x1194 */ short   unk1194;
-} unkstruct_8009E458;
+} ScriptContext;
 
 
 typedef struct unkstruct_800A39B0 {
@@ -1099,7 +1099,7 @@ typedef struct {
     u_char item_id;
     u_char state;
     u_char subState;
-    u_char unk6;
+    u_char step;
     u_char unk7;
     short clut;
     u_char unkA;
@@ -1109,42 +1109,42 @@ typedef struct {
     u_char unkE;
     signed char unkF;
     short unk10;
-    short unk12;
+    short x;
     short unk14;
-    short unk16;
+    short y;
     short unk18;
-    short unk1A;
+    short z;
     u_char unk1C;
     u_char unk1D;
-    short unk1E;
+    short tpage;
     short unk20;
     u_short cooldownTimer;
-    int unk24;
-    short unk28;
+    int animData;
+    short velocityTable;
     short unk2A;
-    short unk2C;
+    short animTimer;
     short unk2E;
     u_char pad4[0xC];
-    int unk3C;
+    int spriteBank;
     u_char pad5[0x24];
     int buffSize;
     u_char unk68;
-    u_char unk69;
+    u_char touchFlag;
     u_char unk6A;
     u_char objectIndex;
-    short unk6C;
-    short unk6E;
-    short unk70;
-    short unk72;
+    short hitOffsetX;
+    short hitWidth;
+    short hitOffsetY;
+    short hitHeight;
     u_char pad6[0x8];
     short unk7A;
     u_char pad7[0x3];
-    short unk82;
+    short speedY;
     u_char pad8[0x8];
     int unk8C;
     u_char pad9[0x15];
     u_char unkA5;
-} unkstruct_800A6D50;
+} GameObject;
 
 typedef struct SpriteSlot {
     short id;
@@ -2374,7 +2374,7 @@ extern u16  D_8009BCCA;
 extern s16  BGM_MUTED;
 extern u8   D_80014C94;
 extern u8   D_80014C8C;
-extern u8*  D_8009C974;
+extern u8*  SCRIPT_CODE;
 extern int  D_8009E74C[];
 extern u8   D_800778E4[];
 extern u8   D_800778E5[];
@@ -2398,15 +2398,15 @@ extern u8*  D_8007C110[];
 extern u8*  D_80077084[];
 extern u8   D_800B07CC[];
 extern s32  D_800A38DC;
-extern unkstruct_8009E458* D_8009E458;
-extern u8*  D_8009E640[];
+extern ScriptContext* SCRIPT_CTX;
+extern u8*  SCRIPT_OBJECTS[];
 extern s16* D_800A53D8;
 extern s16* D_800A53DC;
 extern s16  D_800A53AE;
 extern u8   D_8009C10A;
 extern u8   D_8009C10B;
-extern u8   D_8009C10C[];
-extern u8   D_8009C20C[];
+extern u8   SCRIPT_FLAGS[];
+extern u8   SCRIPT_GLOBALS[];
 extern u8   D_800A5401;
 extern u8   D_800A5436;
 extern u8   D_8009C619;
@@ -2443,7 +2443,7 @@ extern u_char D_800A38B8[];
 extern u_char D_800A3940[0x70];
 extern u_char D_800A3941;
 extern u8*  D_1F8001D4;
-extern unkstruct_1F8001D4* TASK_C;
+extern Task* TASK_C;
 extern s16  D_1F8003B8;
 extern s16  D_1F8003BA;
 extern s32  D_8009BCBC;
@@ -2498,7 +2498,7 @@ extern short D_800A3954;
 extern short D_800A3956;
 extern unkstruct_800A39B0 D_800A39B0[];
 extern SpriteSlot D_800A5140[];
-extern u_char D_800A5398[0x178];
+extern u_char PLAYER[0x178];
 extern char D_800A539C;
 extern char D_800A539D;
 extern char D_800A539E;
@@ -2528,7 +2528,7 @@ extern char D_800B3188;
 extern int D_800D7188;
 
 /* --- Task table (0x801FD800) --- */
-extern unkstruct_1F8001D4* TASK_TABLE_BASE;
+extern Task* TASK_TABLE_BASE;
 extern int D_801FD804;
 extern int D_801FD808;
 extern int D_801FD80C;
@@ -2602,6 +2602,6 @@ void func_80122A00(void);
 s32 allocSfxVoice();
 s32 queueSoundCommand();
 void func_80021340(void);
-// void applyAnimVelocityX(unkstruct_800A6D50* arg0, u16 arg1);
+// void applyAnimVelocityX(GameObject* arg0, u16 arg1);
 
 #endif // GAME_H
