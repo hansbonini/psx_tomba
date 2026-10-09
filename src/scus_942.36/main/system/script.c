@@ -1,8 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/script", D_80013798);
-
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", uploadSpriteFrame);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", projectOriginToScreen);
@@ -34,7 +32,29 @@ void loadCompressedTIM(s32 arg0)
     loadTIM(TIM_SCRATCH, 0x20, 0, 0x80, 0x1EF);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B2C8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B2C8);
+typedef struct H_3B2C8 { s16 m[2]; s16 x[2]; s16 d[64]; } H_3B2C8;
+typedef struct D_3B2C8 { s16 d[64]; char *base; char *cur; u8 f; } D_3B2C8;
+extern s32 D_8009CA04;
+extern s32 printf(char *, ...);
+
+s32 func_8003B2C8(char *p, D_3B2C8 *o)
+{
+    H_3B2C8 h;
+    s32 i;
+    h = *(H_3B2C8 *)p;
+    if (*(s32 *)&h != 0x530057) {
+        printf("Not Script File");
+        D_8009CA04 = 0;
+        return -2;
+    }
+    for (i = 0; i < 64; i++)
+        o->d[i] = h.d[i];
+    o->base = p;
+    o->cur = p + 0x88;
+    o->f = 0;
+    return 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptStart);
 s32 scriptStart(u8* self, s32 idx)
@@ -171,7 +191,46 @@ void scriptOpRandom(void)
     p->pc += 2;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B750);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B750);
+static __inline__ s32 rd_3B750(u8 *g, u8 c, u8 *t)
+{
+    s32 tmp;
+    s32 k;
+    if (c == 0)
+        return *(s32 *)(g + *t * 4 + 0x1090);
+    for (k = 0; k < 4; k++)
+        ((char *)&tmp)[k] = *t++;
+    return tmp;
+}
+
+void func_8003B750(void)
+{
+    s32 buf[16];
+    u8 *o;
+    u8 *code;
+    s32 *q;
+    s32 pc;
+    s32 i, n;
+    u8 c;
+    u8 *s;
+    pc = 2;
+    o = SCRIPT_CTX;
+    code = SCRIPT_CODE;
+    n = code[*(u16 *)(o + 0x8a) + 1];
+    q = buf;
+    for (i = 0; i < n; i++) {
+        s = code + (*(u16 *)(o + 0x8a) + pc);
+        c = *s++;
+        buf[i] = rd_3B750(SCRIPT_CTX, c, s);
+        if (c == 0)
+            pc += 2;
+        else
+            pc += 5;
+    }
+    for (i = 0; i < n; i++)
+        *(s32 *)(o + 0x1190 + i * 4) = q[i];
+    *(u16 *)(o + 0x8a) += pc;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpBranch);
 void scriptOpBranch(u8 op)
@@ -222,7 +281,31 @@ void scriptOpBranch(u8 op)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B968);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B968);
+typedef struct {
+    char pad[0x8a];
+    u16 w8a;
+    char pad2[0x1090 - 0x8c];
+    s32 cnt[64];
+} S8003A570_3B968;
+
+void func_8003B968(void)
+{
+    S8003A570_3B968 *p = SCRIPT_CTX;
+    u8 *code = SCRIPT_CODE;
+    u16 tmp;
+    s32 i;
+    u8 *s;
+    if (--p->cnt[code[p->w8a + 1]] > 0) {
+        s = (u8 *)(p->w8a + (s32)code) + 2;
+        for (i = 0; i < 2; i++) {
+            ((u8 *)&tmp)[i] = *s++;
+        }
+        p->w8a = tmp;
+    } else {
+        p->w8a += 4;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpCall);
 void scriptOpCall(void)
@@ -282,9 +365,112 @@ void scriptOpPopVars(void)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BB48);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BC34);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BC34);
+void func_8003BC34(u8 op)
+{
+    u8 *b = SCRIPT_CTX;
+    u8 *code = SCRIPT_CODE;
+    u8 idx = code[*(u16 *)(b + 0x8a) + 1];
+    u8 *q;
+    s32 v;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BD28);
+    switch (op) {
+    case 0x18:
+        *(s32 *)(idx * 4 + (s32)b + 0x1090) += 1;
+        break;
+    case 0x19:
+        *(s32 *)(idx * 4 + (s32)b + 0x1090) -= 1;
+        break;
+    case 0x1a:
+        *(s32 *)(idx * 4 + (s32)b + 0x1090) = ~*(s32 *)(idx * 4 + (s32)b + 0x1090);
+        break;
+    case 0x1b:
+        *(s32 *)(idx * 4 + (s32)b + 0x1090) = -*(s32 *)(idx * 4 + (s32)b + 0x1090);
+        break;
+    }
+    v = *(s32 *)(idx * 4 + (s32)b + 0x1090);
+    q = SCRIPT_CTX;
+    if (v == 0) {
+        q[0x89] = 0;
+    } else {
+        q[0x89] = v < 0 ? 1 : 2;
+    }
+    *(s16 *)(b + 0x8a) = *(s16 *)(b + 0x8a) + 2;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BD28);
+typedef struct { char pad[0x1090]; s32 v[1]; } VS_3BD28;
+void func_8003BD28(u8 op)
+{
+    s32 tmp;
+    u8 *o = (*(u8 **)&SCRIPT_CTX);
+    s32 code = SCRIPT_CODE;
+    s32 idx;
+    s32 a;
+    s32 b;
+    s32 k;
+    s32 r;
+    u8 f;
+    u8 *p;
+    u8 *g;
+    u16 x;
+    idx = *(u8 *)(*(u16 *)(o + 0x8a) + code + 1);
+    a = *(s32 *)(o + idx * 4 + 0x1090);
+    do { } while (0);
+    switch (op) {
+    case 0x1c: case 0x1e: case 0x20: case 0x22:
+    case 0x24: case 0x26: case 0x28: case 0x2a:
+        b = *(s32 *)((*(u8 **)&SCRIPT_CTX) + *(u8 *)(*(u16 *)(o + 0x8a) + code + 2) * 4 + 0x1090);
+        f = 0;
+        break;
+    case 0x1d: case 0x1f: case 0x21: case 0x23:
+    case 0x25: case 0x27: case 0x29: case 0x2b:
+        p = (u8 *)(*(u16 *)(o + 0x8a) + code) + 2;
+        for (k = 0; k < 4; k++)
+            ((char *)&tmp)[k] = p[k];
+        b = tmp;
+        f = 1;
+        break;
+    }
+    switch (op) {
+    case 0x1c: case 0x1d:
+        r = a + b;
+        break;
+    case 0x1e: case 0x1f:
+        r = a - b;
+        break;
+    case 0x20: case 0x21:
+        r = a * b;
+        break;
+    case 0x22: case 0x23:
+        r = 0;
+        if (b != 0)
+            r = a / b;
+        break;
+    case 0x24: case 0x25:
+        r = 0;
+        if (b != 0)
+            r = a % b;
+        break;
+    case 0x26: case 0x27:
+        r = a & b;
+        break;
+    case 0x28: case 0x29:
+        r = a | b;
+        break;
+    case 0x2a: case 0x2b:
+        r = a ^ b;
+        break;
+    }
+    ((VS_3BD28 *)o)->v[idx] = r;
+    g = (*(u8 **)&SCRIPT_CTX);
+    if (r == 0)
+        g[0x89] = 0;
+    else
+        g[0x89] = (r < 0) ? 1 : 2;
+    x = *(u16 *)(o + 0x8a);
+    *(u16 *)(o + 0x8a) = f ? x + 6 : x + 3;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", scriptOpWait);
 void scriptOpWait(void)
@@ -298,4 +484,50 @@ void scriptOpWait(void)
     *(s32*)((u8*)p + 0x11D4) = v;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BF58);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003BF58);
+typedef struct { s16 m[4]; s16 w[64]; } F_3BF58;
+typedef struct {
+    s16 w[64];
+    F_3BF58 *p80;
+    F_3BF58 *p84;
+    u8 b88;
+    char b89;
+    u16 w8a;
+} G_3BF58;
+extern char D_80013798[];
+
+void func_8003BF58(void)
+{
+    G_3BF58 *g = SCRIPT_CTX;
+    u8 *t = SCRIPT_CODE;
+    char buf[80];
+    F_3BF58 s;
+    F_3BF58 *src;
+    F_3BF58 *ps;
+    s32 i, n, j;
+
+    n = t[g->w8a + 1];
+    for (i = 0; i < n; i++) {
+        buf[i] = t[i + g->w8a + 2];
+    }
+    buf[i] = 0;
+    for (i = 63; i >= 0; i--) {
+        SCRIPT_OBJECTS[i] = 0;
+    }
+    src = g->p80;
+    g->b88 = 0;
+    g->w8a = 0;
+    ps = &s;
+    s = *src;
+    if (*(s32 *)s.m != 0x530057) {
+        printf(D_80013798);
+        D_8009CA04 = 0;
+        return;
+    }
+    for (j = 0; j < 64; j++) {
+        g->w[j] = ps->w[j];
+    }
+    g->p80 = src;
+    g->p84 = src + 1;
+    g->b88 = 0;
+}

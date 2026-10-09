@@ -141,7 +141,7 @@ void copyMatrix32(s32* src, s32* dst)
 //INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", getBaseMatrix);
 void getBaseMatrix(MATRIX* dst)
 {
-    *dst=*(MATRIX*)(&D_1F8000F8);
+    *dst=*SCRATCH_BASE_MATRIX;
     return;
 }
 
@@ -149,16 +149,16 @@ void getBaseMatrix(MATRIX* dst)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initLighting);
 void initLighting(u8* self)
 {
-    *(s16*)(self + 0x44) = 0x638;
-    *(s16*)(self + 0x46) = 0x800;
-    *(s16*)(self + 0x48) = 0;
-    *(MATRIX*)(self + 0x20) = *(MATRIX*)(&D_1F8000F8);
-    ((MATRIX*)(self + 0x20))->m[0][0] = 0xD00;
-    ((MATRIX*)(self + 0x20))->m[1][0] = 0xD00;
-    ((MATRIX*)(self + 0x20))->m[2][0] = 0xD00;
-    self[0x40] = 0xC0;
-    self[0x41] = 0xC0;
-    self[0x42] = 0xC0;
+    ((LightEnv*)self)->rotX = 0x638;
+    ((LightEnv*)self)->rotY = 0x800;
+    ((LightEnv*)self)->rotZ = 0;
+    ((LightEnv*)self)->color = *SCRATCH_BASE_MATRIX;
+    ((LightEnv*)self)->color.m[0][0] = 0xD00;
+    ((LightEnv*)self)->color.m[1][0] = 0xD00;
+    ((LightEnv*)self)->color.m[2][0] = 0xD00;
+    ((LightEnv*)self)->backR = 0xC0;
+    ((LightEnv*)self)->backG = 0xC0;
+    ((LightEnv*)self)->backB = 0xC0;
     applyLighting(self);
 }
 
@@ -167,14 +167,14 @@ void applyLighting(u8* self)
 {
     SVECTOR v;
     VECTOR out;
-    MATRIX* m = (MATRIX*)self;
+    MATRIX* m = &((LightEnv*)self)->light;
 
     SetFarColor(255, 255, 255);
-    SetBackColor(self[0x40], self[0x41], self[0x42]);
-    SetColorMatrix((MATRIX*)(self + 0x20));
-    *m = *(MATRIX*)(&D_1F8000F8);
-    RotMatrixX(*(s16*)(self + 0x44), m);
-    RotMatrixY(*(s16*)(self + 0x46), m);
+    SetBackColor(((LightEnv*)self)->backR, ((LightEnv*)self)->backG, ((LightEnv*)self)->backB);
+    SetColorMatrix(&((LightEnv*)self)->color);
+    *m = *SCRATCH_BASE_MATRIX;
+    RotMatrixX(((LightEnv*)self)->rotX, m);
+    RotMatrixY(((LightEnv*)self)->rotY, m);
     v.vx = 0;
     v.vy = 0x1000;
     v.vz = 0;

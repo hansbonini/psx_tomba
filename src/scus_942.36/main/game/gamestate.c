@@ -2258,7 +2258,7 @@ s32 loadAreaSectionResources(s32 arg)
 
     s0 = s1;
 
-    if (*(u8*)0x1F8003D3 != s0 || arg != 0) {
+    if (LOADED_SOUND_SET != s0 || arg != 0) {
         loadSoundSet(s0);
         s4 = s0;
         stopAllSound();

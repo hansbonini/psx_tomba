@@ -185,9 +185,19 @@ typedef struct scratchpad {
     /* 0x3A0 */ u_char  unk3A0[0x2C];
     /* 0x3CC */ u_char  unk3CC;
     /* 0x3CD */ u_char  unk3CD[5];
-    /* 0x3D2 */ u_char  unk3D2;
-    /* 0x3D3 */ u_char  unk3D3;
+    /* 0x3D2 */ u_char  loadedListFile;
+    /* 0x3D3 */ u_char  loadedSoundSet;
     /* 0x3D4 */ u_char  unk3D4[0x2C];
 } scratchpad;
+
+/* One of the two frame buffers at OT_FRAMEBUFFER: the ordering table and
+   the environments flipFrameBuffer hands to PutDispEnv / PutDrawEnv. */
+#define OT_LENGTH 0x328
+
+typedef struct {
+    /* 0x000 */ u_long  ot[OT_LENGTH];
+    /* 0xCA0 */ DISPENV disp;
+    /* 0xCB4 */ DRAWENV draw;
+} FrameBuffer; /* size: 0xD10 */
 
 #endif

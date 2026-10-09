@@ -10,6 +10,11 @@
 #define NEXT_PRIM          (*(int*)0x1F800164)      /* 0x164 */
 #define MOVIE_PLAY_STATE   (*(u8*)0x1F8001CC)       /* 0x1CC */
 #define LOAD_COMPLETE      (*(u8*)0x1F8001CE)       /* 0x1CE */
+/* Which list file sits at 0x80097FA8: 0 = SYS/LDSYS.BIN, area + 1 = that
+   area's SYS/LDARnn.BIN (loadAreaListFile), 0xFF = none yet. */
+#define LOADED_LIST_FILE   (*(u_char*)0x1F8003D2)   /* 0x3D2 */
+/* Index into SOUND_SET_LOAD_LISTS of the sound set in memory, 0xFF = none. */
+#define LOADED_SOUND_SET   (*(u_char*)0x1F8003D3)   /* 0x3D3 */
 #define MOVIE_ID           (*(u_char*)0x1F8001CD)      /* 0x1CD */
 #define MOVIE_SKIP_REQUEST (*(u_char*)0x1F8001D3)      /* 0x1D3 */
 #define CD_QUEUE_HEAD      (*(s32*)0x1F80029C)        /* 0x29C */

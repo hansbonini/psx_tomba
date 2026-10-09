@@ -7,7 +7,7 @@ void initGameConfig(void)
     CAMERA* camera = (CAMERA*)0x1F8000E2;
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
     memset(D_8009BC98, 0, sizeof(D_8009BC98));
-    getBaseMatrix((MATRIX* ) D_1F8000C0);
+    getBaseMatrix(SCRATCH_VIEW_MATRIX);
     camera->vrz = -544; 
     camera->vpx = 160;
     camera->vpy = -120;
@@ -15,8 +15,8 @@ void initGameConfig(void)
     camera->vry = 0;
     camera->vpz = 0;
     *(int* )0x1F800200 = 69; // ?
-    *(u_char* )0x1F8003D2 = 0xFF;
-    *(u_char* )0x1F8003D3 = 0xFF;
+    LOADED_LIST_FILE = 0xFF;
+    LOADED_SOUND_SET = 0xFF;
     GAME.playerAP = 0;
     *&GAME.selectedArea = AREA00_VILLAGEOFALLBEGINNINGS;
     GAME.playerLives = 3;

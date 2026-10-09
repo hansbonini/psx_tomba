@@ -144,16 +144,16 @@ void flipFrameBuffer(void)
     u_long* prevOt;
 
     bufIndex = 1 - *(u_short* )(0x1F8001F4);
-    ot = (bufIndex * 0xD10) + (byte*)&OT_FRAMEBUFFER;
+    ot = (bufIndex * (int)sizeof(FrameBuffer)) + (byte*)&OT_FRAMEBUFFER;
     prevOt = *(u_long** )((byte*)&D_1F8000C0[0]+0x120);
     *(u_short* )(&SCRATCHPAD+0x1f4) = (u_short) bufIndex;
     *(u_long* )(&SCRATCHPAD+0x1E0) = ot;
     *(u_long** )(&SCRATCHPAD+0x1E4) = prevOt;
-    PutDispEnv(ot + 0x328);
-    PutDrawEnv(CURRENT_OT + 0xCB4);
+    PutDispEnv(&((FrameBuffer*)ot)->disp);
+    PutDrawEnv(&((FrameBuffer*)CURRENT_OT)->draw);
     compactOrderingTable(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
     DrawOTag(*(u_long* )(&SCRATCHPAD+0x1E4) + 0xC9C);
-    ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), 0x328);
+    ClearOTagR(*(u_long* )(&SCRATCHPAD+0x1E0), OT_LENGTH);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/main", setDrawSyncParams);
@@ -172,8 +172,8 @@ void initGlobalState(void)
     
     D_8009EB5A = 0xFFFF;
     D_8009EB7C = 0xFFFF;
-    scratch->unk3D3 = 0xFF;
-    scratch->unk3D2 = 0xFF;
+    scratch->loadedSoundSet = 0xFF;
+    scratch->loadedListFile = 0xFF;
     scratch->pauseFlags = 0;
     scratch->unk1F2 = 0;
     scratch->pauseToggle = 0;
@@ -229,8 +229,8 @@ void initGraphics(void)
     initDisplay(96U, 151U, 255U);
     setRECT(&rect, 0, 0, 1024, 512);
     ClearImage(&rect, 0U, 0U, 0U);
-    ClearOTagR(&OT_FRAMEBUFFER, 0x328);
-    ClearOTagR(&OT_FRAMEBUFFER + 0x344, 0x328);
+    ClearOTagR(&OT_FRAMEBUFFER, OT_LENGTH);
+    ClearOTagR(&OT_FRAMEBUFFER + 0x344, OT_LENGTH);
     *(short* )&PSX_SCRATCH[0x1F4] = 0;
     *(u_int** )&PSX_SCRATCH[0x1E0] = &OT_FRAMEBUFFER;
 }

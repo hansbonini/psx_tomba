@@ -54,4 +54,11 @@ typedef struct LoadRecord {
     /* 0x10 */ u32 type;   /* LoadType, or LOAD_TYPE_SUB */
 } LoadRecord;
 
+/* What AREA_LOAD_LISTS[area] points to, inside SYS/LDSYS.BIN: the list of the
+   area and one list per section. */
+typedef struct AreaLists {
+    /* 0x00 */ s32 areaList;
+    /* 0x04 */ s32 sectionLists[1];
+} AreaLists;
+
 #endif
