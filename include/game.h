@@ -21,6 +21,7 @@
 #include "game/events.h"
 #include "game/ui.h"
 #include "game/vector.h"
+#include "game/render.h"
 #include "game/sound.h"
 #include "game/movie.h"
 #include "game/system.h"

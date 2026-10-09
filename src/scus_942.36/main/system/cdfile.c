@@ -1619,10 +1619,10 @@ void cdLoadTask(void)
 
     LOAD_COMPLETE = 0;
     D_8009C8B0 = 0;
-    param[0] = 0x80;
+    param[0] = CdlModeSpeed;
     CURRENT_TASK->state0 = 0;
     CURRENT_TASK->state1 = 0;
-    while (CdControl(14, param, 0) == 0) {
+    while (CdControl(CdlSetmode, param, 0) == 0) {
     }
 
     for (;;) {
@@ -1640,7 +1640,7 @@ void cdLoadTask(void)
             id = ((LoadRecord*)hdr)->fileId;
             CD_REQ = entry;
             CD_HDR = hdr;
-            CdControlF(2, (u8*)&FILE_LINKS + (id * 8));
+            CdControlF(CdlSetloc, (u8*)&FILE_LINKS + (id * 8));
             CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
             break;
 
@@ -1672,7 +1672,7 @@ void cdLoadTask(void)
                 CD_DST = *(u8**)(CD_REQ + 4);
                 break;
             }
-            if (CdRead(CD_NSEC, (u_long*)CD_DST, 0x80) == 0) {
+            if (CdRead(CD_NSEC, (u_long*)CD_DST, CdlModeSpeed) == 0) {
                 D_8009C8B0++;
             } else {
                 CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;

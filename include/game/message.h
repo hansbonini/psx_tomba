@@ -66,10 +66,10 @@ typedef struct msgBox {
 
 /* Frame drawn by drawBalloonFrame (actorrender3.c). */
 typedef struct {
-    s16 unk0[4];
-    s16 unk8[4];
-    s16 unk10;
-    s16 unk12[3];
-} unk_8004C1E4;
+    /* 0x00 */ s16  unk0[4];
+    /* 0x08 */ RECT rect;     /* box on screen */
+    /* 0x10 */ s16  tail;     /* BALLOON_TAIL << 12, or -1 for none */
+    /* 0x12 */ s16  unk12[3];
+} BalloonFrame;
 
 #endif

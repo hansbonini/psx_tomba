@@ -15,8 +15,8 @@ int projectActorPosition(u8* self, long* sxy, long* otz)
     } else {
         *(s16*)0x1F800064 = *(u16*)(self + 0x1A);
     }
-    SetRotMatrix((MATRIX*)D_1F8000C0);
-    SetTransMatrix((MATRIX*)D_1F8000C0);
+    SetRotMatrix(SCRATCH_VIEW_MATRIX);
+    SetTransMatrix(SCRATCH_VIEW_MATRIX);
     gte_ldv0(&D_1F800060);
     gte_rtps_real();
     gte_stflg(&D_1F80008C);
