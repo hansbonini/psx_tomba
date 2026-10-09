@@ -1,11 +1,212 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003C9D4);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003C9D4);
+typedef struct { char p0[0x84]; u8 *p84; u8 b88; char p89; u16 w8a; } S_3C9D4;
+extern u32 D_8009FD78;
+extern u32 D_8009FD7C;
+extern s32 D_8009C858;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003CE18);
+static __inline__ u8 run_3C9D4(void)
+{
+    S_3C9D4 *p;
+    s32 r;
+    u8 x;
+    SCRIPT_CTX = &(*(S_3C9D4 *)&D_8009EBA8);
+    p = SCRIPT_CTX;
+    SCRIPT_CODE = (*(S_3C9D4 *)&D_8009EBA8).p84;
+    if ((*(S_3C9D4 *)&D_8009EBA8).b88 == 2 && ++D_8009FD78 >= D_8009FD7C) {
+        (*(S_3C9D4 *)&D_8009EBA8).b88 = 1;
+    }
+    x = p->b88;
+    if (x != 1) return x;
+    do {
+        S_3C9D4 *q = SCRIPT_CTX;
+        u8 *b = SCRIPT_CODE;
+        u8 c = b[q->w8a];
+        if (c < 0x80) {
+            r = execCoreOpcode(c);
+        } else {
+            r = execGameOpcode(c);
+        }
+    } while (r != 0);
+    return p->b88;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D0E4);
+void func_8003C9D4(void)
+{
+    if (D_8009CA04 == 0) return;
+    if ((*(u16 *)&D_800A539C) == 0x505) return;
+    switch (GAME.selectedArea) {
+    case 0:
+        switch (D_8009BCCA) {
+        case 0 ... 2:
+            D_8009C858 = run_3C9D4();
+        }
+        break;
+    case 1:
+        switch (D_8009BCCA) {
+        case 0 ... 4:
+            D_8009C858 = run_3C9D4();
+        }
+        break;
+    case 2:
+        switch (D_8009BCCA) {
+        case 0 ... 2:
+            D_8009C858 = run_3C9D4();
+        }
+        break;
+    case 0x13:
+        switch (D_8009BCCA) {
+        case 0 ... 1:
+            D_8009C858 = run_3C9D4();
+        }
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003CE18);
+typedef struct { char p0[0x8a]; u16 c; char p1[0x1190 - 0x8c]; s32 idx, k, sub, x, y, z; } G_3CE18;
+extern GameObject *allocObjectLayer2(void);
+
+void func_8003CE18(void)
+{
+    extern void func_800ED1D4(GameObject *o, s32 n);
+    G_3CE18 *g = SCRIPT_CTX;
+    s32 k = g->k;
+    s32 idx = g->idx;
+    s32 sub = g->sub;
+    s32 x = g->x;
+    s32 y = g->y;
+    s32 z = g->z;
+    switch (k) {
+    case 2: case 9: case 10: {
+        GameObject *o = allocObjectLayer2();
+        if (o == 0) break;
+        if (k == 9) o->active = 1; else o->active = 2;
+        if (k == 9) o->type = 0x19; else o->type = 0x18;
+        o->animFrame = 0;
+        o->subtype = sub;
+        o->x.raw = x << 16;
+        o->y.raw = y << 16;
+        o->z.raw = z << 16;
+        o->objectIndex = 0x80;
+        o->unkC = idx;
+        o->unkD = 0;
+        o->unk68 = 0;
+        o->unk9C = 0;
+        o->unkE = 0;
+        o->unkF = 0;
+        o->unk74 = 0;
+        o->unk76 = 0;
+        o->unk94 = 0;
+        switch (k) {
+        case 9:
+            o->unkA = 13;
+            func_800ED1D4(o, 1);
+            break;
+        case 10:
+            o->unkA = 0x10;
+            o->unkA0 = 0;
+            break;
+        case 2:
+            o->unkA = 2;
+            break;
+        }
+        o->state = 0;
+        o->subState = 0;
+        o->step = 0;
+        SCRIPT_OBJECTS[idx] = o;
+        break;
+    }
+    case 3: {
+        GameObject *o = allocObjectLayer3();
+        if (o == 0) break;
+        o->active = 1;
+        o->type = 0x2e;
+        o->animFrame = 0;
+        o->subtype = sub;
+        o->x.raw = x << 16;
+        o->y.raw = y << 16;
+        o->z.raw = z << 16;
+        o->objectIndex = 0x80;
+        o->unkA = 0x10;
+        o->unkC = idx;
+        o->unkD = 0;
+        o->unk68 = 0;
+        o->unkF = 0;
+        o->unkE = 0;
+        o->unk74 = 0;
+        o->unk76 = 0;
+        o->unk94 = 0;
+        o->state = 0;
+        o->subState = 0;
+        o->step = 0;
+        SCRIPT_OBJECTS[idx] = o;
+        break;
+    }
+    case 4: {
+        GameObject *o = allocObjectLayer4();
+        u8 c;
+        if (o == 0) break;
+        c = 1;
+        o->active = c;
+        o->type = 0x1e;
+        o->animFrame = 0;
+        o->subtype = sub;
+        o->x.raw = x << 16;
+        o->y.raw = y << 16;
+        o->z.raw = z << 16;
+        o->unkA = 2;
+        o->unkC = idx;
+        o->unkD = 0;
+        o->unk68 = 0;
+        o->objectIndex = c;
+        o->unkF = 0;
+        o->unk94 = 0;
+        o->state = 0;
+        o->subState = 0;
+        o->step = 0;
+        SCRIPT_OBJECTS[idx] = o;
+        break;
+    }
+    case 5: case 6: case 7: case 8:
+        break;
+    }
+    g->c++;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D0E4);
+typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s32 d1194; s32 d1198; } G_3D0E4;
+extern void func_80112AA4(o);
+extern void func_800EBDD8(o);
+extern void func_800E76A8(o);
+
+void func_8003D0E4(void)
+{
+    G_3D0E4 *g = SCRIPT_CTX;
+    GameObject *o;
+    s32 b, a;
+    o = SCRIPT_OBJECTS[g->d1190];
+    a = g->d1194;
+    b = g->d1198;
+    if (o != 0) {
+        o->unk74 = a;
+        o->unk76 = b;
+        switch (o->type & 0x7f) {
+        case 0x18:
+            func_80112AA4(o);
+            break;
+        case 0x19:
+            func_800EBDD8(o);
+            break;
+        case 0x2e:
+            func_800E76A8(o);
+            break;
+        }
+    }
+    g->w8a++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpKillObject);
 void scriptOpKillObject(void)
@@ -300,7 +501,60 @@ void scriptOpSetPlayerState(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003DCF0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003DCF0);
+extern s16 D_800A5478;
+
+void func_8003DCF0(void)
+{
+    u8 *o = SCRIPT_CTX;
+    s32 a, b;
+    if (D_8009BCA2 == 0)
+        return;
+    if (D_8009CA04 & 2) {
+        D_800A539C = *(s32 *)(o + 0x1190);
+        b = *(s32 *)(o + 0x1194);
+        D_800A539E = 0;
+        D_800A539D = b;
+        switch (D_800A539C) {
+        case 1:
+            D_8009BCA7 = 0;
+            (*(u8 *)&PLAYER) = 1;
+            D_800A5436 = 0;
+            break;
+        case 4:
+            switch (D_800A539D) {
+            case 2:
+                D_800A544A = *(s32 *)(o + 0x11a0);
+            case 1:
+                D_800A53C6 = *(s32 *)(o + 0x1198);
+                D_800A53B8 = *(s32 *)(o + 0x119c);
+            }
+            D_8009BCA7 = 1;
+            break;
+        }
+    } else {
+        a = *(s32 *)(o + 0x1190);
+        b = *(s32 *)(o + 0x1194);
+        if (a == 9) {
+            if (b == 8)
+                D_8009BCA6 = 0;
+            if (b == 9)
+                D_8009BCA6 = 1;
+        } else {
+            D_800A539C = a;
+            if (D_800A539C == 5)
+                D_8009BCA7 = 1;
+            if (D_800A539C == 1) {
+                D_8009BCA7 = 0;
+                if (GAME.selectedArea != 0 || D_800A5478 == 0)
+                    (*(u8 *)&PLAYER) = 1;
+            }
+            D_800A539D = b;
+            D_800A539E = 0;
+        }
+    }
+    *(s16 *)(o + 0x8a) += 1;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetPlayerFacing);
 void scriptOpSetPlayerFacing(void)
@@ -371,7 +625,23 @@ void scriptOpGetPlayerHitFlag(void)
     SCRIPT_CTX->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E014);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E014);
+void func_800ED1D4(u8 *a, s32 b);
+void func_8003E014(void)
+{
+    u8 *g = SCRIPT_CTX;
+    u8 *p = SCRIPT_OBJECTS[*(s32 *)(g + 0x1190)];
+    s32 f = *(s32 *)(g + 0x1194);
+    if (p != 0 && p[2] == 0x19) {
+        if (f == 0) {
+            (*(u8 **)(p + 0x94))[4] = 3;
+            *(s32 *)(p + 0x94) = 0;
+        } else {
+            func_800ED1D4(p, 1);
+        }
+    }
+    (*(s16 *)(g + 0x8a))++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpShowMessage2);
 void scriptOpShowMessage2(void)
@@ -476,7 +746,28 @@ void scriptOpGetPlayerFieldE2(void)
     SCRIPT_CTX->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E330);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E330);
+typedef struct { char p0[0x8a]; u16 c; char p1[0x1190-0x8c]; s32 v; } G_3E330;
+extern u8 D_8009BCD9;
+extern u8 D_8009BCD8[];
+
+void func_8003E330(void)
+{
+    G_3E330 *g = SCRIPT_CTX;
+    u8 m = D_8009BCD9;
+    s16 v = ((s16 *)&D_800A5430)[0];
+    s32 a = g->v;
+    if (v < m) {
+        ((s16 *)&D_800A5430)[0] = v + a;
+        if (((s16 *)&D_800A5430)[0] > m) ((s16 *)&D_800A5430)[0] = m;
+        ((s16 *)&D_800A5432)[0] = ((s16 *)&D_800A5430)[0];
+        D_8009BCD8[0] = ((s16 *)&D_800A5430)[0];
+        g->v = 0;
+    } else {
+        g->v = 1;
+    }
+    g->c++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E3C4);
 void func_8003E3C4(void)
@@ -491,7 +782,522 @@ void opNop(void)
     SCRIPT_CTX->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", execGameOpcode);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", execGameOpcode);
+typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s32 d1194; s32 d1198; s32 d119c; } G_3E408;
+typedef struct { s16 s0, s2; } S2_3E408;
+extern S2_3E408 *D_800A53DC__3E408[];
+extern s16 D_800A53AC[];
+
+static __inline__ s32 op81_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o;
+    s32 b, a;
+    a = g->d1194;
+    o = SCRIPT_OBJECTS[g->d1190];
+    b = g->d1198;
+    if (o != 0) {
+        o->unk74 = a;
+        o->unk76 = b;
+        switch (o->type & 0x7f) {
+        case 0x18:
+            func_80112AA4(o);
+            break;
+        case 0x19:
+            func_800EBDD8(o);
+            break;
+        case 0x2e:
+            func_800E76A8(o);
+            break;
+        }
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op82_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject **p = &SCRIPT_OBJECTS[g->d1190];
+    GameObject *o = *p;
+    if (o != 0) {
+        o->state = 3;
+        if (o->unk94 != 0) ((GameObject *)o->unk94)->state = 3;
+        *p = 0;
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op83_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    (*(S2_3E408 **)&D_800A53D8)->s2 = g->d1190;
+    D_800A53AC[1] = g->d1194;
+    D_800A53DC__3E408[0]->s2 = g->d1198;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op84_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    s32 v;
+    g->d1190 = (*(S2_3E408 **)&D_800A53D8)->s2;
+    g->d1194 = D_800A53AC[1];
+    v = D_800A53DC__3E408[0]->s2;
+    (*(s16 *)((char *)g + 0x8a))++;
+    g->d1198 = v;
+    return 1;
+}
+
+static __inline__ s32 op86_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) g->d1190 = o->unk6A;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op87_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) {
+        o->h->p.whole = g->d1194;
+        o->y.p.whole = g->d1198;
+        o->d->p.whole = g->d119c;
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op88_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) {
+        g->d1190 = o->h->p.whole;
+        g->d1194 = o->y.p.whole;
+        g->d1198 = o->d->p.whole;
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op89_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) o->animFrame = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op8a_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) g->d1190 = o->animFrame;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op8b_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) g->d1190 = o->state == 2;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op8c_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) o->active = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op8d_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) {
+        func_80022E44(o);
+        g->d1190 = o->visible;
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op8e_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    s32 v = SCRIPT_FLAGS[g->d1190];
+    (*(s16 *)((char *)g + 0x8a))++;
+    g->d1190 = v;
+    return 1;
+}
+
+static __inline__ s32 op8f_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    SCRIPT_FLAGS[g->d1190] = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op90_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) {
+        s32 t = o->type & 0x7f;
+        if (t == 0x18) goto l;
+        if (t == 0x19) {
+        l:
+            g->d1190 = o->unk68;
+        }
+    } else {
+        g->d1190 = 0;
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op91_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    s32 v = SCRIPT_GLOBALS[g->d1190];
+    (*(s16 *)((char *)g + 0x8a))++;
+    g->d1190 = v;
+    return 1;
+}
+
+static __inline__ s32 op92_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    SCRIPT_GLOBALS[g->d1190] = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op93_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    if (D_8009C618 != 3) func_800EBD5C(PLAYER, (*(S2_3E408 **)&D_800A53D8)->s2, D_800A53AC[1]);
+    g->d1190 = D_800A5400;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op94_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if ((D_8009C618 != 3 || D_800A5403 == 1) && o != 0) o->objectIndex = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op95_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) {
+        switch (o->type & 0x7f) {
+        case 0x18:
+            o->unkF = g->d1194;
+            break;
+        case 0x19:
+        case 0x2e:
+            {
+                s32 c = g->d1194;
+                ((u8 *)o)[0xe] = c;
+                switch (c & 0xff) {
+                case 1: *(s8 *)&o->unkF = -11; break;
+                case 2: o->unkF = 0x10; break;
+                }
+            }
+            break;
+        }
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op96_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    if (D_8009C618 != 3) {
+        switch (g->d1190) {
+        case 0: D_800A5403 = 0; break;
+        case 1: D_800A5403 = 1; break;
+        default: D_800A5403 = 2; break;
+        }
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op98_3E408(void)
+{
+    char *p = (char *)SCRIPT_CTX;
+    *(s32 *)(p + 0x1190) = D_800A5436;
+    *(s16 *)(p + 0x8a) += 1;
+    return 1;
+}
+
+static __inline__ s32 op99_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    D_800A53C6 = g->d1190;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op9a_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    {
+        s32 a = g->d1190;
+        if (g->d1194) awardEventProgress(a, 1, 0);
+        else awardEventProgress(a, 0, 0);
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op9b_3E408(void)
+{
+    u8 *p = (u8 *)SCRIPT_CTX;
+    *(s32 *)(p + 0x1190) = D_800A5401;
+    (*(s16 *)(p + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op9c_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    D_8009BCAA = g->d1190;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op9d_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    printInfoMessage(g->d1190, 2);
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op9e_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    playSFXWithNoteAndVolume(g->d1190, g->d1194, g->d1198);
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 op9f_3E408(void)
+{
+    u8 *g = (u8 *)SCRIPT_CTX;
+    u8 *p = (u8 *)SCRIPT_OBJECTS[*(s32 *)(g + 0x1190)];
+    s32 f = *(s32 *)(g + 0x1194);
+    if (p != 0 && p[2] == 0x19) {
+        if (f == 0) {
+            (*(u8 **)(p + 0x94))[4] = 3;
+            *(s32 *)(p + 0x94) = 0;
+        } else {
+            func_800ED1D4((GameObject *)p, 1);
+        }
+    }
+    (*(s16 *)(g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa0_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    D_8009BCDD = 0x10;
+    D_8009BCA4 = g->d1190;
+    D_8009BCDE = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa2_3E408(void)
+{
+    char *p = (char *)SCRIPT_CTX;
+    s32 a = *(s32 *)(p + 0x1190);
+    s32 b = *(s32 *)(p + 0x1194);
+    s32 c = *(s32 *)(p + 0x1198);
+    if (a < 0) {
+        if (c != 0) {
+            printInfoMessage(0x15, 3);
+            playSFX(10);
+        }
+        increaseMaxHealth();
+    } else {
+        addItemToInventory(a, b, c);
+    }
+    *(u16 *)(p + 0x8a) += 1;
+    return 1;
+}
+
+static __inline__ s32 opa3_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) g->d1190 = o->touchFlag;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa4_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) o->touchFlag = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa5_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[g->d1190];
+    if (o != 0) o->unk9C = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa6_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    func_800EDE44(PLAYER, (s16)g->d1190, (s16)g->d1194);
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa7_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    g->d1190 = D_8009C619;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opa8_3E408(void)
+{
+    char *p = (char *)SCRIPT_CTX;
+    *(s32 *)(p + 0x1190) = D_800A547A;
+    *(u16 *)(p + 0x8a) += 1;
+    return 1;
+}
+
+static __inline__ s32 opa9_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    u8 m = D_8009BCD9;
+    s16 v = ((s16 *)&D_800A5430)[0];
+    s32 a = g->d1190;
+    if (v < m) {
+        ((s16 *)&D_800A5430)[0] = v + a;
+        if (((s16 *)&D_800A5430)[0] > m) ((s16 *)&D_800A5430)[0] = m;
+        ((s16 *)&D_800A5432)[0] = ((s16 *)&D_800A5430)[0];
+        D_8009BCD8[0] = ((s16 *)&D_800A5430)[0];
+        g->d1190 = 0;
+    } else {
+        g->d1190 = 1;
+    }
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opaa_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    g->d1190 = D_8009BCD4;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 1;
+}
+
+static __inline__ s32 opab_3E408(void)
+{
+    G_3E408 *g = SCRIPT_CTX;
+    (*(s16 *)((char *)g + 0x8a))++;
+    return 0;
+}
+
+static __inline__ s32 op97_3E408(void)
+{
+    if (D_8009BCA2 == 0) return 0;
+    func_8003DCF0();
+    return 1;
+}
+
+s32 execGameOpcode(u8 op)
+{
+    s32 r = 0;
+
+    switch (op) {
+    case 0xab:
+        r = opab_3E408();
+        break;
+    case 0x80: func_8003CE18(); r = 1; break;
+    case 0x81: r = op81_3E408(); break;
+    case 0x82: r = op82_3E408(); break;
+    case 0x83: r = op83_3E408(); break;
+    case 0x84: r = op84_3E408(); break;
+    case 0x85: scriptOpShowMessageBox(); r = 1; break;
+    case 0x86: r = op86_3E408(); break;
+    case 0x87: r = op87_3E408(); break;
+    case 0x88: r = op88_3E408(); break;
+    case 0x89: r = op89_3E408(); break;
+    case 0x8a: r = op8a_3E408(); break;
+    case 0x8b: r = op8b_3E408(); break;
+    case 0x8c: r = op8c_3E408(); break;
+    case 0x8d: r = op8d_3E408(); break;
+    case 0x8f: r = op8f_3E408(); break;
+    case 0x8e: r = op8e_3E408(); break;
+    case 0x90: r = op90_3E408(); break;
+    case 0x91: r = op91_3E408(); break;
+    case 0x92: r = op92_3E408(); break;
+    case 0x93: r = op93_3E408(); break;
+    case 0x94: r = op94_3E408(); break;
+    case 0x95: r = op95_3E408(); break;
+    case 0x96: r = op96_3E408(); break;
+    case 0x98: r = op98_3E408(); break;
+    case 0x99: r = op99_3E408(); break;
+    case 0x9a: r = op9a_3E408(); break;
+    case 0x9b: r = op9b_3E408(); break;
+    case 0x9c: r = op9c_3E408(); break;
+    case 0x9d: r = op9d_3E408(); break;
+    case 0x9e: r = op9e_3E408(); break;
+    case 0x9f: r = op9f_3E408(); break;
+    case 0xa0: r = opa0_3E408(); break;
+    case 0xa1: r = op9d_3E408(); break;
+    case 0xa2: r = opa2_3E408(); break;
+    case 0xa3: r = opa3_3E408(); break;
+    case 0xa4: r = opa4_3E408(); break;
+    case 0xa5: r = opa5_3E408(); break;
+    case 0xa6: r = opa6_3E408(); break;
+    case 0xa7: r = opa7_3E408(); break;
+    case 0xa8: r = opa8_3E408(); break;
+    case 0xa9: r = opa9_3E408(); break;
+    case 0xaa: r = opaa_3E408(); break;
+    case 0x97:
+        r = op97_3E408();
+        break;
+    }
+    return r;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", lzDecompress);
 void lzDecompress(byte *src, byte *dest)

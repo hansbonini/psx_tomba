@@ -10,9 +10,221 @@ void setAnimation(u8* self, s16 arg1)
     readAnimFrameCount(self);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80057C74);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80057C74);
+typedef struct { char p[0x4c]; s16 w4c; s16 w4e; } G4_57C74;
+extern u8 D_8009C361;
+extern s32 tickAnimation(GameObject *);
+extern void func_800EDDDC(GameObject *, s32, s32);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_800580BC);
+void func_80057C74(GameObject *o)
+{
+    GameObject *pl = &PLAYER;
+    switch (o->step) {
+    case 0:
+        if ((*(s32 *)&pl->state & 0xffffff) == 0x23001) {
+            pl->active = 5;
+            pl->visible = 1;
+            pl->state = 5;
+            pl->subState = 0x41;
+            pl->step = 0;
+            o->timer = 50;
+            o->step++;
+        }
+        break;
+    case 1:
+        tickAnimation(o);
+        if (o->timer == 0) {
+            o->timer = 16;
+            o->step++;
+            pl->visible = 1;
+            pl->state = 5;
+            pl->subState = 0x41;
+            pl->step = 0;
+            pl->unk8C = 0;
+            pl->animFrame = 0;
+            func_800EDDDC(pl, 0, 0);
+        } else {
+            o->timer--;
+        }
+        break;
+    case 2:
+        o->h->p.whole++;
+        if ((*(s16 *)&D_1F800176) + 0x134 < o->h->p.whole)
+            o->h->p.whole = (*(s16 *)&D_1F800176) + 0x134;
+        tickAnimation(o);
+        if (--o->timer == -1) {
+            o->timer = 40;
+            o->step++;
+            o->unkAC = 0;
+            o->anim = (*(void ***)&o->unkA8)[0];
+            readAnimFrameCount(o);
+            o->unkF = pl->unkF - 2;
+        }
+        break;
+    case 3:
+        if (--o->timer == -1)
+            o->step++;
+        break;
+    case 4:
+        pl->animFrame = 0;
+        func_800EDDDC(pl, 1, 0);
+        o->step++;
+        break;
+    case 5:
+        tickAnimation(pl);
+        pl->h->p.whole++;
+        if (pl->h->p.whole >= o->h->p.whole) {
+            pl->h->p.whole = o->h->p.whole;
+            o->timer = 30;
+            o->step++;
+            func_800EDDDC(pl, 0x2c, 0);
+        }
+        break;
+    case 6:
+        if (--o->timer == -1)
+            o->step++;
+        pl->y.raw -= 0x8000;
+        break;
+    case 7:
+        o->unkAC = 1;
+        o->anim = (*(void ***)&o->unkA8)[1];
+        readAnimFrameCount(o);
+        o->timer = 70;
+        o->velV = 0;
+        o->step++;
+        break;
+    case 8:
+        if (--o->timer == -1) {
+            o->step++;
+            D_8009BCA4 = 0;
+            D_8009BCDD = 3;
+        }
+        o->velV += 0x20;
+        if (o->velV > 0x600)
+            o->velV = 0x600;
+        o->y.raw -= o->velV << 8;
+        pl->y.raw -= o->velV << 8;
+        break;
+    case 9:
+        o->velV += 0x20;
+        if (o->velV > 0x600)
+            o->velV = 0x600;
+        o->y.raw -= o->velV << 8;
+        pl->y.raw -= o->velV << 8;
+        if (D_8009BCDD == 1) {
+            D_8009C361 = 1;
+            if ((*(s32 *)&GAME) == 0x7000E && D_8009C62B == 0xff) {
+                o->step++;
+            } else {
+                (*(G4_57C74 **)&D_1F8001D4)->w4c = 7;
+                (*(G4_57C74 **)&D_1F8001D4)->w4e = 0;
+            }
+        }
+        break;
+    case 10:
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_800580BC);
+extern u8 D_8009C361;
+extern void func_800EDDDC(GameObject *, s32, s32);
+extern s32 tickAnimation(GameObject *);
+extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
+
+void func_800580BC(GameObject *o)
+{
+    GameObject *s = &PLAYER;
+
+    switch (o->step) {
+    case 0:
+        if ((*(s32 *)((u8 *)s + 4) & 0xffffff) != 0x30405)
+            break;
+        o->h->p.whole = s->h->p.whole;
+        s->h->p.whole = o->h->p.whole;
+        s->y.p.whole = o->y.p.whole - 0x14;
+        o->unkF = s->unkF - 2;
+        s->active = 5;
+        s->visible = 1;
+        s->state = 5;
+        s->subState = 0x41;
+        s->step = 0;
+        func_800EDDDC(s, 0x2c, 0);
+        o->unkAC = 1;
+        o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[1];
+        readAnimFrameCount(o);
+        o->velV = 0x500;
+        o->step++;
+        break;
+    case 1:
+        o->velV -= 8;
+        if (o->velV < 0x100)
+            o->velV = 0x100;
+        o->y.raw += o->velV << 8;
+        s->y.raw += o->velV << 8;
+        if (o->y.p.whole < *(s16 *)((u8 *)s + 0xf2) - 0x1e)
+            break;
+        if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x10)) {
+            o->timer = 0x1e;
+            o->unkAC = 0;
+            o->step++;
+            o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[0];
+            readAnimFrameCount(o);
+        }
+        break;
+    case 2:
+        if (--o->timer == -1)
+            o->step++;
+        break;
+    case 3:
+        s->y.raw += 0x8000;
+        if (probeCollisionAtDepthA(s, s->h->p.whole, s->y.p.whole + 0x14)) {
+            o->unkAC = 0;
+            o->step++;
+            o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[0];
+            readAnimFrameCount(o);
+        }
+        break;
+    case 4:
+        o->timer = 0x10;
+        s->animFrame = 0;
+        func_800EDDDC(s, 1, 0);
+        o->step++;
+        break;
+    case 5:
+        tickAnimation(s);
+        s->h->p.whole++;
+        if (--o->timer == -1) {
+            o->timer = 0x1e;
+            o->step++;
+            s->animFrame = 0;
+            func_800EDDDC(s, 0, 0);
+        }
+        break;
+    case 6:
+        if (--o->timer == -1) {
+            o->step++;
+            o->unkF = s->unkF + 1;
+            o->unkAC = 3;
+            o->animFrame = 0;
+            o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[3];
+            readAnimFrameCount(o);
+        }
+        break;
+    case 7:
+        tickAnimation(o);
+        o->h->p.whole++;
+        if (o->h->p.whole >= s->h->p.whole) {
+            s->state = 5;
+            s->subState = 4;
+            s->step = 2;
+            D_8009C361 = 0;
+            o->active = 2;
+            o->state = 3;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058464);
 
@@ -20,7 +232,41 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058960);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058E14);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_800593EC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_800593EC);
+typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_593EC;
+typedef struct E_593EC { u16 a, b; } E_593EC;
+extern E_593EC D_8007EDA4[];
+extern s16 D_1F80019E;
+
+void func_800593EC(PO_593EC *o, GameObject *e)
+{
+    extern GameObject *D_1F8003C0;
+    s16 d, ad, t;
+    u16 ox, oy;
+    char pad[8];
+    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+        return;
+    d = o->we8 - o->t.h->p.whole;
+    ox = D_8007EDA4[e->unkC].a;
+    oy = D_8007EDA4[e->unkC].b;
+    ad = d;
+    if (d < 0) ad = -d;
+    d = o->we8 - (e->h->p.whole + ox);
+    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
+    else t = e->hitOffsetX + d;
+    if ((u16)t > e->hitWidth + ad)
+        return;
+    ad = e->hitOffsetY + (o->wea - (e->y.p.whole + oy));
+    if ((u16)ad > e->hitHeight)
+        return;
+    o->t.unk9E = 3;
+    o->t.velY = 0;
+    o->t.unkB8 = ox;
+    o->t.unkBA = 0;
+    e->touchFlag = 2;
+    D_1F80019E = 0;
+    D_1F8003C0 = e;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059514);
 
@@ -28,7 +274,33 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059638);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005975C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059A40);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059A40);
+extern s32 D_1F8003C0;
+extern s16 D_1F80019E;
+
+extern u16 D_1F800254;
+extern u8 **D_1F800268;
+extern void func_8005975C(void *, u8 *);
+
+s32 func_80059A40(void *o)
+{
+    u8 **q = D_1F800268;
+    u8 *p;
+    D_1F8003C0 = 0;
+    D_1F80019E = D_1F800254;
+    while (D_1F80019E != 0) {
+        p = *q;
+        D_1F80019E = D_1F80019E - 1;
+        q++;
+        if (p[0] & 1) {
+            switch (p[2]) {
+            case 0x10: case 0x11: case 0x19: case 0x35: case 0x37: case 0x3d: case 0x3e:
+                func_8005975C(o, p);
+            }
+        }
+    }
+    return D_1F8003C0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", dispatchAreaUnlayeredHandler);
 void dispatchAreaUnlayeredHandler(void)
@@ -40,9 +312,181 @@ void dispatchAreaUnlayeredHandler(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059B58);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059B58);
+typedef struct { char p0[2]; u16 s2; } H_59B58;
+typedef struct { char p0[4]; u16 s4; } A_59B58;
+typedef struct {
+    char p0[0x16]; u16 s16;
+    char p1[0x24 - 0x18]; A_59B58 *anim;
+    char p2[0x2e - 0x28]; u16 s2e;
+    char p3[0x40 - 0x30]; H_59B58 *h40;
+    char p4[0x9e - 0x44]; u8 b9e;
+    char p5[0xa9 - 0x9f]; u8 ba9;
+    char p6[0xe8 - 0xaa]; u16 se8; s16 sea;
+} TO_59B58;
+extern u16 D_1F800250;
+extern u8 **D_1F800260;
+extern s16 func_800450FC(TO_59B58 *, s16, s16);
+extern void func_80125D14(TO_59B58 *, u8 *);
+extern void func_8012631C(TO_59B58 *, u8 *);
+extern void func_80125DA8(TO_59B58 *, u8 *);
+extern void func_80126064(TO_59B58 *, u8 *);
+extern void func_801261C4(TO_59B58 *, u8 *);
+extern void func_80120608(TO_59B58 *, u8 *);
+extern void func_8011D2AC(TO_59B58 *, u8 *);
+extern void func_801269B4(TO_59B58 *, u8 *);
+extern void func_8011E2B8(TO_59B58 *, u8 *);
+extern void func_8011E888(TO_59B58 *, u8 *);
+extern void func_8011E7C4(TO_59B58 *, u8 *);
+extern void func_801205F4(TO_59B58 *, u8 *);
+extern void func_8011C73C(TO_59B58 *, u8 *);
+extern void func_8011E6DC(TO_59B58 *, u8 *);
+extern void func_8012629C(TO_59B58 *, u8 *);
+extern void func_80120598(TO_59B58 *, u8 *);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059F7C);
+s32 func_80059B58(TO_59B58 *o, u8 f)
+{
+    s16 r;
+    s32 d;
+    s16 n;
+    u8 **q;
+    u8 *e;
+
+    if (o->b9e != 0) return 0;
+    D_1F8003C0 = 0;
+    if (f) o->sea = o->s16 - 2;
+    else o->sea = o->s16 - 8;
+    d = 0x10;
+    if (o->s2e & 1) d = -0x10;
+    r = func_800450FC(o, o->h40->s2 + d, o->sea);
+    if (r != 0) {
+        o->b9e = (r == 2) ? 5 : 6;
+        if (o->s2e & 1) o->h40->s2 -= 0xc;
+        else o->h40->s2 += 0xc;
+        D_1F8003C0++;
+        return D_1F8003C0;
+    }
+    switch (o->anim->s4) {
+    case 0: n = 9; break;
+    case 1: n = 10; break;
+    case 2: n = 0xc; break;
+    default: n = 0x18; break;
+    }
+    if (o->ba9) n = 0xc;
+    d = -n;
+    if (!(o->s2e & 1)) d = n;
+    q = D_1F800268;
+    D_1F80019E = D_1F800254;
+    o->se8 = o->h40->s2 + d;
+    while (D_1F80019E != 0) {
+        e = *q;
+        D_1F80019E--;
+        q++;
+        if (*e & 1) {
+            switch (e[2]) {
+            case 1:
+                func_80125D14(o, e);
+                break;
+            case 3:
+                func_800593EC(o, e);
+                break;
+            case 4:
+                if (GAME.selectedArea == 0) {
+            case 2:
+                    func_80125C84(o, e);
+                } else {
+                    func_8011F188(o, e);
+                }
+                break;
+            case 5:
+                func_8012631C(o, e);
+                break;
+            case 6:
+                func_80125DA8(o, e);
+                break;
+            case 0x15:
+                func_80126064(o, e);
+                break;
+            case 0xe:
+                func_801261C4(o, e);
+                break;
+            case 0x1c:
+                func_80120608(o, e);
+                break;
+            case 0x1d:
+                func_8011D2AC(o, e);
+                break;
+            case 0x14:
+                func_801269B4(o, e);
+                break;
+            case 0x34:
+                func_8011E2B8(o, e);
+                break;
+            case 0x10: case 0x11: case 0x19: case 0x35: case 0x37: case 0x3d: case 0x3e:
+                func_8005975C(o, e);
+                break;
+            case 0x1f:
+                func_8011E888(o, e);
+                break;
+            case 0x22:
+                func_8011E7C4(o, e);
+                break;
+            case 0x31:
+                func_801205F4(o, e);
+                break;
+            case 0x42:
+                func_8011C73C(o, e);
+                break;
+            case 0x24:
+                func_8011E6DC(o, e);
+                break;
+            }
+        }
+    }
+    if (D_1F8003C0 == 0) {
+        q = D_1F800260;
+        D_1F80019E = D_1F800250;
+        while (D_1F80019E != 0) {
+            e = *q;
+            D_1F80019E--;
+            q++;
+            if (*e & 1) {
+                switch (e[2]) {
+                case 0xb:
+                    func_8012629C(o, e);
+                    break;
+                case 0x21:
+                    func_80120598(o, e);
+                    break;
+                }
+            }
+        }
+    }
+    return D_1F8003C0;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059F7C);
+extern u8 **D_8007F6A4[];
+extern void (*D_8007F6F4[])(u8 *);
+extern u8 *allocObjectUnlayered(void);
+
+void func_80059F7C(void)
+{
+    u8 *e;
+    u8 *p;
+
+    p = D_8007F6A4[GAME.selectedArea][D_8009BCCA];
+    while (*p != 0xff) {
+        e = allocObjectUnlayered();
+        if (e) {
+            *e = 1;
+            e[2] = p[0];
+            e[3] = p[1];
+            if (p[3]) D_8007F6F4[e[2]](e);
+        }
+        p += 4;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", updateObjectsUnlayered);
 void updateObjectsUnlayered(void)
@@ -84,17 +528,325 @@ void spawnUnlayeredObject(u8 arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A184);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A3B0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A3B0);
+typedef struct E_5A3B0 { char a; char pad[3]; char b; char pad2[0x1c-5]; char f; s8 g; char pad3[0xd4-0x1e]; } E_5A3B0;
+typedef struct E3_5A3B0 { char a; char pad[3]; char b; char pad2[0x1c-5]; char f; s8 g; char pad3[0x6c-0x1e]; } E3_5A3B0;
+
+void func_8005A3B0(s8 *o)
+{
+    E_5A3B0 *e;
+    E3_5A3B0 *e3;
+    s32 i;
+    e = ((E_5A3B0 *)&D_800A5970);
+    i = 0;
+    do {
+        if (e->a != 0 && (e->f & 0x80) == 0 && o[0xe] + o[0xf] + e->g != 0) {
+            e->a = 2;
+            e->b = 3;
+        }
+        i++;
+        e++;
+    } while (i < 200);
+    i = 0;
+    do {
+        e = &((E_5A3B0 *)&D_800B0B88)[i];
+        if (e->a != 0 && (e->f & 0x80) == 0 && o[0xe] + o[0xf] + e->g != 0) {
+            e->a = 2;
+            e->b = 3;
+        }
+        i++;
+    } while (i < 0x2d);
+    i = 0;
+    do {
+        e3 = &((E3_5A3B0 *)&D_800A3D08)[i];
+        if (e3->a != 0 && (e3->f & 0x80) == 0 && o[0xe] + o[0xf] + e3->g != 0) {
+            e3->a = 2;
+            e3->b = 3;
+        }
+        i++;
+    } while (i < 10);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A508);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A660);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A660);
+typedef struct { s8 f0; char p1; u8 f2; char p3[0xc]; u8 ff; } R_5A660;
+extern R_5A660 ***D_8007F0C8[];
+extern s32 func_80023608(s32);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A7E0);
+void func_8005A660(s8 *o)
+{
+    extern void func_8005AA98(R_5A660 *, s32);
+    R_5A660 ***tbl;
+    R_5A660 *r;
+    s16 i;
+    s32 s;
+    if (D_8009BCE9 == 1 && o[0xe] > 0) {
+        tbl = D_8007F0C8[GAME.selectedArea];
+        for (r = *tbl[(D_8009BCCA - 1) & 7]; r->f2 < 0xff; r++)
+            if (r->f0 < 0) func_8005AA98(r, -1);
+        i = ((s16 *)&D_8007B294)[GAME.selectedArea];
+        if (((s16 *)&D_8007B294)[GAME.selectedArea] >= 16) i = 15;
+        for (r = *tbl[i]; r->f2 < 0xff; r++) {
+            s = r->ff >> 2;
+            if (!func_80023608(s) && r->f0 == -D_8009BCCA) func_8005AA98(r, s);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005AA98);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A7E0);
+typedef struct { s8 f0; char p1; u8 f2; char p3[0xc]; u8 ff; } R_5A7E0;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005AF70);
+void func_8005A7E0(s8 *o)
+{
+    R_5A7E0 ***tbl;
+    R_5A7E0 *r;
+    s16 i;
+    s32 s;
+    tbl = D_8007F0C8[GAME.selectedArea];
+    for (r = *tbl[D_8009BCCA & 7]; r->f2 < 0xff; r++)
+        if (r->f0 >= 0) func_8005AA98(r, -1);
+    i = ((s16 *)&D_8007B294)[GAME.selectedArea];
+    if (((s16 *)&D_8007B294)[GAME.selectedArea] >= 16) i = 15;
+    for (r = *tbl[i]; r->f2 < 0xff; r++) {
+        s = r->ff >> 2;
+        if (!func_80023608(s) && r->f0 == D_8009BCCA) func_8005AA98(r, s);
+    }
+    if (o[0xe] > 0) {
+        R_5A7E0 ***tbl;
+        R_5A7E0 *r;
+        s16 i;
+        s32 s;
+        tbl = D_8007F0C8[GAME.selectedArea];
+        for (r = *tbl[(D_8009BCCA - 1) & 7]; r->f2 < 0xff; r++)
+            if (r->f0 < 0) func_8005AA98(r, -1);
+        i = ((s16 *)&D_8007B294)[GAME.selectedArea];
+        if (((s16 *)&D_8007B294)[GAME.selectedArea] >= 16) i = 15;
+        for (r = *tbl[i]; r->f2 < 0xff; r++) {
+            s = r->ff >> 2;
+            if (!func_80023608(s) && r->f0 == -D_8009BCCA) func_8005AA98(r, s);
+        }
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005AA98);
+typedef struct {
+    u8 b0, b1, b2, b3, b4, b5;
+    s16 s6, s8, sa;
+    u8 bc, bd, be, bf;
+} Ent_5AA98;
+extern GameObject *D_8009B100;
+extern GameObject *D_8009B104;
+extern s32 D_1F800334;
+extern s32 D_1F800338;
+extern GameObject *allocObjectLayer2(void);
+extern GameObject *allocObjectLayer3(void);
+extern GameObject *allocObjectLayer4(void);
+extern GameObject *allocObjectLayer5(void);
+extern GameObject *allocObjectLayer8(void);
+extern GameObject *allocObjectLayer7(void);
+
+void func_8005AA98(Ent_5AA98 *e, s32 z)
+{
+    u8 kind;
+    GameObject *p;
+    GameObject *q2;
+    u8 ty;
+    volatile s32 *q;
+    s32 idx;
+    s32 tt;
+    s16 s;
+
+    kind = e->b1 & 0x7f;
+    switch (kind) {
+    case 2:
+        p = allocObjectLayer2();
+        D_8009B100 = p;
+        if (p == 0)
+            return;
+        if (e->bc & 0x10) {
+            q = &D_1F800334;
+            goto link;
+        }
+        break;
+    case 3:
+        if ((D_8009B100 = allocObjectLayer3()) == 0)
+            return;
+        break;
+    case 4:
+        p = allocObjectLayer4();
+        D_8009B100 = p;
+        if (p == 0)
+            return;
+        idx = e->be;
+        if (idx == 0xff) {
+            p->unkA0 = 0;
+            break;
+        }
+        if (e->bc & 0x10) {
+            q = &D_1F800334;
+            s = idx << 2;
+            tt = *q;
+            q = (volatile s32 *)*q;
+            tt = *(s32 *)(tt + s + 4);
+            q = (volatile s32 *)((s32)q + tt);
+            p->unkA4 = 1;
+            p->unkA0 = (s32)q;
+        }
+        break;
+    case 5:
+        if ((D_8009B100 = allocObjectLayer5()) == 0)
+            return;
+        break;
+    case 8:
+        p = allocObjectLayer8();
+        D_8009B100 = p;
+        if (p == 0)
+            return;
+        q = &D_1F800338;
+    link:
+        s = *(volatile u8 *)&e->be << 2;
+        tt = *q;
+        q = (volatile s32 *)*q;
+        tt = *(s32 *)(tt + s + 4);
+        q = (volatile s32 *)((s32)q + tt);
+        p->unkA4 = 1;
+        p->unkA0 = (s32)q;
+        break;
+    case 7:
+        if ((D_8009B100 = allocObjectLayer7()) == 0)
+            return;
+        break;
+    }
+    if (z >= 0)
+        D_8009B100->objectIndex = z;
+    else
+        D_8009B100->objectIndex = (e->bf >> 2) - 1;
+    D_8009B100->category |= e->b1 & 0x80;
+    D_8009B100->active = 1;
+    D_8009B100->unk1D = e->b0;
+    D_8009B100->type = e->b2;
+    D_8009B100->subtype = e->b4;
+    D_8009B100->unkC = e->b3;
+    D_8009B100->unkA = e->bc;
+    D_8009B100->animFrame = e->b5;
+    D_8009B100->unkF = e->bd;
+    D_8009B100->x.raw = e->s6 << 16;
+    D_8009B100->y.raw = e->s8 << 16;
+    D_8009B100->z.raw = e->sa << 16;
+    if (kind == 3) {
+        ty = e->b2;
+        if (ty == 0x18 || ty == 0x19 || ty == 0x24 || ty == 0x33)
+            D_8009B100->hitOffsetX = e->be;
+    }
+    if (kind == 6 || kind == 7)
+        return;
+    switch (e->bf & 3) {
+    case 0:
+        D_8009B100->x.raw = e->s6 << 16;
+        D_8009B100->y.raw = e->s8 << 16;
+        D_8009B100->z.raw = e->sa << 16;
+        D_8009B100->unk90 = 0;
+        D_8009B100->unk94 = 0;
+        break;
+    case 1:
+        D_8009B100->x.raw = e->s6 << 16;
+        D_8009B100->y.raw = e->s8 << 16;
+        D_8009B100->z.raw = e->sa << 16;
+        D_8009B104 = D_8009B100;
+        D_8009B100->unk90 = 0;
+        break;
+    case 2:
+        D_8009B100->x.raw = D_8009B104->x.raw + (e->s6 << 16);
+        D_8009B100->y.raw = D_8009B104->y.raw + (e->s8 << 16);
+        D_8009B100->z.raw = D_8009B104->z.raw + (e->sa << 16);
+        D_8009B100->unk30 = e->s6 << 16;
+        D_8009B100->unk34 = e->s8 << 16;
+        D_8009B100->unk38 = e->sa << 16;
+        q2 = D_8009B104;
+        D_8009B104 = D_8009B100;
+        D_8009B100->unk90 = (s32)q2;
+        q2->unk94 = (s32)D_8009B100;
+        break;
+    case 3:
+        D_8009B100->x.raw = D_8009B104->x.raw + (e->s6 << 16);
+        D_8009B100->y.raw = D_8009B104->y.raw + (e->s8 << 16);
+        D_8009B100->z.raw = D_8009B104->z.raw + (e->sa << 16);
+        D_8009B100->unk30 = e->s6 << 16;
+        D_8009B100->unk34 = e->s8 << 16;
+        D_8009B100->unk38 = e->sa << 16;
+        D_8009B100->unk90 = (s32)D_8009B104;
+        D_8009B104->unk94 = (s32)D_8009B100;
+        D_8009B100->unk94 = 0;
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005AF70);
+typedef struct {
+    u16 c960; u16 c962; char p964[0x15 - 4];
+    u8 c975; u8 c976; char p977[0x963 - 0x17]; u8 d2c3;
+} G_5AF70;
+extern G_5AF70 GAME__5AF70;
+extern u8 *D_8007F938[];
+extern u8 *D_8007F968;
+extern u8 D_1F8003D1;
+void func_8005AF70(GameObject *o)
+{
+    u8 *p;
+    s32 r, g, b;
+    switch (o->state) {
+    case 0:
+        GAME__5AF70.c975 = 1;
+        GAME__5AF70.c976 = 0;
+        p = D_8007F938[GAME__5AF70.c960];
+        if (GAME__5AF70.c960 == 4 && (GAME__5AF70.d2c3 & 8)) p = D_8007F968;
+        p += GAME__5AF70.c962 * 4;
+        r = *p++;
+        g = *p;
+        b = p[1];
+        if (GAME__5AF70.c960 == 3 && (GAME__5AF70.d2c3 & 2) && GAME__5AF70.c962 == GAME__5AF70.c960) {
+            r = 0x60;
+            g = 0x97;
+            b = 0xff;
+        }
+        D_8009D6DD = r;
+        D_8009D6DE = g;
+        D_8009D6DF = b;
+        D_8009E3ED = r;
+        D_8009E3EE = g;
+        D_8009E3EF = b;
+        o->state++;
+        break;
+    case 1:
+        GAME__5AF70.c975 = 2;
+        GAME__5AF70.c976 += 8;
+        if (GAME__5AF70.c976 != 0) break;
+        if (D_1F8003D1 == 1) D_1F8003D1 = 0;
+        GAME__5AF70.c975 = 0;
+        o->state++;
+        break;
+    case 2:
+        if (GAME__5AF70.c975 == 3) o->state++;
+        break;
+    case 3:
+        GAME__5AF70.c975 = 2;
+        GAME__5AF70.c976 -= 8;
+        if (GAME__5AF70.c976 != 0) break;
+        GAME__5AF70.c975 = 1;
+        o->state++;
+        D_8009D6DD = 0;
+        D_8009D6DE = 0;
+        D_8009D6DF = 0;
+        D_8009E3ED = 0;
+        D_8009E3EE = 0;
+        D_8009E3EF = 0;
+        break;
+    case 4:
+        if (GAME__5AF70.c975 == 4) o->state = 0;
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005B1A4);
 void func_8005B1A4(u8* self)

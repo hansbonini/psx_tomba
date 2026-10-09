@@ -17,36 +17,36 @@ void updateItemPickupAnim(GameObject* arg0)
     temp_v1 = arg0->step;
     switch (temp_v1) {                              // irregular
         case 0:
-            playSFX(*(&D_8007D6D0 + arg0->item_id));
-            func_800E92D4(0x1F4, arg0->x, arg0->y, arg0->z);
+            playSFX(*(&D_8007D6D0 + arg0->subtype));
+            func_800E92D4(0x1F4, arg0->x.p.whole, arg0->y.p.whole, arg0->z.p.whole);
             arg0->unkA5 = 0;
-            if (arg0->item_id != ITEM_FLOWERTEARS) {
+            if (arg0->subtype != ITEM_FLOWERTEARS) {
                 arg0->unkB = 1;
                 arg0->unkF = 4;
             }
-            arg0->speedY = -1024;
-            *(int*)&arg0->velocityTable = &D_8007722C;
-            if (arg0->unk2E & 2) {
-                *(int*)&arg0->velocityTable = &D_800771FC;
+            arg0->velV = -1024;
+            arg0->movetab = &D_8007722C;
+            if (arg0->animFrame & 2) {
+                arg0->movetab = &D_800771FC;
             }
             arg0->step = (u_char) (arg0->step + 1);
             break;
         case 1:
-            temp_a1 = arg0->unk2E;
+            temp_a1 = arg0->animFrame;
             if (temp_a1 & 2) {
                 applyAnimVelocityX(arg0, temp_a1 & 1);
             } else {
                 applyAnimVelocityX(arg0, (temp_v1 - temp_a1) & 0xFFFF);
             }
-            temp_v0 = arg0->speedY + 64;
-            arg0->speedY = temp_v0;
+            temp_v0 = arg0->velV + 64;
+            arg0->velV = temp_v0;
             if ((short) temp_v0 >= 1025) {
-                arg0->speedY = 1024;
+                arg0->velV = 1024;
             }
-            *(int*)&arg0->unk14 = (int) (*(int*)&arg0->unk14 + ((short) arg0->speedY << 8));
+            arg0->y.raw = (int) (arg0->y.raw + ((short) arg0->velV << 8));
             break;
     }
-    if (arg0->unk2E & 1) {
+    if (arg0->animFrame & 1) {
         var_v0 = arg0->unk8C + 24;
     } else {
         var_v0 = arg0->unk8C - 24;
@@ -774,35 +774,35 @@ void func_8003F9A4(u8* self)
 void applyItemEffect(GameObject* arg0, int arg1, short arg2, short arg3, int arg4)
 {
 
-    if (func_800236F4(arg0->item_id) == ITEM_CHICK) {
-        switch (arg0->spawnMode) {
+    if (func_800236F4(arg0->subtype) == ITEM_CHICK) {
+        switch (arg0->active) {
             case 0:
-                spawnItem(arg0->unk1, arg0->unk2, arg1);
+                spawnItem(arg0->visible, arg0->type, arg1);
                 break;
             case 1:
-                spawnItemDrop(arg0->unk1, arg0->unk2, arg1);
+                spawnItemDrop(arg0->visible, arg0->type, arg1);
                 break;
             case 2:
-                spawnItemAtPos(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemAtPos(arg0->visible, arg0->type, arg1, arg2, (int) arg3);
                 break;
             case 3:
-                spawnItemDropAtPos(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemDropAtPos(arg0->visible, arg0->type, arg1, arg2, (int) arg3);
                 break;
             case 4:
-                spawnItemBounce(arg0->unk1, arg0->unk2, arg1, arg2, (int) arg3);
+                spawnItemBounce(arg0->visible, arg0->type, arg1, arg2, (int) arg3);
                 break;
             case 5:
-                spawnItemFixed(arg0->unk1, arg0->unk2, arg1);
+                spawnItemFixed(arg0->visible, arg0->type, arg1);
                 break;
             case 6:
-                func_80123188(arg1, arg0->item_id, arg2, arg3);
+                func_80123188(arg1, arg0->subtype, arg2, arg3);
                 break;
             case 8:
-                spawnItemChest(arg0->unk1, arg0->unk2, arg1);
+                spawnItemChest(arg0->visible, arg0->type, arg1);
                 break;
         }
         if (arg4 != 0) {
-            func_80023794(arg0->item_id);
+            func_80023794(arg0->subtype);
         }
         if (arg0->subState == 0) {
             playSFX(21);
@@ -824,16 +824,16 @@ void initItemObject(GameObject* arg0)
     u_char temp_v1_2;
     itemDef* temp_s1;
 
-    if ((arg0->item_id == ITEM_JEWELOFWIND) && (GAME.event[EVENT_THEJUNGLEPIGBAG] == 0)) {
+    if ((arg0->subtype == ITEM_JEWELOFWIND) && (GAME.event[EVENT_THEJUNGLEPIGBAG] == 0)) {
         arg0->state = 2;
         return;
     }
     arg0->unk68 = 0;
     arg0->touchFlag = 0;
-    temp_s1 = D_8007E6E4[D_8007E61C[arg0->item_id]];
+    temp_s1 = D_8007E6E4[D_8007E61C[arg0->subtype]];
     arg0->unkA = temp_s1->unk0;
     arg0->tpage = (short)temp_s1->unk2;
-    arg0->unkF = -9;
+    (*(s8 *)&arg0->unkF) = -9;
     arg0->unkD = (u_char)temp_s1->unk5;
     arg0->hitOffsetX = (short)temp_s1->unkC;
     arg0->hitWidth = (short)temp_s1->unkD;
@@ -841,8 +841,8 @@ void initItemObject(GameObject* arg0)
     arg0->hitHeight = (short)temp_s1->unkF;
 
     arg0->spriteBank = *(&SPR_DATA[temp_s1->unk4]);
-    arg0->unk2E = 1;
-    if (arg0->item_id == ITEM_LOSTDWARF) {
+    arg0->animFrame = 1;
+    if (arg0->subtype == ITEM_LOSTDWARF) {
         if ((u_long) (arg0->unkC & 0x7F) >= 4U) {
             arg0->buffSize = 0x2000;
             arg0->hitOffsetX = (short) (temp_s1->unkC * 2);
@@ -889,11 +889,11 @@ void initItemObject(GameObject* arg0)
     switch (temp_s1->unk7) {
         case 0:
             var_v0 = temp_s1->unk10;
-            arg0->animData = (int) *var_v0;
+            arg0->anim = (int) *var_v0;
             break;
         case 1:
             var_v0 = (int) ((arg0->unkC & 0x7F) * 4) + *(int*)&temp_s1->unk10;
-            arg0->animData = (int) *var_v0;
+            arg0->anim = (int) *var_v0;
             break;
     }
     readAnimFrameCount(arg0);
@@ -916,11 +916,11 @@ void rewardItem(GameObject* arg0)
     int var_a2;
     u_char current_item;
 
-    addItemToInventory(arg0->item_id, 1, true);
+    addItemToInventory(arg0->subtype, 1, true);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
     }
-    current_item = arg0->item_id;
+    current_item = arg0->subtype;
     switch (current_item) {
         case ITEM_BOMB:
             setEventComplete(EVENT_INEEDABOMB, 4);
@@ -955,7 +955,7 @@ void rewardItem(GameObject* arg0)
 void rewardHeart(GameObject* arg0)
 {
     if (D_8009BCA0 == 0) {
-        func_800E92D4(0x64, arg0->x, arg0->y, arg0->z);
+        func_800E92D4(0x64, arg0->x.p.whole, arg0->y.p.whole, arg0->z.p.whole);
         playSFX(9);
         if (!(arg0->unkC & 0x80)) {
             func_8002367C(arg0->objectIndex);
@@ -980,7 +980,7 @@ void rewardHeart(GameObject* arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/reward", rewardEffectOnly);
 void rewardEffectOnly(GameObject* arg0)
 {
-    func_800E92D4(*(&D_8007E868 + ((arg0->unkC & 0x7F) * 2)), arg0->x, arg0->y, arg0->z);
+    func_800E92D4(*(&D_8007E868 + ((arg0->unkC & 0x7F) * 2)), arg0->x.p.whole, arg0->y.p.whole, arg0->z.p.whole);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
     }
@@ -1191,7 +1191,7 @@ void rewardCrystalBalls(GameObject* arg0)
 void rewardMysteriousMushroom(GameObject* arg0)
 {
     setEventComplete(EVENT_THEMISTERIOUSMUSHROOM, 0);
-    addItemToInventory(arg0->item_id, 1, true);
+    addItemToInventory(arg0->subtype, 1, true);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
     }
@@ -1205,7 +1205,7 @@ void rewardFlowerSeeds(GameObject* arg0)
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
     }
-    addItemToInventory(arg0->item_id, 1, true);
+    addItemToInventory(arg0->subtype, 1, true);
     arg0->state++;
 }
 
@@ -1216,11 +1216,11 @@ void rewardPigBag(GameObject* arg0)
 
     switch (arg0->subState) {                              // switch 3; irregular
         case 0:                                     // switch 3
-            addItemToInventory(arg0->item_id, 1, true);
+            addItemToInventory(arg0->subtype, 1, true);
             if (!(arg0->unkC & 0x80)) {
                 func_8002367C(arg0->objectIndex);
             }
-            switch (arg0->item_id) {
+            switch (arg0->subtype) {
                 case ITEM_REDPIGBAG:
                     setEventComplete(EVENT_ASTORMYPIGBAG, 2);
                     break;
@@ -1247,10 +1247,10 @@ void rewardPigBag(GameObject* arg0)
             arg0->subState++;
             return;
         case 1:
-            temp = arg0->cooldownTimer - 1;
+            temp = (*(u16 *)&arg0->cooldownTimer) - 1;
             arg0->cooldownTimer = temp;
             if ((temp << 0x10) == 0) {
-                switch (arg0->item_id) {
+                switch (arg0->subtype) {
                     case ITEM_REDPIGBAG:        
                         setEventStarted(EVENT_PHOENIXMOUNTAIN, 0, 3);
                         break;
@@ -1283,7 +1283,7 @@ void rewardPigBag(GameObject* arg0)
 void rewardConditionalItem(GameObject* arg0)
 {
     if ((GAME.selectedArea == AREA10_DEEPJUNGLE) || (arg0->unkC == 1)) {
-        addItemToInventory(arg0->item_id, 1, true);
+        addItemToInventory(arg0->subtype, 1, true);
     }
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
@@ -1299,12 +1299,12 @@ void rewardJewel(GameObject* arg0)
     u_char current_item;
     u_char var_v0;
     
-    current_item = arg0->item_id;
+    current_item = arg0->subtype;
     switch (current_item) {
         case ITEM_JEWELOFFIRE: 
             if (GAME.redExpLevel == 9) {
                 setEventComplete(EVENT_REDHIDDENPOWERS, 1);
-                addItemToInventory(arg0->item_id, 1, true);
+                addItemToInventory(arg0->subtype, 1, true);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->objectIndex);
@@ -1312,7 +1312,7 @@ void rewardJewel(GameObject* arg0)
                 }
                 arg0->state++;
             } else {
-                if ((short)arg0->cooldownTimer == 0) {
+                if (arg0->cooldownTimer == 0) {
                     printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
                     arg0->cooldownTimer = 0x78;
                 } 
@@ -1322,7 +1322,7 @@ void rewardJewel(GameObject* arg0)
         case ITEM_JEWELOFWATER: 
             if (GAME.blueExpLevel == 9) {
                 setEventComplete(EVENT_BLUEHIDDENPOWERS, 0);
-                addItemToInventory(arg0->item_id, 1, true);
+                addItemToInventory(arg0->subtype, 1, true);
                 asm("");
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->objectIndex);
@@ -1331,7 +1331,7 @@ void rewardJewel(GameObject* arg0)
                 arg0->state++;
             } else {
                 setEventStarted(EVENT_BLUEHIDDENPOWERS, 0, 0);
-                if ((short)arg0->cooldownTimer == 0) {
+                if (arg0->cooldownTimer == 0) {
                     printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
                     arg0->cooldownTimer = 0x78;
                 } 
@@ -1341,14 +1341,14 @@ void rewardJewel(GameObject* arg0)
         case ITEM_JEWELOFWIND:
             if (GAME.greenExpLevel == 9) {
                 setEventComplete(EVENT_GREENHIDDENPOWERS, 1);
-                addItemToInventory(arg0->item_id, 1, true);
+                addItemToInventory(arg0->subtype, 1, true);
                 if (!(arg0->unkC & 0x80)) {
                     func_8002367C(arg0->objectIndex);
                 }
                 arg0->state++;
             } else {
                 setEventStarted(EVENT_GREENHIDDENPOWERS, 0, 1);
-                if ((short)arg0->cooldownTimer == 0) {
+                if (arg0->cooldownTimer == 0) {
                     printInfoMessage(MSG_ITS_LOCKED, MSG_TYPE_INFO);
                     arg0->cooldownTimer = 0x78;
                 } 
@@ -1363,7 +1363,7 @@ void rewardJewel(GameObject* arg0)
 void rewardSafeMushroom(GameObject* arg0)
 {
     setEventComplete(EVENT_ASAFEMUSHROOM, 0);
-    addItemToInventory(arg0->item_id, 1, true);
+    addItemToInventory(arg0->subtype, 1, true);
     if (!(arg0->unkC & 0x80)) {
         func_8002367C(arg0->objectIndex);
     }

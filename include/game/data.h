@@ -22,7 +22,7 @@ extern s32* D_1F800210;
 extern u16  D_1F80023E;
 extern s32* D_1F800214;
 extern u16  D_1F80023C;
-extern s16  D_1F80016A;
+extern s16 D_1F80016A[];
 extern s32  D_1F80029C;
 extern s32  D_1F800200;
 extern s32  LOAD_NEXT_ADDR;
@@ -41,7 +41,7 @@ extern s32* D_1F800224;
 extern s32* D_1F800228;
 extern s32* D_1F80022C;
 extern s32* D_1F800230;
-extern u16  D_1F800240;
+extern s16 D_1F800240;
 extern u16  D_1F800242;
 extern u16  D_1F800244;
 extern u16  D_1F800246;
@@ -270,10 +270,10 @@ extern u8   D_8009EB58;
 extern s16  D_1F8000F2;
 extern s32  D_80012368[];
 extern void* D_1F8002D8;
-extern s32  D_1F800278;
+extern u16 *D_1F800278;
 extern u16  D_800A544A;
 extern u16  D_800A53B8;
-extern s32  D_8009BCFC;
+extern u32 D_8009BCFC[][8];
 extern s32  D_1F800198;
 extern u8   D_800B0B88;
 extern u8   D_800A5438;
@@ -761,5 +761,14 @@ extern u8 D_8009C245;
 
 /* main/video/movie.c */
 extern short D_80077728[];
+
+/* Scratchpad bytes as plain symbols. Same bytes as the LOAD_COMPLETE and
+   LOADED_LIST_FILE macros; a symbol keeps the compiler from hoisting the
+   address into a register, which is what the loader entry functions need. */
+extern u8  LOAD_COMPLETE_SYM;
+extern u8  LOADED_LIST_FILE_SYM;
+extern s32 LOAD_SLOTS[];
+extern s32 SYSTEM_LOAD_LISTS[];
+extern u16 D_801FD8E0;
 
 #endif

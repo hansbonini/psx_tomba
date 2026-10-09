@@ -1876,13 +1876,63 @@ void startSoundTask(void)
     openTask(2, &cdLoadTask);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", loadAreaListFile);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", loadAreaListFile);
+void loadAreaListFile(s32 area)
+{
+    if (LOADED_LIST_FILE_SYM != area + 1) {
+        LOADED_LIST_FILE_SYM = area + 1;
+        queueLoadList(LDAR_LOAD_LISTS[area]);
+        LOAD_COMPLETE_SYM = 0;
+        openTask(2, &cdLoadTask);
+        while (LOAD_COMPLETE_SYM == 0) {
+            if (D_801FD8E0 == 0) {
+                break;
+            }
+            sleepTask(1);
+        }
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueAreaSectionLists);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueAreaSectionLists);
+void queueAreaSectionLists(s32 area, s32 section, s32 reloadArea)
+{
+    AreaLists* lists;
+
+    if (reloadArea == 0) {
+        keyOffSfxAll(1);
+    } else {
+        lists = (AreaLists*)AREA_LOAD_LISTS[area];
+        queueLoadList(lists->areaList);
+        LOAD_SLOTS[0] = LOAD_NEXT_ADDR;
+    }
+    lists = (AreaLists*)AREA_LOAD_LISTS[area];
+    queueLoadList(lists->sectionLists[section]);
+    LOAD_SLOTS[3] = LOAD_NEXT_ADDR;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueLoadList);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueSystemLoadList);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueSystemLoadList);
+void queueSystemLoadList(s32 id, s32 start)
+{
+    if (LOADED_LIST_FILE_SYM != 0) {
+        LOADED_LIST_FILE_SYM = 0;
+        queueLoadList(LDSYS_LOAD_LIST);
+        LOAD_COMPLETE_SYM = 0;
+        openTask(2, &cdLoadTask);
+        while (LOAD_COMPLETE_SYM == 0) {
+            if (D_801FD8E0 == 0) {
+                break;
+            }
+            sleepTask(1);
+        }
+    }
+    queueLoadList(SYSTEM_LOAD_LISTS[id]);
+    if (start != 0) {
+        LOAD_COMPLETE_SYM = 0;
+        openTask(2, &cdLoadTask);
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", loadSoundSet);
 void loadSoundSet(s32 arg0)
@@ -1891,7 +1941,24 @@ void loadSoundSet(s32 arg0)
     D_1F8002AC = LOAD_NEXT_ADDR;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223E0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223E0);
+extern volatile u16 D_8009C9D8__223E0[];
+extern volatile u16 D_8009C9DA__223E0;
+extern volatile u16 D_8009C9DE__223E0;
+extern u16 D_1F8001FC;
+extern u16 D_1F8001FE;
+extern u16 func_80028D70(s32);
+extern void func_80028B34(void);
+
+void func_800223E0(void)
+{
+    D_8009C9DC = D_8009C9D8__223E0[0];
+    D_8009C9DE__223E0 = D_8009C9DA__223E0;
+    D_8009C9D8__223E0[0] = func_80028D70(0);
+    D_1F8001FC = ~D_8009C9DC & D_8009C9D8__223E0[0];
+    D_1F8001FE = ~D_8009C9D8__223E0[0] & D_8009C9DC;
+    func_80028B34();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", updateObjectSideFlag);
 void updateObjectSideFlag(u8* self)
@@ -2153,6 +2220,70 @@ void advanceAnimFrame(u8* self, s16 arg1)
     *(u8**)(self + 0x24) = *(u8**)(self + 0x24) + off;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022A50);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", tickAnimation);
+s32 tickAnimation(u8* self)
+{
+    u8* frame;
+    u16 flags;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_80022B34);
+    if (--*(u16*)(self + 0x2C) != 0) {
+        return 0;
+    }
+    frame = *(u8**)(self + 0x24);
+    flags = *(u16*)(frame + 6);
+    switch (flags & 0xC000) {
+    case 0:
+        *(u8**)(self + 0x24) = frame + 8;
+        *(u16*)(self + 0x2C) = *(u16*)(frame + 0xE) & 0x3FFF;
+        break;
+    case 0x4000:
+        *(u8**)(self + 0x24) = frame + 8;
+        *(u8**)(self + 0x24) = *(u8**)(frame + 8);
+        *(u16*)(self + 0x2C) = *(u16*)(*(u8**)(self + 0x24) + 6) & 0x3FFF;
+        break;
+    case 0x8000:
+        *(u16*)(self + 0x2C) = flags & 0x3FFF;
+        return 1;
+    case 0xC000:
+        *(u8**)(self + 0x24) = frame + 8;
+        *(u8**)(self + 0x24) = *(u8**)(frame + 8);
+        *(u16*)(self + 0x2C) = *(u16*)(*(u8**)(self + 0x24) + 6) & 0x3FFF;
+        return 1;
+    default:
+        return 0;
+    }
+    return 0;
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", tickAnimationFixedRate);
+s32 tickAnimationFixedRate(u8* self)
+{
+    u8* frame;
+
+    if (--*(u16*)(self + 0x2C) != 0) {
+        return 0;
+    }
+    frame = *(u8**)(self + 0x24);
+    switch (*(u16*)(frame + 6) & 0xC000) {
+    case 0:
+        *(u8**)(self + 0x24) = frame + 8;
+        *(u16*)(self + 0x2C) = *(u16*)(self + 0x20);
+        break;
+    case 0x4000:
+        *(u8**)(self + 0x24) = frame + 8;
+        *(u8**)(self + 0x24) = *(u8**)(frame + 8);
+        *(u16*)(self + 0x2C) = *(u16*)(self + 0x20);
+        break;
+    case 0x8000:
+        *(u16*)(self + 0x2C) = *(u16*)(self + 0x20);
+        return 1;
+    case 0xC000:
+        *(u8**)(self + 0x24) = frame + 8;
+        *(u8**)(self + 0x24) = *(u8**)(frame + 8);
+        *(u16*)(self + 0x2C) = *(u16*)(self + 0x20);
+        return 1;
+    default:
+        return 0;
+    }
+    return 0;
+}
