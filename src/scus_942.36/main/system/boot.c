@@ -65,7 +65,7 @@ void bootSequenceTask(void)
                 LOAD_COMPLETE = 0;
                 loadSoundSet(0);
                 loadSoundSet(1);
-                func_800222B8(0, 1);
+                queueSystemLoadList(0, 1);
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
                 memset(D_1F8001A0, 0, sizeof(D_1F8001A0));
@@ -104,7 +104,7 @@ void bootSequenceTask(void)
             case 9:
                 SetDispMask(0);
                 *(byte* )0x1F8001CE = 0U;
-                func_800222B8(0x5E, 1);
+                queueSystemLoadList(0x5E, 1);
                 (CURRENT_TASK)->state0 = 0xAU;
                 break;
             case 10:
@@ -163,19 +163,6 @@ void bootSequenceTask(void)
     } while(true);
 }
 
-typedef struct {
-    s16 x;
-    s16 y;
-    u8 u;
-    u8 v;
-    s16 w;
-    s16 h;
-    s16 tpage;
-    s16 clutX;
-    s16 clutY;
-} unk_80076E40;
-
-extern unk_80076E40 D_80076E40[];
 
 unk_80076E40 D_80076E40[4] = {
     { 0, 0xC0, 0, 0xC0, 0x100, 0x28, 0x80, 0x80, 0x1E0 },
@@ -251,13 +238,13 @@ void titleSequenceTask(void)
         }
         switch ((u16)(CURRENT_TASK)->state0) {
             case 0:
-                func_800199B8(sp10);
+                bootLogoState(sp10);
                 break;
             case 1:
                 bootLoadMovieResources();
                 break;
             case 2:
-                func_8001A328();
+                optsubScreenState();
                 break;
             case 3:
                 bootPlayIntroMovie();
@@ -270,8 +257,8 @@ void titleSequenceTask(void)
     };
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_800199B8);
-void func_800199B8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", bootLogoState);
+void bootLogoState(void)
 {
     u16 state2;
     u16 timer;
@@ -295,7 +282,7 @@ void func_800199B8(void)
                     SetDispMask(0);
                     LOAD_COMPLETE = 0U;
                     loadSoundSet(1);
-                    func_800222B8(1, 1);
+                    queueSystemLoadList(1, 1);
                     task4 = *(Task** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
                     return;
@@ -352,7 +339,7 @@ void func_800199B8(void)
                 initDisplay(0U, 0U, 0U);
                 LOAD_COMPLETE = 0U;
                 loadSoundSet(2);
-                func_800222B8(2, 1);
+                queueSystemLoadList(2, 1);
                 task5 = *(Task** )(&SCRATCHPAD+0x1D4);
                 task5->state1++;
                 return;
@@ -386,7 +373,7 @@ void bootLoadMovieResources(void)
             SetDispMask(0);
              *(u8* )&scratch->loadComplete = 0;
             loadSoundSet(2);
-            func_800222B8(2, 1);
+            queueSystemLoadList(2, 1);
             scratch->currentTask->state1++;
             return;
         case 1:
@@ -569,8 +556,8 @@ void loopTitleScreen(int* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001A328);
-void func_8001A328(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", optsubScreenState);
+void optsubScreenState(void)
 {
     u_short state2;
     Task* task;
@@ -584,7 +571,7 @@ void func_8001A328(void)
             SetDispMask(0);
             LOAD_COMPLETE = 0;
             loadSoundSet(3);
-            func_800222B8(8, 1);
+            queueSystemLoadList(8, 1);
             (CURRENT_TASK)->state1++;
             return;
         case 1:
@@ -626,7 +613,7 @@ void func_8001A328(void)
             SetDispMask(0);
             LOAD_COMPLETE = 0U;
             loadSoundSet(2);
-            func_800222B8(2, 1);
+            queueSystemLoadList(2, 1);
             (CURRENT_TASK)->state1++;
             return;
         case 4:

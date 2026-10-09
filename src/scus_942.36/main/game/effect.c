@@ -1,7 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-void updateScrollAnchoredEffect(u8* self);
 
 void (*D_8007D57C[16])(u8* self) = {
     (void (*)(u8*))0x801216BC,
@@ -112,7 +111,6 @@ void dispatchAreaEffectB(void)
     }
 }
 
-extern u8 D_8009C1C0;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateEffectHitbox);
 void updateEffectHitbox(u8* self)
@@ -190,275 +188,7 @@ void updateEffectHitbox(u8* self)
     }
 }
 
-extern const u32 D_800108AC[];
-extern const u32 D_800108C8[];
-extern const u32 D_80010974[];
-extern const u32 D_800109E8[];
-extern const u32 D_80010A6C[];
-extern const u32 D_80010B10[];
-extern const u32 D_80010BFC[];
-extern const u32 D_80010D48[];
-extern const u32 D_80010D6C[];
-extern const u32 D_80010E48[];
-extern const u32 D_80010E7C[];
-extern const u32 D_80010ED8[];
-extern const u32 D_80010F0C[];
-extern const u32 D_80010F58[];
-extern const u32 D_80010FBC[];
-extern const u32 D_80010FE0[];
-extern const u32 D_80011000[];
-extern const u32 D_80011020[];
-extern const u32 D_80011040[];
-extern const u32 D_80011048[];
-extern const u32 D_80011050[];
-extern const u32 D_80011058[];
-extern const u32 D_80011060[];
-extern const u32 D_80011068[];
-extern const u32 D_80011070[];
-extern const u32 D_80011090[];
-extern const u32 D_800110B0[];
-extern const u32 D_800110D0[];
-extern const u32 D_800110D8[];
-extern const u32 D_800110E0[];
-extern const u32 D_800110E8[];
-extern const u32 D_800110F0[];
-extern const u32 D_800110F8[];
-extern const u32 D_800111A8[];
-extern const u32 D_800111E4[];
-extern const u32 D_800111F8[];
-extern const u32 D_80011244[];
-extern const u32 D_800112A8[];
-extern const u32 D_800112DC[];
-extern const u32 D_80011340[];
-extern const u32 D_80011384[];
-extern const u32 D_800113B8[];
-extern const u32 D_800113FC[];
-extern const u32 D_80011440[];
-extern const u32 D_8001153C[];
-extern const u32 D_80011678[];
-extern const u32 D_800116DC[];
-extern const u32 D_80011760[];
-extern const u32 D_80011794[];
-extern const u32 D_800117C8[];
-extern const u32 D_80011804[];
-extern const u32 D_800118F0[];
-extern const u32 D_80011934[];
-extern const u32 D_80011978[];
-extern const u32 D_800119BC[];
-extern const u32 D_80011A00[];
-extern const u32 D_80011A44[];
-extern const u32 D_80011A88[];
-extern const u32 D_80011ACC[];
-extern const u32 D_80011B10[];
-extern const u32 D_80011B54[];
-extern const u32 D_80011B98[];
-extern const u32 D_80011BDC[];
-extern const u32 D_80011C20[];
-extern const u32 D_80011C64[];
-extern const u32 D_80011CA8[];
-extern const u32 D_80011CEC[];
-extern const u32 D_80011CFC[];
-extern const u32 D_80011D0C[];
-extern const u32 D_80011D1C[];
-extern const u32 D_80011D3C[];
-extern const u32 D_80011D5C[];
-extern const u32 D_80011D7C[];
-extern const u32 D_80011D9C[];
-extern const u32 D_80011DA4[];
-extern const u32 D_80011DAC[];
-extern const u32 D_80011DB4[];
-extern const u32 D_80011DCC[];
-extern const u32 D_80011DE4[];
-extern const u32 D_80011DFC[];
-extern const u32 D_80011E1C[];
-extern const u32 D_80011E3C[];
-extern const u32 D_80011E5C[];
-extern const u32 D_80011E6C[];
-extern const u32 D_80011E7C[];
-extern const u32 D_80011E8C[];
-extern const u32 D_80011EB4[];
-extern const u32 D_80011EDC[];
-extern const u8 D_80011F0C[];
-extern const u32 D_80011F10[];
-extern const u8 D_80012014[];
-extern const u32 D_80012194[];
-extern const u32 D_800121A8[];
-extern const u32 D_800121C8[];
-extern const u32 D_80012208[];
-extern const u32 D_8001224C[];
-extern const u32 D_80012260[];
-extern const u32 D_800122B0[];
-extern const u32 D_80012310[];
-extern const u32 D_80012314[];
-extern const u32 D_80012318[];
-extern const u32 D_8001232C[];
-extern const u32 D_80012330[];
-extern const u32 D_80012334[];
-extern const u32 D_80012354[];
-extern const u32 D_80012364[];
 extern const u32 D_80012368_ro[] asm("D_80012368");
-extern const u32 D_800123C8[];
-extern const u32 D_800123CC[];
-extern const u32 D_800123E4[];
-extern const u32 D_800123F0[];
-extern const u32 D_800123F8[];
-extern const u32 D_80012400[];
-extern const u32 D_80012408[];
-extern const u32 D_80012410[];
-extern const u32 D_80012418[];
-extern const u32 D_80012420[];
-extern const u32 D_80012428[];
-extern const u32 D_80012430[];
-extern const u32 D_80012438[];
-extern const u32 D_80012440[];
-extern const u32 D_80012448[];
-extern const u32 D_80012450[];
-extern const u32 D_80012490[];
-extern const u32 D_800124C0[];
-extern const u32 D_800124C8[];
-extern const u32 D_800124D0[];
-extern const u32 D_800124D8[];
-extern const u32 D_800124E0[];
-extern const u32 D_800124E8[];
-extern const u32 D_800124F0[];
-extern const u32 D_800124F8[];
-extern const u32 D_80012500[];
-extern const u32 D_80012508[];
-extern const u32 D_80012510[];
-extern const u32 D_80012518[];
-extern const u32 D_80012520[];
-extern const u32 D_80012528[];
-extern const u32 D_80012530[];
-extern const u32 D_80012538[];
-extern const u32 D_80012540[];
-extern const u32 D_80012548[];
-extern const u32 D_80012550[];
-extern const u32 D_80012558[];
-extern const u32 D_80012560[];
-extern const u32 D_80012568[];
-extern const u32 D_80012570[];
-extern const u32 D_80012578[];
-extern const u32 D_80012580[];
-extern const u32 D_80012588[];
-extern const u32 D_80012590[];
-extern const u32 D_80012598[];
-extern const u32 D_800125A0[];
-extern const u32 D_800125A8[];
-extern const u32 D_800125B0[];
-extern const u32 D_800125B8[];
-extern const u32 D_800125C0[];
-extern const u32 D_800125C8[];
-extern const u32 D_800125D0[];
-extern const u32 D_800125D8[];
-extern const u32 D_800125E0[];
-extern const u32 D_800125E8[];
-extern const u32 D_800125F0[];
-extern const u32 D_800125F8[];
-extern const u32 D_80012600[];
-extern const u32 D_80012608[];
-extern const u32 D_80012610[];
-extern const u32 D_80012650[];
-extern const u32 D_80012658[];
-extern const u32 D_80012660[];
-extern const u32 D_80012668[];
-extern const u32 D_80012670[];
-extern const u32 D_80012678[];
-extern const u32 D_80012680[];
-extern const u32 D_80012688[];
-extern const u32 D_80012698[];
-extern const u32 D_800126A0[];
-extern const u32 D_800126A8[];
-extern const u32 D_800126B0[];
-extern const u32 D_800126B8[];
-extern const u32 D_800126C0[];
-extern const u32 D_800126C8[];
-extern const u32 D_800126D0[];
-extern const u32 D_800126D8[];
-extern const u32 D_800126E0[];
-extern const u32 D_800126E8[];
-extern const u32 D_800126F0[];
-extern const u32 D_800126F8[];
-extern const u32 D_80012700[];
-extern const u32 D_80012708[];
-extern const u32 D_80012710[];
-extern const u32 D_80012718[];
-extern const u32 D_80012720[];
-extern const u32 D_80012728[];
-extern const u32 D_80012730[];
-extern const u32 D_80012780[];
-extern const u32 D_800127D0[];
-extern const u32 D_800127D8[];
-extern const u32 D_800127E0[];
-extern const u32 D_800127E8[];
-extern const u32 D_800127F0[];
-extern const u32 D_800127F8[];
-extern const u32 D_80012800[];
-extern const u32 D_80012808[];
-extern const u32 D_80012810[];
-extern const u32 D_80012818[];
-extern const u32 D_80012820[];
-extern const u32 D_80012828[];
-extern const u32 D_80012830[];
-extern const u32 D_80012854[];
-extern const u32 D_8001287C[];
-extern const u32 D_80012894[];
-extern const u32 D_800128AC[];
-extern const u32 D_800128B4[];
-extern const u32 D_800128BC[];
-extern const u32 D_800128C4[];
-extern const u32 D_800128CC[];
-extern const u32 D_800128D4[];
-extern const u32 D_800128DC[];
-extern const u32 D_800128E4[];
-extern const u32 D_800128EC[];
-extern const u32 D_800128F4[];
-extern const u32 D_800128FC[];
-extern const u32 D_80012904[];
-extern const u32 D_8001290C[];
-extern const u32 D_80012914[];
-extern const u32 D_80012954[];
-extern const u32 D_8001296C[];
-extern const u32 D_8001298C[];
-extern const u32 D_80012994[];
-extern const u32 D_800129B4[];
-extern const u32 D_800129BC[];
-extern const u32 D_800129DC[];
-extern const u32 D_800129E4[];
-extern const u32 D_800129EC[];
-extern const u32 D_800129F4[];
-extern const u32 D_800129FC[];
-extern const u32 D_80012A04[];
-extern const u32 D_80012A0C[];
-extern const u32 D_80012A14[];
-extern const u32 D_80012A1C[];
-extern const u32 D_80012A24[];
-extern const u32 D_80012A2C[];
-extern const u32 D_80012A34[];
-extern const u32 D_80012A98[];
-extern const u32 D_80012AA0[];
-extern const u32 D_80012AA8[];
-extern const u32 D_80012B68[];
-extern const u32 D_80012B9C[];
-extern const u32 D_80012BB8[];
-extern const u32 D_80012BFC[];
-extern const u32 D_80012C18[];
-extern const u32 D_80012C34[];
-extern const u32 D_80012C5C[];
-extern const u32 D_80012C80[];
-extern const u32 D_80012C98[];
-extern const u32 D_80012CBC[];
-extern const u32 D_80012CC4[];
-extern const u32 D_80012CCC[];
-extern const u32 D_80012CD4[];
-extern const u32 D_80012CE8[];
-extern const u32 D_80012D0C[];
-extern const u32 D_80012D20[];
-extern const u32 D_80012D28[];
-extern const u32 D_80012D78[];
-extern const u32 D_80012D80[];
-extern const u32 D_80012D88[];
-extern const u32 D_80012DAC[];
-extern const u32 D_80012DE0[];
 
 const u32 D_80010814[] = {
     (u32)D_80011B98,
@@ -516,8 +246,6 @@ void updateObjectsLayer7(void)
     } while (D_1F800198 < 0xA);
 }
 
-extern u8 D_8009C3F0;
-extern u8 D_8009BCA6;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateScrollAnchoredEffect);
 void updateScrollAnchoredEffect(u8* self)
@@ -551,7 +279,6 @@ void updateScrollAnchoredEffect(u8* self)
     }
 }
 
-void dispatchScreenEffect(u8* self);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/effect", updateAreaScreenEffect);
 void updateAreaScreenEffect(void)

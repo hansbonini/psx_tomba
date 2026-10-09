@@ -30,15 +30,6 @@ enum {
     SND_SLIDE_START           = 0x0300
 };
 
-typedef struct {
-    u8 vab;
-    u8 prog;
-    u8 tone;
-    u8 note;
-    u8 volume;
-    u8 priority;
-    u8 pad[2];
-} SfxDef;
 
 SfxDef D_80077774[41] = {
     { 0, 2, 8, 40, 100, 0 },
@@ -95,45 +86,9 @@ SfxDef D_800778C4[4] = {
     { 1, 0, 3, 3, 100, 0 }
 };
 
-extern s16 BGM_FADE_TIMER;
-extern s16 BGM_FADE_INTERVAL;
-extern s16 BGM_FADE_STEP;
-extern s16 BGM_FADE_TARGET;
-extern s16 PITCH_SLIDE_TIMER;
-extern s16 PITCH_SLIDE_INTERVAL;
-extern s16 PITCH_SLIDE_STEP;
-extern s16 PITCH_SLIDE_DURATION;
-extern s16 PITCH_SLIDE_VOICE;
-extern int LAST_KEYON_VOICE;
 
-typedef struct {
-    u16 id;
-    s16 arg;
-} SfxQueueEntry;
-
-typedef struct {
-    u8 seq;
-    u8 vab;
-    u8 fadeIn;
-    u8 unk3;
-} BgmDef;
-
-extern u16 AREA_BGM_VOLUME[];
-extern s16 BGM_FADE_VOLUME;
-extern SfxQueueEntry SOUND_QUEUE[];
-extern BgmDef BGM_TRACK_DEFS[];
-extern s16 BGM_VAB_ID;
 extern u_long* SEQ_DATA[];
-extern s16 BGM_TRACK_VOLUME[];
-extern s16 JINGLE_VAB_ID;
 
-
-extern s16 PITCH_SLIDE_VAB;
-extern s16 PITCH_SLIDE_PROG;
-extern s16 PITCH_SLIDE_OLD_NOTE;
-extern s16 PITCH_SLIDE_OLD_FINE;
-extern s16 PITCH_SLIDE_NEW_NOTE;
-extern s16 PITCH_SLIDE_NEW_FINE;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", updateSound);
 void updateSound(void)
@@ -215,7 +170,6 @@ void updateSound(void)
     }
 }
 
-s32 getSfxVabOffset(u16 id);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", keyOnQueuedSfx);
 s32 keyOnQueuedSfx(s32 cmd)
@@ -536,9 +490,6 @@ inline s32 adjustAreaBgmVolume(s32 id)
     return id;
 }
 
-extern BgmDef AREA_BGM_DEFS[];
-extern u8* AREA_REVERB_DEPTH[];
-extern s32 AREA_REVERB_MODE[];
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", openAreaBgm);
 s32 openAreaBgm(s32 reverbDepth)

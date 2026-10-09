@@ -1,15 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-typedef struct msgBox {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 unk6;
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ s16 unkA;
-} msgBox;
-
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002E964);
 
@@ -57,7 +48,7 @@ void dispatchMsgBoxHandler(u8* self)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F804);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", func_8002F948);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", clearTalkPose);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/message", updateMessageBox);
 

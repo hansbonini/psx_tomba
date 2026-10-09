@@ -18,19 +18,6 @@ u_char D_8007775C[0x18] = {
 };
 
 
-extern short D_80077728[];
-
-typedef struct {
-    u_long* vlcbuf[2];
-    int vlcid;
-    u_short* imgbuf[2];
-    int imgid;
-    RECT rect[2];
-    int rectid;
-    RECT slice;
-    int isdone;
-} DecEnv;
-
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", movieDecodeNextFrame);
 int movieDecodeNextFrame(DecEnv* dec)
 {

@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_80038570);
-s16 func_80038570(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", distanceToPlayer);
+s16 distanceToPlayer(u8* self)
 {
     s32 dx = abs((*(s16**)(self + 0x40))[1] - D_800A53D8[1]);
     s32 dy = abs(*(s16*)(self + 0x16) - D_800A53AE);

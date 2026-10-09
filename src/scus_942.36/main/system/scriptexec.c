@@ -321,10 +321,6 @@ u_char runScriptContext(ScriptContext* ctx)
     return p->state;
 }
 
-extern u8 D_8009C119;
-extern u8 D_8009C120;
-extern u8 D_8009C121;
-extern u8 D_8009C245;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", loadAreaSoundBank);
 void loadAreaSoundBank(void)

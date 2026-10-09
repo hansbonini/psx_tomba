@@ -56,15 +56,11 @@ s32 isPlayerInRange(u8* self, s16 arg1, s16 arg2)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objlogic", func_80036A28);
-typedef struct {
-    s16 x;
-    s16 y;
-} Vec2s;
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objlogic", angleToPlayer);
 
-s32 func_8002331C(Vec2s a, Vec2s b);
+s32 angleBetweenPoints(Vec2s a, Vec2s b);
 
-s16 func_80036A28(u8* self) {
+s16 angleToPlayer(u8* self) {
     Vec2s player;
     Vec2s me;
 
@@ -72,7 +68,7 @@ s16 func_80036A28(u8* self) {
     me.y = *(s16*)(self + 0x16);
     player.x = D_800A53D8[1];
     player.y = D_800A53AE;
-    return func_8002331C(me, player);
+    return angleBetweenPoints(me, player);
 }
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objlogic", func_80036A8C);

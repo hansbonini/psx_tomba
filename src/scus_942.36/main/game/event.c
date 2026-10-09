@@ -1,10 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-} unk_80077720;
 
 u8 D_80077428[0xC8] = {
     [EVENT_GRANDPASBRACELET]                           = 0x02,
@@ -725,32 +721,6 @@ u_char getEventState(EVENT event_id)
     return GAME.event[event_id];
 }
 
-extern u16 D_800A53AA;
-extern u16 D_800A38C2;
-extern u8 D_8009BC9B;
-extern u8 D_8009BCA6;
-extern u8 D_8009BCA8;
-extern s8** D_80139330;
-extern s8** D_8013CC1C;
-extern s8** D_800F077C;
-extern s8** D_80137998;
-extern s8** D_80132CAC;
-extern s8** D_80119334;
-extern s8** D_80121BE0;
-extern s8** D_80118018;
-extern s8** D_801177F8;
-extern s8** D_8012CB9C;
-extern s8** D_80130DD8;
-extern s8** D_8011B4C8;
-extern s8** D_80118C38;
-extern s8** D_80119B44;
-extern s8** D_80128018;
-extern s8** D_8011A5CC;
-extern s8** D_8011B2A8;
-extern s8** D_8011BDC0;
-extern s8** D_800F00BC;
-extern s8** D_8011E3A0;
-extern s8** D_80102000;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/event", spawnEventTitle);
 int spawnEventTitle(int event_id, int completed, int duration, int state)

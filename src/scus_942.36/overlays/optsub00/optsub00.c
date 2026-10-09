@@ -58,22 +58,22 @@ extern s16   D_800EA380;
 extern void* SEQ_DATA;
 
 s32 fixedMulSin2(s16 arg0, s16 arg1);
-void func_800E73C0();
+void drawOptsubSpriteList();
 void func_800E7EFC(void);
-void func_800E7F74(optsubSprite* arg0, s16 tpage, u8 arg2);
+void drawOptsubSprite(optsubSprite* arg0, s16 tpage, u8 arg2);
 void func_800E8160();
 void func_800E82F4(void);
 void func_800E83EC(s32 arg0, s32 arg1);
 void func_800E8570(s32 arg0);
 void func_800E8680();
 void func_800E8814(void);
-void func_800E8908(s16 arg0, s16 arg1, s32 arg2);
+void drawOptsubText(s16 arg0, s16 arg1, s32 arg2);
 void func_800E8964(s16 arg0, s16 arg1, s32 arg2);
 void func_800E89CC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-void func_800E8A24(s16 arg0, s16 arg1, s32 arg2);
+void drawOptsubNumber(s16 arg0, s16 arg1, s32 arg2);
 void func_800E8B6C();
 
-INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E73C0);
+INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", drawOptsubSpriteList);
 
 void func_800E75C4(void) {
 }
@@ -118,7 +118,7 @@ void func_800E7D5C(void)
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E7D74);
 void func_800E7D74(void)
 {
-    func_800E73C0(&D_800E9DD4, 0, 0, 1);
+    drawOptsubSpriteList(&D_800E9DD4, 0, 0, 1);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E7DA4);
@@ -147,8 +147,8 @@ void func_800E7DDC(s32* arg0)
             D_800EA378 -= 0x20;
         }
     }
-    func_800E73C0(D_800E9E14, 0, (s16)-D_800EA370, 0);
-    func_800E73C0(D_800E9E44, 0, 0, 0);
+    drawOptsubSpriteList(D_800E9E14, 0, (s16)-D_800EA370, 0);
+    drawOptsubSpriteList(D_800E9E44, 0, 0, 0);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E7EB0);
@@ -177,8 +177,8 @@ void func_800E7F40(void)
     func_800E8814();
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E7F74);
-void func_800E7F74(optsubSprite* arg0, s16 tpage, u8 arg2)
+// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", drawOptsubSprite);
+void drawOptsubSprite(optsubSprite* arg0, s16 tpage, u8 arg2)
 {
     SPRT* sprt;
     SPRT* dst;
@@ -259,23 +259,23 @@ void func_800E83EC(s32 arg0, s32 arg1)
     tpage = GetTPage(0, 0, 0x200, 0);
     p = D_800E9EB4;
     while (p->unk0 != -1) {
-        func_800E7F74(p++, tpage, 0);
+        drawOptsubSprite(p++, tpage, 0);
     }
-    func_800E8908(0x88, 0xE, 0);
-    func_800E8908(0x50, 0x2C, 1);
-    func_800E8908(0xB0, 0x2C, arg0 + 6);
-    func_800E8908(0x50, 0x44, 2);
-    func_800E8908(0xB0, 0x44, arg1 + 9);
+    drawOptsubText(0x88, 0xE, 0);
+    drawOptsubText(0x50, 0x2C, 1);
+    drawOptsubText(0xB0, 0x2C, arg0 + 6);
+    drawOptsubText(0x50, 0x44, 2);
+    drawOptsubText(0xB0, 0x44, arg1 + 9);
     func_800E8964(0x60, 0xB0, 0x14);
     func_800E8964(0x60, 0xC0, 0x16);
     if (D_800EA380 != 0) {
-        func_800E8908(0x50, 0x5C, 3);
-        func_800E8908(0xB0, 0x5C, (u16)D_8009C97A + 0xB);
-        func_800E8908(0x50, 0x74, 4);
-        func_800E8908(0x50, 0x8C, 5);
+        drawOptsubText(0x50, 0x5C, 3);
+        drawOptsubText(0xB0, 0x5C, (u16)D_8009C97A + 0xB);
+        drawOptsubText(0x50, 0x74, 4);
+        drawOptsubText(0x50, 0x8C, 5);
     } else {
-        func_800E8908(0x50, 0x5C, 4);
-        func_800E8908(0x50, 0x74, 5);
+        drawOptsubText(0x50, 0x5C, 4);
+        drawOptsubText(0x50, 0x74, 5);
     }
 }
 
@@ -288,11 +288,11 @@ void func_800E8570(s32 arg0)
     tpage = GetTPage(0, 0, 0x200, 0);
     p = D_800EA2A4[arg0];
     while (p->unk0 != -1) {
-        func_800E7F74(p++, tpage, 0);
+        drawOptsubSprite(p++, tpage, 0);
     }
     p = D_800E9EE4;
     while (p->unk0 != -1) {
-        func_800E7F74(p++, tpage, 0);
+        drawOptsubSprite(p++, tpage, 0);
     }
     func_800E8964(0x60, 0xB0, 0x14);
     func_800E8964(0x60, 0xC0, 0x16);
@@ -308,17 +308,17 @@ void func_800E8680(s32 arg0)
     tpage = GetTPage(0, 0, 0x200, 0);
     p = D_800EA2BC;
     while (p->unk0 != -1) {
-        func_800E7F74(p++, tpage, 0);
+        drawOptsubSprite(p++, tpage, 0);
     }
-    func_800E8908(0x68, 0x10, 4);
-    func_800E8908(0xA0, 0x50, 0xD);
-    func_800E8908(0xA0, 0x70, 0xE);
+    drawOptsubText(0x68, 0x10, 4);
+    drawOptsubText(0xA0, 0x50, 0xD);
+    drawOptsubText(0xA0, 0x70, 0xE);
     func_800E89CC(0x20, 0x60, 0x1D, (arg0 == 3) ? 3 : 0);
     func_800E89CC(0x60, 0x60, 0x1E, (arg0 == 4) ? 3 : 0);
     func_800E89CC(0x40, 0x40, 0x1F, (arg0 == 1) ? 3 : 0);
     func_800E89CC(0x40, 0x80, 0x20, (arg0 == 2) ? 3 : 0);
-    func_800E8A24(0x100, 0x50, (s16)D_8009C864);
-    func_800E8A24(0x100, 0x70, (s16)D_8009C866 - 8);
+    drawOptsubNumber(0x100, 0x50, (s16)D_8009C864);
+    drawOptsubNumber(0x100, 0x70, (s16)D_8009C866 - 8);
     func_800E8964(0x60, 0xB0, 0x16);
     func_800E8964(0x60, 0xC0, 0x15);
 }
@@ -332,7 +332,7 @@ void func_800E8814(void)
     tpage = GetTPage(1, 0, 0x180, 0);
     p = D_800EA2EC;
     while (p->unk0 != -1) {
-        func_800E7F74(p++, tpage, 4);
+        drawOptsubSprite(p++, tpage, 4);
     }
 }
 
@@ -350,8 +350,8 @@ void printTitleScreenMessage(s16 arg0, s16 arg1, s32 arg2)
     func_800E8B6C(&req, 0, 1, 1);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E8908);
-void func_800E8908(s16 arg0, s16 arg1, s32 arg2)
+// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", drawOptsubText);
+void drawOptsubText(s16 arg0, s16 arg1, s32 arg2)
 {
     optsubRequest req;
 
@@ -390,8 +390,8 @@ void func_800E89CC(s16 arg0, s16 arg1, s32 arg2, s32 arg3)
     func_800E8B6C(&req, 0, 1, arg3);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", func_800E8A24);
-void func_800E8A24(s16 arg0, s16 arg1, s32 arg2)
+// INCLUDE_ASM("asm/scus_942.36/overlays/optsub00/nonmatchings/optsub00", drawOptsubNumber);
+void drawOptsubNumber(s16 arg0, s16 arg1, s32 arg2)
 {
     optsubRequest req;
 

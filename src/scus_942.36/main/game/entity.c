@@ -22,19 +22,15 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023020);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_800230BC);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023168);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", angleFromDelta);
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_8002331C);
-typedef struct {
-    s16 x;
-    s16 y;
-} Vec2s;
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", angleBetweenPoints);
 
-s32 func_8002331C(Vec2s a, Vec2s b) {
+s32 angleBetweenPoints(Vec2s a, Vec2s b) {
     if (a.x == b.x && a.y == b.y) {
         return 0;
     }
-    return func_80023168(b.x - a.x, b.y - a.y);
+    return angleFromDelta(b.x - a.x, b.y - a.y);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", setObjectAxisPointers);
@@ -75,8 +71,8 @@ void insertionSortU32(s32 n, u32* arr)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_800238B0);
-void func_800238B0(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", spawnLayer3Object);
+void spawnLayer3Object(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
     u8* p = allocObjectLayer3();
 

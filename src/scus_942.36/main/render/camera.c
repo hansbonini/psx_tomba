@@ -10,8 +10,6 @@ void setSpawnAreaFlag(void)
     *dst |= 1 << row[1];
 }
 
-extern int** D_8007BF78[];
-extern u8 D_8009C617;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", loadSpawnPosition);
 void loadSpawnPosition(u8* self)
@@ -47,13 +45,6 @@ void loadSpawnPosition(u8* self)
     }
 }
 
-typedef struct {
-    int x;
-    int y;
-    int z;
-} VEC3;
-
-extern VEC3 D_8009C61C;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initPlayerAtSpawn);
 void initPlayerAtSpawn(void)
@@ -154,7 +145,6 @@ void getBaseMatrix(MATRIX* dst)
     return;
 }
 
-void applyLighting(u8* self);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/camera", initLighting);
 void initLighting(u8* self)

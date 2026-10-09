@@ -809,14 +809,14 @@ void initSpriteSlots(void)
     v = 0x6A;
     
     for (i = 0; i < 60; i++) {
-        D_800A5140[i].val[0] = u;
-        D_800A5140[i].id = -1;
-        D_800A5140[i].refCount = 0;
-        D_800A5140[i].val[1] = v;
-        D_800A5140[i].val[2] = 4;
-        D_800A5140[i].val[3] = 16;
-        D_800A5140[i].val[4] = 0;
-        D_800A5140[i].val[5] = 0;
+        GLYPH_CACHE[i].val[0] = u;
+        GLYPH_CACHE[i].id = -1;
+        GLYPH_CACHE[i].refCount = 0;
+        GLYPH_CACHE[i].val[1] = v;
+        GLYPH_CACHE[i].val[2] = 4;
+        GLYPH_CACHE[i].val[3] = 16;
+        GLYPH_CACHE[i].val[4] = 0;
+        GLYPH_CACHE[i].val[5] = 0;
 
         u += 4;
         
@@ -826,8 +826,8 @@ void initSpriteSlots(void)
         }
     }
     for (i=0; i < 8; i+=2) {
-        D_800A39B0[i].unk0 = -1;
-        D_800A39B0[i].unk2 = -1;
+        MESSAGE_SLOTS[i].unk0 = -1;
+        MESSAGE_SLOTS[i].unk2 = -1;
     }
 }
 

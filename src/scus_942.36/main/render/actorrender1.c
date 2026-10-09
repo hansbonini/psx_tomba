@@ -2,8 +2,6 @@
 #include "game.h"
 #include "psyq/inline_c.h"
 
-extern SVECTOR D_1F800060;
-extern long D_1F80008C;
 
 #define gte_rtps_real() __asm__ volatile("nop;" "nop;" ".word 0x4A180001")
 

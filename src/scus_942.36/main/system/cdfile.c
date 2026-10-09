@@ -5,7 +5,6 @@
 s32 fixedMulSin(s16 arg0, s16 arg1);
 s32 fixedMulCos(s16 arg0, s16 arg1);
 s32 fixedMulSin2(s16 arg0, s16 arg1);
-s32 fixedMulCos2(s16 arg0, s16 arg1);
 
 
 LoadRecord D_80077FAC[2] = {
@@ -1883,7 +1882,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueAreaSectionL
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueLoadList);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800222B8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", queueSystemLoadList);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", loadSoundSet);
 void loadSoundSet(s32 arg0)
