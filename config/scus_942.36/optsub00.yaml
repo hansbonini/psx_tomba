@@ -29,8 +29,7 @@ options:
   asm_data_macro: dlabel
   disassemble_all: true
 
-  # the header sits at file offset 0, so .data has to precede .text here
-  section_order: [".data", ".text", ".rodata", ".sdata", ".bss", ".sbss"]
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
 
   symbol_addrs_path:
     - ./symbols/scus_942.36/symbol_addrs.txt
@@ -59,8 +58,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      # 0x00        overlay id (0x34)
-      # 0x04..0x37  13 hook pointers copied into the game's per-area table
-      - [0x0, data, header]
+      - [0x0, rodata, header]
+      - [0x4, .rodata, optsub00]
       - [0x38, c, optsub00]
+      - [0x1FC0, data, optsub00]
   - [0x300C]
