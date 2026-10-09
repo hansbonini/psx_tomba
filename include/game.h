@@ -15,6 +15,7 @@
 #include "psyq/libgte.h"
 #include "psyq/libspu.h"
 #include "psyq/libsnd.h"
+#include "cdfiles.h"
 
 typedef struct fileLink {
     /* 0x0 */ CdlLOC loc;
