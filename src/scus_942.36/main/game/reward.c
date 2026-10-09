@@ -870,7 +870,7 @@ void initItemObject(GameObject* arg0)
 
     arg0->spriteBank = *(&D_1F8002C8[temp_s1->unk4]);
     arg0->unk2E = 1;
-    if (arg0->item_id == 2) {
+    if (arg0->item_id == ITEM_LOSTDWARF) {
         if ((u_long) (arg0->unkC & 0x7F) >= 4U) {
             arg0->buffSize = 0x2000;
             arg0->hitOffsetX = (short) (temp_s1->unkC * 2);
