@@ -30,15 +30,6 @@ enum {
     SND_SLIDE_START           = 0x0300
 };
 
-typedef struct {
-    u8 vab;
-    u8 prog;
-    u8 tone;
-    u8 note;
-    u8 volume;
-    u8 priority;
-    u8 pad[2];
-} SfxDef;
 
 SfxDef D_80077774[41] = {
     { 0, 2, 8, 40, 100, 0 },
@@ -95,45 +86,9 @@ SfxDef D_800778C4[4] = {
     { 1, 0, 3, 3, 100, 0 }
 };
 
-extern s16 BGM_FADE_TIMER;
-extern s16 BGM_FADE_INTERVAL;
-extern s16 BGM_FADE_STEP;
-extern s16 BGM_FADE_TARGET;
-extern s16 PITCH_SLIDE_TIMER;
-extern s16 PITCH_SLIDE_INTERVAL;
-extern s16 PITCH_SLIDE_STEP;
-extern s16 PITCH_SLIDE_DURATION;
-extern s16 PITCH_SLIDE_VOICE;
-extern int LAST_KEYON_VOICE;
 
-typedef struct {
-    u16 id;
-    s16 arg;
-} SfxQueueEntry;
-
-typedef struct {
-    u8 seq;
-    u8 vab;
-    u8 fadeIn;
-    u8 unk3;
-} BgmDef;
-
-extern u16 AREA_BGM_VOLUME[];
-extern s16 BGM_FADE_VOLUME;
-extern SfxQueueEntry SOUND_QUEUE[];
-extern BgmDef BGM_TRACK_DEFS[];
-extern s16 BGM_VAB_ID;
 extern u_long* SEQ_DATA[];
-extern s16 BGM_TRACK_VOLUME[];
-extern s16 JINGLE_VAB_ID;
 
-
-extern s16 PITCH_SLIDE_VAB;
-extern s16 PITCH_SLIDE_PROG;
-extern s16 PITCH_SLIDE_OLD_NOTE;
-extern s16 PITCH_SLIDE_OLD_FINE;
-extern s16 PITCH_SLIDE_NEW_NOTE;
-extern s16 PITCH_SLIDE_NEW_FINE;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", updateSound);
 void updateSound(void)
@@ -215,7 +170,6 @@ void updateSound(void)
     }
 }
 
-s32 getSfxVabOffset(u16 id);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", keyOnQueuedSfx);
 s32 keyOnQueuedSfx(s32 cmd)
@@ -233,16 +187,16 @@ s32 keyOnQueuedSfx(s32 cmd)
     *prio = e[5];
     switch (cmd & (SND_KEYON_NOTE_OVERRIDE | SND_KEYON_VOLUME_OVERRIDE)) {
     case 0:
-        LAST_KEYON_VOICE = SsUtKeyOnV(voice, D_1F8003A8[e[0]], e[1], e[2], e[3], 0, e[4], e[4]);
+        LAST_KEYON_VOICE = SsUtKeyOnV(voice, VAB_IDS[e[0]], e[1], e[2], e[3], 0, e[4], e[4]);
         break;
     case SND_KEYON_NOTE_OVERRIDE:
-        LAST_KEYON_VOICE = SsUtKeyOnV(voice, D_1F8003A8[e[0]], e[1], e[2], SFX_NOTE_OVERRIDE, 0, e[4], e[4]);
+        LAST_KEYON_VOICE = SsUtKeyOnV(voice, VAB_IDS[e[0]], e[1], e[2], SFX_NOTE_OVERRIDE, 0, e[4], e[4]);
         break;
     case SND_KEYON_VOLUME_OVERRIDE:
-        LAST_KEYON_VOICE = SsUtKeyOnV(voice, D_1F8003A8[e[0]], e[1], e[2], e[3], 0, SFX_VOLUME_OVERRIDE, SFX_VOLUME_OVERRIDE);
+        LAST_KEYON_VOICE = SsUtKeyOnV(voice, VAB_IDS[e[0]], e[1], e[2], e[3], 0, SFX_VOLUME_OVERRIDE, SFX_VOLUME_OVERRIDE);
         break;
     case SND_KEYON_NOTE_OVERRIDE | SND_KEYON_VOLUME_OVERRIDE:
-        LAST_KEYON_VOICE = SsUtKeyOnV(voice, D_1F8003A8[e[0]], e[1], e[2], SFX_NOTE_OVERRIDE, 0, SFX_VOLUME_OVERRIDE, SFX_VOLUME_OVERRIDE);
+        LAST_KEYON_VOICE = SsUtKeyOnV(voice, VAB_IDS[e[0]], e[1], e[2], SFX_NOTE_OVERRIDE, 0, SFX_VOLUME_OVERRIDE, SFX_VOLUME_OVERRIDE);
         break;
     }
     return LAST_KEYON_VOICE;
@@ -429,7 +383,7 @@ s32 playSFXWithPitchSlide(s32 id, s32 interval, s32 step, s32 duration)
         PITCH_SLIDE_ACTIVE = 0;
     }
     e = (u8*)getSfxVabOffset(id);
-    PITCH_SLIDE_VAB = D_1F8003A8[e[0]];
+    PITCH_SLIDE_VAB = VAB_IDS[e[0]];
     PITCH_SLIDE_PROG = e[1];
     note = e[3];
     PITCH_SLIDE_NEW_FINE = 0;
@@ -452,7 +406,7 @@ s16 keyOnSFX(s32 id)
     s32 voice = allocSfxVoice(id);
     u8* e = (u8*)(SFX_BANKS[D_800778E4[(id & SND_SFX_ID_MASK) * 2]] + D_800778E5[(id & SND_SFX_ID_MASK) * 2] * sizeof(SfxDef));
 
-    return SsUtKeyOnV(voice, D_1F8003A8[e[0]], e[1], e[2], e[3], 0, e[4], e[4]);
+    return SsUtKeyOnV(voice, VAB_IDS[e[0]], e[1], e[2], e[3], 0, e[4], e[4]);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", playSFXAndSetNote);
@@ -461,7 +415,7 @@ s16 playSFXAndSetNote(s32 id, s16 note)
     s32 voice = allocSfxVoice(id);
     u8* e = (u8*)(SFX_BANKS[D_800778E4[(id & SND_SFX_ID_MASK) * 2]] + D_800778E5[(id & SND_SFX_ID_MASK) * 2] * sizeof(SfxDef));
 
-    return SsUtKeyOnV(voice, D_1F8003A8[e[0]], e[1], e[2], note, 0, e[4], e[4]);
+    return SsUtKeyOnV(voice, VAB_IDS[e[0]], e[1], e[2], note, 0, e[4], e[4]);
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", queueSfxKeyOff);
@@ -536,9 +490,6 @@ inline s32 adjustAreaBgmVolume(s32 id)
     return id;
 }
 
-extern BgmDef AREA_BGM_DEFS[];
-extern u8* AREA_REVERB_DEPTH[];
-extern s32 AREA_REVERB_MODE[];
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/audio/sound", openAreaBgm);
 s32 openAreaBgm(s32 reverbDepth)
@@ -555,7 +506,7 @@ s32 openAreaBgm(s32 reverbDepth)
         BGM_SEQ_ID = -1;
     }
     BGM_MUTED = 0;
-    vab = D_1F8003A8[AREA_BGM_DEFS[0].vab];
+    vab = VAB_IDS[AREA_BGM_DEFS[0].vab];
     BGM_VAB_ID = vab;
     BGM_SEQ_ID = SsSeqOpen(SEQ_DATA[AREA_BGM_DEFS[0].seq], vab);
     SsSetMVol(100, 100);
@@ -634,7 +585,7 @@ s32 startBgmTrack(s32 id)
         SsSeqClose(BGM_SEQ_ID);
         BGM_SEQ_ID = -1;
     }
-    vab = D_1F8003A8[BGM_TRACK_DEFS[id].vab];
+    vab = VAB_IDS[BGM_TRACK_DEFS[id].vab];
     BGM_VAB_ID = vab;
     BGM_SEQ_ID = SsSeqOpen(SEQ_DATA[BGM_TRACK_DEFS[id].seq], vab);
     SsSetMVol(100, 100);

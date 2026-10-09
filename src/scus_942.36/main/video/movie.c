@@ -18,19 +18,6 @@ u_char D_8007775C[0x18] = {
 };
 
 
-extern short D_80077728[];
-
-typedef struct {
-    u_long* vlcbuf[2];
-    int vlcid;
-    u_short* imgbuf[2];
-    int imgid;
-    RECT rect[2];
-    int rectid;
-    RECT slice;
-    int isdone;
-} DecEnv;
-
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", movieDecodeNextFrame);
 int movieDecodeNextFrame(DecEnv* dec)
 {
@@ -71,7 +58,7 @@ int movieDecodeNextFrame(DecEnv* dec)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/video/movie", cdSeekStream);
 void cdSeekStream(short file_id)
 {
-    if (CdControl(CdlSetloc, (u_char*)&D_800791A0[D_80078F80[D_8007775C[file_id]]], 0) != 0) {
+    if (CdControl(CdlSetloc, (u_char*)&FILE_LINKS[MOVIE_FILE_IDS[D_8007775C[file_id]]], 0) != 0) {
         CdControlF(CdlSeekL, 0);
     }
 }
@@ -98,7 +85,7 @@ void moviePlayerTask(void)
         switch (state) {
             case 0:
                 movieInitDecodeEnv((DecEnv*)&MOVIE_DEC_ENV, 384, 256, 704, 256);
-                startMovieStream((int)&D_800791A0[D_80078F80[D_8007775C[MOVIE_ID]]]);
+                startMovieStream((int)&FILE_LINKS[MOVIE_FILE_IDS[D_8007775C[MOVIE_ID]]]);
                 gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
                 gameControl->state0+=1;
                 do {
@@ -190,7 +177,7 @@ void movieInitDecodeEnv(DecEnv* dec, s32 x0, s32 y0, s32 x1)
 {
     register s32 y1 asm("$3");
 
-    dec->vlcbuf[0] = (u_long*)&D_800B3188;
+    dec->vlcbuf[0] = (u_long*)&LOAD_BUFFER_ALT;
     dec->vlcbuf[1] = (u_long*)&D_800C3188;
     dec->imgbuf[0] = (u_short*)&D_800D3188;
     dec->imgbuf[1] = (u_short*)&D_800D5188;

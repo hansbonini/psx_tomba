@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_80038570);
-s16 func_80038570(u8* self)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", distanceToPlayer);
+s16 distanceToPlayer(u8* self)
 {
     s32 dx = abs((*(s16**)(self + 0x40))[1] - D_800A53D8[1]);
     s32 dy = abs(*(s16*)(self + 0x16) - D_800A53AE);
@@ -32,7 +32,7 @@ void func_8003A604(int id)
     D_8007D6A0 = id;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", func_8003A614);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", unpackSpriteFrame);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objutil", fillBytesUnrolled);
 u8* fillBytesUnrolled(s32 n, u8* dst, u8 val)

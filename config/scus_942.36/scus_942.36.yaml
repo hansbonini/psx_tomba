@@ -368,6 +368,8 @@ segments:
       - [0x67F28, .data, main/video/movie]
       - [0x67F74, .data, main/audio/sound]
       - [0x680E4, data]
+      - [0x687AC, .data, main/system/cdfile]
+      - [0x6BA90, data]
       - [0x6BAF4, .data, main/render/drawutil]
       - [0x6BB30, data]
       - [0x6DD7C, .data, main/game/effect]

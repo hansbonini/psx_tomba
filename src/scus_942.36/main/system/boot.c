@@ -63,9 +63,9 @@ void bootSequenceTask(void)
         switch (state) {
             case 0:
                 LOAD_COMPLETE = 0;
-                loadAreaResources(0);
-                loadAreaResources(1);
-                func_800222B8(0, 1);
+                loadSoundSet(0);
+                loadSoundSet(1);
+                queueSystemLoadList(0, 1);
                 *(s8* )0x1F8001C4 = 0;
                 *(s8* )0x1F8001C5 = 0;
                 memset(D_1F8001A0, 0, sizeof(D_1F8001A0));
@@ -86,7 +86,7 @@ void bootSequenceTask(void)
                 break;
             case 3:
                 task7 = CURRENT_TASK;
-                NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+                NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
                 task7->timer--;
                 if ((s16) task7->timer == -1) {
                     task7->state0++;
@@ -104,7 +104,7 @@ void bootSequenceTask(void)
             case 9:
                 SetDispMask(0);
                 *(byte* )0x1F8001CE = 0U;
-                func_800222B8(0x5E, 1);
+                queueSystemLoadList(0x5E, 1);
                 (CURRENT_TASK)->state0 = 0xAU;
                 break;
             case 10:
@@ -120,7 +120,7 @@ void bootSequenceTask(void)
                 break;
             case 11:
                 task8 = CURRENT_TASK;
-                NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF);
+                NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF);
                 switch (task8->state1) {                    // switch 1; irregular
                     case 0:                             // switch 1
                         task8->unk5A = 1U;
@@ -163,19 +163,6 @@ void bootSequenceTask(void)
     } while(true);
 }
 
-typedef struct {
-    s16 x;
-    s16 y;
-    u8 u;
-    u8 v;
-    s16 w;
-    s16 h;
-    s16 tpage;
-    s16 clutX;
-    s16 clutY;
-} unk_80076E40;
-
-extern unk_80076E40 D_80076E40[];
 
 unk_80076E40 D_80076E40[4] = {
     { 0, 0xC0, 0, 0xC0, 0x100, 0x28, 0x80, 0x80, 0x1E0 },
@@ -251,13 +238,13 @@ void titleSequenceTask(void)
         }
         switch ((u16)(CURRENT_TASK)->state0) {
             case 0:
-                func_800199B8(sp10);
+                bootLogoState(sp10);
                 break;
             case 1:
                 bootLoadMovieResources();
                 break;
             case 2:
-                func_8001A328();
+                optsubScreenState();
                 break;
             case 3:
                 bootPlayIntroMovie();
@@ -270,8 +257,8 @@ void titleSequenceTask(void)
     };
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_800199B8);
-void func_800199B8(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", bootLogoState);
+void bootLogoState(void)
 {
     u16 state2;
     u16 timer;
@@ -294,8 +281,8 @@ void func_800199B8(void)
                 case 0:                             // switch 1
                     SetDispMask(0);
                     LOAD_COMPLETE = 0U;
-                    loadAreaResources(1);
-                    func_800222B8(1, 1);
+                    loadSoundSet(1);
+                    queueSystemLoadList(1, 1);
                     task4 = *(Task** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
                     return;
@@ -334,14 +321,14 @@ void func_800199B8(void)
             SetDispMask(0);
             initDisplayHiRes(240U, 240U, 240U);
             SetDispMask(1);
-            NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (s32) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
             func_800E7D74();
             task = CURRENT_TASK;
             task->timer = 120;
             task->state1++;
             return;
         case 5:
-            NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF);
+            NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF);
             func_800E7D74();
             task6 = CURRENT_TASK;
             timer = task6->timer - 1;
@@ -351,8 +338,8 @@ void func_800199B8(void)
                 SetDispMask(0);
                 initDisplay(0U, 0U, 0U);
                 LOAD_COMPLETE = 0U;
-                loadAreaResources(2);
-                func_800222B8(2, 1);
+                loadSoundSet(2);
+                queueSystemLoadList(2, 1);
                 task5 = *(Task** )(&SCRATCHPAD+0x1D4);
                 task5->state1++;
                 return;
@@ -385,8 +372,8 @@ void bootLoadMovieResources(void)
         case 0:
             SetDispMask(0);
              *(u8* )&scratch->loadComplete = 0;
-            loadAreaResources(2);
-            func_800222B8(2, 1);
+            loadSoundSet(2);
+            queueSystemLoadList(2, 1);
             scratch->currentTask->state1++;
             return;
         case 1:
@@ -482,7 +469,7 @@ void loopTitleScreen(int* arg0)
             return;
         case 3:
             gameControlTemp5 = *(Task** )((byte*)D_1F8001A0+0x34);
-            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
             gameControlTemp5->timer--;
             if ((short)gameControlTemp5->timer <= 0) {
                 gameControlTemp5->state1++;
@@ -569,22 +556,22 @@ void loopTitleScreen(int* arg0)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", func_8001A328);
-void func_8001A328(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/boot", optsubScreenState);
+void optsubScreenState(void)
 {
     u_short state2;
     Task* task;
     Task* task2;
     Task* task3;
 
-    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     switch ((CURRENT_TASK)->state1) {
         case 0:
             stopBgm(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0;
-            loadAreaResources(3);
-            func_800222B8(8, 1);
+            loadSoundSet(3);
+            queueSystemLoadList(8, 1);
             (CURRENT_TASK)->state1++;
             return;
         case 1:
@@ -625,8 +612,8 @@ void func_8001A328(void)
             stopBgm(0);
             SetDispMask(0);
             LOAD_COMPLETE = 0U;
-            loadAreaResources(2);
-            func_800222B8(2, 1);
+            loadSoundSet(2);
+            queueSystemLoadList(2, 1);
             (CURRENT_TASK)->state1++;
             return;
         case 4:

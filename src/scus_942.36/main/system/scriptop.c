@@ -44,7 +44,7 @@ void scriptOpGetPlayerPosition(void)
     SCRIPT_CTX->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D2A8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpShowMessageBox);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjField6A);
 void scriptOpGetObjField6A(void)
@@ -72,8 +72,8 @@ void scriptOpGetObjPosition(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D6C0);
-void func_8003D6C0(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjectPosition);
+void scriptOpSetObjectPosition(void)
 {
     ScriptContext* p = SCRIPT_CTX;
     u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
@@ -396,8 +396,8 @@ void scriptOpSetFadeEffect(void)
     p->pc++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E12C);
-void func_8003E12C(void)
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGiveItem);
+void scriptOpGiveItem(void)
 {
     ScriptContext* p = SCRIPT_CTX;
     s32 a = *(s32*)((u8*)p + 0x1190);

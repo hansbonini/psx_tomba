@@ -55,31 +55,8 @@ void updateItemPickupAnim(GameObject* arg0)
 }
 
 extern int D_80077274;
-extern int D_8013A44C;
-extern int D_80134018;
-extern u8 D_8009C263;
-extern u8 D_8009C616;
-extern int D_80131D84[];
 extern int D_8007728C;
 
-typedef struct {
-    int x;
-    int y;
-    int z;
-} VEC3;
-
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-    u8 unk4;
-    u8 unk5;
-    s16 unk6;
-    int* unk8;
-} unk_8007D6E0;
-
-extern unk_8007D6E0 D_8007D6E0[];
 
 unk_8007D6E0 D_8007D6E0[14] = {
     { 0xA, 0x14, 0x10, 0x20, 1, 0, 2, (int*)0x80014CCC },
@@ -564,11 +541,6 @@ int D_8007E6E4[97] = {
     (int)&D_8007E608
 };
 
-typedef struct {
-    int unk0;
-    s16 unk4;
-    s16 unk6;
-} unk_8007E868;
 
 unk_8007E868 D_8007E868_data[8] asm("D_8007E868") = {
     { 500, 0x150, 0x1E3 },
@@ -598,7 +570,7 @@ void func_8003F3D4(u8* self)
         *(s16*)(self + 0x70) = D_8007D6E0[self[3]].unk2;
         *(s16*)(self + 0x72) = D_8007D6E0[self[3]].unk3;
         *(s16*)(self + 0x1E) = D_8007D6E0[self[3]].unk4;
-        *(int*)(self + 0x3C) = D_1F8002C8[D_8007D6E0[self[3]].unk6];
+        *(int*)(self + 0x3C) = SPR_DATA[D_8007D6E0[self[3]].unk6];
         *(s16*)(self + 0xA6) = D_8007D6E0[self[3]].unk5;
         *(int*)(self + 0x24) = D_8007D6E0[self[3]].unk8[*(s16*)(self + 0xA6)];
         switch (self[3]) {
@@ -868,9 +840,9 @@ void initItemObject(GameObject* arg0)
     arg0->hitOffsetY = (short)temp_s1->unkE;
     arg0->hitHeight = (short)temp_s1->unkF;
 
-    arg0->spriteBank = *(&D_1F8002C8[temp_s1->unk4]);
+    arg0->spriteBank = *(&SPR_DATA[temp_s1->unk4]);
     arg0->unk2E = 1;
-    if (arg0->item_id == 2) {
+    if (arg0->item_id == ITEM_LOSTDWARF) {
         if ((u_long) (arg0->unkC & 0x7F) >= 4U) {
             arg0->buffSize = 0x2000;
             arg0->hitOffsetX = (short) (temp_s1->unkC * 2);

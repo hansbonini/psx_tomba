@@ -345,7 +345,6 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80028D70);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80028EF4);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80029008);
-extern s16 D_800B0778;
 
 void func_80029008(void)
 {

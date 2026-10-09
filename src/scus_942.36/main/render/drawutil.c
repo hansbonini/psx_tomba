@@ -1,18 +1,6 @@
 #include "common.h"
 #include "game.h"
 
-extern u_char D_800A1FF8[];
-extern u_char D_800A2008[];
-typedef struct {
-    u_short u;
-    u_short v;
-    u_short w;
-    u_short h;
-    short clutX;
-    short clutY;
-} UiSpriteDef;
-
-extern UiSpriteDef D_8007B30C[];
 
 UiSpriteDef D_8007B2F4_data[2] asm("D_8007B2F4") = {
     { 0x70, 0, 0x30, 0x30, 0x30, 0x47 },
@@ -31,8 +19,6 @@ UiSpriteDef D_8007B30C[3] = {
     { 0xB8, 0xD0, 0x38, 0x10, 0x160, 0x1FD }
 };
 
-void drawUiSprite(short x, short y, short sprt_id);
-void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/drawutil", fontDebugPrintf);
 void fontDebugPrintf(short x, short y, short color, char* fmt)

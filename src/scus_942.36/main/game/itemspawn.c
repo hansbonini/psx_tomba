@@ -1,12 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-typedef struct { s32 x, y, z; } Vec3L;
 s16 probeCollisionAtDepthB(u8*, s16, s16);
-extern s16 D_80114670[];
 s32 probeCollisionAtDepthA(u8*, s16, s16);
-extern s16 D_800A38E8;
-extern s16 D_1F80027E;
 s16 func_80043D2C(u8*, s16, s16);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_8004117C);
@@ -149,7 +145,7 @@ u8* getCollisionColumnPtr(s16 arg0, u8 arg1) {
     return base + off;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", func_80042654);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", getCollisionPlaneAt);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/itemspawn", readCollisionTileShape);
 inline s32 readCollisionTileShape(u8* arg0) {

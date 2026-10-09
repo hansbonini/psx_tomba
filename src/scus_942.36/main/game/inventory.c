@@ -177,8 +177,8 @@ void updateInventoryOverlay(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029C80);
-s32 func_80029C80(s32 arg0) {
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", stepPlayerXToward);
+s32 stepPlayerXToward(s32 arg0) {
     s16* p = D_800A53D8;
     u16 x = p[1];
     s32 target = arg0;

@@ -1,0 +1,74 @@
+font_height: 8
+hash: "sha256 of u16 w (VRAM words), u16 h, then the w*h glyph words as stored in the WFM"
+sheet:
+  file: font_08.png
+  columns: 16
+  cell: [8, 8]
+glyphs:
+  - { hash: 39f53b12151d43cb6387ec54ea8d15fd4aac1b495043a783a23c78a3c158208d, char: " ", w: 8, h: 8, advance: 8, handakuten: 0, x: 0, y: 0 }
+  - { hash: ca18c4cdf9b76a1ed80012ef5e99a636074d39c53f83e45e39d7098289689607, char: "'", w: 8, h: 8, advance: 8, handakuten: 0, x: 8, y: 0 }
+  - { hash: acb5bece44404990c4979661d52f6e5e76629173e8c932e0117b4f8ba223fcad, char: "!", w: 8, h: 8, advance: 8, handakuten: 0, x: 16, y: 0 }
+  - { hash: 72fa2b42097bf49620924d5987696a461350be4adb204820d0a5d7a07caed10a, char: "+", w: 8, h: 8, advance: 8, handakuten: 0, x: 24, y: 0 }
+  - { hash: 65faeec79e7688367e3c888e7c6ade0140217fd955ac6f14b31f28ff3ddca921, char: ",", w: 8, h: 8, advance: 8, handakuten: 0, x: 32, y: 0 }
+  - { hash: 445c06ebb782849abc4912adc30570076aa83256125da3612a255f989842c15e, char: ".", w: 8, h: 8, advance: 8, handakuten: 0, x: 40, y: 0 }
+  - { hash: 18f93bed513e9ac5e78d76007c2233d6df6c2b560de560a822c3f74a382bd511, char: "/", w: 8, h: 8, advance: 8, handakuten: 0, x: 48, y: 0 }
+  - { hash: e06f28aff3ad5f55619d71b21bc0430f3d66340abeb8065f1d739e745c11f2e1, char: "0", w: 8, h: 8, advance: 8, handakuten: 0, x: 56, y: 0 }
+  - { hash: 012f77a1f17bbd79c0e01539437b752ef1defed7915ebdbb4e7c795d1dcb400c, char: "1", w: 8, h: 8, advance: 8, handakuten: 0, x: 64, y: 0 }
+  - { hash: f86134b0e2f03e0b1f8d87cbc374118def74e5c232315f4c86b909ebc9e26654, char: "2", w: 8, h: 8, advance: 8, handakuten: 0, x: 72, y: 0 }
+  - { hash: de0720558e27555121f40b47537a4ad657ec932bb2ae462e8f2f7cb9b68c17b5, char: "3", w: 8, h: 8, advance: 8, handakuten: 0, x: 80, y: 0 }
+  - { hash: d8ad12f1208ac4986676f467a7775159986cade49184df7823c02cf6b8c322c0, char: "4", w: 8, h: 8, advance: 8, handakuten: 0, x: 88, y: 0 }
+  - { hash: 8abe58855e5809aab80ba6cb8d7ea0d9e8fde0c82c300a7341f43114cdf3e820, char: "5", w: 8, h: 8, advance: 8, handakuten: 0, x: 96, y: 0 }
+  - { hash: 9c6dd7a9a841469a9e8bac29e560b65250df1ea0eed420e7647352a8f93315ce, char: "6", w: 8, h: 8, advance: 8, handakuten: 0, x: 104, y: 0 }
+  - { hash: 188f425a537d6e99197104141b81f44f31c95649832a267f9fa197c818ff2207, char: "7", w: 8, h: 8, advance: 8, handakuten: 0, x: 112, y: 0 }
+  - { hash: dc78e8c0b31e4e6a6df42b3b4d910da595a172863f42060594894019b66206fa, char: "8", w: 8, h: 8, advance: 8, handakuten: 0, x: 120, y: 0 }
+  - { hash: 1d4c0d7530ec824042a2133f704c280ef74d9ff7d986214e134574f12a695e90, char: "9", w: 8, h: 8, advance: 8, handakuten: 0, x: 0, y: 8 }
+  - { hash: 8f971e4eaa72c2207bdf473734d8b39d5bcc64de529bff5ac080e42ce11e8eab, char: "A", w: 8, h: 8, advance: 8, handakuten: 0, x: 8, y: 8 }
+  - { hash: 168bbfc3b2efb589060d9df5630210e3e2c99bfcc8c0be6f4c15a6320c8a8bb8, char: "B", w: 8, h: 8, advance: 8, handakuten: 0, x: 16, y: 8 }
+  - { hash: 887cbd10d887a29017963f345cc982d769a6bee95c89595d392b042f466474aa, char: "C", w: 8, h: 8, advance: 8, handakuten: 0, x: 24, y: 8 }
+  - { hash: 038c1bb0f0e6e285a667b60eca57c9681462100ec21cb2e72127ce219eb74a32, char: "D", w: 8, h: 8, advance: 8, handakuten: 0, x: 32, y: 8 }
+  - { hash: 476467c992703018042f21331da9dabf1fed6164acf0d138378b3d9ca4d34100, char: "E", w: 8, h: 8, advance: 8, handakuten: 0, x: 40, y: 8 }
+  - { hash: 0337d39c45e992a0b02d1de8525bd820e3b85f9358838c8547556b79519bc588, char: "F", w: 8, h: 8, advance: 8, handakuten: 0, x: 48, y: 8 }
+  - { hash: 529211c60a0248c14f0d93e79d02a89f11306c642c1a41f663c0417d3a7791af, char: "G", w: 8, h: 8, advance: 8, handakuten: 0, x: 56, y: 8 }
+  - { hash: de249feb5667e7679242a53170999e5ef32541f8c919e1a79d0a4999b8941ffe, char: "H", w: 8, h: 8, advance: 8, handakuten: 0, x: 64, y: 8 }
+  - { hash: 674c653ac318e03ab7014f16ecde0cab7d8935d937824945cc683a1e34537d18, char: "I", w: 8, h: 8, advance: 8, handakuten: 0, x: 72, y: 8 }
+  - { hash: 0479af46cbc07843b8bd49a09bca0ecc7fe17bfc1db021bff68c6b6c4a1cb466, char: "J", w: 8, h: 8, advance: 8, handakuten: 0, x: 80, y: 8 }
+  - { hash: bd230b06c8cbc4e21cb6710ccb19ee1e6ce78e405029f6d6b4bc0581bd6c1898, char: "K", w: 8, h: 8, advance: 8, handakuten: 0, x: 88, y: 8 }
+  - { hash: 5952cae688f003e1d5c1ba46b8d2324e25f90bb964234dcd46599f94e64dbff8, char: "L", w: 8, h: 8, advance: 8, handakuten: 0, x: 96, y: 8 }
+  - { hash: 666cadff79f10c5965bac51f7b928794ddb9d0e2b0e58c098efcdf4466632986, char: "M", w: 8, h: 8, advance: 8, handakuten: 0, x: 104, y: 8 }
+  - { hash: 372155ac228deaf5554c19a27088467f88c2958468b6fddbcd3f57079e9bbd0a, char: "N", w: 8, h: 8, advance: 8, handakuten: 0, x: 112, y: 8 }
+  - { hash: 31367c98f29188145ee20581c3f782a138f37f0392d0bb3dbca5aef502e45a47, char: "O", w: 8, h: 8, advance: 8, handakuten: 0, x: 120, y: 8 }
+  - { hash: cd718fd73a3b87bf552a3137867cfcc76adbd1b01e836bbfe3018176b701a7ad, char: "P", w: 8, h: 8, advance: 8, handakuten: 0, x: 0, y: 16 }
+  - { hash: 9e304dfbf700e419c6416f0b2f667d2b4cd7f13384d1c6fed4b8cd6e2dd11627, char: "R", w: 8, h: 8, advance: 8, handakuten: 0, x: 8, y: 16 }
+  - { hash: 6adf94e1724c7636cc6beacbf04021bdeaf5c5188a53cbe32642157aed39763d, char: "S", w: 8, h: 8, advance: 8, handakuten: 0, x: 16, y: 16 }
+  - { hash: ffd44a81a354e12af6c84769ecaa5a5b4bcb905053bc02a9f317e50cc1959435, char: "T", w: 8, h: 8, advance: 8, handakuten: 0, x: 24, y: 16 }
+  - { hash: 380134ff9d98893ad3c19efefefd216be3f79888fb255a98f517a889c9c69e11, char: "U", w: 8, h: 8, advance: 8, handakuten: 0, x: 32, y: 16 }
+  - { hash: 9c6dca7ec826dda5cba58e72fa26fca945cadfb8d7351e77a11e243a0a011d57, char: "V", w: 8, h: 8, advance: 8, handakuten: 0, x: 40, y: 16 }
+  - { hash: 6bfa00fb5d903453eccd6fa1277d63f202142f7dd1cdb7fc2b2f2426636d49a7, char: "W", w: 8, h: 8, advance: 8, handakuten: 0, x: 48, y: 16 }
+  - { hash: b26c1858e02be9ef3d87e400af8c5f106a256071d3febc6a0be3bcc22fa094d4, char: "X", w: 8, h: 8, advance: 8, handakuten: 0, x: 56, y: 16 }
+  - { hash: cd0f1c84afcbe9abfce2948b17bd5c99dd637932190a699399eacb30f8ace56e, char: "Y", w: 8, h: 8, advance: 8, handakuten: 0, x: 64, y: 16 }
+  - { hash: 18fc90669c4de2004c4e47fe492ff185fbb2942b398c3df0a67472d96b22dac0, char: "Z", w: 8, h: 8, advance: 8, handakuten: 0, x: 72, y: 16 }
+  - { hash: 0831e31ed80ebb572a93d76d472524ac839bc5ceadb53ea283a4df201f17235d, char: "a", w: 8, h: 8, advance: 8, handakuten: 0, x: 80, y: 16 }
+  - { hash: f4d28b627517dea3d08cfc96dd0ba400509cd532d6da404de56c9c82a0cefe90, char: "b", w: 8, h: 8, advance: 8, handakuten: 0, x: 88, y: 16 }
+  - { hash: f708fecd3c52da8a6f940cba35f9beec5b11cf730ca3bf3e9a7a33bbc2db48d3, char: "c", w: 8, h: 8, advance: 8, handakuten: 0, x: 96, y: 16 }
+  - { hash: cc24a7b94574acdb8082065cd91d0846968cab43abbcf6d4ebad555382c9a055, char: "d", w: 8, h: 8, advance: 8, handakuten: 0, x: 104, y: 16 }
+  - { hash: b7026c9ae3628fe8d791a105aa317b02a16fa80293af200ad899f47b3d15a7aa, char: "e", w: 8, h: 8, advance: 8, handakuten: 0, x: 112, y: 16 }
+  - { hash: 9ff621fca3b6a9df266e3aee14f8866895c7284d0d4cffcd6e0fa00b4b3d9d71, char: "f", w: 8, h: 8, advance: 8, handakuten: 0, x: 120, y: 16 }
+  - { hash: 4d61176f29350a1308304b3e658c15e6ab2779c13b2f1bee3ef26514af81a304, char: "g", w: 8, h: 8, advance: 8, handakuten: 0, x: 0, y: 24 }
+  - { hash: 0be01c4f7daa3958e138e7e82b77faf0aede4c8ea424c7669298b35f75c16bfa, char: "h", w: 8, h: 8, advance: 8, handakuten: 0, x: 8, y: 24 }
+  - { hash: b9550c4319810960f7f21ec6bf05be9b1f721cf3bd2c6e03f1750b7bb5c66c2d, char: "i", w: 8, h: 8, advance: 8, handakuten: 0, x: 16, y: 24 }
+  - { hash: 17985d93c9785e0dcc510db83b50119a836a8256c92c502e69fc193c98b03bf6, char: "j", w: 8, h: 8, advance: 8, handakuten: 0, x: 24, y: 24 }
+  - { hash: 63341a201297a75093b45043d6629bafcb12273d44a8358e955a038258568bfa, char: "k", w: 8, h: 8, advance: 8, handakuten: 0, x: 32, y: 24 }
+  - { hash: d733690b5ba1b2ebbbb2b2bfd5b8fe830ee84dbaf12f59c5913452c3c35f54af, char: "l", w: 8, h: 8, advance: 8, handakuten: 0, x: 40, y: 24 }
+  - { hash: 7a34beb3fd608901e9dafd65c58a94a08622bd4fff895a35e283eb87d14d00dd, char: "m", w: 8, h: 8, advance: 8, handakuten: 0, x: 48, y: 24 }
+  - { hash: 903e135cbcaca6cc0b6887713ff168f00765a8f65b9f730e4aae75851e61d251, char: "n", w: 8, h: 8, advance: 8, handakuten: 0, x: 56, y: 24 }
+  - { hash: 89c19fd04e43f82bfb52309af70fad0ac76af1dd6828eb2129d1e2384e706841, char: "o", w: 8, h: 8, advance: 8, handakuten: 0, x: 64, y: 24 }
+  - { hash: bd8c7a090119e70c2076184c09778f3240667253e9f1137456ea614db8a3d2e1, char: "p", w: 8, h: 8, advance: 8, handakuten: 0, x: 72, y: 24 }
+  - { hash: 8ae39776af35437f398e3e1123660e8df1d167c46742c9ade32a0ac44b652503, char: "q", w: 8, h: 8, advance: 8, handakuten: 0, x: 80, y: 24 }
+  - { hash: f84d4d1e80ba88642f79ee79499e18f31d8c1d1a86d3922f192658fae94a8592, char: "r", w: 8, h: 8, advance: 8, handakuten: 0, x: 88, y: 24 }
+  - { hash: 5ff1df0f87a836d3b5bad12c27b6ab3eca19d0e6e9a1a0d70e46c49bffbb605a, char: "s", w: 8, h: 8, advance: 8, handakuten: 0, x: 96, y: 24 }
+  - { hash: b956bef8768d019a9482e2613090e4294b56fefc3a0c476441ecae7a340e45ad, char: "t", w: 8, h: 8, advance: 8, handakuten: 0, x: 104, y: 24 }
+  - { hash: 7f2462de61b2fab29e01722262e43ab5f61e9a4ed68abd8f72ea725d6e978152, char: "u", w: 8, h: 8, advance: 8, handakuten: 0, x: 112, y: 24 }
+  - { hash: 646e0a40994ca4661c782af140627c8daad94027c7faedc527ecd377f18eb694, char: "v", w: 8, h: 8, advance: 8, handakuten: 0, x: 120, y: 24 }
+  - { hash: 9195368ba534fc0eff8334e8304ae2e20526e7f20d32a6d3eaa7d4ec31cef686, char: "w", w: 8, h: 8, advance: 8, handakuten: 0, x: 0, y: 32 }
+  - { hash: b85406e429fd83e584c1d01d1cb9a3e0767ffb1e0bdaf5e0246896d4587c31f5, char: "x", w: 8, h: 8, advance: 8, handakuten: 0, x: 8, y: 32 }
+  - { hash: 25303edafbbd94fd0c7650bfa40e87ff214819a3e94989382378fba8b0ece260, char: "y", w: 8, h: 8, advance: 8, handakuten: 0, x: 16, y: 32 }

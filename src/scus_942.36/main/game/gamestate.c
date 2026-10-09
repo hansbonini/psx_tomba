@@ -1,63 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-extern u32 D_80076E88[];
-extern u32 D_80076E94[];
-extern u32 D_80076EA0[];
-extern u32 D_80076EAC[];
-extern u32 D_80076EB8[];
-extern u32 D_80076EE4[];
-extern u32 D_80076EEC[];
-extern u32 D_80076EF4[];
-extern u32 D_80076F00[];
-extern u32 D_80076F08[];
-extern u32 D_80076F14[];
-extern u32 D_80076F28[];
-extern u32 D_80076F34[];
-extern u32 D_80076F60[];
-extern u32 D_80076F64[];
-extern u32 D_80076F74[];
-extern u32 D_80076F84[];
-extern u32 D_80076F9C[];
-extern u32 D_80076FA4[];
 extern u32 D_80076FAC_data[] asm("D_80076FAC");
-extern u32 D_80076FFC[];
-extern u32 D_80077004[];
-extern u32 D_8007700C[];
-extern u32 D_80077014[];
-extern u32 D_8007701C[];
-extern u32 D_80077030[];
-extern u32 D_80077034[];
-extern u32 D_80077038[];
-extern u32 D_8007703C[];
-extern u32 D_80077044[];
-extern u32 D_80077050[];
-extern u32 D_8007705C[];
-extern u32 D_80077060[];
-extern u32 D_80077068[];
-extern u32 D_80077070[];
-extern u32 D_8007707C[];
-extern u32 D_80077080[];
 extern u32 D_80077084_data[] asm("D_80077084");
-extern u32 D_800770D4[];
-extern u32 D_800770DC[];
-extern u32 D_800770E4[];
-extern u32 D_800770EC[];
-extern u32 D_800770F4[];
-extern u32 D_80077108[];
-extern u32 D_8007710C[];
-extern u32 D_80077110[];
-extern u32 D_80077118[];
-extern u32 D_8007711C[];
-extern u32 D_80077124[];
-extern u32 D_80077130[];
-extern u32 D_80077134[];
-extern u32 D_80077148[];
-extern u32 D_8007714C[];
-extern u32 D_80077154[];
-extern u32 D_8007715C[];
-extern u32 D_80077164[];
-extern u32 D_80077168[];
 extern u32 D_8007716C_data[] asm("D_8007716C");
 extern u32 D_800771FC_data[] asm("D_800771FC");
 extern u32 D_8007722C_data[] asm("D_8007722C");
@@ -430,8 +375,8 @@ void titleScreenHandler(void)
             SetDispMask(0);
             func_80028CE4();
             LOAD_COMPLETE = 0;
-            loadAreaResources(3);
-            func_800222B8(5, 1);
+            loadSoundSet(3);
+            queueSystemLoadList(5, 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state1++;;
             return;
@@ -448,7 +393,7 @@ void titleScreenHandler(void)
         default:
             return;
         case 2:
-            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+            NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
             temp_v0 = func_800E9438();
             if (temp_v0 == 1) {
                 (CURRENT_TASK)->state1++;
@@ -515,7 +460,7 @@ void introSequenceHandler(void)
     temp_v1 = (CURRENT_TASK)->state2;
     switch (temp_v1) {
         case 0:
-            func_800222B8(9, 1);
+            queueSystemLoadList(9, 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->state2++;
             return;
@@ -780,7 +725,7 @@ void debugSelectHandler(void)
 
     switch ((CURRENT_TASK)->step.value) {
         case 0:
-            func_800222B8(9, 1);
+            queueSystemLoadList(9, 1);
             (CURRENT_TASK)->step.value++;
             return;
         case 1:
@@ -924,7 +869,7 @@ void gameplayMainHandler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", gameplayTick);
 void gameplayTick(void)
 {
-    *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    *(s32* )(&SCRATCHPAD+0x164) = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 2) {
         if (*(u8* )(&SCRATCHPAD+0x1CC) == 0) {
             *(s16* )0x1F8001C6 = 0;
@@ -1022,7 +967,7 @@ void areaMode2Tick(void)
     u_short var_a1;
     Task* temp_v1;
 
-    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     if ((*(short* )(&SCRATCHPAD+0x1C6) == 2) && (MOVIE_PLAY_STATE == MOVIE_STATE_IDLE)) {
         *(short* )0x1F8001C6 = 0;
     }
@@ -1109,19 +1054,19 @@ void inventoryScreenHandler(void)
                 case 1:                             // switch 2
                 case 2:                             // switch 2
                 case 6:                             // switch 2
-                    func_800222B8(3, 1);
+                    queueSystemLoadList(3, 1);
                     break;
                 case 4:                             // switch 2
-                    func_800222B8(4, 1);
+                    queueSystemLoadList(4, 1);
                     break;
                 case 5:                             // switch 2
-                    func_800222B8(5, 1);
+                    queueSystemLoadList(5, 1);
                     break;
                 case 7:                             // switch 2
-                    func_800222B8(6, 1);
+                    queueSystemLoadList(6, 1);
                     break;
                 case 3:                             // switch 2
-                    func_800222B8(7, 1);
+                    queueSystemLoadList(7, 1);
                     break;
             }
             temp_v1_2 = CURRENT_TASK;
@@ -1159,7 +1104,7 @@ void inventoryScreenHandler(void)
             setRGB0((DRAWENV*)(&DRAW_ENV_1), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
             setRGB0((DRAWENV*)(DRAW_ENV_2), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
             var_a0 = (D_80076FAC[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
-            func_800222B8(((s16*)var_a0)[GAME.selectedSection], 1);
+            queueSystemLoadList(((s16*)var_a0)[GAME.selectedSection], 1);
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->step.value++;
             return;
@@ -1204,7 +1149,7 @@ void inventoryScreenTick(void)
     s32 var_s0;
 
     *(u16* )(&SCRATCHPAD+0x1F8)=*(u16* )(0x1F8001F8)+1;
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     switch (D_800A3952) {
         case 0:
         case 1:
@@ -1312,7 +1257,7 @@ void areaMode4Handler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode4Tick);
 void areaMode4Tick(void)
 {
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
@@ -1404,7 +1349,7 @@ void areaMode5Handler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode5Tick);
 void areaMode5Tick(void)
 {
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(u16* )(&SCRATCHPAD+0x1F8))++;
@@ -1495,7 +1440,7 @@ void areaMode6Handler(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", areaMode6Tick);
 void areaMode6Tick(void)
 {
-    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &D_800B3188) & 0xFFFFFF;
+    NEXT_PRIM = (s32) ((*(s16* )(&SCRATCHPAD+0x1F4) * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (*(s16* )(&SCRATCHPAD+0x1C6) == 0) {
         (*(s16* )(&SCRATCHPAD+0x1F8))++;
@@ -1699,13 +1644,13 @@ void loadCurrentArea(s16 arg0)
     D_8009C614 = D_8009BCEA;
     *(short*)0x1F8001DC = val;
 
-    func_80021C24(GAME.selectedArea + (u16)D_8009EBA0);
+    loadAreaListFile(GAME.selectedArea + (u16)D_8009EBA0);
 
     if (loadAreaSectionResources((s16)arg0) != -1) {
         D_8009BCCF = 2;
     }
 
-    func_80021CC8(GAME.selectedArea + (u16)D_8009EBA0, GAME.selectedSection, (s16)(arg0 | variant));
+    queueAreaSectionLists(GAME.selectedArea + (u16)D_8009EBA0, GAME.selectedSection, (s16)(arg0 | variant));
     loadAreaSoundBank();
     startSoundTask();
 }
@@ -1726,7 +1671,7 @@ void areaTransitionHandler(void)
 {
     switch (CURRENT_TASK->step.value) {
     case 0:
-        func_800222B8(9, 1);
+        queueSystemLoadList(9, 1);
         goto advance;
     case 1:
         if (LOAD_COMPLETE == 0) break;
@@ -1791,13 +1736,13 @@ void areaTransitionHandler(void)
         D_8009C614 = D_8009BCEA;
         *(short*)0x1F8001DC = val;
 
-        func_80021C24(GAME_A + (u16)D_8009EBA0);
+        loadAreaListFile(GAME_A + (u16)D_8009EBA0);
 
         if (loadAreaSectionResources(areaChanged) != -1) {
             D_8009BCCF = 2;
         }
 
-        func_80021CC8(GAME_B + (u16)D_8009EBA0, D_8009BCCA, variant | areaChanged);
+        queueAreaSectionLists(GAME_B + (u16)D_8009EBA0, D_8009BCCA, variant | areaChanged);
         loadAreaSoundBank();
         startSoundTask();
         D_8009EB4C = 0;
@@ -1834,7 +1779,7 @@ void func_8001D2F0(void)
         task->step.value = 0;
         LOAD_COMPLETE = 0;
         task->state2++;
-        func_800222B8(0x5D, 1);
+        queueSystemLoadList(0x5D, 1);
         break;
     case 1:
         if (LOAD_COMPLETE == 0) break;
@@ -1895,7 +1840,7 @@ void func_8001D480(void)
         t0->state2++;
         stopAllSound();
         LOAD_COMPLETE = 0;
-        func_800222B8(0x5D, 1);
+        queueSystemLoadList(0x5D, 1);
         break;
     }
     case 1:
@@ -1966,14 +1911,6 @@ void openMenuScreenEx(s16 arg0, s16 arg1, s16 arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/gamestate", updatePauseMenu);
-typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 pad2[0x10];
-    s16 unk12;
-    s16 unk14;
-    s16 unk16;
-} unk_800A3940;
 #define MENU_STATE ((unk_800A3940*)D_800A3940)
 
 void updatePauseMenu(void) {
@@ -2322,7 +2259,7 @@ s32 loadAreaSectionResources(s32 arg)
     s0 = s1;
 
     if (*(u8*)0x1F8003D3 != s0 || arg != 0) {
-        loadAreaResources(s0);
+        loadSoundSet(s0);
         s4 = s0;
         stopAllSound();
         *(&SCRATCHPAD + 0x3D3) = s1;
@@ -2330,13 +2267,13 @@ s32 loadAreaSectionResources(s32 arg)
 
     if (s2 == 1 || s2 == 7) {
         keyOffActiveSfxVoices();
-        loadAreaResources(D_800771BC[gp->selectedSection]);
+        loadSoundSet(D_800771BC[gp->selectedSection]);
     } else if (s2 == 0xA && gp->selectedSection != 3 && gp->selectedSection != 7) {
         keyOffActiveSfxVoices();
-        loadAreaResources(D_800771C4[gp->selectedSection]);
+        loadSoundSet(D_800771C4[gp->selectedSection]);
     } else if (s2 == 0xC) {
         keyOffActiveSfxVoices();
-        loadAreaResources(D_800771D0[gp->selectedSection]);
+        loadSoundSet(D_800771D0[gp->selectedSection]);
     }
 
     return s4;

@@ -10,7 +10,6 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004DFA0);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E244);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E3EC);
-extern s16 D_800B0778;
 
 void func_8004E3EC(void)
 {
@@ -38,7 +37,7 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004EB10);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004ED80);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004EFA8);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", drawMessageGlyphs);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", addDrawModePrim);
 void addDrawModePrim(short tpage, int p) {

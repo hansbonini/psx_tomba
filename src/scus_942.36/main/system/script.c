@@ -3,7 +3,7 @@
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/system/script", D_80013798);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B0D4);
+INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", uploadSpriteFrame);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", projectOriginToScreen);
 s32 projectOriginToScreen(s32 arg0, s16* arg1)

@@ -321,10 +321,6 @@ u_char runScriptContext(ScriptContext* ctx)
     return p->state;
 }
 
-extern u8 D_8009C119;
-extern u8 D_8009C120;
-extern u8 D_8009C121;
-extern u8 D_8009C245;
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptexec", loadAreaSoundBank);
 void loadAreaSoundBank(void)
@@ -336,7 +332,7 @@ void loadAreaSoundBank(void)
         case 0:
         case 1:
         case 2:
-            loadSoundBank(0xF, 6);
+            loadWssFile(0xF, 6);
             D_8009CA04 = 1;
             break;
         }
@@ -347,29 +343,29 @@ void loadAreaSoundBank(void)
         case 0:
         case 1:
             if (D_8009C119 != 0xFF) {
-                loadSoundBank(0xF, 0);
+                loadWssFile(0xF, 0);
                 D_8009CA04 = 1;
             }
             if (D_8009C120 == 0xFF) {
                 if (D_8009C121 == 0) {
-                    loadSoundBank(0xF, 0);
+                    loadWssFile(0xF, 0);
                     D_8009CA04 = 1;
                 } else if (D_8009C245 == 2) {
-                    loadSoundBank(0xF, 0);
+                    loadWssFile(0xF, 0);
                     D_8009CA04 = 1;
                 }
             }
             break;
         case 2:
-            loadSoundBank(0xF, 5);
+            loadWssFile(0xF, 5);
             D_8009CA04 = 1;
             break;
         case 3:
-            loadSoundBank(0xF, 4);
+            loadWssFile(0xF, 4);
             D_8009CA04 = 1;
             break;
         case 4:
-            loadSoundBank(0xF, 3);
+            loadWssFile(0xF, 3);
             D_8009CA04 = 1;
             break;
         }
@@ -378,18 +374,18 @@ void loadAreaSoundBank(void)
         switch (D_8009BCCA) {
         case 0:
             if (D_8009C120 == 1) {
-                loadSoundBank(0xF, 8);
+                loadWssFile(0xF, 8);
             } else {
-                loadSoundBank(0xF, 1);
+                loadWssFile(0xF, 1);
             }
             D_8009CA04 = 2;
             break;
         case 1:
-            loadSoundBank(0xF, 2);
+            loadWssFile(0xF, 2);
             D_8009CA04 = 1;
             break;
         case 2:
-            loadSoundBank(0xF, 7);
+            loadWssFile(0xF, 7);
             D_8009CA04 = 1;
             break;
         }
@@ -398,14 +394,14 @@ void loadAreaSoundBank(void)
         switch (D_8009BCCA) {
         case 0:
             if (D_8009C120 == 1) {
-                loadSoundBank(0xF, 8);
+                loadWssFile(0xF, 8);
             } else {
-                loadSoundBank(0xF, 1);
+                loadWssFile(0xF, 1);
             }
             D_8009CA04 = 2;
             break;
         case 1:
-            loadSoundBank(0xF, 2);
+            loadWssFile(0xF, 2);
             D_8009CA04 = 1;
             break;
         }
