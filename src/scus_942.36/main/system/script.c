@@ -1,7 +1,38 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", uploadSpriteFrame);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", uploadSpriteFrame);
+typedef struct { char p0[2]; u8 type; char p3[0x24 - 3]; u16 *anim; } O_3B0D4;
+extern s32 WPP_DATA;
+extern char *D_8009B698;
+extern void unpackSpriteFrame(s32, s32, char *, s32);
+
+void uploadSpriteFrame(O_3B0D4 *o)
+{
+    RECT r;
+    switch (o->type) {
+    case 0:
+        unpackSpriteFrame(WPP_DATA, *o->anim, (char *)0x801fb000, 0);
+        r.y = 2;
+        r.w = 0x10;
+        r.h = 0x50;
+        r.x = (*(u16 *)&D_1F8001F4) << 4;
+        ClearImage(&r, 0, 0, 0);
+        break;
+    case 1:
+    case 2:
+    case 3:
+        unpackSpriteFrame(D_1F800350, *o->anim, (char *)0x801fb000, 0);
+        r.y = 2;
+        r.w = 0xe;
+        r.h = 0x3a;
+        r.x = (*(u16 *)&D_1F8001F4) << 4;
+        ClearImage(&r, 0, 0, 0);
+        break;
+    }
+    loadTIM((char *)0x801fb000, (*(u16 *)&D_1F8001F4) * 16 + 1, 4, 0x80, 0x1e0);
+    *(u16 *)(D_8009B698 + D_1F8001F4 * 2 + 0x28) = *o->anim;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", projectOriginToScreen);
 s32 projectOriginToScreen(s32 arg0, s16* arg1)
@@ -35,8 +66,6 @@ void loadCompressedTIM(s32 arg0)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/script", func_8003B2C8);
 typedef struct H_3B2C8 { s16 m[2]; s16 x[2]; s16 d[64]; } H_3B2C8;
 typedef struct D_3B2C8 { s16 d[64]; char *base; char *cur; u8 f; } D_3B2C8;
-extern s32 D_8009CA04;
-extern s32 printf(char *, ...);
 
 s32 func_8003B2C8(char *p, D_3B2C8 *o)
 {
@@ -494,7 +523,6 @@ typedef struct {
     char b89;
     u16 w8a;
 } G_3BF58;
-extern char D_80013798[];
 
 void func_8003BF58(void)
 {

@@ -1,6 +1,5 @@
 #include "common.h"
 #include "game.h"
-//#include "psyq/libcd.h"
 
 s32 fixedMulSin(s16 arg0, s16 arg1);
 s32 fixedMulCos(s16 arg0, s16 arg1);
@@ -1847,7 +1846,6 @@ void cdLoadTask(void)
 }
 
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", stubCdFunction);
 int stubCdFunction(void)
 {
     return 0;
@@ -1942,21 +1940,14 @@ void loadSoundSet(s32 arg0)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800223E0);
-extern volatile u16 D_8009C9D8__223E0[];
-extern volatile u16 D_8009C9DA__223E0;
-extern volatile u16 D_8009C9DE__223E0;
-extern u16 D_1F8001FC;
-extern u16 D_1F8001FE;
-extern u16 func_80028D70(s32);
-extern void func_80028B34(void);
 
 void func_800223E0(void)
 {
-    D_8009C9DC = D_8009C9D8__223E0[0];
-    D_8009C9DE__223E0 = D_8009C9DA__223E0;
-    D_8009C9D8__223E0[0] = func_80028D70(0);
-    D_1F8001FC = ~D_8009C9DC & D_8009C9D8__223E0[0];
-    D_1F8001FE = ~D_8009C9D8__223E0[0] & D_8009C9DC;
+    D_8009C9DC = D_8009C9D8[0];
+    D_8009C9DE = D_8009C9DA;
+    D_8009C9D8[0] = func_80028D70(0);
+    D_1F8001FC = ~D_8009C9DC & D_8009C9D8[0];
+    D_1F8001FE = ~D_8009C9D8[0] & D_8009C9DC;
     func_80028B34();
 }
 
@@ -2144,7 +2135,6 @@ void applyObjectSpeedX(u8* self)
     *p += *(s16*)(self + 0x80) << 8;
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", applyObjectSpeedVertical);
 void applyObjectSpeedVertical(u_short* id)
 {
     ((u_int*)(id))[0x5] = (int)(((u_int*)(id))[0x5] + (((short*)(id))[0x41] << 8));

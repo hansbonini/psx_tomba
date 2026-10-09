@@ -2,8 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80022C08);
-extern u16 D_1F800176;
-extern u16 D_1F800186;
 void pushDrawListLayer1(GameObject *o);
 void pushDrawListMain(GameObject *o);
 void pushDrawListCapped(GameObject *o);
@@ -32,7 +30,6 @@ s32 func_80022C08(GameObject *o, s32 x)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80022D3C);
-extern u16 D_1F800176;
 void pushDrawListLayer1(GameObject *o);
 void pushDrawListMain(GameObject *o);
 void pushDrawListCapped(GameObject *o);
@@ -106,9 +103,39 @@ s32 isOnScreen(s16 x, s16 y)
     return 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023020);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023020);
+typedef struct O_23020 { u8 active, visible, p2, p3, b04; char p5[0x16 - 5]; s16 y; char p18[0x40 - 0x18]; u16 *h; } O_23020;
+void func_80023020(O_23020 *o)
+{
+    char pad;
+    s16 y;
+    if (o->active != 0) {
+        y = o->y;
+        if (D_800A38EA + 0x98 <= y
+            || (u16)(o->h[1] - D_1F800176 + 0xa0) > 0x27f
+            || (u16)(D_1F800186 - y + 0xa0) > 0x22f) {
+            o->b04 = 3;
+            o->active = 2;
+            o->visible = 0;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_800230BC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_800230BC);
+
+void func_800230BC(GameObject *o, s32 a)
+{
+    s16 y;
+    if (o->active == 0) return;
+    y = o->y.p.whole;
+    if (D_800A38EA + 0x98 > y) {
+        if ((u16)(o->h->p.whole - D_1F800176 + a) < (s16)a * 2 + 0x140 &&
+            (u16)(D_1F800186 - y + a) < (s16)a * 2 + 0xf0) return;
+    }
+    o->state = 3;
+    o->active = 2;
+    o->visible = 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", angleFromDelta);
 s32 angleFromDelta(s32 a, s32 b)
@@ -175,16 +202,12 @@ void setObjectAxisPointers(u8* self)
 typedef struct { u8 act; char p01[0xf]; char a10[8]; char a18[0x28]; void *p40; void *p44; char rest[0xec - 0x48]; } S1_233B8;
 typedef struct { u8 act; char p01[0xf]; char a10[8]; char a18[0x28]; void *p40; void *p44; char rest[0xd4 - 0x48]; } S2_233B8;
 typedef struct { u8 act; char p01[0xf]; char a10[8]; char a18[0x28]; void *p40; void *p44; char rest[0x6c - 0x48]; } S3_233B8;
-extern s16 D_1F80019C;
-extern char D_1F8000EC[];
-extern void *D_800A38EC;
-extern void *D_800A38F0;
 void func_800233B8(void)
 {
     S2_233B8 *e2;
     S3_233B8 *e3;
     S1_233B8 *e1;
-    char *b = PLAYER;
+    char *b = &PLAYER.obj;
     if (!(D_1F8001C8 & 1)) {
         D_800A53D8 = b + 0x10;
         D_800A53DC = b + 0x18;
@@ -238,7 +261,6 @@ void func_800233B8(void)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023608);
-
 s32 func_80023608(s32 n)
 {
     s32 q = n / 32;
@@ -254,7 +276,6 @@ s32 func_80023608(s32 n)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_8002367C);
-
 void func_8002367C(s32 bit)
 {
     s32 w, b;
@@ -332,7 +353,6 @@ void spawnLayer3Object(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/entity", func_80023928);
-extern u32 D_8009BEFC[];
 extern GameObject *allocObjectLayer2(void);
 
 GameObject *func_80023928(GameObject *p)

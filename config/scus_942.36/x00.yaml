@@ -1,0 +1,102 @@
+name: X00
+sha1: 2ba0d06824c940ab40c4c4031f3e3b8e9ead1b89
+options:
+  basename: x00
+  target_path: ./iso/us/SYSTEM/X00.BIN
+  elf_path: ./build/x00/x00.elf
+  base_path: ../../
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: ./asm/scus_942.36/overlays/x00
+  src_path: ./src/scus_942.36/overlays/x00
+  build_path: ./build
+  asset_path: ./assets/scus_942.36/overlays/x00
+  generate_asm_macros_files : False
+
+  ld_script_path: ./linker/scus_942.36/x00.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  gp_value: 0x80097FA8
+  global_vram_start: 0x800E7388
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  disassemble_all: true
+
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
+
+  symbol_addrs_path:
+    - ./symbols/scus_942.36/symbol_addrs.txt
+    - ./symbols/scus_942.36/x00_symbol_addrs.txt
+  reloc_addrs_path:
+    - ./symbols/scus_942.36/reloc_addrs.txt
+
+  undefined_funcs_auto_path: ./linker/scus_942.36/undefined_funcs_auto.x00.txt
+  undefined_syms_auto_path: ./linker/scus_942.36/undefined_syms_auto.x00.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
+segments:
+  - name: engine
+    type: code
+    start: 0x0
+    vram: 0x800E7388
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, rodata, engine_header]
+      - [0x4, .rodata, engine]
+      - [0x1C8, .rodata, engine_1]
+      - [0x1EC, .rodata, engine_2]
+      - [0x1C98, .rodata, engine_3]
+      - [0x1D98, c, engine]
+      - [0x5F6C, c, engine_1]
+      - [0x7738, c, engine_2]
+      - [0x273C8, c, engine_3]
+      - [0x2CA10, data, engine]
+  - name: x00
+    type: code
+    start: 0x2DE6C
+    vram: 0x801151F4
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x2DE6C, rodata, x00_header]
+      - [0x2DE70, .rodata, x00]
+      - [0x2DEF4, .rodata, x00_1]
+      - [0x2DF40, .rodata, x00_2]
+      - [0x2E04C, .rodata, x00_3]
+      - [0x2E078, .rodata, x00_4]
+      - [0x2E0FC, .rodata, x00_5]
+      - [0x2E420, .rodata, x00_6]
+      - [0x2E54C, .rodata, x00_7]
+      - [0x2E5D0, .rodata, x00_8]
+      - [0x2E644, .rodata, x00_9]
+      - [0x2E668, .rodata, x00_10]
+      - [0x2E720, c, x00]
+      - [0x315BC, c, x00_1]
+      - [0x32C20, c, x00_2]
+      - [0x379A8, c, x00_3]
+      - [0x3845C, c, x00_4]
+      - [0x39E18, c, x00_5]
+      - [0x46D1C, c, x00_6]
+      - [0x4B210, c, x00_7]
+      - [0x4CE18, c, x00_8]
+      - [0x4DD6C, c, x00_9]
+      - [0x4E3A0, c, x00_10]
+      - [0x503D8, data, x00]
+  - [0x53F38]

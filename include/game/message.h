@@ -49,10 +49,33 @@ typedef enum {
     /*0xFFFF*/ MSG_END = 0xFFFF
 } MessageCode;
 
-typedef struct unkstruct_800A39B0 {
-    short unk0;
-    short unk2;
-} unkstruct_800A39B0;
+/* One open message box: how many glyphs it shows and where (MESSAGE_SLOTS). */
+typedef struct MessageSlot {
+    /* 0x0 */ s16 count;
+    /* 0x2 */ s16 unk2;
+    /* 0x4 */ s16 x;
+    /* 0x6 */ s16 y;
+} MessageSlot;
+
+/* One glyph placed in a message box (MESSAGE_GLYPHS[slot][n]). */
+typedef struct MessageGlyph {
+    /* 0x0 */ u16 id;
+    /* 0x2 */ u16 clut;
+    /* 0x4 */ s16 x;
+    /* 0x6 */ s16 y;
+} MessageGlyph;
+
+/* One glyph uploaded to VRAM (GLYPH_CACHE). */
+typedef struct GlyphSlot {
+    /* 0x0 */ s16 id;
+    /* 0x2 */ u16 mask;
+    /* 0x4 */ u8 u;
+    /* 0x5 */ u8 v;
+    /* 0x6 */ u8 w;
+    /* 0x7 */ u8 h;
+    /* 0x8 */ u8 unk8;
+    /* 0x9 */ u8 flag;
+} GlyphSlot;
 
 /* Position argument of openMessageBox (message.c). */
 typedef struct msgBox {

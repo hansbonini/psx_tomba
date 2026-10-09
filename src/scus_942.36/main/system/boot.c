@@ -121,12 +121,12 @@ void bootSequenceTask(void)
             case 11:
                 task8 = CURRENT_TASK;
                 NEXT_PRIM = (s32) ((s32) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF);
-                switch (task8->state1) {                    // switch 1; irregular
-                    case 0:                             // switch 1
+                switch (task8->state1) {
+                    case 0:
                         task8->unk5A = 1U;
                         task8->state1++;
                         break;
-                    case 1:                             // switch 1
+                    case 1:
                         task8->unk5A++;
                         if ((s16) task8->unk5A >= 0x80) {
                             task8->timer = 0xB4U;
@@ -134,13 +134,13 @@ void bootSequenceTask(void)
                             break;
                         }
                         break;
-                    case 2:                             // switch 1
+                    case 2:
                         task8->timer--;
                         if ((s16) task8->timer == -1) {
                             task8->state1++;
                         }
                         break;
-                    case 3:                             // switch 1
+                    case 3:
                         task8->unk5A--;
                         if ((s16)task8->unk5A == 0) {
                             SetDispMask(0);
@@ -277,8 +277,8 @@ void bootLogoState(void)
         case 0:
             task3 = CURRENT_TASK;
             state2 = task3->state2;
-            switch (state2) {                      // switch 1; irregular
-                case 0:                             // switch 1
+            switch (state2) {
+                case 0:
                     SetDispMask(0);
                     LOAD_COMPLETE = 0U;
                     loadSoundSet(1);
@@ -286,7 +286,7 @@ void bootLogoState(void)
                     task4 = *(Task** )(&SCRATCHPAD+0x1D4);
                     task4->state2++;
                     return;
-                case 1:                             // switch 1
+                case 1:
                     if (LOAD_COMPLETE != 0) {
                         task3->state1 = 2U;
                         task3->state2 = 0U;
@@ -368,7 +368,7 @@ void bootLoadMovieResources(void)
     scratchpad* scratch = PSX_SCRATCH;
     Task* task = scratch->currentTask;
 
-    switch (task->state1) {                              // irregular
+    switch (task->state1) {
         case 0:
             SetDispMask(0);
              *(u8* )&scratch->loadComplete = 0;
@@ -475,12 +475,12 @@ void loopTitleScreen(int* arg0)
                 gameControlTemp5->state1++;
             }
             func_800E7DDC(arg0);
-            if (*&D_8009C9D8 != 0) {
+            if (D_8009C9D8[0] != 0) {
                 (*(Task** )(&SCRATCHPAD+0x1D4))->timer = 972;
             }
             gameControlTemp2 = CURRENT_TASK;
-            switch ((u_short)gameControlTemp2->state2) {                    // switch 1; irregular
-                case 0:                             // switch 1
+            switch ((u_short)gameControlTemp2->state2) {
+                case 0:
                     if (JOYPAD_STATE & JOY_LEFT) {
                         if (gameControlTemp2->titleScreenSelectedOption != 0) {
                             gameControlTemp2->titleScreenSelectedOption--;
@@ -505,18 +505,18 @@ void loopTitleScreen(int* arg0)
                     if (JOYPAD_STATE & (JOY_CROSS | JOY_START)) {
                         stopBgm(0);
                         gameControlTemp6 = CURRENT_TASK;
-                        switch (gameControlTemp6->titleScreenSelectedOption) {       // switch 2; irregular
-                            case TITLESCREEN_OPTION_NEWGAME:                 // switch 2
+                        switch (gameControlTemp6->titleScreenSelectedOption) {
+                            case TITLESCREEN_OPTION_NEWGAME:
                                 gameControlTemp6->loadGameSelected = 0;
                                 playSFXAndSetNote(10, 10);
                                 setTask(gameTask);
                                 break;
-                            case TITLESCREEN_OPTION_LOADGAME:                 // switch 2
+                            case TITLESCREEN_OPTION_LOADGAME:
                                 gameControlTemp6->loadGameSelected = 1;
                                 playSFXAndSetNote(10, 10);
                                 setTask(gameTask);
                                 break;
-                            case TITLESCREEN_OPTION_OPTIONS:                 // switch 2
+                            case TITLESCREEN_OPTION_OPTIONS:
                                 gameControlTemp6->state0 = 2;
                                 gameControlTemp6->state1 = 0U;
                                 playSFXAndSetNote(10, 10);
@@ -524,7 +524,7 @@ void loopTitleScreen(int* arg0)
                         }
                     }
                     break;
-                case 1:                             // switch 1
+                case 1:
                     if (gameControlTemp2->unk6A != gameControlTemp2->unk6B) {
                         amount = -4;
                         if (gameControlTemp2->unk6A < gameControlTemp2->unk6B) {
@@ -589,21 +589,20 @@ void optsubScreenState(void)
         case 2:
             task = CURRENT_TASK;
             state2 = task->state2;
-            switch (state2) {                    // switch 1; irregular
-                case 0:                             // switch 1
+            switch (state2) {
+                case 0:
                     task->step.value = 0;
                     task->state2++;
-                    // fallthrough
-                case 1:                             // switch 1
+                case 1:
                     if (func_800E75CC(task) != 0) {
                     (CURRENT_TASK)->state1++;
                     return;
                     }
                     break;
-                case 2:                             // switch 1
+                case 2:
                     func_800E7960(task);
                     return;
-                case 3:                             // switch 1
+                case 3:
                     func_800E7A48(task);
                     return;
             }
@@ -654,13 +653,13 @@ void gameTask(void)
         state = (CURRENT_TASK)->state0;
         switch ((u_short)state) {
             case 0:
-                gameInitState(); // New Game
+                gameInitState();
                 break;
             case 1:
-                gameStateDispatcher(); // Debug
+                gameStateDispatcher();
                 break;
             case 2:
-                titleScreenHandler(); // Load Game
+                titleScreenHandler();
                 break;
         }
         sleepTask(1);
@@ -676,7 +675,7 @@ void gameInitState(void)
     scratchpad* scratch = PSX_SCRATCH;
     Task* task = *(u_long**)&scratch->currentTask;
 
-    switch (task->state1) {                              // irregular
+    switch (task->state1) {
         case 0:
             task->unk5A = 1U;
             task->state1 += 1;

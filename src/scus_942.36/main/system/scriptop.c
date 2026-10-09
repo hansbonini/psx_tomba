@@ -3,9 +3,6 @@
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003C9D4);
 typedef struct { char p0[0x84]; u8 *p84; u8 b88; char p89; u16 w8a; } S_3C9D4;
-extern u32 D_8009FD78;
-extern u32 D_8009FD7C;
-extern s32 D_8009C858;
 
 static __inline__ u8 run_3C9D4(void)
 {
@@ -36,7 +33,7 @@ static __inline__ u8 run_3C9D4(void)
 void func_8003C9D4(void)
 {
     if (D_8009CA04 == 0) return;
-    if ((*(u16 *)&D_800A539C) == 0x505) return;
+    if ((*(u16 *)&PLAYER.obj.state) == 0x505) return;
     switch (GAME.selectedArea) {
     case 0:
         switch (D_8009BCCA) {
@@ -178,9 +175,6 @@ void func_8003CE18(void)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D0E4);
 typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s32 d1194; s32 d1198; } G_3D0E4;
-extern void func_80112AA4(o);
-extern void func_800EBDD8(o);
-extern void func_800E76A8(o);
 
 void func_8003D0E4(void)
 {
@@ -230,22 +224,153 @@ void scriptOpKillObject(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetPlayerPosition);
 void scriptOpSetPlayerPosition(void)
 {
-    D_800A53D8[1] = *(s32*)((u8*)SCRIPT_CTX + 0x1190);
-    D_800A53AE = *(s32*)((u8*)SCRIPT_CTX + 0x1194);
-    D_800A53DC[1] = *(s32*)((u8*)SCRIPT_CTX + 0x1198);
+    PLAYER.obj.h->p.whole = *(s32*)((u8*)SCRIPT_CTX + 0x1190);
+    PLAYER.obj.y.p.whole = *(s32*)((u8*)SCRIPT_CTX + 0x1194);
+    PLAYER.obj.d->p.whole = *(s32*)((u8*)SCRIPT_CTX + 0x1198);
     SCRIPT_CTX->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerPosition);
 void scriptOpGetPlayerPosition(void)
 {
-    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A53D8[1];
-    *(s32*)((u8*)SCRIPT_CTX + 0x1194) = D_800A53AE;
-    *(s32*)((u8*)SCRIPT_CTX + 0x1198) = D_800A53DC[1];
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = PLAYER.obj.h->p.whole;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1194) = PLAYER.obj.y.p.whole;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1198) = PLAYER.obj.d->p.whole;
     SCRIPT_CTX->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpShowMessageBox);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpShowMessageBox);
+typedef struct {
+    char pad0[0x8a];
+    u16 w8a;
+    char pad1[0x1190 - 0x8c];
+    s32 idx;
+    u32 cmd;
+    s32 a[6];
+} S_3D2A8;
+typedef struct { s16 v[6]; } V6_3D2A8;
+extern u8 D_800A5444[];
+extern u8 D_8009BCA7_U8Arr[] asm("D_8009BCA7");
+extern s32 showMessageBoxDirect(s32, s32, V6_3D2A8 *);
+
+void scriptOpShowMessageBox(void)
+{
+    S_3D2A8 *s = SCRIPT_CTX;
+    GameObject *o = SCRIPT_OBJECTS[s->idx];
+    V6_3D2A8 tmp;
+    u32 cmd = s->cmd;
+
+    if (o != 0) {
+        switch (cmd) {
+        case 1:
+            o->unk6A = 1;
+            o->timer = s->a[0];
+        case 0:
+        case 9:
+            o->unk6A = 0;
+            o->subState = cmd;
+            o->step = 0;
+            break;
+        case 2:
+            o->timer = s->a[0];
+            o->velX = s->a[1];
+            o->unk6A = 1;
+            o->subState = cmd;
+            o->step = 0;
+            break;
+        case 3:
+            o->timer = s->a[0];
+            o->unk30 = s->a[1];
+            o->unk34 = s->a[2];
+            o->unk98 = s->a[3];
+            o->unk9A = s->a[4];
+            o->unk6A = 1;
+            o->subState = cmd;
+            o->step = 0;
+            break;
+        case 8:
+            tmp.v[1] = s->a[3];
+            tmp.v[3] = s->a[4];
+            tmp.v[5] = s->a[5];
+        case 4:
+            if (cmd == 4) tmp = *(V6_3D2A8 *)&o->x;
+            o->unk90 = showMessageBoxDirect(s->a[0], s->a[1], &tmp);
+            switch (o->type & 0x7f) {
+            case 0x18:
+                o->unk74 = s->a[2];
+                o->unk76 = 0;
+                func_80112AA4(o);
+                (*(u8 *)&D_8009C618) = 2;
+                D_8009BCA7 = 1;
+                D_800A539C = 5;
+                D_800A539D = 0;
+                D_800A539E = 0;
+                break;
+            case 0x19:
+                o->unk68 = 2;
+                D_800A5444[0] = 3;
+                D_8009C618[0] = 2;
+                D_8009BCA7_U8Arr[0] = 1;
+                if (s->a[2] & 0x80) {
+                    o->unk74 = o->animFrame + (s->a[2] & 0x7f);
+                } else {
+                    o->animFrame = o->touchFlag - 1;
+                    o->unk74 = o->animFrame + s->a[2];
+                }
+                o->unk76 = 0;
+                func_800EBDD8(o);
+                {
+                    u16 *k = &PLAYER.obj.animFrame;
+                    D_800A539C = 1;
+                    D_800A539D = 2;
+                    D_800A539E = 0;
+                    *k |= 8;
+                }
+                break;
+            }
+            D_8009BCAA = 1;
+            o->unk6A = 1;
+            o->subState = 4;
+            o->step = 0;
+            break;
+        case 5:
+            {
+            s32 ty = o->type & 0x7f;
+            if (ty == 0x18) goto L1;
+            if (ty == 0x19) {
+            L1:
+                o->velX = s->a[0];
+                o->velY = s->a[1];
+            }
+            }
+            o->unk6A = 1;
+            o->subState = cmd;
+            o->step = 0;
+            break;
+        case 6:
+            o->unk6A = 0;
+            o->subState = cmd;
+            o->step = 0;
+            break;
+        case 7:
+            {
+            s32 ty = o->type & 0x7f;
+            if (ty == 0x18) goto L2;
+            if (ty == 0x19) {
+            L2:
+                o->velX = s->a[0];
+                o->velY = s->a[1];
+                o->unk78 = s->a[2];
+            }
+            }
+            o->unk6A = 1;
+            o->subState = cmd;
+            o->step = 0;
+            break;
+        }
+    }
+    s->w8a++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjField6A);
 void scriptOpGetObjField6A(void)
@@ -408,10 +533,10 @@ void scriptOpLoadBackground(void)
 {
     ScriptContext* p = SCRIPT_CTX;
 
-    if (D_8009C618 != 3) {
-        func_800EBD5C(PLAYER, *(s16*)((u8*)D_800A53D8 + 2), D_800A53AE);
+    if (D_8009C618[0] != 3) {
+        func_800EBD5C(&PLAYER.obj, PLAYER.obj.h->p.whole, PLAYER.obj.y.p.whole);
     }
-    *(s32*)((u8*)p + 0x1190) = D_800A5400;
+    *(s32*)((u8*)p + 0x1190) = PLAYER.obj.unk68;
     p->pc++;
 }
 
@@ -420,16 +545,16 @@ void scriptOpSetPlayerField6B(void)
 {
     ScriptContext* p = SCRIPT_CTX;
 
-    if (D_8009C618 != 3) {
+    if (D_8009C618[0] != 3) {
         switch (*(s32*)((u8*)p + 0x1190)) {
         case 0:
-            D_800A5403 = 0;
+            PLAYER.obj.objectIndex = 0;
             break;
         case 1:
-            D_800A5403 = 1;
+            PLAYER.obj.objectIndex = 1;
             break;
         default:
-            D_800A5403 = 2;
+            PLAYER.obj.objectIndex = 2;
             break;
         }
     }
@@ -477,22 +602,22 @@ void scriptOpSetPlayerState(void)
     s32 a = *(s32*)((u8*)p + 0x1190);
     s32 b;
 
-    D_800A539C = a;
+    PLAYER.obj.state = a;
     b = *(s32*)((u8*)p + 0x1194);
-    D_800A539E = 0;
-    D_800A539D = b;
+    PLAYER.obj.step = 0;
+    PLAYER.obj.subState = b;
     switch ((u8)a) {
     case 1:
         D_8009BCA7 = 0;
-        PLAYER[0] = 1;
-        D_800A5436 = 0;
+        PLAYER.obj.active = 1;
+        PLAYER.obj.unk9E = 0;
         break;
     case 4:
         switch ((u8)b) {
         case 2:
             D_800A544A = *(s32*)((u8*)p + 0x11A0);
         case 1:
-            D_800A53C6 = *(s32*)((u8*)p + 0x1198);
+            PLAYER.obj.animFrame = *(s32*)((u8*)p + 0x1198);
             D_800A53B8 = *(s32*)((u8*)p + 0x119C);
             break;
         }
@@ -502,7 +627,6 @@ void scriptOpSetPlayerState(void)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003DCF0);
-extern s16 D_800A5478;
 
 void func_8003DCF0(void)
 {
@@ -511,22 +635,22 @@ void func_8003DCF0(void)
     if (D_8009BCA2 == 0)
         return;
     if (D_8009CA04 & 2) {
-        D_800A539C = *(s32 *)(o + 0x1190);
+        PLAYER.obj.state = *(s32 *)(o + 0x1190);
         b = *(s32 *)(o + 0x1194);
-        D_800A539E = 0;
-        D_800A539D = b;
-        switch (D_800A539C) {
+        PLAYER.obj.step = 0;
+        PLAYER.obj.subState = b;
+        switch (PLAYER.obj.state) {
         case 1:
             D_8009BCA7 = 0;
-            (*(u8 *)&PLAYER) = 1;
-            D_800A5436 = 0;
+            PLAYER.obj.active = 1;
+            PLAYER.obj.unk9E = 0;
             break;
         case 4:
-            switch (D_800A539D) {
+            switch (PLAYER.obj.subState) {
             case 2:
                 D_800A544A = *(s32 *)(o + 0x11a0);
             case 1:
-                D_800A53C6 = *(s32 *)(o + 0x1198);
+                PLAYER.obj.animFrame = *(s32 *)(o + 0x1198);
                 D_800A53B8 = *(s32 *)(o + 0x119c);
             }
             D_8009BCA7 = 1;
@@ -541,16 +665,16 @@ void func_8003DCF0(void)
             if (b == 9)
                 D_8009BCA6 = 1;
         } else {
-            D_800A539C = a;
-            if (D_800A539C == 5)
+            PLAYER.obj.state = a;
+            if (PLAYER.obj.state == 5)
                 D_8009BCA7 = 1;
-            if (D_800A539C == 1) {
+            if (PLAYER.obj.state == 1) {
                 D_8009BCA7 = 0;
                 if (GAME.selectedArea != 0 || D_800A5478 == 0)
-                    (*(u8 *)&PLAYER) = 1;
+                    PLAYER.obj.active = 1;
             }
-            D_800A539D = b;
-            D_800A539E = 0;
+            PLAYER.obj.subState = b;
+            PLAYER.obj.step = 0;
         }
     }
     *(s16 *)(o + 0x8a) += 1;
@@ -561,7 +685,7 @@ void scriptOpSetPlayerFacing(void)
 {
     ScriptContext* q = SCRIPT_CTX;
 
-    D_800A53C6 = *(s32*)((u8*)q + 0x1190);
+    PLAYER.obj.animFrame = *(s32*)((u8*)q + 0x1190);
     asm("");
     q->pc++;
 }
@@ -614,14 +738,14 @@ void scriptOpShowMessage(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerTouchFlag);
 void scriptOpGetPlayerTouchFlag(void)
 {
-    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A5401;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = PLAYER.obj.touchFlag;
     SCRIPT_CTX->pc++;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetPlayerHitFlag);
 void scriptOpGetPlayerHitFlag(void)
 {
-    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = D_800A5436;
+    *(s32*)((u8*)SCRIPT_CTX + 0x1190) = PLAYER.obj.unk9E;
     SCRIPT_CTX->pc++;
 }
 
@@ -728,7 +852,7 @@ void scriptOpMoveCamera(void)
     ScriptContext* temp_s0;
 
     temp_s0 = SCRIPT_CTX;
-    func_800EDE44(PLAYER, *(s16*)&*(s32*)((u8*)temp_s0 + 0x1190), *(s16*)&*(s32*)((u8*)temp_s0 + 0x1194));
+    func_800EDE44(&PLAYER.obj, *(s16*)&*(s32*)((u8*)temp_s0 + 0x1190), *(s16*)&*(s32*)((u8*)temp_s0 + 0x1194));
     temp_s0->pc++;
 }
 
@@ -784,8 +908,6 @@ void opNop(void)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", execGameOpcode);
 typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s32 d1194; s32 d1198; s32 d119c; } G_3E408;
-typedef struct { s16 s0, s2; } S2_3E408;
-extern S2_3E408 *D_800A53DC__3E408[];
 extern s16 D_800A53AC[];
 
 static __inline__ s32 op81_3E408(void)
@@ -832,9 +954,9 @@ static __inline__ s32 op82_3E408(void)
 static __inline__ s32 op83_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    (*(S2_3E408 **)&D_800A53D8)->s2 = g->d1190;
+    PLAYER.obj.h->p.whole = g->d1190;
     D_800A53AC[1] = g->d1194;
-    D_800A53DC__3E408[0]->s2 = g->d1198;
+    PLAYER.obj.d->p.whole = g->d1198;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -843,9 +965,9 @@ static __inline__ s32 op84_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
     s32 v;
-    g->d1190 = (*(S2_3E408 **)&D_800A53D8)->s2;
+    g->d1190 = PLAYER.obj.h->p.whole;
     g->d1194 = D_800A53AC[1];
-    v = D_800A53DC__3E408[0]->s2;
+    v = PLAYER.obj.d->p.whole;
     (*(s16 *)((char *)g + 0x8a))++;
     g->d1198 = v;
     return 1;
@@ -989,8 +1111,8 @@ static __inline__ s32 op92_3E408(void)
 static __inline__ s32 op93_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    if (D_8009C618 != 3) func_800EBD5C(PLAYER, (*(S2_3E408 **)&D_800A53D8)->s2, D_800A53AC[1]);
-    g->d1190 = D_800A5400;
+    if (D_8009C618[0] != 3) func_800EBD5C(&PLAYER.obj, PLAYER.obj.h->p.whole, D_800A53AC[1]);
+    g->d1190 = PLAYER.obj.unk68;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -999,7 +1121,7 @@ static __inline__ s32 op94_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
     GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if ((D_8009C618 != 3 || D_800A5403 == 1) && o != 0) o->objectIndex = g->d1194;
+    if ((D_8009C618[0] != 3 || PLAYER.obj.objectIndex == 1) && o != 0) o->objectIndex = g->d1194;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1033,11 +1155,11 @@ static __inline__ s32 op95_3E408(void)
 static __inline__ s32 op96_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    if (D_8009C618 != 3) {
+    if (D_8009C618[0] != 3) {
         switch (g->d1190) {
-        case 0: D_800A5403 = 0; break;
-        case 1: D_800A5403 = 1; break;
-        default: D_800A5403 = 2; break;
+        case 0: PLAYER.obj.objectIndex = 0; break;
+        case 1: PLAYER.obj.objectIndex = 1; break;
+        default: PLAYER.obj.objectIndex = 2; break;
         }
     }
     (*(s16 *)((char *)g + 0x8a))++;
@@ -1047,7 +1169,7 @@ static __inline__ s32 op96_3E408(void)
 static __inline__ s32 op98_3E408(void)
 {
     char *p = (char *)SCRIPT_CTX;
-    *(s32 *)(p + 0x1190) = D_800A5436;
+    *(s32 *)(p + 0x1190) = PLAYER.obj.unk9E;
     *(s16 *)(p + 0x8a) += 1;
     return 1;
 }
@@ -1055,7 +1177,7 @@ static __inline__ s32 op98_3E408(void)
 static __inline__ s32 op99_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    D_800A53C6 = g->d1190;
+    PLAYER.obj.animFrame = g->d1190;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1075,7 +1197,7 @@ static __inline__ s32 op9a_3E408(void)
 static __inline__ s32 op9b_3E408(void)
 {
     u8 *p = (u8 *)SCRIPT_CTX;
-    *(s32 *)(p + 0x1190) = D_800A5401;
+    *(s32 *)(p + 0x1190) = PLAYER.obj.touchFlag;
     (*(s16 *)(p + 0x8a))++;
     return 1;
 }
@@ -1180,7 +1302,7 @@ static __inline__ s32 opa5_3E408(void)
 static __inline__ s32 opa6_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    func_800EDE44(PLAYER, (s16)g->d1190, (s16)g->d1194);
+    func_800EDE44(&PLAYER.obj, (s16)g->d1190, (s16)g->d1194);
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1371,7 +1493,6 @@ void func_8003F124(void)
             return;
         case AREA19_VILLAGEOFCIVILIZATIONPURIFIED:
             func_800F5B4C();
-            // fallthrough
         default:
             return;
     }

@@ -605,76 +605,52 @@ void displayDebugScreen(void)
     u_char* temp_v1_3;
     u_char *temp2;
 
-    /* If start a game and debug mode is enabled */
     if ((temp_v1->loadGameSelected == 0) && (scratch->debug_mode_enabled != 0)) {
-        // If button UP is pressed decrease selected row
         if (scratch->joypad_state & JOY_UP) {
             D_8009B6A8 = (D_8009B6A8 - 1) & 1;
         }
-        // If button DOWN is pressed increase selected row
         if (scratch->joypad_state & JOY_DOWN) {
             D_8009B6A8 = (D_8009B6A8 + 1) & 1;
         }
-        // If selected row is the second one "SELECTED SECTION"
         if (D_8009B6A8 != 0) {
-            // If button LEFT is pressed decrease selected section
             if (scratch->joypad_state & JOY_LEFT) {
                 var_v1 = &GAME.selectedSection;
                 *(u_short*)var_v1 -= 1;
-                /* If selected section is less than the min section allowed for the current area,
-                   clamp it to the min section */
                 if ((*(u_short*)var_v1 << 0x10) <= 0) {
                     *(u_short*)var_v1 = 0U;
                 }
-            // If button RIGHT is pressed increase selected section
             } else if (scratch->joypad_state & JOY_RIGHT) {
                 temp_v1_2 = GAME.selectedSection += 1;
-                /* If selected section is greater than the max section allowed for the current area,
-                   clamp it to the max section */
                 temp_a0 = *(u_short*)((u_short*)&D_8007B294 + GAME.selectedArea);
                 if ((temp_a0 - 1) < (int)temp_v1_2) {
                     GAME.selectedSection = (u_short) (temp_a0 - 1);
                 }
             }
-        // If selected row is the first one "SELECTED AREA"
         } else {
-            // If button LEFT is pressed decrease selected area option
             if (scratch->joypad_state & JOY_LEFT) {
                 var_v1 = &GAME.selectedArea;
                 *(u_short*)var_v1 -= 1;
-                /* If selected area is less than the min area allowed,
-                   clamp it to the min area */
                 if ((*(u_short*)var_v1 << 0x10) <= 0) {
                     *(u_short*)var_v1 = 0U;
                 }
-            // If button RIGHT is pressed increase selected area option
             } else if (scratch->joypad_state & JOY_RIGHT) {
                 GAME.selectedArea++;
                 temp_v1_2 = (u_short*)D_8007B290;
-                /* If selected area is greater than the max area allowed,
-                   clamp it to the max area */
                 if (temp_v1_2 < GAME.selectedArea) {
                     GAME.selectedArea = temp_v1_2;
                 }
             }
         }
-        // Print rows with current selected options
         sprintf(&SPRINTF_BUFFER_MSG, "AREA SELECT = %02d", GAME.selectedArea);
         fontDebugPrintf(32, 96, 0U, &SPRINTF_BUFFER_MSG);
         sprintf(&SPRINTF_BUFFER_MSG, "SECTION SELECT = %02d", GAME.selectedSection);
         fontDebugPrintf(32, 104, 0U, &SPRINTF_BUFFER_MSG);
-        // Print asterisk cursor on the selected row
         sprintf(&SPRINTF_BUFFER_MSG, "*");
         fontDebugPrintf(24, ((short) D_8009B6A8 + 0xC) * 8, (u_long) (*(u_short*)&PSX_SCRATCH[0x1F6] & 0xC) >> 2, &SPRINTF_BUFFER_MSG);
-        // Set next area, section and spawn point to the selected ones
         GAME.nextArea = GAME.selectedArea;
         GAME.nextSection = GAME.selectedSection;
         GAME.nextSpawnPoint = GAME.selectedSpawnPoint;
-        // If any action button (CIRCLE or START) is pressed
         if (scratch->joypad_state & (JOY_CIRCLE | JOY_START)) {
-            // Handle area and section exceptions cases
-            /* If selected area is not VILLAGE OF ALL BEGINNINGS or DWARF FOREST
-               and selected section is not VILLAGE OF ALL BEGINNINGS or FOREST OF 100 FLOWERS */
             if (
                 (
                     GAME.selectedArea < AREA02_DWARFVILLAGE) &&
@@ -684,13 +660,11 @@ void displayDebugScreen(void)
                     )
                 )
             ) {
-                GAME.unk21 = 1; // Set unk21 to 1 (unknown purpose)
+                GAME.unk21 = 1;
             }
-            /* If selected area is not the VILLAGE OF ALL BEGINNINGS 
-               and selected section is not VILLAGE OF ALL BEGINNINGS */
             if (*(u_long*)&GAME.selectedArea != (AREA00_VILLAGEOFALLBEGINNINGS << 16 | AREA00_SECTION00_VILLAGEOFALLBEGINNINGS)) {
-                GAME.event[EVENT_CLEARTHEFOG] = 0xFF; // Set event CLEARTHEFOG to CLEARED
-                GAME.playerState = 1; // Set player state to NORMAL
+                GAME.event[EVENT_CLEARTHEFOG] = 0xFF;
+                GAME.playerState = 1;
             }
         } else return;
     }
@@ -795,7 +769,7 @@ void gameplayMainHandler(void)
 
     temp_a0 = CURRENT_TASK;
     temp_v1 = temp_a0->step.value;
-    switch (temp_v1) {                              // irregular
+    switch (temp_v1) {
         case 0:
             initObjectPools(temp_a0);
             initHud();
@@ -814,7 +788,7 @@ void gameplayMainHandler(void)
                 startAreaBgm();
             }
             GAME.unk21 = 1;
-            *(&D_8009C9D8) = D_8009C9DC = 0;
+            D_8009C9D8[0] = D_8009C9DC = 0;
             *(short*)(&SCRATCHPAD+0x1FC)=0;
             return;
         case 1:
@@ -825,7 +799,7 @@ void gameplayMainHandler(void)
                 temp_v1_2->step.value++;
                 stopBgm(1);
             }
-            if ((*(u_char* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+            if ((*(u_char* )0x1F8001C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
                 (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
@@ -906,7 +880,6 @@ void gameplayTick(void)
         func_8002DA2C();
         updateObjectsLayer8();
     }
-    // Hack to match (using this instead SCRATCHPAD to access 1F8001C6)
     if (*(s16* )((byte*)D_1F8001A0+0x26) != 2) {
         func_80046264();
     } else {
@@ -938,13 +911,13 @@ void areaMode2Handler(void)
             }
             *(short* )0x1F8001FC = 0;
             scratch->currentTask->step.volatile_value+=1;
-            *(volatile u_short*)&D_8009C9D8 = D_8009C9DC = 0;
+            D_8009C9D8[0] = D_8009C9DC = 0;
             break;
         case 1:
             GAME.totalTimePlayed++;
             areaMode2Tick();
             if (scratch->unk1C2 != 0) {
-                volatile u_short *temp_v1 = (volatile int* )&D_8009C9D8;
+                volatile u_short *temp_v1 = (volatile int* )D_8009C9D8;
                 if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
                     scratch->currentTask->step.value = 2;
                 }
@@ -1029,8 +1002,8 @@ void inventoryScreenHandler(void)
     Task* temp_v1_3;
 
     temp_v1 = (CURRENT_TASK)->step.value;
-    switch (temp_v1) {                              // switch 1
-        case 0:                                     // switch 1
+    switch (temp_v1) {
+        case 0:
             *(s8* )0x1F8001CF = 1;
             (*(Task** )(&SCRATCHPAD+0x1D4))->unk6A = 0;
             SetDispMask(0);
@@ -1047,32 +1020,32 @@ void inventoryScreenHandler(void)
             temp_a0 = CURRENT_TASK;
             temp_a0->step.value++;
             return;
-        case 1:                                     // switch 1
+        case 1:
             LOAD_COMPLETE = 0;
-            switch (D_800A3952) {                   // switch 2
-                case 0:                             // switch 2
-                case 1:                             // switch 2
-                case 2:                             // switch 2
-                case 6:                             // switch 2
+            switch (D_800A3952) {
+                case 0:
+                case 1:
+                case 2:
+                case 6:
                     queueSystemLoadList(3, 1);
                     break;
-                case 4:                             // switch 2
+                case 4:
                     queueSystemLoadList(4, 1);
                     break;
-                case 5:                             // switch 2
+                case 5:
                     queueSystemLoadList(5, 1);
                     break;
-                case 7:                             // switch 2
+                case 7:
                     queueSystemLoadList(6, 1);
                     break;
-                case 3:                             // switch 2
+                case 3:
                     queueSystemLoadList(7, 1);
                     break;
             }
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->step.value++;
             return;
-        case 2:                                     // switch 1
+        case 2:
             if (LOAD_COMPLETE != 0) {
                 EnterCriticalSection();
                 FlushCache();
@@ -1085,16 +1058,16 @@ void inventoryScreenHandler(void)
                 temp_v1_2->step.value++;
                 return;
             }
-        default:                                    // switch 1
+        default:
             return;
-        case 3:                                     // switch 1
+        case 3:
             inventoryScreenTick();
-            if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+            if ((*(u8* )0x1F8001C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
                 (CURRENT_TASK)->step.value = 6U;
                 return;
             }
             break;
-        case 4:                                     // switch 1
+        case 4:
             SetDispMask(0);
             setRECT(&rect, 288, 480, 48, 31);
             LoadImage((RECT* ) &rect, (u32* )0x801FB000);
@@ -1108,7 +1081,7 @@ void inventoryScreenHandler(void)
             temp_v1_2 = CURRENT_TASK;
             temp_v1_2->step.value++;
             return;
-        case 5:                                     // switch 1
+        case 5:
             if ((LOAD_COMPLETE) != 0) {
                 EnterCriticalSection();
                 FlushCache();
@@ -1121,12 +1094,12 @@ void inventoryScreenHandler(void)
                 return;
             }
             break;
-        case 6:                                     // switch 1
+        case 6:
             temp_v1_3 = CURRENT_TASK;
             temp_v1_3->state2 = 8U;
             temp_v1_3->step.value = 0U;
             return;
-        case 7:                                     // switch 1
+        case 7:
             GAME.areaTransition = 0;
             GAME.keepBgm = 0;
             stopBgm(0);
@@ -1201,7 +1174,7 @@ void areaMode4Handler(void)
     ObjectRawView* temp_v0;
     Task* temp_v1_2;
     Task* temp_v1_3;
-    char pad[2]; // ?? fixes the stack, but there's probably a better way
+    char pad[2];
 
     temp_v1 = (CURRENT_TASK)->step.value;
 
@@ -1229,14 +1202,14 @@ void areaMode4Handler(void)
                 temp_v0->unk16 = 0;
                 temp_v0->unk1A = 0;
             }
-            *&D_8009C9D8 = D_8009C9DC = 0;
+            D_8009C9D8[0] = D_8009C9DC = 0;
             *(s16* )0x1F8001FC = 0;
         break;   
 
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode4Tick();
-            if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+            if ((*(u8* )0x1F8001C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
                 (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
@@ -1294,7 +1267,7 @@ void areaMode5Handler(void)
     ObjectRawView* temp_v0;
     Task* temp_v1_2;
     Task* temp_v1_3;
-    char pad[2]; // ?? fixes the stack, but there's probably a better way
+    char pad[2];
     
     temp_v1 = (CURRENT_TASK)->step.value;
     switch (temp_v1) {
@@ -1321,14 +1294,14 @@ void areaMode5Handler(void)
                 temp_v0->unk16 = 0;
                 temp_v0->unk1A = 0;
             }
-            *&D_8009C9D8 = D_8009C9DC = 0;
+            D_8009C9D8[0] = D_8009C9DC = 0;
             *(s16* )0x1F8001FC = 0;
         break;   
     
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode5Tick();
-            if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+            if ((*(u8* )0x1F8001C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
                 (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
@@ -1385,7 +1358,7 @@ void areaMode6Handler(void)
     ObjectRawView* temp_v0;
     Task* temp_v1_2;
     Task* temp_v1_3;
-    char pad[2]; // ?? fixes the stack, but there's probably a better way
+    char pad[2];
     
     temp_v1 = (CURRENT_TASK)->step.value;
     switch (temp_v1) {
@@ -1412,14 +1385,14 @@ void areaMode6Handler(void)
                 temp_v0->unk16 = 0;
                 temp_v0->unk1A = 0;
             }
-            *&D_8009C9D8 = D_8009C9DC = 0;
+            D_8009C9D8[0] = D_8009C9DC = 0;
             *(s16* )0x1F8001FC = 0;
         break;   
     
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode6Tick();
-            if ((*(u8* )0x1F8001C2 != 0) && (*&D_8009C9D8 & 8) && (*&D_8009C9D8 & 0x800)) {
+            if ((*(u8* )0x1F8001C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
                 (*(Task** )(&SCRATCHPAD+0x1D4))->step.value = 3U;
                 return;
             }
@@ -1478,7 +1451,7 @@ void displayLoadingScreen(void)
     Task* temp_v0_2;
     Task* temp_v1;
 
-    switch (D_8009EB4C) {                           // irregular
+    switch (D_8009EB4C) {
         case 0:
             temp_v1 = CURRENT_TASK;
             temp_v1->unk62 = 0;
@@ -1486,14 +1459,13 @@ void displayLoadingScreen(void)
             temp_v1->unk64 = 0U;
             drawLoadingSprites(temp_v1->unk62, 0U);
             D_8009EB4C += 1;
-            // fallthrough
         case 1:
             temp_a0 = *(Task**)(&SCRATCHPAD+0x1D4);
             temp_v0 = temp_a0->unk60 - 1;
             temp_a0->unk60 = temp_v0;
             if ((temp_v0 << 0x10) == 0) {
-                temp_a0->unk60 = 0xFU; // sprite refresh rate?
-                temp_a0->unk62 = (short) ((u_short) temp_a0->unk62 ^ 1); // is even frame?
+                temp_a0->unk60 = 0xFU;
+                temp_a0->unk62 = (short) ((u_short) temp_a0->unk62 ^ 1);
             }
             temp_v0_2 = CURRENT_TASK;
             *(u_short*)&temp_v0_2->unk64 = ((temp_v0_2->unk64 + 12) & 0xFF);
@@ -1942,18 +1914,18 @@ void updatePauseMenu(void) {
         if (D_8009BCA2 == 0) {
             return;
         }
-        if (D_8009C618 != 1) {
+        if (D_8009C618[0] != 1) {
             return;
         }
         if (D_8009BCA7 != 0) {
             return;
         }
 
-        if (D_800A5462 != D_8009C618) {
-            if (D_800A539C != D_8009C618) {
+        if (D_800A5462 != D_8009C618[0]) {
+            if (PLAYER.obj.state != D_8009C618[0]) {
                 return;
             }
-            if (D_800A539D >= 0x20) {
+            if (PLAYER.obj.subState >= 0x20) {
                 return;
             }
         }

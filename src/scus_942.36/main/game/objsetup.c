@@ -2,10 +2,7 @@
 #include "game.h"
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objsetup", func_80031908);
-extern s32 GetGraphType(void);
-extern s32 D_1F8002D8__31908[];
 extern u16 D_1F80016E[];
-extern u16 D_1F800172[];
 extern void pushDrawListCapped(GameObject *o);
 extern s16 fixedMulSin2(s16 a, s16 b);
 extern void freeObjectLayer3(GameObject *o);
@@ -26,7 +23,7 @@ void func_80031908(GameObject *o)
         o->clut = GetClut(0x160, o->unkC + 0x1f1);
         o->animFrame = 0;
         o->anim = D_80012680;
-        o->spriteBank = D_1F8002D8__31908[0];
+        o->spriteBank = D_1F8002D8[0];
         o->unk30 = D_1F80016A[0] << 16;
         o->y.p.whole = D_1F80016E[0];
         o->d->p.whole = D_1F800172[0];
@@ -125,7 +122,6 @@ void func_80031F00(s32 a, s32 b, s32 c)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objsetup", func_80031F88);
-extern s32 nextRandom__31F88(void);
 extern s32 tickAnimation(GameObject *o);
 
 void func_80031F88(GameObject *o)
@@ -148,7 +144,7 @@ void func_80031F88(GameObject *o)
                 }
                 n = allocObjectLayer3();
                 if (n == 0) break;
-                r = nextRandom__31F88();
+                r = ((s32 (*)(void))nextRandom)();
                 b = r & 1;
                 s = b;
                 switch (o->unkC) {
@@ -159,7 +155,7 @@ void func_80031F88(GameObject *o)
                     break;
                 case 1:
                     s = (b * 3 << 10) + 0xc00;
-                    n->unkAC = nextRandom__31F88() & 1;
+                    n->unkAC = ((s32 (*)(void))nextRandom)() & 1;
                     if (n->unkAC) goto one;
                     n->unkA = 0;
                     break;
@@ -210,7 +206,7 @@ void func_80032230(u8* self)
     *(s16*)(self + 0x1E) = 0x14;
     self[0xD] = 0x80;
     self[0xB] = 0;
-    *(void**)(self + 0x3C) = D_1F8002D8;
+    *(void**)(self + 0x3C) = (void *)D_1F8002D8[0];
     *(s32*)(self + 0x24) = D_80012368[*(s16*)(self + 0xAC)];
     readAnimFrameCount(self);
 }
@@ -317,10 +313,7 @@ void func_800324B4(GameObject *o)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objsetup", func_800325C0);
-extern void func_80028A74(s32, s32, s32, s32);
-extern u16 D_1F8001F8;
 extern char D_800A5464;
-extern s16 D_800A5478;
 
 void func_800325C0(GameObject *o)
 {
@@ -353,9 +346,9 @@ void func_800325C0(GameObject *o)
     } else {
         if (o->timer < 0) {
             if (D_800A5478 > 0)
-                (*(char *)&PLAYER) = 3;
+                PLAYER.obj.active = 3;
             else
-                (*(char *)&PLAYER) = 1;
+                PLAYER.obj.active = 1;
             D_800A5464 = 3;
             o->objectIndex = 0;
             o->state = 2;
@@ -368,14 +361,14 @@ void func_800325C0(GameObject *o)
     }
     o->objectIndex = b;
 L:
-    s = D_800A53D8[1];
+    s = PLAYER.obj.h->p.whole;
     f = o->h;
-    if (D_800A53C6 & 1)
+    if (PLAYER.obj.animFrame & 1)
         f->p.whole = s + 4;
     else
         f->p.whole = s - 4;
-    o->y.p.whole = D_800A53AE - 8;
-    o->d->p.whole = D_800A53DC[1];
+    o->y.p.whole = PLAYER.obj.y.p.whole - 8;
+    o->d->p.whole = PLAYER.obj.d->p.whole;
     switch (o->unkC) {
     case 0:
         b = D_800A53A7 + 1;
@@ -390,8 +383,6 @@ L:
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objsetup", func_800327D8);
-extern u8 D_800A53A7__327D8[];
-extern u16 D_800A53AE__327D8[];
 
 void func_800327D8(GameObject *o)
 {
@@ -423,18 +414,17 @@ void func_800327D8(GameObject *o)
         o->objectIndex = t;
     }
     {
-        s32 x = D_800A53D8[1];
-        o->h->p.whole = (D_800A53C6 & 1) ? x + 4 : x - 4;
+        s32 x = PLAYER.obj.h->p.whole;
+        o->h->p.whole = (PLAYER.obj.animFrame & 1) ? x + 4 : x - 4;
     }
-    o->y.p.whole = D_800A53AE__327D8[0] - 8;
+    o->y.p.whole = (u16)PLAYER.obj.y.p.whole - 8;
     o->d->p.whole = ((s16 **)&D_800A53DC)[0][1];
-    o->unkF = D_800A53A7__327D8[0] - 1;
+    o->unkF = PLAYER.obj.unkF - 1;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objsetup", func_80032934);
 typedef struct { s16 w0; s16 w2; } P_32934;
 typedef struct { void **tab; s32 a; s32 b; } AT_32934;
-extern GameObject PLAYER__32934;
 extern P_32934 *D_800A6078;
 extern P_32934 *D_800A607C;
 extern s16 fixedMulCos(s32, s32);
@@ -480,14 +470,14 @@ void func_80032934(GameObject *o)
         if (o->unkC == 0 && (D_1F8001F8 & 3) == 0)
             func_80028A74(0, 0, 0xff, 2);
         o->timer--;
-        o->visible = PLAYER__32934.visible;
+        o->visible = PLAYER.obj.visible;
         if (o->timer >= 0x3d) {
             if (o->objectIndex < 0x7f)
                 v = o->objectIndex + 8;
             else
                 v = o->objectIndex;
         } else if (o->timer < 0) {
-            if (D_800A5478 > 0) PLAYER__32934.active = 3; else PLAYER__32934.active = 1;
+            if (D_800A5478 > 0) PLAYER.obj.active = 3; else PLAYER.obj.active = 1;
             D_800A5464 = 3;
             o->objectIndex = 0;
             o->state = 2;
@@ -503,39 +493,39 @@ void func_80032934(GameObject *o)
         tickAnimation(o);
         switch (o->unkC) {
         case 0:
-            o->h->p.whole = PLAYER__32934.h->p.whole;
-            o->y.p.whole = PLAYER__32934.y.p.whole - 8;
-            o->d->p.whole = PLAYER__32934.d->p.whole;
+            o->h->p.whole = PLAYER.obj.h->p.whole;
+            o->y.p.whole = PLAYER.obj.y.p.whole - 8;
+            o->d->p.whole = PLAYER.obj.d->p.whole;
             break;
         case 5:
-            o->h->p.whole = PLAYER__32934.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 8);
-            o->y.p.whole = PLAYER__32934.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 28) - 8);
-            o->d->p.whole = PLAYER__32934.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
+            o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 8);
+            o->y.p.whole = PLAYER.obj.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 28) - 8);
+            o->d->p.whole = PLAYER.obj.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
             break;
         case 6:
-            o->h->p.whole = PLAYER__32934.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 16);
-            o->y.p.whole = PLAYER__32934.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 16) - 8);
-            o->d->p.whole = PLAYER__32934.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
+            o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 16);
+            o->y.p.whole = PLAYER.obj.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 16) - 8);
+            o->d->p.whole = PLAYER.obj.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
             break;
         case 7:
-            o->h->p.whole = PLAYER__32934.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 24);
-            o->y.p.whole = PLAYER__32934.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 8) - 8);
-            o->d->p.whole = PLAYER__32934.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
+            o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 24);
+            o->y.p.whole = PLAYER.obj.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 8) - 8);
+            o->d->p.whole = PLAYER.obj.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
             break;
         case 8:
-            o->h->p.whole = PLAYER__32934.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 4);
-            o->y.p.whole = PLAYER__32934.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 24) - 8);
-            o->d->p.whole = PLAYER__32934.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
+            o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 4);
+            o->y.p.whole = PLAYER.obj.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 24) - 8);
+            o->d->p.whole = PLAYER.obj.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
             break;
         case 9:
-            o->h->p.whole = PLAYER__32934.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 20);
-            o->y.p.whole = PLAYER__32934.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 20) - 8);
-            o->d->p.whole = PLAYER__32934.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
+            o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 20);
+            o->y.p.whole = PLAYER.obj.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 20) - 8);
+            o->d->p.whole = PLAYER.obj.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
             break;
         case 10:
-            o->h->p.whole = PLAYER__32934.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 28);
-            o->y.p.whole = PLAYER__32934.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 12) - 8);
-            o->d->p.whole = PLAYER__32934.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
+            o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos(*(s16 *)&o->unk84, 28);
+            o->y.p.whole = PLAYER.obj.y.p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 12) - 8);
+            o->d->p.whole = PLAYER.obj.d->p.whole + (s16)(fixedMulSin(*(s16 *)&o->unk84, 4) - 4);
             break;
         }
         o->unk84 = (o->unk84 + 0x10) & 0xff;

@@ -12,13 +12,12 @@ void setAnimation(u8* self, s16 arg1)
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80057C74);
 typedef struct { char p[0x4c]; s16 w4c; s16 w4e; } G4_57C74;
-extern u8 D_8009C361;
 extern s32 tickAnimation(GameObject *);
 extern void func_800EDDDC(GameObject *, s32, s32);
 
 void func_80057C74(GameObject *o)
 {
-    GameObject *pl = &PLAYER;
+    GameObject *pl = &PLAYER.obj;
     switch (o->step) {
     case 0:
         if ((*(s32 *)&pl->state & 0xffffff) == 0x23001) {
@@ -127,14 +126,13 @@ void func_80057C74(GameObject *o)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_800580BC);
-extern u8 D_8009C361;
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern s32 tickAnimation(GameObject *);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 
 void func_800580BC(GameObject *o)
 {
-    GameObject *s = &PLAYER;
+    GameObject *s = &PLAYER.obj;
 
     switch (o->step) {
     case 0:
@@ -226,9 +224,220 @@ void func_800580BC(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058464);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058464);
+extern void func_800E7DF8(void *, s32, s32);
+extern void func_800E8A30(void *, s32, s32);
+extern void func_800E8758(void *, s32, s32);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058960);
+#define SETANIM(o, a, b) \
+    switch ((o)->unk6A - 1) { \
+    case 0: func_800E7DF8(&PLAYER.obj, a, b); break; \
+    case 1: func_800E8A30(&PLAYER.obj, a, b); break; \
+    case 2: func_800E8758(&PLAYER.obj, a, b); break; \
+    }
+
+static __inline__ void SetAnim_58464(GameObject *self, s16 n)
+{
+    self->unkAC = n;
+    self->anim = (*(void ***)&self->unkA8)[n];
+    readAnimFrameCount(self);
+}
+
+void func_80058464(GameObject *o)
+{
+    GameObject *p = &PLAYER.obj;
+
+    switch (o->step) {
+    case 0:
+        if ((*(s32 *)&p->state & 0xffffff) == 0x23001) {
+            p->active = 5;
+            p->visible = 1;
+            p->state = 4;
+            p->subState = 0;
+            p->step = 0;
+            o->timer = 0x32;
+            o->step++;
+        }
+        break;
+    case 1:
+        tickAnimation(o);
+        if (--o->timer == -1) {
+            o->timer = 0x10;
+            o->step++;
+            p->subState = 6;
+            SETANIM(o, 0, 6);
+        }
+        break;
+    case 2:
+        o->h->p.whole++;
+        if (o->h->p.whole > (*(s16 *)&D_1F800176) + 0x136)
+            o->h->p.whole = (*(s16 *)&D_1F800176) + 0x136;
+        tickAnimation(o);
+        if (--o->timer == -1) {
+            o->timer = 0x28;
+            o->step++;
+            SetAnim_58464(o, 0);
+            o->unkF = p->unkF - 2;
+        }
+        break;
+    case 3:
+        if (--o->timer == -1)
+            goto next;
+        break;
+    case 4:
+        p->animFrame = 0;
+        SETANIM(o, 1, 0);
+    next:
+        o->step++;
+        break;
+    case 5:
+        tickAnimation(p);
+        p->h->p.whole++;
+        if (p->h->p.whole >= o->h->p.whole) {
+            p->h->p.whole = o->h->p.whole;
+            o->timer = 0x1e;
+            o->step++;
+            SETANIM(o, 0, 6);
+        }
+        break;
+    case 6:
+        if (--o->timer == -1)
+            o->step++;
+        p->y.raw -= 0x8000;
+        break;
+    case 7:
+        SetAnim_58464(o, 1);
+        o->timer = 0x46;
+        o->velV = 0;
+        o->step++;
+        break;
+    case 8:
+        if (--o->timer == -1) {
+            o->step++;
+            D_8009BCA4 = 0;
+            D_8009BCDD = 3;
+        }
+        if ((o->velV += 0x20) > 0x600)
+            o->velV = 0x600;
+        o->y.raw -= o->velV << 8;
+        p->y.raw -= o->velV << 8;
+        break;
+    case 9:
+        if ((o->velV += 0x20) > 0x600)
+            o->velV = 0x600;
+        o->y.raw -= o->velV << 8;
+        p->y.raw -= o->velV << 8;
+        if (D_8009BCDD == 1) {
+            D_8009C361 = 1;
+            (*(GameObject **)&D_1F8001D4)->unk4C = 7;
+            (*(GameObject **)&D_1F8001D4)->unk4E = 0;
+        }
+        break;
+    }
+}
+#undef SETANIM
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058960);
+typedef struct { GameObject o; char pad[0x32]; s16 wf2; } BigObj_58960;
+extern void func_800E7DF8(void *, s32, s32);
+extern void func_800E8A30(void *, s32, s32);
+extern void func_800E8758(void *, s32, s32);
+
+#define SETANIM(o, a, b) \
+    switch ((o)->unk6A - 1) { \
+    case 0: func_800E7DF8(&PLAYER.obj, a, b); break; \
+    case 1: func_800E8A30(&PLAYER.obj, a, b); break; \
+    case 2: func_800E8758(&PLAYER.obj, a, b); break; \
+    }
+
+static __inline__ void SetAnim_58960(GameObject *self, s16 n)
+{
+    self->unkAC = n;
+    self->anim = (*(void ***)&self->unkA8)[n];
+    readAnimFrameCount(self);
+}
+
+void func_80058960(GameObject *o)
+{
+    GameObject *p = &(*(BigObj_58960 *)&PLAYER).o;
+    s32 d;
+
+    switch (o->step) {
+    case 0:
+        if ((*(s32 *)&p->state & 0xffffff) == 0x30504) {
+            o->h->p.whole = p->h->p.whole;
+            o->unk34 = ((BigObj_58960 *)p)->wf2;
+            o->y.p.whole = p->y.p.whole + 0x14;
+            p->state = 4;
+            p->subState = 6;
+            p->step = 0;
+            SETANIM(o, 0, 6);
+            SetAnim_58960(o, 1);
+            o->velV = 0x100;
+            o->step++;
+            o->unkF = p->unkF - 1;
+        }
+        break;
+    case 1:
+        o->y.raw += (s16)(o->velV += 8) << 8;
+        p->y.raw += o->velV << 8;
+        if (o->y.p.whole > (d = o->unk34)) {
+            o->timer = 0x1e;
+            o->y.p.whole = d;
+            o->step++;
+            SetAnim_58960(o, 0);
+        }
+        break;
+    case 2:
+        if (--o->timer == -1)
+            goto next;
+        break;
+    case 3:
+        p->y.raw += 0x8000;
+        if (o->unk34 < p->y.p.whole) {
+            o->step++;
+            SetAnim_58960(o, 0);
+        }
+        break;
+    case 4:
+        o->timer = 0x10;
+        p->animFrame = 0;
+        SETANIM(o, 1, 4);
+    next:
+        o->step++;
+        break;
+    case 5:
+        tickAnimation(p);
+        p->h->p.whole++;
+        if (--o->timer == -1) {
+            o->timer = 0x1e;
+            o->step++;
+            p->animFrame = 0;
+            SETANIM(o, 0, 6);
+        }
+        break;
+    case 6:
+        if (--o->timer == -1) {
+            o->animFrame = 0;
+            o->step++;
+            SetAnim_58960(o, 3);
+        }
+        break;
+    case 7:
+        tickAnimation(o);
+        o->h->p.whole++;
+        if (o->h->p.whole >= p->h->p.whole) {
+            p->state = 4;
+            p->subState = 5;
+            p->step = 2;
+            D_8009C361 = 0;
+            o->active = 2;
+            o->state = 3;
+        }
+        break;
+    }
+}
+#undef SETANIM
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058E14);
 
@@ -236,7 +445,6 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80058E14);
 typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_593EC;
 typedef struct E_593EC { u16 a, b; } E_593EC;
 extern E_593EC D_8007EDA4[];
-extern s16 D_1F80019E;
 
 void func_800593EC(PO_593EC *o, GameObject *e)
 {
@@ -272,15 +480,89 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059514);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059638);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005975C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005975C);
+typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_5975C;
+
+s32 func_8005975C(PO_5975C *o, GameObject *e)
+{
+    extern GameObject *D_1F8003C0;
+    s16 d, ad, dy, t;
+    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+        return 0;
+    d = o->we8 - o->t.h->p.whole;
+    ad = d;
+    if (d < 0) ad = -d;
+    d = o->we8 - e->h->p.whole;
+    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
+    else t = e->hitOffsetX + d;
+    if ((u16)t > e->hitWidth + ad)
+        return 0;
+    dy = o->wea - e->y.p.whole;
+    ad = e->hitOffsetY + dy;
+    if (e->hitHeight < (u16)ad)
+        return 0;
+    switch (e->type) {
+    case 0x19:
+    case 0x37:
+    case 0x3d:
+        if (e->subtype == 0 && ad < 8) {
+            o->t.unk9E = 0xb;
+            if (e->type == 0x3d && (e->animFrame & 2)) o->t.animFrame = 0;
+            else o->t.animFrame = 1;
+        } else {
+            o->t.unk9E = 0xa;
+        }
+        if (o->t.animFrame & 1) {
+            o->t.unkB8 = 8;
+            o->t.h->p.whole = e->h->p.whole + 8;
+        } else {
+            o->t.unkB8 = -5;
+            o->t.h->p.whole = e->h->p.whole - 5;
+        }
+        break;
+    case 0x11:
+        if (ad < 8) o->t.unk9E = 0xb;
+        else o->t.unk9E = 0xa;
+        o->t.animFrame = 0;
+        o->t.unkB8 = -8;
+        o->t.h->p.whole = e->h->p.whole - 8;
+        break;
+    case 0x10:
+    case 0x3e:
+        if (e->subtype == 0 && ad < 8) o->t.unk9E = 0xc;
+        else o->t.unk9E = 0xa;
+        if (o->t.animFrame & 1) {
+            o->t.unkB8 = 8;
+            o->t.h->p.whole = e->h->p.whole + 8;
+        } else {
+            o->t.unkB8 = -8;
+            o->t.h->p.whole = e->h->p.whole - 8;
+        }
+        break;
+    case 0x35:
+        if (e->subtype != 0) return 0;
+        if (o->t.animFrame & 1) {
+            o->t.unkB8 = 8;
+            o->t.h->p.whole = e->h->p.whole + 8;
+        } else {
+            o->t.unkB8 = -8;
+            o->t.h->p.whole = e->h->p.whole - 8;
+        }
+        o->t.unk9E = 0xa;
+        e->touchFlag = 1;
+        break;
+    }
+    o->t.unkBA = dy;
+    o->t.velY = 0;
+    D_1F80019E = 0;
+    D_1F8003C0 = e;
+    return 1;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059A40);
 extern s32 D_1F8003C0;
-extern s16 D_1F80019E;
 
-extern u16 D_1F800254;
-extern u8 **D_1F800268;
-extern void func_8005975C(void *, u8 *);
+s32 func_8005975C();
 
 s32 func_80059A40(void *o)
 {
@@ -466,9 +748,7 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_80059F7C);
-extern u8 **D_8007F6A4[];
 extern void (*D_8007F6F4[])(u8 *);
-extern u8 *allocObjectUnlayered(void);
 
 void func_80059F7C(void)
 {
@@ -526,7 +806,72 @@ void spawnUnlayeredObject(u8 arg0)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A184);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A184);
+typedef struct {
+    u8 b0, b1, b2, b3, b4, b5, b6, b7;
+    s16 w08;
+    s16 w0a;
+    u16 w0c;
+    u8 b0e;
+    s8 b0f;
+} S_5A184;
+extern u16 D_8009BCCA_U16Arr[] asm("D_8009BCCA");
+extern s32 APD_DATA[];
+extern void func_8005A508(S_5A184 *);
+extern void freeObjectUnlayered(S_5A184 *);
+
+void func_8005A184(S_5A184 *o)
+{
+    extern void func_8005A7E0(S_5A184 *);
+    extern void func_8005A660(S_5A184 *);
+    extern void func_8005A3B0(S_5A184 *);
+    u8 t = o->b4;
+
+    switch (t) {
+    case 0:
+        o->w0c = ((u16 *)&GAME)[0];
+        o->b0e = GAME.selectedSection;
+        o->b4++;
+        o->b5 = 0;
+        if (((u16 *)&GAME)[0] == 1 && !(D_8009C62B & 1) && D_8009C11D == 0 && D_8009BCCA < 2) {
+            APD_DATA[0] = D_1F800370;
+            D_1F80035C = D_1F800374;
+            APD_DATA[D_8007B296] = D_1F800378;
+        }
+        func_8005A508(o);
+        func_8005A660(o);
+        break;
+    case 1:
+        switch (o->b5) {
+        case 0:
+            o->b0f = o->b0e - *(u8 *)D_8009BCCA_U16Arr;
+            if (o->b0f == 0) break;
+            if (o->b0f < 0) o->b0f = 0;
+            o->b0e = D_8009BCCA_U16Arr[0];
+            o->w08 = 2;
+            o->b5++;
+            func_8005A3B0(o);
+            break;
+        case 1:
+            if (--o->w08 == 0) {
+                o->b5--;
+                if (o->b0f == 0) {
+                    func_8005A508(o);
+                } else {
+                    func_8005A7E0(o);
+                }
+            }
+            break;
+        }
+        break;
+    case 2:
+        o->b4 = t - 1;
+        break;
+    case 3:
+        freeObjectUnlayered(o);
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A3B0);
 typedef struct E_5A3B0 { char a; char pad[3]; char b; char pad2[0x1c-5]; char f; s8 g; char pad3[0xd4-0x1e]; } E_5A3B0;
@@ -572,7 +917,6 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A508);
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005A660);
 typedef struct { s8 f0; char p1; u8 f2; char p3[0xc]; u8 ff; } R_5A660;
 extern R_5A660 ***D_8007F0C8[];
-extern s32 func_80023608(s32);
 
 void func_8005A660(s8 *o)
 {
@@ -635,16 +979,10 @@ typedef struct {
     s16 s6, s8, sa;
     u8 bc, bd, be, bf;
 } Ent_5AA98;
-extern GameObject *D_8009B100;
-extern GameObject *D_8009B104;
-extern s32 D_1F800334;
-extern s32 D_1F800338;
 extern GameObject *allocObjectLayer2(void);
 extern GameObject *allocObjectLayer3(void);
-extern GameObject *allocObjectLayer4(void);
 extern GameObject *allocObjectLayer5(void);
 extern GameObject *allocObjectLayer8(void);
-extern GameObject *allocObjectLayer7(void);
 
 void func_8005AA98(Ent_5AA98 *e, s32 z)
 {
@@ -783,29 +1121,21 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/objpool", func_8005AF70);
-typedef struct {
-    u16 c960; u16 c962; char p964[0x15 - 4];
-    u8 c975; u8 c976; char p977[0x963 - 0x17]; u8 d2c3;
-} G_5AF70;
-extern G_5AF70 GAME__5AF70;
-extern u8 *D_8007F938[];
-extern u8 *D_8007F968;
-extern u8 D_1F8003D1;
 void func_8005AF70(GameObject *o)
 {
     u8 *p;
     s32 r, g, b;
     switch (o->state) {
     case 0:
-        GAME__5AF70.c975 = 1;
-        GAME__5AF70.c976 = 0;
-        p = D_8007F938[GAME__5AF70.c960];
-        if (GAME__5AF70.c960 == 4 && (GAME__5AF70.d2c3 & 8)) p = D_8007F968;
-        p += GAME__5AF70.c962 * 4;
+        GAME.fadeScreenControl = 1;
+        GAME.fadeScreenAmount = 0;
+        p = D_8007F938[GAME.selectedArea];
+        if (GAME.selectedArea == 4 && (GAME.purifiedAreas & 8)) p = D_8007F968;
+        p += GAME.selectedSection * 4;
         r = *p++;
         g = *p;
         b = p[1];
-        if (GAME__5AF70.c960 == 3 && (GAME__5AF70.d2c3 & 2) && GAME__5AF70.c962 == GAME__5AF70.c960) {
+        if (GAME.selectedArea == 3 && (GAME.purifiedAreas & 2) && GAME.selectedSection == GAME.selectedArea) {
             r = 0x60;
             g = 0x97;
             b = 0xff;
@@ -819,21 +1149,21 @@ void func_8005AF70(GameObject *o)
         o->state++;
         break;
     case 1:
-        GAME__5AF70.c975 = 2;
-        GAME__5AF70.c976 += 8;
-        if (GAME__5AF70.c976 != 0) break;
+        GAME.fadeScreenControl = 2;
+        GAME.fadeScreenAmount += 8;
+        if ((u8)GAME.fadeScreenAmount != 0) break;
         if (D_1F8003D1 == 1) D_1F8003D1 = 0;
-        GAME__5AF70.c975 = 0;
+        GAME.fadeScreenControl = 0;
         o->state++;
         break;
     case 2:
-        if (GAME__5AF70.c975 == 3) o->state++;
+        if (GAME.fadeScreenControl == 3) o->state++;
         break;
     case 3:
-        GAME__5AF70.c975 = 2;
-        GAME__5AF70.c976 -= 8;
-        if (GAME__5AF70.c976 != 0) break;
-        GAME__5AF70.c975 = 1;
+        GAME.fadeScreenControl = 2;
+        GAME.fadeScreenAmount -= 8;
+        if ((u8)GAME.fadeScreenAmount != 0) break;
+        GAME.fadeScreenControl = 1;
         o->state++;
         D_8009D6DD = 0;
         D_8009D6DE = 0;
@@ -843,7 +1173,7 @@ void func_8005AF70(GameObject *o)
         D_8009E3EF = 0;
         break;
     case 4:
-        if (GAME__5AF70.c975 == 4) o->state = 0;
+        if (GAME.fadeScreenControl == 4) o->state = 0;
         break;
     }
 }

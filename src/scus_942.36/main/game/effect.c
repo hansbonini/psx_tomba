@@ -105,7 +105,6 @@ void dispatchAreaEffectB(void)
             return;
         case AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER:
             func_80115DB0();
-            // fallthrough
         default:
             return;
     }
@@ -285,7 +284,7 @@ void updateAreaScreenEffect(void)
 {
     u8* p;
 
-    p = PLAYER;
+    p = &PLAYER.obj;
     p[2] = 0;
     switch (GAME.selectedArea) {
     case 2:

@@ -35,7 +35,6 @@ s16 func_80043D2C(u8* self, s16 arg1, s16 arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043DA0);
-
 s32 func_80043DA0(s32 x, s32 y)
 {
     s32 base;
@@ -67,7 +66,6 @@ s32 func_80043DA0(s32 x, s32 y)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043F14);
-
 u32 func_80043F14(s32 u, s32 a)
 {
     u16 x;
@@ -105,7 +103,6 @@ u32 func_80043F14(s32 u, s32 a)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80044050);
-
 s32 func_80044050(s32 u, s32 a)
 {
     u16 x, w, m;
@@ -143,7 +140,6 @@ ret0:
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80044184);
-
 s32 func_80044184(s32 x, s32 y)
 {
     s32 h;
@@ -196,7 +192,60 @@ s32 func_800442FC(s32 x, s16 y)
     return 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_800443CC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_800443CC);
+
+static __inline__ s32 inr_443CC(s16 m, s16 lo, s16 hi)
+{
+    if (m < lo || lo + hi < m) return 0;
+    return 1;
+}
+s32 func_800443CC(void *o, s32 x, s32 y)
+{
+    extern u16 D_1F800282;
+    s16 n, m;
+    register s32 r asm("$4");
+    u16 w, a, c;
+    s32 lo, hi;
+    u16 s;
+    n = *(s16 *)D_1F800278++;
+    if (n == 0)
+        return 0;
+    do {
+        w = *D_1F800278++;
+        n--;
+        if ((w & 0x1f) == 0) {
+            D_1F800278 += 3;
+            continue;
+        }
+        r = 0;
+        if (w & 0x10) {
+            D_1F800284 = (w & 0xe00) >> 9;
+            a = *D_1F800278++;
+            r = *D_1F800278++;
+            c = *D_1F800278++;
+            lo = c & 0xf;
+            hi = (c >> 4) & 0xf;
+            s = a + r;
+            if ((s16)a >= (s16)y && (s16)y >= (s16)s)
+                r = inr_443CC((s16)x % 8, lo, hi);
+            else
+                r = 0;
+        } else {
+            D_1F800284 = (w & 0xe00) >> 9;
+            switch (w & 0xf) {
+            case 1: r = func_80043DA0((s16)x, (s16)y); break;
+            case 2: r = func_80044184((s16)x, (s16)y); break;
+            case 4: r = func_80043F14((s16)x, (s16)y); break;
+            case 8: r = func_80044050((s16)x, (s16)y); break;
+            }
+        }
+        if (r) {
+            D_1F800282 = w;
+            return 1;
+        }
+    } while (n);
+    return 0;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", probeCollisionAtDepthB);
 s16 probeCollisionAtDepthB(u8* self, s16 arg1, s16 arg2)
@@ -206,7 +255,6 @@ s16 probeCollisionAtDepthB(u8* self, s16 arg1, s16 arg2)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80044694);
-extern u16 D_1F800284;
 
 typedef struct O_44694 { char pad[0x44]; s16 *h; } O_44694;
 
@@ -288,7 +336,6 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80045174);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80045310);
 typedef struct O_45310 { char p[0x44]; s16 *q; } O_45310;
-extern s16 D_1F800280;
 extern s16 D_1F800282;
 s32 func_80045310(O_45310 *o, s16 a, s16 b)
 {

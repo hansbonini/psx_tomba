@@ -1,0 +1,5 @@
+printTitleScreenMessage = 0x800E889C;
+drawOptsubSpriteList = 0x800E73C0;
+drawOptsubSprite = 0x800E7F74;
+drawOptsubText = 0x800E8908;
+drawOptsubNumber = 0x800E8A24;

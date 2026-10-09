@@ -968,7 +968,6 @@ void onOverlapConsumeObject(u8* arg0, u8* arg1) {
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005242C);
-extern u16 D_1F80019E;
 s32 func_8005242C(GameObject *a, GameObject *b)
 {
     s16 dy; s16 sx; s16 ad; s16 dx;
@@ -976,12 +975,12 @@ s32 func_8005242C(GameObject *a, GameObject *b)
         return -1;
     sx = *(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c);
     dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
-    if ((u16)(dx + sx) > *(s16 *)((u8 *)b + 0x6e) + *(s16 *)((u8 *)a + 0x6e))
+    if ((u16)(dx + sx) > b->hitWidth + a->hitWidth)
         return -1;
     {
         u16 c = (*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)b + 0x70) + *(u16 *)((u8 *)a + 0x70));
         dy = *(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16);
-        if (c > *(s16 *)((u8 *)a + 0x72) + *(s16 *)((u8 *)b + 0x72))
+        if (c > a->hitHeight + b->hitHeight)
             return -1;
     }
     D_1F80019E = 0;
@@ -1144,8 +1143,7 @@ void func_800527C8(GameObject *o, GameObject *q)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800529A8);
-extern u16 D_1F80019E;
-extern s32 func_800505E8(GameObject *, GameObject *);
+s32 func_800505E8();
 extern void func_800224FC(s32, s32, s32, s32);
 extern void playSFX(s32);
 
@@ -1155,9 +1153,9 @@ static __inline__ s16 hit_529A8(GameObject *a, GameObject *b)
     if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
     dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
-    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > *(s16 *)((u8 *)b + 0x6e) + *(s16 *)((u8 *)a + 0x6e))
+    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitWidth + a->hitWidth)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > *(s16 *)((u8 *)a + 0x72) + *(s16 *)((u8 *)b + 0x72))
+    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitHeight + b->hitHeight)
         return -1;
     D_1F80019E = 0;
     if (dx < 0)
@@ -1213,9 +1211,9 @@ static __inline__ s16 hit_52B88(GameObject *a, GameObject *b)
 {
     if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > *(s16 *)((u8 *)b + 0x6e) + *(s16 *)((u8 *)a + 0x6e))
+    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitWidth + a->hitWidth)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > *(s16 *)((u8 *)a + 0x72) + *(s16 *)((u8 *)b + 0x72))
+    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitHeight + b->hitHeight)
         return -1;
     return 1;
 }
@@ -1267,8 +1265,6 @@ void func_80052B88(GameObject *a, GameObject *b)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80052D5C);
-extern void func_8011EDBC(void);
-extern void func_800E92D4(s32, s32, s32, s32);
 
 static __inline__ s16 hit_52D5C(GameObject *a, GameObject *b)
 {
@@ -1278,9 +1274,9 @@ static __inline__ s16 hit_52D5C(GameObject *a, GameObject *b)
         return -1;
     if (b->animFrame & 1) off = *(u16 *)((u8 *)b + 0x6e) - *(u16 *)((u8 *)b + 0x6c);
     else off = *(u16 *)((u8 *)b + 0x6c);
-    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (off + *(u16 *)((u8 *)a + 0x6c))) > *(s16 *)((u8 *)b + 0x6e) + *(s16 *)((u8 *)a + 0x6e))
+    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (off + *(u16 *)((u8 *)a + 0x6c))) > b->hitWidth + a->hitWidth)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)b + 0x70) + *(u16 *)((u8 *)a + 0x70))) > *(s16 *)((u8 *)a + 0x72) + *(s16 *)((u8 *)b + 0x72))
+    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)b + 0x70) + *(u16 *)((u8 *)a + 0x70))) > a->hitHeight + b->hitHeight)
         return -1;
     return 1;
 }
@@ -1381,8 +1377,7 @@ void func_80052F20(O_52F20 *a, O_52F20 *b)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_800530F0);
-extern u16 D_1F80019E;
-extern s32 func_800505E8(GameObject *, GameObject *);
+s32 func_800505E8();
 extern void func_800224FC(s32, s32, s32, s32);
 extern void playSFX(s32);
 
@@ -1390,9 +1385,9 @@ static __inline__ s16 hit_530F0(GameObject *a, GameObject *b)
 {
     if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > *(s16 *)((u8 *)b + 0x6e) + *(s16 *)((u8 *)a + 0x6e))
+    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitWidth + a->hitWidth)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > *(s16 *)((u8 *)a + 0x72) + *(s16 *)((u8 *)b + 0x72))
+    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitHeight + b->hitHeight)
         return -1;
     return 1;
 }
@@ -1630,7 +1625,6 @@ void func_8005368C(u8 *a, u8 *b)
 #undef S
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053808);
-extern u8 D_8009C12F;
 #define B(o, n) (((u8 *)(o))[n])
 
 void func_80053808(GameObject *o, GameObject *e)
@@ -1766,14 +1760,401 @@ void dispatchObjectContact(u8* arg0, u8* arg1) {
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053DA0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053DA0);
+typedef struct { u8 act, p1, type; char p[0xa2]; u8 ba5; } O_53DA0;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053F08);
+void func_80053DA0(void)
+{
+    s16 n = D_1F800244;
+    O_53DA0 **pp = D_1F800218;
+    O_53DA0 *o;
+    u8 **q;
+    u8 *b;
+    s32 s2;
+    u16 v;
+    if ((*(s16 *)&D_1F800248) != 0 && n != 0) {
+        do {
+            o = *pp++;
+            n--;
+            if ((o->act & 1) && o->ba5 != 0) {
+                q = D_1F800228;
+                s2 = (u8)(o->type - 5) < 3;
+                v = (*(s16 *)&D_1F800248);
+                D_1F80019E = v;
+                if (v != 0) do {
+                    b = *q;
+                    D_1F80019E--;
+                    q++;
+                    switch (s2) {
+                    case 0:
+                        if ((b[0] & 1) && (b[3] == 0 || b[3] == 2))
+                            func_80052B88(o, b);
+                        break;
+                    case 1:
+                        if (b[0] != 5 && (b[0] & 3))
+                            func_80052B88(o, b);
+                        break;
+                    }
+                } while (D_1F80019E != 0);
+            }
+        } while (n != 0);
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80054618);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80053F08);
+
+static __inline__ s16 hit_53F08(GameObject *a, GameObject *b)
+{
+    s16 dx;
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+        return -1;
+    dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
+    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitWidth + a->hitWidth)
+        return -1;
+    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitHeight + b->hitHeight)
+        return -1;
+    D_1F80019E = 0;
+    if (dx < 0)
+        return 0;
+    return 1;
+}
+
+static __inline__ void col_53F08(GameObject *a, GameObject *b)
+{
+    s32 r;
+
+    if (hit_53F08(a, b) >= 0) {
+        r = 1;
+        b->unk68 = 1;
+        b->unk9E = 0;
+        switch (func_800505E8(a, b)) {
+        case 1:
+        case 7:
+            r = 1;
+            break;
+        case 4:
+        case 5:
+        case 10:
+            r = 1;
+            a->unk6A = 1;
+            a->active = 2;
+            a->unkA8 = 0x4ff;
+            break;
+        case 0:
+        case 3:
+        case 9:
+            r = 2;
+            break;
+        case 13:
+            b->unk68 = 0;
+            r = -1;
+            break;
+        case 6:
+        case 11:
+        case 12:
+            r = 2;
+            a->unk6A = 1;
+            a->active = 2;
+            a->unkA8 = 0x4ff;
+            break;
+        case 2:
+        case 8:
+            r = 0;
+            b->unk9E = 1;
+            b->unk9F = 0;
+            break;
+        }
+        if (r >= 0) {
+            func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
+            if ((b->category & 0x7f) == 4)
+                playSFX(6);
+            else
+                playSFX(7);
+        }
+    }
+}
+
+void func_80053F08(void)
+{
+    s16 n = D_1F800244;
+    GameObject **pp = D_1F800218;
+    GameObject **qq;
+    GameObject *a, *b;
+
+    if ((*(s16 *)&D_1F800246) == 0)
+        return;
+    while (n != 0) {
+        a = *pp++;
+        n--;
+        if (!(a->active & 1) || a->unkA5 == 0)
+            continue;
+        qq = D_1F80021C;
+        for (D_1F80019E = D_1F800246; D_1F80019E != 0;) {
+            b = *qq++;
+            D_1F80019E--;
+            if (!(b->active & 1))
+                continue;
+            switch (b->type) {
+            case 0:
+                func_8012523C(a, b);
+                break;
+            case 1:
+                func_80124DF0(a, b);
+                break;
+            case 2:
+                func_80052D5C(a, b);
+                break;
+            case 10:
+                func_8011FD70(a, b);
+                break;
+            case 11:
+                col_53F08(a, b);
+                break;
+            case 4:
+                col_53F08(a, b);
+                break;
+            case 14:
+                func_80052F20(a, b);
+                break;
+            case 18:
+                func_80124F60(a, b);
+                break;
+            case 6:
+                func_801250E8(a, b);
+                break;
+            case 7:
+                func_8005334C(a, b);
+                break;
+            case 8:
+                func_80124FC8(a, b);
+                break;
+            case 30:
+                func_8011EAF4(a, b);
+                break;
+            case 16:
+            case 26:
+            case 28:
+                col_53F08(a, b);
+                break;
+            case 39:
+                func_8011D0E0(a, b);
+                break;
+            case 17:
+                func_8012533C(a, b);
+                break;
+            case 19:
+                func_80124EC0(a, b);
+                break;
+            case 33:
+                func_8011FEE4(a, b);
+                break;
+            case 40:
+                func_8011F2B4(a, b);
+                break;
+            case 41:
+                func_8011EC28(a, b);
+                break;
+            case 56:
+                func_8011EB3C(a, b);
+                break;
+            case 58:
+                func_8011F884(a, b);
+                break;
+            case 59: case 60: case 61: case 62:
+            case 63: case 64: case 65: case 66:
+                func_8011C620(a, b);
+                break;
+            case 71:
+                func_8011BEE4(a, b);
+                break;
+            case 79:
+                func_8011C334(a, b);
+                break;
+            }
+        }
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80054618);
+
+static __inline__ s16 hit_54618(GameObject *a, GameObject *b)
+{
+    s16 dx;
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+        return -1;
+    dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
+    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitWidth + a->hitWidth)
+        return -1;
+    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitHeight + b->hitHeight)
+        return -1;
+    D_1F80019E = 0;
+    if (dx < 0)
+        return 0;
+    return 1;
+}
+
+static __inline__ void col_54618(GameObject *a, GameObject *b)
+{
+    s32 r;
+
+    if (hit_54618(a, b) >= 0) {
+        r = 1;
+        b->unk68 = 1;
+        b->unk9E = 0;
+        switch (func_800505E8(a, b)) {
+        case 1:
+        case 7:
+            r = 1;
+            break;
+        case 4:
+        case 5:
+        case 10:
+            r = 1;
+            a->unk6A = 1;
+            a->active = 2;
+            a->unkA8 = 0x4ff;
+            break;
+        case 0:
+        case 3:
+        case 9:
+            r = 2;
+            break;
+        case 13:
+            b->unk68 = 0;
+            r = -1;
+            break;
+        case 6:
+        case 11:
+        case 12:
+            r = 2;
+            a->unk6A = 1;
+            a->active = 2;
+            a->unkA8 = 0x4ff;
+            break;
+        case 2:
+        case 8:
+            r = 0;
+            b->unk9E = 1;
+            b->unk9F = 0;
+            break;
+        }
+        if (r >= 0) {
+            func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
+            if ((b->category & 0x7f) == 4)
+                playSFX(6);
+            else
+                playSFX(7);
+        }
+    }
+}
+
+void func_80054618(void)
+{
+    s16 n = D_1F800244;
+    GameObject **pp = D_1F800218;
+    GameObject **qq;
+    GameObject *a, *b;
+
+    if ((*(s16 *)&D_1F80024C) == 0)
+        return;
+    while (n != 0) {
+        a = *pp++;
+        n--;
+        if (!(a->active & 1) || a->unkA5 == 0)
+            continue;
+        qq = D_1F800224;
+        for (D_1F80019E = D_1F80024C; D_1F80019E != 0;) {
+            b = *qq++;
+            D_1F80019E--;
+            if (!(b->active & 1))
+                continue;
+            switch (b->type) {
+            case 0:
+                func_800529A8(a, b);
+                break;
+            case 1:
+                func_80124D6C(a, b);
+                break;
+            case 3:
+                func_800527C8(a, b);
+                break;
+            case 4:
+                if ((*(u16 *)&GAME) == 0) {
+            case 2:
+                    func_80124CC8(a, b);
+                    break;
+                }
+                func_8011F218(a, b);
+                break;
+            case 5:
+                func_80124E1C(a, b);
+                break;
+            case 0xb: case 0xc:
+                func_80124C1C(a, b);
+                break;
+            case 6: case 0x42: case 0x43:
+                col_54618(a, b);
+                break;
+            case 10:
+                col_54618(a, b);
+                break;
+            case 0x14:
+                func_80124BA0(a, b);
+                break;
+            case 0x15:
+                func_80124CCC(a, b);
+                break;
+            case 0xf:
+                col_54618(a, b);
+                break;
+            case 0x1c:
+                func_8011FC08(a, b);
+                break;
+            case 0x1d:
+                func_8011D25C(a, b);
+                break;
+            case 0x23:
+                func_801252F4(a, b);
+                break;
+            case 0x28:
+                func_8011E8D4(a, b);
+                break;
+            case 0x1f:
+                func_8011E818(a, b);
+                break;
+            case 0x2e:
+                func_8011F634(a, b);
+                break;
+            case 0x2f:
+                func_80124C74(a, b);
+                break;
+            case 0x24:
+                func_8011E680(a, b);
+                break;
+            case 0x22:
+                func_8011E768(a, b);
+                break;
+            case 0x33:
+                func_801202E0(a, b);
+                break;
+            case 0x34:
+                func_8011E838(a, b);
+                break;
+            case 0x39:
+                func_800530F0(a, b);
+                break;
+            case 0x31:
+                func_80120710(a, b);
+                break;
+            case 0x1e:
+                func_8011E6CC(a, b);
+                break;
+            }
+        }
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_80054D60);
-extern s16 D_1F80019E__54D60;
 void func_80124200(GameObject *o, GameObject *e);
 void func_80124280(GameObject *o, GameObject *e);
 void func_8012437C(GameObject *o, GameObject *e);
@@ -1821,9 +2202,9 @@ void func_80054D60(GameObject *o)
     GameObject *e;
 
     pp = D_1F800224;
-    for (D_1F80019E__54D60 = D_1F80024C; D_1F80019E__54D60 != 0; ) {
+    for (D_1F80019E = D_1F80024C; D_1F80019E != 0; ) {
         e = *pp++;
-        D_1F80019E__54D60--;
+        D_1F80019E--;
         if (!(e->active & 1))
             continue;
         switch (e->type) {
@@ -1922,46 +2303,7 @@ void func_80054D60(GameObject *o)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/actor1", func_8005548C);
-extern s16 D_1F80019E__5548C;
-extern void func_8011BB50(GameObject *, u8 *);
-extern void func_8011BC04(GameObject *, u8 *);
-extern void func_8011BDA4(GameObject *, u8 *);
-extern void func_8011BF60(GameObject *, u8 *);
-extern void func_8011C0B0(GameObject *, u8 *);
-extern void func_8011C1A8(GameObject *, u8 *);
-extern void func_8011C270(GameObject *, u8 *);
-extern void func_8011C384(GameObject *, u8 *);
-extern void func_8011C47C(GameObject *, u8 *);
-extern void func_8011CF54(GameObject *, u8 *);
-extern void func_8011D6F8(GameObject *, u8 *);
-extern void func_8011E858(GameObject *, u8 *);
-extern void func_8011E984(GameObject *, u8 *);
-extern void func_8011E978(GameObject *, u8 *);
-extern void func_8011EC90(GameObject *, u8 *);
-extern void func_8011EE24(GameObject *, u8 *);
-extern void func_8011EFD4(GameObject *, u8 *);
-extern void func_8011F070(GameObject *, u8 *);
-extern void func_8011F490(GameObject *, u8 *);
-extern void func_8011F710(GameObject *, u8 *);
-extern void func_8011FA14(GameObject *, u8 *);
-extern void func_8011FFAC(GameObject *, u8 *);
-extern void func_80120278(GameObject *, u8 *);
-extern void func_801204C4(GameObject *, u8 *);
-extern void func_801235F8(GameObject *, u8 *);
-extern void func_80123680(GameObject *, u8 *);
-extern void func_8012370C(GameObject *, u8 *);
-extern void func_80125274(GameObject *, u8 *);
-extern void func_80125354(GameObject *, u8 *);
-extern void func_8012543C(GameObject *, u8 *);
-extern void func_801254DC(GameObject *, u8 *);
-extern void func_80125584(GameObject *, u8 *);
-extern void func_80125630(GameObject *, u8 *);
-extern void func_801257A8(GameObject *, u8 *);
-extern void func_8012589C(GameObject *, u8 *);
-extern void func_801259DC(GameObject *, u8 *);
-extern void func_80125BB4(GameObject *, u8 *);
 extern void func_80125DA8(GameObject *, u8 *);
-extern void func_80125EF4(GameObject *, u8 *);
 
 void func_8005548C(GameObject *o)
 {
@@ -1971,10 +2313,10 @@ void func_8005548C(GameObject *o)
 
     if (D_8009BCA2 == 0) return;
     r = D_1F80021C;
-    D_1F80019E__5548C = D_1F800246;
-    while (D_1F80019E__5548C != 0) {
+    D_1F80019E = D_1F800246;
+    while (D_1F80019E != 0) {
         q = *r;
-        D_1F80019E__5548C = D_1F80019E__5548C - 1;
+        D_1F80019E = D_1F80019E - 1;
         r++;
         if (q[0] & 1) {
             switch (q[2]) {
@@ -2005,7 +2347,7 @@ void func_8005548C(GameObject *o)
                         { GameObject *p = o; *(u8 **)((char *)p + 0xe4) = q; }
                         { GameObject *p = o; *(u8 *)&p->unkAC = 2; }
                     }
-                    D_1F80019E__5548C = 0;
+                    D_1F80019E = 0;
                 }
                 break;
             case 3:

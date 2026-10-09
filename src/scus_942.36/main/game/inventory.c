@@ -84,7 +84,6 @@ u_char addItemToInventory(u_long item_id, u_char qty, bool printMessage)
     return GAME.item[item_id];
 }
 
-//INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", removeItemFromInventory);
 int removeItemFromInventory(ITEM id, int qty)
 {
     int i;
@@ -204,11 +203,7 @@ typedef struct {
     char p40[0x4a - 0x40]; s16 w4a, w4c; s16 w4e; s16 w50, w52; s16 w54; s16 w56;
     s16 w58; s16 w5a; s16 w5c; s16 w5e, w60, w62;
 } S_29CDC;
-extern s16 D_1F8000EE[];
-extern s16 D_1F8000F6[];
 #define F6 D_1F8000F6[0]
-extern u8 D_8009BCA4;
-extern u8 D_8009BCDD;
 
 static __inline__ s32 body_29CDC(S_29CDC *s)
 {
@@ -293,7 +288,7 @@ s32 func_80029CDC(S_29CDC *s)
 void dispatchAreaItemHandler(s32 arg0)
 {
     loadSectionHeight();
-    switch (GAME.selectedArea) {                    // irregular
+    switch (GAME.selectedArea) {
         case AREA00_VILLAGEOFALLBEGINNINGS:
             func_80115AA8(arg0);
             return;
@@ -309,12 +304,40 @@ void dispatchAreaItemHandler(s32 arg0)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A0A0);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A240);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A240);
+typedef struct { u8 b0; char p[0x15]; s16 w16; } S_2A240;
+typedef struct { s16 w0; s16 w2; } P_2A240;
+typedef struct { char p0[0x30]; s16 w30; s16 w32; P_2A240 *d34; } O_2A240;
+
+void func_8002A240(O_2A240 *o)
+{
+    S_2A240 *s = &PLAYER;
+    char pad;
+    if (s->b0 < 4 || s->b0 == 7) {
+        u16 x = o->d34->w2;
+        s16 t;
+        t = x - 0x90;
+        if ((*(P_2A240 **)&D_800A53D8)->w2 < t) {
+            (*(P_2A240 **)&D_800A53D8)->w2 = t;
+        } else {
+            t = x + 0x90;
+            if (t < (*(P_2A240 **)&D_800A53D8)->w2)
+                (*(P_2A240 **)&D_800A53D8)->w2 = t;
+        }
+        if ((*(s32 *)&GAME) == 0x2000E) {
+            if (s->w16 < o->w30 - 0x54)
+                s->w16 = o->w30 - 0x54;
+        } else {
+            if (s->w16 < o->w30 - 0x88)
+                s->w16 = o->w30 - 0x88;
+        }
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", syncObjectTargetY);
 void syncObjectTargetY(u8* self)
 {
-    (*(s16**)(self + 0x38))[1] = D_800A53DC[1];
+    (*(s16**)(self + 0x38))[1] = PLAYER.obj.d->p.whole;
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A334);
@@ -324,10 +347,6 @@ typedef struct {
     Fix16 *f34;
 } S_2A334;
 typedef struct { char p[0x14]; s32 d14; } G_2A334;
-extern u8 D_8009BCA1;
-extern Fix16 *D_800A53D8__2A334[];
-extern s8 D_8009C618__2A334[];
-extern Fix16 D_1F8000F0;
 
 void func_8002A334(S_2A334 *o)
 {
@@ -337,21 +356,21 @@ void func_8002A334(S_2A334 *o)
     s32 v;
 
     if (D_8009BCA1 != 0) return;
-    o->f34->raw = D_800A53D8__2A334[0]->raw;
+    o->f34->raw = PLAYER.obj.h->raw;
     f = o->f34;
     g = &PLAYER;
     if (o->s2e < f->p.whole) {
         f->raw = o->s2e << 16;
-        if (D_8009C618__2A334[0] != 3) {
-            if (o->s2e + 150 < D_800A53D8__2A334[0]->p.whole) D_800A53D8__2A334[0]->p.whole = o->s2e + 150;
+        if (D_8009C618[0] != 3) {
+            if (o->s2e + 150 < PLAYER.obj.h->p.whole) PLAYER.obj.h->p.whole = o->s2e + 150;
         }
     } else if (f->p.whole < o->s2c) {
         f->raw = o->s2c << 16;
-        if (D_8009C618__2A334[0] != 3) {
-            if (D_800A53D8__2A334[0]->p.whole < o->s2c - 150) D_800A53D8__2A334[0]->p.whole = o->s2c - 150;
+        if (D_8009C618[0] != 3) {
+            if (PLAYER.obj.h->p.whole < o->s2c - 150) PLAYER.obj.h->p.whole = o->s2c - 150;
         }
     }
-    if (D_8009C618__2A334[0] < 3) {
+    if (D_8009C618[0] < 3) {
         c = &D_1F8000F0;
         c->raw = g->d14;
         if (D_1F8000F0.p.whole > o->s32) {
@@ -368,8 +387,6 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A480);
 typedef struct O_2A798 { char p0[0x14]; s32 y; char p1[0x2c-0x18]; s16 h2c; s16 h2e; char p2[0x34-0x30]; s32 *d34;
   char p3[0x3c-0x38]; u8 b3c; char p4[0x44-0x3d]; u16 h44; char p5[0x58-0x46]; u16 w58; } O_2A798;
 typedef struct G_2A798 { char p0[0x9c]; u8 f9c; } G_2A798;
-extern u8 D_800A5434;
-extern s32 D_800A53C8;
 
 void func_8002A798(O_2A798 *o)
 {
@@ -385,7 +402,7 @@ void func_8002A798(O_2A798 *o)
     o->w58 = u;
     if (u)
         base += 0x200000;
-    if (D_800A5436 == 3)
+    if (PLAYER.obj.unk9E == 3)
         t = D_800A53C8 << 16;
     else
         t = *(*(s32 **)&D_800A53D8);
@@ -455,12 +472,132 @@ L:
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A9FC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002A9FC);
+#define D34(o) (*(Fix16 **)&(o)->unk34)
+#define W44(o) (*(u16 *)&(o)->d)
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002ABC0);
+static __inline__ void body_2A9FC(GameObject *o)
+{
+    s32 d;
+    u8 neg;
+    d = D_1F80018C - D34(o)->raw;
+    neg = d < 0;
+    if (d > 0x20000) {
+        if (d < o->y.raw) {
+            if (d < 0x40000)
+                o->y.raw = d;
+            else
+                o->y.raw = 0x40000;
+        } else {
+            if (o->y.raw < 0)
+                o->y.raw = 0;
+            o->y.raw += 0x2000;
+        }
+        { s32 y = o->y.raw; D34(o)->raw += y; }
+    } else if (d < -0x20000) {
+        if (o->y.raw < d) {
+            if (d > -0x40000)
+                o->y.raw = d;
+            else
+                o->y.raw = -0x40000;
+        } else {
+            if (o->y.raw > 0)
+                o->y.raw = 0;
+            o->y.raw -= 0x2000;
+        }
+        D34(o)->raw += o->y.raw;
+        if (D34(o)->p.whole < (s16)o->animTimer) {
+            D34(o)->raw = (s16)o->animTimer << 16;
+            o->y.raw = 0;
+            W44(o) |= 2;
+        }
+        return;
+    } else {
+        o->y.raw = d;
+        D34(o)->raw += d;
+        if (neg) {
+            if (D34(o)->p.whole < (s16)o->animTimer) {
+                D34(o)->raw = (s16)o->animTimer << 16;
+                o->y.raw = 0;
+                W44(o) |= 2;
+            }
+        }
+    }
+    if (D34(o)->p.whole > (s16)o->animFrame) {
+        D34(o)->raw = (s16)o->animFrame << 16;
+        o->y.raw = 0;
+        W44(o) |= 1;
+    }
+}
+
+void func_8002A9FC(GameObject *o)
+{
+    body_2A9FC(o);
+}
+#undef D34
+#undef W44
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002ABC0);
+typedef struct {
+    char p0[0x18]; s32 v; char p1[0x30 - 0x1c]; s16 s30, s32; char p2[0x44 - 0x34]; u16 f44;
+} O_2ABC0;
+typedef union { s32 i; struct { s16 lo, hi; } s; } FX_2ABC0;
+#define VF (*(volatile s32 *)&(*(FX_2ABC0 *)&D_1F8000F0).i)
+
+static __inline__ void inl_2ABC0(O_2ABC0 *o)
+{
+    s32 d = D_1F800190 - VF;
+    if (d >= 0) {
+        if (d > 0x10000) {
+            if (d < o->v) {
+                if (d > 0x3ffff) o->v = 0x40000;
+                else o->v = d;
+            } else {
+                if (o->v < 0) o->v = 0;
+                o->v += 0x8000;
+            }
+            VF += o->v;
+            if ((*(FX_2ABC0 *)&D_1F8000F0).s.hi > o->s32) {
+                (*(FX_2ABC0 *)&D_1F8000F0).i = o->s32 << 16;
+                o->v = 0;
+                o->f44 |= 8;
+            }
+        } else {
+            VF = D_1F800190;
+            if ((*(FX_2ABC0 *)&D_1F8000F0).s.hi > o->s32) {
+                (*(FX_2ABC0 *)&D_1F8000F0).i = o->s32 << 16;
+                o->v = 0;
+                o->f44 |= 8;
+            }
+        }
+    } else {
+        if (d < -0x40000) {
+            if (o->v < d) {
+                if (d > -0x40000) o->v = d;
+                else o->v = -0x40000;
+            } else {
+                if (o->v > 0) o->v = 0;
+                o->v -= 0x4000;
+            }
+        } else {
+            o->v = d;
+        }
+        VF += o->v;
+        if ((*(FX_2ABC0 *)&D_1F8000F0).s.hi < o->s30) {
+            (*(FX_2ABC0 *)&D_1F8000F0).i = o->s30 << 16;
+            o->v = 0;
+            o->f44 |= 4;
+        }
+    }
+}
+
+void func_8002ABC0(O_2ABC0 *o)
+{
+    inl_2ABC0(o);
+}
+#undef VF
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002AD74);
-extern s32 D_1F800190;
 #define W(o) (*(s32 *)((o) + 0x18))
 
 void func_8002AD74(u8 *o)
@@ -629,11 +766,8 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B110);
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B278);
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002B3E8);
-extern u8 D_800A5434;
-extern s16 D_1F8000E6;
-extern u16 D_8009C9D8;
-extern void func_8002B110(char *, s32);
-extern void func_8002B278(char *, s32);
+void func_8002B110();
+void func_8002B278();
 
 static __inline__ void decay_2B3E8(void)
 {
@@ -658,7 +792,7 @@ void func_8002B3E8(char *o, s32 a)
         decay_2B3E8();
         return;
     }
-    k = &D_8009C9D8;
+    k = D_8009C9D8;
     if (*k & 0x10) {
         if (a != 0 || *(s32 *)(o + 0x20) < -0x9ff) {
             func_8002B110(o, a);
@@ -915,9 +1049,6 @@ typedef struct {
     char p9f;
     union { s32 i; u8 b[4]; } a0;
 } G_2BB9C;
-extern u8 D_8009BCCC;
-extern u8 D_8009BCCD;
-extern u16 D_1F8001FC;
 
 static __inline__ s16 ramp_2BB9C(S_2BB9C *o)
 {
@@ -995,7 +1126,7 @@ void func_8002BB9C(S_2BB9C *o)
         case 0:
             c = g->a0.b[0];
             if (c & 0x12) {
-                if (((volatile u16 *)&D_8009C9D8)[0] & 0xc00) {
+                if (D_8009C9D8[0] & 0xc00) {
                     if ((D_1F8001FC & 0x10) && D_800A5438 != 4) {
                         if (o->b6e != 1) {
                             o->b6c = 7;
@@ -1077,7 +1208,7 @@ void func_8002BB9C(S_2BB9C *o)
                     }
                     if (f) decay_2BB9C();
                 }
-            } else if (((volatile u16 *)&D_8009C9D8)[0] & 0xc00) {
+            } else if (D_8009C9D8[0] & 0xc00) {
                 handleLookScrollInput(o);
                 func_8002B3E8(o, 0);
             } else {
@@ -1106,7 +1237,7 @@ void func_8002BB9C(S_2BB9C *o)
         case 12:
             break;
         default:
-            if ((g->a0.b[0] & 0x12) || (((volatile u16 *)&D_8009C9D8)[0] & 0xc00)) func_8002B3E8(o, 1);
+            if ((g->a0.b[0] & 0x12) || (D_8009C9D8[0] & 0xc00)) func_8002B3E8(o, 1);
             else decay_2BB9C();
             break;
         }
@@ -1136,7 +1267,7 @@ void func_8002BB9C(S_2BB9C *o)
     case 5:
         clamp_2BB9C(o);
         if (g->a0.b[3] != 0) break;
-        if ((g->a0.b[0] & 0x10) && (((volatile u16 *)&D_8009C9D8)[0] & 0x40)) goto zero;
+        if ((g->a0.b[0] & 0x10) && (D_8009C9D8[0] & 0x40)) goto zero;
         if (D_8009BCCC > D_8009BCCD) goto zero;
         o->b6c = 7;
         o->b6d = 0;
@@ -1169,7 +1300,7 @@ void func_8002BB9C(S_2BB9C *o)
     case 9:
         if (g->a0.b[2] != 0) break;
         if (g->a0.b[0] & 2) {
-            if (((volatile u16 *)&D_8009C9D8)[0] & 0x10) {
+            if (D_8009C9D8[0] & 0x10) {
                 if (!(g->a0.b[0] & 1)) o->b6c = 0;
                 break;
             }
@@ -1217,16 +1348,105 @@ void func_8002BB9C(S_2BB9C *o)
     if (D_1F8000F2 > o->w32) D_1F8000F0 = o->w32 << 16;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002C7D8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002C7D8);
+typedef struct { u8 b0; char p0[0x15]; s16 w16; char p1[0x16]; u16 w2e; char p2[0x79]; u8 ba9; } S_2C7D8;
+typedef struct { s16 w0; s16 w2; } P_2C7D8;
+typedef struct {
+    char p0[0x24]; s32 d24; char p1[8]; s16 w30; s16 w32; P_2C7D8 *d34; P_2C7D8 *d38;
+    u8 b3c; u8 b3d; char p2[0x1a]; u16 w58;
+} O_2C7D8;
+extern u8 D_800A5436;
+
+static __inline__ void Clamp_2C7D8(O_2C7D8 *o)
+{
+    S_2C7D8 *s = &PLAYER;
+    char pad;
+    if (s->b0 < 4 || s->b0 == 7) {
+        u16 x = o->d34->w2;
+        s16 t;
+        t = x - 0x90;
+        if ((*(P_2C7D8 **)&D_800A53D8)->w2 < t) {
+            (*(P_2C7D8 **)&D_800A53D8)->w2 = t;
+        } else {
+            t = x + 0x90;
+            if (t < (*(P_2C7D8 **)&D_800A53D8)->w2)
+                (*(P_2C7D8 **)&D_800A53D8)->w2 = t;
+        }
+        if ((*(s32 *)&GAME) == 0x2000E) {
+            if (s->w16 < o->w30 - 0x54)
+                s->w16 = o->w30 - 0x54;
+        } else {
+            if (s->w16 < o->w30 - 0x88)
+                s->w16 = o->w30 - 0x88;
+        }
+    }
+}
+
+void func_8002C7D8(O_2C7D8 *o)
+{
+    S_2C7D8 *s = &PLAYER;
+    s32 t;
+    if (D_8009BCA1 == 0) {
+        switch (D_800A5436) {
+        case 4:
+            if ((*(u16 *)&GAME) != 10 && s->ba9 == 0)
+                goto c4;
+        case 0: case 6: case 7: case 8: case 9: case 10: case 11: case 12:
+            func_8002A798(o);
+            func_8002A480(o);
+            o->b3d = 0;
+            o->b3c = 0;
+            break;
+        c4:
+            t = s->w2e & 1;
+            if (t != o->w58) {
+                o->w58 = t;
+                o->b3d = 0;
+                o->b3c = 0;
+            }
+            if (o->b3c == 0)
+                func_8002A798(o);
+            func_8002A480(o);
+            o->b3d = 0;
+            break;
+        case 3:
+            t = s->w2e & 1;
+            if (t != o->w58) {
+                o->w58 = t;
+                o->b3d = 0;
+            }
+            func_8002A798(o);
+            if (o->b3d == 0)
+                func_8002A480(o);
+            break;
+        case 1: case 2: case 5:
+            t = s->w2e & 1;
+            if (t != o->w58) {
+                o->w58 = t;
+                o->b3d = 0;
+                o->b3c = 0;
+            }
+            if (o->b3c == 0)
+                func_8002A798(o);
+            if (o->b3d == 0)
+                func_8002A480(o);
+            break;
+        }
+        o->d38->w2 = (*(P_2C7D8 **)&D_800A53DC)->w2;
+    }
+    func_8002B704(o);
+    func_8002BB9C(o);
+    D_1F800286 = -o->d24 >> 6;
+    Clamp_2C7D8(o);
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CA40);
 typedef struct S_2CA40 {
     char p0[0x20]; s32 vy; s32 vx; char p1[0x6e - 0x28];
     u8 b6e, b6f, b70, b71, b72, b73;
 } S_2CA40;
-extern s16 D_1F8000E6;
-extern void func_8002A9FC(S_2CA40 *);
-extern void func_8002ABC0(S_2CA40 *);
+void func_8002A9FC();
+void func_8002ABC0();
 void func_8002CA40(S_2CA40 *o)
 {
     s32 f1, f2;
@@ -1303,11 +1523,105 @@ void updateLookScroll(u8* self)
     func_8002AD74(self);
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CC20);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CC20);
+typedef struct {
+    u8 b0, b1, b2, b3;
+    char p4[0x34 - 4];
+    u16 *p34;
+    char p38[0x44 - 0x38];
+    u16 f44;
+} S_2CC20;
+extern u16 D_1F80016E;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CD7C);
+void func_8002CC20(S_2CC20 *o)
+{
+    s16 v;
+    o->f44 = 0;
+    v = (*(SVECTOR *)&D_1F8000E6).vx;
+    if (v != 0) {
+        if (v > 0) {
+            v -= 2;
+            D_1F8000E6 = v;
+            if (v < 0) D_1F8000E6 = 0;
+        } else {
+            v += 2;
+            D_1F8000E6 = v;
+            if (v > 0) D_1F8000E6 = 0;
+        }
+    }
+    func_8002A798(o);
+    func_8002A480(o);
+    if ((u16)(o->p34[1] - (*(u16 *)&D_1F80016A) + 0x8c) < 0x118 || (o->f44 & 3)) {
+        if ((u16)(D_1F8000F2 - D_1F80016E + 0xb4) < 0x168 || (o->f44 & 0xc)) {
+            o->b3 = 1;
+            if (D_8009BCCE == 3 || D_8009C10E == 0xff) o->b3 = 0;
+            D_8009BCA7 = 0;
+            D_8009BCA6 = 0;
+            D_8009BCAA = 0;
+        }
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CEF8);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CD7C);
+typedef struct {
+    u8 b0, b1, b2, b3;
+    char pad[0x34 - 4];
+    u16 *p34;
+    char pad2[0x44 - 0x38];
+    u16 w44;
+} S8002A258_2CD7C;
+extern s16 D_1F8000E6_S16Arr[] asm("D_1F8000E6");
+
+void func_8002CD7C(S8002A258_2CD7C *o)
+{
+    s16 v;
+    o->w44 = 0;
+    v = D_1F8000E6_S16Arr[0];
+    if (v != 0) {
+        if (v > 0) {
+            D_1F8000E6 = v - 2;
+            if (D_1F8000E6 < 0) D_1F8000E6 = 0;
+        } else {
+            D_1F8000E6 = v + 2;
+            if (D_1F8000E6 > 0) D_1F8000E6 = 0;
+        }
+    }
+    D_1F80018C = D_1F800168;
+    D_1F800190 = D_1F80016C;
+    func_8002A9FC(o);
+    func_8002ABC0(o);
+    if ((u16)(o->p34[1] - (*(u16 *)&D_1F80016A) + 0x40) < 0x80 || (o->w44 & 3)) {
+        if ((u16)(D_1F8000F2 - D_1F80016E + 0x5a) < 0xb4 || (o->w44 & 0xc)) {
+            o->b3 = 1;
+            if (D_8009BCCE == 3 || D_8009C10E == 0xff) o->b3 = 0;
+            D_8009BCA7 = 0;
+            D_8009BCA6 = 0;
+            D_8009BCAA = 0;
+        }
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CEF8);
+extern u8 PLAYER_U8Arr[] asm("PLAYER");
+static __inline__ void lim_2CEF8(s16 *q, s16 x, s32 k) { if (*q < x - k) *q = x - k; }
+void func_8002CEF8(GameObject *o)
+{
+    s16 a, b;
+    u8 *g;
+    func_8002A798(o);
+    func_8002A480(o);
+    g = PLAYER_U8Arr;
+    if (PLAYER.obj.active < 4 || PLAYER.obj.active == 7) {
+        b = *(s16 *)(o->unk34 + 2);
+        if (PLAYER.obj.h->p.whole < (a = b - 0x90)) PLAYER.obj.h->p.whole = a;
+        else if ((a = b + 0x90) < PLAYER.obj.h->p.whole) PLAYER.obj.h->p.whole = a;
+        if ((*(s32 *)&GAME) == 0x2000e) {
+            lim_2CEF8((s16 *)(g + 0x16), *(s16 *)&o->unk30, 0x54);
+        } else {
+            lim_2CEF8((s16 *)(g + 0x16), *(s16 *)&o->unk30, 0x88);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002CFF4);
 
@@ -1326,7 +1640,6 @@ void dispatchSectionInit(void)
         case 4:
         case 5:
             func_801156A8();
-            // fallthrough
         default:
             return;
     }
@@ -1335,7 +1648,7 @@ void dispatchSectionInit(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionUpdate);
 void dispatchSectionUpdate(void)
 {
-    switch (GAME.selectedSection) {                     // irregular
+    switch (GAME.selectedSection) {
         case 2:
         case 0:
             func_800E7E70();
@@ -1350,7 +1663,7 @@ void dispatchSectionUpdate(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionDraw);
 void dispatchSectionDraw(void)
 {
-    switch (GAME.selectedSection) {                     // irregular
+    switch (GAME.selectedSection) {
         case 2:
         case 0:
             func_800E7FE0();
@@ -1405,7 +1718,7 @@ void dispatchSectionClose(void)
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", dispatchSectionConfirm);
 void dispatchSectionConfirm(void)
 {
-    switch (GAME.selectedSection) {                     // irregular
+    switch (GAME.selectedSection) {
         case 1:
             func_801151F8();
             return;
@@ -1416,7 +1729,81 @@ void dispatchSectionConfirm(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D784);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002D784);
+typedef struct {
+    u8 b0, b1, b2, b3, b4, b5, b6, b7;
+    s32 d8;
+    s32 dc;
+    s32 d10;
+    char p14[0x3c - 0x14];
+    u8 b3c, b3d, b3e, b3f;
+    char p40[0x58 - 0x40];
+    u16 w58;
+    char p5a[0x6c - 0x5a];
+    u8 b6c, b6d, b6e, b6f;
+    u8 b70, b71, b72, b73;
+    u8 b74, b75, b76, b77;
+} S_2D784;
+extern void (*D_8007C5F0[])(S_2D784 *);
+
+void func_8002D784(S_2D784 *o)
+{
+    u16 w;
+    s32 t;
+
+    switch (o->b4) {
+    case 0:
+        o->b3c = 0;
+        o->b3d = 0;
+        o->b3e = 0;
+        w = PLAYER.obj.animFrame;
+        o->b3 = 0;
+        o->b70 = 0;
+        o->b71 = 0;
+        o->b72 = 0;
+        o->b73 = 0;
+        o->b6c = 10;
+        o->b6d = 0;
+        o->b6e = 0;
+        o->b6f = 0;
+        o->b74 = 0;
+        o->b75 = 0;
+        o->b76 = 0;
+        o->b77 = 0;
+        D_1F800286 = 0;
+        o->w58 = w;
+        o->b4++;
+        if ((*(s32 *)&GAME) == 6) {
+            o->b4 = 2;
+            SetGeomScreen(0x220);
+        } else if ((*(s32 *)&GAME) == 0x60009) {
+            o->b4 = 2;
+            D_8009D6DD = 0;
+            D_8009D6DE = 0;
+            D_8009D6DF = 0;
+            D_8009E3ED = 0;
+            D_8009E3EE = 0;
+            D_8009E3EF = 0;
+        } else {
+            SetGeomScreen(0x220);
+        }
+        break;
+    case 1:
+        D_8007C5F0[(*(u16 *)&GAME)](o);
+        func_8002A0A0(o);
+        goto tail;
+    case 2:
+        D_8007C5F0[(*(u16 *)&GAME)](o);
+    tail:
+        D_1F800174[0] = o->d8;
+        t = o->dc;
+        D_1F800178[0] = t;
+        D_1F80017C[0] = o->d10;
+        D_1F800184[0] = D_1F8000E4 + t;
+        D_1F800180 = o->d8;
+        break;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", getScrollOffsetX);
 s16 getScrollOffsetX(void)
@@ -1442,8 +1829,6 @@ s32 getScrollOffsetY(void)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_8002DA2C);
-extern u8 D_800B00FB;
-extern u8 D_800B00F9;
 extern s32 WMD_DATA;
 extern void (*D_8007C640[])(char *, s32);
 
