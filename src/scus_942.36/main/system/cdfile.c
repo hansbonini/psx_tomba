@@ -349,7 +349,20 @@ void playObjectSfx(u8* self, s32 arg1)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224FC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", func_800224FC);
+void func_800224FC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    u8* p = allocObjectLayer3();
+
+    if (p != NULL) {
+        p[0] = 1;
+        p[2] = 0xF;
+        p[3] = arg0;
+        *(s16*)(p + 0x12) = arg1;
+        *(s16*)(p + 0x16) = arg2;
+        *(s16*)(p + 0x1A) = arg3;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/cdfile", nextRandom);
 u16 nextRandom(void)

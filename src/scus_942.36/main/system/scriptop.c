@@ -72,7 +72,19 @@ void scriptOpGetObjPosition(void)
     p->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D6C0);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003D6C0);
+void func_8003D6C0(void)
+{
+    ScriptContext* p = SCRIPT_CTX;
+    u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
+
+    if (obj != NULL) {
+        *(s16*)(*(u8**)(obj + 0x40) + 2) = *(s32*)((u8*)p + 0x1194);
+        *(s16*)(obj + 0x16) = *(s32*)((u8*)p + 0x1198);
+        *(s16*)(*(u8**)(obj + 0x44) + 2) = *(s32*)((u8*)p + 0x119C);
+    }
+    p->pc++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpSetObjFrame);
 void scriptOpSetObjFrame(void)
@@ -384,7 +396,25 @@ void scriptOpSetFadeEffect(void)
     p->pc++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E12C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", func_8003E12C);
+void func_8003E12C(void)
+{
+    ScriptContext* p = SCRIPT_CTX;
+    s32 a = *(s32*)((u8*)p + 0x1190);
+    s32 b = *(s32*)((u8*)p + 0x1194);
+    s32 c = *(s32*)((u8*)p + 0x1198);
+
+    if (a < 0) {
+        if (c != 0) {
+            printInfoMessage(0x15, 3);
+            playSFX(10);
+        }
+        increaseMaxHealth();
+    } else {
+        addItemToInventory(a, b, c);
+    }
+    p->pc++;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/system/scriptop", scriptOpGetObjTouchFlag);
 void scriptOpGetObjTouchFlag(void)

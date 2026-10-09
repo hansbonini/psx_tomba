@@ -177,7 +177,24 @@ void updateInventoryOverlay(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029C80);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029C80);
+s32 func_80029C80(s32 arg0) {
+    s16* p = D_800A53D8;
+    u16 x = p[1];
+    s32 target = arg0;
+    s16 d = x - arg0 + 3;
+
+    if ((u16)d >= 7) {
+        if (d < 0) {
+            p[1] = x + 3;
+        } else {
+            p[1] = x - 3;
+        }
+        return 0;
+    }
+    p[1] = target;
+    return 1;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/inventory", func_80029CDC);
 

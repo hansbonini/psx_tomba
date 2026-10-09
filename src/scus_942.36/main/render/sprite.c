@@ -9,7 +9,22 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004DFA0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E244);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E3EC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E3EC);
+extern s16 D_800B0778;
+
+void func_8004E3EC(void)
+{
+    u8* p = D_800B0770;
+
+    if (D_8009C618 != 3) {
+        if (D_8009BCA7 != 0) {
+            D_800B0778 = 0x78;
+        }
+        if (D_800B0778 == 0 && (p[0] & 1)) {
+            func_8004E468(p);
+        }
+    }
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/sprite", func_8004E468);
 

@@ -16,7 +16,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043AB0);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043B3C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043D2C);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043D2C);
+s16 func_80043D2C(u8* self, s16 arg1, s16 arg2)
+{
+    D_1F800278 = func_80042654(arg1, *(s16*)(*(u8**)(self + 0x44) + 2));
+    return func_80043B3C(self, arg1, arg2);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80043DA0);
 
@@ -43,7 +48,12 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_800448D4);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80044B0C);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_800450FC);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_800450FC);
+s16 func_800450FC(u8* self, s16 arg1, s16 arg2)
+{
+    D_1F800278 = func_80042654(arg1, *(s16*)(*(u8**)(self + 0x44) + 2));
+    return func_80044B0C(self, arg1, arg2, -1);
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/game/collision", func_80045174);
 

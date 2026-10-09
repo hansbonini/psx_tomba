@@ -289,7 +289,19 @@ void subtractScaledVertices(u8* dst, u8* src, s32 scale)
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80028638);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", joypadInit);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", joypadInit);
+void joypadInit(void)
+{
+    D_8009C97A = 1;
+    D_8009C97C = 0;
+    D_8009C97D = 0;
+    D_8009C97E = 0;
+    D_8009C97F = 0;
+    D_8009C982 = 0;
+    D_8009C983 = 0;
+    func_8006A9EC(&D_8009EB58, &D_8009EB58 + 0x22);
+    ((void (*)())PadInit)();
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80028794);
 s16 func_80028794(u8* p, s16 mode)
@@ -332,7 +344,22 @@ INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80028D70);
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80028EF4);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80029008);
+// INCLUDE_ASM("asm/scus_942.36/nonmatchings/main/render/ui", func_80029008);
+extern s16 D_800B0778;
+
+void func_80029008(void)
+{
+
+    if (D_800B0770[0] != 0) {
+        if (*(u_long*)&GAME.selectedArea == 6) {
+            if (D_800B0778 != 0) {
+                D_800B0778 -= 1;
+            }
+        } else {
+            func_8002907C(D_800B0770);
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/scus_942.36/nonmatchings/main/render/ui", D_80010368);
 

@@ -1540,5 +1540,6 @@ _svm_okof1 = 0x800A3344; // size:0x2
 _svm_okof2 = 0x800A3346; // size:0x2
 PLAYER = 0x800A5398;
 SPRITE_SLOTS = 0x800AFF18;
+D_800B0778 = 0x800B0778; // size:0x2
 // RAM area
 TASK_TABLE_BASE = 0x801FD800;
