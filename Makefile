@@ -196,7 +196,7 @@ $(error Invalid VERSION specified: $(VERSION))
 endif
 
 ifeq ($(BUILD_OVERLAYS), 1)
-TARGET_OVERLAYS := scus_942.36/overlays/optsub00
+TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00
 endif
 
 # Source Definitions
