@@ -6,6 +6,7 @@ extern int EnterCriticalSection(void);
 extern void ExitCriticalSection(void);
 int ChangeClearRCnt(int, int);
 int SysDeqIntRP(int, void*);
+int SysEnqIntRP(int, void*);
 extern int D_8009B2E0[];
 int _padChkVsync(void);
 typedef struct {
@@ -60,22 +61,23 @@ typedef struct padPort {
 extern padPort* D_80097544;
 extern int D_8009755C;
 typedef struct {
-    u_long stat;
-    u_long mask;
+    volatile u_long stat;
+    volatile u_long mask;
 } padIntr;
 extern void (*D_80097538)(void);
-extern volatile padIntr* D_80097570;
+extern padIntr* D_80097570;
 typedef struct {
-    u_long data;
-    u_short stat;
+    volatile u_char data;
+    u_char unk1[3];
+    volatile u_short stat;
     u_short unk6;
-    u_short mode;
-    u_short ctrl;
+    volatile u_short mode;
+    volatile u_short ctrl;
     u_short unkC;
-    u_short baud;
+    volatile u_short baud;
 } padSio;
 int chkRC2wait(void);
-extern volatile padSio* D_80097574;
+extern padSio* D_80097574;
 void func_8006A378(padPort*);
 void func_8006A38C(padPort*, int);
 void func_8006A3CC(padPort*, int);
@@ -83,5 +85,23 @@ void func_8006A3AC(padPort*, int);
 void func_8006A3EC(padPort*);
 extern void (*D_80097514)(padPort*);
 extern padPort D_8009B3A0[];
+
+int _padClrIntSio0(void);
+void setRC2wait(int);
+extern int D_80097548;
+extern int D_80097550;
+extern int D_80097554;
+extern int D_80097558;
+extern int D_80097560;
+extern int D_80097564;
+extern int D_80097568[];
+extern int D_80097578;
+extern int D_8009B2F0[2];
+extern void (*D_80097510)(int);
+extern void (*D_80097530)(padPort*);
+extern void (*D_80097534)(padPort*);
+extern int (*D_80097594[])(void);
+extern u_long D_8009FD80;
+extern u_long D_8009B6A4;
 
 #endif

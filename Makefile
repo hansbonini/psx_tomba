@@ -364,6 +364,23 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
+# LIBPAD 4.2 was built with a newer assembler than the rest of the executable:
+# it fills branch delay slots itself (`jr ra` + `addiu sp`, `lui at` / `jal` /
+# `sw %lo(at)`) and puts load-delay nops before loop labels. MASPSX 2.56 does
+# neither, so these units go straight to GNU as in reorder mode. `-gcoff` is
+# dropped because its line labels stop GNU as from swapping, and `move` is
+# spelled as `addu` because newer binutils encode it as `or`.
+# Only units fully in C can be listed (INCLUDE_ASM depends on MASPSX).
+GNU_AS_UNITS := psyq/libpad/padmain
+GNU_AS_OBJS  := $(foreach u,$(GNU_AS_UNITS),$(BUILD_DIR)/src/$(TARGET_MAIN)/$(u).c.o)
+
+$(GNU_AS_OBJS): $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.i
+	@mkdir -p $(dir $@)
+	$(CC) $(OPT_FLAGS) -G0 -mips1 -mcpu=3000 -funsigned-char -quiet -o $(@:.o=.s) $<
+	sed -i -E 's/^\tmove\t(\$$[0-9a-z]+),(\$$[0-9a-z]+)/\taddu\t\1,\2,$$0/' $(@:.o=.s)
+	$(AS) $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -G0 -march=r3000 -mtune=r3000 -no-pad-sections -o $@ $(@:.o=.s)
+	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+
 $(BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
 	@mkdir -p $(dir $@)
 	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
