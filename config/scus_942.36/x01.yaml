@@ -2,7 +2,7 @@ name: X01
 sha1: b00c9552178738abacc73f94f17d65fa6e34250f
 options:
   basename: x01
-  target_path: ./iso/us/SYSTEM/X01.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X01.BIN
   elf_path: ./build/x01/x01.elf
   base_path: ../../
   platform: psx

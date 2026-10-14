@@ -2,7 +2,7 @@ name: X18
 sha1: de2078cc6d271dbbb94460f6896b570613306fab
 options:
   basename: x18
-  target_path: ./iso/us/SYSTEM/X18.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X18.BIN
   elf_path: ./build/x18/x18.elf
   base_path: ../../
   platform: psx

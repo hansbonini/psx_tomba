@@ -2,7 +2,7 @@ name: X09
 sha1: 0081fbea9136c4864e7f0e4f4121e5ec73b9236f
 options:
   basename: x09
-  target_path: ./iso/us/SYSTEM/X09.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X09.BIN
   elf_path: ./build/x09/x09.elf
   base_path: ../../
   platform: psx

@@ -2,7 +2,7 @@ name: OPTSUB00
 sha1: 50c4fc9ccc467e0d67c14eb8706d67c4f10fcd4c
 options:
   basename: optsub00
-  target_path: ./iso/us/SYSTEM/OPTSUB00.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/OPTSUB00.BIN
   elf_path: ./build/optsub00/optsub00.elf
   base_path: ../../
   platform: psx

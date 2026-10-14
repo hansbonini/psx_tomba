@@ -2,7 +2,7 @@ name: X05
 sha1: 8cc9a13885752f3da1264643abc791d6f8acce02
 options:
   basename: x05
-  target_path: ./iso/us/SYSTEM/X05.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X05.BIN
   elf_path: ./build/x05/x05.elf
   base_path: ../../
   platform: psx

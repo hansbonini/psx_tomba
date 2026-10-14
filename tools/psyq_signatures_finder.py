@@ -59,7 +59,7 @@ def parse_libsig(lib_name, path, data):
     return res
 
 
-with open("./iso/us/SCUS_942.36", "rb") as f:
+with open("./iso/scus_942.36/SCUS_942.36", "rb") as f:
     data = f.read()
 
 res = []

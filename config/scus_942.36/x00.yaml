@@ -2,7 +2,7 @@ name: X00
 sha1: 2ba0d06824c940ab40c4c4031f3e3b8e9ead1b89
 options:
   basename: x00
-  target_path: ./iso/us/SYSTEM/X00.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X00.BIN
   elf_path: ./build/x00/x00.elf
   base_path: ../../
   platform: psx

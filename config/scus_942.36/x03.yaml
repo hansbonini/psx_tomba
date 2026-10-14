@@ -2,7 +2,7 @@ name: X03
 sha1: 919e0a0e29a2811edaa448f38b191e87047083aa
 options:
   basename: x03
-  target_path: ./iso/us/SYSTEM/X03.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X03.BIN
   elf_path: ./build/x03/x03.elf
   base_path: ../../
   platform: psx

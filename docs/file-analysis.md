@@ -7,7 +7,7 @@ This documentation contains a comprehensive cross-regional analysis of all files
 | Region | Game Code | Status | ISO Folder | Notes |
 |--------|----------|--------|------------|-------|
 | 🇯🇵 **NTSC-J (Japan)** | SLPS-01144 | ✅ Complete | `iso/jp/` | Original Japanese version |
-| 🇺🇸 **NTSC-U (USA)** | SCUS-94236 | ✅ Complete | `iso/us/` | American version |
+| 🇺🇸 **NTSC-U (USA)** | SCUS-94236 | ✅ Complete | `iso/scus_942.36/` | American version |
 | 🇪🇺 **PAL (Europe)** | SCES-01330 | ✅ Complete | `iso/eu/` | European version (Multi-language) |
 
 ## 📊 Quick Regional Comparison Summary

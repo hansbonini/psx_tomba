@@ -2,7 +2,7 @@ name: X08
 sha1: dece9a61218eb0704f2d1cf5fe427cd4b4bbb8a7
 options:
   basename: x08
-  target_path: ./iso/us/SYSTEM/X08.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X08.BIN
   elf_path: ./build/x08/x08.elf
   base_path: ../../
   platform: psx

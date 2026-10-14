@@ -2,7 +2,7 @@ name: GOVER
 sha1: 0dc13a1ef2dfca024f623b7ff3fc33a2d60912b9
 options:
   basename: gover
-  target_path: ./iso/us/SYSTEM/GOVER.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/GOVER.BIN
   elf_path: ./build/gover/gover.elf
   base_path: ../../
   platform: psx

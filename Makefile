@@ -4,57 +4,29 @@
 BUILD_OVERLAYS ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
-VERSION 	   ?= us
+# Executable serial: scus_942.36 (US), slps_011.44 (JP), sces_013.30 and
+# sces_013.31 (EU). The disc of each one is extracted to iso/<serial>.
+VERSION        ?= scus_942.36
+VERSIONS       := scus_942.36 slps_011.44 sces_013.30 sces_013.31
 
 # Names and Paths
-ifeq ($(VERSION),us)
-  GAME_NAME    := SCUS_942.36
-  BASE_DIR     := scus_942.36
-  ROM_DIR      := iso/${VERSION}
-  CONFIG_DIR   := config/${BASE_DIR}
-  LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build
-  OUT_DIR      := $(BUILD_DIR)/out
-  TOOLS_DIR    := tools
-  OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-  PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets
-  ASM_DIR      := asm
-  C_DIR        := src
-  EXPECTED_DIR := expected
-else ifeq ($(VERSION),jp)
-  GAME_NAME := SLPS_012.34
-  BASE_DIR     := slps_012.34
-  ROM_DIR      := iso/${VERSION}
-  CONFIG_DIR   := config/${BASE_DIR}
-  LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build/${BASE_DIR}
-  OUT_DIR      := $(BUILD_DIR)/out
-  TOOLS_DIR    := tools
-  OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-  PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets/${BASE_DIR}
-  ASM_DIR      := asm/${BASE_DIR}
-  C_DIR        := src/${BASE_DIR}
-  EXPECTED_DIR := expected
-else ifeq ($(VERSION),eu)
-  GAME_NAME := SLES_012.34
-  BASE_DIR     := sles_012.34
-  ROM_DIR      := iso/${VERSION}
-  CONFIG_DIR   := config/${BASE_DIR}
-  LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build/${BASE_DIR}
-  OUT_DIR      := $(BUILD_DIR)/out
-  TOOLS_DIR    := tools
-  OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-  PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets/${BASE_DIR}
-  ASM_DIR      := asm/${BASE_DIR}
-  C_DIR        := src/${BASE_DIR}
-  EXPECTED_DIR := expected
-else
-  $(error Invalid VERSION specified: $(VERSION))
+ifeq ($(filter $(VERSION),$(VERSIONS)),)
+  $(error Invalid VERSION specified: $(VERSION) (one of: $(VERSIONS)))
 endif
+GAME_NAME    := $(shell echo $(VERSION) | tr a-z A-Z)
+BASE_DIR     := $(VERSION)
+ROM_DIR      := iso/$(VERSION)
+CONFIG_DIR   := config/$(BASE_DIR)
+LINKER_DIR   := linker/$(BASE_DIR)
+BUILD_DIR    := build
+OUT_DIR      := $(BUILD_DIR)/out
+TOOLS_DIR    := tools
+OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
+PERMUTER_DIR := permuter
+ASSETS_DIR   := assets
+ASM_DIR      := asm
+C_DIR        := src
+EXPECTED_DIR := expected
 
 # Tools
 CROSS   := mips-linux-gnu
@@ -133,11 +105,11 @@ endif
 
 # Function to find matching .s files for a target name.
 find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" \
-                     $(if $(findstring overlays,$1),,-not -path "*/overlays/*") 2> /dev/null)
+                     $(if $(findstring /,$1),,-not -path "*/overlays/*" -not -path "*/exe/*") 2> /dev/null)
 
 # Function to find matching .c files for a target name.
 find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" \
-                     $(if $(findstring overlays,$1),,-not -path "*/overlays/*") 2> /dev/null)
+                     $(if $(findstring /,$1),,-not -path "*/overlays/*" -not -path "*/exe/*") 2> /dev/null)
 
 # Function to generate matching .o files for target name in build directory.
 gen_o_files = $(addprefix $(BUILD_DIR)/, \
@@ -185,19 +157,17 @@ endef
 endif
 
 # Targets
-ifeq ($(VERSION),us)
-TARGET_MAIN := scus_942.36
-else ifeq ($(VERSION),jp)
-TARGET_MAIN := slps_012.34
-else ifeq ($(VERSION),eu)
-TARGET_MAIN := sles_012.34
-else
-$(error Invalid VERSION specified: $(VERSION))
-endif
+TARGET_MAIN := $(BASE_DIR)
 
-ifeq ($(BUILD_OVERLAYS), 1)
+ifeq ($(BUILD_OVERLAYS)$(VERSION), 1scus_942.36)
 TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00 \
                    $(foreach n,01 02 03 04 05 06 08 09 10 11 13 14 16 17 18,scus_942.36/overlays/x$(n))
+endif
+
+# The European discs boot a language menu (SCES_013.3x); the game itself is
+# EXE/MAIN0.EXE .. MAIN8.EXE, one per language.
+ifneq ($(filter sces_013.30 sces_013.31,$(VERSION)),)
+TARGET_OVERLAYS += $(foreach n,0 1 2 3 4 5 6 7 8,$(BASE_DIR)/exe/main$(n))
 endif
 
 # Source Definitions

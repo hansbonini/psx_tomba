@@ -2,7 +2,7 @@ name: X14
 sha1: b65ccce92f2d2ad0a033cf49da53ea7f89989e4c
 options:
   basename: x14
-  target_path: ./iso/us/SYSTEM/X14.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X14.BIN
   elf_path: ./build/x14/x14.elf
   base_path: ../../
   platform: psx

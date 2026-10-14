@@ -2,7 +2,7 @@ name: X10
 sha1: f22918863d400ed5ecf589a13a665086d7064522
 options:
   basename: x10
-  target_path: ./iso/us/SYSTEM/X10.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X10.BIN
   elf_path: ./build/x10/x10.elf
   base_path: ../../
   platform: psx

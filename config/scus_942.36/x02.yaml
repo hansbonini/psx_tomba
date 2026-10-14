@@ -2,7 +2,7 @@ name: X02
 sha1: 47013fa07760f5ee1d9348e090ea47bd7a9632ce
 options:
   basename: x02
-  target_path: ./iso/us/SYSTEM/X02.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X02.BIN
   elf_path: ./build/x02/x02.elf
   base_path: ../../
   platform: psx

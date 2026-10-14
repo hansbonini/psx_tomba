@@ -2,7 +2,7 @@ name: X11
 sha1: 60680209f06fb6e364737b05cb96b55764607c11
 options:
   basename: x11
-  target_path: ./iso/us/SYSTEM/X11.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X11.BIN
   elf_path: ./build/x11/x11.elf
   base_path: ../../
   platform: psx

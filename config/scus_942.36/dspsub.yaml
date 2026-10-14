@@ -2,7 +2,7 @@ name: DSPSUB
 sha1: bac75e42796b308f34ee7279ae5ffc8884c04bee
 options:
   basename: dspsub
-  target_path: ./iso/us/SYSTEM/DSPSUB.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/DSPSUB.BIN
   elf_path: ./build/dspsub/dspsub.elf
   base_path: ../../
   platform: psx

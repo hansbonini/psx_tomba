@@ -2,7 +2,7 @@ name: INFO3
 sha1: c0073331fc635e077734b19cfc78b99d4e330e3b
 options:
   basename: info3
-  target_path: ./iso/us/SYSTEM/INFO3.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/INFO3.BIN
   elf_path: ./build/info3/info3.elf
   base_path: ../../
   platform: psx

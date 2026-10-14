@@ -2,7 +2,7 @@ name: X13
 sha1: 6809e49b358fde84f35ccb99fef58dcec92824ea
 options:
   basename: x13
-  target_path: ./iso/us/SYSTEM/X13.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X13.BIN
   elf_path: ./build/x13/x13.elf
   base_path: ../../
   platform: psx

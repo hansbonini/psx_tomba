@@ -2,7 +2,7 @@ name: X06
 sha1: 869f84d42bd4af486ffac0f65a36e29260b66ac2
 options:
   basename: x06
-  target_path: ./iso/us/SYSTEM/X06.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X06.BIN
   elf_path: ./build/x06/x06.elf
   base_path: ../../
   platform: psx

@@ -2,7 +2,7 @@ name: X16
 sha1: 9a8100ef44b36e4db16dabd2996228989bbbbb89
 options:
   basename: x16
-  target_path: ./iso/us/SYSTEM/X16.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X16.BIN
   elf_path: ./build/x16/x16.elf
   base_path: ../../
   platform: psx

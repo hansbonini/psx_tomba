@@ -2,7 +2,7 @@ name: DSPSUB3
 sha1: 8e5bc61c47b1e09a88c420ae0109535b13f0b05f
 options:
   basename: dspsub3
-  target_path: ./iso/us/SYSTEM/DSPSUB3.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/DSPSUB3.BIN
   elf_path: ./build/dspsub3/dspsub3.elf
   base_path: ../../
   platform: psx

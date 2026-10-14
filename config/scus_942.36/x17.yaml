@@ -2,7 +2,7 @@ name: X17
 sha1: 6955722682ac5664091a2ecb864e1fd645fbbd1e
 options:
   basename: x17
-  target_path: ./iso/us/SYSTEM/X17.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X17.BIN
   elf_path: ./build/x17/x17.elf
   base_path: ../../
   platform: psx
