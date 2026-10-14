@@ -364,7 +364,15 @@ u32 _spu_FgetRXXa(s32 arg0, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_FsetPCR);
+void _spu_FsetPCR(s32 high_priority) {
+    *dma_dpcr &= 0xFFF8FFFF;
+
+    if (high_priority) {
+        *dma_dpcr |= 0x30000;
+    } else {
+        *dma_dpcr |= 0x50000;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libspu/spu", _spu_FsetDelayW);
 
