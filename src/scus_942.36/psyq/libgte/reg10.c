@@ -1,3 +1,10 @@
 #include "common.h"
+#include "psyq/libgte.h"
+#include "psyq/inline_c.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/reg10", SetBackColor);
+void SetBackColor(long rbk, long gbk, long bbk) {
+    rbk <<= 4;
+    gbk <<= 4;
+    bbk <<= 4;
+    gte_ldbkdir(rbk, gbk, bbk);
+}

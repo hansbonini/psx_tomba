@@ -1,3 +1,6 @@
 #include "common.h"
+#include "libsnd_i.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_don", _SsVmDamperOn);
+void _SsVmDamperOn(void) {
+    _svm_damper = 2;
+}

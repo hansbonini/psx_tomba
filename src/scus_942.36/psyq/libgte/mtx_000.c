@@ -1,5 +1,4 @@
 #include "common.h"
-#include "psyq/libgte.h"
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/mtx_000", MulMatrix0);
 

@@ -369,16 +369,23 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 # `sw %lo(at)`) and puts load-delay nops before loop labels. MASPSX 2.56 does
 # neither, so these units go straight to GNU as in reorder mode. `-gcoff` is
 # dropped because its line labels stop GNU as from swapping, and `move` is
-# spelled as `addu` because newer binutils encode it as `or`.
+# spelled as `addu` because newer binutils encode it as `or`. cc1 names the
+# read-only section `.rdata`; it is renamed so the linker script picks it up.
+# The original assembler padded each section to 16 bytes; `.balign 16` at the
+# end of .text and .rodata does the same.
 # Only units fully in C can be listed (INCLUDE_ASM depends on MASPSX).
-GNU_AS_UNITS := psyq/libpad/padmain
+GNU_AS_UNITS := psyq/libpad/padmain psyq/libpad/padcmd psyq/libpad/padentry \
+                psyq/libpad/padif psyq/libpad/padportd psyq/libpad/padseqd \
+                psyq/libpad/waitrc2
 GNU_AS_OBJS  := $(foreach u,$(GNU_AS_UNITS),$(BUILD_DIR)/src/$(TARGET_MAIN)/$(u).c.o)
 
 $(GNU_AS_OBJS): $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.i
 	@mkdir -p $(dir $@)
 	$(CC) $(OPT_FLAGS) -G0 -mips1 -mcpu=3000 -funsigned-char -quiet -o $(@:.o=.s) $<
-	sed -i -E 's/^\tmove\t(\$$[0-9a-z]+),(\$$[0-9a-z]+)/\taddu\t\1,\2,$$0/' $(@:.o=.s)
-	$(AS) $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -G0 -march=r3000 -mtune=r3000 -no-pad-sections -o $@ $(@:.o=.s)
+	sed -i -E 's/^\tmove\t(\$$[0-9a-z]+),(\$$[0-9a-z]+)/\taddu\t\1,\2,$$0/; s/^\t\.rdata$$/\t.section .rodata/' $(@:.o=.s)
+	grep -q '^[[:space:]]*\.section \.rodata' $(@:.o=.s) && printf '\t.section .rodata\n\t.balign 16\n' >> $(@:.o=.s) || true
+	printf '\t.text\n\t.balign 16\n' >> $(@:.o=.s)
+	$(AS) $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -G0 -march=r3000 -mtune=r3000 -o $@ $(@:.o=.s)
 	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
 
 $(BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s

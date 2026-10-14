@@ -1,3 +1,12 @@
 #include "common.h"
+#include "libsnd_i.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_11", _SsSetNrpnVabAttr11);
+void _SsSetNrpnVabAttr11(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    struct Unk adsr;
+
+    SsUtGetVagAtr(vabId, prog, tone, &vagAtr);
+    adsr.unkE = 1;
+    adsr.unk8 = data;
+    _SsUtBuildADSR(&adsr, &vagAtr.adsr1, &vagAtr.adsr2);
+    SsUtSetVagAtr(vabId, prog, tone, &vagAtr);
+}

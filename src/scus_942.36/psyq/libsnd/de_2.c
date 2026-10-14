@@ -1,3 +1,8 @@
 #include "common.h"
+#include "libsnd_i.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_2", _SsSetNrpnVabAttr2);
+void _SsSetNrpnVabAttr2(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    SsUtGetVagAtr(vabId, prog, tone, &vagAtr);
+    vagAtr.min = data;
+    SsUtSetVagAtr(vabId, prog, tone, &vagAtr);
+}

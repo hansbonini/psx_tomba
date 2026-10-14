@@ -1,12 +1,6 @@
 #include "common.h"
 #include "padlocal.h"
 
-int func_80068FF0(void);
-int func_80069058(void);
-int _padInitSioMode(padPort* port);
-void func_800694FC(padPort* port);
-void func_80069A60(void);
-
 int PadEnableCom(int mask)
 {
     int old;
@@ -136,7 +130,7 @@ int _padChkVsync(void)
     return old;
 }
 
-int _padStartCom(void)
+void _padStartCom(void)
 {
     D_80097548 = 0;
     EnterCriticalSection();
@@ -166,11 +160,6 @@ void _padStopCom(void)
     ExitCriticalSection();
 }
 
-typedef union {
-    int* count;
-    u_long word;
-} padAddr;
-
 int _padInitSioMode(padPort* port)
 {
     register padSio* sio = D_80097574;
@@ -178,7 +167,7 @@ int _padInitSioMode(padPort* port)
     sio->ctrl = 0;
     sio->mode = 0xD;
     sio->baud = 0x88;
-    setRC2wait(port->unkE8 == 8 ? 80 : 145);
+    setRC2wait(port->currentId == 8 ? 80 : 145);
     {
         int index = D_80097550;
         {
@@ -200,7 +189,7 @@ int _padInitSioMode(padPort* port)
                         count.count = counts;
                         count.word = (D_80097550 * 4) + count.word;
                         (*count.count)--;
-                        D_80097530(port->unkC + *count.count);
+                        D_80097530(port->subPorts + *count.count);
                     } while (counts[D_80097550] > 0);
                 }
                 {
@@ -237,11 +226,11 @@ int _padInitSioMode(padPort* port)
         }
         D_80097570->stat = ~0x80;
     }
-    if (port->unk4A[6] && port->unk36) {
+    if (port->pad_50[0] && port->command) {
         return 0;
     }
 
-    *port->unk3C = 0;
+    *port->response_3c = 0;
     return 1;
 }
 
@@ -282,9 +271,9 @@ int _padSioRW(padPort* inObj, int inByte)
 
     if (outgoing < 0) {
         received = D_80097574->data;
-        port->unk44 = 0xFF;
-        port->unk45 = 1;
-        *port->unk40 = ~outgoing;
+        port->response_index = 0xFF;
+        port->payload_index = 1;
+        *port->statusBuffer = ~outgoing;
         replyByte = received;
         if (!(D_80097574->stat & 1)) {
             do {
@@ -300,13 +289,13 @@ int _padSioRW(padPort* inObj, int inByte)
     {
         register int expected;
         {
-            register u_char* response = port->unk3C;
+            register u_char* response = port->response_3c;
             deviceId = *response;
         }
         expected = 8;
         baud = 0x88;
         if ((deviceId >> 4) == expected) {
-            if ((u_char)port->unk44 >= 9U) {
+            if ((u_char)port->response_index >= 9U) {
                 baud = 0x22;
             }
         }
@@ -341,11 +330,11 @@ int _padSioRW(padPort* inObj, int inByte)
             } while ((D_80097570->stat & 0x80) == 0);
         }
         D_80097574->data = (u_char)outgoing;
-        port->unk45 += 1;
-        port->unk3C[port->unk44] = replyByte;
-        result = port->unk44;
+        port->payload_index += 1;
+        port->response_3c[port->response_index] = replyByte;
+        result = port->response_index;
         result++;
-        port->unk44 = result;
+        port->response_index = result;
         result = replyByte;
     }
     return result;
@@ -367,9 +356,9 @@ int func_8006979C(padPort* obj, int value)
     int first_byte;
     u_short poll_status;
 
-    first_byte = obj->unk3C[0];
+    first_byte = obj->response_3c[0];
     baud = 0x88;
-    if ((first_byte >> 4) == 8 && obj->unk44 >= 9) {
+    if ((first_byte >> 4) == 8 && obj->response_index >= 9) {
         baud = 0x22;
     }
 
@@ -383,7 +372,7 @@ int func_8006979C(padPort* obj, int value)
 
     sio = D_80097574;
     received = sio->data;
-    if (obj->unk44 != 0 || (received >> 4) != 8) {
+    if (obj->response_index != 0 || (received >> 4) != 8) {
         sio->baud = baud;
     } else {
         sio->baud = 0x22;
@@ -419,20 +408,20 @@ int func_8006979C(padPort* obj, int value)
         } while (!(poll_irq->stat & 0x80));
     }
 
-    if (obj->unkE8 != 8 && D_80097554 == 2) {
+    if (obj->currentId != 8 && D_80097554 == 2) {
         setRC2wait(60);
         while (!chkRC2wait()) {
         }
     }
 
     D_80097574->data = value;
-    obj->unk45++;
-    if (obj->unk44 != 0xFF) {
+    obj->payload_index++;
+    if (obj->response_index != 0xFF) {
         /* The response cursor is read again after the payload update. */
         asm volatile("" ::: "memory");
-        obj->unk3C[obj->unk44] = received;
+        obj->response_3c[obj->response_index] = received;
     }
-    obj->unk44++;
+    obj->response_index++;
     return received;
 }
 
