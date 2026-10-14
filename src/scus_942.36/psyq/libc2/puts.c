@@ -1,3 +1,14 @@
 #include "common.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libc2/puts", puts);
+void putchar(char c);
+
+void puts(char* s) {
+    char c;
+
+    if (s == NULL) {
+        s = "<NULL>";
+    }
+    while ((c = *s++) != 0) {
+        putchar(c);
+    }
+}

@@ -11,7 +11,6 @@ extern u_int volatile* d_pcr;
 
 extern u_int volatile* d1_chcr;
 static int timeout(char* arg0);
-int timeout(char* arg0);
 
 extern volatile u_long* mdec1;
 
@@ -214,6 +213,29 @@ int MDEC_out_sync(void)
 
 u_long MDEC_status(void) { return *mdec1; }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", timeout);
+static inline void print_status(void) {
+    u_long stat;
+
+    stat = *mdec1;
+    printf("	 DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
+", (*d0_chcr >> 24) & 1,
+           (*d1_chcr >> 24) & 1, *d0_madr, *d1_madr);
+    printf("	 FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d
+",
+           ~stat >> 31, (stat >> 30) & 1, (stat >> 29) & 1, (stat >> 28) & 1,
+           (stat >> 27) & 1, (stat >> 25) & 1, (stat >> 23) & 1);
+}
+
+static int timeout(char* arg0) {
+    printf("%s timeout:
+", arg0);
+    print_status();
+    *mdec1 = 0x80000000;
+    *d0_chcr = 0;
+    *d1_chcr = 0;
+    *d1_chcr;
+    *mdec1 = 0x60000000;
+    return 0;
+}
 
 INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libpress/libpress", func_8005D748);

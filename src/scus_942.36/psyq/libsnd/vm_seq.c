@@ -262,11 +262,31 @@ short _SsVmSetSeqVol(short seq_sep_no, u16 voll, u16 volr, short arg3) {
     return _svm_cur.seq_sep_no;
 }
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_seq", _SsVmGetSeqVol);
+short _SsVmGetSeqVol(short seq_sep_no, short* voll, short* volr) {
+    struct SeqStruct* score;
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_seq", _SsVmGetSeqLVol);
+    score = &_ss_score[seq_sep_no & 0xFF][(seq_sep_no & 0xFF00) >> 8];
+    _svm_cur.seq_sep_no = seq_sep_no;
+    *voll = score->unk74;
+    *volr = score->unk76;
+    return _svm_cur.seq_sep_no;
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_seq", _SsVmGetSeqRVol);
+short _SsVmGetSeqLVol(short seq_sep_no) {
+    struct SeqStruct* score;
+
+    score = &_ss_score[seq_sep_no & 0xFF][(seq_sep_no & 0xFF00) >> 8];
+    _svm_cur.seq_sep_no = seq_sep_no;
+    return score->unk74;
+}
+
+short _SsVmGetSeqRVol(short seq_sep_no) {
+    struct SeqStruct* score;
+
+    score = &_ss_score[seq_sep_no & 0xFF][(seq_sep_no & 0xFF00) >> 8];
+    _svm_cur.seq_sep_no = seq_sep_no;
+    return score->unk76;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/vm_seq", _SsVmSeqKeyOff);
 

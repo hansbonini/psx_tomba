@@ -1,3 +1,8 @@
 #include "common.h"
+#include "libsnd_i.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_15", _SsSetNrpnVabAttr15);
+short SsUtSetReverbType(short);
+
+void _SsSetNrpnVabAttr15(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    SsUtSetReverbType(data);
+}

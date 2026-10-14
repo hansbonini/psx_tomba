@@ -106,6 +106,7 @@ segments:
       - [0x69D0, .rodata, psyq/libcd/c_011]
       - [0x69E8, .rodata, psyq/libetc/vsync]
       - [0x69F8, .rodata, psyq/libetc/intr]
+      - [0x6A90, .rodata, psyq/libpad/padentry]
       - [0x6AB0, .rodata, psyq/libsnd/ssopenq]
       - [0x6AD4, .rodata, psyq/libsnd/seqinit]
       - [0x6B10, .rodata, psyq/libsnd/sstick]

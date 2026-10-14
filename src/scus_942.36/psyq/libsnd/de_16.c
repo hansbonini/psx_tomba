@@ -1,9 +1,21 @@
 #include "common.h"
+#include "libsnd_i.h"
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_16", _SsSetNrpnVabAttr16);
+void SsUtSetReverbFeedback(short);
+void SsUtSetReverbDelay(short);
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_16", _SsSetNrpnVabAttr17);
+void _SsSetNrpnVabAttr16(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    SsUtSetReverbDepth(data, data);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_16", _SsSetNrpnVabAttr18);
+void _SsSetNrpnVabAttr17(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    SsUtSetReverbFeedback(data);
+}
 
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libsnd/de_16", _SsSetNrpnVabAttr19);
+void _SsSetNrpnVabAttr18(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    SsUtSetReverbDelay(data);
+}
+
+void _SsSetNrpnVabAttr19(short vabId, short prog, short tone, VagAtr vagAtr, short fn, u8 data) {
+    SsUtSetReverbDelay(data);
+}
