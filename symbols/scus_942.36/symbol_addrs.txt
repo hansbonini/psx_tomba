@@ -1187,6 +1187,7 @@ RotMatrixX = 0x80063F34;
 RotMatrixY = 0x800640D4;
 RotMatrixZ = 0x80064274;
 ratan2 = 0x80064414;
+_patch_gte = 0x80064594;
 // libpress
 DecDCTReset = 0x8005CFE8;
 DecDCTGetEnv = 0x8005D020;

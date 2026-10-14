@@ -224,6 +224,7 @@ segments:
       - [0x548D4, c, psyq/libgte/fgo_05]
       - [0x54A74, c, psyq/libgte/fgo_06]
       - [0x54C14, c, psyq/libgte/ratan]
+      - [0x54D94, c, psyq/libgte/patchgte]
       - [0x54E34, c, psyq/libcd/cdrom]
       - [0x54E64, c, psyq/libcd/event]
       - [0x54F6C, hasm, psyq/libapi/a07]

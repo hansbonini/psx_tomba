@@ -43,7 +43,3 @@ long ratan2(long dx, long dy) {
         ret = -ret;
     return ret;
 }
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/ratan", func_80064594);
-
-INCLUDE_ASM("asm/scus_942.36/nonmatchings/psyq/libgte/ratan", func_80064604);
