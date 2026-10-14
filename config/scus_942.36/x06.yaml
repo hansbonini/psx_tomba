@@ -10,6 +10,8 @@ options:
 
   asm_path: ./asm/scus_942.36/overlays/x06
   src_path: ./src/scus_942.36/overlays/x06
+  nonmatchings_path: nonmatchings/x06
+  matchings_path: matchings/x06
   build_path: ./build
   asset_path: ./assets/scus_942.36/overlays/x06
   generate_asm_macros_files : False
@@ -59,8 +61,14 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata, engine_header]
-      - [0x4, rodata, engine]
-      - [0x1D98, asm, engine]
+      - [0x4, .rodata, ../x00/engine]
+      - [0x1C8, .rodata, ../x00/engine_1]
+      - [0x1EC, .rodata, ../x00/engine_2]
+      - [0x1C98, .rodata, ../x00/engine_3]
+      - [0x1D98, c, ../x00/engine]
+      - [0x5F6C, c, ../x00/engine_1]
+      - [0x7738, c, ../x00/engine_2]
+      - [0x273C8, c, ../x00/engine_3]
       - [0x2CA10, data, engine]
   - name: x06
     type: code

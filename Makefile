@@ -196,7 +196,8 @@ $(error Invalid VERSION specified: $(VERSION))
 endif
 
 ifeq ($(BUILD_OVERLAYS), 1)
-TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00
+TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00 \
+                   $(foreach n,01 02 03 04 05 06 08 09 10 11 13 14 16 17 18,scus_942.36/overlays/x$(n))
 endif
 
 # Source Definitions
