@@ -9,8 +9,8 @@ options:
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36
-  src_path: ./src/scus_942.36
-  build_path: ./build
+  src_path: ./src
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36
   # create_asm_dependencies: True
   generate_asm_macros_files : False

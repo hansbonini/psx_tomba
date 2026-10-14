@@ -9,10 +9,10 @@ options:
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/x03
-  src_path: ./src/scus_942.36/overlays/x03
+  src_path: ./src/overlays/x03
   nonmatchings_path: nonmatchings/x03
   matchings_path: matchings/x03
-  build_path: ./build
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/x03
   generate_asm_macros_files : False
 

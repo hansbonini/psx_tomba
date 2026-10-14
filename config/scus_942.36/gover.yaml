@@ -9,8 +9,8 @@ options:
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/gover
-  src_path: ./src/scus_942.36/overlays/gover
-  build_path: ./build
+  src_path: ./src/overlays/gover
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/gover
   generate_asm_macros_files : False
 

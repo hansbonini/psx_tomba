@@ -9,8 +9,8 @@ options:
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/dspsub2
-  src_path: ./src/scus_942.36/overlays/dspsub2
-  build_path: ./build
+  src_path: ./src/overlays/dspsub2
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/dspsub2
   generate_asm_macros_files : False
 
