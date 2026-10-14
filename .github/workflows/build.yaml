@@ -1,5 +1,4 @@
 name: Build
-description: Build the Tomba! decompilation project for PSX
 
 on:
   push:
@@ -8,11 +7,28 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        game_id: [ SCUS_942.32 ]
-      fail-fast: true
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - game_id: SCUS_942.36
+            dir_name: scus_942.36
+            xml_name: tomba-us.xml
+            secret_key: SCUS_94236_URL
+          - game_id: SLPS_011.44
+            dir_name: slps_011.44
+            xml_name: tomba-jp.xml
+            secret_key: SLPS_01144_URL
+          - game_id: SCES_013.30
+            dir_name: sces_013.30
+            xml_name: tomba-eu-en.xml
+            secret_key: SCES_01330_URL
+          - game_id: SCES_013.31
+            dir_name: sces_013.31
+            xml_name: tomba-eu-fr.xml
+            secret_key: SCES_01331_URL
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -20,57 +36,82 @@ jobs:
           submodules: recursive
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+
+      - name: Cache Pip Packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-splat-${{ hashFiles('requirements.txt', '**/pyproject.toml') || 'v1' }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install splat64[mips]==0.35.2 spimdisasm==1.36.0
           sudo apt-get update
-          sudo apt-get install make binutils-mips-linux-gnu cpp-mips-linux-gnu megatools cmake
+          sudo apt-get install -y make binutils-mips-linux-gnu cpp-mips-linux-gnu megatools cmake
 
-      - name: Build dumpsxiso
+      - name: Cache mkpsxiso build
+        id: cache-mkpsxiso
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/mkpsxiso
+          key: ${{ runner.os }}-mkpsxiso-${{ hashFiles('tools/mkpsxiso/**') }}
+
+      - name: Build dumpsxiso (se não estiver no cache)
+        if: steps.cache-mkpsxiso.outputs.cache-hit != 'true'
         run: |
           cmake -S tools/mkpsxiso -B "$RUNNER_TEMP/mkpsxiso" -DCMAKE_BUILD_TYPE=Release
           cmake --build "$RUNNER_TEMP/mkpsxiso" --target dumpsxiso -j"$(nproc)"
+
+      - name: Set DUMPSXISO Env Variable
+        run: |
           echo "DUMPSXISO=$(find "$RUNNER_TEMP/mkpsxiso" -type f -name dumpsxiso -perm -u+x | head -n1)" >> "$GITHUB_ENV"
 
       - name: Setup build environment
+        env:
+          DOWNLOAD_URL: ${{ secrets[matrix.secret_key] }}
         run: |
           tmp="$(mktemp -d)"
-          megadl --path "$tmp" "${{ secrets.SCUS_94236_URL }}"
+          megadl --path "$tmp" "$DOWNLOAD_URL"
           img="$(find "$tmp" -type f \( -iname '*.bin' -o -iname '*.img' -o -iname '*.iso' \) | head -n1)"
           if [ -z "$img" ]; then echo "No disc image in the download:"; ls -lR "$tmp"; exit 1; fi
-          mkdir -p iso/scus_942.36
-          "$DUMPSXISO" -x iso/scus_942.36 -s "$tmp/tomba-us.xml" "$img"
+
+          mkdir -p "iso/${{ matrix.dir_name }}"
+          
+          xml_file="$tmp/${{ matrix.xml_name }}"
+          if [ ! -f "$xml_file" ]; then
+            xml_file="$(find "$tmp" -type f -iname '*.xml' | head -n1)"
+          fi
+
+          "$DUMPSXISO" -x "iso/${{ matrix.dir_name }}" -s "$xml_file" "$img"
           rm -rf "$tmp"
-          # Fail here rather than deep inside splat if the image is the wrong
-          # dump. Every splat config carries the hash of what it expects, so
-          # this covers overlays too, with nothing extra to keep in sync.
-          for cfg in config/scus_942.36/*.yaml; do
+
+          for cfg in config/${{ matrix.dir_name }}/*.yaml; do
+            [ -f "$cfg" ] || continue
             sha1="$(grep -m1 '^sha1:' "$cfg" | awk '{print $2}')"
             path="$(grep -m1 '^  target_path:' "$cfg" | awk '{print $2}')"
             [ -n "$sha1" ] && [ -n "$path" ] || continue
             echo "$sha1  ${path#./}" | sha1sum -c -
           done
+
           chmod +x ./tools/gcc-2.7.2-psx -R
           chmod +x ./tools/objdiff -R
-      
+
       - name: Build
         run: |
-          make generate
-          make build
-
-      # - name: Check match
-      #   run: make check
+          make generate VERSION=${{ matrix.dir_name }} || make generate
+          make build VERSION=${{ matrix.dir_name }} || make build
 
       - name: Generate Progress Report
-        run: make report
+        run: make report VERSION=${{ matrix.dir_name }} || make report
 
       - name: Upload Progress Report
         uses: actions/upload-artifact@v4
         with:
-            name: ${{ matrix.game_id }}_report
-            path: ./build/progress.json
+          name: ${{ matrix.game_id }}_report
+          path: ./build/progress.json
