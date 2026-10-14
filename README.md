@@ -151,7 +151,7 @@ will pull a newer backend that produces incompatible labels.
 
 3. **Provide the executable**
 
-Extract `SCUS_942.36` from a disc you legally own and place it at `iso/us/SCUS_942.36`. Verify it
+Extract `SCUS_942.36` from a disc you legally own and place it at `iso/scus_942.36/SCUS_942.36`. Verify it
 matches the SHA1 in the table above before continuing — every offset in this project assumes that
 exact build.
 
@@ -181,10 +181,10 @@ is byte-perfect.
 
 ```bash
 # Unpack a GAM archive
-./tools/tombatools/tombatools gam unpack iso/us/AREA00/A000.GAM ./extracted/A000.UNGAM
+./tools/tombatools/tombatools gam unpack iso/scus_942.36/AREA00/A000.GAM ./extracted/A000.UNGAM
 
 # Decode a font / dialogue file
-./tools/tombatools/tombatools wfm decode iso/us/SYSTEM/FONT.WFM ./fonts/
+./tools/tombatools/tombatools wfm decode iso/scus_942.36/SYSTEM/FONT.WFM ./fonts/
 ```
 
 ## 🤖 Continuous Integration

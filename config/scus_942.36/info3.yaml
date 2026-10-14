@@ -2,15 +2,15 @@ name: INFO3
 sha1: c0073331fc635e077734b19cfc78b99d4e330e3b
 options:
   basename: info3
-  target_path: ./iso/us/SYSTEM/INFO3.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/INFO3.BIN
   elf_path: ./build/info3/info3.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/info3
-  src_path: ./src/scus_942.36/overlays/info3
-  build_path: ./build
+  src_path: ./src/overlays/info3
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/info3
   generate_asm_macros_files : False
 

@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / "tools" / "splat_ext"))
 import gam
 import ldlist
 
-ISO = ROOT / "iso" / "us"
+ISO = ROOT / "iso" / "scus_942.36"
 EXE = ISO / "SCUS_942.36"
 EXE_VRAM = 0x8000F800
 CONFIG_DIR = ROOT / "build" / "cd" / "config"
@@ -40,7 +40,7 @@ SPLIT_MODES = [
     "ldlist", "gam", "none", "grpx", "clut", "wvd", "str", "spr", "four", "wmd", "wpp",
     "whm", "apd", "clm", "unka", "seq", "wss", "wfm3", "ins",
 ]
-MISSING = "missing in iso/us"
+MISSING = "missing in iso/scus_942.36"
 
 
 def enum_to_path(name: str) -> str:
@@ -224,7 +224,7 @@ def write_config(path: str, size: int, seg: dict) -> Path:
         f"name: {path}",
         "options:",
         f"  basename: {stem}",
-        f"  target_path: ./iso/us/{path}",
+        f"  target_path: ./iso/scus_942.36/{path}",
         "  base_path: ../../../",
         "  platform: psx",
         "  compiler: PSYQ",
@@ -306,7 +306,7 @@ def main():
         print("subsegments: " + ", ".join(f"{k} {sub_counts[k]}" for k in sorted(sub_counts)))
     missing = [path for path, reason in failed if reason == MISSING]
     if missing:
-        print(f"{len(missing)} files missing in iso/us (first: {missing[0]})")
+        print(f"{len(missing)} files missing in iso/scus_942.36 (first: {missing[0]})")
     for path, reason in failed:
         if reason != MISSING:
             print(f"FAILED {path}: {reason}")

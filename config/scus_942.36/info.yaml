@@ -2,15 +2,15 @@ name: INFO
 sha1: e51dd1e335c95a7dc4cf1632ec0e9f647d3c8610
 options:
   basename: info
-  target_path: ./iso/us/SYSTEM/INFO.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/INFO.BIN
   elf_path: ./build/info/info.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/info
-  src_path: ./src/scus_942.36/overlays/info
-  build_path: ./build
+  src_path: ./src/overlays/info
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/info
   generate_asm_macros_files : False
 

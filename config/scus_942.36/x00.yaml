@@ -2,15 +2,15 @@ name: X00
 sha1: 2ba0d06824c940ab40c4c4031f3e3b8e9ead1b89
 options:
   basename: x00
-  target_path: ./iso/us/SYSTEM/X00.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/X00.BIN
   elf_path: ./build/x00/x00.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/x00
-  src_path: ./src/scus_942.36/overlays/x00
-  build_path: ./build
+  src_path: ./src/overlays/x00
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/x00
   generate_asm_macros_files : False
 

@@ -1,4 +1,4 @@
-.open "build/out/iso/us/SCUS_942.36",0x8000F800
+.open "build/out/iso/scus_942.36/SCUS_942.36",0x8000F800
 .psx
 
 .definelabel execDebug, 0x8001a954

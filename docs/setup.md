@@ -122,14 +122,14 @@ If you have an ISO file, extract it first:
 
 ```bash
 # Using 7-Zip (Windows)
-7z x "Tomba! (USA).iso" -o"iso/us/"
+7z x "Tomba! (USA).iso" -o"iso/scus_942.36/"
 
 # Using bchunk (Linux)
-bchunk "Tomba! (USA).bin" "Tomba! (USA).cue" iso/us/track
+bchunk "Tomba! (USA).bin" "Tomba! (USA).cue" iso/scus_942.36/track
 
 # Using built-in tools (macOS)
 hdiutil mount "Tomba! (USA).iso"
-cp -r /Volumes/TOMBA/* iso/us/
+cp -r /Volumes/TOMBA/* iso/scus_942.36/
 hdiutil unmount /Volumes/TOMBA
 ```
 
@@ -162,7 +162,7 @@ Edit the appropriate YAML file to match your setup:
 options:
   platform: psx
   basename: SCUS_942.36
-  target_path: iso/us/SCUS_942.36
+  target_path: iso/scus_942.36/SCUS_942.36
   base_path: .
   asm_path: asm
   src_path: src
@@ -217,7 +217,7 @@ Extract fonts and archives using TombaTools:
 
 ```bash
 # Extract all WFM font files
-for file in iso/us/AREA*/A*.GAM; do
+for file in iso/scus_942.36/AREA*/A*.GAM; do
     tools/tombatools/tombatools.exe gam unpack "$file" "extracted/$(basename "$file" .GAM)/"
 done
 
@@ -362,7 +362,7 @@ go build -o tombatools.exe .
 
 ```bash
 # Verify file paths in YAML configuration
-ls -la iso/us/SCUS_942.36
+ls -la iso/scus_942.36/SCUS_942.36
 ```
 
 ### Getting Help

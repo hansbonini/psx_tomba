@@ -2,15 +2,15 @@ name: DSPSUB3
 sha1: 8e5bc61c47b1e09a88c420ae0109535b13f0b05f
 options:
   basename: dspsub3
-  target_path: ./iso/us/SYSTEM/DSPSUB3.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/DSPSUB3.BIN
   elf_path: ./build/dspsub3/dspsub3.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/dspsub3
-  src_path: ./src/scus_942.36/overlays/dspsub3
-  build_path: ./build
+  src_path: ./src/overlays/dspsub3
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/dspsub3
   generate_asm_macros_files : False
 

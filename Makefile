@@ -4,57 +4,29 @@
 BUILD_OVERLAYS ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
-VERSION 	   ?= us
+# Executable serial: scus_942.36 (US), slps_011.44 (JP), sces_013.30 and
+# sces_013.31 (EU). The disc of each one is extracted to iso/<serial>.
+VERSION        ?= scus_942.36
+VERSIONS       := scus_942.36 slps_011.44 sces_013.30 sces_013.31
 
 # Names and Paths
-ifeq ($(VERSION),us)
-  GAME_NAME    := SCUS_942.36
-  BASE_DIR     := scus_942.36
-  ROM_DIR      := iso/${VERSION}
-  CONFIG_DIR   := config/${BASE_DIR}
-  LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build
-  OUT_DIR      := $(BUILD_DIR)/out
-  TOOLS_DIR    := tools
-  OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-  PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets
-  ASM_DIR      := asm
-  C_DIR        := src
-  EXPECTED_DIR := expected
-else ifeq ($(VERSION),jp)
-  GAME_NAME := SLPS_012.34
-  BASE_DIR     := slps_012.34
-  ROM_DIR      := iso/${VERSION}
-  CONFIG_DIR   := config/${BASE_DIR}
-  LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build/${BASE_DIR}
-  OUT_DIR      := $(BUILD_DIR)/out
-  TOOLS_DIR    := tools
-  OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-  PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets/${BASE_DIR}
-  ASM_DIR      := asm/${BASE_DIR}
-  C_DIR        := src/${BASE_DIR}
-  EXPECTED_DIR := expected
-else ifeq ($(VERSION),eu)
-  GAME_NAME := SLES_012.34
-  BASE_DIR     := sles_012.34
-  ROM_DIR      := iso/${VERSION}
-  CONFIG_DIR   := config/${BASE_DIR}
-  LINKER_DIR   := linker/${BASE_DIR}
-  BUILD_DIR    := build/${BASE_DIR}
-  OUT_DIR      := $(BUILD_DIR)/out
-  TOOLS_DIR    := tools
-  OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-  PERMUTER_DIR := permuter
-  ASSETS_DIR   := assets/${BASE_DIR}
-  ASM_DIR      := asm/${BASE_DIR}
-  C_DIR        := src/${BASE_DIR}
-  EXPECTED_DIR := expected
-else
-  $(error Invalid VERSION specified: $(VERSION))
+ifeq ($(filter $(VERSION),$(VERSIONS)),)
+  $(error Invalid VERSION specified: $(VERSION) (one of: $(VERSIONS)))
 endif
+GAME_NAME    := $(shell echo $(VERSION) | tr a-z A-Z)
+BASE_DIR     := $(VERSION)
+ROM_DIR      := iso/$(VERSION)
+CONFIG_DIR   := config/$(BASE_DIR)
+LINKER_DIR   := linker/$(BASE_DIR)
+BUILD_DIR    := build/$(VERSION)
+OUT_DIR      := build/out
+TOOLS_DIR    := tools
+OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
+PERMUTER_DIR := permuter
+ASSETS_DIR   := assets
+ASM_DIR      := asm
+C_DIR        := src
+EXPECTED_DIR := expected
 
 # Tools
 CROSS   := mips-linux-gnu
@@ -76,7 +48,7 @@ GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 OPT_FLAGS           := -O2
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR)
-DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
+DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM -DVERSION_$(subst .,,$(GAME_NAME))
 CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MP -undef -Wall -lang-c -nostdinc
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
@@ -98,7 +70,7 @@ BIOS_FUNCS := 	a07:B07 a08:B08 a09:B09 a10:B0A a11:B0B 	\
 
 # Generate object paths
 BIOS_OBJS := $(foreach f,$(BIOS_FUNCS), \
-						 $(BUILD_DIR)/src/${BASE_DIR}/psyq/libapi/$(word 1,$(subst :, ,$f)).hasm.s.o)
+						 $(BUILD_DIR)/src/psyq/libapi/$(word 1,$(subst :, ,$f)).hasm.s.o)
 
 
 # Map function obj to BIOS fn number
@@ -108,14 +80,7 @@ bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(BIOS_FUNCS))))
 # Archive library code uses GCC 2.6.0.
 # Main-related and psyq code seem to use -G0 instead of -G8
 define DL_FlagsSwitch
-	$(if
-		$(or 
-			$(filter MAIN,$(patsubst build\/src/$(BASE_DIR)\/psyq/%,MAIN,$(1))), 
-			$(filter MAIN,$(patsubst build\/asm/${BASE_DIR}\/psyq/%,MAIN,$(1)))
-		),
-		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --macro-inc --expand-div --use-comm-section --run-assembler $(AS_FLAGS)),
-		$(eval MASPSX_FLAGS = --aspsx-version=2.56 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
-	)
+	$(eval MASPSX_FLAGS = --aspsx-version=2.56 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
 
 	$(eval AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -fverbose-asm -quiet)
@@ -133,16 +98,14 @@ endif
 
 # Function to find matching .s files for a target name.
 find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -path "asm/*matchings*" \
-                     $(if $(findstring overlays,$1),,-not -path "*/overlays/*") 2> /dev/null)
+                     $(if $(findstring /,$1),,-not -path "*/overlays/*" -not -path "*/exe/*") 2> /dev/null)
 
 # Function to find matching .c files for a target name.
 find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" \
-                     $(if $(findstring overlays,$1),,-not -path "*/overlays/*") 2> /dev/null)
+                     $(if $(findstring /,$1),,-not -path "*/overlays/*" -not -path "*/exe/*") 2> /dev/null)
 
-# Function to generate matching .o files for target name in build directory.
-gen_o_files = $(addprefix $(BUILD_DIR)/, \
-							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
-							$(patsubst %.c, %.c.o, $(call find_c_files, $1)))
+# Function to list the objects of a target: the ones its linker script uses.
+gen_o_files = $(shell grep -oE '$(BUILD_DIR)/[^ ()]*\.o' $(LINKER_DIR)/$(notdir $1).ld 2> /dev/null | sort -u)
 
 # get_target_out = $(addprefix $(OUT_DIR)/,$1)
 
@@ -179,28 +142,35 @@ $2.elf: $(call gen_o_files, $1)
 		-T $(LINKER_DIR)/undefined_syms_auto.$(notdir $1).txt \
 		-T $(LINKER_DIR)/undefined_funcs_auto.$(notdir $1).txt \
 		$(if $(MANUAL_SYMS),-T $(MANUAL_SYMS)) \
+		$(foreach f,$(wildcard $(SYMBOLS_DIR)/$(notdir $1)_undefined_syms.txt),-T $f) \
 		-o $$@
 endef
 
 endif
 
 # Targets
-ifeq ($(VERSION),us)
-TARGET_MAIN := scus_942.36
-else ifeq ($(VERSION),jp)
-TARGET_MAIN := slps_012.34
-else ifeq ($(VERSION),eu)
-TARGET_MAIN := sles_012.34
-else
-$(error Invalid VERSION specified: $(VERSION))
+TARGET_MAIN := $(BASE_DIR)
+
+ifeq ($(BUILD_OVERLAYS)$(VERSION), 1scus_942.36)
+TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00 \
+                   $(foreach n,01 02 03 04 05 06 08 09 10 11 13 14 16 17 18,scus_942.36/overlays/x$(n))
 endif
 
-ifeq ($(BUILD_OVERLAYS), 1)
-TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00
+# The European discs boot a language menu (SCES_013.3x); the game itself is
+# EXE/MAIN0.EXE .. MAIN8.EXE, one per language.
+ifneq ($(filter sces_013.30 sces_013.31,$(VERSION)),)
+TARGET_OVERLAYS += $(foreach n,0 1 2 3 4 5 6 7 8,$(BASE_DIR)/exe/main$(n))
 endif
 
 # Source Definitions
 TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
+
+# The sources in src/ are shared by every release; INCLUDE_ASM names a path
+# under the asm folder of the executable, given to the assembler with -I.
+# Each European MAINn.EXE has its own asm and build folders.
+# build folder:asm folder
+TARGET_BUILDS := $(BUILD_DIR):$(ASM_DIR)/$(BASE_DIR) \
+                 $(foreach t,$(TARGET_OVERLAYS),$(if $(findstring /exe/,$t),$(BUILD_DIR)/exe/$(notdir $t):$(ASM_DIR)/$t))
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 SYMBOLS_DIR  := symbols/$(BASE_DIR)
 SYMBOL_FILES := $(wildcard $(SYMBOLS_DIR)/*.txt)
@@ -226,7 +196,7 @@ check: build
 
 expected: build
 	mkdir -p $(EXPECTED_DIR)
-	mv build/asm $(EXPECTED_DIR)
+	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)
 	mv $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libapi/c73.s.o $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libgpu/c73.s.o
 	mv $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libapi/a07.s.o $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libcd/a07.s.o
 
@@ -349,20 +319,39 @@ patch_debug_infomessage: build
 $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get_target_out,$(target)))))
 
 # Generate objects.
-$(BUILD_DIR)/%.i: %.c
-	@mkdir -p $(dir $@)
-	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) -o $@ $<
+# $1 build folder, $2 asm folder of INCLUDE_ASM.
+define make_object_rules
+$1/%.i: %.c
+	@mkdir -p $$(dir $$@)
+	$$(CPP) -P -MMD -MP -MT $$@ -MF $$@.d $$(CPP_FLAGS) -o $$@ $$<
 
-$(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.i
-	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
-	$(CC) $(CC_FLAGS) -o $@ $<
+$1/%.c.s: $1/%.i
+	@mkdir -p $$(dir $$@)
+	$$(call DL_FlagsSwitch, $$@)
+	$$(CC) $$(CC_FLAGS) -o $$@ $$<
 
-$(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
-	@mkdir -p $(dir $@)
-	$(call DL_FlagsSwitch, $@)
-	-$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
-	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+$1/%.c.o: $1/%.c.s
+	@mkdir -p $$(dir $$@)
+	$$(call DL_FlagsSwitch, $$@)
+	-$$(MASPSX) $$(MASPSX_FLAGS) -I$2 -o $$@ $$<
+	-$$(OBJDUMP) $$(OBJDUMP_FLAGS) $$@ > $$(@:.o=.dump.s)
+
+$1/%.hasm.s.o: src/psyq/bios.s
+	@mkdir -p $$(dir $$@)
+	$$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $$@ \
+	-Iinclude -Ibuild -DFUNC_$$(call bios_num,$$(notdir $$*)) -o $$(@:.o=) $$<
+	$$(AS) $$(AS_FLAGS) -o $$@ $$(@:.o=)
+
+$1/%.s.o: %.s
+	@mkdir -p $$(dir $$@)
+	$$(AS) $$(AS_FLAGS) -I$2 -o $$@ $$<
+
+$1/%.bin.o: %.bin
+	@mkdir -p $$(dir $$@)
+	$$(LD) -r -b binary -o $$@ $$<
+endef
+
+$(foreach b,$(TARGET_BUILDS),$(eval $(call make_object_rules,$(word 1,$(subst :, ,$b)),$(word 2,$(subst :, ,$b)))))
 
 # LIBPAD 4.2 was built with a newer assembler than the rest of the executable:
 # it fills branch delay slots itself (`jr ra` + `addiu sp`, `lui at` / `jal` /
@@ -377,9 +366,9 @@ $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
 GNU_AS_UNITS := psyq/libpad/padmain psyq/libpad/padcmd psyq/libpad/padentry \
                 psyq/libpad/padif psyq/libpad/padportd psyq/libpad/padseqd \
                 psyq/libpad/waitrc2
-GNU_AS_OBJS  := $(foreach u,$(GNU_AS_UNITS),$(BUILD_DIR)/src/$(TARGET_MAIN)/$(u).c.o)
+GNU_AS_OBJS  := $(foreach b,$(TARGET_BUILDS),$(foreach u,$(GNU_AS_UNITS),$(word 1,$(subst :, ,$b))/src/$(u).c.o))
 
-$(GNU_AS_OBJS): $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.i
+$(GNU_AS_OBJS): %.c.o: %.i
 	@mkdir -p $(dir $@)
 	$(CC) $(OPT_FLAGS) -G0 -mips1 -mcpu=3000 -funsigned-char -quiet -o $(@:.o=.s) $<
 	sed -i -E 's/^\tmove\t(\$$[0-9a-z]+),(\$$[0-9a-z]+)/\taddu\t\1,\2,$$0/; s/^\t\.rdata$$/\t.section .rodata/' $(@:.o=.s)
@@ -387,20 +376,6 @@ $(GNU_AS_OBJS): $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.i
 	printf '\t.text\n\t.balign 16\n' >> $(@:.o=.s)
 	$(AS) $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) -G0 -march=r3000 -mtune=r3000 -o $@ $(@:.o=.s)
 	-$(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
-
-$(BIOS_OBJS): $(BUILD_DIR)/src/$(TARGET_MAIN)/psyq/libapi/%.hasm.s.o: src/$(TARGET_MAIN)/psyq/bios.s
-	@mkdir -p $(dir $@)
-	$(CPP) -x assembler-with-cpp -P -MMD -MP -MT $@ \
-	-Iinclude -Ibuild -DFUNC_$(call bios_num,$*) -o $(dir $@)$*.hasm.s $<
-	$(AS) $(AS_FLAGS) -o $@ $(dir $@)$*.hasm.s
-
-$(BUILD_DIR)/%.s.o: %.s
-	@mkdir -p $(dir $@)
-	$(AS) $(AS_FLAGS) -o $@ $<
-
-$(BUILD_DIR)/%.bin.o: %.bin
-	@mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $@ $<
 
 # Split .yaml.
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml $(SYMBOL_FILES)

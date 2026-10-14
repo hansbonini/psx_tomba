@@ -2,15 +2,15 @@ name: INFO2
 sha1: 9e19f8b912ab0fd1ea4050e8a2c51e6b8e533c5b
 options:
   basename: info2
-  target_path: ./iso/us/SYSTEM/INFO2.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/INFO2.BIN
   elf_path: ./build/info2/info2.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/info2
-  src_path: ./src/scus_942.36/overlays/info2
-  build_path: ./build
+  src_path: ./src/overlays/info2
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/info2
   generate_asm_macros_files : False
 

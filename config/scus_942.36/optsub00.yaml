@@ -2,15 +2,15 @@ name: OPTSUB00
 sha1: 50c4fc9ccc467e0d67c14eb8706d67c4f10fcd4c
 options:
   basename: optsub00
-  target_path: ./iso/us/SYSTEM/OPTSUB00.BIN
+  target_path: ./iso/scus_942.36/SYSTEM/OPTSUB00.BIN
   elf_path: ./build/optsub00/optsub00.elf
   base_path: ../../
   platform: psx
   compiler: PSYQ
 
   asm_path: ./asm/scus_942.36/overlays/optsub00
-  src_path: ./src/scus_942.36/overlays/optsub00
-  build_path: ./build
+  src_path: ./src/overlays/optsub00
+  build_path: ./build/scus_942.36
   asset_path: ./assets/scus_942.36/overlays/optsub00
   generate_asm_macros_files : False
 
