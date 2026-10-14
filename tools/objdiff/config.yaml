@@ -2,97 +2,97 @@ categories:
   - id: main
     name: Main Code
     paths:
-      - scus_942.36/main
+      - main
   - id: sdk
     name: Psy-Q SDK
     paths:
-      - scus_942.36/psyq
+      - psyq
   - id: optsub00
     name: OPTSUB00 Overlay
     paths:
-      - scus_942.36/overlays/optsub00
+      - overlays/optsub00
   - id: x00
     name: X00 Overlay
     paths:
-      - scus_942.36/overlays/x00
+      - overlays/x00
   - id: x01
     name: X01 Overlay
     paths:
-      - scus_942.36/overlays/x01
+      - overlays/x01
   - id: x02
     name: X02 Overlay
     paths:
-      - scus_942.36/overlays/x02
+      - overlays/x02
   - id: x03
     name: X03 Overlay
     paths:
-      - scus_942.36/overlays/x03
+      - overlays/x03
   - id: x04
     name: X04 Overlay
     paths:
-      - scus_942.36/overlays/x04
+      - overlays/x04
   - id: x05
     name: X05 Overlay
     paths:
-      - scus_942.36/overlays/x05
+      - overlays/x05
   - id: x06
     name: X06 Overlay
     paths:
-      - scus_942.36/overlays/x06
+      - overlays/x06
   - id: x07
     name: X07 Overlay
     paths:
-      - scus_942.36/overlays/x07
+      - overlays/x07
   - id: x08
     name: X08 Overlay
     paths:
-      - scus_942.36/overlays/x08
+      - overlays/x08
   - id: x09
     name: X09 Overlay
     paths:
-      - scus_942.36/overlays/x09
+      - overlays/x09
   - id: x10
     name: X10 Overlay
     paths:
-      - scus_942.36/overlays/x10
+      - overlays/x10
   - id: x11
     name: X11 Overlay
     paths:
-      - scus_942.36/overlays/x11
+      - overlays/x11
   - id: x12
     name: X12 Overlay
     paths:
-      - scus_942.36/overlays/x12
+      - overlays/x12
   - id: x13
     name: X13 Overlay
     paths:
-      - scus_942.36/overlays/x13
+      - overlays/x13
   - id: x14
     name: X14 Overlay
     paths:
-      - scus_942.36/overlays/x14
+      - overlays/x14
   - id: x15
     name: X15 Overlay
     paths:
-      - scus_942.36/overlays/x15
+      - overlays/x15
   - id: x16
     name: X16 Overlay
     paths:
-      - scus_942.36/overlays/x16
+      - overlays/x16
   - id: x17
     name: X17 Overlay
     paths:
-      - scus_942.36/overlays/x17
+      - overlays/x17
   - id: x18
     name: X18 Overlay
     paths:
-      - scus_942.36/overlays/x18
+      - overlays/x18
 
 expected_paths:
   asm: expected/asm
   src: expected/src
 
 ignored_files:
-  - scus_942.36/header
+  - header
 
 output: ./objdiff.json
