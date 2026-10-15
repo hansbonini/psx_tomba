@@ -42,7 +42,7 @@ def raw_sectors(data: bytes) -> bytes:
 
 class PSXSegStr(Segment):
     """A movie: the stream the game plays through the libcd streaming and
-    libpress MDEC routines (src/scus_942.36/main/video/movie.c), with XA audio
+    libpress MDEC routines (src/main/video/movie.c), with XA audio
     interleaved. It is handed to ffmpeg, which demuxes and decodes it, and
     written as MP4."""
 

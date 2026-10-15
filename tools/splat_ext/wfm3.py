@@ -1,6 +1,6 @@
 """WFM3 font + dialogue file, as the message routines of the game read it.
 
-Layout (src/scus_942.36/main/game/message.c, func_80030A54, drawInfoMessageText):
+Layout (src/main/game/message.c, func_80030A54, drawInfoMessageText):
 
     0x00  "WFM3"
     0x04  u32  unk4

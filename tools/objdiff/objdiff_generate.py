@@ -62,15 +62,25 @@ def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
     else:
         modified_path = path.relative_to(config["expected_paths"]["src"])
 
+    unit = _split_path(str(modified_path))[2]
     categories = []
     for category in config["categories"]:
         for prefix in category["paths"]:
-            if str(modified_path).startswith(prefix):
+            if unit.startswith(prefix):
                 categories.append(category["id"])
     return (UnitMetadata(categories), str(modified_path))
 
+def _split_path(path: str) -> tuple[str, str, str]:
+    # <version>[/exe/<main>]/<unit>: the European MAINn.EXE build apart
+    parts = path.split("/")
+    if len(parts) > 3 and parts[1] == "exe":
+        return parts[0], "/".join(parts[1:3]), "/".join(parts[3:])
+    return parts[0], "", "/".join(parts[1:])
+
 def _get_base_path(path: Path) -> Path:
-    name = "build/src/" + path.removesuffix(".s.o").removesuffix(".c.o")
+    # <version>[/exe/<main>]/<unit> -> build/<version>[/exe/<main>]/src/<unit>
+    version, exe, unit = _split_path(path.removesuffix(".s.o").removesuffix(".c.o"))
+    name = "/".join(x for x in ("build", version, exe, "src", unit) if x)
     c_path = name + ".c.o"
     hasm_path = name + ".hasm.s.o"
     if Path(c_path).exists(): return c_path
