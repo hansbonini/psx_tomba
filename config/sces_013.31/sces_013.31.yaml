@@ -19,6 +19,7 @@ options:
 
   find_file_boundaries: False
   symbol_name_format: $VRAM_sces01331
+  symbol_name_format_no_rom: $VRAM_sces01331
   gp_value: 0x800AE4B8
   global_vram_start: 0x80010000
 

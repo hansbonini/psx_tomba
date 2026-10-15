@@ -19,6 +19,7 @@ options:
 
   find_file_boundaries: False
   symbol_name_format: $VRAM_sces01331
+  symbol_name_format_no_rom: $VRAM_sces01331
   gp_value: 0x80098C50
   global_vram_start: 0x80010000
 
@@ -66,7 +67,7 @@ segments:
       - [0x800, rodata, main/game/gameinit]
       - [0x830, rodata, main/system/boot]
       - [0x860, rodata, main/game/gamestate]
-      - [0x9D8, .rodata, main/game/entity]
+      - [0x9D8, rodata, main/game/entity]
       - [0xA38, rodata, main/render/ui]
       - [0xA54, rodata, main/game/inventory]
       - [0xCF8, rodata, main/game/message]
@@ -106,7 +107,7 @@ segments:
       - [0x69D0, .rodata, psyq/libcd/cdread]
       - [0x6A14, .rodata, psyq/libcd/c_011]
       - [0x6A2C, .rodata, psyq/libetc/vsync]
-      - [0x6A3C, rodata, psyq/libetc/intr]
+      - [0x6A3C, .rodata, psyq/libetc/intr]
       - [0x6AD4, rodata, psyq/libpad/padentry]
       - [0x6AF4, .rodata, psyq/libsnd/ssopenq]
       - [0x6B18, .rodata, psyq/libsnd/seqinit]
@@ -116,14 +117,14 @@ segments:
       - [0x6BF4, asm]
       - [0x7184, asm, main/main]
       - [0x77C0, c, main/system/task]
-      - [0x7CC0, asm, main/system/gfxinit]
+      - [0x7CC0, c, main/system/gfxinit]
       - [0x803C, asm, main/game/gameinit]
       - [0x9884, asm, main/system/boot]
       - [0xA30C, asm, main/game/gamestate]
       - [0xDCB0, asm, main/video/movie]
       - [0xE3DC, asm, main/audio/sound]
       - [0x10050, asm, main/system/cdfile]
-      - [0x10878, c, main/game/entity]
+      - [0x10878, asm, main/game/entity]
       - [0x11714, asm, main/render/drawutil]
       - [0x11EC4, c, main/render/camera]
       - [0x1296C, asm, main/render/ui]
@@ -250,7 +251,7 @@ segments:
       - [0x57E78, c, psyq/libcd/c_011]
       - [0x589D8, c, psyq/libetc/vsync]
       - [0x58BBC, asm, psyq/libapi/l10]
-      - [0x58BCC, asm, psyq/libetc/intr]
+      - [0x58BCC, c, psyq/libetc/intr]
       - [0x592FC, asm, psyq/libapi/a23]
       - [0x5930C, asm, psyq/libapi/a24]
       - [0x5931C, asm, psyq/libapi/a25]
@@ -265,7 +266,7 @@ segments:
       - [0x5AA54, asm, psyq/libpad/padcmd]
       - [0x5B63C, asm]
       - [0x5B69C, asm, psyq/libpad/padif]
-      - [0x5BC64, c, psyq/libpad/padportd]
+      - [0x5BC64, asm, psyq/libpad/padportd]
       - [0x5C2C4, asm, psyq/libpad/padseqd]
       - [0x5C784, c, psyq/libpad/waitrc2]
       - [0x5C844, c, psyq/libsn/snmain]

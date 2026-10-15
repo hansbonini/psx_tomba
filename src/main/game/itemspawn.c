@@ -419,6 +419,9 @@ s16 arg1;
 INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80042C20);
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", clampToCeilingAndProbeSides);
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+INCLUDE_ASM("nonmatchings/main/game/itemspawn", clampToCeilingAndProbeSides);
+#else
 s32 clampToCeilingAndProbeSides(u8* arg0) {
     u8* obj;
     s16 ret;
@@ -438,6 +441,7 @@ s32 clampToCeilingAndProbeSides(u8* arg0) {
     }
     return 0;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", applyCollisionTileResponse);
 void applyCollisionTileResponse(u8* arg0) {

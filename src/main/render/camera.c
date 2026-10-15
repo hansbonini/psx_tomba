@@ -12,6 +12,9 @@ void setSpawnAreaFlag(void)
 
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", loadSpawnPosition);
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/camera", loadSpawnPosition);
+#else
 void loadSpawnPosition(u8* self)
 {
     s16* row = (s16*)((u8*)D_8007BF78[GAME.selectedArea][GAME.selectedSection] + (u16)D_8009BCEA * 8);
@@ -44,9 +47,13 @@ void loadSpawnPosition(u8* self)
         break;
     }
 }
+#endif
 
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", initPlayerAtSpawn);
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/camera", initPlayerAtSpawn);
+#else
 void initPlayerAtSpawn(void)
 {
     u8* p = &PLAYER.obj;
@@ -93,6 +100,7 @@ void initPlayerAtSpawn(void)
         *(VEC3*)&PLAYER.obj.x = D_8009C61C;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", loadSectionBounds);
 void loadSectionBounds(u8* self)

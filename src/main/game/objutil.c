@@ -657,6 +657,9 @@ typedef struct { char p[0xc]; u8 b; } G338_3A4F8;
 extern G338_3A4F8 *D_8009B6A0;
 extern u8 *D_8009B698;
 void freeObjectLayer1(GameObject *o);
+#if defined(VERSION_SCES_01330)
+INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
+#else
 void func_8003A4F8(GameObject *o)
 {
     if (D_800A545F) o->state = 2;
@@ -680,6 +683,7 @@ void func_8003A4F8(GameObject *o)
         break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A604);
 void func_8003A604(int id)

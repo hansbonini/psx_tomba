@@ -3,7 +3,7 @@
 How the game gets a file off the disc and into memory, VRAM or SPU RAM.
 
 Everything here is derived from the disassembly and from the partially decompiled
-`src/scus_942.36/main/system/cdfile.c`. Addresses are for **SCUS-94236 (USA)**.
+`src/main/system/cdfile.c`. Addresses are for **SCUS-94236 (USA)**.
 Where a fact could not be established from the code it is marked as open rather
 than guessed — see [Open questions](#-open-questions).
 
@@ -70,7 +70,7 @@ Head and tail live in the scratchpad and wrap with `& 0x7F`:
 | `0x1F80029C` | head — advanced by the producer |
 | `0x1F8002A0` | tail — advanced by the loader task |
 
-Both are zeroed during boot in [main.c:29-30](../src/scus_942.36/main/main.c#L29-L30).
+Both are zeroed during boot in [main.c:29-30](../src/main/main.c#L29-L30).
 The queue is empty when `head == tail`.
 
 `func_80021B84(dst, hdr)` is the enqueue primitive — sixteen instructions, no
@@ -161,7 +161,7 @@ file type and jumps to the right path:
 | 4 | `lzDecompress(workBuffer, entry->dst)`, then done |
 | 5 | VAB upload, see below |
 
-`lzDecompress` is in [lz.c:111](../src/scus_942.36/main/system/lz.c#L111); the
+`lzDecompress` is in [lz.c:111](../src/main/system/lz.c#L111); the
 compressed format is documented in [game-formats.md](game-formats.md).
 
 Note the asymmetry between paths 1 and 4. Type 1 reads compressed data into the

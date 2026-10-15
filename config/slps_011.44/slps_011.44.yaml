@@ -19,6 +19,7 @@ options:
 
   find_file_boundaries: False
   symbol_name_format: $VRAM_slps01144
+  symbol_name_format_no_rom: $VRAM_slps01144
   gp_value: 0x8009DAC8
   global_vram_start: 0x80010000
 
@@ -98,7 +99,7 @@ segments:
       - [0x6318, .rodata, psyq/libcd/cdread]
       - [0x635C, .rodata, psyq/libcd/c_011]
       - [0x6374, .rodata, psyq/libetc/vsync]
-      - [0x6384, rodata, psyq/libetc/intr]
+      - [0x6384, .rodata, psyq/libetc/intr]
       - [0x641C, .rodata, psyq/libsnd/ssopenq]
       - [0x6440, .rodata, psyq/libsnd/seqinit]
       - [0x647C, .rodata, psyq/libsnd/sstick]
@@ -121,7 +122,7 @@ segments:
       - [0x10624, asm, main/system/cdfile]
       - [0x117F0, asm, main/game/entity]
       - [0x1265C, asm, main/render/drawutil]
-      - [0x12898, asm, main/render/camera]
+      - [0x12898, c, main/render/camera]
       - [0x13300, asm]
       - [0x179A8, asm, main/render/ui]
       - [0x1801C, asm, main/game/inventory]
@@ -249,7 +250,7 @@ segments:
       - [0x55724, asm]
       - [0x557B4, c, psyq/libetc/vsync]
       - [0x55998, asm, psyq/libapi/l10]
-      - [0x559A8, asm, psyq/libetc/intr]
+      - [0x559A8, c, psyq/libetc/intr]
       - [0x560D8, asm, psyq/libapi/a23]
       - [0x560E8, asm, psyq/libapi/a24]
       - [0x560F8, asm, psyq/libapi/a25]

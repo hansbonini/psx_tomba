@@ -89,6 +89,9 @@ void resetDrawLists(void)
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/gfxinit", resetCamera);
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+INCLUDE_ASM("nonmatchings/main/system/gfxinit", resetCamera);
+#else
 void resetCamera(void)
 {
     CAMERA* camera = (CAMERA*)0x1F8000E2;
@@ -107,3 +110,4 @@ void resetCamera(void)
     LOADED_SOUND_SET = 0xFF;
     D_8009EBA0 = 0;
 }
+#endif

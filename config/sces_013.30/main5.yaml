@@ -19,6 +19,7 @@ options:
 
   find_file_boundaries: False
   symbol_name_format: $VRAM_sces01330
+  symbol_name_format_no_rom: $VRAM_sces01330
   gp_value: 0x80098758
   global_vram_start: 0x80010000
 
@@ -66,7 +67,7 @@ segments:
       - [0x800, rodata, main/game/gameinit]
       - [0x830, rodata, main/system/boot]
       - [0x860, rodata, main/game/gamestate]
-      - [0x9D8, .rodata, main/game/entity]
+      - [0x9D8, rodata, main/game/entity]
       - [0xA38, rodata, main/render/ui]
       - [0xA54, rodata, main/game/inventory]
       - [0xCF8, rodata, main/game/message]
@@ -76,7 +77,7 @@ segments:
       - [0xE48, rodata, main/game/effect]
       - [0x34C4, rodata]
       - [0x34DC, rodata, main/game/objlogic]
-      - [0x391C, rodata, main/game/objutil]
+      - [0x391C, .rodata, main/game/objutil]
       - [0x3E50, .rodata, main/system/script]
       - [0x3F08, .rodata, main/system/scriptexec]
       - [0x401C, .rodata, main/system/scriptop]
@@ -116,14 +117,14 @@ segments:
       - [0x6BF4, asm]
       - [0x7184, asm, main/main]
       - [0x77C0, c, main/system/task]
-      - [0x7CC0, asm, main/system/gfxinit]
+      - [0x7CC0, c, main/system/gfxinit]
       - [0x803C, asm, main/game/gameinit]
       - [0x9884, asm, main/system/boot]
       - [0xA30C, asm, main/game/gamestate]
       - [0xDCB0, asm, main/video/movie]
       - [0xE3DC, asm, main/audio/sound]
       - [0x10050, asm, main/system/cdfile]
-      - [0x10878, c, main/game/entity]
+      - [0x10878, asm, main/game/entity]
       - [0x11714, asm, main/render/drawutil]
       - [0x11E78, c, main/render/camera]
       - [0x12920, asm, main/render/ui]
@@ -135,7 +136,7 @@ segments:
       - [0x20C9C, c, main/game/areamisc]
       - [0x21288, asm, main/game/effect]
       - [0x21A74, asm, main/game/objlogic]
-      - [0x2592C, asm, main/game/objutil]
+      - [0x2592C, c, main/game/objutil]
       - [0x28514, c, main/system/script]
       - [0x29564, c, main/system/scriptexec]
       - [0x29E14, c, main/system/scriptop]

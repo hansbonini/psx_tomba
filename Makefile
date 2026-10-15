@@ -107,6 +107,13 @@ find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" \
 # Function to list the objects of a target: the ones its linker script uses.
 gen_o_files = $(shell grep -oE '$(BUILD_DIR)/[^ ()]*\.o' $(LINKER_DIR)/$(notdir $1).ld 2> /dev/null | sort -u)
 
+# Build folder of a target: each European MAINn.EXE has its own.
+target_build = $(if $(findstring /exe/,$1),$(BUILD_DIR)/exe/$(notdir $1),$(BUILD_DIR))
+
+# Function to list the objects of every .s file of a target, the whole
+# disassembly of its C files included (the targets of the progress report).
+gen_s_o_files = $(addprefix $(call target_build,$1)/,$(patsubst %.s,%.s.o,$(call find_s_files,$1)))
+
 # get_target_out = $(addprefix $(OUT_DIR)/,$1)
 
 # Function to get path to .yaml file for given target.
@@ -124,7 +131,7 @@ ifeq ($(SKIP_ASM),1)
 
 define make_elf_target
 $2: $2.elf
-$2.elf: $(call gen_o_files, $1) \
+$2.elf: $(call gen_o_files, $1) $(call gen_s_o_files,$1) \
 		$(BIOS_OBJS)
 endef
 
@@ -196,9 +203,10 @@ check: build
 
 expected: build
 	mkdir -p $(EXPECTED_DIR)
-	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)
-	mv $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libapi/c73.s.o $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libgpu/c73.s.o
-	mv $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libapi/a07.s.o $(EXPECTED_DIR)/asm/$(TARGET_MAIN)/psyq/libcd/a07.s.o
+	rm -rf $(EXPECTED_DIR)/asm/$(BASE_DIR)
+	mkdir -p $(EXPECTED_DIR)/asm
+	mv $(BUILD_DIR)/asm/$(BASE_DIR) $(EXPECTED_DIR)/asm/
+	$(foreach m,libgpu/c73 libcd/a07,[ ! -f $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/libapi/$(notdir $m).s.o ] || { mkdir -p $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/$(dir $m) && mv $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/libapi/$(notdir $m).s.o $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/$m.s.o; };)
 
 generate: $(LD_FILES)
 
@@ -206,7 +214,7 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 reset: clean
-	rm -rf $(ASM_DIR)
+	rm -rf $(ASM_DIR)/$(BASE_DIR)
 	rm -rf $(LINKER_DIR)
 	rm -rf $(EXPECTED_DIR)
 
@@ -384,5 +392,5 @@ $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml $(SYMBOL_FILES)
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default permuter-setup permuter-import permuter-run permuter-reseed permuter-clean
+.PHONY: all build check expected report objdiff-config generate clean reset setup regenerate clean-build default permuter-setup permuter-import permuter-run permuter-reseed permuter-clean
 SHELL = /bin/bash -e -o pipefail
