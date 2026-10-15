@@ -299,8 +299,8 @@ void func_800ED928(O_ED928 *o)
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED9E0);
 typedef struct S_ED9E0 { char pad0[0x40]; s32 *h; char pad1[0x7c-0x44]; s16 velH; } S_ED9E0;
-extern void func_8010DE48(S_ED9E0 *);
-extern void func_8010E444(S_ED9E0 *, s32 *);
+void func_8010DE48();
+void func_8010E444();
 extern void applyObjectAltSpeedVertical(S_ED9E0 *);
 void func_800ED9E0(S_ED9E0 *o)
 {
@@ -440,7 +440,16 @@ void func_800EDD9C(GameObject *o)
     else o->unkB6 = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDDDC);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDDDC);
+typedef struct D_EDDDC { char pad[0x2c]; u16 a; u16 b; } D_EDDDC;
+extern D_EDDDC *D_8009B698_D_EDDDCPtr asm("D_8009B698");
+void func_800EDDDC(s32 o, s16 a, s16 c)
+{
+    D_8009B698_D_EDDDCPtr->a = a;
+    func_800EEF64(o);
+    advanceAnimFrame(o, c);
+    D_8009B698_D_EDDDCPtr->b = D_8009B698_D_EDDDCPtr->a;
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDE44);
 typedef struct P_EDE44 { char p0[0x2c]; u16 a; u16 b; } P_EDE44;
@@ -457,7 +466,20 @@ void func_800EDE44(void *o, u16 x, s16 y)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDEBC);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDEBC);
+extern GameObject *D_8009B698_GameObjectPtr asm("D_8009B698");
+
+void func_800EDEBC(GameObject *o, u16 anim)
+{
+    GameObject *p = D_8009B698_GameObjectPtr;
+    p->animTimer = anim;
+    if (p->animFrame != anim) {
+        p->animTimer = anim;
+        func_800EEF64(o);
+        advanceAnimFrame(o, 0);
+        D_8009B698_GameObjectPtr->animFrame = D_8009B698_GameObjectPtr->animTimer;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDF24);
 typedef struct S_EDF24 { char pad[0x24]; void *anim; char pad2[0x8c - 0x28]; s32 v; } S_EDF24;

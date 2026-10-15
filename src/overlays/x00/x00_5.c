@@ -282,7 +282,7 @@ typedef struct O_21D5C {
     char p7[0x9c - 0x80]; u8 b9c; char p8[0xac - 0x9d]; u8 bac;
 } O_21D5C;
 extern O_21D5C *D_8009C650;
-extern void func_8010DE48(void);
+void func_8010DE48();
 extern void applyObjectAltSpeedVertical(O_21D5C *);
 extern s16 probeSidesAndApplyTileResponse(O_21D5C *, s32, s32);
 
@@ -374,9 +374,634 @@ void func_80122538(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80122688);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80122688);
+typedef struct SPADBlock_22688 {
+    u8 b0;
+    u8 _pad1[0x5f];
+    s16 s60;
+    s16 s62;
+    s16 s64;
+    u8 _pad66[0xe];
+    s32 i74;
+    s32 i78;
+    u8 _pad7c[0x10];
+    s32 i8c;
+    u8 _pad90[0x30];
+    u8 bc0;
+    u8 _padc1[0x13];
+    s32 id4;
+    s32 id8;
+    s32 idc;
+    s32 ie0;
+    u8 _pade4[0x2];
+    s16 se6;
+    u8 _pade8[0x2];
+    s16 sea;
+    s32 iec;
+    s32 if0;
+    s32 if4;
+    u8 _padf8[0x20];
+    u8 b118;
+    u8 _pad119[0x4b];
+    void * p164;
+    s32 i168;
+    s32 i16c;
+    s32 i170;
+    s32 i174;
+    u8 _pad178[0x2];
+    u16 s17a;
+    u8 _pad17c[0x2];
+    u16 s17e;
+    u8 _pad180[0x6];
+    u16 s186;
+    u8 _pad188[0x4];
+    s32 i18c;
+    s32 i190;
+    u8 _pad194[0x4];
+    s32 i198;
+    s16 s19c;
+    s16 s19e;
+    u8 b1a0;
+    u8 _pad1a1[0x3];
+    u8 b1a4;
+    u8 b1a5;
+    u8 _pad1a6[0x1c];
+    u8 b1c2;
+    u8 _pad1c3[0x1];
+    u8 b1c4;
+    u8 b1c5;
+    s16 s1c6;
+    u16 s1c8;
+    u8 _pad1ca[0x2];
+    u8 b1cc;
+    u8 b1cd;
+    u8 _pad1ce[0x1];
+    u8 b1cf;
+    u8 b1d0;
+    u8 b1d1;
+    u8 b1d2;
+    u8 b1d3;
+    u8 _pad1d4[0xc];
+    s32 i1e0;
+    u8 _pad1e4[0x4];
+    s16 s1e8;
+    u8 _pad1ea[0xa];
+    s16 s1f4;
+    s16 s1f6;
+    u16 s1f8;
+    u8 _pad1fa[0x2];
+    u16 s1fc;
+    u16 s1fe;
+    u8 _pad200[0x1c];
+    void * p21c;
+    u8 _pad220[0x4];
+    void * p224;
+    void * p228;
+    u8 _pad22c[0xc];
+    s16 s238;
+    u8 _pad23a[0xc];
+    s16 s246;
+    u16 s248;
+    u8 _pad24a[0x2];
+    s16 s24c;
+    u8 _pad24e[0x2];
+    u16 s250;
+    u8 _pad252[0x2];
+    u16 s254;
+    s16 s256;
+    u8 _pad258[0x8];
+    void * p260;
+    u8 _pad264[0x4];
+    void * p268;
+    void * p26c;
+    u8 _pad270[0x8];
+    void * p278;
+    u8 _pad27c[0x2];
+    s16 s27e;
+    s16 s280;
+    u16 s282;
+    s16 s284;
+    s16 s286;
+    u8 _pad288[0x2c];
+    s32 i2b4;
+    u8 _pad2b8[0x18];
+    s32 i2d0;
+    s32 i2d4;
+    s32 i2d8;
+    s32 i2dc;
+    s32 i2e0;
+    s32 i2e4;
+    s32 i2e8;
+    u8 _pad2ec[0x4];
+    s32 i2f0;
+    u8 _pad2f4[0x4];
+    s32 i2f8;
+    u8 _pad2fc[0x4];
+    s32 i300;
+    s32 i304;
+    void * p308;
+    void * p30c;
+    s32 i310;
+    s32 i314;
+    s32 i318;
+    void * p31c;
+    u8 _pad320[0x14];
+    s32 i334;
+    void * p338;
+    void * p33c;
+    u8 _pad340[0x1c];
+    s32 i35c;
+    u8 _pad360[0x10];
+    s32 i370;
+    s32 i374;
+    s32 i378;
+    u8 _pad37c[0x3c];
+    u16 s3b8;
+    u16 s3ba;
+    s16 s3bc;
+    u8 _pad3be[0x2];
+    void * p3c0;
+    u16 s3c4;
+    u16 s3c6;
+    u16 s3c8;
+    u8 _pad3ca[0x4];
+    u8 b3ce;
+    u8 _pad3cf[0x1];
+    u8 b3d0;
+    u8 b3d1;
+    u8 _pad3d2[0x2e];
+} SPADBlock_22688;
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012298C);
+typedef struct GCDBlock_22688 {
+    u8 _pad0[0x94];
+    u16 scd94;
+    u8 _pad96[0x2];
+    u8 bcd98;
+    u8 bcd99;
+    u8 bcd9a;
+    u8 _pad9b[0x1];
+    u8 bcd9c;
+    u8 bcd9d;
+    u8 bcd9e;
+    u8 _pad9f[0x3];
+    u8 bcda2;
+    u8 _pada3[0x2];
+    u8 bcda5;
+    u8 bcda6;
+    u8 bcda7;
+    u8 _pada8[0x1];
+    u8 bcda9;
+    u8 _padaa[0x1];
+    u8 bcdab;
+    u8 bcdac;
+    u8 bcdad;
+    u8 bcdae;
+    u8 _padaf[0x2];
+    u8 bcdb1;
+    u8 bcdb2;
+    u8 _padb3[0x1];
+    u8 bcdb4;
+    u8 bcdb5;
+    u8 _padb6[0x2];
+    u8 bcdb8;
+    u8 _padb9[0x1];
+    u8 bcdba;
+    u8 bcdbb;
+    u8 bcdbc;
+    u8 _padbd[0x2];
+    u8 bcdbf;
+    u8 bcdc0;
+    u8 bcdc1;
+    u8 _padc2[0x1];
+    u8 bcdc3;
+    u8 _padc4[0x1];
+    u8 bcdc5;
+    u8 _padc6[0x1];
+    u8 bcdc7;
+    u8 bcdc8;
+    u8 bcdc9;
+    u8 bcdca;
+    u8 bcdcb;
+    u8 bcdcc;
+    u8 bcdcd;
+    u8 bcdce;
+    u8 _padcf[0x3];
+    u8 bcdd2;
+    u8 _padd3[0x2];
+    u8 bcdd5;
+    u8 bcdd6;
+    u8 bcdd7;
+    u8 _padd8[0x1];
+    u8 bcdd9;
+    u8 _padda[0x1];
+    u8 bcddb;
+    u8 bcddc;
+    u8 bcddd;
+    u8 bcdde;
+    u8 _paddf[0x3];
+    u8 bcde2;
+    u8 bcde3;
+    u8 _pade4[0x1];
+    u8 bcde5;
+    u8 _pade6[0x7];
+    u8 bcded;
+    u8 _padee[0x3];
+    u8 bcdf1;
+    u8 bcdf2;
+    u8 bcdf3;
+    u8 _padf4[0x1];
+    u8 bcdf5;
+    u8 _padf6[0xf];
+    u8 bce05;
+    u8 _pad106[0x4];
+    u8 bce0a;
+    u8 bce0b;
+    u8 bce0c;
+    u8 bce0d;
+    u8 _pad10e[0x7];
+    u8 bce15;
+    u8 bce16;
+    u8 bce17;
+    u8 bce18;
+    u8 _pad119[0x1];
+    u8 bce1a;
+    u8 bce1b;
+    u8 bce1c;
+    u8 _pad11d[0x2];
+    u8 bce1f;
+    u8 _pad120[0x2];
+    u8 bce22;
+    u8 bce23;
+    u8 bce24;
+    u8 _pad125[0x3];
+    u8 bce28;
+    u8 _pad129[0xb];
+    u8 bce34;
+    u8 _pad135[0x5];
+    u8 bce3a;
+    u8 bce3b;
+    u8 _pad13c[0x1];
+    u8 bce3d;
+    u8 _pad13e[0x2];
+    u8 bce40;
+    u8 bce41;
+    u8 _pad142[0x2];
+    u8 bce44;
+    u8 _pad145[0x3];
+    u8 bce48;
+    u8 _pad149[0x1];
+    u8 bce4a;
+    u8 _pad14b[0x2];
+    u8 bce4d;
+    u8 bce4e;
+    u8 bce4f;
+    u8 bce50;
+    u8 bce51;
+    u8 bce52;
+    u8 bce53;
+    u8 bce54;
+    u8 bce55;
+    u8 bce56;
+    u8 bce57;
+    u8 bce58;
+    u8 bce59;
+    u8 _pad15a[0x1];
+    u8 bce5b;
+    u8 _pad15c[0x1];
+    u8 bce5d;
+    u8 _pad15e[0x3];
+    u8 bce61;
+    u8 bce62;
+    u8 bce63;
+    u8 _pad164[0x47];
+    u8 bceab;
+    u8 _pad1ac[0x1];
+    u8 bcead;
+    u8 bceae;
+    u8 bceaf;
+    u8 bceb0;
+    u8 _pad1b1[0xb];
+    u8 bcebc;
+    u8 bcebd;
+    u8 _pad1be[0x1];
+    u8 bcebf;
+    u8 _pad1c0[0x1];
+    u8 bcec1;
+    u8 bcec2;
+    u8 bcec3;
+    u8 bcec4;
+    u8 bcec5;
+    u8 bcec6;
+    u8 bcec7;
+    u8 _pad1c8[0x4];
+    u8 bcecc;
+    u8 bcecd;
+    u8 _pad1ce[0x10];
+    u8 bcede;
+    u8 bcedf;
+    u8 _pad1e0[0x1];
+    u8 bcee1;
+    u8 bcee2;
+    u8 _pad1e3[0xa];
+    u8 bceed;
+    u8 _pad1ee[0x1];
+    u8 bceef;
+    u8 bcef0;
+    u8 _pad1f1[0x5];
+    u8 bcef6;
+    u8 bcef7;
+    u8 _pad1f8[0x3];
+    u8 bcefb;
+    u8 bcefc;
+    u8 _pad1fd[0x3];
+    u8 bcf00;
+    u8 _pad201[0x2];
+    u8 bcf03;
+    u8 bcf04;
+    u8 _pad205[0x1];
+    u8 bcf06;
+    u8 _pad207[0x3];
+    u8 bcf0a;
+    u8 bcf0b;
+    u8 bcf0c;
+    u8 bcf0d;
+    u8 bcf0e;
+    u8 bcf0f;
+    u8 bcf10;
+    u8 bcf11;
+    u8 _pad212[0xa];
+    u8 bcf1c;
+    u8 _pad21d[0x7];
+    u8 bcf24;
+    u8 _pad225[0x4];
+    u8 bcf29;
+    u8 _pad22a[0x3];
+    u8 bcf2d;
+    u8 bcf2e;
+    u8 bcf2f;
+    u8 _pad230[0x98];
+    u8 bcfc8;
+    u8 _pad2c9[0x1];
+    u8 bcfca;
+    u8 bcfcb;
+    u8 bcfcc;
+    u8 bcfcd;
+    u8 bcfce;
+    u8 bcfcf;
+    s16 scfd0;
+    s16 scfd2;
+    s16 scfd4;
+    u8 bcfd6;
+    u8 _pad2d7[0x2];
+    u8 bcfd9;
+    u8 bcfda;
+    u8 bcfdb;
+    u8 bcfdc;
+    u8 bcfdd;
+    u8 bcfde;
+    u8 bcfdf;
+    u8 bcfe0;
+    u8 bcfe1;
+    s16 scfe2;
+    u8 _pad2e4[0x1];
+    u8 bcfe5;
+    u8 _pad2e6[0x4];
+    u8 bcfea;
+    u8 _pad2eb[0x2];
+    u8 bcfed;
+    u8 bcfee;
+    u8 _pad2ef[0x1];
+    u8 bcff0;
+    u8 bcff1;
+    u8 bcff2;
+    u8 bcff3;
+    u8 bcff4;
+    u8 bcff5;
+    u8 _pad2f6[0x1];
+    u8 bcff7;
+    u8 bcff8;
+    u8 bcff9;
+    u8 bcffa;
+    u8 bcffb;
+    u8 bcffc;
+    u8 bcffd;
+    u8 _pad2fe[0x2];
+    u8 bd000;
+    u8 bd001;
+    u8 bd002;
+    u8 bd003;
+    u8 bd004;
+    u8 _pad305[0x1];
+    u8 bd006;
+    u8 bd007;
+    u8 bd008;
+    u8 _pad309[0x1];
+    u8 bd00a;
+    u8 _pad30b[0x2];
+    u8 bd00d;
+    u8 bd00e;
+    u8 _pad30f[0x67];
+    u8 bd076;
+    u8 bd077;
+    u8 bd078;
+    u8 _pad379[0x1];
+    u8 bd07a;
+    u8 bd07b;
+    u8 bd07c;
+    u8 bd07d;
+    u8 bd07e;
+    u8 _pad37f[0x2];
+    u8 bd081;
+    u8 bd082;
+    u8 bd083;
+    u8 bd084;
+    u8 _pad385[0x1];
+    u8 bd086;
+    u8 bd087;
+    u8 bd088;
+    u8 _pad389[0x7];
+    u8 bd090;
+    u8 bd091;
+    u8 bd092;
+    u8 bd093;
+    u8 bd094;
+    u8 bd095;
+    u8 _pad396[0xe];
+    u8 bd0a4;
+    u8 _pad3a5[0x2];
+    u8 bd0a7;
+    u8 _pad3a8[0x1];
+    u8 bd0a9;
+    u8 bd0aa;
+    u8 _pad3ab[0x5];
+    u16 sd0b0;
+    u8 bd0b2;
+    u8 _pad3b3[0x1];
+    u8 bd0b4;
+    u8 _pad3b5[0x2];
+    u8 bd0b7;
+    u8 bd0b8;
+    u8 bd0b9;
+    u8 bd0ba;
+    u8 bd0bb;
+    u8 bd0bc;
+    u8 _pad3bd[0x1];
+    u8 bd0be;
+    u8 bd0bf;
+    u8 bd0c0;
+    u8 bd0c1;
+    u8 _pad3c2[0x2];
+    u8 bd0c4;
+    u8 bd0c5;
+    u8 bd0c6;
+    u8 _pad3c7[0x1];
+    u8 bd0c8;
+    u8 bd0c9;
+    u8 bd0ca;
+    u8 bd0cb;
+    u8 bd0cc;
+    u8 bd0cd;
+    u8 bd0ce;
+    u8 bd0cf;
+    u8 bd0d0;
+    u8 bd0d1;
+    u8 _pad3d2[0x7];
+    u8 bd0d9;
+    u8 bd0da;
+    u8 _pad3db[0x7];
+    u8 bd0e2;
+    u8 _pad3e3[0x3];
+    u8 bd0e6;
+    u8 bd0e7;
+    u8 _pad3e8[0x13];
+    u8 bd0fb;
+    u8 bd0fc;
+    u8 bd0fd;
+    u8 _pad3fe[0x2];
+} GCDBlock_22688;
+extern GCDBlock_22688 D_8009C068;
+
+typedef struct { s16 t; u16 x, y, z; } E_22688;
+extern s32 D_8013A428;
+extern s32 D_801340D0;
+extern u16 D_80138250[];
+extern E_22688 D_80138258[];
+extern void readAnimFrameCount(GameObject *o);
+extern void playSFX(s32 n);
+extern void freeObjectLayer5(GameObject *o);
+
+void func_80122688(GameObject *o)
+{
+    GameObject *p;
+    E_22688 *e;
+    switch (o->state) {
+    case 0:
+        o->hitOffsetX = 8;
+        o->hitWidth = 0x10;
+        o->hitOffsetY = 8;
+        o->hitHeight = 0x10;
+        o->unkA = 0;
+        switch (o->subtype) {
+        case 0:
+            o->tpage = 0xb;
+            o->unkD = 1;
+            o->clut = 0x79cf;
+            *(s32 *)&o->anim = D_8013A428;
+            goto common;
+        case 1:
+            o->unkD = 0;
+            o->tpage = 8;
+            *(s32 *)&o->anim = D_801340D0;
+        common:
+            o->spriteBank = (*(SPADBlock_22688 *)&SCRATCHPAD).i2d4;
+            break;
+        }
+        readAnimFrameCount(o);
+        goto next;
+    case 1:
+        if (func_80022E44(o) == 0) break;
+        p = (GameObject *)o->unk94;
+        switch (o->subtype) {
+        case 0:
+            o->h->p.whole = p->h->p.whole + 12;
+            o->y.p.whole = p->y.p.whole;
+            o->d->p.whole = p->d->p.whole;
+            if (((u8*)&D_8009C068.bd0aa)[0] == 0) break;
+            goto next;
+        case 1:
+            switch (o->subState) {
+            case 0: {
+                u16 v = D_80138250[(u16)p->unkB8];
+                o->unkB8 = v;
+                o->cooldownTimer = D_80138258[v].t;
+                o->subState++;
+            }
+            case 1:
+                e = &D_80138258[(u16)o->unkB8];
+                if (e->t == -2) {
+                    o->unkB8--;
+                    e = &D_80138258[(u16)o->unkB8];
+                }
+                if (e->t == -1) {
+                    u16 v = D_80138250[(u16)p->unkB8];
+                    e = &D_80138258[v];
+                    o->unkB8 = v;
+                }
+                if (--o->cooldownTimer == 0) {
+                    o->unkB8++;
+                    o->cooldownTimer = e->t;
+                }
+                o->h->p.whole = p->h->p.whole + e->x;
+                o->y.p.whole = p->y.p.whole + e->y;
+                o->d->p.whole = p->d->p.whole;
+                break;
+            }
+            if (((u8*)&D_8009C068.bd0c8)[0] == 0) break;
+            goto next;
+        }
+        break;
+    case 2:
+        playSFX(9);
+    next:
+        o->state++;
+        break;
+    case 3:
+        freeObjectLayer5(o);
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012298C);
+#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
+#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
+#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
+#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
+#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+void func_8012298C(char *p, char *q, s32 c)
+{
+    extern char *allocObjectLayer5();
+    char *o = allocObjectLayer5();
+    if (o != 0) {
+        U8(o, 0) = 4;
+        U8(o, 2) = 7;
+        U8(o, 3) = c;
+        U8(o, 0xc) = 0;
+        *(s8 *)&U8(o, 0xf) = -10;
+        S16(o, 0x2e) = 0;
+        *(s32 *)(o + 0x10) = *(s16 *)(q + 2) << 16;
+        *(s32 *)(o + 0x14) = *(s16 *)(q + 6) << 16;
+        *(s32 *)(o + 0x18) = *(s16 *)(q + 10) << 16;
+        *(s32 *)(o + 0x94) = (s32)p;
+        S16(o, 0xb4) = *(u16 *)(p + 0xb6);
+    }
+}
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
 
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80122A34);
 
@@ -475,7 +1100,272 @@ void func_80123148(GameObject *o)
     D_1F800164 = (PFT4_23148 *)((char *)D_1F800164 + 0x28);
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80123314);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80123314);
+typedef struct SPADBlock_23314 {
+    u8 b0;
+    u8 _pad1[0x5f];
+    s16 s60;
+    s16 s62;
+    s16 s64;
+    u8 _pad66[0xe];
+    s32 i74;
+    s32 i78;
+    u8 _pad7c[0x10];
+    s32 i8c;
+    u8 _pad90[0x30];
+    u8 bc0;
+    u8 _padc1[0x13];
+    s32 id4;
+    s32 id8;
+    s32 idc;
+    s32 ie0;
+    u8 _pade4[0x2];
+    s16 se6;
+    u8 _pade8[0x2];
+    s16 sea;
+    s32 iec;
+    s32 if0;
+    s32 if4;
+    u8 _padf8[0x20];
+    u8 b118;
+    u8 _pad119[0x4b];
+    void * p164;
+    s32 i168;
+    s32 i16c;
+    s32 i170;
+    s32 i174;
+    u8 _pad178[0x2];
+    u16 s17a;
+    u8 _pad17c[0x2];
+    u16 s17e;
+    u8 _pad180[0x6];
+    u16 s186;
+    u8 _pad188[0x4];
+    s32 i18c;
+    s32 i190;
+    u8 _pad194[0x4];
+    s32 i198;
+    s16 s19c;
+    s16 s19e;
+    u8 b1a0;
+    u8 _pad1a1[0x3];
+    u8 b1a4;
+    u8 b1a5;
+    u8 _pad1a6[0x1c];
+    u8 b1c2;
+    u8 _pad1c3[0x1];
+    u8 b1c4;
+    u8 b1c5;
+    s16 s1c6;
+    u16 s1c8;
+    u8 _pad1ca[0x2];
+    u8 b1cc;
+    u8 b1cd;
+    u8 _pad1ce[0x1];
+    u8 b1cf;
+    u8 b1d0;
+    u8 b1d1;
+    u8 b1d2;
+    u8 b1d3;
+    u8 _pad1d4[0xc];
+    s32 i1e0;
+    u8 _pad1e4[0x4];
+    s16 s1e8;
+    u8 _pad1ea[0xa];
+    s16 s1f4;
+    s16 s1f6;
+    u16 s1f8;
+    u8 _pad1fa[0x2];
+    u16 s1fc;
+    u16 s1fe;
+    u8 _pad200[0x1c];
+    void * p21c;
+    u8 _pad220[0x4];
+    void * p224;
+    void * p228;
+    u8 _pad22c[0xc];
+    s16 s238;
+    u8 _pad23a[0xc];
+    s16 s246;
+    u16 s248;
+    u8 _pad24a[0x2];
+    s16 s24c;
+    u8 _pad24e[0x2];
+    u16 s250;
+    u8 _pad252[0x2];
+    u16 s254;
+    s16 s256;
+    u8 _pad258[0x8];
+    void * p260;
+    u8 _pad264[0x4];
+    void * p268;
+    void * p26c;
+    u8 _pad270[0x8];
+    void * p278;
+    u8 _pad27c[0x2];
+    s16 s27e;
+    s16 s280;
+    u16 s282;
+    s16 s284;
+    s16 s286;
+    u8 _pad288[0x2c];
+    s32 i2b4;
+    u8 _pad2b8[0x18];
+    s32 i2d0;
+    s32 i2d4;
+    s32 i2d8;
+    s32 i2dc;
+    s32 i2e0;
+    s32 i2e4;
+    s32 i2e8;
+    u8 _pad2ec[0x4];
+    s32 i2f0;
+    u8 _pad2f4[0x4];
+    s32 i2f8;
+    u8 _pad2fc[0x4];
+    s32 i300;
+    s32 i304;
+    void * p308;
+    void * p30c;
+    s32 i310;
+    s32 i314;
+    s32 i318;
+    void * p31c;
+    u8 _pad320[0x14];
+    s32 i334;
+    void * p338;
+    void * p33c;
+    u8 _pad340[0x1c];
+    s32 i35c;
+    u8 _pad360[0x10];
+    s32 i370;
+    s32 i374;
+    s32 i378;
+    u8 _pad37c[0x3c];
+    u16 s3b8;
+    u16 s3ba;
+    s16 s3bc;
+    u8 _pad3be[0x2];
+    void * p3c0;
+    u16 s3c4;
+    u16 s3c6;
+    u16 s3c8;
+    u8 _pad3ca[0x4];
+    u8 b3ce;
+    u8 _pad3cf[0x1];
+    u8 b3d0;
+    u8 b3d1;
+    u8 _pad3d2[0x2e];
+} SPADBlock_23314;
+
+typedef struct {
+    s32 tag;
+    u8 r, g, b, code;
+    s16 x0, y0; u8 u0, v0; u16 clut;
+    s16 x1, y1; u8 u1, v1; u16 tpage;
+    s16 x2, y2; u8 u2, v2; u16 pad1;
+    s16 x3, y3; u8 u3, v3; u16 pad2;
+} PFT4_80123FD0_23314;
+extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
+s32 isPolyFT4OnScreen(void *p);
+s32 insertPrim(void *a, s32 b, s32 c, s32 d, u32 e);
+
+#define setSemiTrans(p, abe) ((abe) ? ((p)->code |= 2) : ((p)->code &= ~2))
+#define SN(i) D_8007DB88[i]
+#define a1 ((ang + 0x80) & 0xff)
+#define a0 (ang & 0xff)
+#define CS(i) D_8007D988[i]
+
+void func_80123314(GameObject *o)
+{
+    s16 *e;
+    u8 *q;
+    s32 n;
+    s32 xy;
+    s16 x;
+    s16 y;
+    u32 s;
+    s32 d;
+    s32 ang;
+    s16 A, B, C, D;
+    s16 u, w;
+    PFT4_80123FD0_23314 *f;
+
+    if (projectActorPosition(o, &LZ_FILE_CTRL_Long, &(*(SPADBlock_23314 *)&SCRATCHPAD).i74) != 0)
+        return;
+    xy = LZ_FILE_CTRL_Long;
+    x = xy;
+    y = (u32)xy >> 16;
+    d = o->spriteBank;
+    d += *(u16 *)o->anim * 4;
+    e = (s16 *)d;
+    n = e[0];
+    q = (u8 *)(o->spriteBank + e[1]);
+    switch ((*(s16*)&(*(SPADBlock_23314 *)&SCRATCHPAD).s1c8)) {
+    case 0:
+        s = ((*(s16*)((char*)&(*(SPADBlock_23314 *)&SCRATCHPAD).if4 + 2)) - o->z.p.whole) * 7 + 0x1000;
+        break;
+    case 1:
+        s = (o->x.p.whole - (*(s16*)((char*)&(*(SPADBlock_23314 *)&SCRATCHPAD).iec + 2))) * 7 + 0x1000;
+        break;
+    }
+    ang = o->unk8C;
+    do {
+        A = ((s8)q[14] * s - 0x1800) >> 12;
+        B = ((s8)q[15] * s - 0x1800) >> 12;
+        C = (q[10] * s + 0x1800) >> 12;
+        D = (q[11] * s + 0x1800) >> 12;
+        f = D_1F800164;
+        if (o->animFrame & 1) {
+            u = A;
+            w = B;
+            f->x0 = x + ((-u * SN(a1)) >> 12) + ((-w * SN((a1 + 0xc0) & 0xff)) >> 12);
+            f->y0 = y + ((-u * CS(a1)) >> 12) + ((-w * CS((a1 + 0xc0) & 0xff)) >> 12);
+            f->x1 = x + (((u + C) * SN(a0)) >> 12) + ((-w * SN((a0 + 0x40) & 0xff)) >> 12);
+            f->y1 = y + (((u + C) * CS(a0)) >> 12) + ((-w * CS((a0 + 0x40) & 0xff)) >> 12);
+            f->x2 = x + ((-u * SN(a1)) >> 12) + (((w + D) * SN((a1 + 0x40) & 0xff)) >> 12);
+            f->y2 = y + ((-u * CS(a1)) >> 12) + (((w + D) * CS((a1 + 0x40) & 0xff)) >> 12);
+            f->x3 = x + (((u + C) * SN(a0)) >> 12) + (((w + D) * SN((a0 + 0xc0) & 0xff)) >> 12);
+            f->y3 = y + (((u + C) * CS(a0)) >> 12) + (((w + D) * CS((a0 + 0xc0) & 0xff)) >> 12);
+        } else {
+            u = -(A + C);
+            w = B;
+            f->x1 = x + ((-u * SN(a1)) >> 12) + ((-w * SN((a1 + 0xc0) & 0xff)) >> 12);
+            f->y1 = y + ((-u * CS(a1)) >> 12) + ((-w * CS((a1 + 0xc0) & 0xff)) >> 12);
+            f->x0 = x + (((u + C) * SN(a0)) >> 12) + ((-w * SN((a0 + 0x40) & 0xff)) >> 12);
+            f->y0 = y + (((u + C) * CS(a0)) >> 12) + ((-w * CS((a0 + 0x40) & 0xff)) >> 12);
+            f->x3 = x + ((-u * SN(a1)) >> 12) + (((w + D) * SN((a1 + 0x40) & 0xff)) >> 12);
+            f->y3 = y + ((-u * CS(a1)) >> 12) + (((w + D) * CS((a1 + 0x40) & 0xff)) >> 12);
+            f->x2 = x + (((u + C) * SN(a0)) >> 12) + (((w + D) * SN((a0 + 0xc0) & 0xff)) >> 12);
+            f->y2 = y + (((u + C) * CS(a0)) >> 12) + (((w + D) * CS((a0 + 0xc0) & 0xff)) >> 12);
+        }
+        if (isPolyFT4OnScreen(f)) {
+            f->code = 0x2d;
+            setSemiTrans(f, o->unkD >> 7);
+            f->u0 = ((u8 *)o)[0xc6] << 7;
+            f->v0 = 0xa0;
+            f->u1 = q[10] + (((u8 *)o)[0xc6] << 7);
+            f->v1 = 0xa0;
+            f->u2 = ((u8 *)o)[0xc6] << 7;
+            f->v2 = q[11] + 0xa0;
+            f->u3 = q[10] + (((u8 *)o)[0xc6] << 7);
+            f->v3 = q[11] + 0xa0;
+            f->tpage = o->tpage;
+            f->clut = o->clut;
+            if (o->unkB != 0)
+                insertPrim(f, (*(SPADBlock_23314 *)&SCRATCHPAD).i1e0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000);
+            else
+                insertPrimWithBias(f, (*(SPADBlock_23314 *)&SCRATCHPAD).i1e0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000);
+            D_1F800164 = (PFT4_80123FD0_23314 *)((char *)D_1F800164 + 0x28);
+        }
+        q += 16;
+    } while (--n);
+}
+#undef setSemiTrans
+#undef SN
+#undef a1
+#undef a0
+#undef CS
 
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80123AC4);
 
@@ -886,29 +1776,456 @@ void func_80124CC8(char *a, char *b)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124D6C);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124D6C);
+extern s16 func_8005242C();
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124DF0);
+void func_80124D6C(char *a, char *b)
+{
+    char *t;
+    u16 u;
+    if (func_8005242C() >= 0 && ((s32 (*)(s32, s32))resolveHitResultA)((s32)a, (s32)b) != 0) {
+        t = b;
+        if (*(u16 *)(b + 0x2c) != 0)
+            t = *(char **)(b + 0x28);
+        *(u16 *)(t + 0x2e) = *(u16 *)(a + 0x2e) & 1;
+        u = *(u16 *)(b + 0x2c);
+        t[0x68] = 1;
+        t[0x6b] = u;
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124F60);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124DF0);
+void func_80124DF0(GameObject *o, GameObject *p)
+{
+    if (boxesOverlapSigned(o, p) == -1)
+        return;
+    switch (o->type) {
+    case 0:
+    case 9:
+        o->unkA8 -= 0x200;
+        p->unk6A = 1;
+        if (o->unkA8 < 0x500) {
+            o->unkA8 = 0x4ff;
+            o->unkA5 = 0;
+            o->active = 2;
+            D_1F80019E = 0;
+        }
+        break;
+    case 1:
+        o->unkA5 = 0;
+        o->active = 2;
+        p->unk6A = 1;
+        o->state = 2;
+        o->subState = 0;
+        o->step = 0;
+        break;
+    case 5:
+    case 6:
+    case 7:
+        o->unk6A = 1;
+        o->active = 2;
+        o->unkA8 -= 0x200;
+        p->unk6A = 1;
+        if (o->unkA8 < 0x500) {
+            o->unkA8 = 0x4ff;
+            o->unkA5 = 0;
+            o->active = 2;
+            D_1F80019E = 0;
+        }
+        break;
+    case 10:
+        if (o->subtype != 2) {
+            o->unk6A = 1;
+            o->active = 2;
+            D_1F80019E = 0;
+        }
+        break;
+    case 2:
+    case 3:
+    case 4:
+    case 8:
+        break;
+    }
+    if (o->type != 8) {
+        p->active = 2;
+        p->state = 2;
+        p->subState = 0;
+        p->step = 0;
+        func_800224FC(0, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124FC8);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124F60);
+typedef struct A_24F60 { char pad[2]; u8 t; } A_24F60;
+typedef struct B_24F60 { char pad[4]; u8 s; u8 u; } B_24F60;
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801250E8);
+void func_80124F60(A_24F60 *a, B_24F60 *b)
+{
+    if (b->s == 0 && ((s32 (*)(void))boxesOverlapSigned)() << 16 >= 0 && a->t != 8) {
+        b->s = 1;
+        b->u = 0;
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125274);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80124FC8);
+extern s32 resolveHitResultD(GameObject *, GameObject *);
+extern void cloneItemPickupObject(GameObject *);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125354);
+void func_80124FC8(GameObject *a, GameObject *o)
+{
+    s32 r;
+    u16 t;
+    if (boxesOverlapSigned(a, o) != -1) {
+        if (o->unk6A == 2) {
+            (*(u8 *)&PLAYER) = 1;
+            D_800A539C = 1;
+            D_800A539D = 0;
+            D_800A539E = 0;
+        }
+        o->unk6A = 0;
+        r = resolveHitResultD(a, o);
+        if (r != 0) {
+            if (r == 1) {
+                o->active = 3;
+                o->animFrame = 1 - (a->animFrame & 1);
+                if (o->state != 2)
+                    cloneItemPickupObject(o);
+                o->state = 2;
+                o->subState = 0;
+                o->step = 0;
+            } else {
+                func_800E92D4(500, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+                o->active = 2;
+                t = a->animFrame;
+                o->state = 2;
+                o->subState = 2;
+                o->step = 0;
+                o->animFrame = 1 - (t & 1);
+            }
+        }
+        D_1F80019E = 0;
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012543C);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801250E8);
+void func_801250E8(u8 *o, u8 *p)
+{
+    u32 t;
+    if (*p & 2)
+        return;
+    if (boxesOverlapSigned(o, p) == -1)
+        return;
+    t = o[2];
+    switch (t) {
+    case 0:
+    case 9:
+        *(s16 *)(o + 0xa8) = *(s16 *)(o + 0xa8) - 0x200;
+        if (*(s16 *)(o + 0xa8) < 0x500) {
+            *(s16 *)(o + 0xa8) = 0x4ff;
+            o[0xa5] = 0;
+            o[0] = 2;
+            D_1F80019E = 0;
+        }
+        break;
+    case 1:
+        o[0xa5] = 0;
+        o[0] = 2;
+        o[4] = 2;
+        o[5] = 0;
+        o[6] = 0;
+        break;
+    case 2:
+    case 3:
+    case 4:
+        break;
+    case 5:
+    case 6:
+    case 7:
+        o[0x6a] = 1;
+        *(s16 *)(o + 0xa8) = *(s16 *)(o + 0xa8) - 0x200;
+        o[0] = 2;
+        if (*(s16 *)(o + 0xa8) < 0x500) {
+            *(s16 *)(o + 0xa8) = 0x4ff;
+            o[0xa5] = 0;
+            o[0] = 2;
+            D_1F80019E = 0;
+        }
+        break;
+    case 8:
+        o[0] = 2;
+        o[0x69] = 0;
+        o[0xa5] = 0;
+        *(s16 *)(o + 0xa8) = 0x4ff;
+        func_800224FC(1, *(s16 *)(o + 0x12), *(s16 *)(o + 0x16), *(s16 *)(o + 0x1a));
+        break;
+    default:
+        goto dflt;
+    }
+    t = o[2];
+dflt:
+    if (t != 8) {
+        *p = 3;
+        p[0x68] = 1;
+        func_800224FC(0, *(s16 *)(o + 0x12), *(s16 *)(o + 0x16), *(s16 *)(o + 0x1a));
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801254DC);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125274);
+extern s16 boxesOverlap(void);
+extern s32 *D_8009B698;
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125584);
+void func_80125274(u8 *o, u8 *p)
+{
+    u16 u;
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801257A8);
+    if (boxesOverlap() != 0) {
+        p[0x69] = 1;
+        if (o[0x9c] == 1 && *(u16 *)((char *)D_8009B698 + 0x20) == 1) {
+            *(s16 *)((char *)D_8009B698 + 0x20) = 0xe;
+            *(s16 *)(o + 0x7e) = -1000;
+        }
+        u = *(u16 *)(o + 0xb2);
+        if ((u16)(u + 0x100) > 0x200) {
+            if ((s16)u < 0) {
+                *(u16 *)(o + 0xb2) = u + 0x30;
+                if ((s16)(u + 0x30) > -0x100)
+                    *(s16 *)(o + 0xb2) = -0x100;
+            } else {
+                *(u16 *)(o + 0xb2) = u - 0x30;
+                if ((s16)(u - 0x30) < 0x100)
+                    *(s16 *)(o + 0xb2) = 0x100;
+            }
+        }
+    }
+}
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801259DC);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125354);
+void func_80125354(u8 *o, u8 *s)
+{
+    extern s16 func_80051488(void);
+    s16 r;
+    r = func_80051488();
+    if (r != -1) {
+        if (r == 3 && o[0xac] == 1) {
+            s[0] = 2;
+            s[4] = 2;
+            s[5] = 0;
+            s[6] = 0;
+            s[0x69] = 0;
+            *(u8 **)(o + 0xe4) = s;
+            o[0xac] = 2;
+        } else if ((s[0] & 2) == 0 && (o[0] & 2) == 0 && o[0x9c] == 0 && r < 2) {
+            o[0] = 2;
+            o[4] = 1;
+            *(s16 *)(o + 0x2e) = r;
+            o[5] = 0x35;
+            o[6] = 0;
+        }
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012543C);
+extern s16 func_80051488(char *, u8 *);
+void func_8012543C(char *o, u8 *p)
+{
+    s16 s;
+    if (p[2] == 0x12 && p[4] == 0)
+        return;
+    s = func_80051488(o, p);
+    if (s == -1)
+        return;
+    if (s == 3 && o[0xac] == 1) {
+        p[0] = 2;
+        p[4] = 2;
+        p[5] = 0;
+        p[6] = 0;
+        p[0x69] = 0;
+        *(u8 **)(o + 0xe4) = p;
+        o[0xac] = 2;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801254DC);
+extern s16 func_80051284(void);
+extern void func_800224FC(s32, s32, s32, s32);
+
+void func_801254DC(char *o, char *p)
+{
+    s16 r = func_80051284();
+    if (r != 0) {
+        if (o[0xa6] & 2)
+            o[0xa6] = o[0xa6] + 2;
+        if (r == 1 && o[0xac] == r) {
+            p[0] = 2;
+            p[4] = 2;
+            p[5] = 0;
+            p[6] = 0;
+            p[0x69] = 0;
+            *(char **)(o + 0xe4) = p;
+            o[0xac] = 2;
+            func_800224FC(2, *(s16 *)(o + 0x12), *(s16 *)(o + 0x16), *(s16 *)(o + 0x1a));
+        }
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125584);
+void func_80125584(GameObject *a, GameObject *b)
+{
+    s16 dx, adx, px, wx, dy, py, wy;
+    s16 s0, s2;
+
+    if (a->unk9E == 5) return;
+    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2d) >= 0x5b) return;
+    s0 = b->hitOffsetX + a->hitOffsetX;
+    px = s0;
+    dx = a->h->p.whole - b->h->p.whole;
+    adx = dx;
+    if ((u16)(dx + s0) > b->hitWidth + a->hitWidth) return;
+    dy = a->y.p.whole - b->y.p.whole;
+    py = b->hitOffsetY + a->hitOffsetY;
+    if ((u16)(dy + py) > a->hitHeight + b->hitHeight) return;
+    wx = px;
+    if (dx < 0) {
+        adx = -dx;
+        px = -s0;
+    } else {
+        px = (b->hitWidth - b->hitOffsetX) + (a->hitWidth - a->hitOffsetX);
+        wx = px;
+    }
+    wy = py;
+    if (dy < 0) {
+        dy = -dy;
+        py = -py;
+    } else {
+        py = (b->hitHeight - b->hitOffsetY) + (a->hitHeight - a->hitOffsetY);
+        wy = py;
+    }
+    if (wx - adx < wy - dy) {
+        a->h->p.whole = b->h->p.whole + px;
+        if (px < 0) goto two;
+        a->unkA6 = 3;
+    } else if (py <= 0) {
+        u8 k = 1;
+        if (a->unk9C & 1) {
+        a->h->p.whole = b->h->p.whole + px;
+    two:
+        a->unkA6 = 2;
+        } else {
+        s16 by = b->y.p.whole;
+        a->unkBE = 9;
+        a->animFrame = 1;
+        a->y.p.frac = 0;
+        a->touchFlag = k;
+        a->unkB0 = -2;
+        a->y.p.whole = by + py;
+        b->touchFlag = k;
+        }
+    } else {
+        a->y.p.whole = b->y.p.whole + py;
+        if (a->velY < 0) a->velY = 0;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801257A8);
+#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
+#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
+#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
+#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
+#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+
+void func_801257A8(GameObject *a, GameObject *b)
+{
+    s16 r;
+
+    r = func_80051604(a, b);
+    if (r == -1)
+        return;
+    switch ((*(u8*)&a->unkAC)) {
+    case 1:
+        if (r < 3) {
+            b->touchFlag = 0;
+            b->active = 2;
+            b->state = 2;
+            b->subState = 1;
+            b->step = 0;
+            b->animFrame = a->animFrame & 1;
+            S32(a, 0xe4) = (s32)b;
+            (*(u8*)&a->unkAC) = 2;
+            func_800224FC(2, a->x.p.whole, a->y.p.whole, a->z.p.whole);
+            break;
+        }
+    case 0:
+    case 3:
+        if (D_1F8001A4)
+            return;
+        if (b->active & 2)
+            return;
+        if (a->active & 2)
+            return;
+        if ((*(u8*)&a->unkAC) != 3 && r == 3 && b->unk6A == 1) {
+            if ((*(u8*)&a->unkAC) == 1)
+                (*(u8*)&a->unkAC) = 0;
+            b->active = 4;
+            b->unk6A = 2;
+            a->active = 2;
+            ((u8 *)&PLAYER)[4] = 1;
+            ((u8 *)&PLAYER)[5] = 0x40;
+            ((u8 *)&PLAYER)[6] = 0;
+            ((u8 *)&PLAYER)[7] = 0;
+            return;
+        }
+        {
+            s32 ah, bh;
+            a->active = 2;
+            bh = b->h->p.whole;
+            ah = a->h->p.whole;
+            a->state = 2;
+            a->subState = 0;
+            a->step = 0;
+            a->animFrame = ah < bh;
+            decreaseObjectTimer(a, 1);
+        }
+        break;
+    case 2:
+        if (b->active == 3)
+            return;
+        b->active = 3;
+        if (b->unk6A == 2) {
+            ((u8 *)&PLAYER)[0] = 1;
+            ((u8 *)&PLAYER)[4] = 1;
+            ((u8 *)&PLAYER)[5] = 0;
+            ((u8 *)&PLAYER)[6] = 0;
+        }
+        b->unk6A = 0;
+        b->state = 2;
+        b->subState = 0;
+        b->step = 0;
+        break;
+    }
+}
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801259DC);
+void func_801259DC(GameObject *a, GameObject *b)
+{
+    s16 dx;
+    b->touchFlag = 0;
+    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2d) < 0x5b) {
+        dx = a->h->p.whole - b->h->p.whole;
+        if ((u16)(dx + (a->hitOffsetX + b->hitOffsetX)) > a->hitWidth + b->hitWidth) return;
+        if ((u16)(a->y.p.whole - b->y.p.whole + (a->hitOffsetY + b->hitOffsetY)) > a->hitHeight + b->hitHeight) return;
+        if (dx > 0) b->touchFlag = 3;
+        else b->touchFlag = 2;
+        a->touchFlag = 2;
+        *(s16 *)0x1F80019E = 0;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125AB4);
 void func_80125AB4(GameObject *o)
@@ -1075,7 +2392,17 @@ tail:
 
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125FA4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125FE8);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80125FE8);
+typedef struct A_25FE8 { char pad[2]; u8 b; char pad2[0x1c-3]; u8 c; } A_25FE8;
+typedef struct B_25FE8 { char pad[0x94]; s32 f; } B_25FE8;
+void func_80125FE8(A_25FE8 *a, B_25FE8 *b)
+{
+    extern void func_80056804(void);
+if (b->f == 0) {
+    if (a->c == 2 && a->b == 2) func_80056804();
+    else func_80056284();
+}
+}
 
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80126048);
 
@@ -1138,7 +2465,39 @@ void func_801260C0(GameObject *o, GameObject *e)
     o->y.p.whole = e->y.p.whole + (o->hitOffsetY + (e->hitHeight - e->hitOffsetY));
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801262AC);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_801262AC);
+typedef struct O_262AC {
+    u8 active;
+    char pad0[0x69 - 1];
+    u8 b69;
+    u8 b6a;
+    char pad1[0x90 - 0x6b];
+    struct O_262AC *d90;
+    struct O_262AC *d94;
+} O_262AC;
+extern s16 func_80056F94();
+extern s16 D_1F80019E;
+
+void func_801262AC(O_262AC *o, u8 *p)
+{
+    O_262AC *a, *b;
+    if (func_80056F94(o) != 0) {
+        a = o->d90;
+        b = o->d94;
+        o->b6a = 1;
+        o->b69 = 2;
+        a->b69 = 2;
+        b->b69 = 2;
+        o->active = 2;
+        a->active = 2;
+        b->active = 2;
+        p[0] = 4;
+        p[4] = 2;
+        p[5] = 1;
+        p[6] = 0;
+        D_1F80019E = 0;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_80126330);
 extern u8 D_800A53A7[];
@@ -3739,7 +5098,395 @@ void func_8012BE28(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012C03C);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012C03C);
+#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
+#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
+#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
+#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
+#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+
+typedef struct SPADBlock_2C03C {
+    u8 b0;
+    u8 _pad1[0x5f];
+    s16 s60;
+    s16 s62;
+    s16 s64;
+    u8 _pad66[0xe];
+    s32 i74;
+    s32 i78;
+    u8 _pad7c[0x10];
+    s32 i8c;
+    u8 _pad90[0x30];
+    u8 bc0;
+    u8 _padc1[0x13];
+    s32 id4;
+    s32 id8;
+    s32 idc;
+    s32 ie0;
+    u8 _pade4[0x2];
+    s16 se6;
+    u8 _pade8[0x2];
+    s16 sea;
+    s32 iec;
+    s32 if0;
+    s32 if4;
+    u8 _padf8[0x20];
+    u8 b118;
+    u8 _pad119[0x4b];
+    void * p164;
+    s32 i168;
+    s32 i16c;
+    s32 i170;
+    s32 i174;
+    u8 _pad178[0x2];
+    u16 s17a;
+    u8 _pad17c[0x2];
+    u16 s17e;
+    u8 _pad180[0x6];
+    u16 s186;
+    u8 _pad188[0x4];
+    s32 i18c;
+    s32 i190;
+    u8 _pad194[0x4];
+    s32 i198;
+    s16 s19c;
+    s16 s19e;
+    u8 b1a0;
+    u8 _pad1a1[0x3];
+    u8 b1a4;
+    u8 b1a5;
+    u8 _pad1a6[0x1c];
+    u8 b1c2;
+    u8 _pad1c3[0x1];
+    u8 b1c4;
+    u8 b1c5;
+    s16 s1c6;
+    u16 s1c8;
+    u8 _pad1ca[0x2];
+    u8 b1cc;
+    u8 b1cd;
+    u8 _pad1ce[0x1];
+    u8 b1cf;
+    u8 b1d0;
+    u8 b1d1;
+    u8 b1d2;
+    u8 b1d3;
+    u8 _pad1d4[0xc];
+    s32 i1e0;
+    u8 _pad1e4[0x4];
+    s16 s1e8;
+    u8 _pad1ea[0xa];
+    s16 s1f4;
+    s16 s1f6;
+    u16 s1f8;
+    u8 _pad1fa[0x2];
+    u16 s1fc;
+    u16 s1fe;
+    u8 _pad200[0x1c];
+    void * p21c;
+    u8 _pad220[0x4];
+    void * p224;
+    void * p228;
+    u8 _pad22c[0xc];
+    s16 s238;
+    u8 _pad23a[0xc];
+    s16 s246;
+    u16 s248;
+    u8 _pad24a[0x2];
+    s16 s24c;
+    u8 _pad24e[0x2];
+    u16 s250;
+    u8 _pad252[0x2];
+    u16 s254;
+    s16 s256;
+    u8 _pad258[0x8];
+    void * p260;
+    u8 _pad264[0x4];
+    void * p268;
+    void * p26c;
+    u8 _pad270[0x8];
+    void * p278;
+    u8 _pad27c[0x2];
+    s16 s27e;
+    s16 s280;
+    u16 s282;
+    s16 s284;
+    s16 s286;
+    u8 _pad288[0x2c];
+    s32 i2b4;
+    u8 _pad2b8[0x18];
+    s32 i2d0;
+    s32 i2d4;
+    s32 i2d8;
+    s32 i2dc;
+    s32 i2e0;
+    s32 i2e4;
+    s32 i2e8;
+    u8 _pad2ec[0x4];
+    s32 i2f0;
+    u8 _pad2f4[0x4];
+    s32 i2f8;
+    u8 _pad2fc[0x4];
+    s32 i300;
+    s32 i304;
+    void * p308;
+    void * p30c;
+    s32 i310;
+    s32 i314;
+    s32 i318;
+    void * p31c;
+    u8 _pad320[0x14];
+    s32 i334;
+    void * p338;
+    void * p33c;
+    u8 _pad340[0x1c];
+    s32 i35c;
+    u8 _pad360[0x10];
+    s32 i370;
+    s32 i374;
+    s32 i378;
+    u8 _pad37c[0x3c];
+    u16 s3b8;
+    u16 s3ba;
+    s16 s3bc;
+    u8 _pad3be[0x2];
+    void * p3c0;
+    u16 s3c4;
+    u16 s3c6;
+    u16 s3c8;
+    u8 _pad3ca[0x4];
+    u8 b3ce;
+    u8 _pad3cf[0x1];
+    u8 b3d0;
+    u8 b3d1;
+    u8 _pad3d2[0x2e];
+} SPADBlock_2C03C;
+
+typedef struct GVars_2C03C {
+    u8 b30;
+    u8 _pad31[3];
+    s32 i34;
+    u8 b38;
+    u8 b39;
+    u8 b3a;
+    u8 b3b;
+    u8 b3c;
+    u8 b3d;
+    u8 b3e;
+    u8 b3f;
+    u8 b40;
+    u8 b41;
+    u8 b42;
+    u8 b43;
+    s16 s44;
+    s16 s46;
+    void *p48;
+    void *p4c;
+    void *p50;
+    void *p54;
+    u8 b58;
+    u8 b59;
+    u8 _pad5a[2];
+    s32 i5c;
+} GVars_2C03C;
+
+typedef struct { u8 b0, b1; } B8012CCF8_2C03C;
+extern u8 D_800A38BB[];
+extern s32 D_800A38D0[];
+extern void (*D_8013843C[])(GameObject *);
+extern void func_800322A4(char, s32, s32, s32);
+extern GameObject *allocObjectLayer2(void);
+
+void func_8012C03C(GameObject *o)
+{
+    extern s32 func_80022F6C(GameObject *);
+    B8012CCF8_2C03C *p = (B8012CCF8_2C03C *)&o->unkB4;
+    GameObject *n;
+    s32 t;
+
+    switch (o->state) {
+    case 0:
+        switch (o->subState) {
+        case 0:
+            o->hitOffsetX = 10;
+            o->hitWidth = 0x14;
+            t = o->animFrame;
+            o->hitOffsetY = 0x10;
+            o->hitHeight = 0x20;
+            o->animFrame = t & 1;
+            if (t & 1)
+                o->unkB8 = -0x10;
+            else
+                o->unkB8 = 0x10;
+            o->spriteBank = (*(SPADBlock_2C03C *)&SCRATCHPAD).i2d0;
+            o->tpage = 1;
+            o->unkA = 2;
+            o->unkD = 0;
+            o->touchFlag = 0;
+            o->unk68 = 0;
+            *(s8 *)&o->unkF = -9;
+            p->b1 = 0;
+            o->unk8C = 0;
+            o->unk98 = 3;
+            o->anim = 0;
+            o->subState++;
+            break;
+        case 1:
+            if (func_80022F6C(o)) {
+                o->subState = 0;
+                o->state++;
+            }
+            break;
+        }
+        break;
+    case 1:
+        if (o->subState == 1 && ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0]) {
+            func_80022E44(o);
+            break;
+        }
+        func_80022E44(o);
+        if (o->unk9E == 0) {
+            switch (o->subState) {
+            case 0:
+                if (o->step != 0 && ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0]) {
+                    func_80022E44(o);
+                    break;
+                }
+                if (o->unk98 == 0) {
+                    o->active = 2;
+                    o->state = 2;
+                    o->subState = 2;
+                    o->step = 0;
+                    break;
+                }
+                if (o->visible == 0)
+                    break;
+                D_8013843C[o->subtype](o);
+                break;
+            case 1:
+                if (o->visible == 0)
+                    break;
+                switch (o->step) {
+                case 0:
+                    func_801292F8(o);
+                    break;
+                case 1:
+                    func_80128EF4(o);
+                    break;
+                case 2:
+                    func_80128840(o);
+                    break;
+                case 3:
+                    func_801282F0(o);
+                    break;
+                case 4:
+                    func_80127BFC(o);
+                    break;
+                case 5:
+                    func_801274D4(o);
+                    break;
+                case 6:
+                    func_801271F4(o);
+                    break;
+                case 7:
+                    func_80126B64(o);
+                    break;
+                case 8:
+                case 9:
+                    break;
+                }
+                if (o->unk98 == 0) {
+                    o->active = 2;
+                    o->state = 2;
+                    o->subState = 2;
+                    o->step = 0;
+                }
+                break;
+            }
+        } else if (o->unk9F == 0) {
+            U16(o, 0xd2) = o->h->p.whole;
+            o->unk9F = 0xf;
+        } else {
+            o->h->p.whole = (s16)(S16(o, 0xd2) - 2) + (((s32 (*)(void))nextRandom)() & 3);
+            if (--o->unk9F == 0) {
+                o->unk9E = 0;
+                o->h->p.whole = U16(o, 0xd2);
+            }
+        }
+        o->unk9D = 0;
+        break;
+    case 2:
+        switch (o->subState) {
+        case 0:
+            if (((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0]) {
+                func_80022E44(o);
+                break;
+            }
+            func_8012A160(o);
+            func_80022E44(o);
+            if (o->unk98 == 0) {
+                o->active = 2;
+                o->state = 2;
+                o->subState = 2;
+                o->step = 0;
+            }
+            break;
+        case 1:
+            func_80129B64(o);
+            func_80022E44(o);
+            break;
+        case 2:
+            func_801299E8(o);
+            if (func_80022E44(o) == 0)
+                o->state = 3;
+            break;
+        case 3:
+            func_80022E44(o);
+            switch (o->step) {
+            case 0:
+                ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b3f)[0] = 1;
+                ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0] = 1;
+                D_800A38BB[0] = 3;
+                D_800A38D0[0] = 0;
+                D_1F80018C = o->h->raw;
+                D_1F800190 = o->y.raw;
+                func_800322A4(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+                func_800322A4(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+                n = allocObjectLayer2();
+                if (n) {
+                    n->active = 1;
+                    n->type = 0x2b;
+                    n->objectIndex = o->objectIndex;
+                    n->unk1D = o->unk1D;
+                    n->x.p.whole = o->x.p.whole;
+                    n->y.p.whole = o->y.p.whole;
+                    n->z.p.whole = o->z.p.whole;
+                }
+                o->timer = 10;
+                o->step++;
+            case 1:
+                tickAnimation(o);
+                if (--o->timer == -1)
+                    o->state = 3;
+                break;
+            }
+            break;
+        }
+        break;
+    case 3:
+        if (o->subtype == 5)
+            (*(s16 *)o->unk94)--;
+        freeObjectLayer2(o);
+        break;
+    }
+}
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
 
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_5", func_8012C5D8);
 

@@ -332,7 +332,64 @@ s16 func_800450FC(u8* self, s16 arg1, s16 arg2)
     return func_80044B0C(self, arg1, arg2, -1);
 }
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_80045174);
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_80045174);
+extern s32 angleFromDelta(s32, s32);
+extern s16 D_1F80027C;
+
+s32 func_80045174(GameObject *o, s16 a, s32 b)
+{
+    char pad[8];
+    s16 *p;
+    u16 *q;
+    u16 f;
+    s32 n, cnt, x, w, d, e;
+    u32 k;
+    s16 s;
+    s16 ws;
+    u16 t3;
+    p = getCollisionPlaneAt(a, o->d->p.whole);
+    D_1F800278 = (u16 *)(p + 1);
+    n = cnt = *p;
+    goto test;
+top:
+    q = D_1F800278;
+    D_1F800278 = q + 1;
+    f = *q;
+    cnt--;
+    if (f & 0x4000) {
+        if (!(f & 0x10)) goto hit;
+    }
+    D_1F800278 = q + 4;
+    goto next;
+hit:
+    x = *D_1F800278++;
+    w = *D_1F800278++;
+    D_1F800278++;
+    ws = w;
+    t3 = *(u16 *)((char *)q + 6);
+    if (ws == 0) goto next;
+    k = (t3 >> 4) & 0xf;
+    d = b - x - w;
+    if (((d - 1) & 0xffff) > -ws) {
+        if (d << 16 > 0) return 0;
+        goto next;
+    }
+    s = angleFromDelta(k, ws);
+    D_1F80027C = s;
+    if (s < 0x40) {
+        D_1F80027C = s + 0xc0;
+    } else if (s > 0xc0) {
+        D_1F80027C = s - 0xc0;
+    }
+    e = x + 8;
+    if (((b - e - w - 1) & 0xffff) > -(s16)w) return 2;
+    return 1;
+next:
+    n = cnt << 16;
+test:
+    if (n != 0) goto top;
+    return 0;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80045310);
 typedef struct O_45310 { char p[0x44]; s16 *q; } O_45310;
@@ -390,7 +447,64 @@ s32 func_80045310(O_45310 *o, s16 a, s16 b)
     return 0;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_80045570);
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_80045570);
+static __inline__ s32 check_45570(GameObject *o, s16 a, s16 b)
+{
+    s16 *q;
+    s32 nn;
+    s32 n;
+    u32 v;
+    s32 t;
+    s16 h;
+    s16 m;
+    s32 y0;
+    s16 lo;
+    s32 ys;
+
+    q = getCollisionPlaneAt(a, o->d->p.whole);
+    D_1F800278 = (u16 *)(q + 1);
+    nn = *q;
+    n = nn;
+    if (nn == 0) return 0;
+    do {
+        t = *D_1F800278++;
+        n--;
+        if (t & 2) {
+            if (!(t & 0x10)) goto take;
+        }
+        D_1F800278 += 3;
+        continue;
+take:
+        ys = (s16)*D_1F800278++;
+        y0 = ys;
+        ys -= 16;
+        if (b < ys) return 0;
+        h = *D_1F800278++;
+        if (h == 0) {
+            D_1F800278++;
+            t = y0;
+        } else {
+            v = *D_1F800278++;
+            lo = v & 0xf;
+            v >>= 4;
+            t = v & 0xf;
+            if (t == 0) continue;
+            m = a % 8;
+            if (m < lo) continue;
+            if (lo + t < m) continue;
+            t = y0 + h * ((a - lo) % t) / t;
+        }
+        if ((s16)(t - b) >= 0) return 1;
+    } while ((s16)n != 0);
+    lo = ys; t = nn;
+    return 0;
+}
+
+s32 func_80045570(GameObject *o, s16 a, s32 b)
+{
+    char pad[0x18];
+    return check_45570(o, a, b);
+}
 
 INCLUDE_ASM("nonmatchings/main/game/collision", func_80045780);
 

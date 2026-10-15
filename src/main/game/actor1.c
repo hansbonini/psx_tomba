@@ -1583,16 +1583,14 @@ void tryAttachObjectOnOverlap(u8* arg0, u8* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_8005368C);
-#define U(p, o) (*(u16 *)((p) + (o)))
-#define S(p, o) (*(s16 *)((p) + (o)))
 
 static __inline__ s16 HIT_5368C(u8 *a, u8 *b)
 {
-    if ((u16)(U(*(u8 **)(a + 0x44), 2) - U(*(u8 **)(b + 0x44), 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((*(u8 **)(a + 0x44)) + 2) - *(u16 *)((*(u8 **)(b + 0x44)) + 2) + 0x2d) >= 0x5b)
         return 0;
-    if ((u16)(U(*(u8 **)(a + 0x40), 2) - U(*(u8 **)(b + 0x40), 2) + (U(a, 0x6c) + U(b, 0x6c))) > S(a, 0x6e) + S(b, 0x6e))
+    if ((u16)(*(u16 *)((*(u8 **)(a + 0x40)) + 2) - *(u16 *)((*(u8 **)(b + 0x40)) + 2) + (*(u16 *)(a + 0x6c) + *(u16 *)(b + 0x6c))) > *(s16 *)(a + 0x6e) + *(s16 *)(b + 0x6e))
         return 0;
-    if ((u16)(U(a, 0x16) - U(b, 0x16) + (U(a, 0x70) + U(b, 0x70))) > S(a, 0x72) + S(b, 0x72))
+    if ((u16)(*(u16 *)(a + 0x16) - *(u16 *)(b + 0x16) + (*(u16 *)(a + 0x70) + *(u16 *)(b + 0x70))) > *(s16 *)(a + 0x72) + *(s16 *)(b + 0x72))
         return 0;
     return 1;
 }
@@ -1616,21 +1614,18 @@ void func_8005368C(u8 *a, u8 *b)
             b[5] = 0;
             *(u8 **)(a + 0xe4) = b;
             a[0xac] = 2;
-            func_800224FC(2, S(a, 0x12), S(a, 0x16), S(a, 0x1a));
+            func_800224FC(2, *(s16 *)(a + 0x12), *(s16 *)(a + 0x16), *(s16 *)(a + 0x1a));
             D_1F80019E = 0;
         }
     }
 }
-#undef U
-#undef S
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80053808);
-#define B(o, n) (((u8 *)(o))[n])
 
 void func_80053808(GameObject *o, GameObject *e)
 {
     s16 r;
-    if (o->unk9E != 0 || B(o, 0xc8) != 0)
+    if (o->unk9E != 0 || ((u8 *)o)[0xc8] != 0)
         return;
     if (e->unkC == 0x32) {
         if (D_8009C12F != 0xff)
@@ -1639,8 +1634,8 @@ void func_80053808(GameObject *o, GameObject *e)
             return;
         if ((u16)(o->y.p.whole - e->y.p.whole + (o->hitOffsetY + e->hitOffsetY)) > o->hitHeight + e->hitHeight)
             return;
-        B(o, 0xa0) = 1;
-        B(o, 0xa8) = 9;
+        ((u8 *)o)[0xa0] = 1;
+        ((u8 *)o)[0xa8] = 9;
         return;
     }
     r = func_80051284(o, e);
@@ -1651,14 +1646,14 @@ void func_80053808(GameObject *o, GameObject *e)
     if (r != 1)
         return;
     if (e->active & 4) {
-        if (B(o, 0xac) == r) {
+        if (((u8 *)o)[0xac] == r) {
             e->active = 2;
             e->state = 2;
             e->subState = 0;
             e->step = 0;
             e->touchFlag = 0;
             *(GameObject **)((char *)o + 0xe4) = e;
-            B(o, 0xac) = 2;
+            ((u8 *)o)[0xac] = 2;
             func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
         }
         D_1F80019E = 0;
@@ -1672,7 +1667,6 @@ void func_80053808(GameObject *o, GameObject *e)
         }
     }
 }
-#undef B
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", dispatchAreaActorDraw1);
 void dispatchAreaActorDraw1(void)

@@ -127,7 +127,45 @@ void func_8004D5F0(GameObject *o)
     func_80026694(o->unkA0, (*(char **)&D_1F8001E0) + ((s8)o->unkF * 4 + 0x10), o, o->unkA4);
 }
 
+// INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
+#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
+#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
+#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
+#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
+#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+extern MATRIX D_1F800090;
+extern void func_800279E8(s32, s32, char *);
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
 INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
+#else
+void func_8004D7E0(char *o)
+{
+    getBaseMatrix(&D_1F800020);
+    getBaseMatrix(&D_1F800090);
+    ((s16 *)&D_1F800060)[0] = S32(o, 0x84);
+    ((s16 *)&D_1F800060)[1] = S32(o, 0x88);
+    ((s16 *)&D_1F800060)[2] = S32(o, 0x8c);
+    RotMatrix(((s16 *)&D_1F800060), &D_1F800020);
+    ((s16 *)&D_1F800068)[0] = U16(o, 0x12);
+    ((s16 *)&D_1F800068)[1] = U16(o, 0x16);
+    ((s16 *)&D_1F800068)[2] = U16(o, 0x1a);
+    MulMatrix0(&D_1F800090, &D_1F800020, &(*(MATRIX *)&SCRATCHPAD));
+    ApplyRotMatrix(((s16 *)&D_1F800068), &(*(MATRIX *)&SCRATCHPAD).t[0]);
+    (*(MATRIX *)&SCRATCHPAD).t[0] += -0xa0;
+    (*(MATRIX *)&SCRATCHPAD).t[1] += 0x78;
+    (*(MATRIX *)&SCRATCHPAD).t[2] += 0x220;
+    SetRotMatrix(&(*(MATRIX *)&SCRATCHPAD));
+    SetTransMatrix(&(*(MATRIX *)&SCRATCHPAD));
+    func_800279E8(S32(o, 0xa0), (s32)((*(char **)&D_1F8001E0) + ((S8(o, 0xf) << 2) + 0x10)), o);
+}
+#endif
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D91C);
 

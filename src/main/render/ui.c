@@ -1664,7 +1664,52 @@ s16 func_800287F8(u8 *p, s16 mode)
     return r;
 }
 
-INCLUDE_ASM("nonmatchings/main/render/ui", func_800288C4);
+// INCLUDE_ASM("nonmatchings/main/render/ui", func_800288C4);
+typedef struct { char p0[9]; u8 b9; } G_288C4;
+extern u8 D_8009C980;
+extern u16 D_800A5474;
+
+#define AXIS(v, c, a, hi, lo) ({                                  \
+    s32 d;                                                      \
+    s32 r;                                                      \
+    d = a - 0x50;                                               \
+    if ((u32)d < 0x60) r = 0;                              \
+    else {                                                      \
+        d = a - 0x30;                                           \
+        if ((u16)d < 0xa0) { (v) = 1; { s32 t = ((u16)d < 0x50) ? hi : lo; r = t; } } \
+        else {                                                  \
+            d = a - 0x10;                                       \
+            (a) = 0;                                            \
+            if ((u16)d < 0xe0) { (v) = 2; { s32 t = ((u16)d < 0x70) ? hi : lo; r = t; } } \
+            else { (v) = 3; { s32 t = (c < 0x80) ? hi : lo; r = t; } }         \
+        }                                                       \
+    }                                                           \
+    r; })
+
+void func_800288C4(void)
+{
+    u16 m;
+    u8 c1, c2;
+    u32 a1, a2;
+    volatile u16 *pad;
+    G_288C4 *g = &D_8009C978;
+    D_8009C9DC = D_800A5474;
+    c1 = D_8009C980;
+    D_8009C980 = 0;
+    m = *(volatile u16 *)&D_8009C9D8 & 0xff0f;
+    a1 = c1;
+    m |= AXIS(D_8009C980, c1, a1, 0x80, 0x20);
+    c2 = g->b9;
+    g->b9 = 0;
+    a2 = c2;
+    m |= AXIS(g->b9, c2, a2, 0x10, 0x40);
+    pad = &D_8009C9D8;
+    *pad = m;
+    D_1F8001FC = *pad & ~D_8009C9DC;
+    D_1F8001FE = D_8009C9DC & ~*pad;
+    D_800A5474 = *pad;
+}
+#undef AXIS
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_80028A74);
 typedef struct { char c[6]; } B_28A74;

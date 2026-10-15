@@ -416,7 +416,72 @@ s16 arg1;
     return 0;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80042C20);
+// INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80042C20);
+s16 func_80043AB0(GameObject *o, s16 x, s16 y, s32 dir);
+
+#define HIT(DIR) \
+    if (DIR == (o->animFrame & 1)) { \
+        if (!DIR) o->unkA6 = 2; else o->unkA6 = 3; \
+    }
+
+s16 func_80042C20(GameObject *o)
+{
+    s16 d;
+    s16 dx;
+    s16 dx2;
+    s16 lo;
+    s16 hi;
+    s16 r;
+    s32 h;
+    s16 b;
+    s16 dir;
+    s16 dir2;
+    s32 t;
+
+    if (*(u8 *)&o->unkAA != 0) return 0;
+    if (o->active == 5) return 0;
+    d = o->h->p.whole - *(u16 *)0x1F80016A;
+    if (d == 0) {
+        if (!(o->animFrame & 1)) {
+            dx = 8; dx2 = -8; t = 0; dir2 = 1;
+        } else {
+            dx = -8; dx2 = 8; t = 1; dir2 = 0;
+        }
+    } else if (d >= 0) {
+        dx = 8; dx2 = -8; t = 0; dir2 = 1;
+    } else {
+        dx = -8; dx2 = 8; t = 1; dir2 = 0;
+    }
+    h = o->hitOffsetY;
+    b = o->hitOffsetY;
+    lo = b;
+    if (h >= 8) lo = 8;
+    hi = b;
+    if (h >= 14) hi = 14;
+    dir = t;
+    r = func_80043AB0(o, o->h->p.whole + dx, o->y.p.whole - lo, dir);
+    if (r) {
+        HIT(dir)
+    } else {
+        r = func_80043AB0(o, o->h->p.whole + dx, o->y.p.whole + hi, dir);
+        if (r) {
+            HIT(dir)
+        } else {
+            r = func_80043AB0(o, o->h->p.whole + dx, o->y.p.whole + lo, dir);
+            if (r) {
+                HIT(dir)
+            }
+        }
+    }
+    dir = dir2;
+    if (func_80043AB0(o, o->h->p.whole + dx2, o->y.p.whole + hi, dir)) {
+        HIT(dir)
+    } else if (func_80043AB0(o, o->h->p.whole + dx2, o->y.p.whole + lo, dir)) {
+        HIT(dir)
+    }
+    return r;
+}
+#undef HIT
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", clampToCeilingAndProbeSides);
 #if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)

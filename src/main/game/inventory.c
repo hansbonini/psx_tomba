@@ -473,14 +473,12 @@ L:
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A9FC);
-#define D34(o) (*(Fix16 **)&(o)->unk34)
-#define W44(o) (*(u16 *)&(o)->d)
 
 static __inline__ void body_2A9FC(GameObject *o)
 {
     s32 d;
     u8 neg;
-    d = D_1F80018C - D34(o)->raw;
+    d = D_1F80018C - (*(Fix16 **)&o->unk34)->raw;
     neg = d < 0;
     if (d > 0x20000) {
         if (d < o->y.raw) {
@@ -493,7 +491,7 @@ static __inline__ void body_2A9FC(GameObject *o)
                 o->y.raw = 0;
             o->y.raw += 0x2000;
         }
-        { s32 y = o->y.raw; D34(o)->raw += y; }
+        { s32 y = o->y.raw; (*(Fix16 **)&o->unk34)->raw += y; }
     } else if (d < -0x20000) {
         if (o->y.raw < d) {
             if (d > -0x40000)
@@ -505,28 +503,28 @@ static __inline__ void body_2A9FC(GameObject *o)
                 o->y.raw = 0;
             o->y.raw -= 0x2000;
         }
-        D34(o)->raw += o->y.raw;
-        if (D34(o)->p.whole < (s16)o->animTimer) {
-            D34(o)->raw = (s16)o->animTimer << 16;
+        (*(Fix16 **)&o->unk34)->raw += o->y.raw;
+        if ((*(Fix16 **)&o->unk34)->p.whole < (s16)o->animTimer) {
+            (*(Fix16 **)&o->unk34)->raw = (s16)o->animTimer << 16;
             o->y.raw = 0;
-            W44(o) |= 2;
+            *(u16 *)&o->d |= 2;
         }
         return;
     } else {
         o->y.raw = d;
-        D34(o)->raw += d;
+        (*(Fix16 **)&o->unk34)->raw += d;
         if (neg) {
-            if (D34(o)->p.whole < (s16)o->animTimer) {
-                D34(o)->raw = (s16)o->animTimer << 16;
+            if ((*(Fix16 **)&o->unk34)->p.whole < (s16)o->animTimer) {
+                (*(Fix16 **)&o->unk34)->raw = (s16)o->animTimer << 16;
                 o->y.raw = 0;
-                W44(o) |= 2;
+                *(u16 *)&o->d |= 2;
             }
         }
     }
-    if (D34(o)->p.whole > (s16)o->animFrame) {
-        D34(o)->raw = (s16)o->animFrame << 16;
+    if ((*(Fix16 **)&o->unk34)->p.whole > (s16)o->animFrame) {
+        (*(Fix16 **)&o->unk34)->raw = (s16)o->animFrame << 16;
         o->y.raw = 0;
-        W44(o) |= 1;
+        *(u16 *)&o->d |= 1;
     }
 }
 
@@ -534,8 +532,6 @@ void func_8002A9FC(GameObject *o)
 {
     body_2A9FC(o);
 }
-#undef D34
-#undef W44
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002ABC0);
 typedef struct {
@@ -598,7 +594,6 @@ void func_8002ABC0(O_2ABC0 *o)
 #undef VF
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002AD74);
-#define W(o) (*(s32 *)((o) + 0x18))
 
 void func_8002AD74(u8 *o)
 {
@@ -610,16 +605,16 @@ void func_8002AD74(u8 *o)
         *(s8 *)(o + 0x6f) = -10;
         (*(s16 *)(o + 0x5c))++;
     case 1:
-        W(o) += 0x2000;
-        if (W(o) > 0x3ffff)
-            W(o) = 0x40000;
-        if (W(o) > 0x12000)
+        *(s32 *)(o + 0x18) += 0x2000;
+        if (*(s32 *)(o + 0x18) > 0x3ffff)
+            *(s32 *)(o + 0x18) = 0x40000;
+        if (*(s32 *)(o + 0x18) > 0x12000)
             stepScrollApproachX(o);
         p = &D_1F8000F0;
-        *p += W(o);
+        *p += *(s32 *)(o + 0x18);
         if (D_1F8000F2 > *(s16 *)(o + 0x32)) {
             D_1F8000F0 = *(s16 *)(o + 0x32) << 16;
-            W(o) = 0;
+            *(s32 *)(o + 0x18) = 0;
             *(u16 *)(o + 0x44) |= 8;
         }
         t = *p - D_1F800190;
@@ -627,14 +622,14 @@ void func_8002AD74(u8 *o)
             (*(s16 *)(o + 0x5c))++;
         break;
     case 2:
-        W(o) += 0x2000;
-        if (W(o) > 0x2ffff)
-            W(o) = 0x30000;
+        *(s32 *)(o + 0x18) += 0x2000;
+        if (*(s32 *)(o + 0x18) > 0x2ffff)
+            *(s32 *)(o + 0x18) = 0x30000;
         p = &D_1F8000F0;
-        *p += W(o);
+        *p += *(s32 *)(o + 0x18);
         if (D_1F8000F2 > *(s16 *)(o + 0x32)) {
             D_1F8000F0 = *(s16 *)(o + 0x32) << 16;
-            W(o) = 0;
+            *(s32 *)(o + 0x18) = 0;
             *(u16 *)(o + 0x44) |= 8;
         }
         t = *p - D_1F800190;
@@ -643,7 +638,6 @@ void func_8002AD74(u8 *o)
         break;
     }
 }
-#undef W
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", stepScrollReturnY);
 s32 stepScrollReturnY(u8* self)

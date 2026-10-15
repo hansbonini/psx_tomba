@@ -78,7 +78,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x2DE6C, rodata, x16_header]
-      - [0x2DE70, rodata, x16]
-      - [0x2E130, asm, x16]
+      - [0x2DE70, .rodata, x16]
+      - [0x2DEBC, .rodata, x16_1]
+      - [0x2E130, c, x16]
+      - [0x2F48C, c, x16_1]
       - [0x30C1C, data, x16]
   - [0x33758]
