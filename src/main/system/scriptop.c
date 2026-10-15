@@ -561,7 +561,17 @@ void scriptOpSetPlayerField6B(void)
     p->pc++;
 }
 
-INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003DB04);
+// INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003DB04);
+typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s32 d1194; } G_3DB04;
+typedef struct { char pad[0x6b]; u8 b6b; } Q_3DB04;
+
+void func_8003DB04(void)
+{
+    register G_3DB04 *g asm("$6") = SCRIPT_CTX;
+    Q_3DB04 *o = SCRIPT_OBJECTS[g->d1190];
+    if (((*(s8 *)&D_8009C618) != 3 || PLAYER.obj.objectIndex == 1) && o != 0) o->b6b = g->d1194;
+    (*(s16 *)((char *)g + 0x8a))++;
+}
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", scriptOpSetObjAnim);
 void scriptOpSetObjAnim(void)
