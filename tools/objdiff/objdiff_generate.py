@@ -104,9 +104,13 @@ def main():
             processed_path[0])
         units.append(unit)
     
+    # only the categories this release has units in (no overlays where there
+    # are none, no X07/X12/X15)
+    used = {c for unit in units for c in unit.metadata.progress_categories}
     categories = []
     for category in config["categories"]:
-        categories.append(ProgressCategory(category["id"], category["name"]))
+        if category["id"] in used:
+            categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
         json.dump(asdict(Config(True, False, "make", ["progress"], units, categories)), json_file, indent=2)

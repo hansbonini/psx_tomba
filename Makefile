@@ -176,6 +176,17 @@ TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
 # under the asm folder of the executable, given to the assembler with -I.
 # Each European MAINn.EXE has its own asm and build folders.
 # build folder:asm folder
+# The progress report measures one executable per release: the main one,
+# or on the European discs MAIN0.EXE (the game; SCES_013.3x is the language
+# menu and MAIN1..8 are the same code). Overlays come with the main one.
+ifneq ($(filter sces_013.30 sces_013.31,$(VERSION)),)
+REPORT_BUILD := $(BUILD_DIR)/exe/main0
+REPORT_ASM   := $(BASE_DIR)/exe/main0
+else
+REPORT_BUILD := $(BUILD_DIR)
+REPORT_ASM   := $(BASE_DIR)
+endif
+
 TARGET_BUILDS := $(BUILD_DIR):$(ASM_DIR)/$(BASE_DIR) \
                  $(foreach t,$(TARGET_OVERLAYS),$(if $(findstring /exe/,$t),$(BUILD_DIR)/exe/$(notdir $t):$(ASM_DIR)/$t))
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
@@ -204,9 +215,9 @@ check: build
 expected: build
 	mkdir -p $(EXPECTED_DIR)
 	rm -rf $(EXPECTED_DIR)/asm/$(BASE_DIR)
-	mkdir -p $(EXPECTED_DIR)/asm
-	mv $(BUILD_DIR)/asm/$(BASE_DIR) $(EXPECTED_DIR)/asm/
-	$(foreach m,libgpu/c73 libcd/a07,[ ! -f $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/libapi/$(notdir $m).s.o ] || { mkdir -p $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/$(dir $m) && mv $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/libapi/$(notdir $m).s.o $(EXPECTED_DIR)/asm/$(BASE_DIR)/psyq/$m.s.o; };)
+	mkdir -p $(dir $(EXPECTED_DIR)/asm/$(REPORT_ASM))
+	mv $(REPORT_BUILD)/asm/$(REPORT_ASM) $(EXPECTED_DIR)/asm/$(REPORT_ASM)
+	$(foreach m,libgpu/c73 libcd/a07,[ ! -f $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/libapi/$(notdir $m).s.o ] || { mkdir -p $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/$(dir $m) && mv $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/libapi/$(notdir $m).s.o $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/$m.s.o; };)
 
 generate: $(LD_FILES)
 
