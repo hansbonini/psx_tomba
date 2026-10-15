@@ -205,9 +205,9 @@ void func_8012E56C(O_2E56C *o) { body_2E56C(o); }
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012E6B0);
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012E6C4);
-extern void func_8012E738(char *);
-extern void func_8012EBA8(char *);
-extern void func_8012ED24(char *);
+void func_8012E738();
+void func_8012EBA8();
+void func_8012ED24();
 
 void func_8012E6C4(char *o)
 {
@@ -223,11 +223,252 @@ void func_8012E6C4(char *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012E738);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012E738);
+typedef struct { s16 x, y, z, pad; } V8012F3F4_2E738;
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012EBA8);
+extern void *D_8013A578[];
+extern void playSFX(s32);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012ED24);
+static __inline__ s32 nearCam_2E738(GameObject *o)
+{
+    s16 dv;
+    if ((u16)(o->d->p.whole - *(u16 *)0x1F800172 + 45) >= 91) return 0;
+    dv = *(u16 *)0x1F80016E - o->y.p.whole;
+    if (dv >= -31 || (u16)(dv + 172) >= 173) return 0;
+    return (u16)(o->h->p.whole - *(u16 *)0x1F80016A + 16) < 33;
+}
+
+void func_8012E738(GameObject *o)
+{
+    extern void *D_8013A56C[];
+    V8012F3F4_2E738 *a = (V8012F3F4_2E738 *)&o->unkB4;
+    V8012F3F4_2E738 *b = (V8012F3F4_2E738 *)&o->unkBC;
+    V8012F3F4_2E738 *c = (V8012F3F4_2E738 *)((char *)o + 0xc4);
+    V8012F3F4_2E738 *d = (V8012F3F4_2E738 *)((char *)o + 0xcc);
+    GameObject *p;
+
+    switch (o->step) {
+    case 0:
+        o->velV = -0x800;
+        o->velY = 0x80;
+        o->unk8C = 0;
+        o->touchFlag = 0;
+        o->timer = 0;
+        o->cooldownTimer = 0;
+        a->x = -4;
+        a->y = 0;
+        a->z = 0;
+        b->x = 4;
+        b->y = 0;
+        b->z = 0;
+        c->x = -4;
+        c->y = 0x20;
+        c->z = 0;
+        d->x = 4;
+        d->y = 0x20;
+        d->z = 0;
+        o->unkA = 4;
+        o->step++;
+        break;
+    case 1:
+        if (o->touchFlag == 1) {
+            o->subState = 3;
+            o->step = 0;
+            playSFX(0x2c);
+        } else if (o->touchFlag == 2) {
+            o->subState = 4;
+            o->step = 0;
+            playSFX(0x2c);
+        } else {
+            o->y.raw += o->velV << 8;
+            o->velV += o->velY;
+            c->y -= o->velV >> 9;
+            d->y -= o->velV >> 9;
+            if (o->velV >= 0) {
+                o->step = 2;
+                o->timer = 0;
+                o->cooldownTimer = 0;
+                o->velV = 0;
+                o->velY = 0x30;
+                o->anim = D_8013A578[0];
+            }
+            switch (o->animFrame) {
+            case 1:
+                o->unk8C = (o->unk8C + 6) & 0xff;
+                if (++o->cooldownTimer >= 4)
+                    o->animFrame = 3;
+                break;
+            case 3:
+                o->unk8C = (o->unk8C - 6) & 0xff;
+                if (--o->cooldownTimer < -3)
+                    o->animFrame = 1;
+                break;
+            }
+        }
+        break;
+    case 2:
+        if (o->touchFlag == 1) {
+            o->subState = 3;
+            o->step = 0;
+            playSFX(0x2c);
+        } else if (o->touchFlag == 2) {
+            o->subState = 4;
+            o->step = 0;
+            playSFX(0x2c);
+        } else {
+            o->y.raw += o->velV << 8;
+            o->velV += o->velY;
+            c->y -= o->velV >> 10;
+            d->y -= o->velV >> 10;
+            if (o->velV >= 0x200)
+                o->anim = D_8013A56C[o->subtype];
+            if (o->unk34 - o->y.p.whole < 25)
+                o->step = 3;
+        }
+        break;
+    case 3:
+        if (o->touchFlag == 1) {
+            o->subState = 3;
+            o->step = 0;
+            playSFX(0x2c);
+        } else if (o->touchFlag == 2) {
+            o->subState = 4;
+            o->step = 0;
+            playSFX(0x2c);
+        } else {
+            o->y.raw += o->velV << 8;
+            o->velV += o->velY;
+            if (nearCam_2E738(o)) {
+                o->velV = -0x700;
+                o->velY = 0x80;
+                o->step = 1;
+                a->x = -4;
+                a->y = 0;
+                a->z = 0;
+                b->x = 4;
+                b->y = 0;
+                b->z = 0;
+                c->x = -4;
+                c->y = 0x20;
+                c->z = 0;
+                d->x = 4;
+                d->y = 0x20;
+                d->z = 0;
+            }
+            if (o->y.p.whole >= o->unk34) {
+                o->step++;
+                p = (GameObject *)o->unk94;
+                p->unk6A = 0;
+                p = (GameObject *)p->unk94;
+                p->unk6A = 0;
+            }
+        }
+        break;
+    case 4:
+        o->subState = 0;
+        o->step = 0;
+        o->unkA = 2;
+        o->y.raw = o->unk34 << 16;
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012EBA8);
+void func_8012EBA8(GameObject *o)
+{
+    s32 v;
+    s16 w;
+    o->y.raw = ((GameObject *)o->unk90)->y.raw;
+    switch (o->step) {
+    case 0:
+        o->unk8C = *(u8 *)(o->unk90 + 0x8c);
+        o->timer = ((GameObject *)o->unk90)->timer;
+        w = ((GameObject *)o->unk90)->cooldownTimer;
+        o->unk6A = 1;
+        o->hitOffsetY = 10;
+        o->hitHeight = 10;
+        o->cooldownTimer = w;
+        break;
+    case 1:
+        o->unk6A = 1;
+        o->hitOffsetY = 10;
+        o->hitHeight = 10;
+        o->timer = ((GameObject *)o->unk90)->timer;
+        o->cooldownTimer = ((GameObject *)o->unk90)->cooldownTimer;
+        o->animFrame = ((GameObject *)o->unk90)->animFrame;
+        if (o->timer < 10)
+            o->unk8C = (o->unk8C + 6) & 0xff;
+        switch (o->animFrame) {
+        case 1:
+            o->unk8C = (o->unk8C + 8) & 0xff;
+            break;
+        case 3:
+            o->unk8C = (o->unk8C - 8) & 0xff;
+            break;
+        }
+        break;
+    case 2:
+        if (o->unk8C != 0) {
+            v = o->unk8C - 6;
+            if ((u32)v >= 0xf5)
+                o->unk8C = 0;
+            else
+                o->unk8C = v & 0xff;
+        }
+        break;
+    case 3:
+        if (((GameObject *)o->unk90)->step == 4)
+            o->unk6A = 0;
+        break;
+    case 4:
+        o->unk8C = 0;
+        o->hitOffsetY = 0x20;
+        o->hitHeight = 0x20;
+        break;
+    }
+}
+
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012ED24);
+extern void playSFX(s32);
+#define P ((GameObject *)o->unk90)
+void func_8012ED24(GameObject *o)
+{
+    u32 u;
+    s32 i;
+    o->y = P->y;
+    switch (o->step) {
+    case 0:
+        o->unk8C = P->unk8C & 0xff;
+        o->timer = P->timer;
+        o->cooldownTimer = P->timer;
+        break;
+    case 1:
+        o->timer = P->timer;
+        o->cooldownTimer = P->timer;
+        o->animFrame = P->animFrame;
+        if (o->timer < 10) o->unk8C = (o->unk8C - 6) & 0xff;
+        switch (o->animFrame) {
+        case 1: u = o->unk8C + 8; break;
+        case 3: u = o->unk8C - 8; break;
+        default: return;
+        }
+        o->unk8C = u & 0xff;
+        break;
+    case 2:
+        i = o->unk8C;
+        if (i != 0) {
+            if ((u32)(i - 6) >= 0xf5) o->unk8C = 0;
+            else o->unk8C = (i + 6) & 0xff;
+            if (o->unk8C == 0) playSFX(0x2c);
+        }
+        break;
+    case 3:
+        break;
+    case 4:
+        o->unk8C = 0;
+    }
+}
+#undef P
 
 INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012EE80);
 
@@ -543,7 +784,316 @@ void func_8012FD7C(u8 *o)
     tickAnimation(o);
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012FEF4);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_8012FEF4);
+#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
+#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
+#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
+#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
+#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+typedef struct { s16 x, y; } P_2FEF4;
+typedef struct { s32 a, b, c; } V3_2FEF4;
+extern void applyAnimVelocityY(GameObject *, s32);
+extern s32 fixedMulCos(s32, s32);
+extern s32 fixedMulSin(s32, s32);
+extern s16 probeCollisionAtDepthB(GameObject *, s16, s16);
+extern void *D_8013A080[];
+extern void *D_8013A0A4[];
+extern void *D_8013A0B4[];
+extern s16 D_801385A4[];
+extern s16 *D_80138578[];
+extern char D_800772A4[];
+
+#define WBC (*(u16*)&o->unkBC)
+#define C8 U16(o, 0xc8)
+#define CA U16(o, 0xca)
+
+#define TICK                         \
+    if (--WBC == 0) {                \
+        WBC = 0x38;                  \
+        if (CA)                      \
+            playSFX(0x12);      \
+    }
+
+#define MOD90                                              \
+    {                                                      \
+        s32 m = (s16)(o->d->p.whole % 90);                      \
+        if (m >= 0x50)                                     \
+            o->d->p.whole = 0x5a - m + o->d->p.whole;    \
+        if (m < 0xb)                                       \
+            o->d->p.whole -= m;                            \
+    }
+
+static __inline__ s32 check_2FEF4(GameObject *o)
+{
+    s16 r;
+    u16 d;
+    s32 x;
+    if (o->d->p.whole != (*(Fix16 **)&D_800A53DC)->p.whole) {
+        x = 0;
+    } else {
+        r = 0;
+        if ((u16)((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole + 0x40) < 0x80 && (((s32 (*)(void))nextRandom)() & 0xf) < 12) {
+            r = 1;
+        } else if ((u16)((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole + 0x80) < 0x100 && (((s32 (*)(void))nextRandom)() & 0xf) < 6) {
+            r = 1;
+        }
+        x = 0;
+        d = (*(u16 *)&D_800A53AE) - o->y.p.whole + 0x30;
+        if (r == 1)
+            x = d < 0xf8;
+        else
+            x = 0;
+    }
+    return x;
+}
+
+void func_8012FEF4(GameObject *o)
+{
+    extern s32 angleBetweenPoints(P_2FEF4 a, P_2FEF4 b);
+    P_2FEF4 a, b;
+    s32 dx;
+    s16 *t;
+    s32 ang;
+    u16 s;
+    u8 n;
+
+    switch (o->unk7) {
+    case 0:
+        if ((*(u16*)&o->unkB4)) {
+            o->cooldownTimer = 0xf0;
+            WBC = 1;
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            n = 4;
+            goto set;
+        } else {
+            o->cooldownTimer = 0x38;
+            o->unkB4 = 1;
+            WBC = 1;
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            o->movetab = ((char *)&D_800771FC);
+            o->unk7++;
+        }
+        break;
+    case 1:
+        if (--o->cooldownTimer == 0) {
+            o->velH = 0;
+            o->velV = 0;
+            WBC = 1;
+            o->unk7++;
+        }
+        goto tick;
+    case 2:
+        o->y.raw += o->velV << 8;
+        o->velV -= 0x10;
+        if (o->velV < -0x1ff || probeCollisionAtDepthB(o, o->h->p.whole, o->y.p.whole - 0x18)) {
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            WBC = 1;
+            C8 = 0;
+            o->unk7++;
+        }
+        goto tick;
+    case 3:
+        o->y.raw += o->velV << 8;
+        o->velV += 0x10;
+        if (o->velV >= 0 || probeCollisionAtDepthB(o, o->h->p.whole, o->y.p.whole - 0x18)) {
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            WBC = 1;
+            C8 = 0;
+            o->cooldownTimer = 0xf0;
+            o->unk7++;
+        }
+        goto tick;
+    case 4:
+        if (--WBC == 0) {
+            WBC = 0x38;
+            C8 ^= 1;
+            if (CA)
+                playSFX(0x12);
+        }
+        if (--o->cooldownTimer == 0) {
+            o->timer = 0xf0;
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            o->unk7 = 9;
+        }
+        if (o->cooldownTimer == 0xb4 || o->cooldownTimer == 0x3c) {
+            if (check_2FEF4(o)) {
+                o->subState = 1;
+                o->step = 0;
+                o->unk7 = 0;
+                break;
+            }
+            *(V3_2FEF4 *)&o->unk30 = *(V3_2FEF4 *)&o->x;
+            switch (D_801385A4[((s32 (*)(void))nextRandom)() & 0xf]) {
+            case 0:
+                o->animFrame = 1;
+                break;
+            case 1:
+                o->animFrame = 0;
+                break;
+            case 2:
+            default:
+                goto out;
+            }
+            o->unkBA = ((((s32 (*)(void))nextRandom)() & 1) << 5) + 0x20;
+            WBC = 0x38;
+            o->movetab = ((char *)&D_8007722C);
+            o->unkAC = 0xb;
+            o->anim = D_8013A0A4[0];
+            readAnimFrameCount(o);
+            o->cooldownTimer = 0xb4;
+            o->unk7++;
+        }
+    out:
+        break;
+    case 5:
+        dx = 0x20;
+        if (o->animFrame)
+            dx = -0x20;
+        s = o->unkBA + ((o->h->raw - o->unk30) >> 16);
+        if (--o->cooldownTimer == 0
+            || (u16)o->unkBA * 2 < s
+            || probeCollisionAtDepthB(o, o->h->p.whole + dx, o->y.p.whole + 0x18)) {
+            o->cooldownTimer = 0x3c;
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            o->unk7++;
+        } else {
+            t = D_80138578[o->subtype];
+            if (o->h->p.whole < t[0] || t[1] < o->h->p.whole) {
+                o->unkAC = 2;
+                o->anim = D_8013A080[0];
+                readAnimFrameCount(o);
+                o->unk7 = 9;
+            }
+        }
+        applyAnimVelocityX(o, o->animFrame);
+        goto tick;
+    case 6:
+        if (--o->cooldownTimer == 0) {
+            o->cooldownTimer = 0xa8;
+            WBC = 1;
+            o->movetab = D_800772A4;
+            o->unkAC = 0xf;
+            o->anim = D_8013A0B4[0];
+            readAnimFrameCount(o);
+            n = o->unk7;
+            C8 = 0;
+            n++;
+        set:
+            o->unk7 = n;
+        }
+        break;
+    case 7:
+        if (--o->cooldownTimer == 0) {
+            if (check_2FEF4(o)) {
+                o->subState = 1;
+                o->step = 0;
+                o->unk7 = 0;
+            } else {
+                o->movetab = ((char *)&D_8007722C);
+                o->unkAC = 0xb;
+                o->animFrame ^= 1;
+                o->anim = D_8013A0A4[0];
+                readAnimFrameCount(o);
+                o->unk7++;
+            }
+        }
+        if (--WBC == 0) {
+            WBC = 0x38;
+            o->unkAC = 0xf;
+            C8 ^= 1;
+            o->anim = D_8013A0B4[0];
+            readAnimFrameCount(o);
+            if (CA)
+                playSFX(0x12);
+        }
+        applyAnimVelocityY(o, C8);
+        break;
+    case 8:
+        dx = 0x20;
+        if (o->animFrame)
+            dx = -0x20;
+        s = ((o->x.raw - o->unk30) >> 16) + 4;
+        if (s < 8
+            || probeCollisionAtDepthB(o, o->h->p.whole + dx, o->y.p.whole + 0x18)) {
+            o->cooldownTimer = 0x3c;
+            o->unkAC = 2;
+            o->anim = D_8013A080[0];
+            readAnimFrameCount(o);
+            o->unk7++;
+        }
+        applyAnimVelocityX(o, o->animFrame);
+        break;
+    case 9:
+        a.x = o->h->p.whole;
+        a.y = o->y.p.whole;
+        b.x = (*(s16*)&o->unkBE);
+        b.y = U16(o, 0xc0) - 0x38;
+        if (b.x < a.x)
+            o->animFrame = 1;
+        else
+            o->animFrame = 0;
+        ang = (angleBetweenPoints(a, b) + 0x100) & 0xf8;
+        o->h->raw += (s16)fixedMulCos(ang, 0x200) << 8;
+        o->y.raw += (s16)fixedMulSin(ang, 0x200) << 8;
+        MOD90;
+        dx = (*(u16*)&o->unkBE) - (u16)o->h->p.whole + 4;
+        if ((u16)dx < 8) {
+            o->h->p.whole = (*(s16*)&o->unkBE);
+            o->timer = 0xb4;
+            o->unk7++;
+        }
+    tick:
+        TICK;
+        break;
+    case 10:
+        o->y.raw += ((U16(o, 0xc0) << 16) - o->y.raw) >> 5;
+        MOD90;
+        TICK;
+        if ((u16)(U16(o, 0xc0) - o->y.p.whole + 4) < 8) {
+            o->unkB4 = 0;
+            o->step = D_80138584[((s32 (*)(void))nextRandom)() & 0xf];
+            o->unk7 = 0;
+            if (o->d->p.whole == (*(Fix16 **)&D_800A53DC)->p.whole) {
+                u16 d = (*(u16 *)&D_800A53AE) - o->y.p.whole + 0x30;
+                if ((u16)((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole + 0x80) < 0x100 && d < 0xf8) {
+                    o->step = 4;
+                    o->unk7 = 0;
+                }
+            }
+        } else if (--o->timer == 0) {
+            o->step = 3;
+            o->unk7 = 0;
+        }
+        break;
+    default:
+        return;
+    }
+    tickAnimation(o);
+}
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
+#undef WBC
+#undef C8
+#undef CA
+#undef TICK
+#undef MOD90
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_6", func_80130B28);
 extern void *D_8013A0AC[];

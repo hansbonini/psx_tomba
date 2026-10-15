@@ -575,7 +575,63 @@ void func_801107AC(GameObject *o)
     o->state = o->state + 1;
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_3", func_801108E0);
+// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_3", func_801108E0);
+typedef struct T_108E0 { s32 **p; s32 a, b; } T_108E0;
+typedef struct O_108E0 { u8 b0, b1, b2, b3, b4, b5, state, b7; char p0[4]; u8 bc, bd, be, bf;
+  char p1[0x16-0x10]; s16 y; char p2[0x20-0x18]; s16 timer; char p3[2]; s32 *anim; char p4[0x40-0x28];
+  s16 *h; s16 *d; char p5[0x6b-0x48]; u8 b6b; char p6[0xa5-0x6c]; u8 ba5; } O_108E0;
+extern T_108E0 D_80114C7C[];
+extern u8 D_800A5399;
+extern u8 D_800A53A7[];
+
+void func_801108E0(O_108E0 *o)
+{
+    extern void tickAnimation(O_108E0 *);
+    u8 b;
+    s16 v;
+    u8 c;
+    switch (o->state) {
+    case 0:
+        o->anim = D_80114C7C[o->b3].p[o->bc];
+        readAnimFrameCount(o);
+        o->timer = 0xb4;
+        o->ba5 = 1;
+        o->state++;
+    case 1:
+        tickAnimation(o);
+        o->timer--;
+        o->b1 = D_800A5399;
+        if (o->timer >= 0x3d) {
+            c = o->b6b;
+            if (c < 0x7f)
+                b = c + 8;
+            else
+                b = c;
+        } else if (o->timer < 0) {
+            o->b6b = 0;
+            o->b4 = 3;
+            goto L;
+        } else {
+            b = o->b6b;
+            if (b != 0)
+                b = b - 2;
+            else
+                b = 0;
+        }
+        o->b6b = b;
+    L:
+        {
+            s16 *h = o->h;
+            s32 w;
+            w = D_800A53D8[1];
+            if (D_800A53C6 & 1) h[1] = w + 2;
+            else h[1] = w - 2;
+        }
+        o->y = D_800A53AE[0] - 8;
+        o->d[1] = ((u16 **)&D_800A53DC)[0][1];
+        o->bf = D_800A53A7[0] + 1;
+    }
+}
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_3", func_80110A64);
 extern void tickAnimation(GameObject *o);
@@ -616,7 +672,7 @@ void func_80110A64(GameObject *o)
 }
 
 // INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_3", func_80110BD0);
-extern void func_801108E0(GameObject *);
+void func_801108E0();
 extern void func_80110A64(GameObject *);
 
 void func_80110BD0(GameObject *o)
