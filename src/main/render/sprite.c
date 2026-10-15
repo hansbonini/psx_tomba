@@ -81,6 +81,9 @@ INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E244);
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E3EC);
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E3EC);
+#else
 void func_8004E3EC(void)
 {
     u8* p = D_800B0770;
@@ -94,6 +97,7 @@ void func_8004E3EC(void)
         }
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E468);
 typedef struct { s16 x, y; } Pt_4E468;
@@ -101,6 +105,73 @@ extern Pt_4E468 D_8007EC5C[];
 extern u8 D_8009BCF8;
 extern char D_800B07C8[];
 
+#if defined(VERSION_SCES_01330)
+typedef struct { short x, y; } Pt_586F8;
+extern void GetDrawEnv__8004E468(char *);
+extern void addDrawModePrim__8004E468(int, int);
+extern void func_8004E590__8004E468(char *, int, int);
+extern void func_8004E714__8004E468(char *, int, int);
+extern void func_8004E900__8004E468(char *, int, int, int);
+extern void func_8004ED80__8004E468(char *, int, int);
+extern void func_8004EB10__8004E468(char *, int, int, int, int);
+extern Pt_586F8 D_8007FDB4__sces01330[];
+extern short D_8007FDC0__sces01330[];
+extern unsigned char D_8009BCF8__8004E468;
+extern char D_800B07C8__8004E468[];
+
+void func_8004E468(char *o)
+{
+    char env[0x60];
+    int i;
+    GetDrawEnv__8004E468(env);
+    addDrawModePrim__8004E468(*(short *)(env + 0x14), 1);
+    func_8004E590__8004E468(o, 0x18, 0xf0);
+    func_8004E714__8004E468(o, 0x12c, 0x10);
+    func_8004E900__8004E468(o, 0x24, 0x1c, *(short *)(o + 0x52));
+    func_8004ED80__8004E468(o, 0x48, 0x10);
+    for (i = 0; i < 3; i++) {
+        if (D_8009BCF8__8004E468 == D_8007FDC0__sces01330[i]) {
+            func_8004EB10__8004E468(o, i, D_8007FDB4__sces01330[i].x, D_8007FDB4__sces01330[i].y, 0);
+        } else if (D_800B07C8__8004E468[i] != 0) {
+            func_8004EB10__8004E468(o, i, D_8007FDB4__sces01330[i].x, D_8007FDB4__sces01330[i].y, 1);
+        }
+    }
+}
+#elif defined(VERSION_SCES_01331)
+typedef struct { short x, y; } Pt_58680;
+extern void GetDrawEnv__8004E468(char *);
+extern void addDrawModePrim__8004E468(int, int);
+extern void func_8004E590__8004E468(char *, int, int);
+extern void func_8004E714__8004E468(char *, int, int);
+extern void func_8004E900__8004E468(char *, int, int, int);
+extern void func_8004ED80__8004E468(char *, int, int);
+extern void func_8004EB10__8004E468(char *, int, int, int, int);
+extern Pt_58680 D_800802C8__sces01331[];
+extern short D_800802D4__sces01331[];
+extern unsigned char D_8009BCF8__8004E468;
+extern char D_800B07C8__8004E468[];
+
+void func_8004E468(char *o)
+{
+    char env[0x60];
+    int i;
+    GetDrawEnv__8004E468(env);
+    addDrawModePrim__8004E468(*(short *)(env + 0x14), 1);
+    func_8004E590__8004E468(o, 0x18, 0xf0);
+    func_8004E714__8004E468(o, 0x12c, 0x10);
+    func_8004E900__8004E468(o, 0x24, 0x1c, *(short *)(o + 0x52));
+    func_8004ED80__8004E468(o, 0x48, 0x10);
+    for (i = 0; i < 3; i++) {
+        if (D_8009BCF8__8004E468 == D_800802D4__sces01331[i]) {
+            func_8004EB10__8004E468(o, i, D_800802C8__sces01331[i].x, D_800802C8__sces01331[i].y, 0);
+        } else if (D_800B07C8__8004E468[i] != 0) {
+            func_8004EB10__8004E468(o, i, D_800802C8__sces01331[i].x, D_800802C8__sces01331[i].y, 1);
+        }
+    }
+}
+#elif defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E468);
+#else
 void func_8004E468(char *o)
 {
     extern void func_8004ED80(char *, s32, s32);
@@ -124,6 +195,7 @@ void func_8004E468(char *o)
         }
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E590);
 typedef struct { char p[0x24]; u16 **tbl; char q[0x30 - 0x28]; u16 *dot; } O_4E590;
@@ -156,6 +228,9 @@ typedef struct {
 extern u8 D_8009BCD9;
 extern void func_8004F3DC(SPR_4E900 *s, s32 x, s32 y, s32 v);
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E900);
+#else
 void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 {
     s32 i = 0;
@@ -195,12 +270,16 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
     func_8004F3DC(s, (s16)x, (s16)y, *((u16 **)&D_80012208)[(s16)n]);
     addDrawModePrim(0x15, 1);
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004EB10);
 typedef struct { u8 a, pa, b, pb, c, pc; } Col6_4EB10;
 extern u8 D_8009BCF8;
 extern Col6_4EB10 D_8007EC80[];
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004EB10);
+#else
 void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
 {
     extern void addTilePrim(s16 *, s32, s32, s32);
@@ -240,6 +319,7 @@ void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
     r[3] = 4;
     addTilePrim(r, D_8007EC80[idx].a, D_8007EC80[idx].b, D_8007EC80[idx].c);
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004ED80);
 
@@ -400,6 +480,57 @@ INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004F5A4);
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004FB54);
 typedef struct { char p0[0xc]; u8 b0c, b0d, b0e, b0f, b10, b11, b12, b13; s16 s14, s16, s18, s1a; } P_4FB54;
 
+#if defined(VERSION_SCES_01331)
+typedef struct { char p0[0xc]; unsigned char b0c, b0d, b0e, b0f, b10, b11, b12, b13; short s14, s16, s18, s1a; } P_59D44;
+extern P_59D44 *D_1F800164__8004FB54;
+extern int D_1F8001E0__8004FB54;
+extern unsigned char D_1F8003D1__8004FB54, D_8009BCA4__8004FB54;
+extern void SetDrawMode__8004FB54(void *, int, int, int, int), AddPrim__8004FB54(int, void *), SetSemiTrans__8004FB54(void *, int);
+extern int GetGraphType__8004FB54(void);
+
+void func_8004FB54(unsigned char a)
+{
+    P_59D44 *p;
+    void *r;
+    int t, m;
+    r = D_1F800164__8004FB54;
+    SetDrawMode__8004FB54(r, 0, 0, 0, 0);
+    AddPrim__8004FB54(D_1F8001E0__8004FB54 + 0x10, r);
+    p = D_1F800164__8004FB54;
+    r = D_1F800164__8004FB54 = (P_59D44 *)((char *)p + 0xc);
+    p->s18 = 0x140;
+    p->s1a = 0x100;
+    p->b0f = 3;
+    p->s14 = 0;
+    p->s16 = 0;
+    p->b13 = 0x60;
+    SetSemiTrans__8004FB54(r, 1);
+    if (D_8009BCA4__8004FB54 == 2) {
+        p->b10 = 0;
+        p->b11 = 0;
+    } else {
+        p->b10 = a;
+        p->b11 = a;
+    }
+    p->b12 = a;
+    AddPrim__8004FB54(D_1F8001E0__8004FB54 + 0x10, r);
+    r = D_1F800164__8004FB54 = (P_59D44 *)((char *)D_1F800164__8004FB54 + 0x10);
+    if (D_1F8003D1__8004FB54 == 1 || (unsigned)(D_8009BCA4__8004FB54 - 1) < 2) {
+        if (GetGraphType__8004FB54() == 1) m = 0x80;
+        else if (GetGraphType__8004FB54() == 2) m = 0x80;
+        else m = 0x20;
+    } else {
+        if (GetGraphType__8004FB54() == 1) m = 0x100;
+        else if (GetGraphType__8004FB54() == 2) m = 0x100;
+        else m = 0x40;
+    }
+    SetDrawMode__8004FB54(r, 0, 0, m, 0);
+    AddPrim__8004FB54(D_1F8001E0__8004FB54 + 0x10, r);
+    D_1F800164__8004FB54 = (P_59D44 *)((char *)D_1F800164__8004FB54 + 0xc);
+}
+#elif defined(VERSION_SCES_01330) || defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004FB54);
+#else
 void func_8004FB54(u8 a)
 {
     P_4FB54 *p;
@@ -440,3 +571,4 @@ void func_8004FB54(u8 a)
     AddPrim(D_1F8001E0 + 0x10, r);
     D_1F800164 = (P_4FB54 *)((char *)D_1F800164 + 0xc);
 }
+#endif

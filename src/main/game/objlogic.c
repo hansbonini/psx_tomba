@@ -516,6 +516,9 @@ extern u8 *D_8009B6A0;
 extern u8 *D_8009B698;
 extern s8 D_800A547B;
 extern void freeObjectLayer1(GameObject *);
+#if defined(VERSION_SCES_01330)
+INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036494);
+#else
 void func_80036494(GameObject *o)
 {
     if (D_800A545F != 0)
@@ -551,6 +554,7 @@ void func_80036494(GameObject *o)
         break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800365DC);
 void func_800365DC(u8* self)

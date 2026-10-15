@@ -638,6 +638,9 @@ void scriptOpSetPlayerState(void)
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003DCF0);
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003DCF0);
+#else
 void func_8003DCF0(void)
 {
     u8 *o = SCRIPT_CTX;
@@ -689,6 +692,7 @@ void func_8003DCF0(void)
     }
     *(s16 *)(o + 0x8a) += 1;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", scriptOpSetPlayerFacing);
 void scriptOpSetPlayerFacing(void)

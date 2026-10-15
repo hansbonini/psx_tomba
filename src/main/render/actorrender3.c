@@ -203,6 +203,249 @@ static __inline__ s32 addprim_4BAF0(u32 e, u32 *a, char *b, s32 c, s32 d)
     return 0;
 }
 
+#if defined(VERSION_SCES_01330)
+typedef struct {
+    unsigned long tag;
+    unsigned char r0, g0, b0, code;
+    unsigned short x0, y0;
+    unsigned short uv0, clut;
+    unsigned short x1, y1;
+    unsigned short uv1, tpage;
+    unsigned short x2, y2;
+    unsigned short uv2, pad2;
+    unsigned short x3, y3;
+    unsigned short uv3, pad3;
+} PolyFT4_55D4C;
+
+typedef struct {
+    unsigned long w0;
+    unsigned long w4;
+    unsigned short h8;
+    unsigned char w, h;
+    unsigned short hc;
+    signed char dx, dy;
+} Ent_55D4C;
+
+typedef struct {
+    char p0[8];
+    unsigned short w08;
+    char p0a[3];
+    unsigned char b0d;
+    char p0e;
+    signed char b0f;
+    char p10[2];
+    unsigned short x;
+    char p14[2];
+    unsigned short y;
+    char p18[2];
+    short z;
+    char p1c[2];
+    unsigned short w1e;
+    char p20[4];
+    unsigned short *anim;
+    char p28[0x2e - 0x28];
+    unsigned short animFrame;
+    char p30[0x3c - 0x30];
+    char *tab;
+} O_55D4C;
+
+extern PolyFT4_55D4C *D_1F800164__8004BAF0;
+extern char *D_1F8001E0__8004BAF0;
+extern void SetSemiTrans__8004BAF0(PolyFT4_55D4C *, int);
+
+static __inline__ int onscreen_55D4C(PolyFT4_55D4C *p)
+{
+    if ((*(volatile unsigned short *)&p->y0 < 0x100 || p->y1 < 0x100 || p->y2 < 0x100 || p->y3 < 0x100) &&
+        (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140 || p->x3 < 0x140))
+        return 1;
+    return 0;
+}
+
+static __inline__ int addprim_55D4C(unsigned e, unsigned *a, char *b, int c, int d)
+{
+    d = ((signed char)d + c) << 2;
+    if (d < 0) d = 0;
+    d += (int)b;
+    if ((unsigned)(d - (int)D_1F8001E0__8004BAF0) >= 0xca0) return 1;
+    {
+        unsigned v = *(unsigned *)d;
+        *(unsigned *)d = (unsigned)a;
+        *a = v | e;
+    }
+    return 0;
+}
+
+void func_8004BAF0(O_55D4C *o)
+{
+    PolyFT4_55D4C *p;
+    Ent_55D4C *e;
+    short *h;
+    int n;
+    int z;
+
+    h = (short *)(o->tab + *o->anim * 4);
+    n = h[0];
+    e = (Ent_55D4C *)(*(char * volatile *)&o->tab + h[1]);
+    do {
+        p = D_1F800164__8004BAF0;
+        if (o->animFrame & 1) {
+            p->x0 = o->x + e->dx;
+            p->y0 = o->y + e->dy;
+            p->x1 = p->x0 + e->w;
+            p->x2 = p->x0;
+            p->y1 = p->y0;
+        } else {
+            p->x0 = o->x - e->dx;
+            p->y0 = o->y + e->dy;
+            p->x1 = p->x0 - e->w;
+            p->x2 = p->x0;
+            p->y1 = p->y0;
+        }
+        p->y2 = p->y0 + e->h;
+        *(volatile unsigned short *)&p->x3 = p->x1;
+        *(volatile unsigned short *)&p->y3 = p->y2;
+        if (onscreen_55D4C(p)) {
+            p->code = 0x2d;
+            SetSemiTrans__8004BAF0(p, o->b0d >> 7);
+            *(unsigned long *)&p->uv0 = e->w0;
+            *(unsigned long *)&p->uv1 = e->w4;
+            p->uv2 = e->h8;
+            p->uv3 = e->hc;
+            p->tpage += o->w1e;
+            if (o->b0d & 1) {
+                p->clut = o->w08;
+            }
+            z = o->z;
+            do {} while (0);
+            if (addprim_55D4C(0x9000000, (unsigned *)p, D_1F8001E0__8004BAF0 + 0x10, z, o->b0f) == 0) {
+                D_1F800164__8004BAF0 = D_1F800164__8004BAF0 + 1;
+            }
+        }
+        e++;
+    } while (--n != 0);
+}
+#elif defined(VERSION_SCES_01331)
+typedef struct {
+    unsigned long tag;
+    unsigned char r0, g0, b0, code;
+    unsigned short x0, y0;
+    unsigned short uv0, clut;
+    unsigned short x1, y1;
+    unsigned short uv1, tpage;
+    unsigned short x2, y2;
+    unsigned short uv2, pad2;
+    unsigned short x3, y3;
+    unsigned short uv3, pad3;
+} PolyFT4_55CB8;
+
+typedef struct {
+    unsigned long w0;
+    unsigned long w4;
+    unsigned short h8;
+    unsigned char w, h;
+    unsigned short hc;
+    signed char dx, dy;
+} Ent_55CB8;
+
+typedef struct {
+    char p0[8];
+    unsigned short w08;
+    char p0a[3];
+    unsigned char b0d;
+    char p0e;
+    signed char b0f;
+    char p10[2];
+    unsigned short x;
+    char p14[2];
+    unsigned short y;
+    char p18[2];
+    short z;
+    char p1c[2];
+    unsigned short w1e;
+    char p20[4];
+    unsigned short *anim;
+    char p28[0x2e - 0x28];
+    unsigned short animFrame;
+    char p30[0x3c - 0x30];
+    char *tab;
+} O_55CB8;
+
+extern PolyFT4_55CB8 *D_1F800164__8004BAF0;
+extern char *D_1F8001E0__8004BAF0;
+extern void SetSemiTrans__8004BAF0(PolyFT4_55CB8 *, int);
+
+static __inline__ int onscreen_55CB8(PolyFT4_55CB8 *p)
+{
+    if ((*(volatile unsigned short *)&p->y0 < 0x100 || p->y1 < 0x100 || p->y2 < 0x100 || p->y3 < 0x100) &&
+        (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140 || p->x3 < 0x140))
+        return 1;
+    return 0;
+}
+
+static __inline__ int addprim_55CB8(unsigned e, unsigned *a, char *b, int c, int d)
+{
+    d = ((signed char)d + c) << 2;
+    if (d < 0) d = 0;
+    d += (int)b;
+    if ((unsigned)(d - (int)D_1F8001E0__8004BAF0) >= 0xca0) return 1;
+    {
+        unsigned v = *(unsigned *)d;
+        *(unsigned *)d = (unsigned)a;
+        *a = v | e;
+    }
+    return 0;
+}
+
+void func_8004BAF0(O_55CB8 *o)
+{
+    PolyFT4_55CB8 *p;
+    Ent_55CB8 *e;
+    short *h;
+    int n;
+    int z;
+
+    h = (short *)(o->tab + *o->anim * 4);
+    n = h[0];
+    e = (Ent_55CB8 *)(*(char * volatile *)&o->tab + h[1]);
+    do {
+        p = D_1F800164__8004BAF0;
+        if (o->animFrame & 1) {
+            p->x0 = o->x + e->dx;
+            p->y0 = o->y + e->dy;
+            p->x1 = p->x0 + e->w;
+            p->x2 = p->x0;
+            p->y1 = p->y0;
+        } else {
+            p->x0 = o->x - e->dx;
+            p->y0 = o->y + e->dy;
+            p->x1 = p->x0 - e->w;
+            p->x2 = p->x0;
+            p->y1 = p->y0;
+        }
+        p->y2 = p->y0 + e->h;
+        *(volatile unsigned short *)&p->x3 = p->x1;
+        *(volatile unsigned short *)&p->y3 = p->y2;
+        if (onscreen_55CB8(p)) {
+            p->code = 0x2d;
+            SetSemiTrans__8004BAF0(p, o->b0d >> 7);
+            *(unsigned long *)&p->uv0 = e->w0;
+            *(unsigned long *)&p->uv1 = e->w4;
+            p->uv2 = e->h8;
+            p->uv3 = e->hc;
+            p->tpage += o->w1e;
+            if (o->b0d & 1) {
+                p->clut = o->w08;
+            }
+            z = o->z;
+            do {} while (0);
+            if (addprim_55CB8(0x9000000, (unsigned *)p, D_1F8001E0__8004BAF0 + 0x10, z, o->b0f) == 0) {
+                D_1F800164__8004BAF0 = D_1F800164__8004BAF0 + 1;
+            }
+        }
+        e++;
+    } while (--n != 0);
+}
+#else
 void func_8004BAF0(O_4BAF0 *o)
 {
     PolyFT4_4BAF0 *p;
@@ -252,12 +495,16 @@ void func_8004BAF0(O_4BAF0 *o)
         e++;
     } while (--n != 0);
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", drawMessageBox);
 typedef struct O_4BDE4 { char p0[0x1e]; s16 v1e; char p20[2]; s16 v22; char p24[0x92]; u16 m; char pb8[6];
     u16 a, b, c, d; char pc6[4]; u16 idx; } O_4BDE4;
 typedef struct L_4BDE4 { s16 x0, x1, x2, x3; s16 a, b, c, d; s16 m; s16 pad[7]; } L_4BDE4;
 
+#if defined(VERSION_SCES_01330)
+INCLUDE_ASM("nonmatchings/main/render/actorrender3", drawMessageBox);
+#else
 void drawMessageBox(O_4BDE4 *o)
 {
     char env[0x60];
@@ -316,6 +563,7 @@ void drawMessageBox(O_4BDE4 *o)
     D_1F800164 = (char *)D_1F800164 + 0xc;
     drawBalloonFrame(&l, 0, o->v1e);
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", drawMessageBoxFrame);
 

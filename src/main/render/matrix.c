@@ -136,8 +136,88 @@ void func_8004D5F0(GameObject *o)
 #define PTR(o,n) (*(void **)((char *)(o) + (n)))
 extern MATRIX D_1F800090;
 extern void func_800279E8(s32, s32, char *);
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
+#if defined(VERSION_SCES_01330)
+#define U8(o,n)  (*(unsigned char *)((char *)(o) + (n)))
+#define S8(o,n)  (*(signed char *)((char *)(o) + (n)))
+#define U16(o,n) (*(unsigned short *)((char *)(o) + (n)))
+#define S16(o,n) (*(short *)((char *)(o) + (n)))
+#define S32(o,n) (*(int *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+typedef struct { short m[3][3]; int t[3]; } MATRIX_57A20;
+extern MATRIX_57A20 SCRATCHPAD__8004D7E0;
+extern MATRIX_57A20 D_1F800020__8004D7E0;
+extern MATRIX_57A20 D_1F800090__8004D7E0;
+extern short D_1F800060__8004D7E0[3];
+extern short D_1F800068__8004D7E0[3];
+extern void getBaseMatrix__8004D7E0(void *), RotMatrix__8004D7E0(void *, void *), MulMatrix0__8004D7E0(void *, void *, void *), SetRotMatrix__8004D7E0(void *), ApplyRotMatrix__8004D7E0(void *, void *), SetTransMatrix__8004D7E0(void *), func_800279E8__8004D7E0(int, int, char *);
+extern char *D_1F8001E0__8004D7E0;
+void func_8004D7E0(char *o)
+{
+    getBaseMatrix__8004D7E0(&D_1F800020__8004D7E0);
+    getBaseMatrix__8004D7E0(&D_1F800090__8004D7E0);
+    D_1F800060__8004D7E0[0] = S32(o, 0x84);
+    D_1F800060__8004D7E0[1] = S32(o, 0x88);
+    D_1F800060__8004D7E0[2] = S32(o, 0x8c);
+    RotMatrix__8004D7E0(D_1F800060__8004D7E0, &D_1F800020__8004D7E0);
+    D_1F800068__8004D7E0[0] = U16(o, 0x12);
+    D_1F800068__8004D7E0[1] = U16(o, 0x16);
+    D_1F800068__8004D7E0[2] = U16(o, 0x1a);
+    MulMatrix0__8004D7E0(&D_1F800090__8004D7E0, &D_1F800020__8004D7E0, &SCRATCHPAD__8004D7E0);
+    ApplyRotMatrix__8004D7E0(D_1F800068__8004D7E0, &SCRATCHPAD__8004D7E0.t[0]);
+    SCRATCHPAD__8004D7E0.t[0] += -0xa0;
+    SCRATCHPAD__8004D7E0.t[1] += 0x80;
+    SCRATCHPAD__8004D7E0.t[2] += 0x220;
+    SetRotMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
+    SetTransMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
+    func_800279E8__8004D7E0(S32(o, 0xa0), (int)(D_1F8001E0__8004D7E0 + ((S8(o, 0xf) << 2) + 0x10)), o);
+}
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
+#elif defined(VERSION_SCES_01331)
+#define U8(o,n)  (*(unsigned char *)((char *)(o) + (n)))
+#define S8(o,n)  (*(signed char *)((char *)(o) + (n)))
+#define U16(o,n) (*(unsigned short *)((char *)(o) + (n)))
+#define S16(o,n) (*(short *)((char *)(o) + (n)))
+#define S32(o,n) (*(int *)((char *)(o) + (n)))
+#define PTR(o,n) (*(void **)((char *)(o) + (n)))
+typedef struct { short m[3][3]; int t[3]; } MATRIX_579A8;
+extern MATRIX_579A8 SCRATCHPAD__8004D7E0;
+extern MATRIX_579A8 D_1F800020__8004D7E0;
+extern MATRIX_579A8 D_1F800090__8004D7E0;
+extern short D_1F800060__8004D7E0[3];
+extern short D_1F800068__8004D7E0[3];
+extern void getBaseMatrix__8004D7E0(void *), RotMatrix__8004D7E0(void *, void *), MulMatrix0__8004D7E0(void *, void *, void *), SetRotMatrix__8004D7E0(void *), ApplyRotMatrix__8004D7E0(void *, void *), SetTransMatrix__8004D7E0(void *), func_800279E8__8004D7E0(int, int, char *);
+extern char *D_1F8001E0__8004D7E0;
+void func_8004D7E0(char *o)
+{
+    getBaseMatrix__8004D7E0(&D_1F800020__8004D7E0);
+    getBaseMatrix__8004D7E0(&D_1F800090__8004D7E0);
+    D_1F800060__8004D7E0[0] = S32(o, 0x84);
+    D_1F800060__8004D7E0[1] = S32(o, 0x88);
+    D_1F800060__8004D7E0[2] = S32(o, 0x8c);
+    RotMatrix__8004D7E0(D_1F800060__8004D7E0, &D_1F800020__8004D7E0);
+    D_1F800068__8004D7E0[0] = U16(o, 0x12);
+    D_1F800068__8004D7E0[1] = U16(o, 0x16);
+    D_1F800068__8004D7E0[2] = U16(o, 0x1a);
+    MulMatrix0__8004D7E0(&D_1F800090__8004D7E0, &D_1F800020__8004D7E0, &SCRATCHPAD__8004D7E0);
+    ApplyRotMatrix__8004D7E0(D_1F800068__8004D7E0, &SCRATCHPAD__8004D7E0.t[0]);
+    SCRATCHPAD__8004D7E0.t[0] += -0xa0;
+    SCRATCHPAD__8004D7E0.t[1] += 0x80;
+    SCRATCHPAD__8004D7E0.t[2] += 0x220;
+    SetRotMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
+    SetTransMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
+    func_800279E8__8004D7E0(S32(o, 0xa0), (int)(D_1F8001E0__8004D7E0 + ((S8(o, 0xf) << 2) + 0x10)), o);
+}
+#undef U8
+#undef S8
+#undef U16
+#undef S16
+#undef S32
+#undef PTR
 #else
 void func_8004D7E0(char *o)
 {

@@ -151,3 +151,4 @@ stopBgm = 0x8001F110;
 subtractScaledVertices = 0x80024E54;
 tickAnimation = 0x8001FEC0;
 tryStartItemInteraction = 0x80027054;
+PROVIDE(D_8009F2E0_sces01330 = 0x8009F2E0);

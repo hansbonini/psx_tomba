@@ -9,6 +9,9 @@ extern void readAnimFrameCount(GameObject *);
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/areainit", func_80032DB4);
+#else
 void func_80032DB4(GameObject *o)
 {
     extern void tickAnimation(GameObject *);
@@ -67,11 +70,15 @@ void func_80032DB4(GameObject *o)
         break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_8003301C);
 void func_800325C0(u8 *o);
 void func_80032934(u8 *o);
 void func_800327D8(u8 *o);
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/areainit", func_8003301C);
+#else
 void func_8003301C(u8 *o)
 {
     switch (o[3]) {
@@ -82,6 +89,7 @@ void func_8003301C(u8 *o)
     }
     if (o[3] != 9 && (*(u16 *)0x1F8001F8 & 3) == 0) playSFXWithNote(3, 0xc);
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
 extern void readAnimFrameCount(GameObject *);
@@ -91,6 +99,9 @@ extern u8 D_800A5399;
 extern u8 D_800A53A7;
 extern u8 D_8009BCF8;
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
+#else
 void func_800330EC(GameObject *o)
 {
     char c;
@@ -143,10 +154,14 @@ void func_800330EC(GameObject *o)
         break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
 extern void func_80032374(GameObject *);
 extern void freeObjectLayer3(GameObject *);
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
+#else
 void func_800332CC(GameObject *o)
 {
     switch (o->state) {
@@ -165,6 +180,7 @@ void func_800332CC(GameObject *o)
         break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033374);
 extern s32 D_800A53AC;
@@ -224,6 +240,9 @@ static __inline__ void spawn_33488(s16 sub, s32 idx)
     }
 }
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033488);
+#else
 void func_80033488(s16 n)
 {
     if (n != 2) PLAYER.obj.active = 7;
@@ -249,6 +268,7 @@ void func_80033488(s16 n)
         break;
     }
 }
+#endif
 
 void func_80033858(void) {
 }
@@ -297,3 +317,6 @@ void dispatchAreaInitB(void)
             return;
     }
 }
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/areainit", func_80031688_slps01144);
+#endif

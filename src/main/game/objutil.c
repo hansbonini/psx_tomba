@@ -50,6 +50,9 @@ extern s16 func_80045310(void *, s16, s16);
 extern u16 D_1F800282;
 extern u16 D_1F800282;
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003887C);
+#else
 s32 func_8003887C(GameObject *o)
 {
     extern GameObject *D_8009B698;
@@ -106,6 +109,7 @@ s32 func_8003887C(GameObject *o)
     o->touchFlag = 0;
     return 0;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038AC0);
 typedef struct { s16 x, y; } P_38AC0;
@@ -138,6 +142,9 @@ extern s16 angleBetweenPoints(P_38AC0, P_38AC0);
 #define TB(n) D_8007D60A[(s16)(o->animFrame + o->animFrame * 2) + (n) - 1]
 #define TK(n) D_8007D60A[k + (n) - 1]
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038AC0);
+#else
 void func_80038AC0(GameObject *o)
 {
     extern S338_38AC0 *D_8009B6A0;
@@ -523,6 +530,7 @@ void func_80038AC0(GameObject *o)
         o->step = 0;
     }
 }
+#endif
 #undef G
 #undef TB
 #undef TK
@@ -590,6 +598,9 @@ void func_8003A10C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A310);
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A310);
+#else
 void func_8003A310(u8 *o)
 {
     if ((u8)(o[6] - 6) < 2) return;
@@ -602,9 +613,13 @@ void func_8003A310(u8 *o)
     case 7: *(s32 *)(o + 0x8c) = 0xc0; break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A384);
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A384);
+#else
 void func_8003A384(GameObject *o)
 {
     switch (o->subState) {
@@ -650,6 +665,7 @@ void func_8003A384(GameObject *o)
         break;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
 extern u8 D_800A547B;

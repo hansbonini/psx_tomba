@@ -484,8 +484,52 @@ s16 func_80042C20(GameObject *o)
 #undef HIT
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", clampToCeilingAndProbeSides);
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-INCLUDE_ASM("nonmatchings/main/game/itemspawn", clampToCeilingAndProbeSides);
+#if defined(VERSION_SCES_01330)
+extern short D_800A38E8;
+short func_8004096C__sces01330(GameObject *o, short a, short b);
+
+static __inline__ short chk_3FB60(GameObject *o, int dx)
+{
+    return func_8004096C__sces01330(o, o->h->p.whole + dx, o->y.p.whole - 0x15);
+}
+
+int clampToCeilingAndProbeSides(GameObject *o)
+{
+    short r;
+    GameObject *s = o;
+    if (o->y.p.whole < D_800A38E8 - 0x90) {
+        o->y.p.whole = D_800A38E8 - 0x90;
+        return 1;
+    }
+    if ((r = chk_3FB60(s, 4)) != 0)
+        return r;
+    if ((r = chk_3FB60(s, -4)) != 0)
+        return r;
+    return 0;
+}
+#elif defined(VERSION_SCES_01331)
+extern short D_800A38E8;
+short func_800408D8__sces01331(GameObject *o, short a, short b);
+
+static __inline__ short chk_3FACC(GameObject *o, int dx)
+{
+    return func_800408D8__sces01331(o, o->h->p.whole + dx, o->y.p.whole - 0x15);
+}
+
+int clampToCeilingAndProbeSides(GameObject *o)
+{
+    short r;
+    GameObject *s = o;
+    if (o->y.p.whole < D_800A38E8 - 0x90) {
+        o->y.p.whole = D_800A38E8 - 0x90;
+        return 1;
+    }
+    if ((r = chk_3FACC(s, 4)) != 0)
+        return r;
+    if ((r = chk_3FACC(s, -4)) != 0)
+        return r;
+    return 0;
+}
 #else
 s32 clampToCeilingAndProbeSides(u8* arg0) {
     u8* obj;
