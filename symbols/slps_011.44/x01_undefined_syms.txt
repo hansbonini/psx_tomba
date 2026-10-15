@@ -1,0 +1,13 @@
+D_1F8002D4 = 0x1F8002D4;
+D_8007D788 = 0x80076D50;
+D_8007DB88 = 0x80077150;
+PLAYER = 0x800A7B78;
+SCRATCHPAD = 0x1F800000;
+applyObjectAltSpeedVertical = 0x80020D0C;
+fixedMulSin = 0x80020D24;
+freeObjectLayer2 = 0x80017D64;
+func_80022E44 = 0x8002122C;
+nextRandom = 0x80020958;
+probeCollisionAtDepthA = 0x80040E40;
+readAnimFrameCount = 0x80020DE4;
+tickAnimation = 0x80020E38;

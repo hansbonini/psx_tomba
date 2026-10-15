@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128590);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128590);
 typedef struct GCDBlock_28590 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -410,7 +410,7 @@ void func_80128590(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128780);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128780);
 typedef struct GCDBlock_28780 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -823,9 +823,9 @@ void func_80128780(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128900);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128900);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_8012897C);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_8012897C);
 typedef struct GVars_2897C {
     u8 b30;
     u8 _pad31[3];
@@ -860,6 +860,9 @@ extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 extern void advanceAnimFrame(GameObject *, s32);
 extern s32 showMessageBoxDirect(s32, s32, V12_2897C *);
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_8012897C);
+#else
 void func_8012897C(GameObject *o)
 {
     V12_2897C b;
@@ -906,8 +909,9 @@ void func_8012897C(GameObject *o)
     }
     if (!o->visible) o->state = 3;
 }
+#endif
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128B68);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128B68);
 extern void tickAnimation(GameObject *);
 extern void func_8012897C(GameObject *);
 
@@ -923,7 +927,7 @@ void func_80128B68(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128BB8);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128BB8);
 typedef struct GV2Block_28BB8 {
     u8 _pad00[0x6];
     u16 sa6;
@@ -1007,7 +1011,7 @@ void func_80128BB8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128D7C);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128D7C);
 struct GSInventory_28D7C { u8 slots[256]; u16 counter; u16 sortMode; };
 struct GSEquips_28D7C { u8 weapon; u8 pants; };
 typedef struct GameState_28D7C {
@@ -2074,7 +2078,7 @@ void func_80128D7C(GameObject *o)
     o->state++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_5", func_80128F34);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128F34);
 extern void freeObjectLayer2(GameObject *);
 
 void func_80128F34(GameObject *o)

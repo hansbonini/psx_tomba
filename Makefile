@@ -158,9 +158,10 @@ endif
 # Targets
 TARGET_MAIN := $(BASE_DIR)
 
-ifeq ($(BUILD_OVERLAYS)$(VERSION), 1scus_942.36)
-TARGET_OVERLAYS := scus_942.36/overlays/optsub00 scus_942.36/overlays/x00 \
-                   $(foreach n,01 02 03 04 05 06 08 09 10 11 13 14 16 17 18,scus_942.36/overlays/x$(n))
+# Code overlays (on the European discs, the language 0 set that MAIN0.EXE loads).
+ifeq ($(BUILD_OVERLAYS), 1)
+TARGET_OVERLAYS := $(BASE_DIR)/overlays/optsub00 \
+                   $(foreach n,00 01 02 03 04 05 06 08 09 10 11 13 14 16 17 18,$(BASE_DIR)/overlays/x$(n))
 endif
 
 # The European discs boot a language menu (SCES_013.3x); the game itself is
@@ -182,6 +183,7 @@ TARGET_IN  := $(TARGET_MAIN) $(TARGET_OVERLAYS)
 ifneq ($(filter sces_013.30 sces_013.31,$(VERSION)),)
 REPORT_BUILD := $(BUILD_DIR)/exe/main0
 REPORT_ASM   := $(BASE_DIR)/exe/main0
+REPORT_OVERLAYS := $(BASE_DIR)/overlays
 else
 REPORT_BUILD := $(BUILD_DIR)
 REPORT_ASM   := $(BASE_DIR)
@@ -217,6 +219,7 @@ expected: build
 	rm -rf $(EXPECTED_DIR)/asm/$(BASE_DIR)
 	mkdir -p $(dir $(EXPECTED_DIR)/asm/$(REPORT_ASM))
 	mv $(REPORT_BUILD)/asm/$(REPORT_ASM) $(EXPECTED_DIR)/asm/$(REPORT_ASM)
+	$(if $(REPORT_OVERLAYS),[ ! -d $(BUILD_DIR)/asm/$(REPORT_OVERLAYS) ] || mv $(BUILD_DIR)/asm/$(REPORT_OVERLAYS) $(EXPECTED_DIR)/asm/$(REPORT_OVERLAYS))
 	$(foreach m,libgpu/c73 libcd/a07,[ ! -f $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/libapi/$(notdir $m).s.o ] || { mkdir -p $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/$(dir $m) && mv $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/libapi/$(notdir $m).s.o $(EXPECTED_DIR)/asm/$(REPORT_ASM)/psyq/$m.s.o; };)
 
 generate: $(LD_FILES)

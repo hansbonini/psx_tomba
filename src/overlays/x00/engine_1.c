@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED2F4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED2F4);
 extern void func_800ED15C(GameObject *);
 extern void func_800ECF74(GameObject *);
 
@@ -84,7 +84,7 @@ void func_800ED2F4(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED4EC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED4EC);
 extern void pushDrawListLayer4();
 extern void freeObjectLayer4();
 void func_800ED4EC(char *o)
@@ -113,7 +113,7 @@ void func_800ED4EC(char *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED5BC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED5BC);
 extern void func_80121468(void);
 extern void func_8011B91C(void);
 
@@ -126,7 +126,7 @@ void func_800ED5BC(void)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED604);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED604);
 extern void func_80022D3C(GameObject *, s32);
 extern void freeObjectLayer4(void);
 
@@ -170,7 +170,7 @@ void func_800ED604(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED734);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED734);
 extern u8 *D_8009B698;
 void func_800ED734(u8 *o)
 {
@@ -187,9 +187,9 @@ void func_800ED734(u8 *o)
     *(s32 *)(o + 0x8c) = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED788);
+INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED788);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED7B4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED7B4);
 extern u8 D_80114638[];
 void func_800ED7B4(GameObject *o)
 {
@@ -213,7 +213,7 @@ void func_800ED7B4(GameObject *o)
     o->unk8C = *(u8 *)&o->unk8C;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED840);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED840);
 typedef struct S_ED840 { char pad[0x8c]; s32 v; char pad2[0xb0 - 0x90]; s16 idx; } S_ED840;
 extern u8 D_80114638[];
 extern u8 D_8011465C[];
@@ -229,7 +229,7 @@ void func_800ED840(S_ED840 *s, s16 f)
     s->v = b;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED87C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED87C);
 extern u8 D_8011465C[];
 void func_800ED87C(u8 *o)
 {
@@ -241,7 +241,7 @@ void func_800ED87C(u8 *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED8C0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED8C0);
 typedef struct O_ED8C0 {
     char pad0[6];
     u8 state;
@@ -276,7 +276,7 @@ void func_800ED8C0(O_ED8C0 *o)
     o->state = 5;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED928);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED928);
 typedef struct { char pad[8]; u8 b8; char pad2[5]; u16 we; } P_ED928;
 extern P_ED928 *D_8009B698_P_ED928Ptr asm("D_8009B698");
 typedef struct { char pad[0xb6]; u16 wb6; } O_ED928;
@@ -297,7 +297,7 @@ void func_800ED928(O_ED928 *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800ED9E0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED9E0);
 typedef struct S_ED9E0 { char pad0[0x40]; s32 *h; char pad1[0x7c-0x44]; s16 velH; } S_ED9E0;
 void func_8010DE48();
 void func_8010E444();
@@ -307,7 +307,7 @@ void func_800ED9E0(S_ED9E0 *o)
 s32 *h; func_8010DE48(o); h = o->h; *h += o->velH << 8; func_8010E444(o, h); applyObjectAltSpeedVertical(o);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDA30);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDA30);
 void func_800EDA30(char *o)
 {
 
@@ -339,7 +339,7 @@ void func_800EDA30(char *o)
     *(s32 *)(o + 0x8c) = (*(s32 *)(o + 0x88) + ((s16 (*)(s32, s32))fixedMulCos2)(*(u8 *)(o + 0x84), a)) & 0xff;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDB40);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDB40);
 extern void tickAnimation(GameObject *o);
 extern void func_8011068C(GameObject *o);
 extern void func_8011070C(GameObject *o);
@@ -360,7 +360,7 @@ void func_800EDB40(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDBEC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDBEC);
 typedef struct O_EDBEC { char p0[3]; u8 sub; char p1[0x10]; s32 y; char p2[0xad-0x18]; u8 f; char p3[2]; s16 w; } O_EDBEC;
 void func_800EDBEC(O_EDBEC *o)
 {
@@ -375,14 +375,14 @@ void func_800EDBEC(O_EDBEC *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDC80);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDC80);
 typedef struct { char p[0x14]; s32 y; char q[0xad-0x18]; u8 f; } O_EDC80;
 void func_800EDC80(O_EDC80 *o)
 {
     if (o->f == 0) o->y += 0x7c000;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDCA8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDCA8);
 extern u8 D_8009C61A[];
 extern s16 D_8007D5D0[];
 extern u8 *allocObjectLayer1(void);
@@ -402,7 +402,7 @@ void func_800EDCA8(s8 *o, u8 p)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDD2C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDD2C);
 typedef struct TO_EDD2C {
     char p0[0x14];
     s32 y;
@@ -431,7 +431,7 @@ void func_800EDD2C(TO_EDD2C *o)
     applyObjectSpeedXY(o);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDD9C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDD9C);
 void func_800EDD9C(GameObject *o)
 {
     s16 v = o->unkB0;
@@ -440,7 +440,7 @@ void func_800EDD9C(GameObject *o)
     else o->unkB6 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDDDC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDDDC);
 typedef struct D_EDDDC { char pad[0x2c]; u16 a; u16 b; } D_EDDDC;
 extern D_EDDDC *D_8009B698_D_EDDDCPtr asm("D_8009B698");
 void func_800EDDDC(s32 o, s16 a, s16 c)
@@ -451,7 +451,7 @@ void func_800EDDDC(s32 o, s16 a, s16 c)
     D_8009B698_D_EDDDCPtr->b = D_8009B698_D_EDDDCPtr->a;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDE44);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDE44);
 typedef struct P_EDE44 { char p0[0x2c]; u16 a; u16 b; } P_EDE44;
 extern P_EDE44 *D_8009B698_P_EDE44Ptr asm("D_8009B698");
 void func_800EDE44(void *o, u16 x, s16 y)
@@ -466,7 +466,7 @@ void func_800EDE44(void *o, u16 x, s16 y)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDEBC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDEBC);
 extern GameObject *D_8009B698_GameObjectPtr asm("D_8009B698");
 
 void func_800EDEBC(GameObject *o, u16 anim)
@@ -481,7 +481,7 @@ void func_800EDEBC(GameObject *o, u16 anim)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDF24);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDF24);
 typedef struct S_EDF24 { char pad[0x24]; void *anim; char pad2[0x8c - 0x28]; s32 v; } S_EDF24;
 extern char D_80010C48[];
 extern void readAnimFrameCount(S_EDF24 *s);
@@ -498,7 +498,7 @@ void func_800EDF24(S_EDF24 *s)
     s->v = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EDFA0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDFA0);
 void func_800EDFA0(GameObject *o)
 {
     switch (*(u16 *)o->anim) {
@@ -554,7 +554,7 @@ void func_800EDFA0(GameObject *o)
     o->unk8C = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE1A0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE1A0);
 typedef struct { char pad[4]; u8 b4, b5, b6; } E_EE1A0;
 extern E_EE1A0 *D_8009C650;
 typedef struct { char pad[0xac]; u8 bac; } O_EE1A0;
@@ -570,7 +570,7 @@ void func_800EE1A0(O_EE1A0 *o)
     o->bac = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE1F0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE1F0);
 typedef struct { char p0[0x9d]; char b9d; char p1[0xac - 0x9e]; u8 bac; char p2[0xc6 - 0xad]; char bc6, bc7; char p3[0xe3 - 0xc8]; char be3; } TO_EE1F0;
 
 void func_800EE1F0(TO_EE1F0 *o)
@@ -590,7 +590,7 @@ void func_800EE1F0(TO_EE1F0 *o)
     *D_8009B698 = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE26C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE26C);
 extern u8 D_8009BCF8;
 
 s16 func_800EE26C(void)
@@ -631,7 +631,7 @@ s16 func_800EE26C(void)
     return s;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE3BC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE3BC);
 extern s16 D_80114530[];
 void func_800EE3BC(u32 a, s16 x, s16 y, s16 z)
 {
@@ -650,7 +650,7 @@ void func_800EE3BC(u32 a, s16 x, s16 y, s16 z)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE4B0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE4B0);
 extern void playSFXWithVolume(s32, s32);
 void func_800EE4B0(char *o)
 {
@@ -665,7 +665,7 @@ void func_800EE4B0(char *o)
     o[6] = 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE50C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE50C);
 extern s16 probeSidesAndApplyTileResponse(GameObject *, s32, s32);
 
 static __inline__ void setanim_EE50C(GameObject *o, u16 anim)
@@ -718,7 +718,7 @@ void func_800EE50C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE6E8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE6E8);
 void func_800EE6E8(GameObject *o)
 {
     if (o->touchFlag != 0) {
@@ -745,14 +745,14 @@ void func_800EE6E8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE7C0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE7C0);
 void func_800EE7C0(GameObject *o)
 {
     o->d->raw += o->velH << 8;
     o->y.raw += o->velV << 8;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE7F0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE7F0);
 void func_800EE7F0(char *o)
 {
     u16 v = *(u16 *)(o + 0x2e) & 1;
@@ -765,7 +765,7 @@ void func_800EE7F0(char *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE844);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE844);
 void func_800EE844(char *o)
 {
     u16 v = *(u16 *)(o + 0x2e) & 1;
@@ -784,7 +784,7 @@ void func_800EE844(char *o)
         *(u16 *)(o + 0x2e) |= 4;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE8E8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE8E8);
 void func_800EE8E8(GameObject *o)
 {
     volatile u16 *k = D_8009C9D8;
@@ -803,7 +803,7 @@ void func_800EE8E8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EE98C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE98C);
 void func_800EE98C(GameObject *o)
 {
     volatile u16 *k = &D_8009C9D8;
@@ -833,7 +833,7 @@ void func_800EE98C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/engine_1", func_800EEA38);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EEA38);
 void func_800EEA38(GameObject *o)
 {
     if (o->animFrame & 1) {

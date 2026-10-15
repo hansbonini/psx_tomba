@@ -1,0 +1,86 @@
+name: X00
+sha1: 64984e216f4729629cbdd0cf8598f982ba798e75
+options:
+  basename: x00
+  target_path: ./iso/slps_011.44/SYSTEM/X00.BIN
+  elf_path: ./build/x00/x00.elf
+  base_path: ../../
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: ./asm/slps_011.44/overlays/x00
+  src_path: ./src/overlays/x00
+  build_path: ./build/slps_011.44
+  asset_path: ./assets/slps_011.44/overlays/x00
+  generate_asm_macros_files : False
+
+  ld_script_path: ./linker/slps_011.44/x00.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  symbol_name_format: $VRAM_slps01144
+  symbol_name_format_no_rom: $VRAM_slps01144
+  gp_value: 0x8009DAC8
+  global_vram_start: 0x800E9AF8
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  disassemble_all: true
+
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
+
+  symbol_addrs_path:
+    - ./symbols/slps_011.44/symbol_addrs.txt
+    - ./symbols/slps_011.44/x00_symbol_addrs.txt
+  reloc_addrs_path:
+    - ./symbols/slps_011.44/reloc_addrs.txt
+
+  undefined_funcs_auto_path: ./linker/slps_011.44/undefined_funcs_auto.x00.txt
+  undefined_syms_auto_path: ./linker/slps_011.44/undefined_syms_auto.x00.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
+segments:
+  - name: engine
+    type: code
+    start: 0x0
+    vram: 0x800E9AF8
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, rodata, engine_header]
+      - [0x4, rodata, engine]
+      - [0x1C1C, asm, engine]
+      - [0x2A2AC, data, engine]
+  - name: x00
+    type: code
+    start: 0x2B680
+    vram: 0x80115178
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x2B680, rodata, x00_header]
+      - [0x2B684, rodata, x00]
+      - [0x2B85C, .rodata, x00_3]
+      - [0x2B888, rodata]
+      - [0x2BE3C, .rodata, x00_9]
+      - [0x2BE60, rodata]
+      - [0x2BF18, asm]
+      - [0x34F5C, c, x00_3]
+      - [0x35A10, asm]
+      - [0x4A9C4, c, x00_9]
+      - [0x4AFE0, asm]
+      - [0x4CE48, data, x00]
+  - [0x500E4]

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_80127D64);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80127D64);
 typedef struct SPADBlock_27D64 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -516,7 +516,7 @@ void func_80127D64(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_801288C0);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_801288C0);
 typedef struct SPADBlock_288C0 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -856,7 +856,7 @@ void func_801288C0(GameObject *o)
 }
 #undef SET_ANIM
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_80128E64);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80128E64);
 extern void *D_8013EFFC_VoidPtrArr[] asm("D_8013EFFC");
 
 void func_80128E64(GameObject *o)
@@ -942,7 +942,7 @@ void func_80128E64(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_801290E4);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_801290E4);
 typedef struct SPADBlock_290E4 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1243,7 +1243,7 @@ void func_801290E4(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_801295C8);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_801295C8);
 extern void *D_8013F000[];
 extern void *D_8013F004[];
 extern void *D_8013F044[];
@@ -1328,7 +1328,7 @@ void func_801295C8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_80129904);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80129904);
 typedef struct SPADBlock_29904 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1536,7 +1536,7 @@ void func_80129904(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_80129ACC);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80129ACC);
 typedef struct SPADBlock_29ACC {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1810,7 +1810,7 @@ void func_80129ACC(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_80129E9C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80129E9C);
 extern void *D_8013F034[];
 extern void *D_8013F038[];
 extern void applyFrameVelocityY(GameObject *);
@@ -1957,7 +1957,7 @@ void func_80129E9C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_8012A4BC);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012A4BC);
 extern void *D_8013F00C[];
 
 void func_8012A4BC(GameObject *o)
@@ -1987,7 +1987,7 @@ void func_8012A4BC(GameObject *o)
     else o->unk8C = (o->unk8C - 0x14) & 0xff;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_8012A60C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012A60C);
 typedef struct SPADBlock_2A60C {
     u8 b0;
     u8 _pad1[0x5f];
@@ -2786,7 +2786,7 @@ void func_8012A60C(BX *b)
 }
 #undef o
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_8012AE50);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012AE50);
 typedef struct AE_2AE50 { char p0[2]; u16 i; char p1[2]; u16 v; } AE_2AE50;
 typedef struct { char p0[0x24]; AE_2AE50 *a; char p1[4]; u16 t; char p2[0x3e]; u16 b0, b1, b2, b3; } TA_2AE50;
 extern u8 D_8013BB38[];
@@ -2835,7 +2835,7 @@ s32 func_8012AE50(TA_2AE50 *o)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_8012AFBC);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012AFBC);
 typedef struct P_2AFBC { s16 w0; u16 w2; s16 w4; } P_2AFBC;
 typedef struct H_2AFBC { char p0[2]; s16 x; } H_2AFBC;
 typedef struct O_2AFBC {
@@ -2873,7 +2873,7 @@ s32 func_8012AFBC(O_2AFBC *o)
     return func_80044694(o, (s16)(o->h->x + b), (s16)(o->y + a)) != 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_4", func_8012B0A4);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012B0A4);
 typedef struct SPADBlock_2B0A4 {
     u8 b0;
     u8 _pad1[0x5f];

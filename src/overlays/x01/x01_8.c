@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_8", func_80137888);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_8", func_80137888);
 typedef struct { s16 z, y, x; } P3_37888;
 
 extern P3_37888 D_8013BD24[];
@@ -182,7 +182,7 @@ void func_80137888(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_8", func_80137F84);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_8", func_80137F84);
 typedef struct SPADBlock_37F84 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -375,7 +375,7 @@ void func_80137F84(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_8", func_80138084);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_8", func_80138084);
 typedef struct SPADBlock_38084 {
     u8 b0;
     u8 _pad1[0x5f];

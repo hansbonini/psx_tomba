@@ -1,0 +1,96 @@
+name: X03
+sha1: 440ae76f5012e3778b908743d7d030c350caf7d3
+options:
+  basename: x03
+  target_path: ./iso/sces_013.31/SYSTEM/X003.BIN
+  elf_path: ./build/x03/x03.elf
+  base_path: ../../
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: ./asm/sces_013.31/overlays/x03
+  src_path: ./src/overlays/x03
+  nonmatchings_path: nonmatchings/x03
+  matchings_path: matchings/x03
+  build_path: ./build/sces_013.31
+  asset_path: ./assets/sces_013.31/overlays/x03
+  generate_asm_macros_files : False
+
+  ld_script_path: ./linker/sces_013.31/x03.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  symbol_name_format: $VRAM_sces01331
+  symbol_name_format_no_rom: $VRAM_sces01331
+  gp_value: 0x80098C44
+  global_vram_start: 0x800E8028
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  disassemble_all: true
+
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
+
+  symbol_addrs_path:
+    - ./symbols/sces_013.31/symbol_addrs.txt
+    - ./symbols/sces_013.31/x03_symbol_addrs.txt
+  reloc_addrs_path:
+    - ./symbols/sces_013.31/reloc_addrs.txt
+
+  undefined_funcs_auto_path: ./linker/sces_013.31/undefined_funcs_auto.x03.txt
+  undefined_syms_auto_path: ./linker/sces_013.31/undefined_syms_auto.x03.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
+segments:
+  - name: engine
+    type: code
+    start: 0x0
+    vram: 0x800E8028
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, rodata, engine_header]
+      - [0x4, .rodata, ../x00/engine]
+      - [0x1C8, .rodata, ../x00/engine_1]
+      - [0x1EC, rodata]
+      - [0x1D98, c, ../x00/engine]
+      - [0x5F6C, c, ../x00/engine_1]
+      - [0x7738, asm]
+      - [0x2CA20, data, engine]
+  - name: x03
+    type: code
+    start: 0x2DE7C
+    vram: 0x80115EA4
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x2DE7C, rodata, x03_header]
+      - [0x2DE80, .rodata, x03]
+      - [0x2DEEC, rodata]
+      - [0x2E3CC, .rodata, x03_5]
+      - [0x2E3F8, .rodata, x03_6]
+      - [0x2E824, .rodata, x03_7]
+      - [0x2E860, .rodata, x03_8]
+      - [0x2EC8C, rodata]
+      - [0x2EF4C, c, x03]
+      - [0x30DD0, asm]
+      - [0x41218, c, x03_5]
+      - [0x41C98, c, x03_6]
+      - [0x42B34, c, x03_7]
+      - [0x43FE4, c, x03_8]
+      - [0x44FB8, asm]
+      - [0x4CF3C, data, x03]
+  - [0x52A48]

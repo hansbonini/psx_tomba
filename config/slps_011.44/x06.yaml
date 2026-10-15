@@ -1,0 +1,80 @@
+name: X06
+sha1: 6cd4b1aa4d6818c266dcfe37cd0f904f4a129a8d
+options:
+  basename: x06
+  target_path: ./iso/slps_011.44/SYSTEM/X06.BIN
+  elf_path: ./build/x06/x06.elf
+  base_path: ../../
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: ./asm/slps_011.44/overlays/x06
+  src_path: ./src/overlays/x06
+  nonmatchings_path: nonmatchings/x06
+  matchings_path: matchings/x06
+  build_path: ./build/slps_011.44
+  asset_path: ./assets/slps_011.44/overlays/x06
+  generate_asm_macros_files : False
+
+  ld_script_path: ./linker/slps_011.44/x06.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  symbol_name_format: $VRAM_slps01144
+  symbol_name_format_no_rom: $VRAM_slps01144
+  gp_value: 0x8009DAC8
+  global_vram_start: 0x800E9AF8
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  disassemble_all: true
+
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
+
+  symbol_addrs_path:
+    - ./symbols/slps_011.44/symbol_addrs.txt
+    - ./symbols/slps_011.44/x06_symbol_addrs.txt
+  reloc_addrs_path:
+    - ./symbols/slps_011.44/reloc_addrs.txt
+
+  undefined_funcs_auto_path: ./linker/slps_011.44/undefined_funcs_auto.x06.txt
+  undefined_syms_auto_path: ./linker/slps_011.44/undefined_syms_auto.x06.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
+segments:
+  - name: engine
+    type: code
+    start: 0x0
+    vram: 0x800E9AF8
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, rodata, engine_header]
+      - [0x4, rodata, engine]
+      - [0x1C1C, asm, engine]
+      - [0x2A2AC, data, engine]
+  - name: x06
+    type: code
+    start: 0x2B680
+    vram: 0x80115178
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x2B680, rodata, x06_header]
+      - [0x2B684, rodata, x06]
+      - [0x2B8D0, asm, x06]
+      - [0x344CC, data, x06]
+  - [0x36260]

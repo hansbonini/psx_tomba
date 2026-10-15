@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x14/nonmatchings/x14/x14_9", func_8011F674);
+// INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_9", func_8011F674);
 typedef struct { s32 a; s16 t; s16 b; } E8_1F674;
 
 extern s32 tickAnimation(GameObject *o);

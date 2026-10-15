@@ -6,6 +6,7 @@ from dataclasses import dataclass, asdict
 import logging
 import yaml
 import json
+import re
 
 @dataclass
 class UnitMetadata:
@@ -87,6 +88,29 @@ def _get_base_path(path: Path) -> Path:
     if Path(hasm_path).exists(): return hasm_path
     return None
 
+_AREA_START = {}
+
+
+def _engine_copy(unit: str) -> bool:
+    """A unit of the engine inside an Xnn other than X00: the engine is the
+    same in all of them and counts once. Named ones are engine*; the unnamed
+    pieces are named by their offset, below the start of the area module."""
+    m = re.match(r"([^/]+)/overlays/(x\d\d)/(?:\.\./x00/)?(\w+)$", unit)
+    if not m or m.group(2) == "x00":
+        return False
+    version, ov, name = m.groups()
+    if name.startswith("engine"):
+        return True
+    if not re.fullmatch(r"[0-9A-F]+", name):
+        return False
+    if (version, ov) not in _AREA_START:
+        cfg = Path("config") / version / (ov + ".yaml")
+        s = re.search(r"- name: %s\n\s+type: code\n\s+start: (0x[0-9A-Fa-f]+)" % ov,
+                      cfg.read_text().replace("\r\n", "\n")) if cfg.exists() else None
+        _AREA_START[(version, ov)] = int(s.group(1), 16) if s else 0
+    return int(name, 16) < _AREA_START[(version, ov)]
+
+
 def main():
     logging.basicConfig(level = logging.INFO)
     config = _create_config()
@@ -97,6 +121,9 @@ def main():
     units = []
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
+        # the engine is the same in every Xnn: it counts once, in X00
+        if _engine_copy(processed_path[1].removesuffix(".s.o").removesuffix(".c.o")):
+            continue
         unit = Unit(
             processed_path[1].removesuffix(".s.o").removesuffix(".c.o"),
             _get_base_path(processed_path[1]),

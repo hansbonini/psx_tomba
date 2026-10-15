@@ -1,61 +1,61 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80115774);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80115774);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", D_801151F8);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", D_801151F8);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80115214);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", func_80115214);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801158DC);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801158DC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80115C70);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80115C70);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80115D0C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80115D0C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116068);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116068);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801160A0);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801160A0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116520);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116520);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116574);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116574);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116814);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116814);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80115274);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", func_80115274);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_8011685C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_8011685C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116BB4);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116BB4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116C78);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116C78);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116D3C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116D3C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116FD4);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116FD4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80116FFC);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80116FFC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_8011700C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_8011700C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801171EC);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801171EC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801172E8);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801172E8);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117364);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117364);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117390);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117390);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801173FC);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801173FC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_8011740C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_8011740C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117460);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117460);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_8011767C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_8011767C);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117688);
+// INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117688);
 extern void tickAnimation(GameObject *);
 extern void func_80117460(GameObject *);
 
@@ -71,18 +71,18 @@ void func_80117688(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801176D8);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801176D8);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117790);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117790);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_8011784C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_8011784C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801178B8);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801178B8);
 
 void func_8011792C(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117934);
+// INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117934);
 typedef struct GCDBlock_17934 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -1572,17 +1572,17 @@ void func_80117934(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117BC4);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117BC4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117BD0);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117BD0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117C4C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117C4C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117C5C);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117C5C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117C60);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117C60);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117E80);
+// INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117E80);
 typedef struct GCDBlock_17E80 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -1940,9 +1940,9 @@ void func_80117E80(void)
     if ((u16)((*(S2_17E80 **)&PLAYER.obj.h)->s2 - 0x100) < 0x90 && D_8009C068.bcfd6 == 0) D_8009B698->b1e = 0;
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117ED0);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117ED0);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117EDC);
+// INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117EDC);
 typedef struct GCDBlock_17EDC {
     u8 _pad0[0x94];
     u16 scd94;
@@ -2312,7 +2312,7 @@ void func_80117EDC(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80117FBC);
+// INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117FBC);
 typedef struct GCDBlock_17FBC {
     u8 _pad0[0x94];
     u16 scd94;
@@ -2728,11 +2728,11 @@ void func_80117FBC(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801181F0);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_801181F0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80118A90);
+INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80118A90);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80118A9C);
+// INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80118A9C);
 typedef struct GCDBlock_18A9C {
     u8 _pad0[0x94];
     u16 scd94;
@@ -3101,14 +3101,14 @@ void func_80118A9C(GameObject *o)
     }
 }
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", D_8011546C);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", D_8011546C);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", D_801154B0);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", D_801154B0);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", D_801154E8);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", D_801154E8);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", D_80115540);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", D_80115540);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_801155A8);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", func_801155A8);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x17/nonmatchings/x17/x17", func_80115608);
+INCLUDE_RODATA("overlays/x17/nonmatchings/x17/x17", func_80115608);

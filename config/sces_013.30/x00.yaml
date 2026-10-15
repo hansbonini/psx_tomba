@@ -1,0 +1,94 @@
+name: X00
+sha1: f9b26ba38616320b2759a0f23a2cb7c56359da94
+options:
+  basename: x00
+  target_path: ./iso/sces_013.30/SYSTEM/X000.BIN
+  elf_path: ./build/x00/x00.elf
+  base_path: ../../
+  platform: psx
+  compiler: PSYQ
+
+  asm_path: ./asm/sces_013.30/overlays/x00
+  src_path: ./src/overlays/x00
+  build_path: ./build/sces_013.30
+  asset_path: ./assets/sces_013.30/overlays/x00
+  generate_asm_macros_files : False
+
+  ld_script_path: ./linker/sces_013.30/x00.ld
+  ld_dependencies: True
+
+  find_file_boundaries: False
+  symbol_name_format: $VRAM_sces01330
+  symbol_name_format_no_rom: $VRAM_sces01330
+  gp_value: 0x80098730
+  global_vram_start: 0x800E7B28
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  disassemble_all: true
+
+  section_order: [".rodata", ".text", ".data", ".sdata", ".bss", ".sbss"]
+
+  symbol_addrs_path:
+    - ./symbols/sces_013.30/symbol_addrs.txt
+    - ./symbols/sces_013.30/x00_symbol_addrs.txt
+  reloc_addrs_path:
+    - ./symbols/sces_013.30/reloc_addrs.txt
+
+  undefined_funcs_auto_path: ./linker/sces_013.30/undefined_funcs_auto.x00.txt
+  undefined_syms_auto_path: ./linker/sces_013.30/undefined_syms_auto.x00.txt
+
+  extensions_path: ./tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+
+  ld_bss_is_noload: True
+segments:
+  - name: engine
+    type: code
+    start: 0x0
+    vram: 0x800E7B28
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, rodata, engine_header]
+      - [0x4, .rodata, engine]
+      - [0x1C8, .rodata, engine_1]
+      - [0x1EC, rodata]
+      - [0x1D98, c, engine]
+      - [0x5F40, c, engine_1]
+      - [0x770C, asm]
+      - [0x2C9DC, data, engine]
+  - name: x00
+    type: code
+    start: 0x2DE38
+    vram: 0x80115960
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x2DE38, rodata, x00_header]
+      - [0x2DE3C, .rodata, x00]
+      - [0x2DEC0, rodata]
+      - [0x2E018, .rodata, x00_3]
+      - [0x2E044, rodata]
+      - [0x2E59C, .rodata, x00_8]
+      - [0x2E610, .rodata, x00_9]
+      - [0x2E634, rodata]
+      - [0x2E6EC, c, x00]
+      - [0x31560, asm]
+      - [0x3794C, c, x00_3]
+      - [0x38400, asm]
+      - [0x4CDC8, c, x00_8]
+      - [0x4DD1C, c, x00_9]
+      - [0x4E350, asm]
+      - [0x50388, data, x00]
+  - [0x53EE4]

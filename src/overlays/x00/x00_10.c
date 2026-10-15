@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80135728);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135728);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80135A94);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135A94);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80135DD0);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DD0);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80135DDC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DDC);
 extern GameObject *allocObjectLayer2(void);
 extern u8 D_8009C111;
 extern u32 D_8009BCEC[];
@@ -62,9 +62,9 @@ void func_80135DDC(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80135F04);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135F04);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80136024);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80136024);
 extern GameObject PLAYER_GameObject asm("PLAYER");
 extern GameObject *D_800A5428;
 extern u8 D_800A5458;
@@ -268,9 +268,9 @@ void func_80136024(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_801366B0);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366B0);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_801366BC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366BC);
 typedef struct N_366BC { char p0; char f1; char f2; char f3; char p1[0xe]; s16 x; char p2[2]; s16 y; char p3[2]; s16 z; char p4[0x2e - 0x1c]; s16 w; } N_366BC;
 typedef struct O_366BC { char p0[4]; u8 state; char p1[0x1c-5]; N_366BC *n; } O_366BC;
 extern u8 D_8009C1B2;
@@ -309,7 +309,7 @@ void func_801366BC(O_366BC *o)
     o->state = st;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_8013679C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013679C);
 extern u8 D_800A5401;
 extern u8 D_8009BCA9;
 extern u8 D_800A5458;
@@ -392,7 +392,7 @@ s16 func_8013679C(GameObject *o)
     return n;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80136AFC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80136AFC);
 typedef struct { GameObject o; u8 bc0; } BigObj_36AFC;
 extern BigObj_36AFC PLAYER_BigObj_36AFC asm("PLAYER");
 #define X PLAYER_BigObj_36AFC.o
@@ -641,9 +641,9 @@ void func_80136AFC(GameObject *o)
 #undef X
 #undef CEBD
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_8013728C);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013728C);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_80137298);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80137298);
 extern void func_80135528(u8 *);
 
 static __inline__ s32 chk_37298(void)
@@ -671,7 +671,7 @@ void func_80137298(u8 *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_8013734C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013734C);
 extern void func_80135DDC(GameObject *);
 extern s16 func_80135F04(GameObject *);
 extern void func_80136024(GameObject *);
@@ -696,7 +696,7 @@ void func_8013734C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_801373FC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801373FC);
 void func_801373FC(u8 *o)
 {
     u8 *q;
@@ -743,6 +743,6 @@ void func_801373FC(u8 *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_8013755C);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013755C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_10", func_801376D4);
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801376D4);

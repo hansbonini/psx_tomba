@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_80139DF0);
+INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_80139DF0);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A248);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A248);
 typedef struct GCDBlock_3A248 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -1554,7 +1554,7 @@ void func_8013A248(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A42C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A42C);
 typedef struct GCDBlock_3A42C {
     u8 _pad0[0x94];
     u16 scd94;
@@ -1975,7 +1975,7 @@ void func_8013A42C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A58C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A58C);
 typedef struct GCDBlock_3A58C {
     u8 _pad0[0x94];
     u16 scd94;
@@ -2351,9 +2351,9 @@ void func_8013A58C(void)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A670);
+INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A670);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A67C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A67C);
 typedef struct GCDBlock_3A67C {
     u8 _pad0[0x94];
     u16 scd94;
@@ -2768,7 +2768,7 @@ void func_8013A67C(GameObject *o)
     for (i = 0; i < n; i++) func_80113C20(e, 2, e->x.p.whole, e->y.p.whole, 0x87c);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A83C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A83C);
 typedef struct GCDBlock_3A83C {
     u8 _pad0[0x94];
     u16 scd94;
@@ -3122,9 +3122,9 @@ s32 func_8013A83C(void)
     return D_8009C068.bce56 != 0xff;
 }
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_801158DC);
+INCLUDE_RODATA("overlays/x01/nonmatchings/x01/x01_10", func_801158DC);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013A854);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A854);
 typedef struct GCDBlock_3A854 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -4627,9 +4627,9 @@ void func_8013A854(GameObject *o)
 }
 #undef S16
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013ACB0);
+INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ACB0);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013ACBC);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ACBC);
 typedef struct GCDBlock_3ACBC {
     u8 _pad0[0x94];
     u16 scd94;
@@ -6051,7 +6051,7 @@ void func_8013ACBC(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013ADE8);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ADE8);
 typedef struct GCDBlock_3ADE8 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -6467,7 +6467,7 @@ void func_8013ADE8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013AF5C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013AF5C);
 typedef struct GCDBlock_3AF5C {
     u8 _pad0[0x94];
     u16 scd94;
@@ -6863,7 +6863,7 @@ void func_8013AF5C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013B0D8);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013B0D8);
 typedef struct GCDBlock_3B0D8 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -7230,7 +7230,7 @@ void func_8013B0D8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013B180);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013B180);
 typedef struct SPADBlock_3B180 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -7794,7 +7794,7 @@ void func_8013B180(O_3B180 *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", func_8013B360);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013B360);
 typedef struct SPADBlock_3B360 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -8001,4 +8001,4 @@ void func_8013B360(GameObject *o)
 }
 #undef W0A
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_10", D_80115910);
+INCLUDE_RODATA("overlays/x01/nonmatchings/x01/x01_10", D_80115910);

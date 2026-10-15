@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x14/nonmatchings/x14/x14_7", func_8011F2C4);
+// INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_7", func_8011F2C4);
 typedef struct { s32 a; s16 t; s16 b; } E8_1F2C4;
 typedef struct { s16 x0, x2, x4, x6; u16 n; s16 k; } Q_1F2C4;
 

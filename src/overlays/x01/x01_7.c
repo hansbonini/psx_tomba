@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_80135E84);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80135E84);
 typedef struct GVars_35E84 {
     u8 b30;
     u8 _pad31[3];
@@ -236,7 +236,7 @@ void func_80135E84(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_80136554);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80136554);
 typedef struct SPADBlock_36554 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -830,7 +830,7 @@ void func_80136554(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_801367F8);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801367F8);
 typedef struct SPADBlock_367F8 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1013,7 +1013,7 @@ void func_801367F8(u8 sub, s16 x, s16 y, s16 z)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_801368D4);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801368D4);
 typedef struct SPADBlock_368D4 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1574,7 +1574,7 @@ void func_801368D4(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_80136A4C);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80136A4C);
 typedef struct SPADBlock_36A4C {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1807,7 +1807,7 @@ void func_80136A4C(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_80136CA0);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80136CA0);
 typedef struct GCDBlock_36CA0 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -2224,7 +2224,7 @@ void func_80136CA0(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_80136E34);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80136E34);
 typedef struct GVars_36E34 {
     u8 b30;
     u8 _pad31[3];
@@ -2314,9 +2314,9 @@ void func_80136E34(GameObject *o)
     }
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_801370C4);
+INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801370C4);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x01/nonmatchings/x01/x01_7", func_801376D4);
+// INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801376D4);
 struct GSInventory_376D4 { u8 slots[256]; u16 counter; u16 sortMode; };
 struct GSEquips_376D4 { u8 weapon; u8 pants; };
 typedef struct GameState_376D4 {

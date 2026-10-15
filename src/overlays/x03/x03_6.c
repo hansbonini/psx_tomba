@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_6", func_80129010);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_6", func_80129010);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_6", func_80129A28);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_6", func_80129A28);
 typedef struct GCDBlock_29A28 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -383,8 +383,8 @@ void func_80129A28(GameObject *o)
     o->state++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_6", func_80129BE0);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_6", func_80129BE0);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_6", func_801158DC);
+INCLUDE_RODATA("overlays/x03/nonmatchings/x03/x03_6", func_801158DC);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_6", jtbl_80115B60);
+INCLUDE_RODATA("overlays/x03/nonmatchings/x03/x03_6", jtbl_80115B60);

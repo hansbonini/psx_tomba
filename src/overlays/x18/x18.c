@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_801158A0);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158A0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_801158CC);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158CC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_801158DC);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158DC);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_801158F8);
+// INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158F8);
 typedef struct SPADBlock_158F8 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -207,7 +207,7 @@ void func_801158F8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_80115A40);
+// INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_80115A40);
 typedef struct SPADBlock_15A40 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -424,10 +424,10 @@ void func_80115A40(GameObject *o)
 }
 #undef PT
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_80115BF0);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_80115BF0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_80115C70);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_80115C70);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_80115D0C);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_80115D0C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x18/nonmatchings/x18/x18", func_80115EA8);
+INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_80115EA8);

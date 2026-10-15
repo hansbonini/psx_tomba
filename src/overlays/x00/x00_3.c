@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_3", func_8011ED30);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_3", func_8011ED30);
 typedef struct { u8 p0[9]; u8 b9; } P8011F9E0_1ED30;
 
 extern P8011F9E0_1ED30 *D_8009B698;
@@ -223,7 +223,7 @@ void func_8011ED30(GameObject *o)
 #undef D_800A60A1
 #undef BOB
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_3", func_8011F4B4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_3", func_8011F4B4);
 extern void func_8011EAEC(u8 *);
 extern s16 fixedMulSin(s32, s32);
 extern u8 *D_8013A494;
@@ -263,7 +263,7 @@ void func_8011F4B4(u8 *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_3", func_8011F5F4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_3", func_8011F5F4);
 typedef struct O_1F5F4 {
     u8 active, vis, type, b3, state, step, b6, b7;
     char p0[2]; u8 b0a; char p1[2]; u8 b0d; char p2; s8 b0f;

@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_8", func_801341A0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_8", func_801341A0);
 typedef struct { char pad[0x4c]; s16 w4c; s16 w4e; } C4C_341A0;
 typedef struct { s16 p0, x, p4, y, p8, z; } Pos_341A0;
 extern u8 D_8009C10D;
@@ -452,7 +452,7 @@ void func_801341A0(GameObject *o)
 #undef D_800A60D2
 #undef D_800A60D0
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_8", func_80134E50);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_8", func_80134E50);
 typedef struct { s16 x, y; } P_34E50;
 extern s32 angleBetweenPoints(P_34E50 a, P_34E50 b);
 extern u16 D_1F80016E;

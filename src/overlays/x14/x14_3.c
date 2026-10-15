@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x14/nonmatchings/x14/x14_3", func_8011EC04);
+// INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_3", func_8011EC04);
 typedef struct GVars_1EC04 {
     u8 b30;
     u8 _pad31[3];

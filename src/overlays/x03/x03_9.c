@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012C330);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C330);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012C5D0);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C5D0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012C75C);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C75C);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012C868);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C868);
 extern s16 func_80043D2C(GameObject *, s16, s16);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 
@@ -46,7 +46,7 @@ s32 func_8012C868(GameObject *o)
     return 0;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012C9BC);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C9BC);
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
 s32 func_8012C9BC(GameObject *o)
@@ -64,7 +64,7 @@ s32 func_8012C9BC(GameObject *o)
     return 1;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012CA90);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CA90);
 typedef struct SPADBlock_2CA90 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -276,7 +276,7 @@ void func_8012CA90(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012CC64);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CC64);
 extern s16 D_80135190[];
 extern void *D_80139ABC;
 extern s32 tickAnimation(GameObject *);
@@ -318,7 +318,7 @@ void func_8012CC64(GameObject *o)
     readAnimFrameCount(o);
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012CDB8);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CDB8);
 static __inline__ s16 past_2CDB8(GameObject *o)
 {
     s16 c;
@@ -378,7 +378,7 @@ void func_8012CDB8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_9", func_8012CFFC);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CFFC);
 extern void *D_80139AB4[];
 extern void *D_80139A50[];
 

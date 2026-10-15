@@ -1,7 +1,7 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_9", func_801350F4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_801350F4);
 extern char D_80077208[];
 extern void *D_8013A4E8;
 extern void readAnimFrameCount(GameObject *);
@@ -83,7 +83,7 @@ void func_801350F4(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_9", func_801353D4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_801353D4);
 extern void freeObjectLayer2(u8 *);
 extern void func_80134E50(u8 *);
 extern u8 D_8009C114;
@@ -140,12 +140,15 @@ void func_801353D4(u8 *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_9", func_80135528);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135528);
 extern u32 D_8009BCEC;
 extern u8 D_8009C227;
 extern u8 D_800A5403;
 extern u8 D_800A5402;
 
+#if defined(VERSION_SLPS_01144)
+INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135528);
+#else
 void func_80135528(u8 *o)
 {
     u8 *a, *b, *c;
@@ -218,8 +221,9 @@ void func_80135528(u8 *o)
     *(u8 **)(o + 0x24) = c;
     o[4] = 1;
 }
+#endif
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x00/nonmatchings/x00_9", func_80135708);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135708);
 extern s16 *D_800A53D8;
 
 s32 func_80135708(void)

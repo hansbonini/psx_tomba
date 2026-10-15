@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116330);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116330);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116814);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116814);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116C78);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116C78);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116D04);
+// INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116D04);
 struct GSInventory_16D04 { u8 slots[256]; u16 counter; u16 sortMode; };
 struct GSEquips_16D04 { u8 weapon; u8 pants; };
 typedef struct GameState_16D04 {
@@ -1077,7 +1077,7 @@ void func_80116D04(s32 a, s32 b, s32 c, s32 d)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116E9C);
+// INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116E9C);
 typedef struct SPADBlock_16E9C {
     u8 b0;
     u8 _pad1[0x5f];
@@ -1270,18 +1270,18 @@ void func_80116E9C(SP_16E9C *s)
 #undef setlen
 #undef setcode
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116F60);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116F60);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80116FFC);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116FFC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_8011700C);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_8011700C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80117164);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80117164);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_801172E8);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_801172E8);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80117378);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80117378);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_80117390);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80117390);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x13/nonmatchings/x13/x13_1", func_801173FC);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_801173FC);

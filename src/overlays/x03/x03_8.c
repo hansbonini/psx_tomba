@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_8012B35C);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012B35C);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_8012B9DC);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012B9DC);
 typedef struct GCDBlock_2B9DC {
     u8 _pad0[0x94];
     u16 scd94;
@@ -390,7 +390,7 @@ void func_8012B9DC(GameObject *o)
     o->state++;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_8012BBA8);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012BBA8);
 extern s32 tickAnimation(GameObject *);
 extern void freeObjectLayer2(GameObject *);
 
@@ -427,7 +427,7 @@ void func_8012BBA8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_8012BCCC);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012BCCC);
 typedef struct GCDBlock_2BCCC {
     u8 _pad0[0x94];
     u16 scd94;
@@ -893,7 +893,7 @@ void func_8012BCCC(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_8012BF60);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012BF60);
 typedef struct GCDBlock_2BF60 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -1321,7 +1321,7 @@ void func_8012BF60(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_8012C110);
+// INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012C110);
 typedef struct GCDBlock_2C110 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -1761,8 +1761,8 @@ void func_8012C110(GameObject *o)
     }
 }
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_80115C70);
+INCLUDE_RODATA("overlays/x03/nonmatchings/x03/x03_8", func_80115C70);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", func_80115D0C);
+INCLUDE_RODATA("overlays/x03/nonmatchings/x03/x03_8", func_80115D0C);
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x03/nonmatchings/x03/x03_8", jtbl_80115FC8);
+INCLUDE_RODATA("overlays/x03/nonmatchings/x03/x03_8", jtbl_80115FC8);

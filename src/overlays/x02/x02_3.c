@@ -1,13 +1,13 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_801179D4);
+INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_801179D4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_80117C4C);
+INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80117C4C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_80117C60);
+INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80117C60);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_80118340);
+// INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80118340);
 typedef struct GCDBlock_18340 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -377,7 +377,7 @@ void func_80118340(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_801183D8);
+// INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_801183D8);
 extern void *D_8009E694[];
 extern void func_80115C78(void *, s32, s32);
 
@@ -408,7 +408,7 @@ void func_801183D8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_801184C8);
+// INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_801184C8);
 typedef struct GCDBlock_184C8 {
     u8 _pad0[0x94];
     u16 scd94;
@@ -803,7 +803,7 @@ void func_801184C8(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x02/nonmatchings/x02/x02_3", func_80118680);
+// INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80118680);
 typedef struct GCDBlock_18680 {
     u8 _pad0[0x94];
     u16 scd94;

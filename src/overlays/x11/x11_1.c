@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801163DC);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801163DC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80116814);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80116814);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801168B0);
+// INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801168B0);
 typedef struct SPADBlock_168B0 {
     u8 b0;
     u8 _pad1[0x5f];
@@ -261,55 +261,55 @@ void func_801168B0(GameObject *o)
     }
 }
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80115274);
+INCLUDE_RODATA("overlays/x11/nonmatchings/x11/x11_1", func_80115274);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80116B2C);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80116B2C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80116C78);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80116C78);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80116F84);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80116F84);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80116FFC);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80116FFC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_8011700C);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_8011700C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801171EC);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801171EC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801172E8);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801172E8);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117390);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117390);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801173FC);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801173FC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_8011740C);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_8011740C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801175F4);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801175F4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_8011767C);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_8011767C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117790);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117790);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801178B8);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801178B8);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117AA0);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117AA0);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117C4C);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117C4C);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117C60);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117C60);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117CC4);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117CC4);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80117EAC);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80117EAC);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118094);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118094);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118300);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118300);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_801184E8);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801184E8);
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118764);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118764);
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118A48);
+// INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118A48);
 typedef struct {
     u8 b0, b1, b2, b3;
     u16 w4;
@@ -349,12 +349,12 @@ void func_80118A48(GameObject *o)
     o->state++;
 }
 
-INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118C0C);
+INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118C0C);
 
 void func_80118CB4(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118CBC);
+// INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118CBC);
 typedef struct GCDBlock_18CBC {
     u8 _pad0[0x94];
     u16 scd94;
@@ -748,13 +748,13 @@ void func_80118CBC(GameObject *o)
 void func_80118E60(void) {
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118E68);
+// INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118E68);
 void func_80118E68(GameObject *o)
 {
     o->state = 3;
 }
 
-// INCLUDE_ASM("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", func_80118E74);
+// INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118E74);
 extern void func_80118CBC(GameObject *);
 extern void freeObjectUnlayered(GameObject *);
 
@@ -776,4 +776,4 @@ void func_80118E74(GameObject *o)
     }
 }
 
-INCLUDE_RODATA("asm/scus_942.36/overlays/x11/nonmatchings/x11/x11_1", D_80115310);
+INCLUDE_RODATA("overlays/x11/nonmatchings/x11/x11_1", D_80115310);
