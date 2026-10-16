@@ -8,9 +8,13 @@ void initGameConfig(void)
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
     memset(D_8009BC98, 0, sizeof(D_8009BC98));
     getBaseMatrix(SCRATCH_VIEW_MATRIX);
-    camera->vrz = -544; 
+    camera->vrz = -544;
     camera->vpx = 160;
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+    camera->vpy = -128;
+#else
     camera->vpy = -120;
+#endif
     camera->vrx = 0;
     camera->vry = 0;
     camera->vpz = 0;
@@ -648,9 +652,15 @@ void freeObjectUnlayered(s32* arg0)
     *--D_1F800210 = (s32)arg0;
 }
 
+#if !defined(VERSION_SCUS_94236)
+INCLUDE_RODATA("nonmatchings/main/game/gameinit", D_80010000);
+
+INCLUDE_RODATA("nonmatchings/main/game/gameinit", D_80010008);
+#else
 const char BUILD_DATE[] asm("D_80010000") = "98/3/22";
 
 const char BUILD_TIME[] asm("D_80010008") = "21:11";
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectByLayer);
 void freeObjectByLayer(s32* self)

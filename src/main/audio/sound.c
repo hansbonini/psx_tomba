@@ -590,6 +590,9 @@ s32 startBgmTrack(s32 id)
     BGM_SEQ_ID = SsSeqOpen(SEQ_DATA[BGM_TRACK_DEFS[id].seq], vab);
     SsSetMVol(100, 100);
     SsSeqSetVol(BGM_SEQ_ID, BGM_TRACK_VOLUME[id], BGM_TRACK_VOLUME[id]);
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+    BGM_MUTED = 0;
+#endif
     BGM_FADE_ACTIVE = 0;
     BGM_VOLUME = BGM_TRACK_VOLUME[id];
     SsSeqPlay(BGM_SEQ_ID, SSPLAY_PLAY, 1);

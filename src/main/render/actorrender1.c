@@ -29,6 +29,35 @@ int projectActorPosition(u8* self, long* sxy, long* otz)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", isPolyFT4OnScreen);
+#if defined(VERSION_SCES_01330)
+typedef struct {
+    char pad[8];
+    unsigned short w8, wa, pad1[2], w10, w12, pad2[2], w18, w1a, pad3[2], w20, w22;
+} Q_4FD54;
+
+int isPolyFT4OnScreen(Q_4FD54 *o)
+{
+    if (o->wa < 0x100 || o->w12 < 0x100 || o->w1a < 0x100 || o->w22 < 0x100) {
+        if (o->w8 < 0x140 || o->w10 < 0x140 || o->w18 < 0x140 || o->w20 < 0x140)
+            return 1;
+    }
+    return 0;
+}
+#elif defined(VERSION_SCES_01331)
+typedef struct {
+    char pad[8];
+    unsigned short w8, wa, pad1[2], w10, w12, pad2[2], w18, w1a, pad3[2], w20, w22;
+} Q_4FCC0;
+
+int isPolyFT4OnScreen(Q_4FCC0 *o)
+{
+    if (o->wa < 0x100 || o->w12 < 0x100 || o->w1a < 0x100 || o->w22 < 0x100) {
+        if (o->w8 < 0x140 || o->w10 < 0x140 || o->w18 < 0x140 || o->w20 < 0x140)
+            return 1;
+    }
+    return 0;
+}
+#else
 int isPolyFT4OnScreen(POLY_FT4* p)
 {
     if ((u16)p->y0 >= 0xE0 && (u16)p->y1 >= 0xE0 && (u16)p->y2 >= 0xE0 && (u16)p->y3 >= 0xE0) {
@@ -39,6 +68,7 @@ int isPolyFT4OnScreen(POLY_FT4* p)
     }
     return 0;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", insertPrimWithBias);
 s32 insertPrimWithBias(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
