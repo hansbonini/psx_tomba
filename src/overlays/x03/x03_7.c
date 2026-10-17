@@ -137,7 +137,7 @@ void func_8012A9BC(GameObject *o)
             o->unk68 = 0;
             goto reset;
         }
-        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.state = PLAYER_SCRIPTED;
         PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         o->animFrame = o->unk68 & 1;

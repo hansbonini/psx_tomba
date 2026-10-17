@@ -3530,7 +3530,7 @@ void func_8012DA48(GameObject *o)
                 if (--o->clut <= 0) o->step = 15;
                 break;
             case 2:
-                PLAYER.obj.state = PLAYER_ENTER;
+                PLAYER.obj.state = PLAYER_SCRIPTED;
                 PLAYER.obj.subState = 100;
                 PLAYER.obj.step = 0;
                 D_8009BC98.unk0F = 1;

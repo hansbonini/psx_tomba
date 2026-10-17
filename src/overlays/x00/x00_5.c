@@ -1804,7 +1804,7 @@ void func_801262AC(O_262AC *o, u8 *p)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80126330);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", updateEvilGrass);
 extern u8 D_800A53A7[];
 extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
 extern void *D_8013A514;
@@ -1813,7 +1813,7 @@ extern void readAnimFrameCount(GameObject *o);
 extern void playSFX(s32 id);
 extern void func_801180DC(GameObject *o, s32 x, s32 y, s32 z);
 
-void func_80126330(GameObject *o)
+void updateEvilGrass(GameObject *o)
 {
     u16 t;
     u8 c;
@@ -4780,7 +4780,7 @@ void func_8012D1D0(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012D220);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", updateChick);
 typedef struct {
     char p0[1]; u8 vis; char p1[2]; u8 st, step; char p2[4]; u8 b0a; char p3[2]; u8 b0d; char p4; u8 b0f;
     char p5[0x1e - 0x10]; u16 w1e; char p6[2]; s32 anim; char p7[0x3c - 0x28]; s32 d3c; char p8[0x68 - 0x40]; u8 b68, b69, p9, b6b;
@@ -4790,7 +4790,7 @@ extern void func_8002367C(s32);
 extern s32 func_80022F6C(O_2D220 *);
 extern void addItemToInventory(s32, s32, s32);
 
-void func_8012D220(O_2D220 *o)
+void updateChick(O_2D220 *o)
 {
     u8 c = o->st;
     switch (c) {
@@ -4883,14 +4883,14 @@ void func_8012D3FC(s32 x, s32 y, s32 z)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012D504);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", updateEgg);
 extern GameObject *allocObjectLayer1(void);
 extern u8 D_8009C616_U8Arr[] asm("D_8009C616");
 extern s32 D_800A53A8;
 
 typedef struct { s32 a, b, c; } V3_2D504;
 
-void func_8012D504(GameObject *o)
+void updateEgg(GameObject *o)
 {
     GameObject *n;
     u8 d;

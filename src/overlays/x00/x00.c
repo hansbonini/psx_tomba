@@ -502,12 +502,12 @@ void func_801186AC(char *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801187B8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00", updateBubbleDroplet);
 typedef struct P_187B8 { char p[0x24]; void *anim; char q[0x3c - 0x28]; s32 w3c; } P_187B8;
 extern char D_8013AB58[];
 extern void func_80023020(char *);
 
-void func_801187B8(char *o)
+void updateBubbleDroplet(char *o)
 {
     switch ((u8)o[4]) {
     case 0:

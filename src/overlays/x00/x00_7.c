@@ -75,7 +75,7 @@ void func_80132598(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_801327B8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", updateFrog);
 typedef struct { s8 anim, z, ang, rad; } E4_327B8;
 typedef struct { char c[12]; } V12_327B8;
 extern GameObject PLAYER_GameObject asm("PLAYER");
@@ -108,7 +108,7 @@ extern void func_800EA86C(s32, s32, s32, s32);
 extern void func_80023020(GameObject *);
 extern void printInfoMessage(s32, s32);
 
-void func_801327B8(GameObject *o)
+void updateFrog(GameObject *o)
 {
     switch (o->state) {
     case 0:

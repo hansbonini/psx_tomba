@@ -51,7 +51,7 @@ void func_800E9580(GameObject *o)
     readAnimFrameCount(o);
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800E95E4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine", updateEggShellPiece);
 typedef struct { s16 x, y; } V2_E95E4;
 extern void *D_8013A434[];
 extern void *D_80134000[];
@@ -59,7 +59,7 @@ extern V2_E95E4 D_80113DB8[];
 void func_80023020(GameObject *o);
 s16 probeCollisionAtDepthB(GameObject *o, s32 x, s32 y);
 
-void func_800E95E4(GameObject *o)
+void updateEggShellPiece(GameObject *o)
 {
     s16 *v = &o->unkB4;
     char pad[8];

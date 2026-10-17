@@ -128,7 +128,7 @@ void func_8012EFFC(GameObject *o)
     talk:
         D_8009BC98.unk0F = 1;
         D_8009BC98.unk12 = 1;
-        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.state = PLAYER_SCRIPTED;
         PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         o->unk90 = showMessageBoxDirect(m, n, q);
@@ -1464,7 +1464,7 @@ void func_80132B04(GameObject *o)
 {
     switch (o->step) {
     case 0:
-        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.state = PLAYER_SCRIPTED;
         PLAYER.obj.subState = 100;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;
@@ -1478,7 +1478,7 @@ void func_80132B04(GameObject *o)
         if (--o->clut <= 0) o->step = 0xf;
         break;
     case 2:
-        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.state = PLAYER_SCRIPTED;
         PLAYER.obj.subState = 100;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;

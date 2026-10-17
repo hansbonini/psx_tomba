@@ -1,1 +1,6 @@
 D_8012D3D8 = 0x8012D3D8; // ignore:true
+updateEgg = 0x8012D504; // type:func
+updateChick = 0x8012D220; // type:func
+updateFrog = 0x801327B8; // type:func
+updateBubbleDroplet = 0x801187B8; // type:func
+updateEvilGrass = 0x80126330; // type:func

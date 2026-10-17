@@ -2,13 +2,13 @@
 #include "game.h"
 
 
-// INCLUDE_ASM("nonmatchings/main/game/message", func_8002E964);
+// INCLUDE_ASM("nonmatchings/main/game/message", updateImpactEffect);
 extern void readAnimFrameCount(GameObject *);
 extern void playSFX(s32);
 extern void pushDrawListCapped(GameObject *);
 extern s32 tickAnimation(GameObject *);
 
-void func_8002E964(GameObject *o)
+void updateImpactEffect(GameObject *o)
 {
     u8 s = o->state;
     s32 d;
@@ -172,9 +172,9 @@ void func_8002ED1C(GameObject *o)
         o->state = 3;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/message", func_8002EF20);
+// INCLUDE_ASM("nonmatchings/main/game/message", updateStrikeBurst);
 
-void func_8002EF20(GameObject *o)
+void updateStrikeBurst(GameObject *o)
 {
     switch (o->state) {
     case 0:

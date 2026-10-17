@@ -152,7 +152,7 @@ void initObjectPoolLayer1(void)
         i++;
     } while (i < 0x4);
     q = &D_800B07D8 + 0x2C4;
-    D_1F800204 = (s32*)D_800A38B8;
+    D_1F800204 = (s32*)CAMERA_SCROLL;
     i = 0;
     do {
         ((ObjectAxisView*)q)->layer = 1;
@@ -270,7 +270,7 @@ void initLayer5DrawList(void)
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", clearLayer1Buffer);
 void clearLayer1Buffer(void)
 {
-    memset(&D_800A38B8, 0, 0x84);
+    memset(&CAMERA_SCROLL, 0, 0x84);
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", clearOtBuffer);

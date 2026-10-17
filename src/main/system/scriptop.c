@@ -676,7 +676,7 @@ void func_8003DCF0(void)
                 D_8009BCA6 = 1;
         } else {
             PLAYER.obj.state = a;
-            if (PLAYER.obj.state == PLAYER_ENTER)
+            if (PLAYER.obj.state == PLAYER_SCRIPTED)
                 D_8009BCA7 = 1;
             if (PLAYER.obj.state == PLAYER_ACTIVE) {
                 D_8009BCA7 = 0;

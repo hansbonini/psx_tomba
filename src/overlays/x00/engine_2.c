@@ -669,7 +669,7 @@ void initPlayer(GameObject *o)
         case 3:
             LOADP();
             { u8 t3 = p[2];
-            o->state = PLAYER_ENTER;
+            o->state = PLAYER_SCRIPTED;
             o->subState = PLAYER_AIR_ATTACK;
             o->step = 0;
             o->unk7 = 0;
@@ -702,14 +702,14 @@ void initPlayer(GameObject *o)
         o->animFrame = p[0];
         o->timer = p[1];
         if (c == 99) {
-            o->state = PLAYER_ENTER;
+            o->state = PLAYER_SCRIPTED;
             o->subState = 12;
             o->step = 0;
             break;
         }
         if (c == 98) {
             if (D_8009C1A9) break;
-            o->state = PLAYER_ENTER;
+            o->state = PLAYER_SCRIPTED;
             o->subState = PLAYER_AIR_ATTACK;
             o->step = 0;
             break;
@@ -719,7 +719,7 @@ void initPlayer(GameObject *o)
             o->cooldownTimer = 0x3c;
             if ((c & 0xff) == 7 || (c & 0xff) == 9) o->cooldownTimer = 1;
         }
-        o->state = PLAYER_ENTER;
+        o->state = PLAYER_SCRIPTED;
         o->animFrame &= 0xf;
         if (c == 2) {
             D_8009BCA2 = 1;
@@ -778,7 +778,7 @@ void initPlayer(GameObject *o)
         break;
     case 4:
         if (--o->timer <= 0) {
-            o->state = PLAYER_ENTER;
+            o->state = PLAYER_SCRIPTED;
             o->subState = PLAYER_JUMP;
             o->step = 0;
             o->unk7 = 0;
@@ -6152,7 +6152,7 @@ void func_800FB774(GameObject *o)
 #undef GROUND
 #undef TURN
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FC6B8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerHurt);
 typedef struct {
     u8 b0;
     u8 p1[7];
@@ -6179,7 +6179,7 @@ extern void func_80033374(s32, s32, s32);
     if (*(u8 *)((u8 *)o + 0xd1) == 0 && D_8009B698_P800FD358Ptr->b8 == 0) \
         o->visible = D_1F8001F8 & 1;
 
-void func_800FC6B8(GameObject *o)
+void playerHurt(GameObject *o)
 {
     GameObject *q;
 
@@ -6331,7 +6331,7 @@ void func_800FC6B8(GameObject *o)
 #undef SETANIM_IF
 #undef BLINK
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FCEDC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerHurtBitten);
 typedef struct {
     u8 b0;
     u8 p1[7];
@@ -6355,7 +6355,7 @@ extern P800FDB7C *D_8009B698_P800FDB7CPtr asm("D_8009B698");
     if (D_8009B698_P800FDB7CPtr->b8 == 0) \
         o->visible = D_1F8001F8 & 1;
 
-void func_800FCEDC(GameObject *o)
+void playerHurtBitten(GameObject *o)
 {
     GameObject *q;
     s16 vx;
@@ -6486,7 +6486,7 @@ void func_800FCEDC(GameObject *o)
 #undef SETANIM_IF
 #undef BLINK
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FD49C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerFallInWater);
 typedef struct {
     u8 b0;
     u8 p1[7];
@@ -6518,7 +6518,7 @@ static __inline__ void SetAnimFromTable_FD49C(GameObject *o)
     o->anim = (void *)t.a[D_8009B698->w2c];
 }
 
-void func_800FD49C(GameObject *o)
+void playerFallInWater(GameObject *o)
 {
     extern P800FE13C *D_8009B698;
     GameObject *q;
@@ -7746,7 +7746,7 @@ void updatePlayerActive(GameObject *o, s32 p2)
 {
     extern void func_8010C398(GameObject *);
     extern void func_8010ABD0(GameObject *);
-    extern void func_80108388(GameObject *);
+    extern void playerJumpPlane(GameObject *);
     extern void func_80105D68(GameObject *);
     extern void playerHoldEnemy(GameObject *);
     extern u8 *D_8009B698;
@@ -7839,8 +7839,8 @@ void updatePlayerActive(GameObject *o, s32 p2)
     case 17:
         func_80107A58(o);
         break;
-    case 18:
-        func_80108388(o);
+    case PLAYER_JUMP_PLANE:
+        playerJumpPlane(o);
         break;
     case 19:
         D_8009C618[0] = 1;
@@ -8031,7 +8031,7 @@ void updatePlayerActive(GameObject *o, s32 p2)
     c = 0;
     *(u8 *)&o->unkA8 = 0;
     o->unkA6 = 0;
-    if (o->unk9E == 0 && o->state == PLAYER_ENTER) {
+    if (o->unk9E == 0 && o->state == PLAYER_SCRIPTED) {
         c = o->subState == 0x40;
         if (o->subState == 0x41) c++;
         if (o->subState == 0x65) c++;
@@ -8054,9 +8054,9 @@ typedef struct O_00AE0 {
     char pad3;
     u8 wa8;
 } O_00AE0;
-extern void func_800FC6B8();
-extern void func_800FCEDC();
-extern void func_800FD49C();
+extern void playerHurt();
+extern void playerHurtBitten();
+extern void playerFallInWater();
 extern void func_800FDABC();
 extern void func_800FDCEC();
 extern void func_80042C20();
@@ -8065,9 +8065,9 @@ void func_80100AE0(O_00AE0 *o)
 {
     register char r;
     switch (o->step) {
-    case 0: func_800FC6B8(o); break;
-    case 1: func_800FCEDC(o); break;
-    case 2: func_800FD49C(o); break;
+    case 0: playerHurt(o); break;
+    case 1: playerHurtBitten(o); break;
+    case 2: playerFallInWater(o); break;
     case 3: func_800FDABC(o); break;
     case 4: func_800FDCEC(o); break;
     }
@@ -11404,11 +11404,11 @@ void func_80108330(GameObject *o)
     o->step = 0;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80108388);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerJumpPlane);
 typedef struct { GameObject t; char c0[0x20]; s16 we0; s16 we2; s32 de4; char e8[0xe]; s16 wf6; } PO_08388;
 typedef struct { char pad[0x20]; s16 w20; } P_08388;
 
-void func_80108388(PO_08388 *o)
+void playerJumpPlane(PO_08388 *o)
 {
     switch (o->t.step) {
     case 0:

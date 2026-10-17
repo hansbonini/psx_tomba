@@ -1258,7 +1258,7 @@ void rewardBitingPlantFlower(GameObject* arg0)
             asm("");
             D_8009BCA7 = 1;
             D_8009BCAA = 1;
-            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.state = PLAYER_SCRIPTED;
             PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             PLAYER.obj.unk7 = 0;

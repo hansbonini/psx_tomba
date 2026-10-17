@@ -176,8 +176,8 @@ int tryStartItemInteraction(int arg0, char arg1, int arg2) {
 // INCLUDE_ASM("nonmatchings/main/game/inventory", updateInventoryOverlay);
 void updateInventoryOverlay(void)
 {
-    if (*(u_char*)&D_800A38B8 != 0) {
-        func_8002D784(&D_800A38B8);
+    if (*(u_char*)&CAMERA_SCROLL != 0) {
+        updateCameraScroll(&CAMERA_SCROLL);
     }
 }
 
@@ -721,7 +721,7 @@ s32 stepScrollApproachX(u8* self)
 // INCLUDE_ASM("nonmatchings/main/game/inventory", dampCameraAngle);
 s32 dampCameraAngle(void)
 {
-    s16* p = &D_1F8000E6;
+    s16* p = &CAMERA_TILT;
     s16  v = *p;
 
     if (v != 0) {
@@ -770,16 +770,16 @@ void func_8002B278();
 
 static __inline__ void decay_2B3E8(void)
 {
-    s16 v = D_1F8000E6;
+    s16 v = CAMERA_TILT;
     if (v == 0) return;
     if (v > 0) {
         v -= 2;
-        D_1F8000E6 = v;
-        if (v < 0) D_1F8000E6 = 0;
+        CAMERA_TILT = v;
+        if (v < 0) CAMERA_TILT = 0;
     } else {
         v += 2;
-        D_1F8000E6 = v;
-        if (v > 0) D_1F8000E6 = 0;
+        CAMERA_TILT = v;
+        if (v > 0) CAMERA_TILT = 0;
     }
 }
 
@@ -827,19 +827,19 @@ s32 stepScrollAndAngle(u8* self)
     } else {
         a = 0;
     }
-    v = D_1F8000E6;
+    v = CAMERA_TILT;
     if (v != 0) {
         if (v > 0) {
             v = v - 2;
-            D_1F8000E6 = v;
+            CAMERA_TILT = v;
             if (v < 0) {
-                D_1F8000E6 = 0;
+                CAMERA_TILT = 0;
             }
         } else {
             v = v + 2;
-            D_1F8000E6 = v;
+            CAMERA_TILT = v;
             if (v > 0) {
-                D_1F8000E6 = 0;
+                CAMERA_TILT = 0;
             }
         }
         b = 1;
@@ -1068,16 +1068,16 @@ static __inline__ s16 ramp_2BB9C(S_2BB9C *o)
 
 static __inline__ s32 decay_2BB9C(void)
 {
-    s16 v = D_1F8000E6;
+    s16 v = CAMERA_TILT;
     if (v != 0) {
         if (v > 0) {
             v -= 2;
-            D_1F8000E6 = v;
-            if (v < 0) D_1F8000E6 = 0;
+            CAMERA_TILT = v;
+            if (v < 0) CAMERA_TILT = 0;
         } else {
             v += 2;
-            D_1F8000E6 = v;
-            if (v > 0) D_1F8000E6 = 0;
+            CAMERA_TILT = v;
+            if (v > 0) CAMERA_TILT = 0;
         }
         return 1;
     }
@@ -1087,9 +1087,9 @@ static __inline__ s32 decay_2BB9C(void)
 static __inline__ void clamp_2BB9C(S_2BB9C *o)
 {
     s16 f = D_1F8000F2;
-    s32 s = f + D_1F8000E6;
-    if (o->w30 > s) D_1F8000E6 = o->w30 - f;
-    else if (o->w32 < s) D_1F8000E6 = o->w32 - f;
+    s32 s = f + CAMERA_TILT;
+    if (o->w30 > s) CAMERA_TILT = o->w30 - f;
+    else if (o->w32 < s) CAMERA_TILT = o->w32 - f;
 }
 
 void func_8002BB9C(S_2BB9C *o)
@@ -1464,14 +1464,14 @@ void func_8002CA40(S_2CA40 *o)
         else o->vy += 0x100;
         f1 = 1;
     }
-    s = D_1F8000E6;
+    s = CAMERA_TILT;
     if (s != 0) {
         if (s > 0) {
-            D_1F8000E6 = s -= 2;
-            if (s < 0) D_1F8000E6 = 0;
+            CAMERA_TILT = s -= 2;
+            if (s < 0) CAMERA_TILT = 0;
         } else {
-            D_1F8000E6 = s += 2;
-            if (s > 0) D_1F8000E6 = 0;
+            CAMERA_TILT = s += 2;
+            if (s > 0) CAMERA_TILT = 0;
         }
         f2 = 1;
     } else {
@@ -1488,21 +1488,21 @@ void func_8002CA40(S_2CA40 *o)
 // INCLUDE_ASM("nonmatchings/main/game/inventory", updateLookScroll);
 void updateLookScroll(u8* self)
 {
-    s16 v = D_1F8000E6;
+    s16 v = CAMERA_TILT;
     s32 w;
 
     if (v != 0) {
         if (v > 0) {
             v = v - 2;
-            D_1F8000E6 = v;
+            CAMERA_TILT = v;
             if (v < 0) {
-                D_1F8000E6 = 0;
+                CAMERA_TILT = 0;
             }
         } else {
             v = v + 2;
-            D_1F8000E6 = v;
+            CAMERA_TILT = v;
             if (v > 0) {
-                D_1F8000E6 = 0;
+                CAMERA_TILT = 0;
             }
         }
     }
@@ -1536,16 +1536,16 @@ void func_8002CC20(S_2CC20 *o)
 {
     s16 v;
     o->f44 = 0;
-    v = (*(SVECTOR *)&D_1F8000E6).vx;
+    v = (*(SVECTOR *)&CAMERA_TILT).vx;
     if (v != 0) {
         if (v > 0) {
             v -= 2;
-            D_1F8000E6 = v;
-            if (v < 0) D_1F8000E6 = 0;
+            CAMERA_TILT = v;
+            if (v < 0) CAMERA_TILT = 0;
         } else {
             v += 2;
-            D_1F8000E6 = v;
-            if (v > 0) D_1F8000E6 = 0;
+            CAMERA_TILT = v;
+            if (v > 0) CAMERA_TILT = 0;
         }
     }
     func_8002A798(o);
@@ -1569,7 +1569,7 @@ typedef struct {
     char pad2[0x44 - 0x38];
     u16 w44;
 } S8002A258_2CD7C;
-extern s16 D_1F8000E6_S16Arr[] asm("D_1F8000E6");
+extern s16 D_1F8000E6_S16Arr[] asm("CAMERA_TILT");
 
 void func_8002CD7C(S8002A258_2CD7C *o)
 {
@@ -1578,11 +1578,11 @@ void func_8002CD7C(S8002A258_2CD7C *o)
     v = D_1F8000E6_S16Arr[0];
     if (v != 0) {
         if (v > 0) {
-            D_1F8000E6 = v - 2;
-            if (D_1F8000E6 < 0) D_1F8000E6 = 0;
+            CAMERA_TILT = v - 2;
+            if (CAMERA_TILT < 0) CAMERA_TILT = 0;
         } else {
-            D_1F8000E6 = v + 2;
-            if (D_1F8000E6 > 0) D_1F8000E6 = 0;
+            CAMERA_TILT = v + 2;
+            if (CAMERA_TILT > 0) CAMERA_TILT = 0;
         }
     }
     D_1F80018C = D_1F800168;
@@ -1728,7 +1728,7 @@ void dispatchSectionConfirm(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002D784);
+// INCLUDE_ASM("nonmatchings/main/game/inventory", updateCameraScroll);
 typedef struct {
     u8 b0, b1, b2, b3, b4, b5, b6, b7;
     s32 d8;
@@ -1745,7 +1745,7 @@ typedef struct {
 } S_2D784;
 extern void (*D_8007C5F0[])(S_2D784 *);
 
-void func_8002D784(S_2D784 *o)
+void updateCameraScroll(S_2D784 *o)
 {
     u16 w;
     s32 t;
@@ -1931,4 +1931,4 @@ void cloneItemPickupObject(u8* src)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002E494);
+INCLUDE_ASM("nonmatchings/main/game/inventory", updateItemGetIcon);

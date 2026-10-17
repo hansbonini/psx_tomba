@@ -127,13 +127,13 @@ void func_8012897C(GameObject *o)
             advanceAnimFrame(o, 0);
 #if defined(VERSION_SLPS_01144)
             PLAYER.obj.animFrame = 0;
-            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.state = PLAYER_SCRIPTED;
             PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
 #else
             o->animFrame = o->unk68 & 1;
             t = o->h->p.whole < *(s16 *)((char *)D_800A53D8_Fix16PtrArr[0] + 2);
-            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.state = PLAYER_SCRIPTED;
             PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             PLAYER.obj.animFrame = t;

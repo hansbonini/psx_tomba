@@ -1345,7 +1345,7 @@ void func_80112708(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_801127D4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", updateTreasureChest);
 typedef void (*ObjFn_127D4)(GameObject *);
 typedef union { s32 w; struct { u16 a, b; } h; } Stage_127D4;
 extern Stage_127D4 GAME_Stage_127D4 asm("GAME");
@@ -1357,7 +1357,7 @@ extern ObjFn_127D4 D_801150E0[];
 extern ObjFn_127D4 D_801150FC[];
 extern ObjFn_127D4 D_80115118[];
 
-void func_801127D4(GameObject *o)
+void updateTreasureChest(GameObject *o)
 {
     s32 ok;
     switch (o->state) {

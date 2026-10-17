@@ -128,7 +128,7 @@ void func_80115304(GameObject *o)
         if ((*(u8*)((char*)&PLAYER.obj.unkA0 + 2)) == 2) {
             stepPlayerXToward(0xa0);
             if (SCRATCHPAD.unk168[2].p.whole >= 0x50) {
-                PLAYER.obj.state = PLAYER_ENTER;
+                PLAYER.obj.state = PLAYER_SCRIPTED;
                 PLAYER.obj.visible = 0;
                 PLAYER.obj.subState = 0x41;
                 PLAYER.obj.step = 0;

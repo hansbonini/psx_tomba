@@ -231,7 +231,7 @@ void func_8012C110(GameObject *o)
         if (D_8009C068.unk5a3 == 3) {
             o->subState++;
             o->step = 0;
-            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.state = PLAYER_SCRIPTED;
             PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             D_8009BC98.unk0F = 1;
@@ -239,7 +239,7 @@ void func_8012C110(GameObject *o)
             break;
         }
         if (o->unk68 == 0) break;
-        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.state = PLAYER_SCRIPTED;
         PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;

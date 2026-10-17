@@ -139,7 +139,7 @@ void func_800246B0(void)
     s32 off, x, v;
     u16 w;
     char pad[0x10];
-    c = &D_800A38B8;
+    c = &CAMERA_SCROLL;
     c->b0 = 1;
     p = (s16 *)&((S4_246B0 **)&D_8007B680)[((u16 *)&GAME)[0]][D_8009BCCA];
     D_800A38E4 = *p++;

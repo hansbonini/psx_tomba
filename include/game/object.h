@@ -237,9 +237,21 @@ typedef struct Unk8009C968 {
 typedef enum PlayerState {
     PLAYER_INIT = 0,       /* initPlayer */
     PLAYER_ACTIVE = 1,     /* updatePlayerActive, by sub-state */
-    PLAYER_HURT = 2,       /* knocked back after a hit */
-    PLAYER_ENTER = 5,      /* entering the area / respawning */
+    PLAYER_HURT = 2,       /* taking damage, by PlayerHurtType */
+    PLAYER_SCRIPTED = 5,   /* no control while the game runs a scene: respawn,
+                              item get, reading a sign */
 } PlayerState;
+
+/* PLAYER.obj.subState while PLAYER_HURT (updatePlayer picks one of five
+   handlers; 3 and 4 are not identified). */
+typedef enum PlayerHurtType {
+    PLAYER_HURT_NORMAL = 0,  /* playerHurt: enemies, spikes */
+    PLAYER_HURT_BITTEN = 1,  /* playerHurtBitten: caught and spat out (Biting Plant Flower) */
+    PLAYER_HURT_WATER = 2,   /* playerFallInWater: the section reloads */
+} PlayerHurtType;
+
+/* PLAYER.obj.subState while PLAYER_SCRIPTED (only this one identified). */
+#define PLAYER_READ_MESSAGE 0x61
 
 /* PLAYER.obj.subState while PLAYER_ACTIVE (the jump table of
    updatePlayerActive has 0x64 entries; these are the ones identified). */
@@ -254,6 +266,7 @@ typedef enum PlayerSubState {
     PLAYER_CLING = 0x0D,              /* playerCling: on a vine or a wall */
     PLAYER_HOLD_ENEMY = 0x0E,         /* playerHoldEnemy */
     PLAYER_THROW_ENEMY = 0x0F,        /* playerThrowEnemy */
+    PLAYER_JUMP_PLANE = 0x12,         /* playerJumpPlane: to the next depth plane */
     PLAYER_CLIMB = 0x1D,              /* playerClimb */
 } PlayerSubState;
 

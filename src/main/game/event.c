@@ -911,7 +911,7 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
                     D_8009BC98.unk0F = 1;
                     D_8009BCAA = 1;
                     if (state != 4 && (PLAYER.obj.unk9E == 0 || ((u8 *)&PLAYER)[0xAC] < 2)) {
-                        PLAYER.obj.state = PLAYER_ENTER;
+                        PLAYER.obj.state = PLAYER_SCRIPTED;
                         PLAYER.obj.subState = PLAYER_IDLE;
                         PLAYER.obj.step = 0;
                         PLAYER.obj.unk7 = 0;

@@ -13,7 +13,7 @@ void func_801169CC(GameObject *o)
 {
     switch (o->step) {
     case 0:
-        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.state = PLAYER_SCRIPTED;
         PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;

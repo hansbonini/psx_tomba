@@ -54,10 +54,10 @@ void func_80031908(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031B18);
+// INCLUDE_ASM("nonmatchings/main/game/objsetup", updateEventCube);
 extern void pushDrawListCapped(GameObject *);
 
-void func_80031B18(GameObject *o)
+void updateEventCube(GameObject *o)
 {
     extern void readAnimFrameCount(GameObject *);
     switch (o->state) {
