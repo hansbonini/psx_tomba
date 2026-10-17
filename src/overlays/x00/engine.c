@@ -1262,9 +1262,6 @@ extern s32 insertPrimWithBias(void *, s32, s32, s32, u32);
 #define gte_stotz(r0) __asm__ volatile ("swc2 $7, 0( %0 )" : : "r"(r0) : "memory")
 #define gte_stsxy(r0) __asm__ volatile ("swc2 $14, 0( %0 )" : : "r"(r0) : "memory")
 
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800EC0E8);
-#else
 void func_800EC0E8(GameObject *o)
 {
     s32 m;
@@ -1282,13 +1279,13 @@ void func_800EC0E8(GameObject *o)
     D_1F800068.vx = o->x.p.whole;
     D_1F800068.vy = o->y.p.whole;
     D_1F800068.vz = o->z.p.whole;
-    MulMatrix0(&(*(MATRIX *)&D_1F8000C0), &D_1F800020, &(*(MATRIX *)&SCRATCHPAD));
-    ApplyRotMatrix(&D_1F800068, (*(MATRIX *)&SCRATCHPAD).t);
-    (*(MATRIX *)&SCRATCHPAD).t[0] += (*(MATRIX *)&D_1F8000C0).t[0];
-    (*(MATRIX *)&SCRATCHPAD).t[1] += (*(MATRIX *)&D_1F8000C0).t[1];
-    (*(MATRIX *)&SCRATCHPAD).t[2] += (*(MATRIX *)&D_1F8000C0).t[2];
-    SetRotMatrix(&(*(MATRIX *)&SCRATCHPAD));
-    SetTransMatrix(&(*(MATRIX *)&SCRATCHPAD));
+    MulMatrix0(&(*(MATRIX *)&D_1F8000C0), &D_1F800020, &(*&SCRATCHPAD.workMatrix));
+    ApplyRotMatrix(&D_1F800068, SCRATCHPAD.workMatrix.t);
+    SCRATCHPAD.workMatrix.t[0] += (*(MATRIX *)&D_1F8000C0).t[0];
+    SCRATCHPAD.workMatrix.t[1] += (*(MATRIX *)&D_1F8000C0).t[1];
+    SCRATCHPAD.workMatrix.t[2] += (*(MATRIX *)&D_1F8000C0).t[2];
+    SetRotMatrix(&(*&SCRATCHPAD.workMatrix));
+    SetTransMatrix(&(*&SCRATCHPAD.workMatrix));
     p = (u8 *)D_1F800164;
     p[7] = 0x3b;
     p[4] = 0;
@@ -1315,14 +1312,17 @@ void func_800EC0E8(GameObject *o)
     insertPrimWithBias(p, D_1F8001E0 + 0x10, LZ_FILE_CTRL_Long, (s8)o->unkF, 0x8000000);
     D_1F800164 += 0x24;
     q = (u8 *)D_1F800164;
+#if defined(VERSION_SCES_01330)
+    m = 0x20;
+#else
     if (GetGraphType() == 1) m = 0x80;
     else if (GetGraphType() == 2) m = 0x80;
     else m = 0x20;
+#endif
     SetDrawMode(q, 0, 0, m, 0);
     AddPrim((s32 *)D_1F8001E0 + (LZ_FILE_CTRL_Long + 4) + (s8)o->unkF, q);
     D_1F800164 += 0xc;
 }
-#endif
 #undef gte_ldv3
 #undef gte_rtpt
 #undef gte_stsxy3_g4

@@ -265,8 +265,8 @@ void updateScrollAnchoredEffect(u8* self)
             break;
         }
         self[1] = 1;
-        *(s16*)(self + 0x12) = *(int*)(self + 0x30) - *(u16*)0x1F800176;
-        *(s16*)(self + 0x16) = *(int*)(self + 0x34) - *(u16*)0x1F800186;
+        *(s16*)(self + 0x12) = *(int*)(self + 0x30) - (*(u16 *)&SPAD->unk168[3].p.whole);
+        *(s16*)(self + 0x16) = *(int*)(self + 0x34) - (*(u16 *)&SPAD->unk168[7].p.whole);
         pushDrawListLayer7(self);
         break;
     case 2:

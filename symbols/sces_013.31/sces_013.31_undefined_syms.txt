@@ -113,3 +113,5 @@ _svm_vh = 0x800B1220;
 _svm_voice = 0x800AEBC0;
 kMaxPrograms = 0x800B120C;
 spuVmMaxVoice = 0x800B1228;
+PROVIDE(PadInfoMode = 0x8006911C);
+PROVIDE(PadSetMainMode = 0x800693C8);

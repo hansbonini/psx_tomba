@@ -92,8 +92,8 @@ void dispatchTasks(void)
     Task* task2;
     Task* task3;
 
-    *(Task** )(&SCRATCHPAD+0x1D4) = (u32*)TASK_TABLE;
-    for (task = *(Task** )(&SCRATCHPAD+0x1D4); task <= 0x801FD94FU; task = *(Task** )(&SCRATCHPAD+0x1D4) = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(Task)) {
+    SCRATCHPAD.currentTask = (u32*)TASK_TABLE;
+    for (task = SCRATCHPAD.currentTask; task <= 0x801FD94FU; task = SCRATCHPAD.currentTask = *(u32* )(&D_1F8000C0[0]+0x114) + sizeof(Task)) {
         tid = 2;
         switch ((u16)(*(Task** )((byte*)D_1F8001A0+0x34))->status) {
             case 3:
@@ -102,7 +102,7 @@ void dispatchTasks(void)
                 (CURRENT_TASK)->task_id = OpenTh(task2->task_func, task2->task_sp, task2->task_gp);
                 ExitCriticalSection();
             case 2:
-                task3 = *(Task** )(&SCRATCHPAD+0x1D4);
+                task3 = SCRATCHPAD.currentTask;
                 task3->status = tid*2;
                 ChangeTh(task3->task_id);
                 break;
@@ -147,7 +147,7 @@ void exitTask(void)
 {
     (CURRENT_TASK)->status = 0;
     EnterCriticalSection();
-    CloseTh((*(Task** )(&SCRATCHPAD+0x1D4))->task_id);
+    CloseTh((SCRATCHPAD.currentTask)->task_id);
     ExitCriticalSection();
     ChangeTh(DescTH);
 }
@@ -179,7 +179,7 @@ void setTask(s32 arg0)
     task->status = 3;
     task->task_func = arg0;
     EnterCriticalSection();
-    CloseTh((*(Task** )(&SCRATCHPAD+0x1D4))->task_id);
+    CloseTh((SCRATCHPAD.currentTask)->task_id);
     ExitCriticalSection();
     ChangeTh(DescTH);
 }
@@ -243,8 +243,31 @@ void setTaskEntry(TaskEntry* arg0, int arg1)
     arg0->saved_reg_gp = GetGp();
 }
 #if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/system/task", func_80016ACC_slps01144);
+void func_80016ACC_slps01144(u_long *addr)
+{
+    TIM_IMAGE tim;
+
+    OpenTIM(addr);
+    ReadTIM(&tim);
+    DrawSync(0);
+    LoadImage(tim.prect, tim.paddr);
+    if (tim.mode & 8) {
+        LoadImage(tim.crect, tim.caddr);
+    }
+    DrawSync(0);
+}
 #endif
 #if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/system/task", func_80016B38_slps01144);
+void func_80016B38_slps01144(u_long *addr)
+{
+    TIM_IMAGE tim;
+
+    OpenTIM(addr);
+    ReadTIM(&tim);
+    DrawSync(0);
+    if (tim.mode & 8) {
+        LoadImage(tim.crect, tim.caddr);
+    }
+    DrawSync(0);
+}
 #endif

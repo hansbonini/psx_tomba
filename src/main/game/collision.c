@@ -21,7 +21,7 @@ extern s16 func_80043740(O8004065C_43AB0 *, s32, s32, s16);
 
 s16 func_80043AB0(O8004065C_43AB0 *o, s16 a, s16 b, s32 c)
 {
-    *(s32 *)0x1F800278 = getCollisionPlaneAt(a, o->p44[1]);
+    SPAD->unk278 = getCollisionPlaneAt(a, o->p44[1]);
     return func_80043740(o, a, b, (c & 1) | 0xff00);
 }
 

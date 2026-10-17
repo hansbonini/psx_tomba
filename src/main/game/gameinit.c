@@ -10,15 +10,11 @@ void initGameConfig(void)
     getBaseMatrix(SCRATCH_VIEW_MATRIX);
     camera->vrz = -544;
     camera->vpx = 160;
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-    camera->vpy = -128;
-#else
-    camera->vpy = -120;
-#endif
+    camera->vpy = -NTSC_PAL(120, 128);
     camera->vrx = 0;
     camera->vry = 0;
     camera->vpz = 0;
-    *(int* )0x1F800200 = 69;
+    SPAD->unk200 = 69;
     LOADED_LIST_FILE = 0xFF;
     LOADED_SOUND_SET = 0xFF;
     GAME.playerAP = 0;
@@ -26,9 +22,9 @@ void initGameConfig(void)
     GAME.playerLives = 3;
     GAME.saveSlot = 0xFF;
     GAME.unk730 = 0xFF;
-    *(char* )0x1F8003CE = 0;
-    *(short* )0x1F8001C8 = 0;
-    *(char* )0x1F8003D1 = 0; 
+    SPAD->unk3CE = 0;
+    (*(short *)&SPAD->unk1C8) = 0;
+    SPAD->unk3D1 = 0; 
     D_8009EBA0 = 0;
     GAME.selectedSection = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
     GAME.inventoryScreen = INVENTORY_SCREEN_ITEM;
@@ -42,8 +38,8 @@ void initGameConfig(void)
     GAME.unk672 = 0x639;
     GAME.unk674 = 0x691;
     GAME.unk5bc = D_8009E744;
-    if (*(u8* )0x1F8001B3 == 0) {
-        if (*(u8* )0x1F8001AB != 0) {
+    if (SPAD->unk1B3 == 0) {
+        if (SPAD->unk1AB != 0) {
             GAME.inventory.slots[0] = ITEM_BLACKJACK;
             GAME.inventory.slots[1] = ITEM_GRAPPLE;
             GAME.inventory.slots[2] = ITEM_GRAPPLEJACK;
@@ -92,9 +88,9 @@ void initHud(void)
     char *tmp;
 
     memset(D_8009BC98, 0, sizeof(D_8009BC98));
-    *(s16* )0x1F8001C6 = 0;
+    SPAD->unk1C6 = 0;
     GAME.fadeScreenControl = 1;
-    *(s8* )0x1F8003D0 = 0;
+    SPAD->unk3D0 = 0;
     GAME.playerIdleState = 0;
     initAreaScripts();
     restoreAreaBgmVolume();
@@ -200,10 +196,10 @@ void initObjectPool(void)
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initLayer1DrawList);
 void initLayer1DrawList(void)
 {
-    *(int* )0x1F80021C = &D_800A5970;
-    *(int* )0x1F800260 = &D_800A5970;
-    *(short* )0x1F800250 = 0;
-    *(short* )0x1F800246 = 0;
+    SPAD->unk21C = &D_800A5970;
+    (*(int *)&SPAD->unk260) = &D_800A5970;
+    (*(short *)&SPAD->unk250) = 0;
+    SPAD->unk246 = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initMainDrawList);
@@ -212,8 +208,8 @@ void initMainDrawList(void)
     s32 i;
     s32 off;
 
-    *(s32** )0x1F800264 = *(s32** )0x1F800220 = &D_800B0680;
-    *(s16* )0x1F80024A = *(s16* )0x1F800252 = 0;
+    (*(s32* *)&SPAD->unk264) = SPAD->unk220 = &D_800B0680;
+    SPAD->unk24A = SPAD->unk252 = 0;
     for (i = 7; 0 <= i; --i) {
         off = i * 0x8C;
         *(s16*)&LOAD_BUFFER[off] = 0xFFFF;
@@ -225,10 +221,10 @@ void initMainDrawList(void)
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initLayer4DrawList);
 void initLayer4DrawList(void)
 {
-    *(int** )0x1F800224 = &D_800B0470;
-    *(int** )0x1F800268 = &D_800B0470;
-    *(short* )0x1F800254 = 0;
-    *(short* )0x1F80024C = 0;
+    (*(int* *)&SPAD->unk224) = &D_800B0470;
+    (*(int* *)&SPAD->unk268) = &D_800B0470;
+    SPAD->unk254 = 0;
+    (*(short *)&SPAD->unk24C) = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initObjectPoolLayer8);
@@ -265,10 +261,10 @@ void initObjectPoolLayer8(void)
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initLayer5DrawList);
 void initLayer5DrawList(void)
 {
-    *(int** )0x1F800228 = &D_800B04F0;
+    (*(int* *)&SPAD->unk228) = &D_800B04F0;
     *(int** )0x1F80026C = &D_800B04F0;
-    *(short* )0x1F800256 = 0;
-    *(short* )0x1F800248 = 0;
+    SPAD->unk256 = 0;
+    SPAD->unk248 = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", clearLayer1Buffer);
@@ -884,7 +880,7 @@ void initAreaScripts(void) {
                 case AREA00_SECTION00_VILLAGEOFALLBEGINNINGS:
                 case AREA00_SECTION01_FORESTOFALLBEGINNINGS:
                 case AREA00_SECTION02_FORESTOFALLBEGINNINGSHUTENTRANCE:
-                    u = *(int* )0x1F8002B8;
+                    u = SPAD->wssData[0];
                     func_8003B2C8(u, p);
                     scriptStart(p, 0);
                     break;
@@ -897,7 +893,7 @@ void initAreaScripts(void) {
                  case AREA01_SECTION02_WOBBLYWHARF:
                  case AREA01_SECTION03_WATCHTOWER:
                  case AREA01_SECTION04_CHARITYSQUARE:
-                    u = *(int* )0x1F8002B8;
+                    u = SPAD->wssData[0];
                     func_8003B2C8(u, p);
                     scriptStart(p, 0);
                     break;
@@ -906,13 +902,13 @@ void initAreaScripts(void) {
         case AREA02_DWARFVILLAGE:
             switch(GAME.selectedSection) {
                 case AREA02_SECTION00_DWARFVILLAGE:
-                    u = *(int* )0x1F8002BC;
+                    u = SPAD->wssData[1];
                     func_8003B2C8(u, p);
                     scriptStart(p, 0);
                     break;
                  case AREA02_SECTION01_DWARFELDERSHUT:
                  case AREA02_SECTION02_UNDERGROUNDPRISON:
-                    u = *(int* )0x1F8002B8;
+                    u = SPAD->wssData[0];
                     func_8003B2C8(u, p);
                     scriptStart(p, 0);
                     break;

@@ -2,162 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_801189F4);
-typedef struct SPADBlock_189F4 {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_189F4;
 extern void playSFX(s32);
 
 static __inline__ s32 add_189F4(s32 a, s32 b)
@@ -172,7 +16,7 @@ u8 func_801189F4(GameObject *o, s32 d)
 
     switch ((u8)d) {
     case 0:
-        if ((*(s16*)((char*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).i174 + 2)) + 300 < o->h->p.whole) {
+        if (SCRATCHPAD.unk168[3].p.whole + 300 < o->h->p.whole) {
             t = 8;
             t -= d;
             t += nextRandom() & 3;
@@ -183,20 +27,20 @@ u8 func_801189F4(GameObject *o, s32 d)
     case 1:
     case 2:
     case 3:
-        if ((*(s16*)((char*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).i174 + 2)) + 300 < o->h->p.whole) {
+        if (SCRATCHPAD.unk168[3].p.whole + 300 < o->h->p.whole) {
             t = 8;
             t -= d;
             r = (nextRandom() & 3) - 2;
             t += r;
             d = t & 0xf;
             playSFX(7);
-        } else if (o->y.p.whole < (*(s16*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).s186) - 200) {
+        } else if (o->y.p.whole < SCRATCHPAD.unk168[7].p.whole - 200) {
             d = -d & 0xf;
             playSFX(7);
         }
         break;
     case 4:
-        if (o->y.p.whole < (*(s16*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).s186) - 200) {
+        if (o->y.p.whole < SCRATCHPAD.unk168[7].p.whole - 200) {
             d = add_189F4(-d, nextRandom() & 1) & 0xf;
             playSFX(7);
         }
@@ -204,16 +48,16 @@ u8 func_801189F4(GameObject *o, s32 d)
     case 5:
     case 6:
     case 7:
-        if ((*(s16*)((char*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).i174 + 2)) + 20 > o->h->p.whole) {
+        if (SCRATCHPAD.unk168[3].p.whole + 20 > o->h->p.whole) {
             d = (8 - d) & 0xf;
             playSFX(7);
-        } else if (o->y.p.whole < (*(s16*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).s186) - 200) {
+        } else if (o->y.p.whole < SCRATCHPAD.unk168[7].p.whole - 200) {
             d = -d & 0xf;
             playSFX(7);
         }
         break;
     case 8:
-        if ((*(s16*)((char*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).i174 + 2)) + 20 > o->h->p.whole) {
+        if (SCRATCHPAD.unk168[3].p.whole + 20 > o->h->p.whole) {
             t = 8;
             t -= d;
             t += nextRandom() & 1;
@@ -224,20 +68,20 @@ u8 func_801189F4(GameObject *o, s32 d)
     case 9:
     case 10:
     case 11:
-        if ((*(s16*)((char*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).i174 + 2)) + 20 > o->h->p.whole) {
+        if (SCRATCHPAD.unk168[3].p.whole + 20 > o->h->p.whole) {
             t = 8;
             t -= d;
             r = (nextRandom() & 3) - 2;
             t += r;
             d = t & 0xf;
             playSFX(7);
-        } else if ((*(s16*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).s186) - 40 < o->y.p.whole) {
+        } else if (SCRATCHPAD.unk168[7].p.whole - 40 < o->y.p.whole) {
             d = -d & 0xf;
             playSFX(7);
         }
         break;
     case 12:
-        if ((*(s16*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).s186) - 40 < o->y.p.whole) {
+        if (SCRATCHPAD.unk168[7].p.whole - 40 < o->y.p.whole) {
             d = add_189F4(-d, nextRandom() & 0x10) & 0xf;
             playSFX(7);
         }
@@ -245,10 +89,10 @@ u8 func_801189F4(GameObject *o, s32 d)
     case 13:
     case 14:
     case 15:
-        if ((*(s16*)((char*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).i174 + 2)) + 300 < o->h->p.whole) {
+        if (SCRATCHPAD.unk168[3].p.whole + 300 < o->h->p.whole) {
             d = (8 - d) & 0xf;
             playSFX(7);
-        } else if ((*(s16*)&(*(SPADBlock_189F4 *)&SCRATCHPAD).s186) - 40 < o->y.p.whole) {
+        } else if (SCRATCHPAD.unk168[7].p.whole - 40 < o->y.p.whole) {
             d = -d & 0xf;
             playSFX(7);
         }
@@ -2566,162 +2410,6 @@ void func_8011994C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_80119D30);
-typedef struct SPADBlock_19D30 {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_19D30;
 
 typedef struct GVars_19D30 {
     u8 b30;
@@ -2756,7 +2444,7 @@ extern void *D_8012933C;
 static __inline__ void setup_19D30(GameObject *p)
 {
     (*(GameObject **)&(*(GVars_19D30 *)&D_8009BC98).p54) = p;
-    p->spriteBank = ((s32*)&(*(SPADBlock_19D30 *)&SCRATCHPAD).i2d4)[0];
+    p->spriteBank = SCRATCHPAD.sprData[3];
     p->anim = D_8012933C;
     readAnimFrameCount(p);
 }
@@ -2822,162 +2510,6 @@ void func_80119D30(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_80119FEC);
-typedef struct SPADBlock_19FEC {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_19FEC;
 
 extern void *D_80129338;
 extern u16 D_80124FE4[];
@@ -2993,7 +2525,7 @@ void func_80119FEC(GameObject *o)
         o->hitHeight = D_80124FE4[o->unkC];
         o->tpage = 0x10;
         o->unkD = 0;
-        o->spriteBank = ((s32*)&(*(SPADBlock_19FEC *)&SCRATCHPAD).i2d4)[0];
+        o->spriteBank = SCRATCHPAD.sprData[3];
         o->anim = D_80129338;
         readAnimFrameCount(o);
         break;
@@ -3037,7 +2569,7 @@ void func_8011A0C8(GameObject *o)
         break;
     case 1:
         e = (GameObject *)o->unk90;
-        getBaseMatrix(((char *)&SCRATCHPAD));
+        getBaseMatrix(&SCRATCHPAD.workMatrix);
         v.vx = o->unk30 >> 16;
         v.vy = o->unk34 >> 16;
         v.vz = o->unk38 >> 16;
@@ -3089,7 +2621,7 @@ void func_8011A22C(GameObject *o)
         break;
     case 1:
         e = (GameObject *)o->unk90;
-        getBaseMatrix(((char *)&SCRATCHPAD));
+        getBaseMatrix(&SCRATCHPAD.workMatrix);
         v.vx = o->unk30 >> 16;
         v.vy = o->unk34 >> 16;
         v.vz = o->unk38 >> 16;
@@ -3171,162 +2703,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011C6B4);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011C730);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011C73C);
-typedef struct SPADBlock_1C73C {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_1C73C;
 
 typedef struct {
     GameObject t;
@@ -3357,8 +2733,8 @@ void func_8011C73C(P_1C73C *o, GameObject *e)
             o->t.unkB8 = 0;
             o->t.unkBA = 0;
             e->touchFlag = 2;
-            (*(SPADBlock_1C73C *)&SCRATCHPAD).s19e = 0;
-            (*(GameObject **)&(*(SPADBlock_1C73C *)&SCRATCHPAD).p3c0) = e;
+            SCRATCHPAD.unk19E = 0;
+            (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = e;
         }
     }
 }
@@ -3430,167 +2806,11 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011CBD0);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011CC08);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011CC3C);
-typedef struct SPADBlock_1CC3C {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_1CC3C;
 
 s32 func_8011CC3C(u16 *p)
 {
-    if ((u16)(p[0] - (*(u16*)((char*)&(*(SPADBlock_1CC3C *)&SCRATCHPAD).iec + 2)) + 0xa0) < 0x141)
-        return (u16)(p[1] - (*(u16*)((char*)&(*(SPADBlock_1CC3C *)&SCRATCHPAD).if0 + 2)) + 0x6e) < 0xdd;
+    if ((u16)(p[0] - (*(u16*)((char*)&SCRATCHPAD.vpx.raw + 2)) + 0xa0) < 0x141)
+        return (u16)(p[1] - (*(u16*)((char*)&SCRATCHPAD.vpy.raw + 2)) + 0x6e) < 0xdd;
     return 0;
 }
 

@@ -154,7 +154,7 @@ void func_800E7DDC(s32* arg0)
 // INCLUDE_ASM("overlays/optsub00/nonmatchings/optsub00", func_800E7EB0);
 void func_800E7EB0(void)
 {
-    *(u8*)0x1F8001CF = 1;
+    SPAD->unk1CF = 1;
     func_800E8160();
     func_800E83EC(D_8009C9E4, D_8009E450);
     func_800E8814();
@@ -163,7 +163,7 @@ void func_800E7EB0(void)
 // INCLUDE_ASM("overlays/optsub00/nonmatchings/optsub00", func_800E7EFC);
 void func_800E7EFC(void)
 {
-    *(u8*)0x1F8001CF = 1;
+    SPAD->unk1CF = 1;
     func_800E82F4();
     func_800E8570((s16)D_8009E744);
     func_800E8814();
@@ -172,7 +172,7 @@ void func_800E7EFC(void)
 // INCLUDE_ASM("overlays/optsub00/nonmatchings/optsub00", func_800E7F40);
 void func_800E7F40(void)
 {
-    *(u8*)0x1F8001CF = 1;
+    SPAD->unk1CF = 1;
     func_800E8680();
     func_800E8814();
 }

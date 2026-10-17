@@ -28,10 +28,10 @@ static __inline__ s32 nearObj_2E0A4(GameObject *o, GameObject *p)
 static __inline__ s32 nearCam_2E0A4(GameObject *o)
 {
     s16 dv;
-    if ((u16)(o->d->p.whole - *(u16 *)0x1F800172 + 45) >= 91) return 0;
-    dv = *(u16 *)0x1F80016E - o->y.p.whole;
+    if ((u16)(o->d->p.whole - (*(u16 *)&SPAD->unk168[2].p.whole) + 45) >= 91) return 0;
+    dv = (*(u16 *)&SPAD->unk168[1].p.whole) - o->y.p.whole;
     if (dv >= -31 || (u16)(dv + 172) >= 173) return 0;
-    return (u16)(o->h->p.whole - *(u16 *)0x1F80016A + 16) < 33;
+    return (u16)(o->h->p.whole - (*(u16 *)&SPAD->unk168[0].p.whole) + 16) < 33;
 }
 
 void func_8012E0A4(GameObject *o)
@@ -232,10 +232,10 @@ extern void playSFX(s32);
 static __inline__ s32 nearCam_2E738(GameObject *o)
 {
     s16 dv;
-    if ((u16)(o->d->p.whole - *(u16 *)0x1F800172 + 45) >= 91) return 0;
-    dv = *(u16 *)0x1F80016E - o->y.p.whole;
+    if ((u16)(o->d->p.whole - (*(u16 *)&SPAD->unk168[2].p.whole) + 45) >= 91) return 0;
+    dv = (*(u16 *)&SPAD->unk168[1].p.whole) - o->y.p.whole;
     if (dv >= -31 || (u16)(dv + 172) >= 173) return 0;
-    return (u16)(o->h->p.whole - *(u16 *)0x1F80016A + 16) < 33;
+    return (u16)(o->h->p.whole - (*(u16 *)&SPAD->unk168[0].p.whole) + 16) < 33;
 }
 
 void func_8012E738(GameObject *o)

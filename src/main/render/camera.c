@@ -12,48 +12,41 @@ void setSpawnAreaFlag(void)
 
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", loadSpawnPosition);
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/render/camera", loadSpawnPosition);
-#else
 void loadSpawnPosition(u8* self)
 {
     s16* row = (s16*)((u8*)D_8007BF78[GAME.selectedArea][GAME.selectedSection] + (u16)D_8009BCEA * 8);
 
-    *(int*)(self + 0xEC) = *row++ << 16;
-    *(int*)(self + 0xF0) = *row << 16;
-    *(int*)(self + 0xF4) = row[1] << 16;
+    *(int*)(self + NTSC_J(0xEC, 0xDC)) = *row++ << 16;
+    *(int*)(self + NTSC_J(0xF0, 0xE0)) = *row << 16;
+    *(int*)(self + NTSC_J(0xF4, 0xE4)) = row[1] << 16;
     switch (GAME.selectedArea) {
     case 0:
         if (D_8009C617 == 0 && GAME.selectedSection == 0) {
-            *(s16*)(self + 0xEE) = 0x40;
+            *(s16*)(self + NTSC_J(0xEE, 0xDE)) = 0x40;
         } else if (GAME.selectedSection == 3) {
-            *(s16*)(self + 0xEE) = 0xD2;
+            *(s16*)(self + NTSC_J(0xEE, 0xDE)) = 0xD2;
         }
         break;
     case 2:
         if (GAME.selectedSection == 4) {
-            *(s16*)(self + 0xEE) = 0x90;
+            *(s16*)(self + NTSC_J(0xEE, 0xDE)) = 0x90;
         }
         break;
     case 4:
         if (GAME.selectedSection == 0xF) {
-            *(s16*)(self + 0xEE) = 0x90;
+            *(s16*)(self + NTSC_J(0xEE, 0xDE)) = 0x90;
         }
         break;
     case 10:
         if (GAME.selectedSection == 8) {
-            *(s16*)(self + 0xEE) = 0x90;
+            *(s16*)(self + NTSC_J(0xEE, 0xDE)) = 0x90;
         }
         break;
     }
 }
-#endif
 
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", initPlayerAtSpawn);
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/render/camera", initPlayerAtSpawn);
-#else
 void initPlayerAtSpawn(void)
 {
     u8* p = &PLAYER.obj;
@@ -75,7 +68,7 @@ void initPlayerAtSpawn(void)
     flags = (u16)row[1];
     plane = flags >> 8;
     flags &= 1;
-    *(u16*)0x1F8001C8 = flags;
+    SPAD->unk1C8 = flags;
     GAME.area00_fogControl = plane;
     if (flags == 0) {
         *(u8**)(p + 0x40) = p + 0x10;
@@ -93,14 +86,13 @@ void initPlayerAtSpawn(void)
     }
     if (D_8009C618[0] == 3 || D_8009C617 == 0) {
         loadSpawnPosition(p);
-        *(s16*)(p + 0x12) = *(u16*)(p + 0xEE);
+        *(s16*)(p + 0x12) = *(u16*)(p + NTSC_J(0xEE, 0xDE));
         *(s16*)(p + 0x16) -= 0x104;
     } else if ((CURRENT_TASK)->loadGameSelected != 0) {
         (CURRENT_TASK)->loadGameSelected = 0;
         *(VEC3*)&PLAYER.obj.x = D_8009C61C;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", loadSectionBounds);
 void loadSectionBounds(u8* self)
@@ -122,162 +114,6 @@ void loadSectionHeight(u8* self)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/camera", func_800246B0);
-typedef struct SPADBlock_246B0 {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_246B0;
 
 typedef struct GCDBlock_246B0 {
     u8 _pad0[0x94];
@@ -639,15 +475,12 @@ typedef struct { char p[0x4c]; u16 w4c; } O_246B0;
 extern s16 D_800A38E4;
 extern s16 D_800A38E6;
 extern void func_8002A0A0(C_246B0 *);
-#define FLAG (*(u16 *)0x1F8001C8)
-#define SFLAG (*(s16 *)0x1F8001C8)
+#define FLAG (SPAD->unk1C8)
+#define SFLAG ((*(s16 *)&SPAD->unk1C8))
 
 static __inline__ s32 smax_246B0(s32 a, s16 b) { s16 r = a; asm("" : "=r"(r) : "0"(r)); if (a < b) r = b; return r; }
 static __inline__ s32 smin_246B0(s32 a, s16 b) { register s16 r asm("$4") = a; if ((s16)a > b) r = b; return r; }
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/render/camera", func_800246B0);
-#else
 void func_800246B0(void)
 {
     C_246B0 *c;
@@ -663,18 +496,22 @@ void func_800246B0(void)
     D_800A38E8 = *p++;
     D_800A38EA = *p;
     if (!(FLAG & 1)) {
-        D_800A38EC = &((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[3];
-        D_800A38F0 = &((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[5];
+        D_800A38EC = &((s32*)&SCRATCHPAD.vrx.raw)[3];
+        D_800A38F0 = &((s32*)&SCRATCHPAD.vrx.raw)[5];
     } else {
-        D_800A38F0 = &((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[3];
-        D_800A38EC = &((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[5];
+        D_800A38F0 = &((s32*)&SCRATCHPAD.vrx.raw)[3];
+        D_800A38EC = &((s32*)&SCRATCHPAD.vrx.raw)[5];
     }
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[0] = 0;
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[1] = 0;
+    ((s32*)&SCRATCHPAD.vrx.raw)[0] = 0;
+    ((s32*)&SCRATCHPAD.vrx.raw)[1] = 0;
+#if defined(VERSION_SLPS_01144)
+    ((s32*)&SCRATCHPAD.vrx.raw)[2] = 0xFDE00000;
+#else
     if ((((u16 *)&GAME)[0] == 4 && D_8009BCCA < 4) || *(s32 *)((u16 *)&GAME) == 0x50000)
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[2] = 0xFDC00000;
+        ((s32*)&SCRATCHPAD.vrx.raw)[2] = 0xFDC00000;
     else
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[2] = 0xFDE00000;
+        ((s32*)&SCRATCHPAD.vrx.raw)[2] = 0xFDE00000;
+#endif
     q = D_8007BF78[((u16 *)&GAME)[0]][D_8009BCCA];
     w = (*(O_246B0 **)&D_1F8001D4)->w4c;
     q += (*(u16 *)&D_8009BCEA) * 4;
@@ -687,19 +524,19 @@ void func_800246B0(void)
         break;
     }
     if (!(FLAG & 1)) {
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[3] = smax_246B0(*q++, c->w2c) << 16;
-        { register s32 t asm("$2"); t = smin_246B0((u16)*q++ + off, c->w32) << 16; ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[4] = t; }
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[5] = *q << 16;
+        ((s32*)&SCRATCHPAD.vrx.raw)[3] = smax_246B0(*q++, c->w2c) << 16;
+        { register s32 t asm("$2"); t = smin_246B0((u16)*q++ + off, c->w32) << 16; ((s32*)&SCRATCHPAD.vrx.raw)[4] = t; }
+        ((s32*)&SCRATCHPAD.vrx.raw)[5] = *q << 16;
     } else {
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[3] = *q++ << 16;
-        { register s32 t asm("$2"); t = smin_246B0((u16)*q++ + off, c->w32) << 16; ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[4] = t; }
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[5] = smax_246B0(*q, c->w2c) << 16;
+        ((s32*)&SCRATCHPAD.vrx.raw)[3] = *q++ << 16;
+        { register s32 t asm("$2"); t = smin_246B0((u16)*q++ + off, c->w32) << 16; ((s32*)&SCRATCHPAD.vrx.raw)[4] = t; }
+        ((s32*)&SCRATCHPAD.vrx.raw)[5] = smax_246B0(*q, c->w2c) << 16;
     }
-    x = *(s16 *)0x1F8000F2;
+    x = SPAD->vpy.p.whole;
     asm("");
     v = c->w30;
     if (x < v || (v = c->w32, v < x))
-        ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[4] = v << 16;
+        ((s32*)&SCRATCHPAD.vrx.raw)[4] = v << 16;
     { register s32 *pp asm("$4") = c->p34;
     v = c->w2e;
     if (v < ((SP_246B0 *)pp)->y || (v = c->w2c, ((SP_246B0 *)pp)->y < v))
@@ -717,14 +554,13 @@ void func_800246B0(void)
         c->d7c = SFLAG * 0x5A00;
     }
     func_8002A0A0(c);
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).i174)[0] = c->pos.x;
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).i174)[1] = c->pos.y;
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).i174)[2] = c->pos.z;
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).i174)[3] = c->pos.x;
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).i174)[4] = c->pos.y + ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).ie0)[1];
-    ((s32*)&(*(SPADBlock_246B0 *)&SCRATCHPAD).i174)[5] = c->pos.z;
+    ((s32*)&SCRATCHPAD.unk168[3].raw)[0] = c->pos.x;
+    ((s32*)&SCRATCHPAD.unk168[3].raw)[1] = c->pos.y;
+    ((s32*)&SCRATCHPAD.unk168[3].raw)[2] = c->pos.z;
+    ((s32*)&SCRATCHPAD.unk168[3].raw)[3] = c->pos.x;
+    ((s32*)&SCRATCHPAD.unk168[3].raw)[4] = c->pos.y + ((s32*)&SCRATCHPAD.vrx.raw)[1];
+    ((s32*)&SCRATCHPAD.unk168[3].raw)[5] = c->pos.z;
 }
-#endif
 #undef FLAG
 #undef SFLAG
 

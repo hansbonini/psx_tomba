@@ -5,12 +5,21 @@
    Part of game.h: include "game.h", not this file. */
 
 /* --- PSX scratchpad (0x1F800000) -- see `struct scratchpad` --- */
-extern u_char SCRATCHPAD;
+extern scratchpad SCRATCHPAD;
 extern u_char D_1F8000C0[];
 extern u_char D_1F8000F8[];
 extern u_char D_1F800118[];
 extern u_char D_1F8001A0[0x24];
 extern int SPR_DATA[];
+
+typedef struct ObjSetupEntry {
+    u16 tpage;
+    s16 p2;
+    s16 sprite;
+    s16 p6;
+    s32 *anims;
+} ObjSetupEntry;
+extern ObjSetupEntry D_8007D2E8[];
 extern u16  D_1F8001C8;
 extern s32* D_1F800204;
 extern u16  D_1F800236;
@@ -789,8 +798,8 @@ extern s16 D_8007EB82;
 extern s16 D_8007EC68[];
 extern s16 D_8007EC70[];
 extern s16 D_8007EC78[];
-extern s16 D_8009C96A[];
-extern s16 D_8009C96C[];
+extern Unk8009C968 D_8009C968;
+extern ObjectAC *D_8009B6A0;
 extern s16 D_800A38EA;
 extern s16 D_800A5412;
 extern s16 D_800A5416;
@@ -847,6 +856,7 @@ extern u8 *D_8007F968;
 extern u8 *D_8009E454;
 extern u8 DAT_8009c971;
 extern u8 D_1F8003D1;
+extern u16 D_1F8003DA;
 extern u8 D_80011F0D[];
 extern u8 D_8007C840[];
 extern u8 D_8007DD88[];

@@ -97,9 +97,6 @@ typedef struct ObjectVariantView {
     u_char unk3;
 } ObjectVariantView;
 
-/* 16.16 fixed point value. */
-typedef struct { u16 frac; s16 whole; } FixParts;
-typedef union { s32 raw; FixParts p; } Fix16;
 
 /* Game object. The layout follows the TObj struct of afsenovilla/Tombi-Decomp
    (MIT licence, (c) 2026 afsenovilla and Tombi-Decomp contributors). */
@@ -197,6 +194,44 @@ typedef struct GameObject {
     /* 0xBE */ u8 unkBE;
     /* 0xBF */ u8 unkBF;
 } GameObject;
+
+typedef struct ObjectAC {
+    s16 x;
+    s16 y;
+    u16 tpage;
+    u16 clut;
+    u16 tpage2;
+    u16 clut2;
+    s8 mode;
+    u8 frame;
+    s16 angle;
+    u16 shadow[8];
+    u16 shadow2[8];
+    s16 shadowLen;
+    s16 shadowLen2;
+    s16 w34;
+    s16 w36;
+} ObjectAC;
+
+typedef struct Unk8009C968 {
+    s16 w0;
+    s16 w2;
+    s16 w4;
+    u8 pad6[0xA];
+    u16 w10;
+    u8 pad12[0x2];
+    u8 b14;
+    u8 pad15[0x5B];
+    u16 w70;
+    u8 pad72[0x2];
+    u16 w74;
+    u8 pad76[0x1E];
+    s32 i94;
+    u8 pad98[0x4];
+    s32 i9c;
+    s32 ia0;
+    u8 pada4[0xC];
+} Unk8009C968;
 
 typedef struct Player {
     /* 0x00 */ GameObject obj;

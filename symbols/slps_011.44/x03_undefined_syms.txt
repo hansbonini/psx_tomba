@@ -10,3 +10,5 @@ freeObjectLayer2 = 0x80017D64;
 func_80022E44 = 0x8002122C;
 readAnimFrameCount = 0x80020DE4;
 tickAnimation = 0x80020E38;
+PROVIDE(advanceAnimFrame = 0x80020E0C);
+PROVIDE(showMessageBoxDirect = 0x8002E42C);

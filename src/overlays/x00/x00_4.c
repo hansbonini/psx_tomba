@@ -179,7 +179,7 @@ void func_8011FBE0(GameObject *o)
         g = &PLAYER;
         switch (o->step) {
         case 0:
-            d = o->h->p.whole - (*(u16 *)0x1F80016A + 0x20);
+            d = o->h->p.whole - ((*(u16 *)&SPAD->unk168[0].p.whole) + 0x20);
             if (d == 0) {
                 o->step = 2;
                 break;

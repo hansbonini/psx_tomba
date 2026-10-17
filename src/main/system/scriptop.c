@@ -638,9 +638,6 @@ void scriptOpSetPlayerState(void)
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003DCF0);
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003DCF0);
-#else
 void func_8003DCF0(void)
 {
     u8 *o = SCRIPT_CTX;
@@ -683,8 +680,12 @@ void func_8003DCF0(void)
                 D_8009BCA7 = 1;
             if (PLAYER.obj.state == 1) {
                 D_8009BCA7 = 0;
+#if defined(VERSION_SLPS_01144)
+                PLAYER.obj.active = 1;
+#else
                 if (GAME.selectedArea != 0 || D_800A5478 == 0)
                     PLAYER.obj.active = 1;
+#endif
             }
             PLAYER.obj.subState = b;
             PLAYER.obj.step = 0;
@@ -692,7 +693,6 @@ void func_8003DCF0(void)
     }
     *(s16 *)(o + 0x8a) += 1;
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", scriptOpSetPlayerFacing);
 void scriptOpSetPlayerFacing(void)

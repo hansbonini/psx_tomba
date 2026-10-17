@@ -375,7 +375,7 @@ inline s32 readCollisionTileShape(u8* arg0) {
     u16 pad;
     s32 dir;
 
-    pad = *(u16*)0x1F800282;
+    pad = SPAD->unk282;
     dir = (pad >> 5) & 0xF;
     if (!(pad & 0x3000)) {
         switch (dir) {
@@ -440,7 +440,7 @@ s16 func_80042C20(GameObject *o)
 
     if (*(u8 *)&o->unkAA != 0) return 0;
     if (o->active == 5) return 0;
-    d = o->h->p.whole - *(u16 *)0x1F80016A;
+    d = o->h->p.whole - (*(u16 *)&SPAD->unk168[0].p.whole);
     if (d == 0) {
         if (!(o->animFrame & 1)) {
             dx = 8; dx2 = -8; t = 0; dir2 = 1;
@@ -484,60 +484,13 @@ s16 func_80042C20(GameObject *o)
 #undef HIT
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", clampToCeilingAndProbeSides);
-#if defined(VERSION_SCES_01330)
-extern short D_800A38E8;
-short func_8004096C__sces01330(GameObject *o, short a, short b);
-
-static __inline__ short chk_3FB60(GameObject *o, int dx)
-{
-    return func_8004096C__sces01330(o, o->h->p.whole + dx, o->y.p.whole - 0x15);
-}
-
-int clampToCeilingAndProbeSides(GameObject *o)
-{
-    short r;
-    GameObject *s = o;
-    if (o->y.p.whole < D_800A38E8 - 0x90) {
-        o->y.p.whole = D_800A38E8 - 0x90;
-        return 1;
-    }
-    if ((r = chk_3FB60(s, 4)) != 0)
-        return r;
-    if ((r = chk_3FB60(s, -4)) != 0)
-        return r;
-    return 0;
-}
-#elif defined(VERSION_SCES_01331)
-extern short D_800A38E8;
-short func_800408D8__sces01331(GameObject *o, short a, short b);
-
-static __inline__ short chk_3FACC(GameObject *o, int dx)
-{
-    return func_800408D8__sces01331(o, o->h->p.whole + dx, o->y.p.whole - 0x15);
-}
-
-int clampToCeilingAndProbeSides(GameObject *o)
-{
-    short r;
-    GameObject *s = o;
-    if (o->y.p.whole < D_800A38E8 - 0x90) {
-        o->y.p.whole = D_800A38E8 - 0x90;
-        return 1;
-    }
-    if ((r = chk_3FACC(s, 4)) != 0)
-        return r;
-    if ((r = chk_3FACC(s, -4)) != 0)
-        return r;
-    return 0;
-}
-#else
 s32 clampToCeilingAndProbeSides(u8* arg0) {
     u8* obj;
     s16 ret;
 
     obj = arg0;
-    if (*(s16*)(arg0 + 0x16) < D_800A38E8 - 0x88) {
-        *(s16*)(obj + 0x16) = D_800A38E8 - 0x88;
+    if (*(s16*)(arg0 + 0x16) < D_800A38E8 - NTSC_PAL(0x88, 0x90)) {
+        *(s16*)(obj + 0x16) = D_800A38E8 - NTSC_PAL(0x88, 0x90);
         return 1;
     }
     ret = func_80043D2C(arg0, (*(u16**)(obj + 0x40))[1] + 4, *(s16*)(arg0 + 0x16) - 0x15);
@@ -550,7 +503,6 @@ s32 clampToCeilingAndProbeSides(u8* arg0) {
     }
     return 0;
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", applyCollisionTileResponse);
 void applyCollisionTileResponse(u8* arg0) {
@@ -573,11 +525,11 @@ void applyCollisionTileResponse(u8* arg0) {
         speed = -speed;
     }
     arg0[0x69] = 1;
-    tmp = *(u16*)0x1F800284;
-    *(u8*)0x1F8001D2 = 1;
+    tmp = (*(u16 *)&SPAD->unk284);
+    SPAD->unk1D2 = 1;
     arg0[0xA0] = 0;
     arg0[0xBE] = 0;
-    pad = *(u16*)0x1F800282;
+    pad = SPAD->unk282;
     *(s16*)(arg0 + 0xB0) = speed;
     *(u16*)(arg0 + 0xAE) = tmp;
     hi = pad >> 15;
@@ -613,7 +565,7 @@ void applyCollisionTileResponse(u8* arg0) {
                 break;
             }
         }
-        if (*(u16*)0x1F800282 & 0x1000) {
+        if (SPAD->unk282 & 0x1000) {
             switch (dir2 & 3) {
             case 0:
                 arg0[0xA0] |= 0x10;

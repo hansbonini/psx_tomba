@@ -8,19 +8,19 @@
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", projectActorPosition);
 int projectActorPosition(u8* self, long* sxy, long* otz)
 {
-    *(s16*)0x1F800060 = *(u16*)(self + 0x12);
-    *(s16*)0x1F800062 = *(u16*)(self + 0x16);
+    SPAD->unk060.vx = *(u16*)(self + 0x12);
+    SPAD->unk060.vy = *(u16*)(self + 0x16);
     if (*(u_long*)&GAME.selectedArea == 0x10005 && (u16)(CURRENT_TASK)->state2 != 3) {
-        *(s16*)0x1F800064 = (s16)*(u16*)(self + 0x1A) >> 2;
+        SPAD->unk060.vz = (s16)*(u16*)(self + 0x1A) >> 2;
     } else {
-        *(s16*)0x1F800064 = *(u16*)(self + 0x1A);
+        SPAD->unk060.vz = *(u16*)(self + 0x1A);
     }
     SetRotMatrix(SCRATCH_VIEW_MATRIX);
     SetTransMatrix(SCRATCH_VIEW_MATRIX);
     gte_ldv0(&D_1F800060);
     gte_rtps_real();
     gte_stflg(&D_1F80008C);
-    if (*(long*)0x1F80008C < 0) {
+    if (SPAD->unk08C < 0) {
         return 1;
     }
     gte_stsxy(sxy);
@@ -29,38 +29,9 @@ int projectActorPosition(u8* self, long* sxy, long* otz)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", isPolyFT4OnScreen);
-#if defined(VERSION_SCES_01330)
-typedef struct {
-    char pad[8];
-    unsigned short w8, wa, pad1[2], w10, w12, pad2[2], w18, w1a, pad3[2], w20, w22;
-} Q_4FD54;
-
-int isPolyFT4OnScreen(Q_4FD54 *o)
-{
-    if (o->wa < 0x100 || o->w12 < 0x100 || o->w1a < 0x100 || o->w22 < 0x100) {
-        if (o->w8 < 0x140 || o->w10 < 0x140 || o->w18 < 0x140 || o->w20 < 0x140)
-            return 1;
-    }
-    return 0;
-}
-#elif defined(VERSION_SCES_01331)
-typedef struct {
-    char pad[8];
-    unsigned short w8, wa, pad1[2], w10, w12, pad2[2], w18, w1a, pad3[2], w20, w22;
-} Q_4FCC0;
-
-int isPolyFT4OnScreen(Q_4FCC0 *o)
-{
-    if (o->wa < 0x100 || o->w12 < 0x100 || o->w1a < 0x100 || o->w22 < 0x100) {
-        if (o->w8 < 0x140 || o->w10 < 0x140 || o->w18 < 0x140 || o->w20 < 0x140)
-            return 1;
-    }
-    return 0;
-}
-#else
 int isPolyFT4OnScreen(POLY_FT4* p)
 {
-    if ((u16)p->y0 >= 0xE0 && (u16)p->y1 >= 0xE0 && (u16)p->y2 >= 0xE0 && (u16)p->y3 >= 0xE0) {
+    if ((u16)p->y0 >= SCREEN_HEIGHT && (u16)p->y1 >= SCREEN_HEIGHT && (u16)p->y2 >= SCREEN_HEIGHT && (u16)p->y3 >= SCREEN_HEIGHT) {
         return 0;
     }
     if ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140) {
@@ -68,7 +39,6 @@ int isPolyFT4OnScreen(POLY_FT4* p)
     }
     return 0;
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", insertPrimWithBias);
 s32 insertPrimWithBias(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
@@ -183,19 +153,19 @@ int func_80045D0C(u8* self)
         return self[0xA];
     }
     if (self[0xA] < 4) {
-        switch (*(u16*)0x1F8001C8 & 1) {
+        switch (SPAD->unk1C8 & 1) {
         case 0:
-            d = *(u16*)0x1F8000F6 - *(u16*)(self + 0x1A);
+            d = (*(u16 *)&SPAD->vpz.p.whole) - *(u16*)(self + 0x1A);
             break;
         case 1:
-            d = *(u16*)(self + 0x12) - *(u16*)0x1F8000EE;
+            d = *(u16*)(self + 0x12) - (*(u16 *)&SPAD->vpx.p.whole);
             break;
         }
         if (d != 0 && !(self[0xA] & 1)) {
             if (GAME.selectedArea == 4) {
-                *(int*)0x1F8002B4 = d * 5 + 0x1000;
+                SPAD->loadSlots[4] = d * 5 + 0x1000;
             } else {
-                *(int*)0x1F8002B4 = d * 7 + 0x1000;
+                SPAD->loadSlots[4] = d * 7 + 0x1000;
             }
             return self[0xA] | 1;
         }

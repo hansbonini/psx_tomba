@@ -86,8 +86,8 @@ static __inline__ s32 vis_22F6C(void *q)
 {
     S_22F6C *p = q;
     if (p->on == 0) return 0;
-    if ((u16)(p->pos->y - *(u16 *)0x1F800176 + 0x40) >= 0x1c1) return 0;
-    return (u16)(*(u16 *)0x1F800186 - p->z + 0x40) < 0x171;
+    if ((u16)(p->pos->y - (*(u16 *)&SPAD->unk168[3].p.whole) + 0x40) >= 0x1c1) return 0;
+    return (u16)((*(u16 *)&SPAD->unk168[7].p.whole) - p->z + 0x40) < 0x171;
 }
 s32 func_80022F6C(S_22F6C *o)
 {
@@ -105,33 +105,13 @@ s32 isOnScreen(s16 x, s16 y)
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80023020);
 typedef struct O_23020 { u8 active, visible, p2, p3, b04; char p5[0x16 - 5]; s16 y; char p18[0x40 - 0x18]; u16 *h; } O_23020;
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-extern short D_800A38EA;
-extern unsigned short D_1F800176, D_1F800186;
-typedef struct O_20490 { unsigned char active, visible, p2, p3, b04; char p5[0x16 - 5]; short y; char p18[0x40 - 0x18]; unsigned short *h; } O_20490;
-void func_80023020(O_20490 *o)
-{
-    char pad;
-    short y;
-    if (o->active != 0) {
-        y = o->y;
-        if (D_800A38EA + 0xa0 <= y
-            || (unsigned short)(o->h[1] - D_1F800176 + 0xa0) > 0x27f
-            || (unsigned short)(D_1F800186 - y + 0xa0) > 0x22f) {
-            o->b04 = 3;
-            o->active = 2;
-            o->visible = 0;
-        }
-    }
-}
-#else
 void func_80023020(O_23020 *o)
 {
     char pad;
     s16 y;
     if (o->active != 0) {
         y = o->y;
-        if (D_800A38EA + 0x98 <= y
+        if (D_800A38EA + NTSC_PAL(0x98, 0xA0) <= y
             || (u16)(o->h[1] - D_1F800176 + 0xa0) > 0x27f
             || (u16)(D_1F800186 - y + 0xa0) > 0x22f) {
             o->b04 = 3;
@@ -140,191 +120,15 @@ void func_80023020(O_23020 *o)
         }
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_800230BC);
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-typedef struct SPADBlock_2052C {
-    unsigned char b0;
-    unsigned char _pad1[0x5f];
-    short s60;
-    short s62;
-    short s64;
-    unsigned char _pad66[0xe];
-    int i74;
-    int i78;
-    unsigned char _pad7c[0x10];
-    int i8c;
-    unsigned char _pad90[0x30];
-    unsigned char bc0;
-    unsigned char _padc1[0x13];
-    int id4;
-    int id8;
-    int idc;
-    int ie0;
-    unsigned char _pade4[0x2];
-    short se6;
-    unsigned char _pade8[0x2];
-    short sea;
-    int iec;
-    int if0;
-    int if4;
-    unsigned char _padf8[0x20];
-    unsigned char b118;
-    unsigned char _pad119[0x4b];
-    void * p164;
-    int i168;
-    int i16c;
-    int i170;
-    int i174;
-    unsigned char _pad178[0x2];
-    unsigned short s17a;
-    unsigned char _pad17c[0x2];
-    unsigned short s17e;
-    unsigned char _pad180[0x6];
-    unsigned short s186;
-    unsigned char _pad188[0x4];
-    int i18c;
-    int i190;
-    unsigned char _pad194[0x4];
-    int i198;
-    short s19c;
-    short s19e;
-    unsigned char b1a0;
-    unsigned char _pad1a1[0x3];
-    unsigned char b1a4;
-    unsigned char b1a5;
-    unsigned char _pad1a6[0x1c];
-    unsigned char b1c2;
-    unsigned char _pad1c3[0x1];
-    unsigned char b1c4;
-    unsigned char b1c5;
-    short s1c6;
-    unsigned short s1c8;
-    unsigned char _pad1ca[0x2];
-    unsigned char b1cc;
-    unsigned char b1cd;
-    unsigned char _pad1ce[0x1];
-    unsigned char b1cf;
-    unsigned char b1d0;
-    unsigned char b1d1;
-    unsigned char b1d2;
-    unsigned char b1d3;
-    unsigned char _pad1d4[0xc];
-    int i1e0;
-    unsigned char _pad1e4[0x4];
-    short s1e8;
-    unsigned char _pad1ea[0xa];
-    short s1f4;
-    short s1f6;
-    unsigned short s1f8;
-    unsigned char _pad1fa[0x2];
-    unsigned short s1fc;
-    unsigned short s1fe;
-    unsigned char _pad200[0x1c];
-    void * p21c;
-    unsigned char _pad220[0x4];
-    void * p224;
-    void * p228;
-    unsigned char _pad22c[0xc];
-    short s238;
-    unsigned char _pad23a[0xc];
-    short s246;
-    unsigned short s248;
-    unsigned char _pad24a[0x2];
-    short s24c;
-    unsigned char _pad24e[0x2];
-    unsigned short s250;
-    unsigned char _pad252[0x2];
-    unsigned short s254;
-    short s256;
-    unsigned char _pad258[0x8];
-    void * p260;
-    unsigned char _pad264[0x4];
-    void * p268;
-    void * p26c;
-    unsigned char _pad270[0x8];
-    void * p278;
-    unsigned char _pad27c[0x2];
-    short s27e;
-    short s280;
-    unsigned short s282;
-    short s284;
-    short s286;
-    unsigned char _pad288[0x2c];
-    int i2b4;
-    unsigned char _pad2b8[0x18];
-    int i2d0;
-    int i2d4;
-    int i2d8;
-    int i2dc;
-    int i2e0;
-    int i2e4;
-    int i2e8;
-    unsigned char _pad2ec[0x4];
-    int i2f0;
-    unsigned char _pad2f4[0x4];
-    int i2f8;
-    unsigned char _pad2fc[0x4];
-    int i300;
-    int i304;
-    void * p308;
-    void * p30c;
-    int i310;
-    int i314;
-    int i318;
-    void * p31c;
-    unsigned char _pad320[0x14];
-    int i334;
-    void * p338;
-    void * p33c;
-    unsigned char _pad340[0x1c];
-    int i35c;
-    unsigned char _pad360[0x10];
-    int i370;
-    int i374;
-    int i378;
-    unsigned char _pad37c[0x3c];
-    unsigned short s3b8;
-    unsigned short s3ba;
-    short s3bc;
-    unsigned char _pad3be[0x2];
-    void * p3c0;
-    unsigned short s3c4;
-    unsigned short s3c6;
-    unsigned short s3c8;
-    unsigned char _pad3ca[0x4];
-    unsigned char b3ce;
-    unsigned char _pad3cf[0x1];
-    unsigned char b3d0;
-    unsigned char b3d1;
-    unsigned char _pad3d2[0x2e];
-} SPADBlock_2052C;
-extern SPADBlock_2052C SCRATCHPAD__800230BC;
-
-extern short D_800A38EA__800230BC;
-
-void func_800230BC(GameObject *o, int a)
-{
-    short y;
-    if (o->active == 0) return;
-    y = o->y.p.whole;
-    if (D_800A38EA__800230BC + 0xa0 > y) {
-        if ((unsigned short)(o->h->p.whole - (*(unsigned short*)((char*)&SCRATCHPAD__800230BC.i174 + 2)) + a) < (short)a * 2 + 0x140 &&
-            (unsigned short)(SCRATCHPAD__800230BC.s186 - y + a) < (short)a * 2 + 0xf0) return;
-    }
-    o->state = 3;
-    o->active = 2;
-    o->visible = 0;
-}
-#else
 void func_800230BC(GameObject *o, s32 a)
 {
     s16 y;
     if (o->active == 0) return;
     y = o->y.p.whole;
-    if (D_800A38EA + 0x98 > y) {
+    if (D_800A38EA + NTSC_PAL(0x98, 0xA0) > y) {
         if ((u16)(o->h->p.whole - D_1F800176 + a) < (s16)a * 2 + 0x140 &&
             (u16)(D_1F800186 - y + a) < (s16)a * 2 + 0xf0) return;
     }
@@ -332,7 +136,6 @@ void func_800230BC(GameObject *o, s32 a)
     o->active = 2;
     o->visible = 0;
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", angleFromDelta);
 s32 angleFromDelta(s32 a, s32 b)
@@ -386,7 +189,7 @@ s32 angleBetweenPoints(Vec2s a, Vec2s b) {
 // INCLUDE_ASM("nonmatchings/main/game/entity", setObjectAxisPointers);
 void setObjectAxisPointers(u8* self)
 {
-    if ((*(u16*)0x1F8001C8 & 1) == 0) {
+    if ((SPAD->unk1C8 & 1) == 0) {
         *(u8**)(self + 0x40) = self + 0x10;
         *(u8**)(self + 0x44) = self + 0x18;
     } else {

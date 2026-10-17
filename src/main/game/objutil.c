@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "game/objinit.h"
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", distanceToPlayer);
 s16 distanceToPlayer(u8* self)
@@ -10,7 +11,15 @@ s16 distanceToPlayer(u8* self)
     return (csqrt((dx * dx + dy * dy) << 12) << 4) >> 16;
 }
 
+// INCLUDE_ASM("nonmatchings/main/game/objutil", func_800385EC);
+#if defined(VERSION_SCES_01330)
 INCLUDE_ASM("nonmatchings/main/game/objutil", func_800385EC);
+#else
+void func_800385EC(GameObject *o)
+{
+    initObjectAC(o);
+}
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038748);
 void playSFX(s32 id);
@@ -18,10 +27,9 @@ s32 abs(s32);
 s16 angleToPlayer(u8 *o);
 void func_80038748(u8 *o)
 {
-    extern u8 *D_8009B6A0;
     s32 dx, dy, d, n;
 
-    D_8009B6A0[0xd] = 0;
+    D_8009B6A0->frame = 0;
     playSFX(0x26);
     D_800A5460 = 1;
     D_800A53C8 = *(s16 *)(*(u8 **)(o + 0x40) + 2);
@@ -50,9 +58,6 @@ extern s16 func_80045310(void *, s16, s16);
 extern u16 D_1F800282;
 extern u16 D_1F800282;
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003887C);
-#else
 s32 func_8003887C(GameObject *o)
 {
     extern GameObject *D_8009B698;
@@ -68,6 +73,7 @@ s32 func_8003887C(GameObject *o)
                 if (D_1F800282 & 2) o->touchFlag = 1;
             }
         }
+#if !defined(VERSION_SLPS_01144)
         k = (D_1F800282 >> 5) & 0xf;
         if (!(D_1F800282 & 0x3000)) {
             switch (k) {
@@ -78,6 +84,7 @@ s32 func_8003887C(GameObject *o)
                 break;
             }
         }
+#endif
         func_800224FC(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
         playSFX(5);
         o->unkA8 = 0x4ff;
@@ -109,7 +116,6 @@ s32 func_8003887C(GameObject *o)
     o->touchFlag = 0;
     return 0;
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038AC0);
 typedef struct { s16 x, y; } P_38AC0;
@@ -121,14 +127,6 @@ typedef struct {
     u8 p24[4];
     u16 w28, w2a, w2c, w2e;
 } S330_38AC0;
-typedef struct {
-    u8 p0[0xc];
-    u8 bc, bd;
-    s16 we;
-    u8 p10[0x20];
-    s16 w30, w32, w34, w36;
-} S338_38AC0;
-extern s16 D_8009C968[];
 extern s16 D_8007D5E4[];
 extern s16 fixedMulCos(s32, s16);
 extern s16 fixedMulSin(s32, s16);
@@ -142,12 +140,8 @@ extern s16 angleBetweenPoints(P_38AC0, P_38AC0);
 #define TB(n) D_8007D60A[(s16)(o->animFrame + o->animFrame * 2) + (n) - 1]
 #define TK(n) D_8007D60A[k + (n) - 1]
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038AC0);
-#else
 void func_80038AC0(GameObject *o)
 {
-    extern S338_38AC0 *D_8009B6A0;
     extern S330_38AC0 *D_8009B698;
     P_38AC0 t;
     P_38AC0 s;
@@ -168,11 +162,11 @@ void func_80038AC0(GameObject *o)
         o->active = 2;
         o->unkA = 0;
         o->unkAA = u;
-        D_8009B6A0->bc = 0;
+        D_8009B6A0->mode = 0;
         D_8009B698->w22 = 0;
-        D_8009C96A[0] = 0;
-        D_8009B6A0->w30 = 1;
-        D_8009B6A0->w32 = 0;
+        D_8009C968.w2 = 0;
+        D_8009B6A0->shadowLen = 1;
+        D_8009B6A0->shadowLen2 = 0;
         D_8009B6A0->w34 = 0;
         D_8009B6A0->w36 = 0;
         o->unkA8 = 0;
@@ -210,7 +204,7 @@ void func_80038AC0(GameObject *o)
         o->hitOffsetY = 6;
         o->hitWidth = 0xc;
         o->hitHeight = 0xc;
-        D_8009B6A0->bd = 0;
+        D_8009B6A0->frame = 0;
         switch (D_8009B698->b0) {
         case 2:
             o->unkA8 = 0x1c00;
@@ -275,7 +269,7 @@ void func_80038AC0(GameObject *o)
                 func_8003473C(o);
                 advanceAnimFrame(&G, 0);
                 o->unkAA = TK(2);
-                D_8009B6A0->bc = 1;
+                D_8009B6A0->mode = 1;
                 G.unk8C = 0;
                 o->touchFlag = 0;
                 o->timer = 1;
@@ -286,7 +280,7 @@ void func_80038AC0(GameObject *o)
                 func_8003473C(o);
                 advanceAnimFrame(&G, 0);
                 o->unkAA = TK(2);
-                D_8009B6A0->bc = 1;
+                D_8009B6A0->mode = 1;
                 G.unk8C = 0;
                 o->touchFlag = 0;
                 o->timer = 1;
@@ -303,10 +297,10 @@ void func_80038AC0(GameObject *o)
             }
         }
     case 3:
-        D_8009B6A0->w30 += o->unkA8 >> 8;
-        if (D_8009B6A0->w30 > 0x60 - D_8009B698->b0 * 16) D_8009B6A0->w30 = 0x60 - (D_8009B698->b0 << 4);
-        D_8009B6A0->w32 -= (o->unkA8 >> 8) * 2;
-        if (D_8009B6A0->w32 < 0) D_8009B6A0->w32 = 0;
+        D_8009B6A0->shadowLen += o->unkA8 >> 8;
+        if (D_8009B6A0->shadowLen > 0x60 - D_8009B698->b0 * 16) D_8009B6A0->shadowLen = 0x60 - (D_8009B698->b0 << 4);
+        D_8009B6A0->shadowLen2 -= (o->unkA8 >> 8) * 2;
+        if (D_8009B6A0->shadowLen2 < 0) D_8009B6A0->shadowLen2 = 0;
         o->unkA8 -= 0x280;
         o->velH = fixedMulCos(o->unkAA, o->unkA8);
         o->velV = fixedMulSin(o->unkAA, o->unkA8);
@@ -317,9 +311,9 @@ void func_80038AC0(GameObject *o)
                 o->unkAA = TB(2);
                 o->velX = o->h->p.whole + fixedMulCos(((u16)o->unkAA + 0x80) & 0xff, 0x18);
                 o->velY = o->y.p.whole + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 0x18);
-                D_8009B6A0->w32 = 0;
-                *(u8 *)((u8 *)D_8009B6A0 + 0xc) = 2;
-                D_8009B6A0->we = 0;
+                D_8009B6A0->shadowLen2 = 0;
+                D_8009B6A0->mode = 2;
+                D_8009B6A0->angle = 0;
                 if (o->visible) {
                     func_8002F05C(o, (s16)(o->x.p.whole + ((o->animFrame & 1) ? -0x10 : 0x10)), o->y.p.whole, o->z.p.whole);
                 }
@@ -328,30 +322,30 @@ void func_80038AC0(GameObject *o)
         }
         break;
     case 4:
-        D_8009B6A0->w30 -= (o->unkA8 >> 8) * 2;
-        if (D_8009B6A0->w30 < 0) D_8009B6A0->w30 = 0;
-        o->h->p.whole = o->velX + fixedMulCos(((u16)o->unkAA + (u16)D_8009B6A0->we) & 0xff, 0x18);
-        o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + (u16)D_8009B6A0->we) & 0xff, 0x18);
-        D_8009B6A0->we += TB(1) >> 1;
+        D_8009B6A0->shadowLen -= (o->unkA8 >> 8) * 2;
+        if (D_8009B6A0->shadowLen < 0) D_8009B6A0->shadowLen = 0;
+        o->h->p.whole = o->velX + fixedMulCos(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 0x18);
+        o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 0x18);
+        D_8009B6A0->angle += TB(1) >> 1;
         G.unk8C = 0;
         if (o->animFrame & 1) {
-            D_8009B6A0->bd = (D_8009B6A0->we < -0x20) ? 2 : 1;
-            if (D_8009B6A0->we < -0x40) {
-                o->unkAA = (o->unkAA + D_8009B6A0->we) & 0xff;
-                D_8009B6A0->bc = 3;
+            D_8009B6A0->frame = (D_8009B6A0->angle < -0x20) ? 2 : 1;
+            if (D_8009B6A0->angle < -0x40) {
+                o->unkAA = (o->unkAA + D_8009B6A0->angle) & 0xff;
+                D_8009B6A0->mode = 3;
                 func_8003481C(o);
                 advanceAnimFrame(&G, 0);
-                D_8009B6A0->we = (TB(2) - 0x40) & 0xff;
+                D_8009B6A0->angle = (TB(2) - 0x40) & 0xff;
                 o->step++;
             }
         } else {
-            D_8009B6A0->bd = (D_8009B6A0->we > 0x20) ? 2 : 1;
-            if (D_8009B6A0->we > 0x40) {
-                o->unkAA = (o->unkAA + D_8009B6A0->we) & 0xff;
-                D_8009B6A0->bc = 3;
+            D_8009B6A0->frame = (D_8009B6A0->angle > 0x20) ? 2 : 1;
+            if (D_8009B6A0->angle > 0x40) {
+                o->unkAA = (o->unkAA + D_8009B6A0->angle) & 0xff;
+                D_8009B6A0->mode = 3;
                 func_8003481C(o);
                 advanceAnimFrame(&G, 0);
-                D_8009B6A0->we = (TB(2) + 0x40) & 0xff;
+                D_8009B6A0->angle = (TB(2) + 0x40) & 0xff;
                 o->step++;
             }
         }
@@ -359,17 +353,17 @@ void func_80038AC0(GameObject *o)
         break;
     case 5:
         if (((s16 (*)(GameObject *))func_8003887C)(o) == 0) {
-            D_8009B6A0->bd = 0;
+            D_8009B6A0->frame = 0;
             o->unkA8 = 0x2000;
-            D_8009B6A0->w30 += 0x20;
-            if (D_8009B6A0->w30 > 0x60 - D_8009B698->b0 * 16) D_8009B6A0->w30 = 0x60 - (D_8009B698->b0 << 4);
-            D_8009B6A0->w32 -= o->unkA8 >> 8;
-            if (D_8009B6A0->w32 < 0) D_8009B6A0->w32 = 0;
+            D_8009B6A0->shadowLen += 0x20;
+            if (D_8009B6A0->shadowLen > 0x60 - D_8009B698->b0 * 16) D_8009B6A0->shadowLen = 0x60 - (D_8009B698->b0 << 4);
+            D_8009B6A0->shadowLen2 -= o->unkA8 >> 8;
+            if (D_8009B6A0->shadowLen2 < 0) D_8009B6A0->shadowLen2 = 0;
             if (o->animFrame & 1) o->velX = PLAYER.obj.h->p.whole + 0x10;
             else o->velX = PLAYER.obj.h->p.whole - 0x10;
             o->velY = PLAYER.obj.y.p.whole - 0x10;
-            t.x = o->velX + fixedMulCos(D_8009B6A0->we, 0xc);
-            t.y = o->velY + fixedMulSin(D_8009B6A0->we, 0xc);
+            t.x = o->velX + fixedMulCos(D_8009B6A0->angle, 0xc);
+            t.y = o->velY + fixedMulSin(D_8009B6A0->angle, 0xc);
             s.x = o->h->p.whole;
             s.y = o->y.p.whole;
             o->unkAA = angleBetweenPoints(s, t);
@@ -391,19 +385,24 @@ void func_80038AC0(GameObject *o)
                 o->velY = PLAYER.obj.y.p.whole - 0x10;
                 o->h->p.whole = o->velX + fixedMulCos(o->unkAA, 0xc);
                 o->y.p.whole = o->velY + fixedMulSin(o->unkAA, 0xc);
-                D_8009B6A0->w32 = 0;
-                D_8009B6A0->we = 0;
-                D_8009B6A0->bc = 0;
+                D_8009B6A0->shadowLen2 = 0;
+                D_8009B6A0->angle = 0;
+                D_8009B6A0->mode = 0;
                 G.unk9D = 0;
                 o->unkA5 = 0;
-                if (!(D_8009C9D8[0] & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
+                if (!(D_8009C9D8[0] & SPAD->unk3C8) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
+#if defined(VERSION_SLPS_01144)
+                    func_800EFBEC_slps01144(&G);
+#endif
                     D_8009B698->b0 = 0;
                     o->state = 2;
                     o->subState = 0;
                     o->step = 0;
                     D_8009BC9C = 0;
                 } else {
+#if !defined(VERSION_SLPS_01144)
                     func_800EBA70(D_8009C61A[0], o);
+#endif
                     o->unkAA += (o->animFrame & 1) ? -0x40 : 0x40;
                     o->step = 6;
                 }
@@ -415,19 +414,23 @@ void func_80038AC0(GameObject *o)
         func_800348FC(o);
         advanceAnimFrame(&G, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
+#if !defined(VERSION_SLPS_01144)
             func_80028A74(0, 0, 0xc0, 2);
+#endif
             playSFX(3);
         }
         advanceAnimFrame(&G, (D_8009B698->w22 >> 2) & 3);
         k = o->animFrame + o->animFrame * 2;
-        D_8009C968[0] = 10;
-        D_8009C96A[0] = 2;
-        D_8009C96C[0] = TK(0);
+        D_8009C968.w0 = 10;
+        D_8009C968.w2 = 2;
+        D_8009C968.w4 = TK(0);
         o->unkAA += TK(1);
         if (o->unkAA > 0xff) o->unkAA -= 0x100;
         if (o->unkAA < 0) o->unkAA += 0x100;
+#if !defined(VERSION_SLPS_01144)
         if (o->animFrame & 1) o->unk8C = (o->unkAA + 0x80) & 0xff;
         else o->unk8C = (u8)o->unkAA;
+#endif
         i = o->subState * 6;
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3:
@@ -444,10 +447,10 @@ void func_80038AC0(GameObject *o)
         vb = D_8007D5E4[i + 1];
         o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
         o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
-        func_800349DC(D_8009C968, o->unkAA, &va, &vb);
+        func_800349DC(&D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(D_8009C9D8[0] & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(D_8009C9D8[0] & SPAD->unk3C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
             G.unk9D = 1;
             D_8009B698->b0 = 2;
             D_8009B698->w22 = 0;
@@ -465,20 +468,24 @@ void func_80038AC0(GameObject *o)
         func_800348FC(o);
         advanceAnimFrame(&G, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
+#if !defined(VERSION_SLPS_01144)
             func_80028A74(0, 0, 0xff, 2);
+#endif
             playSFXWithNote(3, 6);
         }
         advanceAnimFrame(&G, (D_8009B698->w22 / 3) & 3);
         o->animFrame = G.animFrame;
         k = o->animFrame + o->animFrame * 2;
-        D_8009C968[0] = 0x10;
-        D_8009C96A[0] = 4;
-        D_8009C96C[0] = TK(0);
+        D_8009C968.w0 = 0x10;
+        D_8009C968.w2 = 4;
+        D_8009C968.w4 = TK(0);
         o->unkAA += TK(1);
         if (o->unkAA > 0xff) o->unkAA -= 0x100;
         if (o->unkAA < 0) o->unkAA += 0x100;
+#if !defined(VERSION_SLPS_01144)
         if (o->animFrame & 1) o->unk8C = (o->unkAA + 0x80) & 0xff;
         else o->unk8C = (u8)o->unkAA;
+#endif
         i = o->subState * 6;
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3:
@@ -495,10 +502,10 @@ void func_80038AC0(GameObject *o)
         vb = D_8007D5E4[i + 1];
         o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)va, vb);
         o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)va, vb);
-        func_800349DC(D_8009C968, o->unkAA, &va, &vb);
+        func_800349DC(&D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(D_8009C9D8[0] & *(u16 *)0x1F8003C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(D_8009C9D8[0] & SPAD->unk3C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
             D_8009B698->b0 = 1;
             D_8009B698->w22 = 0;
             G.unk9D = 1;
@@ -523,35 +530,32 @@ void func_80038AC0(GameObject *o)
         }
         D_8009B698->w2e = 0xffff;
         G.unk9D = 0;
-        D_8009B6A0->bc = 0;
+        D_8009B6A0->mode = 0;
         D_8009B698->b0 = 0;
         o->state = 2;
         o->subState = 0;
         o->step = 0;
     }
 }
-#endif
 #undef G
 #undef TB
 #undef TK
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A10C);
-typedef struct { char p0[0xc]; u8 bc; char p1; s16 we; char p2[0x20]; s16 w30; s16 w32; } G338_3A10C;
 extern u8 *D_8009B698;
 extern u8 D_800A5435;
 
 void func_8003A10C(GameObject *o)
 {
-    extern G338_3A10C *D_8009B6A0;
     GameObject *t = *(GameObject **)((char *)o + 0x90);
     s16 dx, dy;
     u16 b;
-    G338_3A10C *g;
+    ObjectAC *g;
     switch (o->step) {
     case 0:
-        D_8009B6A0->bc = 1;
-        D_8009B6A0->w30 = 0;
-        D_8009B6A0->w32 = 0;
+        D_8009B6A0->mode = 1;
+        D_8009B6A0->shadowLen = 0;
+        D_8009B6A0->shadowLen2 = 0;
         o->step++;
         if (t != 0) {
             o->velX = t->h->p.whole;
@@ -584,9 +588,9 @@ void func_8003A10C(GameObject *o)
     }
     if (PLAYER.obj.subState != 0x32) {
         g = D_8009B6A0;
-        g->bc = 0;
-        g->w32 = 0;
-        g->we = 0;
+        g->mode = 0;
+        g->shadowLen2 = 0;
+        g->angle = 0;
         D_800A5435 = 0;
         *D_8009B698 = 0;
         D_800A545E = 0;
@@ -598,12 +602,11 @@ void func_8003A10C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A310);
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A310);
-#else
 void func_8003A310(u8 *o)
 {
+#if !defined(VERSION_SLPS_01144)
     if ((u8)(o[6] - 6) < 2) return;
+#endif
     switch (*(u16 *)(o + 0x2e)) {
     case 0: case 1: case 2: case 3:
         *(s32 *)(o + 0x8c) = 0; break;
@@ -613,20 +616,18 @@ void func_8003A310(u8 *o)
     case 7: *(s32 *)(o + 0x8c) = 0xc0; break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A384);
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A384);
-#else
 void func_8003A384(GameObject *o)
 {
     switch (o->subState) {
     case 0:
         func_80038AC0(o);
+#if !defined(VERSION_SLPS_01144)
         if (o->step == 6 || o->step == 7)
             break;
+#endif
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3: o->unk8C = 0; break;
         case 4: o->unk8C = 0x20; break;
@@ -637,8 +638,10 @@ void func_8003A384(GameObject *o)
         break;
     case 1:
         func_80038AC0(o);
+#if !defined(VERSION_SLPS_01144)
         if (o->step == 6 || o->step == 7)
             break;
+#endif
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3: o->unk8C = 0; break;
         case 4: o->unk8C = 0x20; break;
@@ -649,8 +652,10 @@ void func_8003A384(GameObject *o)
         break;
     case 2:
         func_80038AC0(o);
+#if !defined(VERSION_SLPS_01144)
         if (o->step == 6 || o->step == 7)
             break;
+#endif
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3: o->unk8C = 0; break;
         case 4: o->unk8C = 0x20; break;
@@ -665,23 +670,21 @@ void func_8003A384(GameObject *o)
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
 extern u8 D_800A547B;
-typedef struct { char p[0xc]; u8 b; } G338_3A4F8;
-extern G338_3A4F8 *D_8009B6A0;
 extern u8 *D_8009B698;
 void freeObjectLayer1(GameObject *o);
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
-#else
 void func_8003A4F8(GameObject *o)
 {
     if (D_800A545F) o->state = 2;
     switch (o->state) {
     case 0:
+#if defined(VERSION_SCES_01330)
+        initObjectAC(o);
+#else
         func_800385EC(o);
+#endif
         o->state++;
         break;
     case 1:
@@ -689,7 +692,7 @@ void func_8003A4F8(GameObject *o)
         func_8003A384(o);
         break;
     case 2:
-        D_8009B6A0->b = 0;
+        D_8009B6A0->mode = 0;
         *D_8009B698 = 0;
         if ((s8)--D_800A547B < 0) D_800A547B = 0;
         o->state = 3;
@@ -699,7 +702,6 @@ void func_8003A4F8(GameObject *o)
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A604);
 void func_8003A604(int id)

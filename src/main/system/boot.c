@@ -47,8 +47,8 @@ void bootSequenceTask(void)
     D_8009E3ED = 0;
     D_8009E3EE = 0;
     D_8009E3EF = 0;
-    *(s8* )0x1F8001D1 = 0;
-    *(s8* )0x1F8001D0 = 0;
+    (*(s8 *)&SPAD->unk1D1) = 0;
+    (*(s8 *)&SPAD->unk1D0) = 0;
     D_8009E744 = 0;
     D_8009C9E4 = 1;
     D_8009E450 = 0;
@@ -66,8 +66,8 @@ void bootSequenceTask(void)
                 loadSoundSet(0);
                 loadSoundSet(1);
                 queueSystemLoadList(0, 1);
-                *(s8* )0x1F8001C4 = 0;
-                *(s8* )0x1F8001C5 = 0;
+                (*(s8 *)&SPAD->unk1C4) = 0;
+                (*(s8 *)&SPAD->unk1C5) = 0;
                 memset(D_1F8001A0, 0, sizeof(D_1F8001A0));
                 task9 = CURRENT_TASK;
                 task9->state0++;
@@ -145,9 +145,9 @@ void bootSequenceTask(void)
                         if ((s16)task8->unk5A == 0) {
                             SetDispMask(0);
                             initDisplay(0U, 0U, 0U);
-                            task4 = *(Task** )(&SCRATCHPAD+0x1D4);
+                            task4 = SCRATCHPAD.currentTask;
                             *(byte* )0x1F8001D1 = 0;
-                            *(s16* )0x1F8001F6 = 0;
+                            (*(s16 *)&SPAD->frameCount) = 0;
                             task4->state0 = 0U;
                             task4->state1 = 0U;
                         }
@@ -221,7 +221,7 @@ void titleSequenceTask(void)
     sp10[0] = 0;
     scratch->currentTask->titleScreenSelectedOption = 0;
     while(true) {
-        *(u16* )0x1F8001F8 = *(u16* )(D_1F8000F8+0x100) + 1;
+        SPAD->unk1F8 = *(u16* )(D_1F8000F8+0x100) + 1;
         asm("");
         func_800223E0();
         task = CURRENT_TASK;
@@ -283,7 +283,7 @@ void bootLogoState(void)
                     LOAD_COMPLETE = 0U;
                     loadSoundSet(1);
                     queueSystemLoadList(1, 1);
-                    task4 = *(Task** )(&SCRATCHPAD+0x1D4);
+                    task4 = SCRATCHPAD.currentTask;
                     task4->state2++;
                     return;
                 case 1:
@@ -300,7 +300,7 @@ void bootLogoState(void)
         case 1:
             SetDispMask(0);
             func_800E7D5C();
-            task5 = *(Task** )(&SCRATCHPAD+0x1D4);
+            task5 = SCRATCHPAD.currentTask;
             task5->state1++;
             return;
         case 2:
@@ -314,7 +314,7 @@ void bootLogoState(void)
             if (MOVIE_PLAY_STATE != MOVIE_STATE_IDLE) {
                 return;
             }
-            task5 = *(Task** )(&SCRATCHPAD+0x1D4);
+            task5 = SCRATCHPAD.currentTask;
             task5->state1++;
             return;
         case 4:
@@ -340,7 +340,7 @@ void bootLogoState(void)
                 LOAD_COMPLETE = 0U;
                 loadSoundSet(2);
                 queueSystemLoadList(2, 1);
-                task5 = *(Task** )(&SCRATCHPAD+0x1D4);
+                task5 = SCRATCHPAD.currentTask;
                 task5->state1++;
                 return;
             }
@@ -463,7 +463,7 @@ void loopTitleScreen(int* arg0)
             gameControl->unk6A = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
             gameControl = *(Task** )(&D_1F8000C0[0]+0x114);
             gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-            gameControlTemp = *(Task** )(&SCRATCHPAD+0x1D4);
+            gameControlTemp = SCRATCHPAD.currentTask;
             gameControlTemp->timer = 972;
             gameControlTemp->state1++;
             return;
@@ -476,7 +476,7 @@ void loopTitleScreen(int* arg0)
             }
             func_800E7DDC(arg0);
             if (D_8009C9D8[0] != 0) {
-                (*(Task** )(&SCRATCHPAD+0x1D4))->timer = 972;
+                (SCRATCHPAD.currentTask)->timer = 972;
             }
             gameControlTemp2 = CURRENT_TASK;
             switch ((u_short)gameControlTemp2->state2) {
@@ -486,7 +486,7 @@ void loopTitleScreen(int* arg0)
                             gameControlTemp2->titleScreenSelectedOption--;
                             gameControl = *(Task** )(&D_1F8000C0[0]+0x114);
                             gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-                            gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
+                            gameControl = SCRATCHPAD.currentTask;
                             gameControl->state2++;
                             playSFX(8);
                         }
@@ -497,7 +497,7 @@ void loopTitleScreen(int* arg0)
                             gameControlTemp3->titleScreenSelectedOption++;
                             gameControl = *(Task** )(&D_1F8000C0[0]+0x114);
                             gameControl->unk6B = (u_char) D_80076E80[gameControl->titleScreenSelectedOption];
-                            gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
+                            gameControl = SCRATCHPAD.currentTask;
                             gameControl->state2++;
                             playSFX(8);
                         }
@@ -531,7 +531,7 @@ void loopTitleScreen(int* arg0)
                             amount = 4;
                         }
                         gameControlTemp2->unk6A += amount;
-                        gameControlTemp4 = *(Task** )(&SCRATCHPAD+0x1D4);
+                        gameControlTemp4 = SCRATCHPAD.currentTask;
                         if (gameControlTemp4->unk6B == gameControlTemp4->unk6A) {
                             gameControlTemp4->state2--;
                         }
@@ -539,7 +539,7 @@ void loopTitleScreen(int* arg0)
                     break;
             }
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
-            if (*(u_short* )0x1F8001F8 & 0x20) {
+            if (SPAD->unk1F8 & 0x20) {
                 printTitleScreenMessage(56, 144, TITLESCREEN_MESSAGE_PRESSSTART);
             }
             gameControlTemp7 = CURRENT_TASK;

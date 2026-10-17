@@ -860,9 +860,6 @@ extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 extern void advanceAnimFrame(GameObject *, s32);
 extern s32 showMessageBoxDirect(s32, s32, V12_2897C *);
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_8012897C);
-#else
 void func_8012897C(GameObject *o)
 {
     V12_2897C b;
@@ -878,12 +875,19 @@ void func_8012897C(GameObject *o)
             o->unk90 = showMessageBoxDirect(2, 0xf, &b);
             o->anim = ((AT_2897C *)&D_801350D4)[o->subtype].anims[9];
             advanceAnimFrame(o, 0);
+#if defined(VERSION_SLPS_01144)
+            PLAYER.obj.animFrame = 0;
+            PLAYER.obj.state = 5;
+            PLAYER.obj.subState = 0;
+            PLAYER.obj.step = 0;
+#else
             o->animFrame = o->unk68 & 1;
             t = o->h->p.whole < *(s16 *)((char *)D_800A53D8_Fix16PtrArr[0] + 2);
             PLAYER.obj.state = 5;
             PLAYER.obj.subState = 0;
             PLAYER.obj.step = 0;
             PLAYER.obj.animFrame = t;
+#endif
             o->step++;
         }
         break;
@@ -892,7 +896,9 @@ void func_8012897C(GameObject *o)
         p = (GameObject *)o->unk90;
         if (p->state == 2) {
             p->state = 3;
+#if !defined(VERSION_SLPS_01144)
             o->animFrame = 1;
+#endif
             o->anim = ((AT_2897C *)&D_801350D4)[o->subtype].anims[0];
             advanceAnimFrame(o, 0);
             (*(GVars_2897C *)&D_8009BC98).b3f = 0;
@@ -909,7 +915,6 @@ void func_8012897C(GameObject *o)
     }
     if (!o->visible) o->state = 3;
 }
-#endif
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128B68);
 extern void tickAnimation(GameObject *);

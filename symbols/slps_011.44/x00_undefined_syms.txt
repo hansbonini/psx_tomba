@@ -27,3 +27,6 @@ func_80022E44 = 0x8002122C;
 readAnimFrameCount = 0x80020DE4;
 setEventStarted = 0x8001C88C;
 tickAnimation = 0x80020E38;
+PROVIDE(D_800A5402 = 0x800A7BE2);
+PROVIDE(D_800A5403 = 0x800A7BE3);
+PROVIDE(allocObjectLayer4 = 0x80017AAC);

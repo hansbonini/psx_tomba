@@ -25,7 +25,6 @@ void computeRotatedQuad(s16* out, s32 arg1, s16 r1, s16 r2) {
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_8004FE24);
-extern char *D_8009B6A0;
 extern s32 fixedMulCos(s32, s16);
 extern s32 fixedMulSin(s32, s16);
 
@@ -50,7 +49,7 @@ static __inline__ void box_4FE24(s16 *p, s32 a, s32 len)
 
 void func_8004FE24(char *o, s16 dx, s16 dy)
 {
-    char *p = D_8009B6A0;
+    char *p = (char *)D_8009B6A0;
     char *r;
     char *q1;
     char *q2;
@@ -65,7 +64,7 @@ void func_8004FE24(char *o, s16 dx, s16 dy)
         a = (*(u16 *)((u8 *)o + 0xaa) + 0x80) & 0xff;
         *(u16 *)((u8 *)p + 0x3c) = a;
         box_4FE24((s16 *)(p + 0x10), a, *(u16 *)((u8 *)p + 0x30));
-        q1 = D_8009B6A0;
+        q1 = (char *)D_8009B6A0;
         *(s16 *)((u8 *)q1 + 0x34) = dx;
         *(s16 *)((u8 *)q1 + 0x36) = dy;
         *(s16 *)((u8 *)q1 + 0x10) += dx;
@@ -81,7 +80,7 @@ void func_8004FE24(char *o, s16 dx, s16 dy)
         a = (*(u16 *)((u8 *)o + 0xaa) + 0x80) & 0xff;
         *(u16 *)((u8 *)p + 0x3e) = a;
         box_4FE24((s16 *)(p + 0x20), a, *(u16 *)((u8 *)p + 0x32));
-        q2 = D_8009B6A0;
+        q2 = (char *)D_8009B6A0;
         a = *(u8 *)((u8 *)q2 + 0x3c);
         *(s16 *)((u8 *)q2 + 0x38) = dx;
         *(s16 *)((u8 *)q2 + 0x3a) = dy;
@@ -94,7 +93,7 @@ void func_8004FE24(char *o, s16 dx, s16 dy)
         *(s16 *)((u8 *)q2 + 0x2a) += dy;
         *(s16 *)((u8 *)q2 + 0x2e) += dy;
         box_4FE24((s16 *)(q2 + 0x10), a, *(u16 *)((u8 *)q2 + 0x30));
-        q3 = D_8009B6A0;
+        q3 = (char *)D_8009B6A0;
         *(s16 *)((u8 *)q3 + 0x10) += *(s16 *)((u8 *)q3 + 0x34);
         *(s16 *)((u8 *)q3 + 0x14) += *(s16 *)((u8 *)q3 + 0x34);
         *(s16 *)((u8 *)q3 + 0x18) += *(s16 *)((u8 *)q3 + 0x34);
@@ -108,7 +107,7 @@ void func_8004FE24(char *o, s16 dx, s16 dy)
         a = (*(u16 *)((u8 *)o + 0xaa) + 0x80) & 0xff;
         *(u16 *)((u8 *)p + 0x3c) = a;
         box_4FE24((s16 *)(p + 0x10), a, *(u16 *)((u8 *)p + 0x30));
-        q4 = D_8009B6A0;
+        q4 = (char *)D_8009B6A0;
         a = *(u8 *)((u8 *)q4 + 0x3e);
         *(s16 *)((u8 *)q4 + 0x34) = dx;
         *(s16 *)((u8 *)q4 + 0x36) = dy;
@@ -121,7 +120,7 @@ void func_8004FE24(char *o, s16 dx, s16 dy)
         *(s16 *)((u8 *)q4 + 0x1a) += dy;
         *(s16 *)((u8 *)q4 + 0x1e) += dy;
         box_4FE24((s16 *)(q4 + 0x20), a, *(u16 *)((u8 *)q4 + 0x32));
-        q5 = D_8009B6A0;
+        q5 = (char *)D_8009B6A0;
         *(s16 *)((u8 *)q5 + 0x20) += *(s16 *)((u8 *)q5 + 0x38);
         *(s16 *)((u8 *)q5 + 0x24) += *(s16 *)((u8 *)q5 + 0x38);
         *(s16 *)((u8 *)q5 + 0x28) += *(s16 *)((u8 *)q5 + 0x38);
@@ -133,10 +132,10 @@ void func_8004FE24(char *o, s16 dx, s16 dy)
         break;
     default:
         a = (*(u16 *)((u8 *)o + 0xaa) + 0x80) & 0xff;
-        r = D_8009B6A0;
+        r = (char *)D_8009B6A0;
         *(u16 *)((u8 *)r + 0x3c) = a;
         box_4FE24((s16 *)(r + 0x10), a, *(u16 *)((u8 *)r + 0x30));
-        q6 = D_8009B6A0;
+        q6 = (char *)D_8009B6A0;
         *(s16 *)((u8 *)q6 + 0x10) = *(s16 *)((u8 *)q6 + 0x14) = *(s16 *)((u8 *)q6 + 0x18) = *(s16 *)((u8 *)q6 + 0x1c) = 0;
         *(s16 *)((u8 *)q6 + 0x12) = *(s16 *)((u8 *)q6 + 0x16) = *(s16 *)((u8 *)q6 + 0x1a) = *(s16 *)((u8 *)q6 + 0x1e) = 0;
         *(s16 *)((u8 *)q6 + 0x20) = *(s16 *)((u8 *)q6 + 0x24) = *(s16 *)((u8 *)q6 + 0x28) = *(s16 *)((u8 *)q6 + 0x2c) = 0;
@@ -1018,7 +1017,7 @@ s32 boxesOverlapSide(u8* arg0, u8* arg1) {
     if ((u16)(dy + w) > *(s16*)(a + 0x72) + *(s16*)(b + 0x72)) {
         return -1;
     }
-    *(s16*)0x1F80019E = 0;
+    SPAD->unk19E = 0;
     if (dx < 0) {
         return 0;
     }
@@ -1578,7 +1577,7 @@ void tryAttachObjectOnOverlap(u8* arg0, u8* arg1) {
             *(u8**)(arg0 + 0xE4) = arg1;
             arg0[0xAC] = 2;
         }
-        *(s16*)0x1F80019E = 0;
+        SPAD->unk19E = 0;
     }
 }
 

@@ -10,16 +10,16 @@ extern void getBaseMatrix(void *);
 extern void func_80026694(s32, s32, void *, s32);
 void func_8004D1A0(char *o)
 {
-    getBaseMatrix((MATRIX *)&SCRATCHPAD);
+    getBaseMatrix(&SCRATCHPAD.workMatrix);
     ((s16 *)&D_1F800060)[0] = *(u16 *)((u8 *)o + 0x12);
     ((s16 *)&D_1F800060)[1] = *(u16 *)((u8 *)o + 0x16);
     ((s16 *)&D_1F800060)[2] = *(u16 *)((u8 *)o + 0x1a);
     SetRotMatrix(SCRATCH_VIEW_MATRIX);
-    ApplyRotMatrix(((s16 *)&D_1F800060), &((MATRIX *)&SCRATCHPAD)->t[0]);
-    ((MATRIX *)&SCRATCHPAD)->t[0] += SCRATCH_VIEW_MATRIX->t[0];
-    ((MATRIX *)&SCRATCHPAD)->t[1] += SCRATCH_VIEW_MATRIX->t[1];
-    ((MATRIX *)&SCRATCHPAD)->t[2] += SCRATCH_VIEW_MATRIX->t[2];
-    SetTransMatrix((MATRIX *)&SCRATCHPAD);
+    ApplyRotMatrix(((s16 *)&D_1F800060), &SCRATCHPAD.workMatrix.t[0]);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
     func_80026694(*(s32 *)((u8 *)o + 0xa0), (s32)((*(char **)&D_1F8001E0) + ((*(s8 *)((u8 *)o + 0xf) << 2) + 0x10)), o, *(u8 *)((u8 *)o + 0xa4));
 }
 
@@ -44,13 +44,13 @@ void func_8004D2A8(GameObject *o)
     D_1F800068.vx = o->x.p.whole;
     D_1F800068.vy = o->y.p.whole;
     D_1F800068.vz = o->z.p.whole;
-    MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, (MATRIX *)&SCRATCHPAD);
-    ApplyRotMatrix(&D_1F800068, ((MATRIX *)&SCRATCHPAD)->t);
-    ((MATRIX *)&SCRATCHPAD)->t[0] += SCRATCH_VIEW_MATRIX->t[0];
-    ((MATRIX *)&SCRATCHPAD)->t[1] += SCRATCH_VIEW_MATRIX->t[1];
-    ((MATRIX *)&SCRATCHPAD)->t[2] += SCRATCH_VIEW_MATRIX->t[2];
-    SetRotMatrix((MATRIX *)&SCRATCHPAD);
-    SetTransMatrix((MATRIX *)&SCRATCHPAD);
+    MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, &SCRATCHPAD.workMatrix);
+    ApplyRotMatrix(&D_1F800068, SCRATCHPAD.workMatrix.t);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    SetRotMatrix(&SCRATCHPAD.workMatrix);
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
     func_80026694(o->unkA0, (s32)&((struct { char pad[0x10]; s32 a[1]; } *)D_1F8001E0)->a[(s8)o->unkF], o, o->unkA4);
 }
 
@@ -80,13 +80,13 @@ void func_8004D448(O_4D448 *o)
     D_1F800068.vx = o->x;
     D_1F800068.vy = o->y;
     D_1F800068.vz = o->z;
-    MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, (MATRIX *)&SCRATCHPAD);
-    ApplyRotMatrix(&D_1F800068, ((MATRIX *)&SCRATCHPAD)->t);
-    ((MATRIX *)&SCRATCHPAD)->t[0] += SCRATCH_VIEW_MATRIX->t[0];
-    ((MATRIX *)&SCRATCHPAD)->t[1] += SCRATCH_VIEW_MATRIX->t[1];
-    ((MATRIX *)&SCRATCHPAD)->t[2] += SCRATCH_VIEW_MATRIX->t[2];
-    SetRotMatrix((MATRIX *)&SCRATCHPAD);
-    SetTransMatrix((MATRIX *)&SCRATCHPAD);
+    MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, &SCRATCHPAD.workMatrix);
+    ApplyRotMatrix(&D_1F800068, SCRATCHPAD.workMatrix.t);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    SetRotMatrix(&SCRATCHPAD.workMatrix);
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
     func_80026E48(o->aa0, &(*(s32 **)&D_1F8001E0)[o->f + 4], o, o->aa8, o->ba4);
 }
 
@@ -116,14 +116,14 @@ void func_8004D5F0(GameObject *o)
     D_1F800068.vx = o->x.p.whole;
     D_1F800068.vy = o->y.p.whole;
     D_1F800068.vz = o->z.p.whole;
-    MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, (MATRIX *)&SCRATCHPAD);
-    ApplyRotMatrix(&D_1F800068, ((MATRIX *)&SCRATCHPAD)->t);
-    ((MATRIX *)&SCRATCHPAD)->t[0] += SCRATCH_VIEW_MATRIX->t[0];
-    ((MATRIX *)&SCRATCHPAD)->t[1] += SCRATCH_VIEW_MATRIX->t[1];
-    ((MATRIX *)&SCRATCHPAD)->t[2] += SCRATCH_VIEW_MATRIX->t[2];
-    ScaleMatrix((MATRIX *)&SCRATCHPAD, &D_1F800040);
-    SetRotMatrix((MATRIX *)&SCRATCHPAD);
-    SetTransMatrix((MATRIX *)&SCRATCHPAD);
+    MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, &SCRATCHPAD.workMatrix);
+    ApplyRotMatrix(&D_1F800068, SCRATCHPAD.workMatrix.t);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    ScaleMatrix(&SCRATCHPAD.workMatrix, &D_1F800040);
+    SetRotMatrix(&SCRATCHPAD.workMatrix);
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
     func_80026694(o->unkA0, (*(char **)&D_1F8001E0) + ((s8)o->unkF * 4 + 0x10), o, o->unkA4);
 }
 
@@ -136,89 +136,6 @@ void func_8004D5F0(GameObject *o)
 #define PTR(o,n) (*(void **)((char *)(o) + (n)))
 extern MATRIX D_1F800090;
 extern void func_800279E8(s32, s32, char *);
-#if defined(VERSION_SCES_01330)
-#define U8(o,n)  (*(unsigned char *)((char *)(o) + (n)))
-#define S8(o,n)  (*(signed char *)((char *)(o) + (n)))
-#define U16(o,n) (*(unsigned short *)((char *)(o) + (n)))
-#define S16(o,n) (*(short *)((char *)(o) + (n)))
-#define S32(o,n) (*(int *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
-typedef struct { short m[3][3]; int t[3]; } MATRIX_57A20;
-extern MATRIX_57A20 SCRATCHPAD__8004D7E0;
-extern MATRIX_57A20 D_1F800020__8004D7E0;
-extern MATRIX_57A20 D_1F800090__8004D7E0;
-extern short D_1F800060__8004D7E0[3];
-extern short D_1F800068__8004D7E0[3];
-extern void getBaseMatrix__8004D7E0(void *), RotMatrix__8004D7E0(void *, void *), MulMatrix0__8004D7E0(void *, void *, void *), SetRotMatrix__8004D7E0(void *), ApplyRotMatrix__8004D7E0(void *, void *), SetTransMatrix__8004D7E0(void *), func_800279E8__8004D7E0(int, int, char *);
-extern char *D_1F8001E0__8004D7E0;
-void func_8004D7E0(char *o)
-{
-    getBaseMatrix__8004D7E0(&D_1F800020__8004D7E0);
-    getBaseMatrix__8004D7E0(&D_1F800090__8004D7E0);
-    D_1F800060__8004D7E0[0] = S32(o, 0x84);
-    D_1F800060__8004D7E0[1] = S32(o, 0x88);
-    D_1F800060__8004D7E0[2] = S32(o, 0x8c);
-    RotMatrix__8004D7E0(D_1F800060__8004D7E0, &D_1F800020__8004D7E0);
-    D_1F800068__8004D7E0[0] = U16(o, 0x12);
-    D_1F800068__8004D7E0[1] = U16(o, 0x16);
-    D_1F800068__8004D7E0[2] = U16(o, 0x1a);
-    MulMatrix0__8004D7E0(&D_1F800090__8004D7E0, &D_1F800020__8004D7E0, &SCRATCHPAD__8004D7E0);
-    ApplyRotMatrix__8004D7E0(D_1F800068__8004D7E0, &SCRATCHPAD__8004D7E0.t[0]);
-    SCRATCHPAD__8004D7E0.t[0] += -0xa0;
-    SCRATCHPAD__8004D7E0.t[1] += 0x80;
-    SCRATCHPAD__8004D7E0.t[2] += 0x220;
-    SetRotMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
-    SetTransMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
-    func_800279E8__8004D7E0(S32(o, 0xa0), (int)(D_1F8001E0__8004D7E0 + ((S8(o, 0xf) << 2) + 0x10)), o);
-}
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
-#elif defined(VERSION_SCES_01331)
-#define U8(o,n)  (*(unsigned char *)((char *)(o) + (n)))
-#define S8(o,n)  (*(signed char *)((char *)(o) + (n)))
-#define U16(o,n) (*(unsigned short *)((char *)(o) + (n)))
-#define S16(o,n) (*(short *)((char *)(o) + (n)))
-#define S32(o,n) (*(int *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
-typedef struct { short m[3][3]; int t[3]; } MATRIX_579A8;
-extern MATRIX_579A8 SCRATCHPAD__8004D7E0;
-extern MATRIX_579A8 D_1F800020__8004D7E0;
-extern MATRIX_579A8 D_1F800090__8004D7E0;
-extern short D_1F800060__8004D7E0[3];
-extern short D_1F800068__8004D7E0[3];
-extern void getBaseMatrix__8004D7E0(void *), RotMatrix__8004D7E0(void *, void *), MulMatrix0__8004D7E0(void *, void *, void *), SetRotMatrix__8004D7E0(void *), ApplyRotMatrix__8004D7E0(void *, void *), SetTransMatrix__8004D7E0(void *), func_800279E8__8004D7E0(int, int, char *);
-extern char *D_1F8001E0__8004D7E0;
-void func_8004D7E0(char *o)
-{
-    getBaseMatrix__8004D7E0(&D_1F800020__8004D7E0);
-    getBaseMatrix__8004D7E0(&D_1F800090__8004D7E0);
-    D_1F800060__8004D7E0[0] = S32(o, 0x84);
-    D_1F800060__8004D7E0[1] = S32(o, 0x88);
-    D_1F800060__8004D7E0[2] = S32(o, 0x8c);
-    RotMatrix__8004D7E0(D_1F800060__8004D7E0, &D_1F800020__8004D7E0);
-    D_1F800068__8004D7E0[0] = U16(o, 0x12);
-    D_1F800068__8004D7E0[1] = U16(o, 0x16);
-    D_1F800068__8004D7E0[2] = U16(o, 0x1a);
-    MulMatrix0__8004D7E0(&D_1F800090__8004D7E0, &D_1F800020__8004D7E0, &SCRATCHPAD__8004D7E0);
-    ApplyRotMatrix__8004D7E0(D_1F800068__8004D7E0, &SCRATCHPAD__8004D7E0.t[0]);
-    SCRATCHPAD__8004D7E0.t[0] += -0xa0;
-    SCRATCHPAD__8004D7E0.t[1] += 0x80;
-    SCRATCHPAD__8004D7E0.t[2] += 0x220;
-    SetRotMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
-    SetTransMatrix__8004D7E0(&SCRATCHPAD__8004D7E0);
-    func_800279E8__8004D7E0(S32(o, 0xa0), (int)(D_1F8001E0__8004D7E0 + ((S8(o, 0xf) << 2) + 0x10)), o);
-}
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
-#else
 void func_8004D7E0(char *o)
 {
     getBaseMatrix(&D_1F800020);
@@ -230,16 +147,15 @@ void func_8004D7E0(char *o)
     ((s16 *)&D_1F800068)[0] = U16(o, 0x12);
     ((s16 *)&D_1F800068)[1] = U16(o, 0x16);
     ((s16 *)&D_1F800068)[2] = U16(o, 0x1a);
-    MulMatrix0(&D_1F800090, &D_1F800020, &(*(MATRIX *)&SCRATCHPAD));
-    ApplyRotMatrix(((s16 *)&D_1F800068), &(*(MATRIX *)&SCRATCHPAD).t[0]);
-    (*(MATRIX *)&SCRATCHPAD).t[0] += -0xa0;
-    (*(MATRIX *)&SCRATCHPAD).t[1] += 0x78;
-    (*(MATRIX *)&SCRATCHPAD).t[2] += 0x220;
-    SetRotMatrix(&(*(MATRIX *)&SCRATCHPAD));
-    SetTransMatrix(&(*(MATRIX *)&SCRATCHPAD));
+    MulMatrix0(&D_1F800090, &D_1F800020, &(*&SCRATCHPAD.workMatrix));
+    ApplyRotMatrix(((s16 *)&D_1F800068), &SCRATCHPAD.workMatrix.t[0]);
+    SCRATCHPAD.workMatrix.t[0] += -0xa0;
+    SCRATCHPAD.workMatrix.t[1] += NTSC_PAL(0x78, 0x80);
+    SCRATCHPAD.workMatrix.t[2] += 0x220;
+    SetRotMatrix(&(*&SCRATCHPAD.workMatrix));
+    SetTransMatrix(&(*&SCRATCHPAD.workMatrix));
     func_800279E8(S32(o, 0xa0), (s32)((*(char **)&D_1F8001E0) + ((S8(o, 0xf) << 2) + 0x10)), o);
 }
-#endif
 #undef U8
 #undef S8
 #undef U16
@@ -254,13 +170,13 @@ void func_8004D91C(GameObject *o)
     D_1F800060.vx = o->x.p.whole;
     D_1F800060.vy = o->y.p.whole;
     D_1F800060.vz = o->z.p.whole;
-    MulMatrix0(SCRATCH_VIEW_MATRIX, (MATRIX *)&o->unk48, (MATRIX *)&SCRATCHPAD);
-    ApplyRotMatrix(&D_1F800060, ((MATRIX *)&SCRATCHPAD)->t);
-    ((MATRIX *)&SCRATCHPAD)->t[0] += SCRATCH_VIEW_MATRIX->t[0];
-    ((MATRIX *)&SCRATCHPAD)->t[1] += SCRATCH_VIEW_MATRIX->t[1];
-    ((MATRIX *)&SCRATCHPAD)->t[2] += SCRATCH_VIEW_MATRIX->t[2];
-    SetRotMatrix((MATRIX *)&SCRATCHPAD);
-    SetTransMatrix((MATRIX *)&SCRATCHPAD);
+    MulMatrix0(SCRATCH_VIEW_MATRIX, (MATRIX *)&o->unk48, &SCRATCHPAD.workMatrix);
+    ApplyRotMatrix(&D_1F800060, SCRATCHPAD.workMatrix.t);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    SetRotMatrix(&SCRATCHPAD.workMatrix);
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
     func_80026694(o->unkA0, &(*(s32 **)&D_1F8001E0)[*(s8 *)&o->unkF + 4], o, o->unkA4);
 }
 
@@ -271,13 +187,13 @@ void func_8004DA28(char *o)
     ((s16 *)&D_1F800060)[0] = *(u16 *)((u8 *)o + 0x12);
     ((s16 *)&D_1F800060)[1] = *(u16 *)((u8 *)o + 0x16);
     ((s16 *)&D_1F800060)[2] = *(u16 *)((u8 *)o + 0x1a);
-    MulMatrix0(SCRATCH_VIEW_MATRIX, o + 0x48, (MATRIX *)&SCRATCHPAD);
-    ApplyRotMatrix(((s16 *)&D_1F800060), &((MATRIX *)&SCRATCHPAD)->t[0]);
-    ((MATRIX *)&SCRATCHPAD)->t[0] += SCRATCH_VIEW_MATRIX->t[0];
-    ((MATRIX *)&SCRATCHPAD)->t[1] += SCRATCH_VIEW_MATRIX->t[1];
-    ((MATRIX *)&SCRATCHPAD)->t[2] += SCRATCH_VIEW_MATRIX->t[2];
-    SetRotMatrix((MATRIX *)&SCRATCHPAD);
-    SetTransMatrix((MATRIX *)&SCRATCHPAD);
+    MulMatrix0(SCRATCH_VIEW_MATRIX, o + 0x48, &SCRATCHPAD.workMatrix);
+    ApplyRotMatrix(((s16 *)&D_1F800060), &SCRATCHPAD.workMatrix.t[0]);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    SetRotMatrix(&SCRATCHPAD.workMatrix);
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
     func_80026E48(*(s32 *)((u8 *)o + 0xa0), (s32)((*(char **)&D_1F8001E0) + ((*(s8 *)((u8 *)o + 0xf) << 2) + 0x10)), o, *(s32 *)((u8 *)o + 0xa8), *(u8 *)((u8 *)o + 0xa4));
 }
 

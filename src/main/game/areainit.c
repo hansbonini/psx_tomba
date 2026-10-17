@@ -5,13 +5,11 @@
 typedef struct { void **p; s32 a, b; } E12_32DB4;
 extern u8 D_800A5399;
 extern u8 D_800A5464[];
+extern s16 D_800A5468;
 extern void readAnimFrameCount(GameObject *);
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/areainit", func_80032DB4);
-#else
 void func_80032DB4(GameObject *o)
 {
     extern void tickAnimation(GameObject *);
@@ -33,8 +31,10 @@ void func_80032DB4(GameObject *o)
         o->unk88 = 0;
         break;
     case 1:
+#if !defined(VERSION_SLPS_01144)
         if (o->unkC == 0 && !(D_1F8001F8 & 3))
             func_80028A74(0, 0, 0xff, 2);
+#endif
         tickAnimation(o);
         o->visible = D_800A5399;
         o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos((s16)o->unk84, (s16)o->unk88);
@@ -55,10 +55,22 @@ void func_80032DB4(GameObject *o)
         if (((u8 *)&PLAYER.obj.touchFlag)[0])
             o->timer = 0;
         if (--o->timer <= 0) {
+#if defined(VERSION_SLPS_01144)
+            if (D_800A5468 > 0)
+                PLAYER.obj.active = 3;
+            else
+                PLAYER.obj.active = 1;
+            D_800A5464[0] = 3;
+            o->timer = 0;
+            o->objectIndex = o->objectIndex == 0 ? 0 : o->objectIndex - 2;
+            if (o->objectIndex == 0)
+                o->state = 2;
+#else
             o->timer = 0;
             D_800A5464[0] = 3;
             o->objectIndex = 0;
             o->state = 2;
+#endif
         } else {
             u = o->objectIndex;
             if (u >= 0x7f)
@@ -70,26 +82,27 @@ void func_80032DB4(GameObject *o)
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_8003301C);
 void func_800325C0(u8 *o);
 void func_80032934(u8 *o);
 void func_800327D8(u8 *o);
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/areainit", func_8003301C);
-#else
 void func_8003301C(u8 *o)
 {
     switch (o[3]) {
     case 0: func_800325C0(o); break;
     case 1: func_80032934(o); break;
     case 2: func_80032DB4(o); break;
+#if !defined(VERSION_SLPS_01144)
     case 9: func_800327D8(o); break;
-    }
-    if (o[3] != 9 && (*(u16 *)0x1F8001F8 & 3) == 0) playSFXWithNote(3, 0xc);
-}
 #endif
+    }
+#if defined(VERSION_SLPS_01144)
+    if ((SPAD->unk1F8 & 3) == 0) playSFXWithNote(3, 0xc);
+#else
+    if (o[3] != 9 && (SPAD->unk1F8 & 3) == 0) playSFXWithNote(3, 0xc);
+#endif
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
 extern void readAnimFrameCount(GameObject *);
@@ -99,9 +112,6 @@ extern u8 D_800A5399;
 extern u8 D_800A53A7;
 extern u8 D_8009BCF8;
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
-#else
 void func_800330EC(GameObject *o)
 {
     char c;
@@ -118,11 +128,17 @@ void func_800330EC(GameObject *o)
         case 2:
             func_80032DB4(o);
             break;
+#if !defined(VERSION_SLPS_01144)
         case 9:
             func_800327D8(o);
             break;
+#endif
         }
+#if defined(VERSION_SLPS_01144)
+        if ((D_1F8001F8 & 3) == 0)
+#else
         if (o->subtype != 9 && (D_1F8001F8 & 3) == 0)
+#endif
             playSFXWithNote(3, 12);
         break;
     case 1:
@@ -154,19 +170,32 @@ void func_800330EC(GameObject *o)
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
 extern void func_80032374(GameObject *);
 extern void freeObjectLayer3(GameObject *);
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
-#else
 void func_800332CC(GameObject *o)
 {
     switch (o->state) {
     case 0:
+#if defined(VERSION_SLPS_01144)
+        {
+            u8 *p = (u8 *)o;
+            *(u16 *)(p + 0x1e) = D_8007D2E8[p[3]].tpage;
+            *(s32 *)(p + 0x3c) = SPR_DATA[D_8007D2E8[p[3]].sprite];
+            *(s32 *)(p + 0x24) = D_8007D2E8[p[3]].anims[p[0xc]];
+            readAnimFrameCount(o);
+            p[0xa] = 0xd;
+            p[0xd] = 0x80;
+            *(s8 *)(p + 0xf) = -7;
+            *(s32 *)(p + 0x8c) = 0;
+            p[0x6b] = 0;
+            p[0x1c] |= 0x80;
+            p[4]++;
+        }
+#else
         func_80032374(o);
+#endif
         break;
     case 1:
         if (PLAYER.obj.active != 5)
@@ -180,7 +209,6 @@ void func_800332CC(GameObject *o)
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033374);
 extern s32 D_800A53AC;
@@ -240,12 +268,13 @@ static __inline__ void spawn_33488(s16 sub, s32 idx)
     }
 }
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033488);
-#else
 void func_80033488(s16 n)
 {
+#if defined(VERSION_SLPS_01144)
+    PLAYER.obj.active = 7;
+#else
     if (n != 2) PLAYER.obj.active = 7;
+#endif
     (*(u8 *)&D_800A5464) = 2;
     switch (n) {
     case 0:
@@ -268,10 +297,11 @@ void func_80033488(s16 n)
         break;
     }
 }
-#endif
 
+#if !defined(VERSION_SLPS_01144)
 void func_80033858(void) {
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", dispatchAreaInitA);
 void dispatchAreaInitA(void)

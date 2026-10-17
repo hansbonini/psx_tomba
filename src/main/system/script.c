@@ -57,7 +57,7 @@ s32 projectOriginToScreen(s32 arg0, s16* arg1)
 // INCLUDE_ASM("nonmatchings/main/system/script", loadCompressedTIM);
 void loadCompressedTIM(s32 arg0)
 {
-    u8* base = *(u8**)0x1F800354;
+    u8* base = (*(u8* *)&SPAD->wppTimPack);
 
     lzDecompress(base + *(s32*)(base + (arg0 << 2)), (byte*)TIM_SCRATCH);
     loadTIM(TIM_SCRATCH, 0x20, 0, 0x80, 0x1EF);

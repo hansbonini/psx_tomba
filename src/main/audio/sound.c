@@ -590,7 +590,7 @@ s32 startBgmTrack(s32 id)
     BGM_SEQ_ID = SsSeqOpen(SEQ_DATA[BGM_TRACK_DEFS[id].seq], vab);
     SsSetMVol(100, 100);
     SsSeqSetVol(BGM_SEQ_ID, BGM_TRACK_VOLUME[id], BGM_TRACK_VOLUME[id]);
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#ifdef VERSION_PAL
     BGM_MUTED = 0;
 #endif
     BGM_FADE_ACTIVE = 0;
@@ -647,7 +647,7 @@ s32 playJingle(s32 seqIndex)
             BGM_SEQ_ID = -1;
         }
     }
-    vab = *(u16*)0x1F8003AC;
+    vab = (*(u16 *)&SPAD->vabIds[2]);
     JINGLE_VAB_ID = vab;
     JINGLE_SEQ_ID = SsSeqOpen(SEQ_DATA[seqIndex], vab);
     SsSetMVol(100, 100);

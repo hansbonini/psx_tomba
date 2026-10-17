@@ -7,25 +7,25 @@
 /* Scratchpad fields reached from code that has no `scratchpad*` handy.
    Each expands to exactly the cast it replaced, so the generated code is
    unchanged; the names mirror the fields of `struct scratchpad`. */
-#define NEXT_PRIM          (*(int*)0x1F800164)      /* 0x164 */
-#define MOVIE_PLAY_STATE   (*(u8*)0x1F8001CC)       /* 0x1CC */
-#define LOAD_COMPLETE      (*(u8*)0x1F8001CE)       /* 0x1CE */
+#define NEXT_PRIM          (*(int *)&SPAD->nextprim)      /* 0x164 */
+#define MOVIE_PLAY_STATE   (*(u8 *)&SPAD->moviePlayState)       /* 0x1CC */
+#define LOAD_COMPLETE      (*(u8 *)&SPAD->loadComplete)       /* 0x1CE */
 /* Which list file sits at 0x80097FA8: 0 = SYS/LDSYS.BIN, area + 1 = that
    area's SYS/LDARnn.BIN (loadAreaListFile), 0xFF = none yet. */
-#define LOADED_LIST_FILE   (*(u_char*)0x1F8003D2)   /* 0x3D2 */
+#define LOADED_LIST_FILE   (*(u_char *)&SPAD->loadedListFile)   /* 0x3D2 */
 /* Index into SOUND_SET_LOAD_LISTS of the sound set in memory, 0xFF = none. */
-#define LOADED_SOUND_SET   (*(u_char*)0x1F8003D3)   /* 0x3D3 */
-#define MOVIE_ID           (*(u_char*)0x1F8001CD)      /* 0x1CD */
-#define MOVIE_SKIP_REQUEST (*(u_char*)0x1F8001D3)      /* 0x1D3 */
-#define CD_QUEUE_HEAD      (*(s32*)0x1F80029C)        /* 0x29C */
-#define CD_QUEUE_TAIL      (*(s32*)0x1F8002A0)        /* 0x2A0 */
-#define CURRENT_OT         (*(u_long*)0x1F8001E0)   /* 0x1E0 */
-#define PAUSE_TOGGLE       (*(u16*)0x1F8001EE)      /* 0x1EE */
-#define PAUSE_FLAGS        (*(u16*)0x1F8001F0)      /* 0x1F0 */
-#define FRAME_BUFFER_INDEX (*(s16*)0x1F8001F4)      /* 0x1F4 */
-#define JOYPAD_STATE       (*(u16*)0x1F8001FC)      /* 0x1FC */
+#define LOADED_SOUND_SET   (*(u_char *)&SPAD->loadedSoundSet)   /* 0x3D3 */
+#define MOVIE_ID           (*(u_char *)&SPAD->movieId)      /* 0x1CD */
+#define MOVIE_SKIP_REQUEST (*(u_char *)&SPAD->movieSkipRequest)      /* 0x1D3 */
+#define CD_QUEUE_HEAD      (*(s32 *)&SPAD->cdQueueHead)        /* 0x29C */
+#define CD_QUEUE_TAIL      (*(s32 *)&SPAD->cdQueueTail)        /* 0x2A0 */
+#define CURRENT_OT         ((*(u_long *)&SPAD->ot))   /* 0x1E0 */
+#define PAUSE_TOGGLE       ((*(u16 *)&SPAD->pauseToggle))      /* 0x1EE */
+#define PAUSE_FLAGS        ((*(u16 *)&SPAD->pauseFlags))      /* 0x1F0 */
+#define FRAME_BUFFER_INDEX (*(s16 *)&SPAD->frameBufferIndex)      /* 0x1F4 */
+#define JOYPAD_STATE       (*(u16 *)&SPAD->joypad_state)      /* 0x1FC */
 
-#define CURRENT_TASK       (*(Task**)0x1F8001D4)
+#define CURRENT_TASK       (*(Task* *)&SPAD->currentTask)
 #define TASK_TABLE  0x801FD800
 #define TIM_SCRATCH ((u_long*)0x801FBE00)
 

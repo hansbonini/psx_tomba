@@ -343,7 +343,7 @@ void func_80056970(GameObject *o, GameObject *e)
         return;
     }
     if (o->unk9C & 1) return;
-    *(s16 *)0x1F80019E = 0;
+    (*(s16 *)&SPAD->unk19E) = 0;
     o->y.p.whole = e->y.p.whole - (B2(e) + (o->hitHeight - B2(o)));
     o->y.p.frac = 0;
     o->touchFlag = 1;
@@ -425,8 +425,8 @@ void func_80056D24(GameObject *o, GameObject *e)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_80056E00);
-#define CNT (*(s16 *)0x1f800246)
-#define LST (*(u8 ***)0x1f80021c)
+#define CNT (SPAD->unk246)
+#define LST ((*(u8 ** *)&SPAD->unk21C))
 
 void func_80056E00(void)
 {
@@ -1584,16 +1584,16 @@ void func_80057188(void)
     GameObject *e;
     s16 d;
     u8 two;
-    n = *(u16 *)0x1F800246;
-    list = *(GameObject ***)0x1F80021C;
-    if (*(s16 *)0x1F80024C == 0) return;
+    n = (*(u16 *)&SPAD->unk246);
+    list = (*(GameObject ** *)&SPAD->unk21C);
+    if ((*(s16 *)&SPAD->unk24C) == 0) return;
     if (n == 0) return;
     do {
         o = *list++;
         n--;
         if (o->active != 2 && D_8007EDFC[o->type] != 0) {
-        l2 = *(GameObject ***)0x1F800224;
-        if ((D_1F80019E = *(u16 *)0x1F80024C) != 0)
+        l2 = (*(GameObject ** *)&SPAD->unk224);
+        if ((D_1F80019E = SPAD->unk24C) != 0)
         do {
             e = *l2++;
             D_1F80019E--;

@@ -761,7 +761,7 @@ void func_8003F3D4(u8* self)
         if ((s16)probeCollisionAtDepthB(self, *(s16*)(*(int*)(self + 0x40) + 2), *(s16*)(self + 0x16)) != 0) {
             self[0] = 2;
             self[0xA5] = 0;
-            *(int*)(self + 0x8C) = (-*(s16*)0x1F80027E << 2) & 0xFF;
+            *(int*)(self + 0x8C) = (-SPAD->unk27E << 2) & 0xFF;
             self[4] = 2;
             self[5] = 0;
             self[6] = 0;
@@ -851,7 +851,7 @@ void func_8003F9A4(u8* self)
         *(s16*)(self + 0x70) = 0x10;
         *(s16*)(self + 0x72) = 0x20;
         self[4]++;
-        *(int*)(self + 0x3C) = *(int*)0x1F8002D4;
+        *(int*)(self + 0x3C) = SPAD->sprData[3];
         if (GAME.selectedArea == 0) {
             *(s16*)(self + 0x1E) = 10;
             *(int*)(self + 0x24) = D_8013A44C;

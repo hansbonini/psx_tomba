@@ -34,7 +34,7 @@ int movieDecodeNextFrame(DecEnv* dec)
             (CURRENT_TASK)->state0 = 3;
             CdMix(&D_80077758);
         }
-        if (*(&SCRATCHPAD + 0x1CD) == 0x15 && (*(Task**)(&SCRATCHPAD + 0x1D4))->loadGameSelected == 0 && header->frameCount >= 0xF) {
+        if (SCRATCHPAD.movieId == 0x15 && (SCRATCHPAD.currentTask)->loadGameSelected == 0 && header->frameCount >= 0xF) {
             startBgmTrack(0);
             (CURRENT_TASK)->loadGameSelected = 1;
         }
@@ -86,7 +86,7 @@ void moviePlayerTask(void)
             case 0:
                 movieInitDecodeEnv((DecEnv*)&MOVIE_DEC_ENV, 384, 256, 704, 256);
                 startMovieStream((int)&FILE_LINKS[MOVIE_FILE_IDS[D_8007775C[MOVIE_ID]]]);
-                gameControl = *(Task** )(&SCRATCHPAD+0x1D4);
+                gameControl = SCRATCHPAD.currentTask;
                 gameControl->state0+=1;
                 do {
                 } while (movieDecodeNextFrame((DecEnv*)&MOVIE_DEC_ENV) == 0);
@@ -119,7 +119,7 @@ void moviePlayerTask(void)
                 SetDispMask(1);
                 *(int*)&MOVIE_DEC_DISPENV->isinter = 0;
                 MOVIE_PLAY_STATE = MOVIE_STATE_ENDING;
-                *(short* )0x1F8001E8 = 0;
+                (*(short *)&SPAD->vblankCount) = 0;
                 break;
             case 3:
                 DecDCToutCallback(NULL);
@@ -127,7 +127,7 @@ void moviePlayerTask(void)
                 StClearRing();
                 CdControlB(CdlPause, 0, 0);
                 MOVIE_PLAY_STATE = MOVIE_STATE_IDLE;
-                *(char* )(&SCRATCHPAD+0x1D3) = 0;
+                SCRATCHPAD.movieSkipRequest = 0;
                 exitTask();
                 break;
         }

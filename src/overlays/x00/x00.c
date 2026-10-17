@@ -360,9 +360,6 @@ void func_801181C0(u8 *o)
 extern s32 D_1F8002D4[];
 extern void *D_8013A450[];
 
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801182E0);
-#else
 void func_801182E0(GameObject *o)
 {
     s16 q;
@@ -373,7 +370,11 @@ void func_801182E0(GameObject *o)
         o->unkB6 = 0x80;
         o->unkB8 = 0;
         o->unkBA = 0;
+#if defined(VERSION_SCES_01330)
+        o->tpage = 0x2a;
+#else
         o->tpage = (GetGraphType() == 1 || GetGraphType() == 2) ? 0x8a : 0x2a;
+#endif
         o->clut = GetClut(0xe0, 0x1e0);
         o->unkD = 0x80;
         o->spriteBank = D_1F8002D4[0];
@@ -410,7 +411,6 @@ void func_801182E0(GameObject *o)
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80118500);
 extern char *allocObjectLayer3(void);

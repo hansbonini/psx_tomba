@@ -137,7 +137,7 @@ void func_80031F88(GameObject *o)
     case 0:
         switch (o->subtype) {
         case 0:
-            if ((*(u16 *)0x1F8001F8 + *(s32 *)0x1F800198) & 1) {
+            if ((SPAD->unk1F8 + SPAD->unk198) & 1) {
                 if (--o->timer == -1) {
                     o->state = 3;
                     break;
@@ -250,19 +250,17 @@ void func_800322A4(char a, s32 x, s32 y, s32 z)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80032374);
-typedef struct T_32374 { u16 w; s16 p0; s16 i; s16 p1; s32 *a; } T_32374;
-extern T_32374 D_8007D2E8[];
 
 void func_80032374(u8 *o)
 {
     if (o[3] != 9) {
-        *(u16 *)(o + 0x1e) = D_8007D2E8[o[3]].w;
-        *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[o[3]].i];
-        *(s32 *)(o + 0x24) = D_8007D2E8[o[3]].a[o[0xc]];
+        *(u16 *)(o + 0x1e) = D_8007D2E8[o[3]].tpage;
+        *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[o[3]].sprite];
+        *(s32 *)(o + 0x24) = D_8007D2E8[o[3]].anims[o[0xc]];
     } else {
-        *(u16 *)(o + 0x1e) = D_8007D2E8[0].w;
-        *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[0].i];
-        *(s32 *)(o + 0x24) = *D_8007D2E8[0].a;
+        *(u16 *)(o + 0x1e) = D_8007D2E8[0].tpage;
+        *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[0].sprite];
+        *(s32 *)(o + 0x24) = *D_8007D2E8[0].anims;
     }
     readAnimFrameCount(o);
     o[0xa] = 0xd;

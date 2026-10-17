@@ -594,6 +594,9 @@ extern u8 D_8009C1A9;
 
 #define LOADP() p = (u8 *)D_801144E0[(*(u16 *)&GAME)]; p = ((u8 **)p)[D_8009BCCA]; p += (*(u16 *)&D_8009BCEA) * 4
 
+#if defined(VERSION_SCES_01330)
+INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800EF7F0);
+#else
 void func_800EF7F0(GameObject *o)
 {
     extern u8 D_8009C36E[];
@@ -785,6 +788,7 @@ void func_800EF7F0(GameObject *o)
         break;
     }
 }
+#endif
 #undef LOADP
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800EFEBC);
@@ -2406,7 +2410,7 @@ void func_800F329C(P800F3F3C_F329C *o)
             D_8009B698->b8 = 1;
             o->t.step = 2;
         }
-        if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C6) {
+        if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C6) {
             if (D_8009B698->b8 != 0) goto common;
             if (++D_8009B698->w20 >= 0xe) {
                 D_8009B698->b8 = 1;
@@ -2729,11 +2733,11 @@ void func_800F3810(GameObject *o)
             o->step = 1;
             o->unk9C = 0;
         }
-        if (*(u16 *)0x1F8001FC & *(u16 *)0x1F8003C6) {
+        if (SPAD->joypad_state & SPAD->unk3C6) {
             (*(u8 *)&D_8009C618) = 0;
             o->unk9C = 1;
             if (D_8009BCEC & 0x40) {
-                if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4) {
+                if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
                     o->unkA7 = 1;
                 }
             }
@@ -5217,7 +5221,7 @@ void func_800FA14C(PO_FA14C *o)
     extern P_FA14C *D_8009B698;
     s32 one, s;
     s16 n, k;
-    if (*(u16 *)0x1F8001FC & (*(u16 *)0x1F8003C6 | *(u16 *)0x1F8003C8)) {
+    if (SPAD->joypad_state & (SPAD->unk3C6 | SPAD->unk3C8)) {
         one = 1;
         D_8009BC9C = 0;
         o->bc7 = one;
@@ -5766,7 +5770,7 @@ void func_800FB464(GameObject *o)
 {
     extern P_FB464 *D_8009B698;
     char pad;
-    if (*(u8 *)0x1F8001A4 == 0 && o->unk9A != o->unk98) {
+    if (SPAD->unk1A4 == 0 && o->unk9A != o->unk98) {
         o->unk9A = o->unk98;
         D_8009B698->b8 = 1;
         D_8009BCD8[0] = o->unk98;
@@ -7158,162 +7162,6 @@ s16 func_800FE764(GameObject *o, s16 r)
 #define S32(o,n) (*(s32 *)((char *)(o) + (n)))
 #define PTR(o,n) (*(void **)((char *)(o) + (n)))
 
-typedef struct SPADBlock_FE970 {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_FE970;
 
 typedef struct GCDBlock_FE970 {
     u8 _pad0[0x94];
@@ -8743,6 +8591,9 @@ static __inline__ s16 calc_FE970(void)
 
 #define SET(a, b) { S16(o, 0xee) = a; S16(o, 0xf2) = b; break; }
 
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FE970);
+#else
 void func_800FE970(GameObject *o, s32 arg)
 {
     extern G330_FE970 *D_8009B698;
@@ -8908,7 +8759,7 @@ void func_800FE970(GameObject *o, s32 arg)
     }
     if (o->active == 1 && arg != 0) {
         decreaseObjectTimer(o, func_800FE764(o));
-        if ((*(SPADBlock_FE970 *)&SCRATCHPAD).b1a4 == 0 && o->unk9A != o->unk98) {
+        if (SCRATCHPAD.unk1A4 == 0 && o->unk9A != o->unk98) {
             o->unk9A = o->unk98;
             D_8009B698->b8 = 1;
             D_8009C970 = o->unk98;
@@ -8939,6 +8790,7 @@ void func_800FE970(GameObject *o, s32 arg)
         o->step = 2;
     }
 }
+#endif
 #undef U8
 #undef S8
 #undef U16
@@ -11110,8 +10962,8 @@ void func_80104118(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_801041F0);
 void func_801041F0(GameObject *o)
 {
-    u16 m = *(u16 *)0x1f8001fc;
-    if ((m & *(u16 *)0x1f8003c8) || (m & *(u16 *)0x1f8003c6)) {
+    u16 m = SPAD->joypad_state;
+    if ((m & SPAD->unk3C8) || (m & SPAD->unk3C6)) {
         if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
             (*(GameObject **)&D_8009B698)->animTimer = 15;
         } else {
@@ -11126,8 +10978,8 @@ void func_801041F0(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010427C);
 void func_8010427C(GameObject *o)
 {
-    u16 m = *(u16 *)0x1F8001FC;
-    if ((m & *(u16 *)0x1F8003C8) || (m & *(u16 *)0x1F8003C6)) {
+    u16 m = SPAD->joypad_state;
+    if ((m & SPAD->unk3C8) || (m & SPAD->unk3C6)) {
         (*(P **)&D_8009B698)->w2c = 0xf;
         o->velY = 0;
         o->unk7 = 2;
@@ -11755,7 +11607,7 @@ void func_80105820(u8 *o)
             o[0x9c] = 2;
             *(s16 *)(o + 0x7e) = 0;
             o[0xac] = 1;
-            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1f8003c4) != 0)
+            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) != 0)
                 o[0xa7] = 1;
             func_800ED788(o);
             o[5] = 2;
@@ -11768,7 +11620,7 @@ void func_80105820(u8 *o)
             o[0x9c] = 2;
             o[0xac] = 1;
             *(s16 *)(o + 0x7e) = 0;
-            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1f8003c4) != 0)
+            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) != 0)
                 o[0xa7] = 1;
             func_800ED788(o);
             o[5] = 2;
@@ -11842,7 +11694,7 @@ void func_80105A14(GameObject *o)
         o->touchFlag = 0;
         o->velV = 0;
         func_800EDEBC(o, 13);
-        if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4)) {
+        if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4)) {
             o->unkA7 = 1;
         } else {
             o->unkA7 = 0;
@@ -12356,14 +12208,14 @@ void func_80106928(GameObject *o)
             o->step = 2;
         }
         func_800EF40C(o);
-        if (*(u16 *)0x1F8001FC & *(u16 *)0x1F8003C6) {
+        if (SPAD->joypad_state & SPAD->unk3C6) {
             D_8009C618[0] = 0;
             if (o->unkB2 > 0x200) o->unkB2 = 0x200;
             if (o->unkB2 < -0x200) o->unkB2 = -0x200;
             o->unkA4 = 0;
             o->unk9C = 1;
             if (((s32 *)&D_8009BCEC)[0] & 0x40) {
-                if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4) {
+                if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
                     o->unkA7 = 1;
                 }
             }
@@ -12419,14 +12271,14 @@ void func_80106928(GameObject *o)
                 o->subState = 0;
                 o->step = 0;
             }
-            if (*(u16 *)0x1F8001FC & *(u16 *)0x1F8003C6) {
+            if (SPAD->joypad_state & SPAD->unk3C6) {
                 D_8009C618[0] = 0;
                 if (o->unkB2 > 0x200) o->unkB2 = 0x200;
                 if (o->unkB2 < -0x200) o->unkB2 = -0x200;
                 o->unk9C = 1;
                 o->unkA4 = 0;
                 if (((s32 *)&D_8009BCEC)[0] & 0x40) {
-                    if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4) {
+                    if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
                         o->unkA7 = 1;
                     }
                 }
@@ -13054,7 +12906,7 @@ void func_80108388(PO_08388 *o)
         o->t.velY = -0x570;
         (*(P_08388 **)&D_8009B698)->w20 = 5;
         func_800EDEBC(o, 0x19);
-        if (*(u16 *)0x1F8001C8 & 1)
+        if (SPAD->unk1C8 & 1)
             o->wf6 = (o->t.d->p.whole + 90) / 90 * 90;
         else
             o->wf6 = (o->t.d->p.whole - 90) / 90 * 90;
@@ -13073,7 +12925,7 @@ void func_80108388(PO_08388 *o)
             o->t.velV = 0;
             o->t.step = 2;
         }
-        if (*(u16 *)0x1F8001C8 & 1) {
+        if (SPAD->unk1C8 & 1) {
             o->t.d->raw += 0x28000;
             if (o->wf6 < o->t.d->p.whole) o->t.d->p.whole = o->wf6;
         } else {
@@ -13085,7 +12937,7 @@ void func_80108388(PO_08388 *o)
         o->t.unkB0 = 0;
         o->t.unkB6 = 0;
         func_8010E444(o);
-        if (*(u16 *)0x1F8001C8 & 1) {
+        if (SPAD->unk1C8 & 1) {
             o->t.d->raw += 0x28000;
             if (o->wf6 < o->t.d->p.whole) {
                 o->t.d->p.whole = o->wf6;
@@ -13353,12 +13205,12 @@ void func_80108D08(GameObject *o)
             func_800EDEBC(o, 10);
         } else if (*k & 0x10) {
             func_800EDEBC(o, 0xb);
-            if ((*(u16 *)0x1F8001F8 & 0xf) == 0) playSFXWithNote(0x1d, 0);
+            if ((SPAD->unk1F8 & 0xf) == 0) playSFXWithNote(0x1d, 0);
             o->y.raw -= 0x18000;
             func_80043D2C(o, o->h->p.whole + ((o->animFrame & 1) ? (-4) : 4), (s16)(o->y.p.whole - 0x15));
         } else if (*k & 0x40) {
             func_800EDEBC(o, 0xc);
-            if ((*(u16 *)0x1F8001F8 & 0xf) == 0) playSFXWithNote(0x1d, 0);
+            if ((SPAD->unk1F8 & 0xf) == 0) playSFXWithNote(0x1d, 0);
             o->y.raw += 0x28000;
             if (o->touchFlag) {
                 *(u8 *)&o->unkAA = 0;
@@ -13431,14 +13283,14 @@ void func_80108D08(GameObject *o)
         }
         break;
     }
-    if (*(u16 *)0x1F8001FC & *(u16 *)0x1F8003C6) {
+    if (SPAD->joypad_state & SPAD->unk3C6) {
         (*(u8 *)&D_8009C618) = 0;
         o->unk9C = 1;
         *(u8 *)&o->unkAA = 0;
         o->unk9E = 0;
         o->h->p.whole += (o->animFrame & 1) ? 0x10 : -0x10;
         if (D_8009BCEC_S32Arr[0] & 0x40) {
-            if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4) {
+            if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
                 o->unkA7 = 1;
             }
         }
@@ -14326,11 +14178,11 @@ s16 func_8010B208(GameObject *o)
 {
     s16 r = 0;
 
-    if (*(u16 *)0x1F8001FC & *(u16 *)0x1F8003C6) {
+    if (SPAD->joypad_state & SPAD->unk3C6) {
         (*(u8 *)&D_8009C618) = 0;
         ((void (*)())func_8010B058)();
         if (D_8009BCEC & 0x40) {
-            if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4) {
+            if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
                 o->unkA7 = 1;
             }
         }
@@ -14403,11 +14255,11 @@ static __inline__ s16 chk_0B384(GameObject *o)
 {
     s16 r = 0;
 
-    if (*(u16 *)0x1F8001FC & *(u16 *)0x1F8003C6) {
+    if (SPAD->joypad_state & SPAD->unk3C6) {
         (*(u8 *)&D_8009C618) = 0;
         func_8010B058(o);
         if (D_8009BCEC & 0x40) {
-            if (*(volatile u16 *)&D_8009C9D8 & *(u16 *)0x1F8003C4) {
+            if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
                 o->unkA7 = 1;
             }
         }
@@ -14517,8 +14369,8 @@ void func_8010B384(GameObject *o)
             break;
         }
         tickAnimation(o);
-        if (o->animFrame & 1) u = *(u16 *)0x1F8001FC & 0x80;
-        else u = *(u16 *)0x1F8001FC & 0x20;
+        if (o->animFrame & 1) u = SPAD->joypad_state & 0x80;
+        else u = SPAD->joypad_state & 0x20;
         if (u) {
             turn_0B384(o);
         }
@@ -16005,25 +15857,6 @@ typedef struct GCDBlock_0DE48 {
     u8 _pad3fe[0x2];
 } GCDBlock_0DE48;
 
-typedef struct GV6Block_0DE48 {
-    s16 s00;
-    u8 _pad02[0xe];
-    u16 s10;
-    u8 _pad12[0x2];
-    u8 b14;
-    u8 _pad15[0x5b];
-    u16 s70;
-    u8 _pad72[0x2];
-    u16 s74;
-    u8 _pad76[0x1e];
-    s32 i94;
-    u8 _pad98[0x4];
-    s32 i9c;
-    s32 ia0;
-    u8 _pada4[0xc];
-} GV6Block_0DE48;
-extern GV6Block_0DE48 D_8009C968;
-
 struct GSInventory_0DE48 { u8 slots[256]; u16 counter; u16 sortMode; };
 struct GSEquips_0DE48 { u8 weapon; u8 pants; };
 typedef struct GameState_0DE48 {
@@ -17107,7 +16940,7 @@ void func_8010DE48(GameObject *o)
     u16 max = D_801147AC[u].f2;
     u8 b;
 
-    if (D_8009C968.s10 == 7) {
+    if (D_8009C968.w10 == 7) {
         if (o->velY > 0) {
             switch (o->animFrame) {
             case 0:

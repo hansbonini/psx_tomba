@@ -183,7 +183,7 @@ extern PolyFT4_4BAF0 *D_1F800164_PolyFT4_4BAF0Ptr asm("D_1F800164");
 
 static __inline__ s32 onscreen_4BAF0(PolyFT4_4BAF0 *p)
 {
-    if ((*(volatile u16 *)&p->y0 < 0xE0 || p->y1 < 0xE0 || p->y2 < 0xE0 || p->y3 < 0xE0) &&
+    if ((*(volatile u16 *)&p->y0 < SCREEN_HEIGHT || p->y1 < SCREEN_HEIGHT || p->y2 < SCREEN_HEIGHT || p->y3 < SCREEN_HEIGHT) &&
         (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140 || p->x3 < 0x140))
         return 1;
     return 0;
@@ -203,249 +203,6 @@ static __inline__ s32 addprim_4BAF0(u32 e, u32 *a, char *b, s32 c, s32 d)
     return 0;
 }
 
-#if defined(VERSION_SCES_01330)
-typedef struct {
-    unsigned long tag;
-    unsigned char r0, g0, b0, code;
-    unsigned short x0, y0;
-    unsigned short uv0, clut;
-    unsigned short x1, y1;
-    unsigned short uv1, tpage;
-    unsigned short x2, y2;
-    unsigned short uv2, pad2;
-    unsigned short x3, y3;
-    unsigned short uv3, pad3;
-} PolyFT4_55D4C;
-
-typedef struct {
-    unsigned long w0;
-    unsigned long w4;
-    unsigned short h8;
-    unsigned char w, h;
-    unsigned short hc;
-    signed char dx, dy;
-} Ent_55D4C;
-
-typedef struct {
-    char p0[8];
-    unsigned short w08;
-    char p0a[3];
-    unsigned char b0d;
-    char p0e;
-    signed char b0f;
-    char p10[2];
-    unsigned short x;
-    char p14[2];
-    unsigned short y;
-    char p18[2];
-    short z;
-    char p1c[2];
-    unsigned short w1e;
-    char p20[4];
-    unsigned short *anim;
-    char p28[0x2e - 0x28];
-    unsigned short animFrame;
-    char p30[0x3c - 0x30];
-    char *tab;
-} O_55D4C;
-
-extern PolyFT4_55D4C *D_1F800164__8004BAF0;
-extern char *D_1F8001E0__8004BAF0;
-extern void SetSemiTrans__8004BAF0(PolyFT4_55D4C *, int);
-
-static __inline__ int onscreen_55D4C(PolyFT4_55D4C *p)
-{
-    if ((*(volatile unsigned short *)&p->y0 < 0x100 || p->y1 < 0x100 || p->y2 < 0x100 || p->y3 < 0x100) &&
-        (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140 || p->x3 < 0x140))
-        return 1;
-    return 0;
-}
-
-static __inline__ int addprim_55D4C(unsigned e, unsigned *a, char *b, int c, int d)
-{
-    d = ((signed char)d + c) << 2;
-    if (d < 0) d = 0;
-    d += (int)b;
-    if ((unsigned)(d - (int)D_1F8001E0__8004BAF0) >= 0xca0) return 1;
-    {
-        unsigned v = *(unsigned *)d;
-        *(unsigned *)d = (unsigned)a;
-        *a = v | e;
-    }
-    return 0;
-}
-
-void func_8004BAF0(O_55D4C *o)
-{
-    PolyFT4_55D4C *p;
-    Ent_55D4C *e;
-    short *h;
-    int n;
-    int z;
-
-    h = (short *)(o->tab + *o->anim * 4);
-    n = h[0];
-    e = (Ent_55D4C *)(*(char * volatile *)&o->tab + h[1]);
-    do {
-        p = D_1F800164__8004BAF0;
-        if (o->animFrame & 1) {
-            p->x0 = o->x + e->dx;
-            p->y0 = o->y + e->dy;
-            p->x1 = p->x0 + e->w;
-            p->x2 = p->x0;
-            p->y1 = p->y0;
-        } else {
-            p->x0 = o->x - e->dx;
-            p->y0 = o->y + e->dy;
-            p->x1 = p->x0 - e->w;
-            p->x2 = p->x0;
-            p->y1 = p->y0;
-        }
-        p->y2 = p->y0 + e->h;
-        *(volatile unsigned short *)&p->x3 = p->x1;
-        *(volatile unsigned short *)&p->y3 = p->y2;
-        if (onscreen_55D4C(p)) {
-            p->code = 0x2d;
-            SetSemiTrans__8004BAF0(p, o->b0d >> 7);
-            *(unsigned long *)&p->uv0 = e->w0;
-            *(unsigned long *)&p->uv1 = e->w4;
-            p->uv2 = e->h8;
-            p->uv3 = e->hc;
-            p->tpage += o->w1e;
-            if (o->b0d & 1) {
-                p->clut = o->w08;
-            }
-            z = o->z;
-            do {} while (0);
-            if (addprim_55D4C(0x9000000, (unsigned *)p, D_1F8001E0__8004BAF0 + 0x10, z, o->b0f) == 0) {
-                D_1F800164__8004BAF0 = D_1F800164__8004BAF0 + 1;
-            }
-        }
-        e++;
-    } while (--n != 0);
-}
-#elif defined(VERSION_SCES_01331)
-typedef struct {
-    unsigned long tag;
-    unsigned char r0, g0, b0, code;
-    unsigned short x0, y0;
-    unsigned short uv0, clut;
-    unsigned short x1, y1;
-    unsigned short uv1, tpage;
-    unsigned short x2, y2;
-    unsigned short uv2, pad2;
-    unsigned short x3, y3;
-    unsigned short uv3, pad3;
-} PolyFT4_55CB8;
-
-typedef struct {
-    unsigned long w0;
-    unsigned long w4;
-    unsigned short h8;
-    unsigned char w, h;
-    unsigned short hc;
-    signed char dx, dy;
-} Ent_55CB8;
-
-typedef struct {
-    char p0[8];
-    unsigned short w08;
-    char p0a[3];
-    unsigned char b0d;
-    char p0e;
-    signed char b0f;
-    char p10[2];
-    unsigned short x;
-    char p14[2];
-    unsigned short y;
-    char p18[2];
-    short z;
-    char p1c[2];
-    unsigned short w1e;
-    char p20[4];
-    unsigned short *anim;
-    char p28[0x2e - 0x28];
-    unsigned short animFrame;
-    char p30[0x3c - 0x30];
-    char *tab;
-} O_55CB8;
-
-extern PolyFT4_55CB8 *D_1F800164__8004BAF0;
-extern char *D_1F8001E0__8004BAF0;
-extern void SetSemiTrans__8004BAF0(PolyFT4_55CB8 *, int);
-
-static __inline__ int onscreen_55CB8(PolyFT4_55CB8 *p)
-{
-    if ((*(volatile unsigned short *)&p->y0 < 0x100 || p->y1 < 0x100 || p->y2 < 0x100 || p->y3 < 0x100) &&
-        (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140 || p->x3 < 0x140))
-        return 1;
-    return 0;
-}
-
-static __inline__ int addprim_55CB8(unsigned e, unsigned *a, char *b, int c, int d)
-{
-    d = ((signed char)d + c) << 2;
-    if (d < 0) d = 0;
-    d += (int)b;
-    if ((unsigned)(d - (int)D_1F8001E0__8004BAF0) >= 0xca0) return 1;
-    {
-        unsigned v = *(unsigned *)d;
-        *(unsigned *)d = (unsigned)a;
-        *a = v | e;
-    }
-    return 0;
-}
-
-void func_8004BAF0(O_55CB8 *o)
-{
-    PolyFT4_55CB8 *p;
-    Ent_55CB8 *e;
-    short *h;
-    int n;
-    int z;
-
-    h = (short *)(o->tab + *o->anim * 4);
-    n = h[0];
-    e = (Ent_55CB8 *)(*(char * volatile *)&o->tab + h[1]);
-    do {
-        p = D_1F800164__8004BAF0;
-        if (o->animFrame & 1) {
-            p->x0 = o->x + e->dx;
-            p->y0 = o->y + e->dy;
-            p->x1 = p->x0 + e->w;
-            p->x2 = p->x0;
-            p->y1 = p->y0;
-        } else {
-            p->x0 = o->x - e->dx;
-            p->y0 = o->y + e->dy;
-            p->x1 = p->x0 - e->w;
-            p->x2 = p->x0;
-            p->y1 = p->y0;
-        }
-        p->y2 = p->y0 + e->h;
-        *(volatile unsigned short *)&p->x3 = p->x1;
-        *(volatile unsigned short *)&p->y3 = p->y2;
-        if (onscreen_55CB8(p)) {
-            p->code = 0x2d;
-            SetSemiTrans__8004BAF0(p, o->b0d >> 7);
-            *(unsigned long *)&p->uv0 = e->w0;
-            *(unsigned long *)&p->uv1 = e->w4;
-            p->uv2 = e->h8;
-            p->uv3 = e->hc;
-            p->tpage += o->w1e;
-            if (o->b0d & 1) {
-                p->clut = o->w08;
-            }
-            z = o->z;
-            do {} while (0);
-            if (addprim_55CB8(0x9000000, (unsigned *)p, D_1F8001E0__8004BAF0 + 0x10, z, o->b0f) == 0) {
-                D_1F800164__8004BAF0 = D_1F800164__8004BAF0 + 1;
-            }
-        }
-        e++;
-    } while (--n != 0);
-}
-#else
 void func_8004BAF0(O_4BAF0 *o)
 {
     PolyFT4_4BAF0 *p;
@@ -495,16 +252,12 @@ void func_8004BAF0(O_4BAF0 *o)
         e++;
     } while (--n != 0);
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", drawMessageBox);
 typedef struct O_4BDE4 { char p0[0x1e]; s16 v1e; char p20[2]; s16 v22; char p24[0x92]; u16 m; char pb8[6];
     u16 a, b, c, d; char pc6[4]; u16 idx; } O_4BDE4;
 typedef struct L_4BDE4 { s16 x0, x1, x2, x3; s16 a, b, c, d; s16 m; s16 pad[7]; } L_4BDE4;
 
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("nonmatchings/main/render/actorrender3", drawMessageBox);
-#else
 void drawMessageBox(O_4BDE4 *o)
 {
     char env[0x60];
@@ -550,8 +303,10 @@ void drawMessageBox(O_4BDE4 *o)
             D_1F800164 = (char *)D_1F800164 + 0x14;
         }
     }
+#if !defined(VERSION_SCES_01330)
     if (GetGraphType() != 1)
         GetGraphType();
+#endif
     r = D_1F800164;
     SetDrawMode(r, 0, 0, 0, 0);
     AddPrim(D_1F8001E0 + 8, r);
@@ -563,7 +318,6 @@ void drawMessageBox(O_4BDE4 *o)
     D_1F800164 = (char *)D_1F800164 + 0xc;
     drawBalloonFrame(&l, 0, o->v1e);
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", drawMessageBoxFrame);
 
@@ -793,162 +547,6 @@ skip:
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", func_8004CC84);
-typedef struct SPADBlock_4CC84 {
-    u8 b0;
-    u8 _pad1[0x5f];
-    s16 s60;
-    s16 s62;
-    s16 s64;
-    u8 _pad66[0xe];
-    s32 i74;
-    s32 i78;
-    u8 _pad7c[0x10];
-    s32 i8c;
-    u8 _pad90[0x30];
-    u8 bc0;
-    u8 _padc1[0x13];
-    s32 id4;
-    s32 id8;
-    s32 idc;
-    s32 ie0;
-    u8 _pade4[0x2];
-    s16 se6;
-    u8 _pade8[0x2];
-    s16 sea;
-    s32 iec;
-    s32 if0;
-    s32 if4;
-    u8 _padf8[0x20];
-    u8 b118;
-    u8 _pad119[0x4b];
-    void * p164;
-    s32 i168;
-    s32 i16c;
-    s32 i170;
-    s32 i174;
-    u8 _pad178[0x2];
-    u16 s17a;
-    u8 _pad17c[0x2];
-    u16 s17e;
-    u8 _pad180[0x6];
-    u16 s186;
-    u8 _pad188[0x4];
-    s32 i18c;
-    s32 i190;
-    u8 _pad194[0x4];
-    s32 i198;
-    s16 s19c;
-    s16 s19e;
-    u8 b1a0;
-    u8 _pad1a1[0x3];
-    u8 b1a4;
-    u8 b1a5;
-    u8 _pad1a6[0x1c];
-    u8 b1c2;
-    u8 _pad1c3[0x1];
-    u8 b1c4;
-    u8 b1c5;
-    s16 s1c6;
-    u16 s1c8;
-    u8 _pad1ca[0x2];
-    u8 b1cc;
-    u8 b1cd;
-    u8 _pad1ce[0x1];
-    u8 b1cf;
-    u8 b1d0;
-    u8 b1d1;
-    u8 b1d2;
-    u8 b1d3;
-    u8 _pad1d4[0xc];
-    s32 i1e0;
-    u8 _pad1e4[0x4];
-    s16 s1e8;
-    u8 _pad1ea[0xa];
-    s16 s1f4;
-    s16 s1f6;
-    u16 s1f8;
-    u8 _pad1fa[0x2];
-    u16 s1fc;
-    u16 s1fe;
-    u8 _pad200[0x1c];
-    void * p21c;
-    u8 _pad220[0x4];
-    void * p224;
-    void * p228;
-    u8 _pad22c[0xc];
-    s16 s238;
-    u8 _pad23a[0xc];
-    s16 s246;
-    u16 s248;
-    u8 _pad24a[0x2];
-    s16 s24c;
-    u8 _pad24e[0x2];
-    u16 s250;
-    u8 _pad252[0x2];
-    u16 s254;
-    s16 s256;
-    u8 _pad258[0x8];
-    void * p260;
-    u8 _pad264[0x4];
-    void * p268;
-    void * p26c;
-    u8 _pad270[0x8];
-    void * p278;
-    u8 _pad27c[0x2];
-    s16 s27e;
-    s16 s280;
-    u16 s282;
-    s16 s284;
-    s16 s286;
-    u8 _pad288[0x2c];
-    s32 i2b4;
-    u8 _pad2b8[0x18];
-    s32 i2d0;
-    s32 i2d4;
-    s32 i2d8;
-    s32 i2dc;
-    s32 i2e0;
-    s32 i2e4;
-    s32 i2e8;
-    u8 _pad2ec[0x4];
-    s32 i2f0;
-    u8 _pad2f4[0x4];
-    s32 i2f8;
-    u8 _pad2fc[0x4];
-    s32 i300;
-    s32 i304;
-    void * p308;
-    void * p30c;
-    s32 i310;
-    s32 i314;
-    s32 i318;
-    void * p31c;
-    u8 _pad320[0x14];
-    s32 i334;
-    void * p338;
-    void * p33c;
-    u8 _pad340[0x1c];
-    s32 i35c;
-    u8 _pad360[0x10];
-    s32 i370;
-    s32 i374;
-    s32 i378;
-    u8 _pad37c[0x3c];
-    u16 s3b8;
-    u16 s3ba;
-    s16 s3bc;
-    u8 _pad3be[0x2];
-    void * p3c0;
-    u16 s3c4;
-    u16 s3c6;
-    u16 s3c8;
-    u8 _pad3ca[0x4];
-    u8 b3ce;
-    u8 _pad3cf[0x1];
-    u8 b3d0;
-    u8 b3d1;
-    u8 _pad3d2[0x2e];
-} SPADBlock_4CC84;
 
 struct GSInventory_4CC84 { u8 slots[256]; u16 counter; u16 sortMode; };
 struct GSEquips_4CC84 { u8 weapon; u8 pants; };
@@ -2093,10 +1691,10 @@ static __inline__ s32 project_4CC84(void)
 {
     gte_ldv0(&D_1F800060);
     gte_rtps();
-    gte_stflg(&(*(SPADBlock_4CC84 *)&SCRATCHPAD).i8c);
-    if ((*(SPADBlock_4CC84 *)&SCRATCHPAD).i8c < 0) return 1;
+    gte_stflg(&SCRATCHPAD.unk08C);
+    if (SCRATCHPAD.unk08C < 0) return 1;
     gte_stsxy(&LZ_FILE_CTRL_Long);
-    gte_stszotz(&(*(SPADBlock_4CC84 *)&SCRATCHPAD).i74);
+    gte_stszotz(&SCRATCHPAD.lz.offset);
     return 0;
 }
 static __inline__ s32 addprim_4CC84(u32 *a, char *b, s32 c, s32 d, u32 e)
@@ -2131,7 +1729,7 @@ void func_8004CC84(GameObject *o)
         D_1F800060.vz = o->z.p.whole >> 2;
     else
         D_1F800060.vz = o->z.p.whole;
-    SetRotMatrix(((char*)&(*(SPADBlock_4CC84 *)&SCRATCHPAD).bc0));
+    SetRotMatrix(&SCRATCHPAD.viewMatrix);
     SetTransMatrix(D_1F8000C0);
     if (project_4CC84()) return;
     a = (u16 *)o->anim;
@@ -2157,7 +1755,7 @@ void func_8004CC84(GameObject *o)
     p->y2 = p->y0 + (h * (u16)o->unkB8) / 100 - 1;
     p->x3 = p->x1;
     p->y3 = p->y2;
-    z = (*(SPADBlock_4CC84 *)&SCRATCHPAD).i74;
+    z = SCRATCHPAD.lz.offset;
     p->clut = o->clut;
     if (addprim_4CC84((u32 *)p, (char *)(D_1F8001E0 + 0x10), z, o->unkF, 0x9000000) == 0)
         D_1F800164 = (PolyFT4_4CC84 *)((char *)D_1F800164 + 0x28);

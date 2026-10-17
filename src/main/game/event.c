@@ -743,9 +743,9 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
     if (event_id == 1) {
         duration = 1;
         x = D_800A53AA - D_800A38C2;
-        y = (u16)PLAYER.obj.y.p.whole - *(u16*)0x1F8000F2;
+        y = (u16)PLAYER.obj.y.p.whole - (*(u16 *)&SPAD->vpy.p.whole);
     }
-    src = *(u8**)0x1F80039C;
+    src = (*(u8* *)&SPAD->unk39C);
     src += *(u16*)(src + 8);
     idx = D_800776D0[GAME.selectedArea][event_id];
     if (idx == 0xFF) {
@@ -873,7 +873,7 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
             temp = obj[0x1C] | 0x80;
             obj[0x1C] = temp;
             *(s16*)(obj + 0x20) = duration;
-            temp = (int)(&SCRATCHPAD + 0x33C);
+            temp = (int)&SCRATCHPAD.wmdData[3];
             hdr = *(int* volatile*)temp;
             temp = (int)*(int* volatile*)temp;
             temp += hdr[1];

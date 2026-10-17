@@ -57,58 +57,18 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/drawutil", drawLoadingSprites);
-#if defined(VERSION_SCES_01331)
-typedef struct {
-    unsigned addr : 24;
-    unsigned len : 8;
-} PTAG_21150;
-typedef struct {
-    PTAG_21150 tag;
-    int code[2];
-} DRM_21150;
-extern DRM_21150 *D_8009C8A8__drawLoadingSprites;
-extern PTAG_21150 *D_1F8001E0__drawLoadingSprites;
-extern int GetGraphType__drawLoadingSprites(void);
-extern void drawNowLoadingSprite__drawLoadingSprites(int a, int b, int c, int d, int e);
-extern void drawUiSprite__drawLoadingSprites(short x, short y, short c);
-extern void SetDrawMode__drawLoadingSprites(DRM_21150 *p, int dfe, int dtd, int tpage, void *tw);
-
-void drawLoadingSprites(int c, short s)
-{
-    int i, j;
-    DRM_21150 *p;
-    PTAG_21150 *ot;
-    if (GetGraphType__drawLoadingSprites() != 1)
-        GetGraphType__drawLoadingSprites();
-    drawNowLoadingSprite__drawLoadingSprites(0xc0, 0xa0, 0, 0, s);
-    for (j = 0; j < 6; j++) {
-        for (i = 0; i < 7; i++) {
-            if ((i + j) & 1)
-                drawUiSprite__drawLoadingSprites(i * 0x30, j * 0x30, 1 - c);
-            else
-                drawUiSprite__drawLoadingSprites(i * 0x30, j * 0x30, c);
-        }
-    }
-    p = D_8009C8A8__drawLoadingSprites;
-    SetDrawMode__drawLoadingSprites(p, 0, 0, 0, 0);
-    ot = D_1F8001E0__drawLoadingSprites;
-    p->tag.addr = ot->addr;
-    ot->addr = (unsigned)p;
-    D_8009C8A8__drawLoadingSprites++;
-}
-#elif defined(VERSION_SCES_01330)
-INCLUDE_ASM("nonmatchings/main/render/drawutil", drawLoadingSprites);
-#else
 void drawLoadingSprites(int arg0, int arg1)
 {
     int i;
     int j;
     DR_MODE* mode;
 
+#if !defined(VERSION_SCES_01330)
     if (GetGraphType() != 1) {
         GetGraphType();
     }
-    drawNowLoadingSprite(192, 128, 0, 0, arg1);
+#endif
+    drawNowLoadingSprite(192, NTSC_PAL(128, 160), 0, 0, arg1);
 
     for (i = 0; i < 6; i++) {
         for (j = 0; j < 7; j++) {
@@ -125,14 +85,14 @@ void drawLoadingSprites(int arg0, int arg1)
     addPrim(CURRENT_OT, mode);
     D_8009C8A8 += sizeof(DR_MODE);
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/drawutil", drawNowLoading);
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("nonmatchings/main/render/drawutil", drawNowLoading);
-#else
 void drawNowLoading(short arg0)
 {
+#if defined(VERSION_SCES_01330)
+    drawNowLoadingSprite(104, 96, 1, 20, arg0);
+    drawNowLoadingSprite(160, 96, 2, 20, arg0);
+#else
     int graphType = GetGraphType();
     int tpage = 36;
     if (graphType != 1) {
@@ -146,9 +106,8 @@ void drawNowLoading(short arg0)
     }
     drawNowLoadingSprite(104, 96, 1, tpage, arg0);
     drawNowLoadingSprite(160, 96, 2, tpage, arg0);
-    return;
-}
 #endif
+}
 
 void drawUiSprite(short x, short y, short sprt_id)
 {   

@@ -44,7 +44,7 @@ void func_801350F4(GameObject *o)
     case 5:
         tickAnimation(o);
         applyAnimVelocityX(o, o->animFrame);
-        if (*(u16 *)0x1F8001F8 & 1) {
+        if (SPAD->unk1F8 & 1) {
             o->unk88--;
         } else {
             o->unk88++;
@@ -146,15 +146,14 @@ extern u8 D_8009C227;
 extern u8 D_800A5403;
 extern u8 D_800A5402;
 
-#if defined(VERSION_SLPS_01144)
-INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135528);
-#else
 void func_80135528(u8 *o)
 {
     u8 *a, *b, *c;
     s32 n;
+#if !defined(VERSION_SLPS_01144)
     u32 *fl = &D_8009BCEC;
     *fl |= 8;
+#endif
     if (D_8009C114 == 0xff) {
         o[4] = 3;
         return;
@@ -221,7 +220,6 @@ void func_80135528(u8 *o)
     *(u8 **)(o + 0x24) = c;
     o[4] = 1;
 }
-#endif
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135708);
 extern s16 *D_800A53D8;

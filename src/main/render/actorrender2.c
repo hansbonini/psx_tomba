@@ -201,23 +201,12 @@ void func_80046CDC(void)
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046EC0);
 
-typedef struct {
-    s16 x, y;
-    u16 w4, w6, w8, w10;
-    s8 b12;
-    u8 b13;
-    s16 w14;
-    u16 q1[8];
-    u16 q2[8];
-    s16 w48, w50;
-} SH_46EC0;
 
 typedef struct { s16 x, y; } P_46EC0;
 typedef struct { char pad[7]; s8 b7; char pad8[0x18 - 8]; u16 w18, w1a; } PL_46EC0;
 typedef struct { char pad[0x4c]; u16 w4c; } C4C_46EC0;
 extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
 extern char D_1F8000C0_CharArr[] asm("D_1F8000C0");
-extern SH_46EC0 *D_8009B6A0;
 extern PL_46EC0 *D_8009B698;
 extern u8 D_800A5435;
 extern u16 *D_800A53BC;
@@ -263,8 +252,8 @@ static __inline__ s32 otadd_46EC0(unsigned long *a, char *b, s32 c, s16 d, unsig
     func_8004FE24(o, D_8009B6A0->x, D_8009B6A0->y); \
     p->code = 0x2c; \
     SetSemiTrans(p, 1); \
-    p->tpage = D_8009B6A0->w8; \
-    p->clut = D_8009B6A0->w10; \
+    p->tpage = D_8009B6A0->tpage2; \
+    p->clut = D_8009B6A0->clut2; \
     p->u0 = 0xc0; \
     p->u2 = 0xc0; \
     p->v0 = 0; \
@@ -391,23 +380,23 @@ void func_80046EC0(GameObject *o)
         }
         break;
     }
-    if (D_8009B6A0->b12) {
-        if (D_8009B6A0->w48 > 0)
-            SHADOW(D_8009B6A0->q1);
-        if (D_8009B6A0->w50 > 0)
-            SHADOW(D_8009B6A0->q2);
+    if (D_8009B6A0->mode) {
+        if (D_8009B6A0->shadowLen > 0)
+            SHADOW(D_8009B6A0->shadow);
+        if (D_8009B6A0->shadowLen2 > 0)
+            SHADOW(D_8009B6A0->shadow2);
         p = (POLY_FT4 *)D_1F800164;
         p->code = 0x2d;
         SetSemiTrans(p, 0);
-        p->tpage = D_8009B6A0->w4;
-        p->clut = D_8009B6A0->w10;
-        p->u0 = D_8009B6A0->b13 * 32 - 0x80;
+        p->tpage = D_8009B6A0->tpage;
+        p->clut = D_8009B6A0->clut2;
+        p->u0 = D_8009B6A0->frame * 32 - 0x80;
         p->v0 = 0x10;
-        p->u1 = D_8009B6A0->b13 * 32 - 0x61;
+        p->u1 = D_8009B6A0->frame * 32 - 0x61;
         p->v1 = 0x10;
-        p->u2 = D_8009B6A0->b13 * 32 - 0x80;
+        p->u2 = D_8009B6A0->frame * 32 - 0x80;
         p->v2 = 0x1f;
-        p->u3 = D_8009B6A0->b13 * 32 - 0x61;
+        p->u3 = D_8009B6A0->frame * 32 - 0x61;
         p->v3 = 0x1f;
         s.x = D_8009B6A0->x;
         s.y = D_8009B6A0->y;
@@ -465,8 +454,8 @@ void func_80046EC0(GameObject *o)
     SetSemiTrans(p, o->unkD >> 7);
     {
     u16 cl;
-    p->tpage = D_8009B6A0->w4;
-    cl = D_8009B6A0->w6;
+    p->tpage = D_8009B6A0->tpage;
+    cl = D_8009B6A0->clut;
     k = (D_1F8001F8 & 3) * D_8007EB7C;
     p->u0 = k - 0x80;
     p->v0 = 0;
