@@ -37,7 +37,7 @@ void initGameConfig(void)
     GAME.unk670 = 0x5DA;
     GAME.unk672 = 0x639;
     GAME.unk674 = 0x691;
-    GAME.unk5bc = D_8009E744;
+    GAME.unk5bc = BUTTON_CONFIG_INDEX;
     if (SPAD->unk1B3 == 0) {
         if (SPAD->unk1AB != 0) {
             GAME.inventory.slots[0] = ITEM_BLACKJACK;

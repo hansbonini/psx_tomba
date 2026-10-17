@@ -515,7 +515,7 @@ void func_8011068C(char *o)
     s = 0x200;
     if ((*(u16 *)&D_8009C978) == 7)
         s >>= 3 - D_8009C980;
-    k = &D_8009C9D8;
+    k = &PAD_PRESSED;
     if (*k & 0x80)
         *(s16 *)(o + 0x7c) = -s;
     else if (*k & 0x20)
@@ -532,7 +532,7 @@ void func_8011070C(GameObject *o)
     s16 v;
     v = 0x20;
     if ((*(u16 *)&D_8009C978) == 7) { v = 0x20; v = v >> (3 - D_8009C981); }
-    if (*(volatile u16 *)&D_8009C9D8 & 0x40) o->velY = o->velY + v;
+    if (*(volatile u16 *)&PAD_PRESSED & 0x40) o->velY = o->velY + v;
     else o->velY = o->velY - v;
     if (o->velY > 0x300) o->velY = 0x300;
     if (o->velY < 0xc0) o->velY = 0xc0;

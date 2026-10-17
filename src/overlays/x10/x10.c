@@ -1275,7 +1275,7 @@ void func_8011B07C(GameObject *o)
     s32 e;
     Fix16 *h;
 
-    if (SCRATCHPAD.joypad_state & SCRATCHPAD.unk3C6) {
+    if (SCRATCHPAD.joypad_state & SCRATCHPAD.buttonJump) {
         D_8009C608.playerEquips = 0;
         ((u8 *)&o->unkA8)[1] = 0;
         if (D_8009C608.unk952 - 5 < 3) (*(GameObject **)&D_8009E454)->active = 1;
@@ -1327,7 +1327,7 @@ extern void func_8010DE48(O_1BA78 *);
 extern void func_8010300C(O_1BA78 *);
 extern s16 probeSidesAndApplyTileResponse(O_1BA78 *, s32, s32);
 
-#define PADCHK() { volatile u16 *pad = &D_8009C9D8; if (*pad & 0x80) o->w2e = 1; if (*pad & 0x20) o->w2e = 0; }
+#define PADCHK() { volatile u16 *pad = &PAD_PRESSED; if (*pad & 0x80) o->w2e = 1; if (*pad & 0x20) o->w2e = 0; }
 
 void func_8011BA78(O_1BA78 *o)
 {

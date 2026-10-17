@@ -309,7 +309,7 @@ s32 *h; func_8010DE48(o); h = o->h; *h += o->velH << 8; func_8010E444(o, h); app
 void func_800EDA30(char *o)
 {
 
-    volatile u16 *pad = &D_8009C9D8;
+    volatile u16 *pad = &PAD_PRESSED;
     s32 a = 10;
     s16 d;
     s32 t;
@@ -748,7 +748,7 @@ void func_800EE7C0(GameObject *o)
 void func_800EE7F0(char *o)
 {
     u16 v = *(u16 *)(o + 0x2e) & 1;
-    volatile u16 *p = &D_8009C9D8;
+    volatile u16 *p = &PAD_PRESSED;
     *(u16 *)(o + 0x2e) = v;
     if (*p & 0x20) {
         *(s16 *)(o + 0x2e) = 0;
@@ -761,7 +761,7 @@ void func_800EE7F0(char *o)
 void func_800EE844(char *o)
 {
     u16 v = *(u16 *)(o + 0x2e) & 1;
-    volatile u16 *p = &D_8009C9D8;
+    volatile u16 *p = &PAD_PRESSED;
     volatile u16 *q;
     *(u16 *)(o + 0x2e) = v;
     if (*p & 0x20) {
@@ -769,7 +769,7 @@ void func_800EE844(char *o)
     } else {
         *(u16 *)(o + 0x2e) = (*p & 0x80) ? 1 : (v | 2);
     }
-    q = &D_8009C9D8;
+    q = &PAD_PRESSED;
     if (*q & 0x10)
         *(u16 *)(o + 0x2e) |= 8;
     if (*q & 0x40)
@@ -779,7 +779,7 @@ void func_800EE844(char *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE8E8);
 void func_800EE8E8(GameObject *o)
 {
-    volatile u16 *k = D_8009C9D8;
+    volatile u16 *k = PAD_PRESSED;
     u16 f = o->animFrame & 1;
     o->animFrame = f;
     if (*k & 0x10) {
@@ -798,7 +798,7 @@ void func_800EE8E8(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE98C);
 void func_800EE98C(GameObject *o)
 {
-    volatile u16 *k = &D_8009C9D8;
+    volatile u16 *k = &PAD_PRESSED;
     u16 f = o->animFrame & 1;
 
     o->animFrame = f;
@@ -829,12 +829,12 @@ void func_800EE98C(GameObject *o)
 void func_800EEA38(GameObject *o)
 {
     if (o->animFrame & 1) {
-        volatile u16 *pad = &D_8009C9D8;
+        volatile u16 *pad = &PAD_PRESSED;
         if ((*pad & 0x10) == 0) o->animFrame = 3;
         else if ((*pad & 0x80) != 0) o->animFrame = 5;
         else o->animFrame = 7;
     } else {
-        volatile u16 *pad = &D_8009C9D8;
+        volatile u16 *pad = &PAD_PRESSED;
         if ((*pad & 0x10) == 0) o->animFrame = 2;
         else if ((*pad & 0x20) != 0) o->animFrame = 4;
         else o->animFrame = 6;

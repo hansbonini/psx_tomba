@@ -791,7 +791,7 @@ void func_8002B3E8(char *o, s32 a)
         decay_2B3E8();
         return;
     }
-    k = D_8009C9D8;
+    k = PAD_PRESSED;
     if (*k & 0x10) {
         if (a != 0 || *(s32 *)(o + 0x20) < -0x9ff) {
             func_8002B110(o, a);
@@ -1125,7 +1125,7 @@ void func_8002BB9C(S_2BB9C *o)
         case 0:
             c = g->a0.b[0];
             if (c & 0x12) {
-                if (D_8009C9D8[0] & 0xc00) {
+                if (PAD_PRESSED[0] & 0xc00) {
                     if ((D_1F8001FC & 0x10) && D_800A5438 != 4) {
                         if (o->b6e != 1) {
                             o->b6c = 7;
@@ -1207,7 +1207,7 @@ void func_8002BB9C(S_2BB9C *o)
                     }
                     if (f) decay_2BB9C();
                 }
-            } else if (D_8009C9D8[0] & 0xc00) {
+            } else if (PAD_PRESSED[0] & 0xc00) {
                 handleLookScrollInput(o);
                 func_8002B3E8(o, 0);
             } else {
@@ -1236,7 +1236,7 @@ void func_8002BB9C(S_2BB9C *o)
         case 12:
             break;
         default:
-            if ((g->a0.b[0] & 0x12) || (D_8009C9D8[0] & 0xc00)) func_8002B3E8(o, 1);
+            if ((g->a0.b[0] & 0x12) || (PAD_PRESSED[0] & 0xc00)) func_8002B3E8(o, 1);
             else decay_2BB9C();
             break;
         }
@@ -1266,7 +1266,7 @@ void func_8002BB9C(S_2BB9C *o)
     case 5:
         clamp_2BB9C(o);
         if (g->a0.b[3] != 0) break;
-        if ((g->a0.b[0] & 0x10) && (D_8009C9D8[0] & 0x40)) goto zero;
+        if ((g->a0.b[0] & 0x10) && (PAD_PRESSED[0] & 0x40)) goto zero;
         if (D_8009BCCC > D_8009BCCD) goto zero;
         o->b6c = 7;
         o->b6d = 0;
@@ -1299,7 +1299,7 @@ void func_8002BB9C(S_2BB9C *o)
     case 9:
         if (g->a0.b[2] != 0) break;
         if (g->a0.b[0] & 2) {
-            if (D_8009C9D8[0] & 0x10) {
+            if (PAD_PRESSED[0] & 0x10) {
                 if (!(g->a0.b[0] & 1)) o->b6c = 0;
                 break;
             }

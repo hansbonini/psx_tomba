@@ -389,7 +389,7 @@ void func_80038AC0(GameObject *o)
                 D_8009B6A0->mode = 0;
                 G.unk9D = 0;
                 o->unkA5 = 0;
-                if (!(D_8009C9D8[0] & SPAD->unk3C8) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
+                if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
 #if defined(VERSION_SLPS_01144)
                     func_800EFBEC_slps01144(&G);
 #endif
@@ -449,7 +449,7 @@ void func_80038AC0(GameObject *o)
         func_800349DC(&D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(D_8009C9D8[0] & SPAD->unk3C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || D_8009BCA7) {
             G.unk9D = 1;
             D_8009B698->b0 = 2;
             D_8009B698->w22 = 0;
@@ -504,7 +504,7 @@ void func_80038AC0(GameObject *o)
         func_800349DC(&D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(D_8009C9D8[0] & SPAD->unk3C8) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || D_8009BCA7) {
             D_8009B698->b0 = 1;
             D_8009B698->w22 = 0;
             G.unk9D = 1;

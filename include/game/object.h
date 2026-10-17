@@ -235,7 +235,9 @@ typedef struct Unk8009C968 {
 
 typedef struct Player {
     /* 0x00 */ GameObject obj;
-    /* 0xC0 */ u8 unkC0[0xB8];
+    /* 0xC0 */ u8 unkC0[0x24];
+    /* 0xE4 */ struct GameObject *heldObject;  /* the enemy grabbed last (kept after the throw) */
+    /* 0xE8 */ u8 unkE8[0x90];
 } Player;
 
 typedef struct SpriteSlot {

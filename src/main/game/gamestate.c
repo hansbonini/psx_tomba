@@ -788,7 +788,7 @@ void gameplayMainHandler(void)
                 startAreaBgm();
             }
             GAME.unk21 = 1;
-            D_8009C9D8[0] = D_8009C9DC = 0;
+            PAD_PRESSED[0] = D_8009C9DC = 0;
             (*(short *)&SCRATCHPAD.joypad_state)=0;
             return;
         case 1:
@@ -799,7 +799,7 @@ void gameplayMainHandler(void)
                 temp_v1_2->step.value++;
                 stopBgm(1);
             }
-            if (((*(u_char *)&SPAD->unk1C2) != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
+            if (((*(u_char *)&SPAD->unk1C2) != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -911,13 +911,13 @@ void areaMode2Handler(void)
             }
             (*(short *)&SPAD->joypad_state) = 0;
             scratch->currentTask->step.volatile_value+=1;
-            D_8009C9D8[0] = D_8009C9DC = 0;
+            PAD_PRESSED[0] = D_8009C9DC = 0;
             break;
         case 1:
             GAME.totalTimePlayed++;
             areaMode2Tick();
             if (scratch->unk1C2 != 0) {
-                volatile u_short *temp_v1 = (volatile int* )D_8009C9D8;
+                volatile u_short *temp_v1 = (volatile int* )PAD_PRESSED;
                 if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
                     scratch->currentTask->step.value = 2;
                 }
@@ -1062,7 +1062,7 @@ void inventoryScreenHandler(void)
             return;
         case 3:
             inventoryScreenTick();
-            if ((SPAD->unk1C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
                 (CURRENT_TASK)->step.value = 6U;
                 return;
             }
@@ -1202,14 +1202,14 @@ void areaMode4Handler(void)
                 temp_v0->unk16 = 0;
                 temp_v0->unk1A = 0;
             }
-            D_8009C9D8[0] = D_8009C9DC = 0;
+            PAD_PRESSED[0] = D_8009C9DC = 0;
             (*(s16 *)&SPAD->joypad_state) = 0;
         break;   
 
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode4Tick();
-            if ((SPAD->unk1C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1294,14 +1294,14 @@ void areaMode5Handler(void)
                 temp_v0->unk16 = 0;
                 temp_v0->unk1A = 0;
             }
-            D_8009C9D8[0] = D_8009C9DC = 0;
+            PAD_PRESSED[0] = D_8009C9DC = 0;
             (*(s16 *)&SPAD->joypad_state) = 0;
         break;   
     
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode5Tick();
-            if ((SPAD->unk1C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1385,14 +1385,14 @@ void areaMode6Handler(void)
                 temp_v0->unk16 = 0;
                 temp_v0->unk1A = 0;
             }
-            D_8009C9D8[0] = D_8009C9DC = 0;
+            PAD_PRESSED[0] = D_8009C9DC = 0;
             (*(s16 *)&SPAD->joypad_state) = 0;
         break;   
     
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode6Tick();
-            if ((SPAD->unk1C2 != 0) && (D_8009C9D8[0] & 8) && (D_8009C9D8[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1942,7 +1942,7 @@ void updatePauseMenu(void) {
         if (SPAD->unk1B8 != 0) {
             return;
         }
-        if ((pad & SPAD->unk3CA) == 0) {
+        if ((pad & SPAD->buttonMenu) == 0) {
             return;
         }
 

@@ -338,7 +338,7 @@ void dispatchScreenEffect(u8* self)
 {
     switch (self[2]) {
     case 0:
-        func_80101574(self);
+        updatePlayer(self);
         break;
     case 1:
         func_800E92C0(self);

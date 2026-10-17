@@ -379,12 +379,12 @@ o->unkC = p->type | 0x80;
     return o;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/entity", loadCollisionBounds);
-void loadCollisionBounds(void)
+// INCLUDE_ASM("nonmatchings/main/game/entity", loadButtonConfig);
+void loadButtonConfig(void)
 {
-    s32 i = (s16)D_8009E744 * 4;
+    s32 i = (s16)BUTTON_CONFIG_INDEX * 4;
 
-    D_1F8003C4 = D_8007B2C4[i];
+    D_1F8003C4 = BUTTON_CONFIGS[i];
     D_1F8003C6 = D_8007B2C6[i];
     D_1F8003C8 = D_8007B2C8[i];
     D_1F8003CA = D_8007B2CA[i];

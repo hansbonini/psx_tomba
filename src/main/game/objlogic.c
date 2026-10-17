@@ -87,7 +87,7 @@ void func_80034AB8(GameObject *o)
 
 #define TB(o) ((s16)(o->animFrame + o->animFrame * 2))
 
-#define PADOK() ((*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C8)) && (*(P38_34C14 *)&PLAYER).b04 == 1 && (*(P38_34C14 *)&PLAYER).ba4 == 0)
+#define PADOK() ((*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C8)) && (*(P38_34C14 *)&PLAYER).b04 == 1 && (*(P38_34C14 *)&PLAYER).ba4 == 0)
 
 void func_80034C14(GameObject *o)
 {
@@ -1101,7 +1101,7 @@ void func_80036F98(GameObject *o)
                 *(u8 *)o->unk94 = o->unk74;
                 o->objectIndex = 0;
             }
-            if ((D_8009C9D8[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
+            if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
                 D_800A5444 >= 2 || D_800A545E != 0 || D_8009BCA7 != 0 || m >= 4 ||
                 (u8)(D_8009BCF8 - 1) < 2 || D_800A545F != 0) {
                 o->state = 2;
@@ -1139,7 +1139,7 @@ void func_80036F98(GameObject *o)
         func_800349DC(&D_8009C968, o->unkAA, &a, &r);
         o->h->p.whole = o->velX + a;
         o->y.p.whole = o->velY + r;
-        if ((D_8009C9D8[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
+        if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
             D_800A545E = 0;
             D_8009B698_P_36F98Ptr->b0 = 2;
             D_8009B698_P_36F98Ptr->w22 = 0;
@@ -1180,7 +1180,7 @@ void func_80036F98(GameObject *o)
         func_800349DC(&D_8009C968, o->unkAA, &a, &r);
         o->h->p.whole = o->velX + a;
         o->y.p.whole = o->velY + r;
-        if ((D_8009C9D8[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
+        if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
             D_800A545E = 0;
             D_8009B698_P_36F98Ptr->b0 = 1;
             D_8009B698_P_36F98Ptr->w22 = 0;

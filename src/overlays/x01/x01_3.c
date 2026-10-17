@@ -55,7 +55,7 @@ void func_80120708(GameObject *o)
         func_800ED9E0(o);
         tickAnimation(o);
         if (o->touchFlag == 0 && func_80045310(o, o->h->p.whole, o->y.p.whole + 0x30) == 0
-            && (SCRATCHPAD.joypad_state & SCRATCHPAD.unk3C8) == 0 && (SCRATCHPAD.joypad_state & SCRATCHPAD.unk3C6) == 0
+            && (SCRATCHPAD.joypad_state & SCRATCHPAD.buttonAttack) == 0 && (SCRATCHPAD.joypad_state & SCRATCHPAD.buttonJump) == 0
             && probeSidesAndApplyTileResponse(o, 4, 0) == 0) break;
         if (*(volatile u16 *)&D_8009C968.w70 & 0x40) D_8009B698->w2c = 0xf;
         else D_8009B698->w2c = 0xe;
@@ -212,7 +212,7 @@ void func_80120D48(PL_20D48 *o)
             o->o.step = 0;
         }
     }
-    if (SCRATCHPAD.joypad_state & SCRATCHPAD.unk3C6) {
+    if (SCRATCHPAD.joypad_state & SCRATCHPAD.buttonJump) {
         D_8009C608.playerEquips = 0;
         playSFX(0x3e);
         func_800EA16C(o->o.h->p.whole, o->o.y.p.whole, o->o.d->p.whole, 0);
@@ -220,7 +220,7 @@ void func_80120D48(PL_20D48 *o)
         o->o.unk9C = 1;
         o->o.state = 1;
         o->o.y.p.whole -= 8;
-        if ((D_8009BCEC[0] & 0x40) && (D_8009C9D8[0] & SCRATCHPAD.unk3C4)) o->o.unkA7 = 1;
+        if ((D_8009BCEC[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->o.unkA7 = 1;
         o->o.subState = 2;
         o->o.step = 0;
     }
@@ -323,7 +323,7 @@ void func_801215FC(GameObject *o)
 {
     L_215FC *q, *n;
 
-    if (!(SCRATCHPAD.joypad_state & SCRATCHPAD.unk3C6)) return;
+    if (!(SCRATCHPAD.joypad_state & SCRATCHPAD.buttonJump)) return;
     D_8009C608.playerEquips = 0;
     ((u8 *)&o->unkA8)[1] = 0;
     if (D_8009C608.unk952 - 5 < 3) (*(L_215FC **)&D_8009E454)->active = 1;
@@ -348,7 +348,7 @@ void func_801215FC(GameObject *o)
         }
     }
     o->h->p.whole += (o->animFrame & 1) ? 0x10 : -0x10;
-    if ((D_8009BCEC[0] & 0x40) && (D_8009C9D8[0] & SCRATCHPAD.unk3C4)) o->unkA7 = 1;
+    if ((D_8009BCEC[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->unkA7 = 1;
     o->subState = 2;
     o->step = 0;
 }

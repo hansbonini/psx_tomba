@@ -94,11 +94,11 @@ s32 func_800E7960(void)
             TASK_C->state2 = 1;
         } else if (JOYPAD_STATE & 0x4000) {
             playSFX(8);
-            D_8009E744++;
-            if ((s16)D_8009E744 >= 6) {
-                D_8009E744 = 0;
+            BUTTON_CONFIG_INDEX++;
+            if ((s16)BUTTON_CONFIG_INDEX >= 6) {
+                BUTTON_CONFIG_INDEX = 0;
             }
-            loadCollisionBounds();
+            loadButtonConfig();
         }
         updateSound();
         break;
@@ -165,7 +165,7 @@ void func_800E7EFC(void)
 {
     SPAD->unk1CF = 1;
     func_800E82F4();
-    func_800E8570((s16)D_8009E744);
+    func_800E8570((s16)BUTTON_CONFIG_INDEX);
     func_800E8814();
 }
 

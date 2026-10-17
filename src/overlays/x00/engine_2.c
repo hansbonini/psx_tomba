@@ -245,7 +245,7 @@ void func_800EEDE0(GameObject *o)
     if (o->unkB2 == 0) {
         D_8009B698->cur = 0;
     } else {
-        if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)) && o->state == 1) {
+        if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)) && o->state == 1) {
             D_8009B698->cur = 0x21;
         } else {
             v = o->unkB2;
@@ -426,7 +426,7 @@ void func_800EF40C(GameObject *o)
         case 1:
             *(u8 *)((u8 *)o + 0xcd) = 0;
             *(u8 *)((u8 *)o + 0xce) = 0;
-            if ((D_8009BCEC & 0x40) && (D_8009C9D8[0] & (*(u16 *)&D_1F8003C4))) o->unkA7 = 1;
+            if ((D_8009BCEC & 0x40) && (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C4))) o->unkA7 = 1;
             *(u8 *)((u8 *)D_8009B698 + 8) = o->animFrame & 1;
             o->subState = 0x10;
             o->step = 0;
@@ -449,7 +449,7 @@ void func_800EF40C(GameObject *o)
             *(u8 *)((u8 *)o + 0xcd) = 0;
             *(u8 *)((u8 *)o + 0xce) = 0;
             *(u8 *)((u8 *)D_8009B698 + 8) = o->animFrame & 1;
-            if ((D_8009BCEC & 0x40) && (D_8009C9D8[0] & (*(u16 *)&D_1F8003C4))) o->unkA7 = 1;
+            if ((D_8009BCEC & 0x40) && (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C4))) o->unkA7 = 1;
             o->subState = 0x1e;
             o->step = 0;
             break;
@@ -542,7 +542,7 @@ void func_800EF7B0(S_EF7B0 *s)
     probeSidesAndApplyTileResponse(s, 0, 0);
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800EF7F0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", initPlayer);
 typedef struct {
     u8 b0;
     u8 _p1[3];
@@ -593,9 +593,9 @@ extern u8 D_8009C1A9;
 #define LOADP() p = (u8 *)D_801144E0[(*(u16 *)&GAME)]; p = ((u8 **)p)[D_8009BCCA]; p += (*(u16 *)&D_8009BCEA) * 4
 
 #if defined(VERSION_SCES_01330)
-INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800EF7F0);
+INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", initPlayer);
 #else
-void func_800EF7F0(GameObject *o)
+void initPlayer(GameObject *o)
 {
     extern u8 D_8009C36E[];
     extern u8 D_8009BCD8;
@@ -1122,7 +1122,7 @@ void func_800F07D8(GameObject *o)
     }
     *(u8 *)((u8 *)o + 0xac) = 0;
     c = 0;
-    if (*(volatile u16 *)&D_8009C9D8 & 0xa0) {
+    if (*(volatile u16 *)&PAD_PRESSED & 0xa0) {
         if (o->unkB2 == 0) {
             if ((u16)(*(u16 *)o->anim - 0x10d) >= 7)
                 o->anim = D_8001096C;
@@ -1259,7 +1259,7 @@ void func_800F07D8(GameObject *o)
         switch (c) {
         case 0:
             o->unk9C = 1;
-            if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+            if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
                 o->unkA7 = 1;
             o->state = 1;
             o->subState = 2;
@@ -1339,7 +1339,7 @@ void func_800F07D8(GameObject *o)
 #undef PL
 #undef YADJ
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F10A4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerWalk);
 typedef struct { s16 x, y; } XY;
 typedef struct {
     GameObject o;
@@ -1395,7 +1395,7 @@ static __inline__ s16 odd_F10A4(void)
     return 0;
 }
 
-void func_800F10A4(GameObject *o)
+void playerWalk(GameObject *o)
 {
     extern GameObject *D_8009B698;
     u8 mode;
@@ -1410,7 +1410,7 @@ void func_800F10A4(GameObject *o)
         D_8009C650_U8Ptr[6] = 0;
     }
     *(u8 *)((u8 *)o + 0xac) = 0;
-    if (D_8009C9D8[0] & 0xa0) {
+    if (PAD_PRESSED[0] & 0xa0) {
         switch (o->step) {
         case 0:
             ((X_F10A4 *)o)->cd = 0;
@@ -1449,13 +1449,13 @@ void func_800F10A4(GameObject *o)
             }
             switch (o->unkA6) {
             case 2:
-                if (D_8009C9D8[0] & 0x20) {
+                if (PAD_PRESSED[0] & 0x20) {
                     if (o->unkB2 >= 0x200) goto inc;
                     goto clr;
                 }
                 break;
             case 3:
-                if (D_8009C9D8[0] & 0x80) {
+                if (PAD_PRESSED[0] & 0x80) {
                     if (o->unkB2 < -0x1ff) {
                     inc:
                         (*(u8 *)((u8 *)D_8009B698 + 8))++;
@@ -1514,7 +1514,7 @@ void func_800F10A4(GameObject *o)
         lim = 0x200;
         if (D_8009BCEC & 0x40) {
             lim = 0x360;
-            if (!(D_8009C9D8[0] & (*(u16 *)&D_1F8003C4)) && (u32)(o->subtype - 1) >= 2) lim = 0x200;
+            if (!(PAD_PRESSED[0] & (*(u16 *)&D_1F8003C4)) && (u32)(o->subtype - 1) >= 2) lim = 0x200;
         }
         if (mode != 0) {
             if ((u16)(o->unkB2 + lim) >= lim * 2) {
@@ -1544,7 +1544,7 @@ void func_800F10A4(GameObject *o)
             }
         }
     done:
-        if ((D_8009BCEC & 0x40) && (D_8009C9D8[0] & (*(u16 *)&D_1F8003C4))) {
+        if ((D_8009BCEC & 0x40) && (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C4))) {
             dust_F10A4(o);
         }
         if (o->subtype != 0) {
@@ -1582,7 +1582,7 @@ void func_800F198C(u8 *o)
         D_8009B698[8] = 1;
         o[6] = 2;
     }
-    if ((D_8009C9D8[0] & (*(u16 *)&D_1F8003C6)) != 0) {
+    if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C6)) != 0) {
         if (D_8009B698[8] != 0)
             return;
         u = *(s16 *)(D_8009B698 + 0x20) + 1;
@@ -1741,7 +1741,7 @@ void func_800F1D90(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F1EF8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerJump);
 typedef struct {
     u8 b0;
     u8 p1[3];
@@ -1769,7 +1769,7 @@ extern T800F2B98 D_800E7764;
 extern void probeCollisionAtDepthA(GameObject *, s16, s16);
 extern s32 func_80059B58(GameObject *, s32);
 
-void func_800F1EF8(GameObject *o)
+void playerJump(GameObject *o)
 {
     extern s16 fixedMulCos(s32, s32);
     extern P800F2B98_F1EF8 *D_8009B698;
@@ -1822,7 +1822,7 @@ void func_800F1EF8(GameObject *o)
             D_8009B698->b8 = 1;
             o->step = 2;
         }
-        if (D_8009C9D8[0] & (*(u16 *)&D_1F8003C6)) {
+        if (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C6)) {
             if (D_8009B698->b8 != 0) goto common;
             if (++D_8009B698->w20 >= 0xe) {
                 D_8009B698->b8 = 1;
@@ -2176,7 +2176,7 @@ void func_800F2A40(GameObject *o)
             D_8009B698_P800F36E0Ptr->b8 = 1;
             o->step = 2;
         }
-        if (D_8009C9D8[0] & (*(u16 *)&D_1F8003C6)) {
+        if (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C6)) {
             if (D_8009B698_P800F36E0Ptr->b8 == 0) {
                 if (++D_8009B698_P800F36E0Ptr->w20 >= 0xe) {
                     D_8009B698_P800F36E0Ptr->b8 = 1;
@@ -2399,7 +2399,7 @@ void func_800F329C(P800F3F3C_F329C *o)
             D_8009B698->b8 = 1;
             o->t.step = 2;
         }
-        if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C6) {
+        if (*(volatile u16 *)&PAD_PRESSED & SPAD->buttonJump) {
             if (D_8009B698->b8 != 0) goto common;
             if (++D_8009B698->w20 >= 0xe) {
                 D_8009B698->b8 = 1;
@@ -2535,7 +2535,7 @@ void func_800F3730(GameObject *o)
     o->touchFlag = 0;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F3810);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerAttack);
 typedef struct {
     u8 b0;
     u8 p1[6];
@@ -2606,7 +2606,7 @@ extern P800F44B0 *D_8009B698_P800F44B0Ptr asm("D_8009B698");
         o->step = 0; \
     }
 
-void func_800F3810(GameObject *o)
+void playerAttack(GameObject *o)
 {
     volatile u16 *k;
     u16 f;
@@ -2621,7 +2621,7 @@ void func_800F3810(GameObject *o)
         D_8009B698_P800F44B0Ptr->b7 = o->animFrame;
         f = o->animFrame & 1;
         o->animFrame = f;
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x10) {
             if (*k & 0x80) o->animFrame = 5;
             else if (*k & 0x20) o->animFrame = 4;
@@ -2722,11 +2722,11 @@ void func_800F3810(GameObject *o)
             o->step = 1;
             o->unk9C = 0;
         }
-        if (SPAD->joypad_state & SPAD->unk3C6) {
+        if (SPAD->joypad_state & SPAD->buttonJump) {
             (*(u8 *)&D_8009C618) = 0;
             o->unk9C = 1;
             if (D_8009BCEC & 0x40) {
-                if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
+                if (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) {
                     o->unkA7 = 1;
                 }
             }
@@ -2983,8 +2983,8 @@ void func_800F43D8(GameObject *o)
             if (o->animFrame & 1) {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     D_8009B698__F43D8->unkA = (*(GameObject **)&D_8009E454)->unkC;
-                    if (D_8009C9D8[0] & 0x80) INC1(o, 9);
-                    if (D_8009C9D8[0] & 0x20) {
+                    if (PAD_PRESSED[0] & 0x80) INC1(o, 9);
+                    if (PAD_PRESSED[0] & 0x20) {
                         o->animFrame = 0;
                         (*(GameObject **)&D_8009E454)->step = 0;
                     }
@@ -2993,8 +2993,8 @@ void func_800F43D8(GameObject *o)
             } else {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     D_8009B698__F43D8->unkA = (*(GameObject **)&D_8009E454)->unkC;
-                    if (D_8009C9D8[0] & 0x20) INC1(o, 9);
-                    if (D_8009C9D8[0] & 0x80) {
+                    if (PAD_PRESSED[0] & 0x20) INC1(o, 9);
+                    if (PAD_PRESSED[0] & 0x80) {
                         o->animFrame = 1;
                         (*(GameObject **)&D_8009E454)->step = 0;
                     }
@@ -3037,26 +3037,26 @@ void func_800F43D8(GameObject *o)
             if (o->animFrame & 1) {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     SND(0);
-                    if (D_8009C9D8[0] & 0x80) INC2(o, 9);
-                    if (D_8009C9D8[0] & 0x20) DEC(o);
+                    if (PAD_PRESSED[0] & 0x80) INC2(o, 9);
+                    if (PAD_PRESSED[0] & 0x20) DEC(o);
                     SETTBL(o);
                 } else {
                     SND(0);
-                    if (D_8009C9D8[0] & 0x80) INC2(o, 3);
-                    if (D_8009C9D8[0] & 0x20) DEC(o);
+                    if (PAD_PRESSED[0] & 0x80) INC2(o, 3);
+                    if (PAD_PRESSED[0] & 0x20) DEC(o);
                     SETTBL(o);
                     ((PL_F43D8 *)D_8009B698__F43D8)->we = -((PL_F43D8 *)D_8009B698__F43D8)->we;
                 }
             } else {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     SND(0);
-                    if (D_8009C9D8[0] & 0x20) INC1(o, 9);
-                    if (D_8009C9D8[0] & 0x80) DEC(o);
+                    if (PAD_PRESSED[0] & 0x20) INC1(o, 9);
+                    if (PAD_PRESSED[0] & 0x80) DEC(o);
                     SETTBL(o);
                 } else {
                     SND(0);
-                    if (D_8009C9D8[0] & 0x20) INC1(o, 3);
-                    if (D_8009C9D8[0] & 0x80) DEC(o);
+                    if (PAD_PRESSED[0] & 0x20) INC1(o, 3);
+                    if (PAD_PRESSED[0] & 0x80) DEC(o);
                     SETTBL(o);
                     ((PL_F43D8 *)D_8009B698__F43D8)->we = -((PL_F43D8 *)D_8009B698__F43D8)->we;
                 }
@@ -3147,12 +3147,12 @@ void func_800F43D8(GameObject *o)
             o->unkB6 = 0;
             if (o->animFrame & 1) {
                 SND(2);
-                if (D_8009C9D8[0] & 0x80) INC2(o, 9);
-                if (D_8009C9D8[0] & 0x20) DEC(o);
+                if (PAD_PRESSED[0] & 0x80) INC2(o, 9);
+                if (PAD_PRESSED[0] & 0x20) DEC(o);
             } else {
                 SND(2);
-                if (D_8009C9D8[0] & 0x20) INC1(o, 9);
-                if (D_8009C9D8[0] & 0x80) DEC(o);
+                if (PAD_PRESSED[0] & 0x20) INC1(o, 9);
+                if (PAD_PRESSED[0] & 0x80) DEC(o);
             }
             if ((D_1F8001FC & (*(u16 *)&D_1F8003C6)) && o->unkB2 < 4) o->unkB2 = 4;
             SETTBL(o);
@@ -3375,20 +3375,20 @@ void func_800F5F94(GameObject *o)
     s32 s1;
     u16 u;
     Fix16 *h;
-    if (((u16 *)&D_8009C9D8)[0] & (*(u16 *)&D_1F8003C6)) {
+    if (((u16 *)&PAD_PRESSED)[0] & (*(u16 *)&D_1F8003C6)) {
         (*(u8 *)&D_8009C618) = 0;
         D_8009B698[9] = 0;
         o->subState = 0xb;
         o->step = 0;
         D_8009E454[0x69] = 0;
     }
-    if (((u16 *)&D_8009C9D8)[0] & 0x10) {
+    if (((u16 *)&PAD_PRESSED)[0] & 0x10) {
         D_8009B698[9] = 0;
         o->subState = 0xb;
         o->step = 0;
         D_8009E454[0x69] = 0;
     }
-    if (((u16 *)&D_8009C9D8)[0] & 0x40) {
+    if (((u16 *)&PAD_PRESSED)[0] & 0x40) {
         D_8009B698[9] = 0;
         *(u8 *)&o->unkAC = 1;
         u = o->animFrame;
@@ -3520,7 +3520,7 @@ void func_800F6298(GameObject *o, s32 p)
     o->y.p.whole = r;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F63BC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerGrabLedge);
 typedef struct {
     u8 b0;
     u8 b1;
@@ -3617,7 +3617,7 @@ static __inline__ void swing_F63BC(GameObject *o, s32 p)
     if (r) { o->subState = 2; o->step = 3; o->unk7 = 0; } \
     else { o->subState = 0; o->step = 0; o->unk7 = 0; } }
 
-void func_800F63BC(GameObject *o)
+void playerGrabLedge(GameObject *o)
 {
     extern u8 D_80114578[][2];
     PL705C *q;
@@ -3748,7 +3748,7 @@ void func_800F6D98(char *o)
     (*(u8 *)((u8 *)o + 6))++;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F6E0C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerClimbOverLedge);
 static __inline__ void setanim_F6E0C(GameObject *o, u16 anim)
 {
     extern GameObject *D_8009B698;
@@ -3762,7 +3762,7 @@ static __inline__ void setanim_F6E0C(GameObject *o, u16 anim)
     }
 }
 
-void func_800F6E0C(GameObject *o)
+void playerClimbOverLedge(GameObject *o)
 {
     extern GameObject *D_8009B698;
     extern char D_800108A8[];
@@ -4340,14 +4340,14 @@ extern P *D_8009B698_PPtr asm("D_8009B698");
 extern u8 D_80114578[];
 
 #define BUTTONS(o) \
-    if (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C6)) { \
+    if (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C6)) { \
         D_8009B698_PPtr->b09 = 0; \
         (o)->subState = 0xb; \
         (o)->step = 0; \
         *(u8 *)((u8 *)o + 0xaa) = 0; \
         D_8009E454_GameObjectPtr->touchFlag = 0; \
     } \
-    if (*(volatile u16 *)&D_8009C9D8 & 0x10) { \
+    if (*(volatile u16 *)&PAD_PRESSED & 0x10) { \
         D_8009B698_PPtr->b09 = 0; \
         (o)->subState = 0xb; \
         (o)->step = 0; \
@@ -4470,7 +4470,7 @@ void func_800F808C(GameObject *o)
         if (D_8009B698_PPtr->b09 == 0)
             break;
         BUTTONS(o);
-        if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+        if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
             v = 0x10;
             D_8009B698_PPtr->b09 = 0;
             *(u8 *)((u8 *)o + 0xac) = 1;
@@ -4515,7 +4515,7 @@ void func_800F808C(GameObject *o)
             o->y.p.whole = fixedMulSin2((D_8009E454_GameObjectPtr->unk8C >> 4) + 0x10, D_8009E454_GameObjectPtr->hitOffsetX) + o->unk34 + 0x10;
         tickAnimation(o);
         BUTTONS(o);
-        if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+        if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
             v = 0x10;
             D_8009B698_PPtr->b09 = 0;
             *(u8 *)((u8 *)o + 0xac) = 1;
@@ -4770,18 +4770,18 @@ void func_800F8C08(GameObject *o)
             o->step++;
         } else if (*(u8 *)((u8 *)D_8009B698 + 9) != 0) {
             func_800F88A8(o, 0, 0);
-            if (D_8009C9D8[0] & (*(u16 *)&D_1F8003C6)) {
+            if (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C6)) {
                 *(u8 *)((u8 *)D_8009B698 + 9) = 0;
                 o->subState = 0xb;
                 o->step = 0;
             }
-            if (D_8009C9D8[0] & 0x10) {
+            if (PAD_PRESSED[0] & 0x10) {
                 *(u8 *)((u8 *)D_8009B698 + 9) = 0;
                 STEP(o);
                 o->subState = 0xb;
                 o->step = 0;
             }
-            if (D_8009C9D8[0] & 0x40) {
+            if (PAD_PRESSED[0] & 0x40) {
                 STEP(o);
                 func_800F89E4(o);
             }
@@ -4789,17 +4789,17 @@ void func_800F8C08(GameObject *o)
         break;
     case 3:
         tickAnimation(o);
-        if (D_8009C9D8[0] & (*(u16 *)&D_1F8003C6)) {
+        if (PAD_PRESSED[0] & (*(u16 *)&D_1F8003C6)) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             o->subState = 0xb;
             o->step = 0;
         }
-        if (D_8009C9D8[0] & 0x10) {
+        if (PAD_PRESSED[0] & 0x10) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             o->subState = 0xb;
             o->step = 0;
         }
-        if (D_8009C9D8[0] & 0x40) {
+        if (PAD_PRESSED[0] & 0x40) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             o->y.p.whole += 9;
             func_800450FC(o, o->h->p.whole, o->y.p.whole);
@@ -4813,7 +4813,7 @@ void func_800F8C08(GameObject *o)
 }
 #undef STEP
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F937C);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerClimb);
 static __inline__ void setanim_F937C(GameObject *o, u16 anim)
 {
     extern GameObject *D_8009B698;
@@ -4829,7 +4829,7 @@ static __inline__ void setanim_F937C(GameObject *o, u16 anim)
 
 typedef struct { u8 b0; char p1; s16 w2; char p4[8]; s16 wc; s16 we; char p10[0x28 - 0x10]; u16 w28, w2a; } PL;
 
-void func_800F937C(GameObject *o)
+void playerClimb(GameObject *o)
 {
     extern GameObject *D_8009B698;
     PL *p;
@@ -5166,7 +5166,7 @@ static __inline__ s16 cond_FA14C(PO_FA14C *o)
 {
     s32 v = 0;
     if (o->t.unkB4 < 0x29) {
-        v = (*(volatile u16 *)&D_8009C9D8 >> 4) & 1;
+        v = (*(volatile u16 *)&PAD_PRESSED >> 4) & 1;
     }
     return v;
 }
@@ -5176,7 +5176,7 @@ void func_800FA14C(PO_FA14C *o)
     extern P_FA14C *D_8009B698;
     s32 one, s;
     s16 n, k;
-    if (SPAD->joypad_state & (SPAD->unk3C6 | SPAD->unk3C8)) {
+    if (SPAD->joypad_state & (SPAD->buttonJump | SPAD->buttonAttack)) {
         one = 1;
         D_8009BC9C = 0;
         o->bc7 = one;
@@ -5264,7 +5264,7 @@ void func_800FA420(char *o)
     extern P_FA420 *D_8009B698;
     P_FA420 *q;
     s32 t;
-#define pad D_8009C9D8
+#define pad PAD_PRESSED
     if (!(*pad & 0x10))
         D_8009B698->w20 = 0;
     if (!(*pad & 0x40))
@@ -5508,8 +5508,8 @@ void func_800FA780(GameObject *o)
                 if (o->unkB2 >= 4) o->unkB2 = 3;
                 o->unk84 = 0x41;
                 playSFXWithNote(3, 0);
-                if (D_8009C9D8[0] & 0x80) o->unkB2 = inc3_FA780(o->unkB2);
-                if (D_8009C9D8[0] & 0x20) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
+                if (PAD_PRESSED[0] & 0x80) o->unkB2 = inc3_FA780(o->unkB2);
+                if (PAD_PRESSED[0] & 0x20) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
             }
         } else {
             f = (u8)o->unk84 - 0xbe;
@@ -5517,8 +5517,8 @@ void func_800FA780(GameObject *o)
                 if (o->unkB2 >= 4) o->unkB2 = 3;
                 o->unk84 = 0xc1;
                 playSFXWithNote(3, 0);
-                if (D_8009C9D8[0] & 0x20) o->unkB2 = inc3_FA780(o->unkB2);
-                if (D_8009C9D8[0] & 0x80) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
+                if (PAD_PRESSED[0] & 0x20) o->unkB2 = inc3_FA780(o->unkB2);
+                if (PAD_PRESSED[0] & 0x80) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
             }
         }
         o->unk84 += ((s16 (*)(void))func_800FA5E0)();
@@ -5577,7 +5577,7 @@ void func_800FA780(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FB04C);
-#define PAD (*(volatile u16 *)&D_8009C9D8)
+#define PAD (*(volatile u16 *)&PAD_PRESSED)
 
 void func_800FB04C(GameObject *o)
 {
@@ -5656,13 +5656,13 @@ void func_800FB114(S_FB114 *o)
     if (o->frame & 1) {
         o->velX = -0x300;
         o->velY = -0x600;
-        if (*(volatile u16 *)&D_8009C9D8 & 0x80) { o->velX = -0x480; o->velY = -0x800; }
-        if (*(volatile u16 *)&D_8009C9D8 & 0x20) { o->velX = -0x200; o->velY = -0x400; }
+        if (*(volatile u16 *)&PAD_PRESSED & 0x80) { o->velX = -0x480; o->velY = -0x800; }
+        if (*(volatile u16 *)&PAD_PRESSED & 0x20) { o->velX = -0x200; o->velY = -0x400; }
     } else {
         o->velX = 0x300;
         o->velY = -0x600;
-        if (*(volatile u16 *)&D_8009C9D8 & 0x80) { o->velX = 0x200; o->velY = -0x400; }
-        if (*(volatile u16 *)&D_8009C9D8 & 0x20) { o->velX = 0x480; o->velY = -0x800; }
+        if (*(volatile u16 *)&PAD_PRESSED & 0x80) { o->velX = 0x200; o->velY = -0x400; }
+        if (*(volatile u16 *)&PAD_PRESSED & 0x20) { o->velX = 0x480; o->velY = -0x800; }
     }
     g = D_8009B698;
     g->timer = 10;
@@ -7621,10 +7621,10 @@ void func_800FF224(GameObject *o)
 }
 #undef SETANIM_IF
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FFAE8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", updatePlayerActive);
 extern void func_8010B384(GameObject *);
-extern void func_80108D08(GameObject *);
-extern void func_80105A14(GameObject *);
+extern void playerCling(GameObject *);
+extern void playerThrowEnemy(GameObject *);
 extern void func_80106928(GameObject *);
 extern void func_80107A58(GameObject *);
 extern void func_8010633C(GameObject *);
@@ -7669,7 +7669,7 @@ extern void probeTileShapeThreePoints(GameObject *, s32);
 static __inline__ void dirA_FFAE8(GameObject *o)
 {
     u16 f = o->animFrame & 1;
-    volatile u16 *k = &D_8009C9D8;
+    volatile u16 *k = &PAD_PRESSED;
     u16 v;
     o->animFrame = f;
     if (*k & 0x20) {
@@ -7682,14 +7682,14 @@ static __inline__ void dirA_FFAE8(GameObject *o)
 
 static __inline__ void dirF_FFAE8(GameObject *o)
 {
-    volatile u16 *k = &D_8009C9D8;
+    volatile u16 *k = &PAD_PRESSED;
     if (*k & 0x10) o->animFrame |= 8;
     if (*k & 0x40) o->animFrame |= 4;
 }
 
 static __inline__ void dirC_FFAE8(GameObject *o)
 {
-    volatile u16 *k = &D_8009C9D8;
+    volatile u16 *k = &PAD_PRESSED;
     u16 f = o->animFrame & 1;
     o->animFrame = f;
     if (*k & 0x10) {
@@ -7707,7 +7707,7 @@ static __inline__ void dirC_FFAE8(GameObject *o)
 
 static __inline__ void dirD_FFAE8(GameObject *o)
 {
-    volatile u16 *k = &D_8009C9D8;
+    volatile u16 *k = &PAD_PRESSED;
     u16 f = o->animFrame & 1;
     o->animFrame = f;
     if (*k & 0x10) {
@@ -7747,13 +7747,13 @@ static __inline__ void turn_FFAE8(GameObject *o)
         if (o->unk9E == 0) func_8010D678(o, 1); \
     }
 
-void func_800FFAE8(GameObject *o, s32 p2)
+void updatePlayerActive(GameObject *o, s32 p2)
 {
     extern void func_8010C398(GameObject *);
     extern void func_8010ABD0(GameObject *);
     extern void func_80108388(GameObject *);
     extern void func_80105D68(GameObject *);
-    extern void func_801039E8(GameObject *);
+    extern void playerHoldEnemy(GameObject *);
     extern u8 *D_8009B698;
     s16 c;
 
@@ -7770,14 +7770,14 @@ void func_800FFAE8(GameObject *o, s32 p2)
         D_8009C618[0] = 1;
         dirA_FFAE8(o);
         dirF_FFAE8(o);
-        func_800F10A4(o);
+        playerWalk(o);
         if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
             D_8009C618[0] = 0;
             o->unk9C = 1;
             o->unkA4 = 0;
             *(u8 *)((u8 *)o + 0xcd) = 0;
             *(u8 *)((u8 *)o + 0xce) = 0;
-            if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+            if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
                 o->unkA7 = 1;
             o->subState = 2;
             o->step = 0;
@@ -7788,11 +7788,11 @@ void func_800FFAE8(GameObject *o, s32 p2)
         break;
     case 2:
         dirA_FFAE8(o);
-        func_800F1EF8(o);
+        playerJump(o);
         chk(o, 2);
         break;
     case 3:
-        func_800F3810(o);
+        playerAttack(o);
         turn_FFAE8(o);
         if (*(u8 *)((u8 *)o + 0xac) < 2) func_800EF40C(o);
         break;
@@ -7808,7 +7808,7 @@ void func_800FFAE8(GameObject *o, s32 p2)
         func_800F43D8(o);
         break;
     case 6:
-        func_800F63BC(o);
+        playerGrabLedge(o);
         break;
     case 7:
         func_800F808C(o);
@@ -7824,19 +7824,19 @@ void func_800FFAE8(GameObject *o, s32 p2)
         func_800F329C(o);
         break;
     case 11:
-        func_800F6E0C(o);
+        playerClimbOverLedge(o);
         break;
     case 12:
         func_800F8C08(o);
         break;
     case 13:
-        func_80108D08(o);
+        playerCling(o);
         break;
     case 14:
-        func_801039E8(o);
+        playerHoldEnemy(o);
         break;
     case 15:
-        func_80105A14(o);
+        playerThrowEnemy(o);
         break;
     case 16:
         func_80106928(o);
@@ -7882,7 +7882,7 @@ void func_800FFAE8(GameObject *o, s32 p2)
         func_800EF40C(o);
         break;
     case 0x1d:
-        func_800F937C(o);
+        playerClimb(o);
         break;
     case 0x1e:
         func_80122B1C(o);
@@ -8371,7 +8371,7 @@ void func_80101470(O_01470 *o)
     extern void func_80108C70(O_01470 *);
     switch (o->step) {
     case 0:
-        func_800F937C(o);
+        playerClimb(o);
         break;
     case 3:
         o->af = o->af & 1;
@@ -8405,7 +8405,7 @@ void func_80101470(O_01470 *o)
         func_80042C20(o);
 }
 
-INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80101574);
+INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", updatePlayer);
 
 INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80101D58);
 
@@ -8493,7 +8493,7 @@ void func_80101E10(GameObject *o)
         o->velY = 0;
         o->step++;
     case 3:
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x80) o->animFrame = 1;
         if (*k & 0x20) o->animFrame = 0;
         D_8009C650->animFrame = o->animFrame & 1;
@@ -8725,7 +8725,7 @@ void func_801025E0(GameObject *o)
         if ((o->touchFlag | ((s16 (*)(GameObject *, s32, s32))probeSidesAndApplyTileResponse)(o, 0, 1)) || o->timer >= 11) BLOCK();
         break;
     case 2:
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x80) o->animFrame = 1;
         if (*k & 0x20) o->animFrame = 0;
         o->h->p.whole = D_8009C650->h->p.whole;
@@ -8828,7 +8828,7 @@ typedef struct O_02B28 {
     char p9[0xb2 - 0xad]; u16 wb2;
 } O_02B28;
 extern O_02B28 *D_8009C650_O_02B28Ptr asm("D_8009C650");
-extern u16 D_8009C9D8_U16 asm("D_8009C9D8");
+extern u16 D_8009C9D8_U16 asm("PAD_PRESSED");
 
 #define PADCHK() { volatile u16 *pad = &D_8009C9D8_U16; if (*pad & 0x80) o->w2e = 1; if (*pad & 0x20) o->w2e = 0; }
 
@@ -9123,9 +9123,9 @@ void func_80103420(GameObject *o)
             LAND(o);
         break;
     case 2:
-        if (((u16 *)&D_8009C9D8)[0] & 0x80)
+        if (((u16 *)&PAD_PRESSED)[0] & 0x80)
             o->animFrame = 1;
-        if (((u16 *)&D_8009C9D8)[0] & 0x20)
+        if (((u16 *)&PAD_PRESSED)[0] & 0x20)
             o->animFrame = 0;
         D_8009C650->h->p.whole = o->h->p.whole;
         D_8009C650->y.p.whole = o->y.p.whole + D_8009C650->hitOffsetY;
@@ -9221,7 +9221,7 @@ void func_801037A4(O_037A4 *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_801039E8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerHoldEnemy);
 typedef struct P_039E8 { s16 x; s16 y; } P_039E8;
 typedef struct S_039E8 {
     u8 b00, b01, type, b03, b04, step, state, substep; char p0[0xf - 8];
@@ -9233,7 +9233,7 @@ typedef struct S_039E8 {
 } S_039E8;
 extern S_039E8 *D_8009C650_S_039E8Ptr asm("D_8009C650");
 extern void func_80121D5C(S_039E8 *);
-void func_801039E8(S_039E8 *o)
+void playerHoldEnemy(S_039E8 *o)
 {
     extern S_039E8 *D_8009B698;
     if (o->state == 0) {
@@ -9398,7 +9398,7 @@ void func_80103D54(GameObject *o)
             o->unk9C = 2;
             o->unkB2 = 0;
             D_8009B698_G_03D54Ptr->w20 = 0xe;
-            if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+            if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
                 o->unkA7 = 1;
             o->subState = 2;
             o->step = 3;
@@ -9413,7 +9413,7 @@ void func_80103D54(GameObject *o)
             o->unk9C = 2;
             o->unkB2 = 0;
             D_8009B698_G_03D54Ptr->w20 = 0xe;
-            if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+            if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
                 o->unkA7 = 1;
             o->subState = 2;
             o->step = 3;
@@ -9491,8 +9491,8 @@ void func_80104118(GameObject *o)
 void func_801041F0(GameObject *o)
 {
     u16 m = SPAD->joypad_state;
-    if ((m & SPAD->unk3C8) || (m & SPAD->unk3C6)) {
-        if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+    if ((m & SPAD->buttonAttack) || (m & SPAD->buttonJump)) {
+        if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
             (*(GameObject **)&D_8009B698)->animTimer = 15;
         } else {
             (*(GameObject **)&D_8009B698)->animTimer = 14;
@@ -9507,7 +9507,7 @@ void func_801041F0(GameObject *o)
 void func_8010427C(GameObject *o)
 {
     u16 m = SPAD->joypad_state;
-    if ((m & SPAD->unk3C8) || (m & SPAD->unk3C6)) {
+    if ((m & SPAD->buttonAttack) || (m & SPAD->buttonJump)) {
         (*(P **)&D_8009B698)->w2c = 0xf;
         o->velY = 0;
         o->unk7 = 2;
@@ -9549,7 +9549,7 @@ void func_801042D8(GameObject *o)
             o->unk7 = 1;
         }
         if ((D_1F8001FC & (*(u16 *)&D_1F8003C8)) || (D_1F8001FC & (*(u16 *)&D_1F8003C6))) {
-            if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+            if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
                 D_8009B698_GameObjectPtr->animTimer = 0xf;
             } else {
                 D_8009B698_GameObjectPtr->animTimer = 0xe;
@@ -9572,7 +9572,7 @@ void func_801042D8(GameObject *o)
         tickAnimation(o);
         if (o->touchFlag != 0 || func_80045310(o, o->h->p.whole, (s16)(o->y.p.whole + 0x30)) != 0 ||
             (D_1F8001FC & (*(u16 *)&D_1F8003C8)) || (D_1F8001FC & (*(u16 *)&D_1F8003C6)) || ((s16 (*)(GameObject *o, s32 a, s32 b))probeSidesAndApplyTileResponse)(o, 4, 0) != 0) {
-            if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+            if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
                 D_8009B698_GameObjectPtr->animTimer = 0xf;
             } else {
                 D_8009B698_GameObjectPtr->animTimer = 0xe;
@@ -9650,7 +9650,7 @@ void func_801042D8(GameObject *o)
                     }
                     t = o->animFrame & 1;
                     q->animFrame = t;
-                    if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+                    if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
                         q->animFrame = t | 2;
                     }
                     q->x.p.whole = o->x.p.whole;
@@ -9695,7 +9695,7 @@ s32 c = o->animFrame & 1; Fix16 *h = q->h; s32 w = h->p.whole; s32 r;
             {GameObject *q = D_8009C650; u16 t;
             t = o->animFrame & 1;
             q->animFrame = t;
-            if (*(volatile u16 *)&D_8009C9D8 & 0x40) {
+            if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
                 q->animFrame = t | 2;
             }}
             break;
@@ -9881,7 +9881,7 @@ void func_80104E34(GameObject *o)
     *(s16 *)(p + 0x20) = 0xe;
     if (q[2] == 0x1c && (t = D_8009C619) < 3 && t != 0)
         *((u8 *)o + 0xab) |= 0x80;
-    if ((D_8009BCEC & 0x40) && (*(r = &D_8009C9D8) & (*(u16 *)&D_1F8003C4)))
+    if ((D_8009BCEC & 0x40) && (*(r = &PAD_PRESSED) & (*(u16 *)&D_1F8003C4)))
         *((u8 *)o + 0xa7) = 1;
     func_800ED788(o);
     o->subState = 2;
@@ -9926,7 +9926,7 @@ void func_80104E34(GameObject *o)
     D_8009B698_GameObjectPtr->timer = 0xe; \
     if (D_8009C650->type == 0x1c && (t = D_8009C619) < 3 && t != 0) \
         *(u8 *)((u8 *)o + 0xab) |= 0x80; \
-    if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4))) \
+    if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4))) \
         o->unkA7 = 1; \
     func_800ED788(o); \
     o->subState = 2; \
@@ -10135,7 +10135,7 @@ void func_80105820(u8 *o)
             o[0x9c] = 2;
             *(s16 *)(o + 0x7e) = 0;
             o[0xac] = 1;
-            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) != 0)
+            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) != 0)
                 o[0xa7] = 1;
             func_800ED788(o);
             o[5] = 2;
@@ -10148,7 +10148,7 @@ void func_80105820(u8 *o)
             o[0x9c] = 2;
             o[0xac] = 1;
             *(s16 *)(o + 0x7e) = 0;
-            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) != 0)
+            if ((D_8009BCEC & 0x40) != 0 && (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) != 0)
                 o[0xa7] = 1;
             func_800ED788(o);
             o[5] = 2;
@@ -10158,12 +10158,12 @@ void func_80105820(u8 *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80105A14);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerThrowEnemy);
 typedef struct { char pad[9]; u8 b9; char pad2[0x20 - 10]; s16 w20; } P_05A14;
 extern void func_8011C730(GameObject *);
 extern void func_80120708(GameObject *);
 
-void func_80105A14(GameObject *o)
+void playerThrowEnemy(GameObject *o)
 {
     GameObject *q;
     switch (o->step) {
@@ -10222,7 +10222,7 @@ void func_80105A14(GameObject *o)
         o->touchFlag = 0;
         o->velV = 0;
         func_800EDEBC(o, 13);
-        if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4)) {
+        if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4)) {
             o->unkA7 = 1;
         } else {
             o->unkA7 = 0;
@@ -10499,7 +10499,7 @@ void func_8010633C(GameObject *o)
         o->velX = 0;
         o->velY = 0;
         g->w2c = 0x1a;
-        if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+        if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
             g->w2c = 0x2a;
         if (D_8009B698_G_0633CPtr->w2e != D_8009B698_G_0633CPtr->w2c) {
             func_800EEF64(o);
@@ -10536,7 +10536,7 @@ void func_8010633C(GameObject *o)
         if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
             D_8009C618[0] = 0;
             o->unk9C = 1;
-            if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+            if ((D_8009BCEC_S32Arr[0] & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
                 o->unkA7 = 1;
             o->subState = 2;
             o->step = 0;
@@ -10734,14 +10734,14 @@ void func_80106928(GameObject *o)
             o->step = 2;
         }
         func_800EF40C(o);
-        if (SPAD->joypad_state & SPAD->unk3C6) {
+        if (SPAD->joypad_state & SPAD->buttonJump) {
             D_8009C618[0] = 0;
             if (o->unkB2 > 0x200) o->unkB2 = 0x200;
             if (o->unkB2 < -0x200) o->unkB2 = -0x200;
             o->unkA4 = 0;
             o->unk9C = 1;
             if (((s32 *)&D_8009BCEC)[0] & 0x40) {
-                if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
+                if (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) {
                     o->unkA7 = 1;
                 }
             }
@@ -10793,18 +10793,18 @@ void func_80106928(GameObject *o)
                 b = D_80114638[o->unkB0];
                 o->unkA4 = 0;
                 o->unk8C = b;
-                if (((o->animFrame & 1) ? (*(volatile u16 *)&D_8009C9D8 & 0x80) : (*(volatile u16 *)&D_8009C9D8 & 0x20)) == 0) o->unkB2 = 0;
+                if (((o->animFrame & 1) ? (*(volatile u16 *)&PAD_PRESSED & 0x80) : (*(volatile u16 *)&PAD_PRESSED & 0x20)) == 0) o->unkB2 = 0;
                 o->subState = 0;
                 o->step = 0;
             }
-            if (SPAD->joypad_state & SPAD->unk3C6) {
+            if (SPAD->joypad_state & SPAD->buttonJump) {
                 D_8009C618[0] = 0;
                 if (o->unkB2 > 0x200) o->unkB2 = 0x200;
                 if (o->unkB2 < -0x200) o->unkB2 = -0x200;
                 o->unk9C = 1;
                 o->unkA4 = 0;
                 if (((s32 *)&D_8009BCEC)[0] & 0x40) {
-                    if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
+                    if (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) {
                         o->unkA7 = 1;
                     }
                 }
@@ -10846,7 +10846,7 @@ void func_80106F50(GameObject *o)
         func_800EDD9C(o);
         o->step++;
     case 1:
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0xa0) {
             if (*k & 0x80) o->animFrame = 1;
             if (*k & 0x20) o->animFrame = 0;
@@ -10898,7 +10898,7 @@ void func_80106F50(GameObject *o)
                 *(u8 *)((u8 *)o + 0xac) = 1;
                 o->y.p.whole -= 4;
                 func_800ED788(o);
-                k = &D_8009C9D8;
+                k = &PAD_PRESSED;
                 if (*k & 0x80) o->animFrame = 1;
                 if (*k & 0x20) o->animFrame = 0;
                 o->anim = D_80010C48;
@@ -10911,7 +10911,7 @@ void func_80106F50(GameObject *o)
             o->velX = 0;
             o->velY = 0;
             func_800ED788(o);
-            k = &D_8009C9D8;
+            k = &PAD_PRESSED;
             if (*k & 0x80) o->animFrame = 1;
             if (*k & 0x20) o->animFrame = 0;
             o->subState = 4;
@@ -11636,7 +11636,7 @@ void func_801087E4(GameObject *o)
 void func_80108B3C(GameObject *o)
 {
     s16 s;
-    if (D_8009C9D8[0] & 0xa0) {
+    if (PAD_PRESSED[0] & 0xa0) {
         if ((D_1F8001F8 & 0xf) == 0)
             playSFXWithNote(0x24, 0x24);
         switch (o->step) {
@@ -11697,10 +11697,10 @@ void func_80108C70(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80108D08);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerCling);
 extern s16 func_80043D2C(GameObject *, s16, s32);
 
-void func_80108D08(GameObject *o)
+void playerCling(GameObject *o)
 {
     volatile u16 *k;
     s16 r;
@@ -11723,7 +11723,7 @@ void func_80108D08(GameObject *o)
         o->step++;
     case 1:
         tickAnimation(o);
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if ((*k & 0x50) == 0) {
             func_800EDEBC(o, 10);
         } else if (*k & 0x10) {
@@ -11806,14 +11806,14 @@ void func_80108D08(GameObject *o)
         }
         break;
     }
-    if (SPAD->joypad_state & SPAD->unk3C6) {
+    if (SPAD->joypad_state & SPAD->buttonJump) {
         (*(u8 *)&D_8009C618) = 0;
         o->unk9C = 1;
         *(u8 *)&o->unkAA = 0;
         o->unk9E = 0;
         o->h->p.whole += (o->animFrame & 1) ? 0x10 : -0x10;
         if (D_8009BCEC_S32Arr[0] & 0x40) {
-            if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
+            if (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) {
                 o->unkA7 = 1;
             }
         }
@@ -11899,7 +11899,7 @@ void func_801094B8(GameObject *o)
     volatile u16 *k;
     D_8009B698_U8Ptr[0xb] = 8;
     if (o->animFrame & 1) {
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x10) {
             D_8009B698_U8Ptr[0xb] = 0;
             if (*k & 0x80) D_8009B698_U8Ptr[0xb] = 7;
@@ -11918,7 +11918,7 @@ void func_801094B8(GameObject *o)
             if (*k & 0x40) D_8009B698_U8Ptr[0xb] = 3;
         }
     } else {
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x10) {
             D_8009B698_U8Ptr[0xb] = 0;
             if (*k & 0x80) D_8009B698_U8Ptr[0xb] = 1;
@@ -11958,7 +11958,7 @@ void func_80109868(GameObject *o)
     volatile u16 *k;
     D_8009B698_U8Ptr[0xb] = 8;
     if (o->animFrame & 1) {
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x10) {
             D_8009B698_U8Ptr[0xb] = 0;
             if (*k & 0x80) D_8009B698_U8Ptr[0xb] = 7;
@@ -11977,7 +11977,7 @@ void func_80109868(GameObject *o)
             if (*k & 0x40) D_8009B698_U8Ptr[0xb] = 3;
         }
     } else {
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x10) {
             D_8009B698_U8Ptr[0xb] = 0;
             if (*k & 0x80) D_8009B698_U8Ptr[0xb] = 1;
@@ -12701,11 +12701,11 @@ s16 func_8010B208(GameObject *o)
 {
     s16 r = 0;
 
-    if (SPAD->joypad_state & SPAD->unk3C6) {
+    if (SPAD->joypad_state & SPAD->buttonJump) {
         (*(u8 *)&D_8009C618) = 0;
         ((void (*)())func_8010B058)();
         if (D_8009BCEC & 0x40) {
-            if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
+            if (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) {
                 o->unkA7 = 1;
             }
         }
@@ -12778,11 +12778,11 @@ static __inline__ s16 chk_0B384(GameObject *o)
 {
     s16 r = 0;
 
-    if (SPAD->joypad_state & SPAD->unk3C6) {
+    if (SPAD->joypad_state & SPAD->buttonJump) {
         (*(u8 *)&D_8009C618) = 0;
         func_8010B058(o);
         if (D_8009BCEC & 0x40) {
-            if (*(volatile u16 *)&D_8009C9D8 & SPAD->unk3C4) {
+            if (*(volatile u16 *)&PAD_PRESSED & SPAD->unk3C4) {
                 o->unkA7 = 1;
             }
         }
@@ -13000,7 +13000,7 @@ void func_8010BC24(GameObject *o)
     if ((*(s32 *)&GAME) == 0x30000) {
         turn_0BC24(o);
     } else {
-        k = &D_8009C9D8;
+        k = &PAD_PRESSED;
         if (*k & 0x80) {
             h = o->h->p.whole; o->h->p.whole = h - 0x10;
         } else if (*k & 0x20) {
@@ -13009,7 +13009,7 @@ void func_8010BC24(GameObject *o)
             turn_0BC24(o);
         }
     }
-    if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&D_8009C9D8 & (*(u16 *)&D_1F8003C4)))
+    if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
         o->unkA7 = 1;
     o->subState = 2;
     o->step = 0;
@@ -13384,7 +13384,7 @@ void func_8010C6E0(GameObject *o)
     if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
         *(u8 *)((u8 *)o + 0xca) = 0;
         flag = 0;
-        if ((*(volatile u16 *)&D_8009C9D8 & 0x10) && (*(u16 *)&GAME) == 10
+        if ((*(volatile u16 *)&PAD_PRESSED & 0x10) && (*(u16 *)&GAME) == 10
             && (D_8009BCCA == 1 || D_8009BCCA == 5) && o->d->p.whole == 0 && o->y.p.whole < -0xe3) {
             h = o->h->p.whole;
             if ((u16)(h - 0x1cd) < 0x20)

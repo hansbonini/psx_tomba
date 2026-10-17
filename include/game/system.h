@@ -277,9 +277,9 @@ typedef struct scratchpad {
     /* 0x3BE */ u8 pad3BE[0x2];
     /* 0x3C0 */ struct GameObject* unk3C0;
     /* 0x3C4 */ u16 unk3C4;
-    /* 0x3C6 */ u16 unk3C6;
-    /* 0x3C8 */ u16 unk3C8;
-    /* 0x3CA */ u16 unk3CA;
+    /* 0x3C6 */ u16 buttonJump;
+    /* 0x3C8 */ u16 buttonAttack;
+    /* 0x3CA */ u16 buttonMenu;
     /* 0x3CC */ u_char unk3CC;
     /* 0x3CD */ u8 unk3CD;
     /* 0x3CE */ u8 unk3CE;

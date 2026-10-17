@@ -1852,7 +1852,7 @@ void func_8011D1A8(GameObject *o)
         o->step++;
     case 1:
         tickAnimation(o);
-        if (D_1F8001FC & SCRATCHPAD.unk3C6) {
+        if (D_1F8001FC & SCRATCHPAD.buttonJump) {
             D_8009B698_G_1D1A8Ptr->b9 = 0;
             o->state = 1;
             o->subState = 0x27;

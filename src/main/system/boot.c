@@ -49,10 +49,10 @@ void bootSequenceTask(void)
     D_8009E3EF = 0;
     (*(s8 *)&SPAD->unk1D1) = 0;
     (*(s8 *)&SPAD->unk1D0) = 0;
-    D_8009E744 = 0;
+    BUTTON_CONFIG_INDEX = 0;
     D_8009C9E4 = 1;
     D_8009E450 = 0;
-    loadCollisionBounds();
+    loadButtonConfig();
     task = CURRENT_TASK;
     task->state0 = 9U;
     task->state1 = 0U;
@@ -475,7 +475,7 @@ void loopTitleScreen(int* arg0)
                 gameControlTemp5->state1++;
             }
             func_800E7DDC(arg0);
-            if (D_8009C9D8[0] != 0) {
+            if (PAD_PRESSED[0] != 0) {
                 (SCRATCHPAD.currentTask)->timer = 972;
             }
             gameControlTemp2 = CURRENT_TASK;

@@ -533,7 +533,7 @@ void func_80136AFC(GameObject *o)
         case 3:
             ((GameObject *)X.unk90)->state = 3;
             CEBD = 4;
-            CEBD = D_8009E744 + 4;
+            CEBD = BUTTON_CONFIG_INDEX + 4;
             p->anim = D_80139F74;
             readAnimFrameCount(p);
             o->subState = 4;
@@ -543,7 +543,7 @@ void func_80136AFC(GameObject *o)
             p->anim = D_80139F5C;
             readAnimFrameCount(p);
             CEBD = 10;
-            CEBD = D_8009E744 + 10;
+            CEBD = BUTTON_CONFIG_INDEX + 10;
             o->subState = 4;
             break;
         case 10: case 11: case 12: case 13: case 14: case 15:

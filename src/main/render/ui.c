@@ -1709,14 +1709,14 @@ void func_800288C4(void)
     D_8009C9DC = D_800A5474;
     c1 = D_8009C980;
     D_8009C980 = 0;
-    m = *(volatile u16 *)&D_8009C9D8 & 0xff0f;
+    m = *(volatile u16 *)&PAD_PRESSED & 0xff0f;
     a1 = c1;
     m |= AXIS(D_8009C980, c1, a1, 0x80, 0x20);
     c2 = g->b9;
     g->b9 = 0;
     a2 = c2;
     m |= AXIS(g->b9, c2, a2, 0x10, 0x40);
-    pad = &D_8009C9D8;
+    pad = &PAD_PRESSED;
     *pad = m;
     D_1F8001FC = *pad & ~D_8009C9DC;
     D_1F8001FE = D_8009C9DC & ~*pad;

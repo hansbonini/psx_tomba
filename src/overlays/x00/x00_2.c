@@ -276,7 +276,7 @@ void func_8011A92C(GameObject *o)
             o->y.p.whole = 0xd8;
         else
             o->y.p.whole = 0x78;
-        o->unk90 = showMessageBox(9, D_801379EC[(*(s16 *)&D_8009E744)], o->x.p.whole, o->y.p.whole);
+        o->unk90 = showMessageBox(9, D_801379EC[(*(s16 *)&BUTTON_CONFIG_INDEX)], o->x.p.whole, o->y.p.whole);
         break;
     case 1:
         if (((char *)o->unk90)[4] == 2) {
