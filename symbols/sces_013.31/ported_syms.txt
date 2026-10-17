@@ -1,2 +1,0 @@
-PROVIDE(PadInfoMode = 0x8006911C);
-PROVIDE(PadSetMainMode = 0x800693C8);
