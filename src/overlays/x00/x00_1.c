@@ -9,8 +9,6 @@ extern void func_80118CD8(GameObject *);
 extern void func_80118BB4(GameObject *);
 extern void tickAnimation(GameObject *);
 extern void removeItemFromInventory(s32, s32);
-extern void queueSfxKeyOff(s32);
-extern void freeObjectLayer3(GameObject *);
 
 typedef struct P_18944 { char p[0xcc]; s16 cc; } P_18944;
 void func_80118944(GameObject *o)
@@ -54,7 +52,7 @@ void func_80118944(GameObject *o)
         case 5:
             break;
         case 6:
-            (*(u8 *)&D_8009BC98) = 2;
+            D_8009BC98.unk00 = 2;
         case 7:
             *(s16 *)((u8 *)o + 0xc0) = 0;
             *(s16 *)((u8 *)o + 0xc2) = 0;
@@ -82,7 +80,7 @@ void func_80118944(GameObject *o)
         tickAnimation(o);
         if (((GameObject *)o->unk90)->subState != 5)
             func_80022E44(o);
-        if ((*(u8 *)&D_8009BC98) != 0)
+        if (D_8009BC98.unk00 != 0)
             break;
         o->state++;
         break;

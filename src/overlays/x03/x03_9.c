@@ -124,7 +124,6 @@ void func_8012CA90(GameObject *o)
 extern s16 D_80135190[];
 extern void *D_80139ABC;
 extern s32 tickAnimation(GameObject *);
-extern void updateObjectSideFlag(GameObject *);
 extern void readAnimFrameCount(GameObject *);
 
 void func_8012CC64(GameObject *o)

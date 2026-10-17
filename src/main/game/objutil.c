@@ -133,7 +133,6 @@ extern s16 fixedMulSin(s32, s16);
 extern void func_8003473C(GameObject *);
 extern void advanceAnimFrame(GameObject *, s32);
 extern s32 tickAnimation(GameObject *);
-extern void applyObjectSpeedXY(GameObject *);
 extern s16 angleBetweenPoints(P_38AC0, P_38AC0);
 
 #define G PLAYER.obj
@@ -674,7 +673,6 @@ void func_8003A384(GameObject *o)
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
 extern u8 D_800A547B;
 extern u8 *D_8009B698;
-void freeObjectLayer1(GameObject *o);
 void func_8003A4F8(GameObject *o)
 {
     if (D_800A545F) o->state = 2;

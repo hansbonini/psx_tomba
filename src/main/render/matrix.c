@@ -6,7 +6,6 @@ INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004CFE0);
 INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D0C0);
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D1A0);
-extern void getBaseMatrix(void *);
 extern void func_80026694(s32, s32, void *, s32);
 void func_8004D1A0(char *o)
 {
@@ -128,12 +127,6 @@ void func_8004D5F0(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
-#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
-#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
-#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
-#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
-#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
 extern MATRIX D_1F800090;
 extern void func_800279E8(s32, s32, char *);
 void func_8004D7E0(char *o)
@@ -156,12 +149,6 @@ void func_8004D7E0(char *o)
     SetTransMatrix(&(*&SCRATCHPAD.workMatrix));
     func_800279E8(S32(o, 0xa0), (s32)((*(char **)&D_1F8001E0) + ((S8(o, 0xf) << 2) + 0x10)), o);
 }
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D91C);
 

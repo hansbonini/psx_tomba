@@ -14,7 +14,6 @@ extern u16 GetClut(s32, s32);
 extern void readAnimFrameCount(GameObject *);
 extern void pushDrawListCapped(GameObject *);
 extern s32 tickAnimation(GameObject *);
-extern void freeObjectLayer3(GameObject *);
 
 void func_801158F8(GameObject *o)
 {

@@ -3,7 +3,6 @@
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801211A0);
 extern u8 D_8009C11C;
-extern u8 D_800A543A;
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
 
@@ -256,7 +255,6 @@ void func_80121C00(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80121CD4);
-extern u8 D_8009C10D;
 
 void func_80121CD4(char *o)
 {
@@ -283,7 +281,6 @@ typedef struct O_21D5C {
 } O_21D5C;
 extern O_21D5C *D_8009C650;
 void func_8010DE48();
-extern void applyObjectAltSpeedVertical(O_21D5C *);
 extern s16 probeSidesAndApplyTileResponse(O_21D5C *, s32, s32);
 
 void func_80121D5C(O_21D5C *o)
@@ -376,354 +373,6 @@ void func_80122538(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80122688);
 
-typedef struct GCDBlock_22688 {
-    u8 _pad0[0x94];
-    u16 scd94;
-    u8 _pad96[0x2];
-    u8 bcd98;
-    u8 bcd99;
-    u8 bcd9a;
-    u8 _pad9b[0x1];
-    u8 bcd9c;
-    u8 bcd9d;
-    u8 bcd9e;
-    u8 _pad9f[0x3];
-    u8 bcda2;
-    u8 _pada3[0x2];
-    u8 bcda5;
-    u8 bcda6;
-    u8 bcda7;
-    u8 _pada8[0x1];
-    u8 bcda9;
-    u8 _padaa[0x1];
-    u8 bcdab;
-    u8 bcdac;
-    u8 bcdad;
-    u8 bcdae;
-    u8 _padaf[0x2];
-    u8 bcdb1;
-    u8 bcdb2;
-    u8 _padb3[0x1];
-    u8 bcdb4;
-    u8 bcdb5;
-    u8 _padb6[0x2];
-    u8 bcdb8;
-    u8 _padb9[0x1];
-    u8 bcdba;
-    u8 bcdbb;
-    u8 bcdbc;
-    u8 _padbd[0x2];
-    u8 bcdbf;
-    u8 bcdc0;
-    u8 bcdc1;
-    u8 _padc2[0x1];
-    u8 bcdc3;
-    u8 _padc4[0x1];
-    u8 bcdc5;
-    u8 _padc6[0x1];
-    u8 bcdc7;
-    u8 bcdc8;
-    u8 bcdc9;
-    u8 bcdca;
-    u8 bcdcb;
-    u8 bcdcc;
-    u8 bcdcd;
-    u8 bcdce;
-    u8 _padcf[0x3];
-    u8 bcdd2;
-    u8 _padd3[0x2];
-    u8 bcdd5;
-    u8 bcdd6;
-    u8 bcdd7;
-    u8 _padd8[0x1];
-    u8 bcdd9;
-    u8 _padda[0x1];
-    u8 bcddb;
-    u8 bcddc;
-    u8 bcddd;
-    u8 bcdde;
-    u8 _paddf[0x3];
-    u8 bcde2;
-    u8 bcde3;
-    u8 _pade4[0x1];
-    u8 bcde5;
-    u8 _pade6[0x7];
-    u8 bcded;
-    u8 _padee[0x3];
-    u8 bcdf1;
-    u8 bcdf2;
-    u8 bcdf3;
-    u8 _padf4[0x1];
-    u8 bcdf5;
-    u8 _padf6[0xf];
-    u8 bce05;
-    u8 _pad106[0x4];
-    u8 bce0a;
-    u8 bce0b;
-    u8 bce0c;
-    u8 bce0d;
-    u8 _pad10e[0x7];
-    u8 bce15;
-    u8 bce16;
-    u8 bce17;
-    u8 bce18;
-    u8 _pad119[0x1];
-    u8 bce1a;
-    u8 bce1b;
-    u8 bce1c;
-    u8 _pad11d[0x2];
-    u8 bce1f;
-    u8 _pad120[0x2];
-    u8 bce22;
-    u8 bce23;
-    u8 bce24;
-    u8 _pad125[0x3];
-    u8 bce28;
-    u8 _pad129[0xb];
-    u8 bce34;
-    u8 _pad135[0x5];
-    u8 bce3a;
-    u8 bce3b;
-    u8 _pad13c[0x1];
-    u8 bce3d;
-    u8 _pad13e[0x2];
-    u8 bce40;
-    u8 bce41;
-    u8 _pad142[0x2];
-    u8 bce44;
-    u8 _pad145[0x3];
-    u8 bce48;
-    u8 _pad149[0x1];
-    u8 bce4a;
-    u8 _pad14b[0x2];
-    u8 bce4d;
-    u8 bce4e;
-    u8 bce4f;
-    u8 bce50;
-    u8 bce51;
-    u8 bce52;
-    u8 bce53;
-    u8 bce54;
-    u8 bce55;
-    u8 bce56;
-    u8 bce57;
-    u8 bce58;
-    u8 bce59;
-    u8 _pad15a[0x1];
-    u8 bce5b;
-    u8 _pad15c[0x1];
-    u8 bce5d;
-    u8 _pad15e[0x3];
-    u8 bce61;
-    u8 bce62;
-    u8 bce63;
-    u8 _pad164[0x47];
-    u8 bceab;
-    u8 _pad1ac[0x1];
-    u8 bcead;
-    u8 bceae;
-    u8 bceaf;
-    u8 bceb0;
-    u8 _pad1b1[0xb];
-    u8 bcebc;
-    u8 bcebd;
-    u8 _pad1be[0x1];
-    u8 bcebf;
-    u8 _pad1c0[0x1];
-    u8 bcec1;
-    u8 bcec2;
-    u8 bcec3;
-    u8 bcec4;
-    u8 bcec5;
-    u8 bcec6;
-    u8 bcec7;
-    u8 _pad1c8[0x4];
-    u8 bcecc;
-    u8 bcecd;
-    u8 _pad1ce[0x10];
-    u8 bcede;
-    u8 bcedf;
-    u8 _pad1e0[0x1];
-    u8 bcee1;
-    u8 bcee2;
-    u8 _pad1e3[0xa];
-    u8 bceed;
-    u8 _pad1ee[0x1];
-    u8 bceef;
-    u8 bcef0;
-    u8 _pad1f1[0x5];
-    u8 bcef6;
-    u8 bcef7;
-    u8 _pad1f8[0x3];
-    u8 bcefb;
-    u8 bcefc;
-    u8 _pad1fd[0x3];
-    u8 bcf00;
-    u8 _pad201[0x2];
-    u8 bcf03;
-    u8 bcf04;
-    u8 _pad205[0x1];
-    u8 bcf06;
-    u8 _pad207[0x3];
-    u8 bcf0a;
-    u8 bcf0b;
-    u8 bcf0c;
-    u8 bcf0d;
-    u8 bcf0e;
-    u8 bcf0f;
-    u8 bcf10;
-    u8 bcf11;
-    u8 _pad212[0xa];
-    u8 bcf1c;
-    u8 _pad21d[0x7];
-    u8 bcf24;
-    u8 _pad225[0x4];
-    u8 bcf29;
-    u8 _pad22a[0x3];
-    u8 bcf2d;
-    u8 bcf2e;
-    u8 bcf2f;
-    u8 _pad230[0x98];
-    u8 bcfc8;
-    u8 _pad2c9[0x1];
-    u8 bcfca;
-    u8 bcfcb;
-    u8 bcfcc;
-    u8 bcfcd;
-    u8 bcfce;
-    u8 bcfcf;
-    s16 scfd0;
-    s16 scfd2;
-    s16 scfd4;
-    u8 bcfd6;
-    u8 _pad2d7[0x2];
-    u8 bcfd9;
-    u8 bcfda;
-    u8 bcfdb;
-    u8 bcfdc;
-    u8 bcfdd;
-    u8 bcfde;
-    u8 bcfdf;
-    u8 bcfe0;
-    u8 bcfe1;
-    s16 scfe2;
-    u8 _pad2e4[0x1];
-    u8 bcfe5;
-    u8 _pad2e6[0x4];
-    u8 bcfea;
-    u8 _pad2eb[0x2];
-    u8 bcfed;
-    u8 bcfee;
-    u8 _pad2ef[0x1];
-    u8 bcff0;
-    u8 bcff1;
-    u8 bcff2;
-    u8 bcff3;
-    u8 bcff4;
-    u8 bcff5;
-    u8 _pad2f6[0x1];
-    u8 bcff7;
-    u8 bcff8;
-    u8 bcff9;
-    u8 bcffa;
-    u8 bcffb;
-    u8 bcffc;
-    u8 bcffd;
-    u8 _pad2fe[0x2];
-    u8 bd000;
-    u8 bd001;
-    u8 bd002;
-    u8 bd003;
-    u8 bd004;
-    u8 _pad305[0x1];
-    u8 bd006;
-    u8 bd007;
-    u8 bd008;
-    u8 _pad309[0x1];
-    u8 bd00a;
-    u8 _pad30b[0x2];
-    u8 bd00d;
-    u8 bd00e;
-    u8 _pad30f[0x67];
-    u8 bd076;
-    u8 bd077;
-    u8 bd078;
-    u8 _pad379[0x1];
-    u8 bd07a;
-    u8 bd07b;
-    u8 bd07c;
-    u8 bd07d;
-    u8 bd07e;
-    u8 _pad37f[0x2];
-    u8 bd081;
-    u8 bd082;
-    u8 bd083;
-    u8 bd084;
-    u8 _pad385[0x1];
-    u8 bd086;
-    u8 bd087;
-    u8 bd088;
-    u8 _pad389[0x7];
-    u8 bd090;
-    u8 bd091;
-    u8 bd092;
-    u8 bd093;
-    u8 bd094;
-    u8 bd095;
-    u8 _pad396[0xe];
-    u8 bd0a4;
-    u8 _pad3a5[0x2];
-    u8 bd0a7;
-    u8 _pad3a8[0x1];
-    u8 bd0a9;
-    u8 bd0aa;
-    u8 _pad3ab[0x5];
-    u16 sd0b0;
-    u8 bd0b2;
-    u8 _pad3b3[0x1];
-    u8 bd0b4;
-    u8 _pad3b5[0x2];
-    u8 bd0b7;
-    u8 bd0b8;
-    u8 bd0b9;
-    u8 bd0ba;
-    u8 bd0bb;
-    u8 bd0bc;
-    u8 _pad3bd[0x1];
-    u8 bd0be;
-    u8 bd0bf;
-    u8 bd0c0;
-    u8 bd0c1;
-    u8 _pad3c2[0x2];
-    u8 bd0c4;
-    u8 bd0c5;
-    u8 bd0c6;
-    u8 _pad3c7[0x1];
-    u8 bd0c8;
-    u8 bd0c9;
-    u8 bd0ca;
-    u8 bd0cb;
-    u8 bd0cc;
-    u8 bd0cd;
-    u8 bd0ce;
-    u8 bd0cf;
-    u8 bd0d0;
-    u8 bd0d1;
-    u8 _pad3d2[0x7];
-    u8 bd0d9;
-    u8 bd0da;
-    u8 _pad3db[0x7];
-    u8 bd0e2;
-    u8 _pad3e3[0x3];
-    u8 bd0e6;
-    u8 bd0e7;
-    u8 _pad3e8[0x13];
-    u8 bd0fb;
-    u8 bd0fc;
-    u8 bd0fd;
-    u8 _pad3fe[0x2];
-} GCDBlock_22688;
-extern GCDBlock_22688 D_8009C068;
 
 typedef struct { s16 t; u16 x, y, z; } E_22688;
 extern s32 D_8013A428;
@@ -732,7 +381,6 @@ extern u16 D_80138250[];
 extern E_22688 D_80138258[];
 extern void readAnimFrameCount(GameObject *o);
 extern void playSFX(s32 n);
-extern void freeObjectLayer5(GameObject *o);
 
 void func_80122688(GameObject *o)
 {
@@ -770,7 +418,7 @@ void func_80122688(GameObject *o)
             o->h->p.whole = p->h->p.whole + 12;
             o->y.p.whole = p->y.p.whole;
             o->d->p.whole = p->d->p.whole;
-            if (((u8*)&D_8009C068.bd0aa)[0] == 0) break;
+            if (D_8009C068.item_06 == 0) break;
             goto next;
         case 1:
             switch (o->subState) {
@@ -800,7 +448,7 @@ void func_80122688(GameObject *o)
                 o->d->p.whole = p->d->p.whole;
                 break;
             }
-            if (((u8*)&D_8009C068.bd0c8)[0] == 0) break;
+            if (D_8009C068.item_24 == 0) break;
             goto next;
         }
         break;
@@ -816,12 +464,6 @@ void func_80122688(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012298C);
-#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
-#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
-#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
-#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
-#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
 void func_8012298C(char *p, char *q, s32 c)
 {
     extern char *allocObjectLayer5();
@@ -840,12 +482,6 @@ void func_8012298C(char *p, char *q, s32 c)
         S16(o, 0xb4) = *(u16 *)(p + 0xb6);
     }
 }
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
 
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80122A34);
 
@@ -908,7 +544,6 @@ typedef struct {
 typedef struct { u16 uv0, p0, uv1, p1, uv2; u8 w, h; u16 uv3; s8 dx, dy; } Spr_23148;
 extern char LZ_FILE_CTRL_CharArr[] asm("LZ_FILE_CTRL");
 extern s32 LZ_FILE_CTRL_S32 asm("LZ_FILE_CTRL");
-s32 projectActorPosition(GameObject *o, void *a, void *b);
 void insertPrimWithBias(PFT4_23148 *p, s32 a, s32 b, s32 c, s32 d);
 void func_80123148(GameObject *o)
 {
@@ -955,7 +590,6 @@ typedef struct {
     s16 x3, y3; u8 u3, v3; u16 pad2;
 } PFT4_80123FD0_23314;
 extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
-s32 isPolyFT4OnScreen(void *p);
 s32 insertPrim(void *a, s32 b, s32 c, s32 d, u32 e);
 
 #define setSemiTrans(p, abe) ((abe) ? ((p)->code |= 2) : ((p)->code &= ~2))
@@ -1300,7 +934,6 @@ void func_801245FC(GameObject *o, GameObject *e)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801248A0);
-extern u8 D_1F8001A4;
 
 void func_801248A0(GameObject *o, GameObject *p)
 {
@@ -1389,7 +1022,6 @@ void func_801248A0(GameObject *o, GameObject *p)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80124B38);
 extern s16 func_80051604(u8 *, u8 *);
 extern void decreaseObjectTimer(u8 *, s32);
-extern u8 D_1F8001A4;
 
 void func_80124B38(u8 *a, u8 *b)
 {
@@ -1557,7 +1189,6 @@ void func_80124F60(A_24F60 *a, B_24F60 *b)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80124FC8);
 extern s32 resolveHitResultD(GameObject *, GameObject *);
-extern void cloneItemPickupObject(GameObject *);
 
 void func_80124FC8(GameObject *a, GameObject *o)
 {
@@ -1815,12 +1446,6 @@ void func_80125584(GameObject *a, GameObject *b)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801257A8);
-#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
-#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
-#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
-#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
-#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
 
 void func_801257A8(GameObject *a, GameObject *b)
 {
@@ -1892,12 +1517,6 @@ void func_801257A8(GameObject *a, GameObject *b)
         break;
     }
 }
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801259DC);
 void func_801259DC(GameObject *a, GameObject *b)
@@ -1965,7 +1584,6 @@ void func_80125AB4(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80125C84);
 extern s16 func_80059514(void);
-extern s16 D_1F8003BC;
 extern s16 D_1F80019E;
 extern GameObject *D_1F8003C0;
 
@@ -1985,7 +1603,6 @@ void func_80125C84(GameObject *a, GameObject *b)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80125D14);
 extern s16 func_80059638(void);
-extern s16 D_1F8003BC;
 extern s16 D_1F80019E;
 extern GameObject *D_1F8003C0;
 
@@ -2195,7 +1812,6 @@ extern void *D_8013A518;
 extern void readAnimFrameCount(GameObject *o);
 extern void playSFX(s32 id);
 extern void func_801180DC(GameObject *o, s32 x, s32 y, s32 z);
-extern void freeObjectLayer2(GameObject *o);
 
 void func_80126330(GameObject *o)
 {
@@ -2481,8 +2097,6 @@ u8 func_80126A64(s32 a)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80126B64);
 typedef struct { u8 _p[0xa]; u8 ba, bb; s16 wc, we; } EX_26B64;
-extern void applyFrameVelocityX(GameObject *);
-extern char D_80077214[];
 extern u16 *D_80139504[];
 extern u16 *D_8013951C[];
 extern u16 *D_80139520[];
@@ -2768,11 +2382,7 @@ void func_801271F4(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801274D4);
 typedef struct { s16 w0; u16 w2; s16 w4; char p6[4]; u8 ba, bb; } EX_274D4;
-extern void updateObjectSideFlag(GameObject *);
-extern void applyFrameVelocityY(GameObject *);
-extern void applyFrameVelocityXY(GameObject *);
 extern void func_800EA16C(s16, s16, s16, u8);
-extern char D_80077250[];
 extern u16 *D_801394CC[];
 extern u16 *D_801394D4[];
 extern u16 *D_801394DC[];
@@ -3135,7 +2745,6 @@ void func_80127BFC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801282F0);
 typedef struct { char p0; u8 b01; char p2[2]; s16 w04; char p6[4]; u8 b0a, b0b; char p0c[2]; s16 w0e; } X_282F0;
-extern char D_8007725C[];
 extern u16 *D_801394CC[];
 extern u16 *D_801394EC[];
 extern u16 *D_801394F0[];
@@ -3438,7 +3047,6 @@ void func_80128840(GameObject *o)
 typedef struct { char p0[0xa]; u8 b0a, b0b; char p0c[2]; s16 w0e; } X_28EF4;
 extern u16 *D_801394C8[];
 extern u16 *D_801394C0[];
-extern void updateObjectSideFlag(GameObject *);
 
 static __inline__ s16 ahead_28EF4(GameObject *o)
 {
@@ -3967,7 +3575,6 @@ void func_80129B64(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012A160);
 typedef struct P_2A160 { u8 b0; u8 b1; u16 w2; s16 w4; } P_2A160;
 extern u16 *D_8013954C[];
-extern void cloneItemPickupObject(GameObject *);
 
 #define SETBOX(o, A) \
     { \
@@ -4733,7 +4340,6 @@ void func_8012BC30(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012BE28);
 extern u8 D_80138430[];
 extern u16 *D_801394A8[];
-extern void applyFrameVelocityY(GameObject *);
 
 void func_8012BE28(GameObject *o)
 {
@@ -4787,45 +4393,10 @@ void func_8012BE28(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012C03C);
-#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
-#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
-#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
-#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
-#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
 
 
-typedef struct GVars_2C03C {
-    u8 b30;
-    u8 _pad31[3];
-    s32 i34;
-    u8 b38;
-    u8 b39;
-    u8 b3a;
-    u8 b3b;
-    u8 b3c;
-    u8 b3d;
-    u8 b3e;
-    u8 b3f;
-    u8 b40;
-    u8 b41;
-    u8 b42;
-    u8 b43;
-    s16 s44;
-    s16 s46;
-    void *p48;
-    void *p4c;
-    void *p50;
-    void *p54;
-    u8 b58;
-    u8 b59;
-    u8 _pad5a[2];
-    s32 i5c;
-} GVars_2C03C;
 
 typedef struct { u8 b0, b1; } B8012CCF8_2C03C;
-extern u8 D_800A38BB[];
-extern s32 D_800A38D0[];
 extern void (*D_8013843C[])(GameObject *);
 extern void func_800322A4(char, s32, s32, s32);
 extern GameObject *allocObjectLayer2(void);
@@ -4873,7 +4444,7 @@ void func_8012C03C(GameObject *o)
         }
         break;
     case 1:
-        if (o->subState == 1 && ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0]) {
+        if (o->subState == 1 && ((u8*)&D_8009BC98.unk12)[0]) {
             func_80022E44(o);
             break;
         }
@@ -4881,7 +4452,7 @@ void func_8012C03C(GameObject *o)
         if (o->unk9E == 0) {
             switch (o->subState) {
             case 0:
-                if (o->step != 0 && ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0]) {
+                if (o->step != 0 && ((u8*)&D_8009BC98.unk12)[0]) {
                     func_80022E44(o);
                     break;
                 }
@@ -4951,7 +4522,7 @@ void func_8012C03C(GameObject *o)
     case 2:
         switch (o->subState) {
         case 0:
-            if (((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0]) {
+            if (((u8*)&D_8009BC98.unk12)[0]) {
                 func_80022E44(o);
                 break;
             }
@@ -4977,8 +4548,8 @@ void func_8012C03C(GameObject *o)
             func_80022E44(o);
             switch (o->step) {
             case 0:
-                ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b3f)[0] = 1;
-                ((u8*)&(*(GVars_2C03C *)&D_8009BC98).b42)[0] = 1;
+                ((u8*)&D_8009BC98.unk0F)[0] = 1;
+                ((u8*)&D_8009BC98.unk12)[0] = 1;
                 D_800A38BB[0] = 3;
                 D_800A38D0[0] = 0;
                 D_1F80018C = o->h->raw;
@@ -5013,12 +4584,6 @@ void func_8012C03C(GameObject *o)
         break;
     }
 }
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
 
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012C5D8);
 
@@ -5085,7 +4650,6 @@ void func_8012CC5C(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012CD40);
 extern void *D_8013A5B4;
 extern u8 D_80138468[];
-extern void applyFrameVelocityXY(GameObject *);
 
 void func_8012CD40(GameObject *o)
 {

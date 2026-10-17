@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "game/gte.h"
 
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_801170E4);
 
@@ -48,20 +49,10 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117C60);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117D3C);
 extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
-extern void getBaseMatrix(MATRIX *);
 extern s32 insertPrimWithBias(void *, s32, s32, s32, u32);
 extern s32 insertPrim(void *, s32, s32, s32, u32);
 
-#define gte_ldv3(r0, r1, r2) __asm__ volatile ("lwc2 $0, 0( %0 );lwc2 $1, 4( %0 );lwc2 $2, 0( %1 );lwc2 $3, 4( %1 );lwc2 $4, 0( %2 );lwc2 $5, 4( %2 )" : : "r"(r0), "r"(r1), "r"(r2))
-#define gte_rtpt() __asm__ volatile ("nop;nop;.word 0x4a280030")
-#define gte_stsxy3_g4(r0) __asm__ volatile ("swc2 $12, 8( %0 );swc2 $13, 16( %0 );swc2 $14, 24( %0 )" : : "r"(r0) : "memory")
-#define gte_ldv0(r0) __asm__ volatile ("lwc2 $0, 0( %0 );lwc2 $1, 4( %0 )" : : "r"(r0))
-#define gte_rtps() __asm__ volatile ("nop;nop;.word 0x4a180001")
-#define gte_avsz4() __asm__ volatile ("nop;nop;.word 0x4b68002e")
-#define gte_stotz(r0) __asm__ volatile ("swc2 $7, 0( %0 )" : : "r"(r0) : "memory")
-#define gte_stsxy(r0) __asm__ volatile ("swc2 $14, 0( %0 )" : : "r"(r0) : "memory")
 
-#define gte_avsz3() __asm__ volatile ("nop;nop;.word 0x4b58002d")
 
 void func_80117D3C(GameObject *o)
 {
@@ -175,27 +166,10 @@ void func_80117D3C(GameObject *o)
     else AddPrim((s32 *)SCRATCHPAD.ot + (LZ_FILE_CTRL_Long + 4) + (s8)o->unkF, q);
     D_1F800164 += 0xc;
 }
-#undef gte_ldv3
-#undef gte_rtpt
-#undef gte_stsxy3_g4
-#undef gte_ldv0
-#undef gte_rtps
-#undef gte_avsz4
-#undef gte_stotz
-#undef gte_stsxy
-#undef gte_avsz3
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_8011812C);
 extern void getBaseMatrix__1812C(MATRIX *);
 
-#define gte_ldv3(r0, r1, r2) __asm__ volatile ("lwc2 $0, 0( %0 );lwc2 $1, 4( %0 );lwc2 $2, 0( %1 );lwc2 $3, 4( %1 );lwc2 $4, 0( %2 );lwc2 $5, 4( %2 )" : : "r"(r0), "r"(r1), "r"(r2))
-#define gte_rtpt() __asm__ volatile ("nop;nop;.word 0x4a280030")
-#define gte_stsxy3_g4(r0) __asm__ volatile ("swc2 $12, 8( %0 );swc2 $13, 16( %0 );swc2 $14, 24( %0 )" : : "r"(r0) : "memory")
-#define gte_ldv0(r0) __asm__ volatile ("lwc2 $0, 0( %0 );lwc2 $1, 4( %0 )" : : "r"(r0))
-#define gte_rtps() __asm__ volatile ("nop;nop;.word 0x4a180001")
-#define gte_avsz4() __asm__ volatile ("nop;nop;.word 0x4b68002e")
-#define gte_stotz(r0) __asm__ volatile ("swc2 $7, 0( %0 )" : : "r"(r0) : "memory")
-#define gte_stsxy(r0) __asm__ volatile ("swc2 $14, 0( %0 )" : : "r"(r0) : "memory")
 
 void func_8011812C(GameObject *o)
 {
@@ -265,43 +239,8 @@ void func_8011812C(GameObject *o)
     AddPrim((s32 *)SCRATCHPAD.ot + (LZ_FILE_CTRL_Long + 4) + (s8)o->unkF, q);
     D_1F800164 += 0xc;
 }
-#undef gte_ldv3
-#undef gte_rtpt
-#undef gte_stsxy3_g4
-#undef gte_ldv0
-#undef gte_rtps
-#undef gte_avsz4
-#undef gte_stotz
-#undef gte_stsxy
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80118420);
-typedef struct GVars_18420 {
-    u8 b30;
-    u8 _pad31[3];
-    s32 i34;
-    u8 b38;
-    u8 b39;
-    u8 b3a;
-    u8 b3b;
-    u8 b3c;
-    u8 b3d;
-    u8 b3e;
-    u8 b3f;
-    u8 b40;
-    u8 b41;
-    u8 b42;
-    u8 b43;
-    s16 s44;
-    s16 s46;
-    void *p48;
-    void *p4c;
-    void *p50;
-    void *p54;
-    u8 b58;
-    u8 b59;
-    u8 _pad5a[2];
-    s32 i5c;
-} GVars_18420;
 
 void func_80118420(GameObject *o)
 {
@@ -315,7 +254,7 @@ void func_80118420(GameObject *o)
         o->unk8C = 0;
         o->velX = -0x40;
         o->animFrame = 0;
-        (*(GameObject **)&(*(GVars_18420 *)&D_8009BC98).p54) = o;
+        (*(GameObject **)&D_8009BC98.unk24) = o;
         break;
     case 1:
         o->unk8C = (o->unk8C - (o->velH >> 8)) & 0xfff;

@@ -130,7 +130,6 @@ s32 func_8011F7E4(S_1F7E4 *o)
 #undef SETUP
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_8011FA84);
-extern u8 D_8009BCA9;
 
 void func_8011FA84(GameObject *o)
 {

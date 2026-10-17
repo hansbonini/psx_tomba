@@ -4,7 +4,6 @@
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_8", func_801341A0);
 typedef struct { char pad[0x4c]; s16 w4c; s16 w4e; } C4C_341A0;
 typedef struct { s16 p0, x, p4, y, p8, z; } Pos_341A0;
-extern u8 D_8009C10D;
 extern u8 D_8009C115;
 extern u8 D_8009BCD9;
 extern u8 D_8009BCD8[];
@@ -58,13 +57,10 @@ extern void applyAnimVelocityY(GameObject *, s32);
 extern s32 showMessageBox(s32, s32, s32, s32);
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
-extern void stopBgm(s32);
-extern void startAreaBgm(void);
 extern void dispatchAreaItemUpdate(GameObject *, Pos_341A0 *, s32);
 extern void addItemToInventory(s32, s32, s32);
 extern void playSFX(s32);
 extern void tickAnimation(GameObject *);
-extern void freeObjectLayer2(GameObject *);
 
 void func_801341A0(GameObject *o)
 {

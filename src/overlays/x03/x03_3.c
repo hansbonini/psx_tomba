@@ -12,7 +12,6 @@ extern u8 D_80114638[];
 extern void func_800EDEBC(GameObject *, s32);
 extern void playSFX(s32);
 extern s32 tickAnimation(GameObject *);
-extern void func_800EDD9C(GameObject *);
 
 void func_8011D4F4(GameObject *o)
 {
@@ -51,8 +50,6 @@ void func_8011D4F4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011D620);
-extern s32 clampToCeilingAndProbeSides(GameObject *);
-extern void func_800ED788(GameObject *);
 
 static __inline__ void fall_1D620(GameObject *o)
 {
@@ -78,33 +75,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011D6A8);
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011D9CC);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011DA00);
-typedef struct GVars_1DA00 {
-    u8 b30;
-    u8 _pad31[3];
-    s32 i34;
-    u8 b38;
-    u8 b39;
-    u8 b3a;
-    u8 b3b;
-    u8 b3c;
-    u8 b3d;
-    u8 b3e;
-    u8 b3f;
-    u8 b40;
-    u8 b41;
-    u8 b42;
-    u8 b43;
-    s16 s44;
-    s16 s46;
-    void *p48;
-    void *p4c;
-    void *p50;
-    void *p54;
-    u8 b58;
-    u8 b59;
-    u8 _pad5a[2];
-    s32 i5c;
-} GVars_1DA00;
 
 extern GameObject *D_8009B698;
 extern void func_800FB38C(GameObject *);
@@ -147,12 +117,12 @@ void func_8011DA00(GameObject *o)
         playSFX(0x1f);
         func_800FB38C(o);
         o->animFrame ^= 1;
-        *(u8 *)&D_8009B698->clut = ((u8*)&(*(GVars_1DA00 *)&D_8009BC98).b38)[0];
+        *(u8 *)&D_8009B698->clut = ((u8*)&D_8009BC98.unk08)[0];
         func_800224FC(3, o->x.p.whole, o->y.p.whole, o->z.p.whole);
         break;
     case 2:
-        o->h->raw += ((s16*)&(*(GVars_1DA00 *)&D_8009BC98).s44)[0] << 8;
-        o->y.raw += ((s16*)&(*(GVars_1DA00 *)&D_8009BC98).s46)[0] << 8;
+        o->h->raw += ((s16*)&D_8009BC98.unk14)[0] << 8;
+        o->y.raw += ((s16*)&D_8009BC98.unk16)[0] << 8;
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         if (tickAnimation(o)) {
@@ -161,8 +131,8 @@ void func_8011DA00(GameObject *o)
         }
         break;
     case 3:
-        o->h->raw += ((s16*)&(*(GVars_1DA00 *)&D_8009BC98).s44)[0] << 8;
-        o->y.raw += ((s16*)&(*(GVars_1DA00 *)&D_8009BC98).s46)[0] << 8;
+        o->h->raw += ((s16*)&D_8009BC98.unk14)[0] << 8;
+        o->y.raw += ((s16*)&D_8009BC98.unk16)[0] << 8;
         {
             s32 d = o->unk8C;
             o->unk8C = ((o->animFrame & 1) ? d - 0x10 : d + 0x10) & 0xff;
@@ -183,8 +153,8 @@ void func_8011DA00(GameObject *o)
         }
         break;
     case 4:
-        o->h->raw += ((s16*)&(*(GVars_1DA00 *)&D_8009BC98).s44)[0] << 8;
-        o->y.raw += ((s16*)&(*(GVars_1DA00 *)&D_8009BC98).s46)[0] << 8;
+        o->h->raw += ((s16*)&D_8009BC98.unk14)[0] << 8;
+        o->y.raw += ((s16*)&D_8009BC98.unk16)[0] << 8;
         tickAnimation(o);
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
@@ -254,7 +224,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011E680);
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011E6DC);
 
 extern s16 func_80059514(GameObject *, GameObject *);
-extern s16 D_1F8003BC;
 
 void func_8011E6DC(GameObject *o, GameObject *p)
 {
@@ -654,9 +623,7 @@ u8 func_8011FC48(s32 a)
 typedef struct A_1FD48 { s16 w0; u16 w2; u16 w4; u16 w6; } A_1FD48;
 typedef struct B_1FD48 { u8 c[4]; } B_1FD48;
 typedef struct { s16 w0, w2, w4, w6, w8; u8 bA, bB; s16 wC, wE; } X_1FD48;
-extern char D_80077214[];
 extern A_1FD48 *D_80137AAC[];
-extern void applyFrameVelocityX(GameObject *);
 
 #define SETANIM(k) \
     { A_1FD48 *a = D_80137AAC[k]; u8 *p; \
@@ -868,7 +835,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_80122E44);
 typedef struct A_22E70 { s16 w0; u16 w2; u16 w4; u16 w6; } A_22E70;
 typedef struct B_22E70 { u8 c[4]; } B_22E70;
 extern u8 D_80134FAC[];
-extern void applyFrameVelocityY(GameObject *);
 
 void func_80122E70(GameObject *o)
 {
@@ -980,7 +946,6 @@ typedef struct B_2434C { u16 c[4]; } B_2434C;
 extern A_2434C *D_80138274[];
 extern B_2434C D_80134FC8[];
 extern void readAnimFrameCount(GameObject *);
-extern void freeObjectLayer2(GameObject *);
 
 void func_8012434C(GameObject *o)
 {

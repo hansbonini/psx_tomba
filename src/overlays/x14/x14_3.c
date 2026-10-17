@@ -2,33 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_3", func_8011EC04);
-typedef struct GVars_1EC04 {
-    u8 b30;
-    u8 _pad31[3];
-    s32 i34;
-    u8 b38;
-    u8 b39;
-    u8 b3a;
-    u8 b3b;
-    u8 b3c;
-    u8 b3d;
-    u8 b3e;
-    u8 b3f;
-    u8 b40;
-    u8 b41;
-    u8 b42;
-    u8 b43;
-    s16 s44;
-    s16 s46;
-    void *p48;
-    void *p4c;
-    void *p50;
-    void *p54;
-    u8 b58;
-    u8 b59;
-    u8 _pad5a[2];
-    s32 i5c;
-} GVars_1EC04;
 
 typedef struct { s16 a, b, c, d; } E8_1EC04;
 
@@ -57,7 +30,7 @@ void func_8011EC04(GameObject *o)
     case 2:
         if (tickAnimation(o)) {
             func_8012225C(o);
-            (*(GVars_1EC04 *)&D_8009BC98).b58 = 0;
+            D_8009BC98.unk28 = 0;
             func_8011CC8C(o);
             func_80115FEC(o);
             o->timer = 0x14;

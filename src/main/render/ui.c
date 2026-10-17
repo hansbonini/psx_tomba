@@ -1680,7 +1680,6 @@ s16 func_800287F8(u8 *p, s16 mode)
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_800288C4);
 typedef struct { char p0[9]; u8 b9; } G_288C4;
-extern u8 D_8009C980;
 extern u16 D_800A5474;
 
 #define AXIS(v, c, a, hi, lo) ({                                  \

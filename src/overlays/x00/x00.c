@@ -5,7 +5,6 @@
 typedef struct { char p[2]; u16 s2; } P_15AA8;
 typedef struct { char p[0x32]; s16 w32; P_15AA8 *p34; } S_15AA8;
 extern u16 D_8009BCCA;
-extern u8 D_8009C1A5;
 void func_80115AA8(S_15AA8 *o)
 {
     s16 t;
@@ -37,7 +36,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80116814);
 extern s16 D_1F80016E;
 extern void tryStartItemInteraction(GameObject *, s32, s32);
 extern void func_8002CEF8(GameObject *);
-extern void func_8002CFF4(GameObject *);
 
 void func_801168F4(GameObject *o)
 {
@@ -236,12 +234,9 @@ typedef struct {
     union { s32 i; HL_17F10 s; } y; char p3[0x24 - 0x18]; s32 a24; char *a28; char p4[2]; u16 w2e;
     char p5[0x40 - 0x30]; H_17F10 *h; char p6[0x82 - 0x44]; s16 vel;
 } O_17F10;
-extern char D_80077214[];
 extern E_17F10 D_801379A8[];
 extern s32 D_8013A51C[];
 extern void readAnimFrameCount(O_17F10 *);
-extern void applyFrameVelocityX(O_17F10 *);
-extern void freeObjectLayer3(O_17F10 *);
 extern s16 probeCollisionAtDepthA(O_17F10 *, s32, s32);
 
 void func_80117F10(O_17F10 *o)

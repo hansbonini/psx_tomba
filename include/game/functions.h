@@ -214,4 +214,30 @@ extern void func_80125EF4(GameObject *, u8 *);
 void func_801262AC();
 extern void initItemObject(GameObject *);
 
+int isPolyFT4OnScreen(POLY_FT4*);
+int projectActorPosition(u8*, long*, long*);
+s32 clampToCeilingAndProbeSides(u8*);
+s32 resolveHitResultB(u8*, u8*);
+void addPlayerAP(int);
+void applyCollisionTileResponse(u8*);
+void applyFrameVelocityX(u8*);
+void applyFrameVelocityXY(u8*);
+void applyFrameVelocityY(u8*);
+void applyObjectAltSpeedVertical(short*);
+void applyObjectAltSpeedXY(u8*);
+void applyObjectSpeedXY(u8*);
+void cloneItemPickupObject(u8*);
+void freeObjectLayer1(s32*);
+void freeObjectLayer2(s32*);
+void freeObjectLayer3(s32*);
+void freeObjectLayer5(s32*);
+void freeObjectLayer8(s32*);
+void func_8002CFF4(GameObject *);
+void getBaseMatrix(MATRIX*);
+void queueSfxKeyOff(s32);
+void startAreaBgm(void);
+void stopBgm(s32);
+void unpackSpriteFrame(s32, s32, u8*, s32);
+void updateObjectSideFlag(u8*);
+
 #endif

@@ -15,7 +15,6 @@ extern void func_8012E4F8(GameObject *);
 extern void func_8012EE80(GameObject *);
 extern void func_8012F1DC(GameObject *);
 extern void func_8012F5E4(GameObject *);
-extern void freeObjectLayer2(GameObject *);
 
 static __inline__ s32 nearObj_2E0A4(GameObject *o, GameObject *p)
 {
@@ -663,7 +662,6 @@ void func_8012F658(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_8012FA34);
-extern void unpackSpriteFrame(s32, s32, char *, s32);
 void func_8012FA34(s32 a, s32 b)
 {
     s16 r[4];
@@ -785,12 +783,6 @@ void func_8012FD7C(u8 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_8012FEF4);
-#define U8(o,n)  (*(u8 *)((char *)(o) + (n)))
-#define S8(o,n)  (*(s8 *)((char *)(o) + (n)))
-#define U16(o,n) (*(u16 *)((char *)(o) + (n)))
-#define S16(o,n) (*(s16 *)((char *)(o) + (n)))
-#define S32(o,n) (*(s32 *)((char *)(o) + (n)))
-#define PTR(o,n) (*(void **)((char *)(o) + (n)))
 typedef struct { s16 x, y; } P_2FEF4;
 typedef struct { s32 a, b, c; } V3_2FEF4;
 extern void applyAnimVelocityY(GameObject *, s32);
@@ -1083,12 +1075,6 @@ void func_8012FEF4(GameObject *o)
     }
     tickAnimation(o);
 }
-#undef U8
-#undef S8
-#undef U16
-#undef S16
-#undef S32
-#undef PTR
 #undef WBC
 #undef C8
 #undef CA
@@ -1155,7 +1141,6 @@ void func_80130B28(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_80130D14);
 typedef struct { s16 x, y; } P;
 extern s32 angleBetweenPoints(P a, P b);
-extern void applyObjectAltSpeedXY(GameObject *);
 extern void decreaseObjectTimer(void *, s32);
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
@@ -1404,7 +1389,6 @@ void func_801313EC(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_801314B8);
 typedef struct { GameObject o; u16 c0, c2, c4, c6, c8, ca, cc, ce, d0; s16 d2; } E_314B8;
 extern s32 D_1F8002DC;
-extern char D_800772B0[];
 extern void *D_8013A084[];
 extern void applyAnimVelocityXY(GameObject *, u16);
 extern void applyAnimVelocityX(GameObject *, u16);
@@ -1690,10 +1674,8 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_80132114);
 extern void *D_8013A4D4;
 extern void *D_8013A4C8;
 extern void *D_8013A4C4;
-extern char D_80077214[];
 extern void advanceAnimFrame(GameObject *, s32);
 extern s16 func_80043AB0(GameObject *, s16, s16, s32);
-extern void applyFrameVelocityX(GameObject *);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 void func_801322C4(GameObject *o)
 {

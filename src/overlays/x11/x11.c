@@ -24,7 +24,6 @@ INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_80115C74);
 INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_80115D0C);
 
 // INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_80115EA8);
-extern void freeObjectLayer5(GameObject *);
 
 void func_80115EA8(GameObject *o)
 {
@@ -76,7 +75,6 @@ INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_801160A0);
 
 // INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_801161A4);
 extern s16 D_8007DB88[];
-extern char D_800771F0[];
 extern void *D_8011B750[];
 extern s32 tickAnimation(GameObject *);
 extern void applyAnimVelocityX(GameObject *, s32);
@@ -123,7 +121,6 @@ void func_801161A4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_801162F8);
-extern void freeObjectLayer2(GameObject *);
 static __inline__ void setanim_162F8(GameObject *p)
 {
     p->spriteBank = SCRATCHPAD.sprData[10];

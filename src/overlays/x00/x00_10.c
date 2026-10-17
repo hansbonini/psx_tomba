@@ -9,7 +9,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DD0);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DDC);
 extern GameObject *allocObjectLayer2(void);
-extern u8 D_8009C111;
 extern u32 D_8009BCEC[];
 
 void func_80135DDC(GameObject *o)
@@ -273,7 +272,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366B0);
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366BC);
 typedef struct N_366BC { char p0; char f1; char f2; char f3; char p1[0xe]; s16 x; char p2[2]; s16 y; char p3[2]; s16 z; char p4[0x2e - 0x1c]; s16 w; } N_366BC;
 typedef struct O_366BC { char p0[4]; u8 state; char p1[0x1c-5]; N_366BC *n; } O_366BC;
-extern u8 D_8009C1B2;
 extern u8 D_8009C225;
 extern u8 D_8009C376;
 
@@ -311,12 +309,10 @@ void func_801366BC(O_366BC *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013679C);
 extern u8 D_800A5401;
-extern u8 D_8009BCA9;
 extern u8 D_800A5458;
 extern u8 D_8009C40F;
 extern u8 D_800A5444;
 extern u8 D_8009C375;
-extern u8 D_8009C363;
 
 s16 func_8013679C(GameObject *o)
 {

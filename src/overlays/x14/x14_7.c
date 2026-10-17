@@ -7,7 +7,6 @@ typedef struct { s16 x0, x2, x4, x6; u16 n; s16 k; } Q_1F2C4;
 
 extern u8 D_80125624[];
 extern s32 tickAnimation(GameObject *o);
-extern void updateObjectSideFlag(GameObject *o);
 extern void func_8011CBD0(GameObject *o, s32 n);
 extern void func_8011CC8C(GameObject *o);
 extern void func_80115FEC(GameObject *o);

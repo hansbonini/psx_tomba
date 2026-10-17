@@ -258,7 +258,6 @@ typedef struct O_ED8C0 {
     char pad5[0xaa - 0x9d];
     char baa;
 } O_ED8C0;
-extern char D_80010DB0[];
 extern void playSFXWithVolume();
 extern void advanceAnimFrame();
 
@@ -301,7 +300,6 @@ void func_800ED928(O_ED928 *o)
 typedef struct S_ED9E0 { char pad0[0x40]; s32 *h; char pad1[0x7c-0x44]; s16 velH; } S_ED9E0;
 void func_8010DE48();
 void func_8010E444();
-extern void applyObjectAltSpeedVertical(S_ED9E0 *);
 void func_800ED9E0(S_ED9E0 *o)
 {
 s32 *h; func_8010DE48(o); h = o->h; *h += o->velH << 8; func_8010E444(o, h); applyObjectAltSpeedVertical(o);
@@ -341,9 +339,6 @@ void func_800EDA30(char *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDB40);
 extern void tickAnimation(GameObject *o);
-extern void func_8011068C(GameObject *o);
-extern void func_8011070C(GameObject *o);
-extern s16 D_8009BCAC;
 extern s16 D_8009BCAE;
 
 void func_800EDB40(GameObject *o)
@@ -413,10 +408,8 @@ typedef struct TO_EDD2C {
     char p3[0xb6 - 0xb4];
     s16 w6;
 } TO_EDD2C;
-extern s16 D_8009BCAC;
 extern s16 D_8009BCAE;
 extern void setObjectSpeedPolar2(TO_EDD2C *o, s32 a, s32 b);
-extern void applyObjectSpeedXY(TO_EDD2C *o);
 
 static __inline__ void add_EDD2C(TO_EDD2C *p)
 {
@@ -483,7 +476,6 @@ void func_800EDEBC(GameObject *o, u16 anim)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDF24);
 typedef struct S_EDF24 { char pad[0x24]; void *anim; char pad2[0x8c - 0x28]; s32 v; } S_EDF24;
-extern char D_80010C48[];
 extern void readAnimFrameCount(S_EDF24 *s);
 
 void func_800EDF24(S_EDF24 *s)

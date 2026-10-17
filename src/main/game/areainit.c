@@ -173,7 +173,6 @@ void func_800330EC(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
 extern void func_80032374(GameObject *);
-extern void freeObjectLayer3(GameObject *);
 void func_800332CC(GameObject *o)
 {
     switch (o->state) {

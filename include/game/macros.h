@@ -34,6 +34,15 @@
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
 #define DRAW_ENV_2 ((void*)0x8009E3D4)
 
+/* A field of a struct reached by its byte offset. */
+#define S8(o, n) (*(s8 *)((char *)(o) + (n)))
+#define U8(o, n) (*(u8 *)((char *)(o) + (n)))
+#define S16(o, n) (*(s16 *)((char *)(o) + (n)))
+#define U16(o, n) (*(u16 *)((char *)(o) + (n)))
+#define S32(o, n) (*(s32 *)((char *)(o) + (n)))
+#define U32(o, n) (*(u32 *)((char *)(o) + (n)))
+#define PTR(o, n) (*(void **)((char *)(o) + (n)))
+
 #define READ32(_dst, _src) { \
     _dst = (((u_char *)_src)[1] << 8) | (((u_char *)_src)[0] << 0) \
         | ((((u_char *)_src)[3] << 8) | (((u_char *)_src)[2] << 0) << 16);\

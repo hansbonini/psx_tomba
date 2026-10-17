@@ -158,7 +158,7 @@ u8 applyGoldenBowl(void)
 int tryStartItemInteraction(int arg0, char arg1, int arg2) {
     GAME.disableSelectMenu = 0;
 #ifdef VERSION_PAL
-    if (D_8009BC98[8] != 0) {
+    if (D_8009BC98.unk08 != 0) {
         return 0;
     }
 #endif

@@ -148,8 +148,6 @@ void dispatchAreaItemUpdate(void)
 typedef struct { s16 h; s16 v; } VT_41DB4;
 extern VT_41DB4 D_8007E90C[];
 extern void (*D_8007DE28[])(GameObject *);
-extern void applyObjectSpeedXY(GameObject *);
-extern void freeObjectLayer5(GameObject *);
 
 void func_80041DB4(GameObject *o)
 {
@@ -252,9 +250,7 @@ void spawnItemFromEntry(u8* arg0, s16* arg1, s32 arg2, s32 arg3, u8* arg4) {
 typedef struct { u16 a, b; } VP_42204;
 extern VP_42204 D_8007E918[];
 extern void (*D_8007DE28[])(GameObject *);
-extern void applyObjectSpeedXY(GameObject *);
 extern s32 tickAnimation(GameObject *);
-extern void freeObjectLayer5(GameObject *);
 
 void func_80042204(GameObject *o)
 {

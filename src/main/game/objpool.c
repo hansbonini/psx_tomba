@@ -225,9 +225,6 @@ void func_800580BC(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80058464);
-extern void func_800E7DF8(void *, s32, s32);
-extern void func_800E8A30(void *, s32, s32);
-extern void func_800E8758(void *, s32, s32);
 
 #define SETANIM(o, a, b) \
     switch ((o)->unk6A - 1) { \
@@ -339,9 +336,6 @@ void func_80058464(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80058960);
 typedef struct { GameObject o; char pad[0x32]; s16 wf2; } BigObj_58960;
-extern void func_800E7DF8(void *, s32, s32);
-extern void func_800E8A30(void *, s32, s32);
-extern void func_800E8758(void *, s32, s32);
 
 #define SETANIM(o, a, b) \
     switch ((o)->unk6A - 1) { \

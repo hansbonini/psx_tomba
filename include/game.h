@@ -32,5 +32,6 @@
 #include "game/state.h"
 #include "game/data.h"
 #include "game/functions.h"
+#include "game/engine.h"
 
 #endif // GAME_H

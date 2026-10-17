@@ -5,9 +5,7 @@ INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8010E750);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8010F1C0);
 typedef struct { s16 a[3]; char pad[0x24 - 6]; u16 g[10]; char pad2[0x74 - 0x38]; } T74_0F1C0;
-extern u8 D_8009C61B;
 extern u8 D_8009BCF8;
-extern u8 D_8009C26E;
 extern u8 D_8009C36E;
 typedef struct { char pad[0x2e]; u16 animFrame; char p1[0xb2 - 0x30]; s16 wb2; char pad2[0xc1 - 0xb4]; u8 bc1; } P_0F1C0;
 
@@ -423,8 +421,6 @@ void func_8011023C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8011032C);
-extern u8 D_8009C61B;
-extern u8 D_8009C26E;
 extern u8 D_8009C36E;
 extern u8 D_8009BCF8;
 extern u8 D_80114860[];
@@ -509,7 +505,6 @@ void func_801104BC(P_104BC *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8011068C);
-extern u8 D_8009C980;
 
 void func_8011068C(char *o)
 {
@@ -697,7 +692,6 @@ void func_80110BD0(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80110C6C);
-extern void freeObjectLayer1(void *);
 
 void func_80110C6C(u8 *o)
 {
@@ -766,7 +760,6 @@ typedef struct O_10E90 {
 extern u8 D_80114DA8[][6];
 extern u8 *D_8011508C[];
 extern AB_10E90 D_801150C0[];
-extern u8 D_8009C1B2;
 extern u8 D_8009C420;
 
 void func_80110E90(O_10E90 *o)
@@ -1358,14 +1351,12 @@ typedef void (*ObjFn_127D4)(GameObject *);
 typedef union { s32 w; struct { u16 a, b; } h; } Stage_127D4;
 extern Stage_127D4 GAME_Stage_127D4 asm("GAME");
 extern u8 D_8009C305;
-extern s32 D_1F8002E0[];
 extern s32 D_1F8002D4[];
 extern u8 D_80114DA4[];
 extern u8 D_80114D68[];
 extern ObjFn_127D4 D_801150E0[];
 extern ObjFn_127D4 D_801150FC[];
 extern ObjFn_127D4 D_80115118[];
-extern void freeObjectLayer2(GameObject *);
 
 void func_801127D4(GameObject *o)
 {
@@ -1531,7 +1522,6 @@ typedef struct O_12DDC {
     char pad3[0x90 - 0x6b];
     char *d90;
 } O_12DDC;
-extern s32 D_800A53F4;
 
 void func_80112DDC(O_12DDC *o)
 {
@@ -1765,7 +1755,6 @@ typedef struct { s16 s[6]; } P6_13610;
 extern u8 *D_8009B698;
 extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
 extern u8 D_800A5401;
-extern s16 D_800A5414;
 
 void func_80113610(GameObject *o)
 {
@@ -1850,7 +1839,6 @@ typedef struct {
     void **tab;
 } Ent5de4_139DC;
 extern Ent5de4_139DC D_80115134[];
-extern void freeObjectLayer2(GameObject *);
 
 void func_801139DC(GameObject *o)
 {
@@ -1913,7 +1901,6 @@ void func_80113C20(s32 a, char b, s32 c, s32 d, s16 e)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80113CB8);
 extern char *allocObjectLayer2(void);
-extern u8 D_8009BCC1;
 
 void func_80113CB8(s32 unused, char sub, s32 x, s32 y, s32 z)
 {

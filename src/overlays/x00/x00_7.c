@@ -81,7 +81,6 @@ typedef struct { char c[12]; } V12_327B8;
 extern GameObject PLAYER_GameObject asm("PLAYER");
 extern u8 D_800A5399;
 extern u8 D_800A53A7;
-extern u8 D_800A543A;
 extern u16 *D_800A53BC[];
 extern Fix16 *D_800A53D8_Fix16Ptr asm("D_800A53D8");
 extern s32 D_800A53FC;
@@ -93,12 +92,8 @@ extern s32 D_8009BCEC_S32 asm("D_8009BCEC");
 extern u8 D_8009C10F[];
 extern s32 D_1F8002D4[];
 extern void *D_8013A4D4[];
-extern char D_80077250[];
-extern char D_8007725C[];
 extern char D_80077238[];
-extern void applyFrameVelocityX(GameObject *);
 extern void pushDrawListMain(GameObject *);
-extern void freeObjectLayer2(GameObject *);
 extern void func_801322C4(GameObject *);
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern void setEventStarted(s32, s32, s32);
@@ -546,7 +541,6 @@ void func_8013364C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_80133748);
-extern u8 D_8009C111;
 void func_80133748(GameObject *o)
 {
     s32 t;
@@ -770,7 +764,6 @@ extern s32 D_1F8002D0[];
 extern void *D_80139F60[];
 extern void *D_80139F7C[];
 extern void *D_80139F84[];
-extern u8 D_8009C1B2;
 
 void func_80133F64(GameObject *o)
 {

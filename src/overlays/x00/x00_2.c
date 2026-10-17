@@ -47,7 +47,6 @@ void func_80119FA8(GameObject *o)
 extern void readAnimFrameCount(GameObject *);
 extern s32 tickAnimation(GameObject *);
 extern void pushDrawListCapped(GameObject *);
-extern void freeObjectLayer3(GameObject *);
 extern void *D_8013A5EC;
 extern void *D_8013A5F0;
 extern void *D_8013A5F4[];
@@ -295,10 +294,8 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011AA30);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011AAF4);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011AB40);
-extern u8 D_8009C114;
 extern s32 D_1F8002D4[];
 extern void *D_8013A4B0[];
-extern void freeObjectLayer3(GameObject *o);
 
 void func_8011AB40(GameObject *o)
 {
@@ -460,7 +457,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011D4F4);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011D500);
 typedef struct { char p0[6]; u8 st; char p1[0x16 - 7]; u16 w16; char p2[0x88 - 0x18]; s32 d88; } O_1D500;
-extern u8 D_800A543A;
 
 void func_8011D500(O_1D500 *o)
 {
@@ -698,7 +694,6 @@ void func_8011DFB8(S_1DFB8 *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011E520);
 extern s32 D_1F800334;
-extern u8 D_8009C114;
 extern void pushDrawListLayer4(void);
 extern void freeObjectLayer4(void);
 
@@ -785,7 +780,6 @@ void func_8011E958(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011EAEC);
 extern void *D_8013A494;
 extern void *D_8013A498;
-extern u8 D_800A5403;
 extern s32 fixedMulSin(s32, s32);
 
 void func_8011EAEC(GameObject *o)

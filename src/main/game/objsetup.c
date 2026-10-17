@@ -5,7 +5,6 @@
 extern u16 D_1F80016E[];
 extern void pushDrawListCapped(GameObject *o);
 extern s16 fixedMulSin2(s16 a, s16 b);
-extern void freeObjectLayer3(GameObject *o);
 
 void func_80031908(GameObject *o)
 {
@@ -57,7 +56,6 @@ void func_80031908(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031B18);
 extern void pushDrawListCapped(GameObject *);
-extern void freeObjectLayer3(GameObject *);
 
 void func_80031B18(GameObject *o)
 {

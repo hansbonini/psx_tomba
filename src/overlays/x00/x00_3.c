@@ -16,10 +16,8 @@ extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 #define D_800A603E D_800A539E_U8Arr[0]
 extern u8 D_800A5401[];
 #define D_800A60A1 D_800A5401[0]
-extern s16 D_800A5414;
 extern s16 D_800A5418;
 extern s16 D_800A541A;
-extern u8 D_8009C227;
 extern void readAnimFrameCount(GameObject *);
 extern s32 tickAnimation(GameObject *);
 extern s16 fixedMulSin(s32, s32);

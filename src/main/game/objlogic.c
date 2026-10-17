@@ -64,7 +64,6 @@ extern u8 D_8009BCA7_U8 asm("D_8009BCA7");
 extern s32 D_8009C650;
 extern void playSFX(s32);
 extern s32 tickAnimation(GameObject *);
-extern void applyObjectSpeedXY(GameObject *);
 extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
@@ -512,7 +511,6 @@ void func_80036440(u8* self)
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036494);
 extern u8 *D_8009B698;
 extern s8 D_800A547B;
-extern void freeObjectLayer1(GameObject *);
 void func_80036494(GameObject *o)
 {
     if (D_800A545F != 0)
@@ -594,7 +592,6 @@ s16 angleToPlayer(u8* self) {
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036A8C);
-extern void applyObjectSpeedXY(GameObject *);
 extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
@@ -1221,7 +1218,6 @@ void func_80038358(u8* self)
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800383AC);
 extern s8 D_800A547B;
-void freeObjectLayer1(GameObject *o);
 
 void func_800383AC(GameObject *o)
 {

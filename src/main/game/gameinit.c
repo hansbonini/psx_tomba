@@ -6,7 +6,7 @@ void initGameConfig(void)
 {
     CAMERA* camera = (CAMERA*)0x1F8000E2;
     memset((u_char *)&GAME, 0, sizeof(gameConfig));
-    memset(D_8009BC98, 0, sizeof(D_8009BC98));
+    memset(&D_8009BC98, 0, sizeof(D_8009BC98));
     getBaseMatrix(SCRATCH_VIEW_MATRIX);
     camera->vrz = -544;
     camera->vpx = 160;
@@ -87,7 +87,7 @@ void initHud(void)
 {
     char *tmp;
 
-    memset(D_8009BC98, 0, sizeof(D_8009BC98));
+    memset(&D_8009BC98, 0, sizeof(D_8009BC98));
     SPAD->unk1C6 = 0;
     GAME.fadeScreenControl = 1;
     SPAD->unk3D0 = 0;

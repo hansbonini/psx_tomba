@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "game/gte.h"
 
 INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800E9120);
 
@@ -9,7 +10,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800E92D4);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800E94C8);
 typedef struct { char p0[4]; u8 b4, b5; char p1[0x2e - 6]; s16 s2e; } TO_E94C8;
-extern void freeObjectLayer3(TO_E94C8 *o);
 
 void func_800E94C8(TO_E94C8 *o)
 {
@@ -346,8 +346,6 @@ void func_800E99DC(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800EA16C);
 extern u8 D_8009C217;
 extern u8 D_8009C41C;
-extern u8 D_8009C272;
-extern u8 D_8009BCC1;
 extern void func_80113CB8(GameObject *, s32, s32, s32, s32);
 
 void func_800EA16C(s16 x, s16 y, s16 z, u8 f)
@@ -1250,17 +1248,8 @@ void func_800EBD20(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800EC0E8);
 extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
-extern void getBaseMatrix(MATRIX *);
 extern s32 insertPrimWithBias(void *, s32, s32, s32, u32);
 
-#define gte_ldv3(r0, r1, r2) __asm__ volatile ("lwc2 $0, 0( %0 );lwc2 $1, 4( %0 );lwc2 $2, 0( %1 );lwc2 $3, 4( %1 );lwc2 $4, 0( %2 );lwc2 $5, 4( %2 )" : : "r"(r0), "r"(r1), "r"(r2))
-#define gte_rtpt() __asm__ volatile ("nop;nop;.word 0x4a280030")
-#define gte_stsxy3_g4(r0) __asm__ volatile ("swc2 $12, 8( %0 );swc2 $13, 16( %0 );swc2 $14, 24( %0 )" : : "r"(r0) : "memory")
-#define gte_ldv0(r0) __asm__ volatile ("lwc2 $0, 0( %0 );lwc2 $1, 4( %0 )" : : "r"(r0))
-#define gte_rtps() __asm__ volatile ("nop;nop;.word 0x4a180001")
-#define gte_avsz4() __asm__ volatile ("nop;nop;.word 0x4b68002e")
-#define gte_stotz(r0) __asm__ volatile ("swc2 $7, 0( %0 )" : : "r"(r0) : "memory")
-#define gte_stsxy(r0) __asm__ volatile ("swc2 $14, 0( %0 )" : : "r"(r0) : "memory")
 
 void func_800EC0E8(GameObject *o)
 {
@@ -1323,14 +1312,6 @@ void func_800EC0E8(GameObject *o)
     AddPrim((s32 *)D_1F8001E0 + (LZ_FILE_CTRL_Long + 4) + (s8)o->unkF, q);
     D_1F800164 += 0xc;
 }
-#undef gte_ldv3
-#undef gte_rtpt
-#undef gte_stsxy3_g4
-#undef gte_ldv0
-#undef gte_rtps
-#undef gte_avsz4
-#undef gte_stotz
-#undef gte_stsxy
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800EC384);
 extern void freeObjectLayer4(GameObject *);
@@ -1439,7 +1420,6 @@ extern s32 DAT_8009c97c;
 extern u8 D_8009C3E1;
 extern s32 *D_80113FB4[];
 extern char D_800E3188[];
-extern void queueSfxKeyOff(s32);
 extern void spawnLayer3Object(s32, s32, s32, s32);
 extern void setEventComplete(s32, s32);
 

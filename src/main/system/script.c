@@ -5,7 +5,6 @@
 typedef struct { char p0[2]; u8 type; char p3[0x24 - 3]; u16 *anim; } O_3B0D4;
 extern s32 WPP_DATA;
 extern char *D_8009B698;
-extern void unpackSpriteFrame(s32, s32, char *, s32);
 
 void uploadSpriteFrame(O_3B0D4 *o)
 {

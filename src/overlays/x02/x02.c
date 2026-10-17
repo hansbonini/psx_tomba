@@ -12,7 +12,6 @@ extern void *D_8011E510;
 extern u16 GetClut(s32, s32);
 extern void readAnimFrameCount(GameObject *);
 extern s32 tickAnimation(GameObject *);
-extern void freeObjectLayer3(GameObject *);
 
 void func_8011592C(GameObject *o)
 {

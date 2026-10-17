@@ -7,7 +7,6 @@ extern void readAnimFrameCount(GameObject *);
 extern void playSFX(s32);
 extern void pushDrawListCapped(GameObject *);
 extern s32 tickAnimation(GameObject *);
-extern void freeObjectLayer3(GameObject *);
 
 void func_8002E964(GameObject *o)
 {
@@ -174,7 +173,6 @@ void func_8002ED1C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002EF20);
-extern void freeObjectLayer3(GameObject *);
 
 void func_8002EF20(GameObject *o)
 {
@@ -446,9 +444,6 @@ void func_8002F804(GameObject *a, s16 b, char c)
 extern u8 D_800A539A;
 extern u8 TALK_POSE;
 void func_800EDDDC(u8 *p, s32 a, s32 b);
-void func_800E7DF8(u8 *p, s32 a, s32 b);
-void func_800E8A30(u8 *p, s32 a, s32 b);
-void func_800E8758(u8 *p, s32 a, s32 b);
 void clearTalkPose(void)
 {
     u8 *p = &D_800A539A;
@@ -601,10 +596,6 @@ E2d_30800 *openMessageBox(s32 k, s32 dx, s16 *pos, s16 anim, u16 w)
 #undef SP398
 
 // INCLUDE_ASM("nonmatchings/main/game/message", loadMessageGlyph);
-#define setaddr(p, _addr) (((P_TAG *)(p))->addr = (u_long)(_addr))
-#define getaddr(p) (u_long)(((P_TAG *)(p))->addr)
-#define addPrim(ot, p) setaddr(p, getaddr(ot)), setaddr(ot, p)
-#define setRECT(r, _x, _y, _w, _h) (r)->x = (_x), (r)->y = (_y), (r)->w = (_w), (r)->h = (_h)
 
 
 s16 loadMessageGlyph(s32 p, s32 id, s32 bank)
@@ -683,10 +674,6 @@ s16 loadMessageGlyph(s32 p, s32 id, s32 bank)
     }
     return freeSlot;
 }
-#undef setaddr
-#undef getaddr
-#undef addPrim
-#undef setRECT
 
 // INCLUDE_ASM("nonmatchings/main/game/message", freeMessageGlyphs);
 void freeMessageGlyphs(u32 p)

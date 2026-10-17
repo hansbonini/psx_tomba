@@ -907,8 +907,8 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
             src += 2;
             if (D_8009C618[0] != 3 && done == 0) {
                 if (state != 0) {
-                    *(u16*)(obj + 0xD0) = D_8009BC98[0xF];
-                    D_8009BC98[0xF] = 1;
+                    *(u16*)(obj + 0xD0) = D_8009BC98.unk0F;
+                    D_8009BC98.unk0F = 1;
                     D_8009BCAA = 1;
                     if (state != 4 && (PLAYER.obj.unk9E == 0 || ((u8 *)&PLAYER)[0xAC] < 2)) {
                         PLAYER.obj.state = 5;
