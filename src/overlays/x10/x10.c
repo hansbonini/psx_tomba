@@ -505,9 +505,6 @@ void func_801186C4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80118830);
-struct GSInventory_18830 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_18830 { u8 weapon; u8 pants; };
-
 extern u16 D_8012E5A4[];
 
 void func_80118830(GameObject *o)
@@ -693,9 +690,6 @@ INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80119798);
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80119818);
 
-
-struct GSInventory_19818 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_19818 { u8 weapon; u8 pants; };
 
 typedef struct GameTask_19818 {
     s16 status;
@@ -1268,8 +1262,6 @@ void func_8011AFCC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8011B07C);
 
-struct GSInventory_1B07C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1B07C { u8 weapon; u8 pants; };
 void func_8011B07C(GameObject *o)
 {
     s32 e;
@@ -1962,7 +1954,7 @@ void func_80122650(GameObject *o)
             PLAYER_GameObject.unk8C = 0;
             PLAYER_GameObject.h->p.whole = o->h->p.whole;
             o->y.p.whole = PLAYER_GameObject.y.p.whole + 8;
-            setEventStarted(0xb2, 0, 0);
+            setEventStarted(EVENT_LEAFBUTTERFLIES, 0, 0);
             o->timer = 0xfa;
             o->step++;
         }
@@ -2008,7 +2000,7 @@ void func_801227E8(GameObject *o)
             o->velH = -r;
         o->velX = 0;
         o->velY = 0;
-        removeItemFromInventory(0x10, 1);
+        removeItemFromInventory(ITEM_LEAFBUTTERFLY, 1);
         o->step++;
     case 1:
         tickAnimation(o);
@@ -2587,7 +2579,7 @@ void func_80126E98(GameObject *o)
             setAnim_26E98(o, ANIMS(o)[5]);
         } else if (D_8009BC98.unk11 == 0x8b) {
             *k = 0;
-            removeItemFromInventory(0x8b, 1);
+            removeItemFromInventory(ITEM_BANANAJUICE, 1);
             D_8009BC98.unk0F = 1;
             D_8009BC98.unk12 = 1;
             o->subState = 2;
@@ -2619,8 +2611,6 @@ INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012741C);
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012787C);
 
 
-struct GSInventory_2787C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_2787C { u8 weapon; u8 pants; };
 extern char D_80131C18[];
 
 void func_8012787C(char *o)
@@ -2978,8 +2968,8 @@ void func_8012BA0C(GameObject *o)
         }
         break;
     case 2:
-        PLAYER.obj.state = 1;
-        PLAYER.obj.subState = 0;
+        PLAYER.obj.state = PLAYER_ACTIVE;
+        PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         o->state = 1;
         o->step = 0;
@@ -3102,8 +3092,6 @@ void func_8012C2EC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012C4DC);
-struct GSInventory_2C4DC { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_2C4DC { u8 weapon; u8 pants; };
 void func_8012C4DC(GameObject *o)
 {
     if (o->subtype == 0 && GAME.selectedSection == 0) func_8012C2EC(o);
@@ -3410,7 +3398,7 @@ void func_8012D648(GameObject *o)
             ((u8*)&D_8009BC98.unk0F)[0] = 1;
             ((u8*)&D_8009BC98.unk12)[0] = 1;
             ((u8*)&D_8009BC98.unk0E)[0] = 1;
-            setEventStarted(0xb7, 0, 0);
+            setEventStarted(EVENT_THEJUNGLEPIGBAG, 0, 0);
             o->clut = 200;
             o->step++;
             break;
@@ -3542,7 +3530,7 @@ void func_8012DA48(GameObject *o)
                 if (--o->clut <= 0) o->step = 15;
                 break;
             case 2:
-                PLAYER.obj.state = 5;
+                PLAYER.obj.state = PLAYER_ENTER;
                 PLAYER.obj.subState = 100;
                 PLAYER.obj.step = 0;
                 D_8009BC98.unk0F = 1;
@@ -3553,8 +3541,8 @@ void func_8012DA48(GameObject *o)
                 o->step = 1;
                 break;
             case 15:
-                PLAYER.obj.state = 1;
-                PLAYER.obj.subState = 0;
+                PLAYER.obj.state = PLAYER_ACTIVE;
+                PLAYER.obj.subState = PLAYER_IDLE;
                 PLAYER.obj.step = 0;
                 D_8009BC98.unk0F = 0;
                 D_8009BC98.unk12 = 0;
@@ -3577,8 +3565,6 @@ void func_8012DA48(GameObject *o)
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012DBE8);
 
-struct GSInventory_2DBE8 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_2DBE8 { u8 weapon; u8 pants; };
 void func_8012DBE8(GameObject *o)
 {
     if (GAME.selectedSection == 1) o->y.raw = -0xea;
@@ -3621,8 +3607,6 @@ INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012DCF4);
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012DD00);
 
-struct GSInventory_2DD00 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_2DD00 { u8 weapon; u8 pants; };
 void func_8012DD00(GameObject *o)
 {
     switch (o->state) {

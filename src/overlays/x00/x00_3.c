@@ -132,7 +132,7 @@ void func_8011ED30(GameObject *o)
         o->velX--;
         if (--o->timer > 0) {
             if (o->timer == 0x28) {
-                setEventStarted(8, 0, 0);
+                setEventStarted(EVENT_ICANTSWIM, 0, 0);
                 D_800A603C = 5;
                 D_800A603D = 0;
                 D_800A603E = 0;

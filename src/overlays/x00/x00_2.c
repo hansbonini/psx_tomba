@@ -535,11 +535,9 @@ typedef struct S_1DFB8 {
 extern u16 *D_801380A4[];
 extern u16 *D_80138098[];
 extern u16 D_80138050[];
-extern s32 DAT_8009c984;
 extern s32 D_8009BCEC[];
 extern s32 D_8009BCEC[];
 extern u8 D_8009BCA0_U8Arr[] asm("D_8009BCA0");
-extern u8 DAT_8009c938;
 extern void func_80119498(s32, s32, s32, s32);
 extern void setEventStarted(s32, s32, s32);
 extern void playSFX(s32);
@@ -630,7 +628,7 @@ void func_8011DFB8(S_1DFB8 *o)
                     o->animFrame = q->animFrame;
                     if (D_8009BCA0_U8Arr[0] == 0 && q->wc0 != 0 && --q->wc0 == 0 && !(D_8009BCEC[0] & 1)) {
                         D_8009BCEC[0] |= 1;
-                        setEventStarted(2, 0, 0);
+                        setEventStarted(EVENT_CLEARTHEFOG, 0, 0);
                         playSFX(0x35);
                     }
                     break;

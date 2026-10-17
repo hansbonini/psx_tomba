@@ -164,12 +164,12 @@ void func_801327B8(GameObject *o)
                     o->unk78 = 1;
                     o->h->p.whole = PLAYER_GameObject.h->p.whole;
                     PLAYER_GameObject.y.p.whole = o->y.p.whole - o->hitOffsetY;
-                    setEventStarted(3, 0, 0);
+                    setEventStarted(EVENT_TAKEMEHOME, 0, 0);
                     o->timer = 300;
                     D_8009BCAA = 1;
                     D_8009BCA7 = 1;
                 }
-                addItemToInventory(1, 1, 1);
+                addItemToInventory(ITEM_FROG, 1, 1);
                 o->step++;
             case 1:
                 if (--o->timer <= 0) {
@@ -260,7 +260,7 @@ void func_801327B8(GameObject *o)
                 o->active = 2;
                 o->animFrame = 0;
                 o->unk8C = 0;
-                removeItemFromInventory(1, 1);
+                removeItemFromInventory(ITEM_FROG, 1);
                 o->anim = D_8013A4D4[0];
                 readAnimFrameCount(o);
                 o->movetab = D_80077250;
@@ -303,7 +303,7 @@ void func_801327B8(GameObject *o)
                 o->active = 2;
                 o->anim = D_8013A4D4[0];
                 readAnimFrameCount(o);
-                removeItemFromInventory(1, 1);
+                removeItemFromInventory(ITEM_FROG, 1);
                 o->movetab = D_8007725C;
                 o->animFrame = !(PLAYER_GameObject.h->p.whole < o->h->p.whole);
                 o->velY = -0x400;
@@ -376,7 +376,7 @@ void func_801327B8(GameObject *o)
                 readAnimFrameCount(o);
                 o->movetab = D_80077238;
                 o->velY = -0x200;
-                removeItemFromInventory(1, 1);
+                removeItemFromInventory(ITEM_FROG, 1);
                 D_8009C984 &= ~2;
                 showMessageBox(5, 1, 0x100, 0x9c);
                 goto L4034;

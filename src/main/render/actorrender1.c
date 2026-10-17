@@ -162,7 +162,7 @@ int func_80045D0C(u8* self)
             break;
         }
         if (d != 0 && !(self[0xA] & 1)) {
-            if (GAME.selectedArea == 4) {
+            if (GAME.selectedArea == AREA04_HAUNTEDMANSION) {
                 SPAD->loadSlots[4] = d * 5 + 0x1000;
             } else {
                 SPAD->loadSlots[4] = d * 7 + 0x1000;

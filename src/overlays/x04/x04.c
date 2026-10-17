@@ -136,7 +136,7 @@ static __inline__ s16 busy_15E30(void)
     if (U8(&(*(GameObject *)&PLAYER), 0xac) >= 2) return 1;
     if ((*(GameObject *)&PLAYER).touchFlag == 0) return 1;
     if ((*(GameObject *)&PLAYER).unk9C | (*(GameObject *)&PLAYER).unk9E | U8(&(*(GameObject *)&PLAYER), 0xaa) | D_8009BC98.unk10) return 1;
-    if (SCRATCHPAD.joypad_state & 0x10) return 0;
+    if (SCRATCHPAD.joypad_state & JOY_UP) return 0;
     return 1;
 }
 
@@ -168,7 +168,7 @@ static __inline__ s16 Blocked_15F5C(void)
     if ((*(u8*)&PLAYER.obj.unkAC) >= 2) return 1;
     if (!PLAYER.obj.touchFlag) return 1;
     if (D_8009BC98.unk10 | ((*(u8*)&PLAYER.obj.unkAA) | (PLAYER.obj.unk9C | PLAYER.obj.unk9E))) return 1;
-    if (SCRATCHPAD.joypad_state & 0x10) return 0;
+    if (SCRATCHPAD.joypad_state & JOY_UP) return 0;
     return 1;
 }
 
@@ -370,8 +370,6 @@ void func_80117F4C(L_17F4C *o, u8 *a)
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80118464);
 
 
-struct GSInventory_18464 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_18464 { u8 weapon; u8 pants; };
 extern void pushDrawListLayer8(GameObject *);
 extern void func_8011877C(GameObject *);
 extern void func_80118998(GameObject *);
@@ -1043,8 +1041,6 @@ void func_80119D8C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80119EF0);
 
-struct GSInventory_19EF0 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_19EF0 { u8 weapon; u8 pants; };
 extern void *D_80134030[];
 extern void readAnimFrameCount(GameObject *);
 extern void playSFX(s32);
@@ -1660,8 +1656,6 @@ void func_8011CB48(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_8011CC08);
-struct GSInventory_1CC08 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1CC08 { u8 weapon; u8 pants; };
 extern void func_8012A638(GameObject *);
 
 void func_8011CC08(GameObject *o)
@@ -3235,9 +3229,6 @@ INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_8012791C);
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80128444);
 
-struct GSInventory_28444 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_28444 { u8 weapon; u8 pants; };
-
 void func_80128444(GameObject *o)
 {
     if (D_8009C068.event_7E == 0) return;
@@ -3257,9 +3248,6 @@ void func_80128444(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80128500);
-
-struct GSInventory_28500 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_28500 { u8 weapon; u8 pants; };
 
 void func_80128500(GameObject *o)
 {

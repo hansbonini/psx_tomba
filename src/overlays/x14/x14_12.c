@@ -166,8 +166,6 @@ void func_801230A8(GameObject *o)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801234A0);
 
 
-struct GSInventory_234A0 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_234A0 { u8 weapon; u8 pants; };
 extern u8 D_80125A34[];
 extern void *D_8012934C[];
 extern void playSFX(s32);
@@ -287,8 +285,6 @@ s32 func_80123760(GameObject *o, u8 k)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123814);
 
 
-struct GSInventory_23814 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_23814 { u8 weapon; u8 pants; };
 extern void *D_80129398;
 extern void func_801163EC(GameObject *, s32);
 extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
@@ -460,8 +456,6 @@ s32 func_80123D14(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123E14);
 
-struct GSInventory_23E14 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_23E14 { u8 weapon; u8 pants; };
 extern s16 D_80125A5C[];
 extern s16 probeCollisionAtDepthA(GameObject *o, s16 x, s16 y);
 
@@ -566,8 +560,6 @@ void func_80123E14(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_8012426C);
-struct GSInventory_2426C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_2426C { u8 weapon; u8 pants; };
 typedef struct { s16 w0; u16 w2; } AH_2426C;
 
 typedef struct B_2426C { u16 c[4]; } B_2426C;

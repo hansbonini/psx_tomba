@@ -2,8 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_5", func_8011EEE4);
-struct GSInventory_1EEE4 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1EEE4 { u8 weapon; u8 pants; };
 typedef struct { s16 a, b, c, d; } E8_1EEE4;
 
 extern s32 tickAnimation(GameObject *);

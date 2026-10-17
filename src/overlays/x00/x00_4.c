@@ -403,7 +403,7 @@ void func_80120BC0(GameObject *o)
                 break;
             case 1:
                 if ((*(u32 *)&D_8009BCD4) <= 0xc34f) {
-                    setEventStarted(0x10, 0, 0);
+                    setEventStarted(EVENT_THEAPBOX, 0, 0);
                     o->subState--;
                 } else {
                     setEventComplete(0x10, 0);

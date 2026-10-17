@@ -163,7 +163,7 @@ void func_80115E94(GameObject *o)
         p->state = 3;
         f = &D_8009C068.unk6a8;
         if (*f == 0) {
-            addItemToInventory(0x41, 1, 1);
+            addItemToInventory(ITEM_WINE, 1, 1);
             *f = 1;
         }
         SCRATCHPAD.unk1C6 = 0;

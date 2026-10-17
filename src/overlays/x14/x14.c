@@ -43,8 +43,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_80115D0C);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_80115D60);
 
-struct GSInventory_15D60 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_15D60 { u8 weapon; u8 pants; };
 typedef struct {
     u8 b0, b1, b2, b3;
     s32 pc;
@@ -146,9 +144,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_8011606C);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_801160A0);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_80116210);
-
-struct GSInventory_16210 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_16210 { u8 weapon; u8 pants; };
 
 extern u16 D_80124EB4[];
 extern void *D_80124F44[];
@@ -333,8 +328,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_80116814);
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14", func_801168F0);
 
 
-struct GSInventory_168F0 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_168F0 { u8 weapon; u8 pants; };
 extern void *D_80129340;
 extern void func_8004FB54(s32);
 

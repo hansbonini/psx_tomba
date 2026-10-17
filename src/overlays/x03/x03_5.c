@@ -127,14 +127,14 @@ void func_8012897C(GameObject *o)
             advanceAnimFrame(o, 0);
 #if defined(VERSION_SLPS_01144)
             PLAYER.obj.animFrame = 0;
-            PLAYER.obj.state = 5;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
 #else
             o->animFrame = o->unk68 & 1;
             t = o->h->p.whole < *(s16 *)((char *)D_800A53D8_Fix16PtrArr[0] + 2);
-            PLAYER.obj.state = 5;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             PLAYER.obj.animFrame = t;
 #endif
@@ -155,8 +155,8 @@ void func_8012897C(GameObject *o)
             D_8009BC98.unk12 = 0;
             D_8009BC98.unk0E = 0;
             PLAYER.obj.unkB2 = 0;
-            PLAYER.obj.state = 1;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ACTIVE;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             o->unk68 = 0;
             o->step = 0;
@@ -248,9 +248,6 @@ void func_80128BB8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128D7C);
-struct GSInventory_28D7C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_28D7C { u8 weapon; u8 pants; };
-
 typedef struct {
     u8 b0, b1, b2, b3;
     u16 w4;

@@ -266,9 +266,9 @@ s32 func_80023608(s32 n)
     s32 q = n / 32;
     s32 r = n % 32;
     s32 k;
-    if (GAME.selectedArea == 0x10)
+    if (GAME.selectedArea == AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER)
         k = 7;
-    else if (GAME.selectedArea == 0x11)
+    else if (GAME.selectedArea == AREA17_VILLAGEOFCIVILIZATIONIRONTOWER)
         k = 0xc;
     else
         k = GAME.selectedArea;
@@ -283,7 +283,7 @@ void func_8002367C(s32 bit)
 
     w = bit / 32;
     b = bit % 32;
-    if (GAME.selectedArea == 0x10)
+    if (GAME.selectedArea == AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER)
         k = 7;
     else if ((k = GAME.selectedArea) == 0x11)
         k = 0xc;

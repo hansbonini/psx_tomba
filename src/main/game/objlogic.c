@@ -795,19 +795,19 @@ void func_80036DF8(u8 *o)
             D_8009B698[0] = 2;
             switch (D_800A5434) {
             case 0:
-                PLAYER.obj.subState = 3;
+                PLAYER.obj.subState = PLAYER_ATTACK;
                 PLAYER.obj.step = 1;
                 break;
             case 1:
                 D_800A5424 = 0;
-                PLAYER.obj.subState = 4;
+                PLAYER.obj.subState = PLAYER_AIR_ATTACK;
                 if (D_8009B698[8] != 0)
                     PLAYER.obj.step = 2;
                 else
                     PLAYER.obj.step = 1;
                 break;
             case 2:
-                PLAYER.obj.subState = 4;
+                PLAYER.obj.subState = PLAYER_AIR_ATTACK;
                 D_800A5424 = 0;
                 PLAYER.obj.step = 3;
                 break;

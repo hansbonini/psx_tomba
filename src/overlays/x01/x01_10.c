@@ -6,8 +6,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_80139DF0);
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A248);
 
 
-struct GSInventory_3A248 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_3A248 { u8 weapon; u8 pants; };
 typedef struct GameTask_3A248 {
     s16 status;
     s16 sleepTimer;
@@ -303,8 +301,6 @@ INCLUDE_RODATA("overlays/x01/nonmatchings/x01/x01_10", func_801158DC);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A854);
 
-struct GSInventory_3A854 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_3A854 { u8 weapon; u8 pants; };
 extern u16 D_800A53AA_U16Arr[] asm("D_800A53AA");
 extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 extern GameObject *D_8009E654[];
@@ -402,8 +398,6 @@ void func_8013A854(GameObject *o)
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ACB0);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ACBC);
-struct GSInventory_3ACBC { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_3ACBC { u8 weapon; u8 pants; };
 extern GameObject *allocObjectLayer2(void);
 extern s16 func_80138E64(GameObject *);
 extern void func_80138F88(GameObject *);

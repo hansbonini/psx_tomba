@@ -119,7 +119,6 @@ s32 func_8003887C(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038AC0);
 typedef struct { s16 x, y; } P_38AC0;
-extern Fix16 *D_800A607C;
 extern GameObject *D_8009C650;
 typedef struct {
     u8 b0, p1[5], b6, b7, b8, p9[0x22 - 9];

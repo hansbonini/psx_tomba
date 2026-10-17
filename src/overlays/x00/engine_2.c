@@ -669,8 +669,8 @@ void initPlayer(GameObject *o)
         case 3:
             LOADP();
             { u8 t3 = p[2];
-            o->state = 5;
-            o->subState = 4;
+            o->state = PLAYER_ENTER;
+            o->subState = PLAYER_AIR_ATTACK;
             o->step = 0;
             o->unk7 = 0;
             o->animFrame = t3; }
@@ -679,14 +679,14 @@ void initPlayer(GameObject *o)
             LOADP();
             o->active = 1;
             { u8 t4 = p[2];
-            o->state = 1;
+            o->state = PLAYER_ACTIVE;
             o->subState = 99;
             o->step = 0;
             o->animFrame = t4; }
             break;
         }
         if ((*(u32 *)&GAME) == 0x2000e) {
-            o->state = 1;
+            o->state = PLAYER_ACTIVE;
             o->step = 0;
             o->subState = 0x3e;
             o->active = 1;
@@ -702,15 +702,15 @@ void initPlayer(GameObject *o)
         o->animFrame = p[0];
         o->timer = p[1];
         if (c == 99) {
-            o->state = 5;
+            o->state = PLAYER_ENTER;
             o->subState = 12;
             o->step = 0;
             break;
         }
         if (c == 98) {
             if (D_8009C1A9) break;
-            o->state = 5;
-            o->subState = 4;
+            o->state = PLAYER_ENTER;
+            o->subState = PLAYER_AIR_ATTACK;
             o->step = 0;
             break;
         }
@@ -719,7 +719,7 @@ void initPlayer(GameObject *o)
             o->cooldownTimer = 0x3c;
             if ((c & 0xff) == 7 || (c & 0xff) == 9) o->cooldownTimer = 1;
         }
-        o->state = 5;
+        o->state = PLAYER_ENTER;
         o->animFrame &= 0xf;
         if (c == 2) {
             D_8009BCA2 = 1;
@@ -735,9 +735,9 @@ void initPlayer(GameObject *o)
             ((TObjX_EF7F0 *)o)->wf2 = o->y.p.whole;
             ((TObjX_EF7F0 *)o)->wf6 = 0;
             o->active = 3;
-            o->state = 0;
+            o->state = PLAYER_INIT;
             o->cooldownTimer = 0x3c;
-            o->subState = 3;
+            o->subState = PLAYER_ATTACK;
             o->step = 0;
             o->unk7 = 0;
             ((TObjX_EF7F0 *)o)->wee = t2; }
@@ -753,8 +753,8 @@ void initPlayer(GameObject *o)
             o->active = 3;
             o->timer = 0x3c;
             o->cooldownTimer = 0x3c;
-            o->state = 0;
-            o->subState = 4;
+            o->state = PLAYER_INIT;
+            o->subState = PLAYER_AIR_ATTACK;
             o->step = 0;
             o->unk7 = 0;
             ((TObjX_EF7F0 *)o)->wf6 = (v / 0x5a) * 0x5a; }
@@ -767,7 +767,7 @@ void initPlayer(GameObject *o)
         c = p[0];
         o->cooldownTimer = 0x3c;
         { u8 t5 = p[2];
-        o->state = 1;
+        o->state = PLAYER_ACTIVE;
         o->step = 0;
         o->unk7 = 0;
         o->animFrame = t5 & 0xf; }
@@ -778,8 +778,8 @@ void initPlayer(GameObject *o)
         break;
     case 4:
         if (--o->timer <= 0) {
-            o->state = 5;
-            o->subState = 2;
+            o->state = PLAYER_ENTER;
+            o->subState = PLAYER_JUMP;
             o->step = 0;
             o->unk7 = 0;
         }
@@ -1122,7 +1122,7 @@ void func_800F07D8(GameObject *o)
     }
     *(u8 *)((u8 *)o + 0xac) = 0;
     c = 0;
-    if (*(volatile u16 *)&PAD_PRESSED & 0xa0) {
+    if (*(volatile u16 *)&PAD_PRESSED & (JOY_RIGHT | JOY_LEFT)) {
         if (o->unkB2 == 0) {
             if ((u16)(*(u16 *)o->anim - 0x10d) >= 7)
                 o->anim = D_8001096C;
@@ -1410,7 +1410,7 @@ void playerWalk(GameObject *o)
         D_8009C650_U8Ptr[6] = 0;
     }
     *(u8 *)((u8 *)o + 0xac) = 0;
-    if (PAD_PRESSED[0] & 0xa0) {
+    if (PAD_PRESSED[0] & (JOY_RIGHT | JOY_LEFT)) {
         switch (o->step) {
         case 0:
             ((X_F10A4 *)o)->cd = 0;
@@ -1449,13 +1449,13 @@ void playerWalk(GameObject *o)
             }
             switch (o->unkA6) {
             case 2:
-                if (PAD_PRESSED[0] & 0x20) {
+                if (PAD_PRESSED[0] & JOY_RIGHT) {
                     if (o->unkB2 >= 0x200) goto inc;
                     goto clr;
                 }
                 break;
             case 3:
-                if (PAD_PRESSED[0] & 0x80) {
+                if (PAD_PRESSED[0] & JOY_LEFT) {
                     if (o->unkB2 < -0x1ff) {
                     inc:
                         (*(u8 *)((u8 *)D_8009B698 + 8))++;
@@ -1565,7 +1565,7 @@ void playerWalk(GameObject *o)
         }
         ((X_F10A4 *)o)->cd = 0;
         ((X_F10A4 *)o)->ce = 0;
-        o->subState = 0;
+        o->subState = PLAYER_IDLE;
         o->step = 0;
     }
     func_800EE26C();
@@ -1912,7 +1912,7 @@ void playerJump(GameObject *o)
             D_8009B698->b8 = 0;
             o->unkA7 = 0;
             o->unkA5 = 0;
-            o->subState = 0xe;
+            o->subState = PLAYER_HOLD_ENEMY;
             o->step = 0;
             *((u8 *)&o->unkAA + 1) &= 0x7f;
         } else if (o->touchFlag == 1) {
@@ -1934,11 +1934,11 @@ void playerJump(GameObject *o)
                 D_8009B698->w28 = 0xffff;
                 D_8009B698->w2a = 0xffff;
                 o->unk8C = D_80114638[o->unkB0];
-                o->subState = 1;
+                o->subState = PLAYER_WALK;
                 o->step = 0;
                 if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
                     (*(u8 *)&D_8009C618) = 0;
-                    o->subState = 2;
+                    o->subState = PLAYER_JUMP;
                     o->step = 0;
                 }
             }
@@ -1954,7 +1954,7 @@ void playerJump(GameObject *o)
                 default: o->step = 0; break;
                 }
             } else if (o->unkBE != 0) {
-                o->subState = 1;
+                o->subState = PLAYER_WALK;
                 o->velY = 0;
                 o->step = 0;
                 if (o->subState == 0x10 || o->subState == 0x17 || o->subState == 0x1b || o->subState == 0x1e) goto l33e8;
@@ -1995,11 +1995,11 @@ void playerJump(GameObject *o)
                 D_8009B698->w2e = 0xffff;
                 D_8009B698->w28 = 0xffff;
                 D_8009B698->w2a = 0xffff;
-                o->subState = 1;
+                o->subState = PLAYER_WALK;
                 o->step = 0;
                 if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
                     (*(u8 *)&D_8009C618) = 0;
-                    o->subState = 2;
+                    o->subState = PLAYER_JUMP;
                     o->step = 0;
                 }
             }
@@ -2707,7 +2707,7 @@ void playerAttack(GameObject *o)
             D_8009C650 = *(void **)((u8 *)o + 0xe4);
             D_8009B698_P800F44B0Ptr->b8 = 0;
             o->unkA5 = 0;
-            o->subState = 0xe;
+            o->subState = PLAYER_HOLD_ENEMY;
             o->step = 0;
             break;
         }
@@ -2716,7 +2716,7 @@ void playerAttack(GameObject *o)
             o->timer = 10;
             o->unk84 = 0;
             if (o->animFrame & 1) d = 0xf0;
-            o->subState = 4;
+            o->subState = PLAYER_AIR_ATTACK;
             o->unk88 = d;
             o->unk8C = 0;
             o->step = 1;
@@ -2756,7 +2756,7 @@ void playerAttack(GameObject *o)
             o->unkA7 = 0;
             D_8009B698_P800F44B0Ptr->b8 = 0;
             o->unkA5 = 0;
-            o->subState = 0xe;
+            o->subState = PLAYER_HOLD_ENEMY;
             o->step = 0;
             break;
         }
@@ -2983,8 +2983,8 @@ void func_800F43D8(GameObject *o)
             if (o->animFrame & 1) {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     D_8009B698__F43D8->unkA = (*(GameObject **)&D_8009E454)->unkC;
-                    if (PAD_PRESSED[0] & 0x80) INC1(o, 9);
-                    if (PAD_PRESSED[0] & 0x20) {
+                    if (PAD_PRESSED[0] & JOY_LEFT) INC1(o, 9);
+                    if (PAD_PRESSED[0] & JOY_RIGHT) {
                         o->animFrame = 0;
                         (*(GameObject **)&D_8009E454)->step = 0;
                     }
@@ -2993,8 +2993,8 @@ void func_800F43D8(GameObject *o)
             } else {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     D_8009B698__F43D8->unkA = (*(GameObject **)&D_8009E454)->unkC;
-                    if (PAD_PRESSED[0] & 0x20) INC1(o, 9);
-                    if (PAD_PRESSED[0] & 0x80) {
+                    if (PAD_PRESSED[0] & JOY_RIGHT) INC1(o, 9);
+                    if (PAD_PRESSED[0] & JOY_LEFT) {
                         o->animFrame = 1;
                         (*(GameObject **)&D_8009E454)->step = 0;
                     }
@@ -3037,26 +3037,26 @@ void func_800F43D8(GameObject *o)
             if (o->animFrame & 1) {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     SND(0);
-                    if (PAD_PRESSED[0] & 0x80) INC2(o, 9);
-                    if (PAD_PRESSED[0] & 0x20) DEC(o);
+                    if (PAD_PRESSED[0] & JOY_LEFT) INC2(o, 9);
+                    if (PAD_PRESSED[0] & JOY_RIGHT) DEC(o);
                     SETTBL(o);
                 } else {
                     SND(0);
-                    if (PAD_PRESSED[0] & 0x80) INC2(o, 3);
-                    if (PAD_PRESSED[0] & 0x20) DEC(o);
+                    if (PAD_PRESSED[0] & JOY_LEFT) INC2(o, 3);
+                    if (PAD_PRESSED[0] & JOY_RIGHT) DEC(o);
                     SETTBL(o);
                     ((PL_F43D8 *)D_8009B698__F43D8)->we = -((PL_F43D8 *)D_8009B698__F43D8)->we;
                 }
             } else {
                 if (((PL_F43D8 *)D_8009B698__F43D8)->we > 0) {
                     SND(0);
-                    if (PAD_PRESSED[0] & 0x20) INC1(o, 9);
-                    if (PAD_PRESSED[0] & 0x80) DEC(o);
+                    if (PAD_PRESSED[0] & JOY_RIGHT) INC1(o, 9);
+                    if (PAD_PRESSED[0] & JOY_LEFT) DEC(o);
                     SETTBL(o);
                 } else {
                     SND(0);
-                    if (PAD_PRESSED[0] & 0x20) INC1(o, 3);
-                    if (PAD_PRESSED[0] & 0x80) DEC(o);
+                    if (PAD_PRESSED[0] & JOY_RIGHT) INC1(o, 3);
+                    if (PAD_PRESSED[0] & JOY_LEFT) DEC(o);
                     SETTBL(o);
                     ((PL_F43D8 *)D_8009B698__F43D8)->we = -((PL_F43D8 *)D_8009B698__F43D8)->we;
                 }
@@ -3147,12 +3147,12 @@ void func_800F43D8(GameObject *o)
             o->unkB6 = 0;
             if (o->animFrame & 1) {
                 SND(2);
-                if (PAD_PRESSED[0] & 0x80) INC2(o, 9);
-                if (PAD_PRESSED[0] & 0x20) DEC(o);
+                if (PAD_PRESSED[0] & JOY_LEFT) INC2(o, 9);
+                if (PAD_PRESSED[0] & JOY_RIGHT) DEC(o);
             } else {
                 SND(2);
-                if (PAD_PRESSED[0] & 0x20) INC1(o, 9);
-                if (PAD_PRESSED[0] & 0x80) DEC(o);
+                if (PAD_PRESSED[0] & JOY_RIGHT) INC1(o, 9);
+                if (PAD_PRESSED[0] & JOY_LEFT) DEC(o);
             }
             if ((D_1F8001FC & (*(u16 *)&D_1F8003C6)) && o->unkB2 < 4) o->unkB2 = 4;
             SETTBL(o);
@@ -3903,7 +3903,7 @@ void playerClimbOverLedge(GameObject *o)
                 d = 0xf0;
             else
                 d = 0x10;
-            o->subState = 2;
+            o->subState = PLAYER_JUMP;
             o->unk88 = d;
             o->unk8C = 0;
             o->step = 3;
@@ -3920,7 +3920,7 @@ void playerClimbOverLedge(GameObject *o)
             o->anim = D_800108A8;
             o->unk8C = b;
             readAnimFrameCount(o);
-            o->subState = 0;
+            o->subState = PLAYER_IDLE;
             o->step = 0;
         }
         break;
@@ -4347,7 +4347,7 @@ extern u8 D_80114578[];
         *(u8 *)((u8 *)o + 0xaa) = 0; \
         D_8009E454_GameObjectPtr->touchFlag = 0; \
     } \
-    if (*(volatile u16 *)&PAD_PRESSED & 0x10) { \
+    if (*(volatile u16 *)&PAD_PRESSED & JOY_UP) { \
         D_8009B698_PPtr->b09 = 0; \
         (o)->subState = 0xb; \
         (o)->step = 0; \
@@ -4470,7 +4470,7 @@ void func_800F808C(GameObject *o)
         if (D_8009B698_PPtr->b09 == 0)
             break;
         BUTTONS(o);
-        if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
             v = 0x10;
             D_8009B698_PPtr->b09 = 0;
             *(u8 *)((u8 *)o + 0xac) = 1;
@@ -4515,7 +4515,7 @@ void func_800F808C(GameObject *o)
             o->y.p.whole = fixedMulSin2((D_8009E454_GameObjectPtr->unk8C >> 4) + 0x10, D_8009E454_GameObjectPtr->hitOffsetX) + o->unk34 + 0x10;
         tickAnimation(o);
         BUTTONS(o);
-        if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
             v = 0x10;
             D_8009B698_PPtr->b09 = 0;
             *(u8 *)((u8 *)o + 0xac) = 1;
@@ -4775,13 +4775,13 @@ void func_800F8C08(GameObject *o)
                 o->subState = 0xb;
                 o->step = 0;
             }
-            if (PAD_PRESSED[0] & 0x10) {
+            if (PAD_PRESSED[0] & JOY_UP) {
                 *(u8 *)((u8 *)D_8009B698 + 9) = 0;
                 STEP(o);
                 o->subState = 0xb;
                 o->step = 0;
             }
-            if (PAD_PRESSED[0] & 0x40) {
+            if (PAD_PRESSED[0] & JOY_DOWN) {
                 STEP(o);
                 func_800F89E4(o);
             }
@@ -4794,12 +4794,12 @@ void func_800F8C08(GameObject *o)
             o->subState = 0xb;
             o->step = 0;
         }
-        if (PAD_PRESSED[0] & 0x10) {
+        if (PAD_PRESSED[0] & JOY_UP) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             o->subState = 0xb;
             o->step = 0;
         }
-        if (PAD_PRESSED[0] & 0x40) {
+        if (PAD_PRESSED[0] & JOY_DOWN) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             o->y.p.whole += 9;
             func_800450FC(o, o->h->p.whole, o->y.p.whole);
@@ -4874,23 +4874,23 @@ void playerClimb(GameObject *o)
         if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             setanim_F937C(o, 9);
-            o->state = 1;
-            o->subState = 0xb;
+            o->state = PLAYER_ACTIVE;
+            o->subState = PLAYER_CLIMB_OVER_LEDGE;
             o->step = 0;
         }
-        if (D_1F8001FC & 0x10) {
+        if (D_1F8001FC & JOY_UP) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             setanim_F937C(o, 9);
-            o->state = 1;
-            o->subState = 0xb;
+            o->state = PLAYER_ACTIVE;
+            o->subState = PLAYER_CLIMB_OVER_LEDGE;
             o->step = 0;
         }
-        if (D_1F8001FC & 0x40) {
+        if (D_1F8001FC & JOY_DOWN) {
             *(u8 *)((u8 *)D_8009B698 + 9) = 0;
             o->y.p.whole += 9;
             o->h->p.whole += (o->animFrame & 1) ? -4 : 4;
             func_800450FC(o, o->h->p.whole, o->y.p.whole);
-            o->subState = 0xd;
+            o->subState = PLAYER_CLING;
             o->step = 0;
         }
         break;
@@ -5104,11 +5104,11 @@ void func_800F9C7C(GameObject *o)
         tickAnimation(o);
         if (--*(u8 *)((u8 *)D_8009B698 + 9) != 0) {
             if (D_1F8001FC) {
-                if (D_1F8001FC & 0x80)
+                if (D_1F8001FC & JOY_LEFT)
                     o->animFrame = 1;
-                if (D_1F8001FC & 0x20)
+                if (D_1F8001FC & JOY_RIGHT)
                     o->animFrame = 0;
-                if (D_1F8001FC & 0xf0)
+                if (D_1F8001FC & (JOY_UP | JOY_RIGHT | JOY_DOWN | JOY_LEFT))
                     (*(u8 *)((u8 *)D_8009B698 + 0xa))++;
                 if (*(u8 *)((u8 *)D_8009B698 + 0xa) > 10) {
                     o->unk9C = 2;
@@ -5375,7 +5375,6 @@ static __inline__ void setanim_FA780(GameObject *o, u16 x)
 }
 
 static __inline__ s16 inc3_FA780(s32 q) { if (q < 3) return q + 1; return q; }
-static __inline__ s16 dec0_FA780(s32 q) { return (q > 0) ? q - 1 : q; }
 static __inline__ void anim31_FA780(GameObject *o)
 {
     extern P_FA780 *D_8009B698;
@@ -5508,8 +5507,8 @@ void func_800FA780(GameObject *o)
                 if (o->unkB2 >= 4) o->unkB2 = 3;
                 o->unk84 = 0x41;
                 playSFXWithNote(3, 0);
-                if (PAD_PRESSED[0] & 0x80) o->unkB2 = inc3_FA780(o->unkB2);
-                if (PAD_PRESSED[0] & 0x20) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
+                if (PAD_PRESSED[0] & JOY_LEFT) o->unkB2 = inc3_FA780(o->unkB2);
+                if (PAD_PRESSED[0] & JOY_RIGHT) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
             }
         } else {
             f = (u8)o->unk84 - 0xbe;
@@ -5517,8 +5516,8 @@ void func_800FA780(GameObject *o)
                 if (o->unkB2 >= 4) o->unkB2 = 3;
                 o->unk84 = 0xc1;
                 playSFXWithNote(3, 0);
-                if (PAD_PRESSED[0] & 0x20) o->unkB2 = inc3_FA780(o->unkB2);
-                if (PAD_PRESSED[0] & 0x80) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
+                if (PAD_PRESSED[0] & JOY_RIGHT) o->unkB2 = inc3_FA780(o->unkB2);
+                if (PAD_PRESSED[0] & JOY_LEFT) { s32 q = o->unkB2; if (q > 0) q--; o->unkB2 = q; }
             }
         }
         o->unk84 += ((s16 (*)(void))func_800FA5E0)();
@@ -5567,7 +5566,7 @@ void func_800FA780(GameObject *o)
         o->h->p.whole = fixedMulCos2(0xc0, o->unkB4) + o->unk30;
         o->y.p.whole = fixedMulSin2(0xc0, o->unkB4) + o->unk34;
         func_800FA420(o);
-        if (D_1F8001FC & 0xa0) {
+        if (D_1F8001FC & (JOY_RIGHT | JOY_LEFT)) {
             o->unkB2 = 1;
             o->step = 1;
         }
@@ -5656,13 +5655,13 @@ void func_800FB114(S_FB114 *o)
     if (o->frame & 1) {
         o->velX = -0x300;
         o->velY = -0x600;
-        if (*(volatile u16 *)&PAD_PRESSED & 0x80) { o->velX = -0x480; o->velY = -0x800; }
-        if (*(volatile u16 *)&PAD_PRESSED & 0x20) { o->velX = -0x200; o->velY = -0x400; }
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_LEFT) { o->velX = -0x480; o->velY = -0x800; }
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_RIGHT) { o->velX = -0x200; o->velY = -0x400; }
     } else {
         o->velX = 0x300;
         o->velY = -0x600;
-        if (*(volatile u16 *)&PAD_PRESSED & 0x80) { o->velX = 0x200; o->velY = -0x400; }
-        if (*(volatile u16 *)&PAD_PRESSED & 0x20) { o->velX = 0x480; o->velY = -0x800; }
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_LEFT) { o->velX = 0x200; o->velY = -0x400; }
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_RIGHT) { o->velX = 0x480; o->velY = -0x800; }
     }
     g = D_8009B698;
     g->timer = 10;
@@ -6505,7 +6504,6 @@ typedef struct {
     u8 pad2[0xec - 0xe2];
     s16 wec, wee, wf0, wf2;
 } X800FE13C_FD49C;
-extern u8 D_8009CF06[];
 typedef struct { u16 c960, c962; char pad[0x5a2]; u8 cf06; } G960_FD49C;
 extern G960_FD49C GAME_G960_FD49C asm("GAME");
 extern char D_80010B64[];
@@ -7106,9 +7104,6 @@ s16 func_800FE764(GameObject *o, s16 r)
 
 
 
-struct GSInventory_FE970 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_FE970 { u8 weapon; u8 pants; };
-
 typedef struct { char pad[8]; u8 b8; char pad2[0x23]; u16 w2c; } G330_FE970;
 typedef struct { void *p[90]; } AnimTbl_FE970;
 #define D_8009C970 D_8009BCD8[0]
@@ -7120,7 +7115,7 @@ static __inline__ s16 calc_FE970(void)
     s16 c = D_8009C068.unk69b != 0;
     if (D_8009C068.event_08 == 0xff)
         c++;
-    if (GAME.selectedArea == 0 && GAME.selectedSection < 2)
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS && GAME.selectedSection < 2)
         c = 0;
     if (GAME.displayExpBar == 1)
         c = 0;
@@ -7758,7 +7753,7 @@ void updatePlayerActive(GameObject *o, s32 p2)
     s16 c;
 
     switch (o->subState) {
-    case 0:
+    case PLAYER_IDLE:
         D_8009C618[0] = 1;
         dirA_FFAE8(o);
         dirF_FFAE8(o);
@@ -7766,7 +7761,7 @@ void updatePlayerActive(GameObject *o, s32 p2)
         turn_FFAE8(o);
         func_800EF40C(o);
         break;
-    case 1:
+    case PLAYER_WALK:
         D_8009C618[0] = 1;
         dirA_FFAE8(o);
         dirF_FFAE8(o);
@@ -7779,24 +7774,24 @@ void updatePlayerActive(GameObject *o, s32 p2)
             *(u8 *)((u8 *)o + 0xce) = 0;
             if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C4)))
                 o->unkA7 = 1;
-            o->subState = 2;
+            o->subState = PLAYER_JUMP;
             o->step = 0;
         }
         func_8010D678(o, 0);
         turn_FFAE8(o);
         func_800EF40C(o);
         break;
-    case 2:
+    case PLAYER_JUMP:
         dirA_FFAE8(o);
         playerJump(o);
         chk(o, 2);
         break;
-    case 3:
+    case PLAYER_ATTACK:
         playerAttack(o);
         turn_FFAE8(o);
         if (*(u8 *)((u8 *)o + 0xac) < 2) func_800EF40C(o);
         break;
-    case 4:
+    case PLAYER_AIR_ATTACK:
         if (o->unk9D == 0) {
             dirC_FFAE8(o);
             D_8009B698[7] = o->animFrame;
@@ -7807,7 +7802,7 @@ void updatePlayerActive(GameObject *o, s32 p2)
     case 5:
         func_800F43D8(o);
         break;
-    case 6:
+    case PLAYER_GRAB_LEDGE:
         playerGrabLedge(o);
         break;
     case 7:
@@ -7823,19 +7818,19 @@ void updatePlayerActive(GameObject *o, s32 p2)
         dirD_FFAE8(o);
         func_800F329C(o);
         break;
-    case 11:
+    case PLAYER_CLIMB_OVER_LEDGE:
         playerClimbOverLedge(o);
         break;
     case 12:
         func_800F8C08(o);
         break;
-    case 13:
+    case PLAYER_CLING:
         playerCling(o);
         break;
-    case 14:
+    case PLAYER_HOLD_ENEMY:
         playerHoldEnemy(o);
         break;
-    case 15:
+    case PLAYER_THROW_ENEMY:
         playerThrowEnemy(o);
         break;
     case 16:
@@ -7874,14 +7869,14 @@ void updatePlayerActive(GameObject *o, s32 p2)
             D_8009C618[0] = 0;
             o->unk9C = 1;
             *(u8 *)((u8 *)o + 0xc3) = 0;
-            o->subState = 2;
+            o->subState = PLAYER_JUMP;
             o->step = 0;
         }
         func_8010D678(o, 0);
         turn_FFAE8(o);
         func_800EF40C(o);
         break;
-    case 0x1d:
+    case PLAYER_CLIMB:
         playerClimb(o);
         break;
     case 0x1e:
@@ -8016,13 +8011,13 @@ void updatePlayerActive(GameObject *o, s32 p2)
         break;
     case 0x63:
         switch (o->step) {
-        case 0:
+        case PLAYER_IDLE:
             o->timer = 0x3c;
             o->step++;
-        case 1:
+        case PLAYER_WALK:
             if (--o->timer <= 0) {
-                o->state = 1;
-                o->subState = 0;
+                o->state = PLAYER_ACTIVE;
+                o->subState = PLAYER_IDLE;
                 o->step = 0;
                 o->unk7 = 0;
                 o->active = 1;
@@ -8036,7 +8031,7 @@ void updatePlayerActive(GameObject *o, s32 p2)
     c = 0;
     *(u8 *)&o->unkA8 = 0;
     o->unkA6 = 0;
-    if (o->unk9E == 0 && o->state == 5) {
+    if (o->unk9E == 0 && o->state == PLAYER_ENTER) {
         c = o->subState == 0x40;
         if (o->subState == 0x41) c++;
         if (o->subState == 0x65) c++;
@@ -9236,7 +9231,7 @@ extern void func_80121D5C(S_039E8 *);
 void playerHoldEnemy(S_039E8 *o)
 {
     extern S_039E8 *D_8009B698;
-    if (o->state == 0) {
+    if (o->state == PLAYER_INIT) {
         D_8009B698->frame = 0xff;
         D_8009B698->timer = 0;
         o->bc7 = 1;
@@ -9492,7 +9487,7 @@ void func_801041F0(GameObject *o)
 {
     u16 m = SPAD->joypad_state;
     if ((m & SPAD->buttonAttack) || (m & SPAD->buttonJump)) {
-        if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+        if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
             (*(GameObject **)&D_8009B698)->animTimer = 15;
         } else {
             (*(GameObject **)&D_8009B698)->animTimer = 14;
@@ -9549,7 +9544,7 @@ void func_801042D8(GameObject *o)
             o->unk7 = 1;
         }
         if ((D_1F8001FC & (*(u16 *)&D_1F8003C8)) || (D_1F8001FC & (*(u16 *)&D_1F8003C6))) {
-            if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+            if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
                 D_8009B698_GameObjectPtr->animTimer = 0xf;
             } else {
                 D_8009B698_GameObjectPtr->animTimer = 0xe;
@@ -9572,7 +9567,7 @@ void func_801042D8(GameObject *o)
         tickAnimation(o);
         if (o->touchFlag != 0 || func_80045310(o, o->h->p.whole, (s16)(o->y.p.whole + 0x30)) != 0 ||
             (D_1F8001FC & (*(u16 *)&D_1F8003C8)) || (D_1F8001FC & (*(u16 *)&D_1F8003C6)) || ((s16 (*)(GameObject *o, s32 a, s32 b))probeSidesAndApplyTileResponse)(o, 4, 0) != 0) {
-            if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+            if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
                 D_8009B698_GameObjectPtr->animTimer = 0xf;
             } else {
                 D_8009B698_GameObjectPtr->animTimer = 0xe;
@@ -9650,7 +9645,7 @@ void func_801042D8(GameObject *o)
                     }
                     t = o->animFrame & 1;
                     q->animFrame = t;
-                    if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+                    if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
                         q->animFrame = t | 2;
                     }
                     q->x.p.whole = o->x.p.whole;
@@ -9695,7 +9690,7 @@ s32 c = o->animFrame & 1; Fix16 *h = q->h; s32 w = h->p.whole; s32 r;
             {GameObject *q = D_8009C650; u16 t;
             t = o->animFrame & 1;
             q->animFrame = t;
-            if (*(volatile u16 *)&PAD_PRESSED & 0x40) {
+            if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) {
                 q->animFrame = t | 2;
             }}
             break;
@@ -10793,7 +10788,7 @@ void func_80106928(GameObject *o)
                 b = D_80114638[o->unkB0];
                 o->unkA4 = 0;
                 o->unk8C = b;
-                if (((o->animFrame & 1) ? (*(volatile u16 *)&PAD_PRESSED & 0x80) : (*(volatile u16 *)&PAD_PRESSED & 0x20)) == 0) o->unkB2 = 0;
+                if (((o->animFrame & 1) ? (*(volatile u16 *)&PAD_PRESSED & JOY_LEFT) : (*(volatile u16 *)&PAD_PRESSED & JOY_RIGHT)) == 0) o->unkB2 = 0;
                 o->subState = 0;
                 o->step = 0;
             }
@@ -11626,7 +11621,7 @@ void func_801087E4(GameObject *o)
             o->step = 0;
             o->active = 1;
             if (D_8009C1C9 == 0 && D_8009C481 != 0)
-                setEventStarted(0xbd, 0, 1);
+                setEventStarted(EVENT_REDBLUE, 0, 1);
         }
         break;
     }
@@ -11636,7 +11631,7 @@ void func_801087E4(GameObject *o)
 void func_80108B3C(GameObject *o)
 {
     s16 s;
-    if (PAD_PRESSED[0] & 0xa0) {
+    if (PAD_PRESSED[0] & (JOY_RIGHT | JOY_LEFT)) {
         if ((D_1F8001F8 & 0xf) == 0)
             playSFXWithNote(0x24, 0x24);
         switch (o->step) {
@@ -11675,7 +11670,6 @@ void func_80108B3C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80108C70);
-extern void PlayerSetAnimIfChanged(GameObject *, s32);
 extern void tickAnimation(GameObject *);
 
 void func_80108C70(GameObject *o)
@@ -11774,7 +11768,7 @@ void playerCling(GameObject *o)
                 }
             reset:
                 o->unk8C = D_80114638[o->unkB0];
-                o->subState = 0;
+                o->subState = PLAYER_IDLE;
                 o->step = 0;
                 break;
             }
@@ -11795,12 +11789,12 @@ void playerCling(GameObject *o)
             o->velV = 0;
             (*(u8 **)&D_8009B698)[8] = 1;
             func_800ED788(o);
-            o->subState = 2;
+            o->subState = PLAYER_JUMP;
             o->step = 3;
             break;
         case 2:
             o->unk9E = 5;
-            o->subState = 0x1d;
+            o->subState = PLAYER_CLIMB;
             o->step = 0;
             break;
         }
@@ -11817,7 +11811,7 @@ void playerCling(GameObject *o)
                 o->unkA7 = 1;
             }
         }
-        o->subState = 2;
+        o->subState = PLAYER_JUMP;
         o->step = 0;
     }
     func_800EE50C(o);
@@ -12892,8 +12886,8 @@ void func_8010B384(GameObject *o)
             break;
         }
         tickAnimation(o);
-        if (o->animFrame & 1) u = SPAD->joypad_state & 0x80;
-        else u = SPAD->joypad_state & 0x20;
+        if (o->animFrame & 1) u = SPAD->joypad_state & JOY_LEFT;
+        else u = SPAD->joypad_state & JOY_RIGHT;
         if (u) {
             turn_0B384(o);
         }
@@ -13096,9 +13090,9 @@ void func_8010BD68(GameObject *o)
         if ((*(s32 *)&GAME) == 0x30000)
             break;
         if (o->animFrame & 1)
-            t = D_1F8001FC & 0x80;
+            t = D_1F8001FC & JOY_LEFT;
         else
-            t = D_1F8001FC & 0x20;
+            t = D_1F8001FC & JOY_RIGHT;
         if (t) {
             playSFXWithNote(0x1e, 8);
             D_8009B698_G330_0BD68Ptr->w2e = 0xff;
@@ -13384,7 +13378,7 @@ void func_8010C6E0(GameObject *o)
     if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
         *(u8 *)((u8 *)o + 0xca) = 0;
         flag = 0;
-        if ((*(volatile u16 *)&PAD_PRESSED & 0x10) && (*(u16 *)&GAME) == 10
+        if ((*(volatile u16 *)&PAD_PRESSED & JOY_UP) && (*(u16 *)&GAME) == 10
             && (D_8009BCCA == 1 || D_8009BCCA == 5) && o->d->p.whole == 0 && o->y.p.whole < -0xe3) {
             h = o->h->p.whole;
             if ((u16)(h - 0x1cd) < 0x20)
@@ -13639,7 +13633,6 @@ typedef struct {
     char p0[5]; u8 step, state; char p1[0x24 - 7]; s32 anim; char p2[4]; union { u32 fl; struct { u16 t, af; } s; } u;
     char p3[0x8c - 0x30]; s32 d8c; char p4[0xa0 - 0x90]; u8 da0, pa1, da2, da3; char p5[0xac - 0xa4]; u8 wac;
 } O_0D2D4;
-extern Q_0D2D4 *DAT_8009c330q;
 extern char D_80010F40[];
 extern char D_80010F8C[];
 
@@ -14006,8 +13999,6 @@ void func_8010DCCC(S_0DCCC *o)
 
 
 
-struct GSInventory_0DE48 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_0DE48 { u8 weapon; u8 pants; };
 typedef struct { s16 f0, f2, f4, f6, f8; s16 pad[5]; } T8010EAF8_0DE48;
 
 extern T8010EAF8_0DE48 D_801147AC[];
@@ -14176,8 +14167,6 @@ void func_8010DE48(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010E444);
 
 
-struct GSInventory_0E444 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_0E444 { u8 weapon; u8 pants; };
 typedef struct T_0E444 { s16 lim; u16 inc; char pad[16]; } T_0E444;
 typedef struct O_0E444 {
     char p0[0x7e]; s16 w7e;

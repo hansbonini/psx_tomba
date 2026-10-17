@@ -4,8 +4,6 @@
 // INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13", func_80115304);
 
 
-struct GSInventory_15304 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_15304 { u8 weapon; u8 pants; };
 typedef struct GameTask_15304 {
     s16 status;
     s16 sleepTimer;
@@ -130,7 +128,7 @@ void func_80115304(GameObject *o)
         if ((*(u8*)((char*)&PLAYER.obj.unkA0 + 2)) == 2) {
             stepPlayerXToward(0xa0);
             if (SCRATCHPAD.unk168[2].p.whole >= 0x50) {
-                PLAYER.obj.state = 5;
+                PLAYER.obj.state = PLAYER_ENTER;
                 PLAYER.obj.visible = 0;
                 PLAYER.obj.subState = 0x41;
                 PLAYER.obj.step = 0;
@@ -174,8 +172,6 @@ INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13", func_801155A8);
 INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13", func_80115608);
 
 // INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13", func_80115620);
-struct GSInventory_15620 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_15620 { u8 weapon; u8 pants; };
 typedef struct {
     char pad[0x2c];
     s16 xmin, xmax, ymin, ymax;

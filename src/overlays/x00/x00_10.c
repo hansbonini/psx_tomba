@@ -120,7 +120,7 @@ void func_80136024(GameObject *o)
         case 1:
             D_800A5428->state = 3;
             D_8009C226_U8 = 2;
-            setEventStarted(5, 0, 0);
+            setEventStarted(EVENT_WHOAREYOU, 0, 0);
             *(s16 *)&o->category = 1;
             o->clut = 0x168;
             o->subState = 4;
@@ -259,7 +259,7 @@ void func_80136024(GameObject *o)
     case 5:
         if (--o->clut != 0)
             break;
-        setEventStarted(7, 0, 0);
+        setEventStarted(EVENT_HIDEANDGOSEEK, 0, 0);
         o->clut = 300;
         o->subState = 4;
         *(s16 *)&o->category = 1;
@@ -416,17 +416,6 @@ static __inline__ s16 chk_36AFC(void)
         r = D_8009BCA9 == 3;
     return r;
 }
-static __inline__ s32 chk2_36AFC(void)
-{
-    s32 r = 0;
-    if (D_8009C40F != 0) {
-        r = 0;
-        if (D_8009BCA8 != 0)
-            r = D_8009BCA9 == 3;
-    }
-    return r;
-}
-
 void func_80136AFC(GameObject *o)
 {
     GameObject *p = *(GameObject **)&o->category;
@@ -494,7 +483,7 @@ void func_80136AFC(GameObject *o)
             p->subState = 0;
             p->step = 0;
             if (D_8009C1B2 == 0) {
-                setEventStarted(0xa6, 0, 0);
+                setEventStarted(EVENT_AHUNGRYMONKEY, 0, 0);
                 o->clut = 300;
                 o->subState = 6;
                 o->step = 0;
@@ -524,7 +513,7 @@ void func_80136AFC(GameObject *o)
             X.step = 0;
             p->active = 1;
             D_8009C225 = 3;
-            removeItemFromInventory(3, 1);
+            removeItemFromInventory(ITEM_BANANAS, 1);
             o->clut = 0x50;
             o->subState = 4;
             if (D_8009C375_U8Arr[0] != 0)

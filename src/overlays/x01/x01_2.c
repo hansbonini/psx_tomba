@@ -111,8 +111,8 @@ void func_8011EA14(GameObject *o)
         v.b.p.whole = o->z.p.whole;
         applyItemEffect(D_8013BA60, &v, 0, 0, 1);
         printInfoMessage(0xf, 2);
-        removeItemFromInventory(0x12, 1);
-        addItemToInventory(0xa, 1, 0);
+        removeItemFromInventory(ITEM_BUCKETOFWATER, 1);
+        addItemToInventory(ITEM_BUCKET, 1, 0);
         D_8009C068.unk54d = 1;
         D_8009BC98.unk0F = 0;
         D_8009BC98.unk12 = 0;
@@ -378,7 +378,7 @@ void func_8011F43C(GameObject *o)
                 break;
             }
             if (o->unk68 == 0) break;
-            setEventStarted(0x18, 0, 1);
+            setEventStarted(EVENT_WHATISTHIS, 0, 1);
             D_8009C3EC_U8 = 1;
             o->unkA0 = (s32)((char **)&D_1F800334)[0] + *(s32 *)((*(char **)&SCRATCHPAD.wmdData[1]) + 0x34);
             e = allocObjectLayer3();
@@ -502,9 +502,6 @@ void func_8011F940(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011FAD0);
 
-
-struct GSInventory_1FAD0 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1FAD0 { u8 weapon; u8 pants; };
 
 typedef struct GameTask_1FAD0 {
     s16 status;
@@ -849,8 +846,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8012029C);
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8012042C);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_801205D8);
-struct GSInventory_205D8 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_205D8 { u8 weapon; u8 pants; };
 extern void func_801367F8(s32, s32, s32, s32);
 extern void func_80135C0C(s32, s32, s32);
 
@@ -874,5 +869,5 @@ void func_801205D8(GameObject *o)
         D_8009C068.unk597 = 0;
     }
     if (D_8009C068.event_14 == 0xff && D_8009C068.item_1A != 0)
-        removeItemFromInventory(0x1a, 1);
+        removeItemFromInventory(ITEM_BROKENVASE, 1);
 }

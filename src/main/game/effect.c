@@ -318,10 +318,10 @@ void updateAreaScreenEffect(void)
         break;
     }
 
-    if (GAME.selectedArea == 6 && D_8009BCCA == 0) {
+    if (GAME.selectedArea == AREA06_DIRTMOTOCROSS && D_8009BCCA == 0) {
         return;
     }
-    if (GAME.selectedArea == 9 && D_8009BCCA >= 6) {
+    if (GAME.selectedArea == AREA09_MUSHROOMVILLAGE && D_8009BCCA >= 6) {
         return;
     }
     if (p[0] != 0) {

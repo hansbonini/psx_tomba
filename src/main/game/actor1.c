@@ -1284,7 +1284,7 @@ void func_80052D5C(GameObject *a, GameObject *b)
 {
     s32 t;
 
-    if (GAME.selectedArea == 3 && b->subtype == 4) {
+    if (GAME.selectedArea == AREA03_PHOENIXMOUNTAIN && b->subtype == 4) {
         func_8011EDBC();
         return;
     }
@@ -2206,7 +2206,7 @@ void func_80054D60(GameObject *o)
         case 2: func_80124280(o, e); break;
         case 3: func_80051EE0(o, e); break;
         case 4:
-            if (GAME.selectedArea == 0)
+            if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS)
                 func_801242E8(o, e);
             else
                 func_8011F158(o, e);
@@ -2279,7 +2279,7 @@ void func_80054D60(GameObject *o)
         case 0x45:
             switch (e->unkC) {
             case 3:
-                if (GAME.selectedArea == 1 || (D_8009C62B & 0x40))
+                if (GAME.selectedArea == AREA01_DWARFFOREST || (D_8009C62B & 0x40))
                     func_80053BB4(o, e);
                 break;
             case 4:
@@ -2361,7 +2361,7 @@ void func_8005548C(GameObject *o)
                 func_801257A8(o, q);
                 break;
             case 0x1f:
-                if (GAME.selectedArea == 1) func_80123748(o, q);
+                if (GAME.selectedArea == AREA01_DWARFFOREST) func_80123748(o, q);
                 else func_8011D178(o, q);
                 break;
             case 9:

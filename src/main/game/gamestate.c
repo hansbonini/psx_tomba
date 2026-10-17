@@ -799,7 +799,7 @@ void gameplayMainHandler(void)
                 temp_v1_2->step.value++;
                 stopBgm(1);
             }
-            if (((*(u_char *)&SPAD->unk1C2) != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
+            if (((*(u_char *)&SPAD->unk1C2) != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1062,7 +1062,7 @@ void inventoryScreenHandler(void)
             return;
         case 3:
             inventoryScreenTick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (CURRENT_TASK)->step.value = 6U;
                 return;
             }
@@ -1209,7 +1209,7 @@ void areaMode4Handler(void)
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode4Tick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1301,7 +1301,7 @@ void areaMode5Handler(void)
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode5Tick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1392,7 +1392,7 @@ void areaMode6Handler(void)
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode6Tick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & 8) && (PAD_PRESSED[0] & 0x800)) {
+            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }

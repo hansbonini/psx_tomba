@@ -16,7 +16,7 @@ void func_801211A0(GameObject *o)
     case 1:
         if ((*(u32 *)&D_8009BCD4) < 100000) {
             if (D_8009C11C == 0) {
-                setEventStarted(0x10, 0, 0);
+                setEventStarted(EVENT_THEAPBOX, 0, 0);
                 goto L;
             }
             o->subState = o->subState - 1;
@@ -361,7 +361,7 @@ void func_80122538(GameObject *o)
             func_8012D3FC((s16)(o->x.p.whole + 1), (s16)(o->y.p.whole - 2), o->z.p.whole);
             func_8012D3FC((s16)(o->x.p.whole - 2), (s16)(o->y.p.whole + 2), o->z.p.whole);
             func_8012D3FC((s16)(o->x.p.whole + 2), o->y.p.whole, o->z.p.whole);
-            removeItemFromInventory(0, 4);
+            removeItemFromInventory(ITEM_CHICK, 4);
             o->step++;
         }
         break;
@@ -4835,7 +4835,7 @@ void func_8012D220(O_2D220 *o)
                 tickAnimation(o);
                 break;
             case 2:
-                addItemToInventory(0, 1, 1);
+                addItemToInventory(ITEM_CHICK, 1, 1);
                 func_8002367C(o->b6b);
                 o->st = 3;
                 break;
@@ -4887,8 +4887,6 @@ void func_8012D3FC(s32 x, s32 y, s32 z)
 extern GameObject *allocObjectLayer1(void);
 extern u8 D_8009C616_U8Arr[] asm("D_8009C616");
 extern s32 D_800A53A8;
-extern s32 DAT_800a604c;
-extern s32 DAT_800a6050;
 
 typedef struct { s32 a, b, c; } V3_2D504;
 

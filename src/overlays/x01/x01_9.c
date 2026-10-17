@@ -159,8 +159,6 @@ void func_80138C4C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_80138DB8);
-struct GSInventory_38DB8 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_38DB8 { u8 weapon; u8 pants; };
 extern GameObject *allocObjectLayer2(void);
 
 void func_80138DB8(GameObject *o)
@@ -193,8 +191,6 @@ void func_80138DB8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_80138E64);
 
-struct GSInventory_38E64 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_38E64 { u8 weapon; u8 pants; };
 extern u8 D_800A5458;
 
 s32 func_80138E64(GameObject *o)
@@ -203,7 +199,7 @@ s32 func_80138E64(GameObject *o)
     s32 r = 0;
 
     if (D_8009C068.event_0E >= 2) return 0;
-    if (!(GAME.area00_eventControl & 0x100) && PLAYER.obj.state == 1 && PLAYER.obj.touchFlag &&
+    if (!(GAME.area00_eventControl & 0x100) && PLAYER.obj.state == PLAYER_ACTIVE && PLAYER.obj.touchFlag &&
         (u16)((*(u16*)&PLAYER.obj.y.p.whole) + 0x50a) < 0x10 &&
         (u16)((*(Fix16 **)&PLAYER.obj.h)->p.whole - p->h->p.whole + 0x30) < 0x60) {
         if (*(u16 *)&o->anim) {
@@ -220,8 +216,6 @@ s32 func_80138E64(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_80138F88);
 
-struct GSInventory_38F88 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_38F88 { u8 weapon; u8 pants; };
 extern GameObject PLAYER_GameObject asm("PLAYER");
 #define P PLAYER_GameObject
 extern GameObject *D_800A5428;

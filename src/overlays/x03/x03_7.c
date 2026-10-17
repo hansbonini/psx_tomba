@@ -137,8 +137,8 @@ void func_8012A9BC(GameObject *o)
             o->unk68 = 0;
             goto reset;
         }
-        PLAYER.obj.state = 5;
-        PLAYER.obj.subState = 0;
+        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         o->animFrame = o->unk68 & 1;
         ((u8*)&D_8009BC98.unk0F)[0] = 1;
@@ -176,7 +176,7 @@ void func_8012A9BC(GameObject *o)
     case 0x33:
         break;
     case 0x32:
-        setEventStarted(0xb9, 0, 0);
+        setEventStarted(EVENT_APRECIOUSTREASURECHEST, 0, 0);
         o->step = 0x78;
         break;
     case 0x46:
@@ -243,8 +243,8 @@ void func_8012A9BC(GameObject *o)
         ((u8*)&D_8009BC98.unk0E)[0] = 0;
         if (o->unk88 == 0) {
             PLAYER.obj.unkB2 = 0;
-            PLAYER.obj.state = 1;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ACTIVE;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
         }
         o->unk68 = 0;

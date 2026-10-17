@@ -419,10 +419,7 @@ void func_800327D8(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80032934);
-typedef struct { s16 w0; s16 w2; } P_32934;
 typedef struct { void **tab; s32 a; s32 b; } AT_32934;
-extern P_32934 *D_800A6078;
-extern P_32934 *D_800A607C;
 extern s16 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 

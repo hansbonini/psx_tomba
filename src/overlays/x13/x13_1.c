@@ -8,8 +8,6 @@ INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116814);
 INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116C78);
 
 // INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116D04);
-struct GSInventory_16D04 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_16D04 { u8 weapon; u8 pants; };
 typedef struct { s16 a, b, c; } R6_16D04;
 extern R6_16D04 D_80117560[];
 extern R6_16D04 D_80117574[];

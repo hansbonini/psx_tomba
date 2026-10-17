@@ -85,8 +85,6 @@ void func_8011792C(void) {
 // INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117934);
 
 
-struct GSInventory_17934 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_17934 { u8 weapon; u8 pants; };
 extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
 extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
 extern u8 D_800A539E_U8Arr[] asm("D_800A539E");

@@ -357,7 +357,7 @@ s32 playSFXWithNoteAndVolume(s32 id, s32 note, s32 volume)
 {
     s32 slot;
 
-    if ((GAME.selectedArea == 2 || GAME.selectedArea == 0x13) && id == 0x32) {
+    if ((GAME.selectedArea == AREA02_DWARFVILLAGE || GAME.selectedArea == AREA19_VILLAGEOFCIVILIZATIONPURIFIED) && id == 0x32) {
         id = 0x61;
     }
     slot = allocSfxVoice(id);

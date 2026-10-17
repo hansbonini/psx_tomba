@@ -12,8 +12,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_11", func_80121748);
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_11", func_8012175C);
 
 
-struct GSInventory_2175C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_2175C { u8 weapon; u8 pants; };
 typedef struct { void *a[3]; } AT_2175C;
 extern AT_2175C D_80129374[];
 extern void readAnimFrameCount(GameObject *);

@@ -436,8 +436,8 @@ void func_8012325C(GameObject *o)
         break;
     case 2:
         if (D_8009C068.event_16 == 0) {
-            setEventStarted(0x16, 0, 0);
-            addItemToInventory(0xb, 1, 1);
+            setEventStarted(EVENT_LOOKANDSEE, 0, 0);
+            addItemToInventory(ITEM_TELESCOPE, 1, 1);
         }
         o->state++;
         break;
@@ -1070,7 +1070,7 @@ void func_80125DA8(u8 *a, u8 *b)
     if (S16(a, 0x98) != 1) {
         c = &D_8009C068.unk56c;
         if (*c == 0) {
-            setEventStarted(0xb1, 0, 1);
+            setEventStarted(EVENT_SOMETHINGCOOKIN, 0, 1);
             *c = 1;
         }
     }

@@ -1,9 +1,6 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-extern s16 _svm_sreg_buf[24 * 8];
-extern char _svm_sreg_dirty[24];
-extern struct SpuVoice _svm_voice[24];
 s16 note2pitch2(u16 note, u16 fine);
 short _SsVmPBVoice(short voice, short seq_sep_no, short vabId, short prog,
                    int pitch);

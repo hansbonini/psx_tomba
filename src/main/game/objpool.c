@@ -667,7 +667,7 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
                 func_800593EC(o, e);
                 break;
             case 4:
-                if (GAME.selectedArea == 0) {
+                if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
             case 2:
                     func_80125C84(o, e);
                 } else {
@@ -1124,12 +1124,12 @@ void func_8005AF70(GameObject *o)
         GAME.fadeScreenControl = 1;
         GAME.fadeScreenAmount = 0;
         p = D_8007F938[GAME.selectedArea];
-        if (GAME.selectedArea == 4 && (GAME.purifiedAreas & 8)) p = D_8007F968;
+        if (GAME.selectedArea == AREA04_HAUNTEDMANSION && (GAME.purifiedAreas & 8)) p = D_8007F968;
         p += GAME.selectedSection * 4;
         r = *p++;
         g = *p;
         b = p[1];
-        if (GAME.selectedArea == 3 && (GAME.purifiedAreas & 2) && GAME.selectedSection == GAME.selectedArea) {
+        if (GAME.selectedArea == AREA03_PHOENIXMOUNTAIN && (GAME.purifiedAreas & 2) && GAME.selectedSection == GAME.selectedArea) {
             r = 0x60;
             g = 0x97;
             b = 0xff;

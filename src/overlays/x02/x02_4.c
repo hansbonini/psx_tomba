@@ -3,9 +3,6 @@
 
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_4", func_801187FC);
 
-struct GSInventory_187FC { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_187FC { u8 weapon; u8 pants; };
-
 void func_801187FC(GameObject *o)
 {
     u8 *p;
@@ -89,9 +86,6 @@ void func_801187FC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_4", func_80118A60);
-struct GSInventory_18A60 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_18A60 { u8 weapon; u8 pants; };
-
 extern u32 D_8009BCF4;
 extern void spawnItem(s16, s16, void *);
 
@@ -112,9 +106,6 @@ INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_4", func_80118AD8);
 INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_4", func_80118C58);
 
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_4", func_80118C64);
-struct GSInventory_18C64 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_18C64 { u8 weapon; u8 pants; };
-
 typedef struct { s16 xf, x, yf, y, zf, z; } V6_18C64;
 extern void freeObjectUnlayered(GameObject *);
 

@@ -86,7 +86,7 @@ void func_80118944(GameObject *o)
         break;
     case 2:
         if (o->subtype == 0 || o->subtype == 6) {
-            removeItemFromInventory(4, 1);
+            removeItemFromInventory(ITEM_FURIOUSTORNADO, 1);
             queueSfxKeyOff(*(u16 *)((char *)o + 0xce));
         }
         o->state++;

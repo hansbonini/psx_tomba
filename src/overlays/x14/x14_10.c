@@ -320,8 +320,6 @@ void func_80120738(GameObject *o)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_801208F4);
 
 
-struct GSInventory_208F4 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_208F4 { u8 weapon; u8 pants; };
 void func_801208F4(GameObject *o)
 {
     switch (o->state) {

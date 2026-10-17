@@ -29,9 +29,6 @@ INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_1", func_80116814);
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_1", func_80116994);
 
 
-struct GSInventory_16994 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_16994 { u8 weapon; u8 pants; };
-
 typedef struct GameTask_16994 {
     s16 status;
     s16 sleepTimer;

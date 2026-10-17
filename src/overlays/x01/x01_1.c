@@ -639,7 +639,7 @@ void func_80118F44(GameObject *o)
             break;
         case 3:
             D_8009C068.unk721 = 1;
-            removeItemFromInventory(0xd, 1);
+            removeItemFromInventory(ITEM_FLOWERTEARS, 1);
             o->state = 3;
             break;
         }
@@ -1143,8 +1143,6 @@ void func_8011AE2C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_1", func_8011AFBC);
 
-struct GSInventory_1AFBC { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1AFBC { u8 weapon; u8 pants; };
 void func_8011AFBC(GameObject *o)
 {
     switch (o->step) {
@@ -1690,8 +1688,8 @@ void func_8011E600(GameObject *o)
                 default:
                     o->state = 3;
                     do { } while (0);
-                    removeItemFromInventory(0xa, 1);
-                    addItemToInventory(0x12, 1, 1);
+                    removeItemFromInventory(ITEM_BUCKET, 1);
+                    addItemToInventory(ITEM_BUCKETOFWATER, 1, 1);
                     o->step = 0;
                     break;
                 }

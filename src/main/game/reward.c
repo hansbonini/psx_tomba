@@ -794,7 +794,7 @@ void func_8003F78C(u8* self)
         }
         *(int*)(self + 0x28) = (int)&D_80077274;
         self[5]++;
-        if (GAME.selectedArea == 0) {
+        if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
             *(int*)(self + 0x24) = D_8013A44C;
         } else {
             *(int*)(self + 0x24) = D_80134018;
@@ -852,7 +852,7 @@ void func_8003F9A4(u8* self)
         *(s16*)(self + 0x72) = 0x20;
         self[4]++;
         *(int*)(self + 0x3C) = SPAD->sprData[3];
-        if (GAME.selectedArea == 0) {
+        if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
             *(s16*)(self + 0x1E) = 10;
             *(int*)(self + 0x24) = D_8013A44C;
         } else {
@@ -869,7 +869,7 @@ void func_8003F9A4(u8* self)
         break;
     case 2:
         if (func_80022E44(self) != 0) {
-            if (GAME.selectedArea == 4) {
+            if (GAME.selectedArea == AREA04_HAUNTEDMANSION) {
                 D_8009C263++;
                 func_80126760(self[3]);
                 if (D_8009BCCA < 4) {
@@ -882,7 +882,7 @@ void func_8003F9A4(u8* self)
             }
             playSFX(sfx);
             func_800E98A4(self, *(s16*)(self + 0x12), *(s16*)(self + 0x16), *(s16*)(self + 0x1A));
-            if (GAME.selectedArea == 0) {
+            if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
                 D_8009C616 |= 1 << self[3];
                 obj = allocObjectLayer2();
                 if (obj != NULL) {
@@ -1258,8 +1258,8 @@ void rewardBitingPlantFlower(GameObject* arg0)
             asm("");
             D_8009BCA7 = 1;
             D_8009BCAA = 1;
-            PLAYER.obj.state = 5;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             PLAYER.obj.unk7 = 0;
             arg0->subState++;
@@ -1270,8 +1270,8 @@ void rewardBitingPlantFlower(GameObject* arg0)
             if ((temp_v0 << 0x10) == 0) {
                 D_8009BCA7 = 0;
                 D_8009BCAA = 0;
-                PLAYER.obj.state = 1;
-                PLAYER.obj.subState = 0;
+                PLAYER.obj.state = PLAYER_ACTIVE;
+                PLAYER.obj.subState = PLAYER_IDLE;
                 PLAYER.obj.step = 0;
                 PLAYER.obj.unk7 = 0;
                 arg0->state++;

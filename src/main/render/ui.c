@@ -1709,7 +1709,7 @@ void func_800288C4(void)
     D_8009C9DC = D_800A5474;
     c1 = D_8009C980;
     D_8009C980 = 0;
-    m = *(volatile u16 *)&PAD_PRESSED & 0xff0f;
+    m = *(volatile u16 *)&PAD_PRESSED & (JOY_SELECT | JOY_L3 | JOY_R3 | JOY_START | JOY_L2 | JOY_R2 | JOY_L1 | JOY_R1 | JOY_TRIANGLE | JOY_CIRCLE | JOY_CROSS | JOY_SQUARE);
     a1 = c1;
     m |= AXIS(D_8009C980, c1, a1, 0x80, 0x20);
     c2 = g->b9;
@@ -1855,7 +1855,7 @@ void func_80029008(void)
 {
 
     if (D_800B0770[0] != 0) {
-        if (*(u_long*)&GAME.selectedArea == 6) {
+        if (*(u_long*)&GAME.selectedArea == AREA06_DIRTMOTOCROSS) {
             if (D_800B0778 != 0) {
                 D_800B0778 -= 1;
             }

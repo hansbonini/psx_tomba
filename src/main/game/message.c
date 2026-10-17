@@ -450,7 +450,7 @@ void clearTalkPose(void)
     TALK_POSE = 0;
     switch (*p) {
     case 0:
-        if (GAME.selectedArea == 9) func_800EDDDC(p - 2, 0, 0);
+        if (GAME.selectedArea == AREA09_MUSHROOMVILLAGE) func_800EDDDC(p - 2, 0, 0);
         break;
     case 1:
         func_800E7DF8(p - 2, 0, (*(s16 *)&PLAYER.obj.animFrame));

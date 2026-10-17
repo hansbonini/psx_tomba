@@ -13,8 +13,8 @@ void func_801169CC(GameObject *o)
 {
     switch (o->step) {
     case 0:
-        PLAYER.obj.state = 5;
-        PLAYER.obj.subState = 0;
+        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;
         D_8009BC98.unk12 = 1;
@@ -23,7 +23,7 @@ void func_801169CC(GameObject *o)
     case 1:
         D_8009BC98.unk0E = 1;
         setEventComplete(0x61, 0);
-        removeItemFromInventory(0x3e, D_8009C068.item_3E);
+        removeItemFromInventory(ITEM_IRONWHEEL, D_8009C068.item_3E);
         o->clut = 200;
         o->step++;
         break;
@@ -33,8 +33,8 @@ void func_801169CC(GameObject *o)
             D_8009BC98.unk12 = 0;
             D_8009BC98.unk0E = 0;
             PLAYER.obj.unkB2 = 0;
-            PLAYER.obj.state = 1;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ACTIVE;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             o->subState = 0;
             o->step = 0;
@@ -56,7 +56,7 @@ void func_80116B00(GameObject *o)
     if (D_8009BC98.unk10 != 0 && D_8009BC98.unk11 == 0x3e) {
         o->subState = 2;
         o->step = 0;
-    } else if ((*(volatile u16 *)&D_8009C968.w70 & 0x10) && (SCRATCHPAD.joypad_state & 0x2000)) {
+    } else if ((*(volatile u16 *)&D_8009C968.w70 & 0x10) && (SCRATCHPAD.joypad_state & JOY_CIRCLE)) {
         D_8009BC98.unk0E = 1;
         o->subState = 1;
         o->step = 0;
@@ -94,7 +94,7 @@ void func_80116CF4(GameObject *o)
                 o->step = 0;
                 break;
             }
-            if ((*(volatile u16 *)&D_8009C968.w70 & 0x10) && (SCRATCHPAD.joypad_state & 0x2000)) {
+            if ((*(volatile u16 *)&D_8009C968.w70 & 0x10) && (SCRATCHPAD.joypad_state & JOY_CIRCLE)) {
                 D_8009BC98.unk0E = 1;
                 o->subState = 1;
                 o->step = 0;

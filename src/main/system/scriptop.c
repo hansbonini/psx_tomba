@@ -676,14 +676,14 @@ void func_8003DCF0(void)
                 D_8009BCA6 = 1;
         } else {
             PLAYER.obj.state = a;
-            if (PLAYER.obj.state == 5)
+            if (PLAYER.obj.state == PLAYER_ENTER)
                 D_8009BCA7 = 1;
-            if (PLAYER.obj.state == 1) {
+            if (PLAYER.obj.state == PLAYER_ACTIVE) {
                 D_8009BCA7 = 0;
 #if defined(VERSION_SLPS_01144)
                 PLAYER.obj.active = 1;
 #else
-                if (GAME.selectedArea != 0 || D_800A5478 == 0)
+                if (GAME.selectedArea != AREA00_VILLAGEOFALLBEGINNINGS || D_800A5478 == 0)
                     PLAYER.obj.active = 1;
 #endif
             }

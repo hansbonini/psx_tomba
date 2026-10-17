@@ -447,8 +447,6 @@ void func_8011CF94(void) {
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011CF9C);
 
-struct GSInventory_1CF9C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1CF9C { u8 weapon; u8 pants; };
 void func_8011CF9C(GameObject *o)
 {
     u8 *p;

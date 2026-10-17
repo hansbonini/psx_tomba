@@ -233,6 +233,30 @@ typedef struct Unk8009C968 {
     u8 pada4[0xC];
 } Unk8009C968;
 
+/* PLAYER.obj.state: what updatePlayer runs. */
+typedef enum PlayerState {
+    PLAYER_INIT = 0,       /* initPlayer */
+    PLAYER_ACTIVE = 1,     /* updatePlayerActive, by sub-state */
+    PLAYER_HURT = 2,       /* knocked back after a hit */
+    PLAYER_ENTER = 5,      /* entering the area / respawning */
+} PlayerState;
+
+/* PLAYER.obj.subState while PLAYER_ACTIVE (the jump table of
+   updatePlayerActive has 0x64 entries; these are the ones identified). */
+typedef enum PlayerSubState {
+    PLAYER_IDLE = 0x00,
+    PLAYER_WALK = 0x01,               /* playerWalk */
+    PLAYER_JUMP = 0x02,               /* playerJump */
+    PLAYER_ATTACK = 0x03,             /* playerAttack */
+    PLAYER_AIR_ATTACK = 0x04,
+    PLAYER_GRAB_LEDGE = 0x06,         /* playerGrabLedge */
+    PLAYER_CLIMB_OVER_LEDGE = 0x0B,   /* playerClimbOverLedge */
+    PLAYER_CLING = 0x0D,              /* playerCling: on a vine or a wall */
+    PLAYER_HOLD_ENEMY = 0x0E,         /* playerHoldEnemy */
+    PLAYER_THROW_ENEMY = 0x0F,        /* playerThrowEnemy */
+    PLAYER_CLIMB = 0x1D,              /* playerClimb */
+} PlayerSubState;
+
 typedef struct Player {
     /* 0x00 */ GameObject obj;
     /* 0xC0 */ u8 unkC0[0x24];

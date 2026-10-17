@@ -396,7 +396,7 @@ void func_801341A0(GameObject *o)
             }
             break;
         case 25:
-            addItemToInventory(6, 1, 1);
+            addItemToInventory(ITEM_100YEAROLDKEY, 1, 1);
             o->unkB6++;
             break;
         case 26:

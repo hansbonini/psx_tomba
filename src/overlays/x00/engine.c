@@ -1415,8 +1415,6 @@ typedef struct {
 } S_EC5B8;
 typedef struct { s32 d0; s32 b8; s32 bc; char p0c[0xc]; s16 wcc; } E_EC5B8;
 extern s16 D_800A53AE_S16 asm("D_800A53AE");
-extern s32 DAT_8009c978;
-extern s32 DAT_8009c97c;
 extern u8 D_8009C3E1;
 extern s32 *D_80113FB4[];
 extern char D_800E3188[];

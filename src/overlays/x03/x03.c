@@ -2,8 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_801162C4);
-struct GSInventory_162C4 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_162C4 { u8 weapon; u8 pants; };
 typedef struct { u16 frac; s16 whole; } FP_162C4;
 typedef struct { char pad[0x32]; s16 y; FP_162C4 *p; } S_162C4;
 

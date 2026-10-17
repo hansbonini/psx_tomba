@@ -16,8 +16,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_801158DC);
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011590C);
 
 
-struct GSInventory_1590C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1590C { u8 weapon; u8 pants; };
 typedef void (*Fn_1590C)(GameObject *);
 extern Fn_1590C D_8007C5D4[];
 extern void func_8002A334(GameObject *);
@@ -57,8 +55,6 @@ void func_8011590C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80115AB4);
-struct GSInventory_15AB4 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_15AB4 { u8 weapon; u8 pants; };
 void func_80115AB4(void)
 {
     if (GAME.selectedSection) ((void (*)(void))func_8011590C)();
@@ -281,9 +277,6 @@ loop:
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80116498);
 
-
-struct GSInventory_16498 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_16498 { u8 weapon; u8 pants; };
 
 typedef struct { s16 m[3][3]; s16 pad; s32 t[3]; } MAT_16498;
 extern s32 D_1F800168_S32Arr[] asm("D_1F800168");
@@ -1046,8 +1039,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011BF5C);
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011BFF8);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011C0BC);
-struct GSInventory_1C0BC { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1C0BC { u8 weapon; u8 pants; };
 extern void func_8004F2CC(void *, s32, s32, s32);
 extern void addDrawModePrim(s32, s32);
 

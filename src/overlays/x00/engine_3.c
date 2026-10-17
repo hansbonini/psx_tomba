@@ -532,7 +532,7 @@ void func_8011070C(GameObject *o)
     s16 v;
     v = 0x20;
     if ((*(u16 *)&D_8009C978) == 7) { v = 0x20; v = v >> (3 - D_8009C981); }
-    if (*(volatile u16 *)&PAD_PRESSED & 0x40) o->velY = o->velY + v;
+    if (*(volatile u16 *)&PAD_PRESSED & JOY_DOWN) o->velY = o->velY + v;
     else o->velY = o->velY - v;
     if (o->velY > 0x300) o->velY = 0x300;
     if (o->velY < 0xc0) o->velY = 0xc0;
@@ -808,7 +808,6 @@ void func_80110E90(O_10E90 *o)
 INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80111118);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_801112A8);
-extern s16 DAT_1f80016ab[];
 
 void func_801112A8(GameObject *o)
 {

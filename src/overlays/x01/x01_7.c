@@ -284,7 +284,7 @@ void func_80136554(GameObject *o)
             func_80135E84(o);
             break;
         case 1:
-            addItemToInventory(10, 1, 1);
+            addItemToInventory(ITEM_BUCKET, 1, 1);
             D_8009C068.unk54d = 1;
             o->state = 3;
             break;
@@ -456,7 +456,7 @@ void func_80136CA0(GameObject *o)
             D_800A5424[0] = 0;
             PLAYER_GameObject.h->p.whole = o->h->p.whole;
             o->y.p.whole = PLAYER_GameObject.y.p.whole + 8;
-            setEventStarted(0xb2, 0, 0);
+            setEventStarted(EVENT_LEAFBUTTERFLIES, 0, 0);
             o->timer = 250;
             o->step++;
         }
@@ -498,7 +498,7 @@ void func_80136E34(GameObject *o)
         if (o->animFrame & 1) o->velH = -o->velH;
         o->velX = 0;
         o->velY = 0;
-        removeItemFromInventory(0x10, 1);
+        removeItemFromInventory(ITEM_LEAFBUTTERFLY, 1);
         o->step++;
     case 1:
         tickAnimation(o);
@@ -538,8 +538,6 @@ void func_80136E34(GameObject *o)
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801370C4);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801376D4);
-struct GSInventory_376D4 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_376D4 { u8 weapon; u8 pants; };
 extern u8 D_8009C330;
 
 void func_801376D4(GameObject *o)
@@ -566,8 +564,8 @@ void func_801376D4(GameObject *o)
                 o->anim = D_8013DA54;
                 readAnimFrameCount(o);
                 D_8009BCC1--;
-                addItemToInventory(0x10, 1, 1);
-                if (GAME.selectedArea == 1) {
+                addItemToInventory(ITEM_LEAFBUTTERFLY, 1, 1);
+                if (GAME.selectedArea == AREA01_DWARFFOREST) {
                     D_8009C272++;
                     o->state = 3;
                     o->subState = 0;

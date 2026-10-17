@@ -1971,8 +1971,6 @@ void func_8013449C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_801349F8);
 
-struct GSInventory_349F8 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_349F8 { u8 weapon; u8 pants; };
 extern s32 GAME_S32Arr[] asm("GAME");
 extern void *D_8013D1B0;
 extern void *D_8013D1AC;
@@ -2030,8 +2028,6 @@ void func_801349F8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_80134B88);
-struct GSInventory_34B88 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_34B88 { u8 weapon; u8 pants; };
 extern void *D_8013D168[];
 extern void *D_8013D16C[];
 
@@ -2039,7 +2035,7 @@ void func_80134B88(GameObject *o)
 {
     switch (o->subState) {
     case 0:
-        if (GAME.selectedArea == 1 && GAME.selectedSection < 2) break;
+        if (GAME.selectedArea == AREA01_DWARFFOREST && GAME.selectedSection < 2) break;
         switch (o->step) {
         case 0:
             o->timer = 0x3c;
@@ -2065,7 +2061,7 @@ void func_80134B88(GameObject *o)
         }
         break;
     case 1:
-        if (GAME.selectedArea == 1 && GAME.selectedSection < 2) break;
+        if (GAME.selectedArea == AREA01_DWARFFOREST && GAME.selectedSection < 2) break;
         if (o->step == 0) {
             o->objectIndex = o->animFrame;
             o->animFrame = o->h->p.whole > (*(Fix16 **)&PLAYER.obj.h)->p.whole;
@@ -2252,8 +2248,6 @@ void func_80134FC8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_8013549C);
 
-struct GSInventory_3549C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_3549C { u8 weapon; u8 pants; };
 void func_8013549C(GameObject *o)
 {
     switch (o->step) {
@@ -2266,7 +2260,7 @@ void func_8013549C(GameObject *o)
         }
         func_80134E80(o);
         o->active = 4;
-        if (GAME.selectedArea == 1 && GAME.selectedSection < 2) o->anim = D_8013D1A4;
+        if (GAME.selectedArea == AREA01_DWARFFOREST && GAME.selectedSection < 2) o->anim = D_8013D1A4;
         else o->anim = D_8013D140;
         readAnimFrameCount(o);
         o->animFrame = o->h->p.whole > (*(Fix16 **)&PLAYER.obj.h)->p.whole;
@@ -2297,7 +2291,7 @@ void func_8013549C(GameObject *o)
             o->animFrame = 1;
             break;
         }
-        if (GAME.selectedArea == 1 && GAME.selectedSection < 2) o->anim = D_8013D184;
+        if (GAME.selectedArea == AREA01_DWARFFOREST && GAME.selectedSection < 2) o->anim = D_8013D184;
         else o->anim = D_8013D128;
         readAnimFrameCount(o);
         o->velX = (o->animFrame & 1) ? -0x200 : 0x200;

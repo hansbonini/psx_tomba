@@ -14,7 +14,6 @@ typedef struct {
 
 extern T8012C68C_2B9DC D_80135138[];
 extern void advanceAnimFrame(GameObject *, s32);
-extern void AnimLoadDuration(GameObject *);
 
 void func_8012B9DC(GameObject *o)
 {
@@ -232,16 +231,16 @@ void func_8012C110(GameObject *o)
         if (D_8009C068.unk5a3 == 3) {
             o->subState++;
             o->step = 0;
-            PLAYER.obj.state = 5;
-            PLAYER.obj.subState = 0;
+            PLAYER.obj.state = PLAYER_ENTER;
+            PLAYER.obj.subState = PLAYER_IDLE;
             PLAYER.obj.step = 0;
             D_8009BC98.unk0F = 1;
             D_8009BC98.unk12 = 1;
             break;
         }
         if (o->unk68 == 0) break;
-        PLAYER.obj.state = 5;
-        PLAYER.obj.subState = 0;
+        PLAYER.obj.state = PLAYER_ENTER;
+        PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;
         D_8009BC98.unk12 = 1;
@@ -258,12 +257,12 @@ void func_8012C110(GameObject *o)
         p->state = 3;
         o->unk68 = 0;
         o->step = 0;
-        PLAYER.obj.state = 1;
-        PLAYER.obj.subState = 0;
+        PLAYER.obj.state = PLAYER_ACTIVE;
+        PLAYER.obj.subState = PLAYER_IDLE;
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 0;
         D_8009BC98.unk12 = 0;
-        setEventStarted(0xad, 0, 1);
+        setEventStarted(EVENT_CHARLESPANTS, 0, 1);
         break;
     }
 }

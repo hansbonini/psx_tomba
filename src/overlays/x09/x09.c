@@ -240,9 +240,6 @@ void func_80116814(GameObject *o)
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_801168EC);
 
 
-struct GSInventory_168EC { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_168EC { u8 weapon; u8 pants; };
-
 typedef struct { s16 vx, vy, vz, pad; } SVEC_168EC;
 
 extern GameObject *D_8009BCB4[];
@@ -688,8 +685,6 @@ INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_801182CC);
 
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80118500);
 
-struct GSInventory_18500 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_18500 { u8 weapon; u8 pants; };
 extern void func_8011869C(GameObject *);
 
 void func_80118500(GameObject *o)
@@ -980,8 +975,6 @@ INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80119798);
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_801197F8);
 
 
-struct GSInventory_197F8 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_197F8 { u8 weapon; u8 pants; };
 extern unsigned long *D_8012A4E8;
 extern unsigned long *D_8012A4FC;
 extern unsigned long *D_8012A4D8[];
@@ -1221,9 +1214,6 @@ void func_80119E94(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_8011A01C);
-
-struct GSInventory_1A01C { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_1A01C { u8 weapon; u8 pants; };
 
 typedef struct { s16 b0, b1, b2, b3; } B4_1A01C;
 
@@ -1859,14 +1849,14 @@ void func_8011D1A8(GameObject *o)
             o->step = 0;
             o->y.p.whole += 0x10;
         }
-        if (D_1F8001FC & 0x10) {
+        if (D_1F8001FC & JOY_UP) {
             D_8009B698_G_1D1A8Ptr->b9 = 0;
             o->state = 1;
             o->subState = 0x27;
             o->step = 0;
             o->y.p.whole += 0x10;
         }
-        if (D_1F8001FC & 0x40) {
+        if (D_1F8001FC & JOY_DOWN) {
             D_8009B698_G_1D1A8Ptr->b9 = 0;
             o->unk9E = 6;
             o->subState = 0x25;
@@ -2795,9 +2785,6 @@ void func_801238A0(GameObject *o)
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80123A14);
 
 
-struct GSInventory_23A14 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_23A14 { u8 weapon; u8 pants; };
-
 extern u8 D_8009C485[];
 
 void func_80123A14(GameObject *o)
@@ -2858,9 +2845,6 @@ void func_80123A14(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80123C18);
-
-struct GSInventory_23C18 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_23C18 { u8 weapon; u8 pants; };
 
 extern s32 D_1F8002D4[];
 extern void *D_8012D3B0[];
@@ -2961,7 +2945,7 @@ void func_80123C18(GameObject *o)
             break;
         case 3:
             if (o->subtype == 3) {
-                addItemToInventory(9, 1, 1);
+                addItemToInventory(ITEM_HEALINGMUSHROOM, 1, 1);
                 o->state = 3;
                 break;
             }

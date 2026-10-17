@@ -548,8 +548,6 @@ skip:
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", func_8004CC84);
 
-struct GSInventory_4CC84 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_4CC84 { u8 weapon; u8 pants; };
 typedef struct GameTask_4CC84 {
     s16 status;
     s16 sleepTimer;

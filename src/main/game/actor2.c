@@ -527,8 +527,6 @@ void func_80057044(void)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_80057188);
-struct GSInventory_57188 { u8 slots[256]; u16 counter; u16 sortMode; };
-struct GSEquips_57188 { u8 weapon; u8 pants; };
 extern u8 D_8007EDFC[];
 void func_8012608C(GameObject *o);
 void func_8012738C(GameObject *o);
