@@ -236,7 +236,6 @@ void func_800EEAC0(GameObject *o, u16 k)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800EEDE0);
 typedef struct { char pad[0x2c]; u16 cur; u16 prev; } Cam2c_EEDE0;
-extern s32 D_8009BCEC;
 
 void func_800EEDE0(GameObject *o)
 {
@@ -411,7 +410,6 @@ s32 func_800EF27C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800EF40C);
-extern s32 D_8009BCEC;
 
 void func_800EF40C(GameObject *o)
 {
@@ -568,11 +566,8 @@ typedef struct {
 } TObjX_EF7F0;
 typedef struct { u8 c, f, a, b; } E;
 typedef struct { u16 a, b; } T2_EF7F0;
-extern u8 D_8009BCF8;
 extern T2_EF7F0 D_8007D5BC[];
-extern u8 D_8009BCD8_U8Arr[] asm("D_8009BCD8");
 extern E **D_801144E0[];
-extern u8 D_8009BCA2_U8Arr[] asm("D_8009BCA2");
 
 #define LOADP() p = (u8 *)D_801144E0[(*(u16 *)&GAME)]; p = ((u8 **)p)[D_8009BCCA]; p += (*(u16 *)&D_8009BCEA) * 4
 
@@ -1004,7 +999,6 @@ s16 func_800F01DC(GameObject *o)
 #undef SETANIM_IF
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F0668);
-extern GameObject *D_8009B698_GameObjectPtr asm("D_8009B698");
 
 #define SETANIM(o, n)                                     \
     {                                                     \
@@ -1048,10 +1042,7 @@ void func_800F0668(GameObject *o)
 #undef SETANIM
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F07D8);
-extern u8 *D_8009C650_U8Ptr asm("D_8009C650");
-extern u8 *D_8009B698_U8Ptr asm("D_8009B698");
 extern u8 D_800A5458;
-extern s16 D_8009BCAE[];
 
 typedef struct { u8 pad[0x28]; u16 w28, w2a, w2c, w2e; } Q_F07D8;
 #define PL ((Q_F07D8 *)D_8009B698_U8Ptr)
@@ -1162,7 +1153,7 @@ void func_800F07D8(GameObject *o)
             if (!(D_1F8001FC & ((*(u16 *)&D_1F8003C6) | (*(u16 *)&D_1F8003C8)))) {
                 setObjectSpeedPolar2(o, o->unkB6, o->unkB2);
                 o->h->raw += D_8009BCAC << 8;
-                o->y.raw += D_8009BCAE[0] << 8;
+                o->y.raw += D_8009BCAE_S16Arr[0] << 8;
                 applyObjectSpeedXY(o);
             }
             break;
@@ -1626,7 +1617,7 @@ void func_800F1C00(GameObject *o)
     }
     tickAnimation(o);
     *(volatile s32 *)&o->h->raw += D_8009BCAC * 0x80;
-    o->y.raw += (*(s16 *)&D_8009BCAE) * 0x80;
+    o->y.raw += (*(s16 *)&D_8009BCAE_S16Arr) * 0x80;
     func_8011068C(o);
     o->h->raw += o->velX * 0x100;
     o->timer--;
@@ -1660,7 +1651,6 @@ void func_800F1D3C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F1D90);
 typedef struct { char p[8]; u8 b8; char q[0x20 - 9]; s16 w20; char r[0x2e - 0x22]; s16 w2e; } G_F1D90;
-extern u8 D_8009C26E_U8Arr[] asm("D_8009C26E");
 void setEventComplete(s32, s32);
 void func_800F1D90(GameObject *o)
 {
@@ -1719,7 +1709,6 @@ typedef struct {
     u8 *e4;
 } X800F2B98_F1EF8;
 typedef struct { void *p[90]; } T800F2B98;
-extern u8 D_8009C619_U8Arr[] asm("D_8009C619");
 extern T800F2B98 D_800E7764;
 extern void probeCollisionAtDepthA(GameObject *, s16, s16);
 extern s32 func_80059B58(GameObject *, s32);
@@ -1795,7 +1784,7 @@ void playerJump(GameObject *o)
     case 2:
     common:
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         tickAnimation(o);
         if (o->unkA7 != 0) {
             s16 a = o->x.p.whole, y = o->y.p.whole, b = o->z.p.whole;
@@ -1852,7 +1841,7 @@ void playerJump(GameObject *o)
         break;
     case 3:
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         tickAnimation(o);
         if (((X800F2B98_F1EF8 *)o)->c9 != 0) func_800F1C00(o);
         else func_800F1A84(o);
@@ -2046,10 +2035,7 @@ typedef struct {
     u16 w2e;
 } P800F36E0;
 extern P800F36E0 *D_8009B698_P800F36E0Ptr asm("D_8009B698");
-extern s16 D_8009BCAE_S16 asm("D_8009BCAE");
-extern u8 D_8009C61A_U8 asm("D_8009C61A");
 extern s16 D_8007D5D0[];
-extern char *D_800A53BC;
 
 #define SETANIM_IF(n) \
     D_8009B698_P800F36E0Ptr->w2c = n; \
@@ -2089,13 +2075,13 @@ void func_800F2A40(GameObject *o)
         D_8009B698_P800F36E0Ptr->w2a = -1;
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3:
-            D_800A53BC = D_80010FE0;
+            D_800A53BC_CharPtr = D_80010FE0;
             break;
         case 4: case 5:
-            D_800A53BC = D_80011000;
+            D_800A53BC_CharPtr = D_80011000;
             break;
         case 6: case 7:
-            D_800A53BC = D_80011020;
+            D_800A53BC_CharPtr = D_80011020;
             break;
         }
         advanceAnimFrame(o, 0);
@@ -2371,7 +2357,7 @@ void func_800F329C(P800F3F3C_F329C *o)
     case 2:
     common:
         o->t.h->raw += D_8009BCAC << 8;
-        o->t.y.raw += D_8009BCAE[0] << 8;
+        o->t.y.raw += D_8009BCAE_S16Arr[0] << 8;
         func_8010E750(o);
         func_8010DE48(o);
         o->t.h->raw += o->t.velX << 8;
@@ -2608,13 +2594,13 @@ void playerAttack(GameObject *o)
         D_8009B698_P800F44B0Ptr->w2a = -1;
         switch (o->animFrame) {
         case 0: case 1: case 2: case 3:
-            D_800A53BC = D_80010FE0;
+            D_800A53BC_CharPtr = D_80010FE0;
             break;
         case 4: case 5:
-            D_800A53BC = D_80011000;
+            D_800A53BC_CharPtr = D_80011000;
             break;
         case 6: case 7:
-            D_800A53BC = D_80011020;
+            D_800A53BC_CharPtr = D_80011020;
             break;
         }
         advanceAnimFrame(o, 0);
@@ -2641,7 +2627,7 @@ void playerAttack(GameObject *o)
         func_8011032C(o);
         setObjectSpeedPolar2(o, o->unkB6, o->unkB2);
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         applyObjectSpeedXY(o);
         func_8010E444(o);
         applyObjectAltSpeedVertical(o);
@@ -2695,7 +2681,7 @@ void playerAttack(GameObject *o)
         func_8011032C(o);
         func_8010E444(o);
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         applyObjectSpeedXY(o);
         applyObjectAltSpeedVertical(o);
         tickAnimation(o);
@@ -2795,7 +2781,6 @@ void func_800F4374(s16 a)
 
 typedef struct { u8 b0; u8 b1; s16 w2; char p4[8]; s16 wc; s16 we; char p10[0x28 - 0x10]; u16 w28, w2a; } PL_F43D8;
 
-extern u8 D_80114578_U8ArrArr2[][2] asm("D_80114578");
 
 static __inline__ void setanim_F43D8(GameObject *o, u16 anim)
 {
@@ -3284,7 +3269,7 @@ void func_800F5B1C(GameObject *o)
         o->step++;
     case 1:
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         func_8010E5A4(o);
         applyObjectAltSpeedXY(o);
         tickAnimation(o);
@@ -3481,7 +3466,6 @@ typedef struct {
 } PL705C;
 extern PL705C *D_8009B698_PL705CPtr asm("D_8009B698");
 extern PL705C *D_8009B698_PL705CPtrArr[] asm("D_8009B698");
-extern GameObject *D_8009E454_GameObjectPtr asm("D_8009E454");
 
 static __inline__ void setanim_F63BC(GameObject *o, u16 anim)
 {
@@ -6209,7 +6193,7 @@ void playerHurt(GameObject *o)
         if (o->touchFlag == 0 && !(o->animFrame & 2))
             applyAnimVelocityX(o, o->animFrame ^ 1);
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->velY += 0x40;
         o->y.raw += o->velY << 8;
         if (o->velY > 0) {
@@ -6238,7 +6222,7 @@ void playerHurt(GameObject *o)
         if (o->touchFlag == 0 && !(o->animFrame & 2))
             applyAnimVelocityX(o, o->animFrame ^ 1);
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->y.raw += o->velY << 8;
         o->velY += 0x40;
         if (((s16 (*)(GameObject *))func_800FB5A0)(o) == 0) {
@@ -6372,7 +6356,7 @@ void playerHurtBitten(GameObject *o)
     case 3:
         BLINK();
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         tickAnimation(o);
         o->velY += 0x20;
         o->y.raw += o->velY << 8;
@@ -6393,7 +6377,7 @@ void playerHurtBitten(GameObject *o)
     case 4:
         BLINK();
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         tickAnimation(o);
         o->y.raw += o->velY << 8;
         o->velY += 0x20;
@@ -6697,7 +6681,7 @@ void func_800FDC58(GameObject *o)
 {
     extern P_FDC58 *D_8009B698;
     o->h->raw += D_8009BCAC << 8;
-    o->y.raw += D_8009BCAE[0] << 8;
+    o->y.raw += D_8009BCAE_S16Arr[0] << 8;
     if (D_8009B698->b8 == 0) {
         o->visible = *(u8 *)0x1F8001F8 & 1;
     }
@@ -6715,7 +6699,6 @@ typedef struct {
     u16 w2e;
 } P800FE98C;
 extern P800FE98C *D_8009B698_P800FE98CPtr asm("D_8009B698");
-extern u8 D_1F8001A4_U8Arr[] asm("D_1F8001A4");
 
 #define SETANIM_IF(n) \
     D_8009B698_P800FE98CPtr->w2c = n; \
@@ -6733,7 +6716,7 @@ extern u8 D_1F8001A4_U8Arr[] asm("D_1F8001A4");
 static __inline__ void move_FDCEC(GameObject *o)
 {
     o->h->raw += D_8009BCAC << 8;
-    o->y.raw += D_8009BCAE[0] << 8;
+    o->y.raw += D_8009BCAE_S16Arr[0] << 8;
     BLINK();
     o->h->raw += o->velX << 8;
     o->y.raw += o->velY << 8;
@@ -6979,7 +6962,7 @@ void func_800FE448(GameObject *o)
     tail:
         if (c) {
             D_8009BCAC = 0;
-            (*(s16 *)&D_8009BCAE) = 0;
+            (*(s16 *)&D_8009BCAE_S16Arr) = 0;
             break;
         }
         goto els;
@@ -6988,7 +6971,7 @@ void func_800FE448(GameObject *o)
             o->y.p.whole = -0xe4;
         els:
             D_8009BCAC = 0;
-            (*(s16 *)&D_8009BCAE) = -0x40;
+            (*(s16 *)&D_8009BCAE_S16Arr) = -0x40;
         }
         break;
     }
@@ -7278,8 +7261,6 @@ typedef struct {
     u8 e2, e3;
 } X800FFEC4_FF224;
 extern P800FFEC4_FF224 *D_8009B698_P800FFEC4_FF224Ptr asm("D_8009B698");
-extern u8 D_8009BCA8_U8Arr[] asm("D_8009BCA8");
-extern u8 D_8009C1BD;
 
 #define SETANIM_IF(n) \
     D_8009B698_P800FFEC4_FF224Ptr->w2c = n; \
@@ -7412,14 +7393,14 @@ void func_800FF224(GameObject *o)
             break;
         case 10:
             D_8009BCA8_U8Arr[0] = 0;
-            if (((s32 *)&GAME)[0] == 0x30001 && D_8009C1BD < 3) {
+            if (((s32 *)&GAME)[0] == 0x30001 && D_8009C1BD_U8 < 3) {
                 spawnEffectObject(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
             }
             break;
         case 0x12:
             D_8009BCA8_U8Arr[0] = 0;
             if (((s32 *)&GAME)[0] != 1) break;
-            if (D_8009C1BD >= 2) break;
+            if (D_8009C1BD_U8 >= 2) break;
             if ((u16)(o->h->p.whole - 0x74b) >= 0xf0) break;
             spawnEffectObject(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
             D_8009BCA7 = 1;
@@ -7971,7 +7952,6 @@ typedef struct O_00C98 {
     char pb8[0xc6-0xb8]; u8 bc6; u8 bc7; char pc8[0xe0-0xc8]; s16 he0; char pe2; u8 be3;
 } O_00C98;
 typedef struct E_00C98 { char p0[4]; u8 b4, b5, b6; } E_00C98;
-extern u8 D_8009C617_U8Arr[] asm("D_8009C617");
 extern E_00C98 *D_8009C650_E_00C98Ptr asm("D_8009C650");
 
 static __inline__ void land_00C98(O_00C98 *o)
@@ -8608,7 +8588,6 @@ void func_801025E0(GameObject *o)
 #undef BLOCK
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80102978);
-extern char *D_8009C650_CharPtr asm("D_8009C650");
 
 void func_80102978(GameObject *o)
 {
@@ -8683,7 +8662,6 @@ typedef struct O_02B28 {
     char p9[0xb2 - 0xad]; u16 wb2;
 } O_02B28;
 extern O_02B28 *D_8009C650_O_02B28Ptr asm("D_8009C650");
-extern u16 D_8009C9D8_U16 asm("PAD_PRESSED");
 
 #define PADCHK() { volatile u16 *pad = &D_8009C9D8_U16; if (*pad & 0x80) o->w2e = 1; if (*pad & 0x20) o->w2e = 0; }
 
@@ -9202,11 +9180,10 @@ void func_80103D10(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80103D54);
 typedef struct { char p[8]; u8 b8; char q[0x20 - 9]; s16 w20; } G_03D54;
 extern G_03D54 *D_8009B698_G_03D54Ptr asm("D_8009B698");
-extern s32 D_8009BCEC_S32Arr[] asm("D_8009BCEC");
 void func_80103D54(GameObject *o)
 {
     o->h->raw += D_8009BCAC << 8;
-    o->y.raw += D_8009BCAE[0] << 8;
+    o->y.raw += D_8009BCAE_S16Arr[0] << 8;
     func_800EE7F0(o);
     func_800ED9E0(o);
     if (*(u8 *)&o->unkAC == 2) {
@@ -9419,7 +9396,7 @@ void func_801042D8(GameObject *o)
         p->y.p.whole = o->y.p.whole + p->hitOffsetY;
         p->unk8C = o->unk88 - 0xc0;
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         func_800ED9E0(o);
         tickAnimation(o);
         if (o->touchFlag != 0 || func_80045310(o, o->h->p.whole, (s16)(o->y.p.whole + 0x30)) != 0 ||
@@ -9718,7 +9695,6 @@ void func_80104D84(S_04D84 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80104E34);
-extern char *D_8009B698_CharPtr asm("D_8009B698");
 
 void func_80104E34(GameObject *o)
 {
@@ -9796,7 +9772,7 @@ void func_80104F1C(GameObject *o)
         D_8009C650->subState = 1;
         D_8009C650->step = 6;
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         func_8010DE48(o);
         if (D_8009C650->type != 0x1c)
             o->h->raw += o->velX << 8;
@@ -9834,7 +9810,7 @@ void func_80104F1C(GameObject *o)
         p->y.p.whole = o->y.p.whole + p->hitOffsetY;
         p->unk8C = o->unk88 - 0xc0;
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         func_8010DE48(o);
         if (D_8009C650->type != 0x1c)
             o->h->raw += o->velX << 8;
@@ -9906,7 +9882,7 @@ void func_80104F1C(GameObject *o)
         break;
     case 4:
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         func_800EE7F0(o);
         func_800ED9E0(o);
         if (*(u8 *)((u8 *)o + 0xac) == 2) {
@@ -9979,7 +9955,7 @@ void func_80105820(u8 *o)
         o[7] = o[7] + 1;
     case 1:
         **(s32 **)(o + 0x40) += D_8009BCAC << 8;
-        *(s32 *)(o + 0x14) += (*(s16 *)&D_8009BCAE) << 8;
+        *(s32 *)(o + 0x14) += (*(s16 *)&D_8009BCAE_S16Arr) << 8;
         func_800ED9E0(o);
         tickAnimation(o);
         if (*(s16 *)(o + 0x7e) > 0) {
@@ -10606,7 +10582,7 @@ void func_80106928(GameObject *o)
     case 2:
         if (o->objectIndex + 0x20 < 0x100) o->objectIndex = o->objectIndex + 0x20; else o->objectIndex = 0xff;
         o->h->raw += ((s16 *)&D_8009BCAC)[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         applyFrameVelocityX(o);
         ((s32 (*)(GameObject *))tickAnimation)(o);
         o->unk8C = (o->animFrame & 1) ? 0x100 - (o->objectIndex >> 2) : o->objectIndex >> 2;
@@ -10821,7 +10797,6 @@ void func_8010731C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_801074B8);
-extern s32 GAME_S32Arr[] asm("GAME");
 
 void func_801074B8(GameObject *o)
 {
@@ -10882,8 +10857,6 @@ void func_801074B8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80107688);
-extern u16 GAME_U16Arr[] asm("GAME");
-extern s16 D_8009BCAC_S16Arr[] asm("D_8009BCAC");
 
 void func_80107688(GameObject *o)
 {
@@ -10939,7 +10912,7 @@ void func_80107688(GameObject *o)
         func_800EDFA0(o);
         tickAnimation(o);
         o->h->raw += D_8009BCAC_S16Arr[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         o->velY += 0x40;
@@ -10965,7 +10938,7 @@ void func_80107688(GameObject *o)
         o->unkB0 = 0;
         o->unkB6 = 0;
         o->h->raw += D_8009BCAC_S16Arr[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         o->velY += 0x40;
@@ -11851,8 +11824,6 @@ void func_80109868(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80109D44);
-extern u8 D_8009BCAA_U8Arr[] asm("D_8009BCAA");
-extern u8 D_8009BCA7_U8Arr[] asm("D_8009BCA7");
 
 void func_80109D44(GameObject *o)
 {
@@ -11937,7 +11908,6 @@ void func_80109D44(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80109FE0);
-extern u8 D_8009BCDD_U8Arr[] asm("D_8009BCDD");
 
 void func_80109FE0(GameObject *o)
 {
@@ -12069,7 +12039,6 @@ o->n++;
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010A3A0);
 typedef struct { char p[8]; u8 b8; u8 b9; char q[0x20 - 0xa]; u16 w20; char r[0x2c - 0x22]; s16 w2c; s16 w2e; } G_0A3A0;
 extern G_0A3A0 *D_8009B698_G_0A3A0Ptr asm("D_8009B698");
-extern GameObject *D_800A547C_GameObjectPtrArr[] asm("D_800A547C");
 void func_8010A3A0(GameObject *o)
 {
     switch (o->step) {
@@ -12116,7 +12085,7 @@ void func_8010A3A0(GameObject *o)
         }
     case 2:
         o->h->raw += D_8009BCAC_S16Arr[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->h->raw += o->velX << 8;
         func_8010E444(o);
         applyObjectAltSpeedVertical(o);
@@ -12139,7 +12108,7 @@ void func_8010A3A0(GameObject *o)
         o->unkB0 = 0;
         o->unkB6 = 0;
         o->h->raw += D_8009BCAC_S16Arr[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->h->raw += o->velX << 8;
         func_8010E444(o);
         applyObjectAltSpeedVertical(o);
@@ -12167,7 +12136,6 @@ void func_8010A3A0(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010A708);
-extern GameObject *D_8009B698_GameObjectPtrArr[] asm("D_8009B698");
 
 void func_8010A708(GameObject *o)
 {
@@ -12230,7 +12198,7 @@ void func_8010A794(GameObject *o)
         func_800EDFA0(o);
         tickAnimation(o);
         o->h->raw += D_8009BCAC_S16Arr[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->h->raw += o->velX << 8;
         func_8010E444(o);
         applyObjectAltSpeedVertical(o);
@@ -12254,7 +12222,7 @@ void func_8010A794(GameObject *o)
         o->unkB0 = 0;
         o->unkB6 = 0;
         o->h->raw += D_8009BCAC_S16Arr[0] << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         o->h->raw += o->velX << 8;
         func_8010E444(o);
         applyObjectAltSpeedVertical(o);
@@ -12530,7 +12498,6 @@ void func_8010B058(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010B208);
-extern s32 D_8009BCEC;
 
 s16 func_8010B208(GameObject *o)
 {
@@ -13091,7 +13058,7 @@ void func_8010C5D0(GameObject *o)
     if (o->unkB2 > 0x400) o->unkB2 = 0x400;
     if (o->unkB2 < 0) o->unkB2 = 0;
     o->h->raw += D_8009BCAC * 0x100;
-    o->y.raw += (*(s16 *)&D_8009BCAE) * 0x100;
+    o->y.raw += (*(s16 *)&D_8009BCAE_S16Arr) * 0x100;
     o->velH = fixedMulCos2(o->unkB6, o->unkB2);
     o->velV = fixedMulSin2(o->unkB6, o->unkB2);
     o->h->raw += o->velH * 0x100;
@@ -13521,7 +13488,6 @@ typedef struct S_0D464 {
     u8 b68; char p4[0x6e - 0x69]; u16 w6e; char p5[2]; u16 w72;
 } S_0D464;
 extern S_0D464 **D_1F800260;
-extern u16 D_1F800250;
 s32 func_8010D464(void)
 {
     S_0D464 **list = D_1F800260;
@@ -13731,7 +13697,7 @@ void func_8010D9BC(GameObject *o)
         o->step = 1;
     case 1:
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         tickAnimation(o);
         func_8010E750(o);
         func_8010DE48(o);
@@ -13745,7 +13711,7 @@ void func_8010D9BC(GameObject *o)
         break;
     case 2:
         o->h->raw += D_8009BCAC << 8;
-        o->y.raw += D_8009BCAE[0] << 8;
+        o->y.raw += D_8009BCAE_S16Arr[0] << 8;
         tickAnimation(o);
         func_8010E750(o);
         func_800ED9E0(o);
@@ -13772,7 +13738,6 @@ void func_8010D9BC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010DC68);
-extern u8 D_8009BCF8;
 extern u8 D_8009C36E;
 typedef struct { char p[0xc1]; u8 c1; } O_0DC68;
 s32 func_8010DC68(O_0DC68 *o)

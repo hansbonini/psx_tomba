@@ -49,7 +49,6 @@ void spawnItemChest(short arg0, short arg1, int arg2)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80041940);
-extern Fix16 D_800A53AC[];
 
 void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
 {

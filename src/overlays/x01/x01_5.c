@@ -265,7 +265,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_5", func_8012C75C);
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_5", func_8012C7E4);
 typedef struct A_2C7E4 { s16 w0; u16 w2; u16 w4; u16 w6; } A_2C7E4;
 typedef struct B_2C7E4 { u8 c[4]; } B_2C7E4;
-extern u8 D_800A5444[];
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
 static __inline__ s32 land_2C7E4(GameObject *o)

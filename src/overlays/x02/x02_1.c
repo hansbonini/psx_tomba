@@ -30,12 +30,6 @@ INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_1", func_80116814);
 
 
 
-extern u8 D_8009D6DD_U8Arr[] asm("D_8009D6DD");
-extern u8 D_8009D6DE_U8Arr[] asm("D_8009D6DE");
-extern u8 D_8009D6DF_U8Arr[] asm("D_8009D6DF");
-extern u8 D_8009E3ED_U8Arr[] asm("D_8009E3ED");
-extern u8 D_8009E3EE_U8Arr[] asm("D_8009E3EE");
-extern u8 D_8009E3EF_U8Arr[] asm("D_8009E3EF");
 
 void func_80116994(GameObject *o)
 {

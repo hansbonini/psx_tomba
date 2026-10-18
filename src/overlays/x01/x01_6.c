@@ -1922,7 +1922,6 @@ void func_8013449C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_801349F8);
 
-extern s32 GAME_S32Arr[] asm("GAME");
 
 void func_801349F8(GameObject *o)
 {
@@ -2076,7 +2075,6 @@ void func_80134E80(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_80134FC8);
-extern u16 GAME_U16Arr[] asm("GAME");
 
 void func_80134FC8(GameObject *o)
 {

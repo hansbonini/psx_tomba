@@ -187,7 +187,6 @@ void updateEffectHitbox(u8* self)
     }
 }
 
-extern const u32 D_80012368_ro[] asm("D_80012368");
 
 const u32 D_80010814[] = {
     (u32)D_80011B98,

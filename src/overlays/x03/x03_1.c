@@ -99,7 +99,6 @@ typedef struct {
     s16 b4, b6, b8, ba, bc, be, c0, c2, c4, c6, c8, ca, cc, ce, d0;
 } E_18514;
 
-extern s16 D_1F800176_S16Arr[] asm("D_1F800176");
 
 void func_80118514(GameObject *o)
 {
@@ -973,10 +972,6 @@ void func_8011ABC0(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_1", func_8011AD84);
-extern u8 PLAYER_U8Arr[] asm("PLAYER");
-extern u8 D_800A5399[];
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
 
 static __inline__ void move_1AD84(GameObject *o)
 {
@@ -1002,7 +997,7 @@ void func_8011AD84(GameObject *o)
             PLAYER_U8Arr[0] = 5;
             D_800A539C_U8Arr[0] = 5;
             D_800A539D_U8Arr[0] = 0x40;
-            D_800A5399[0] = 0;
+            D_800A5399_U8Arr[0] = 0;
             o->unkAC = 2;
             o->anim = D_80138C20[0];
             readAnimFrameCount(o);

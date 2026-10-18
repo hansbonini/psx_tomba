@@ -211,9 +211,7 @@ s32 func_80138E64(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_80138F88);
 
-extern GameObject PLAYER_GameObject asm("PLAYER");
 #define P PLAYER_GameObject
-extern GameObject *D_800A5428;
 extern GameObject *D_8009B698;
 
 typedef struct { char pad[0x24]; u16 a; } AnimH_38F88;

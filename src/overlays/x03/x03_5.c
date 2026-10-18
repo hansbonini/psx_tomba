@@ -104,7 +104,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_5", func_80128900);
 
 typedef struct { char c[12]; } V12_2897C;
 typedef struct { void **anims; s32 a; s32 b; } AT_2897C;
-extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 extern void advanceAnimFrame(GameObject *, s32);
 extern s32 showMessageBoxDirect(s32, s32, V12_2897C *);
 

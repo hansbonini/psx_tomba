@@ -81,7 +81,6 @@ void func_801350F4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_801353D4);
-extern s32 D_1F8002D4;
 extern u8 *D_8013A4E4;
 
 void func_801353D4(u8 *o)
@@ -101,7 +100,7 @@ void func_801353D4(u8 *o)
             *(s16 *)(o + 0x6e) = 0x30;
             *(s16 *)(o + 0x70) = 0x18;
             *(s16 *)(o + 0x72) = 0x30;
-            w = D_1F8002D4;
+            w = D_1F8002D4_S32;
             o[0xd] = 0;
             *(s32 *)(o + 0x3c) = w;
             if (o[3] == 0) {
@@ -134,14 +133,13 @@ void func_801353D4(u8 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135528);
-extern u32 D_8009BCEC;
 
 void func_80135528(u8 *o)
 {
     u8 *a, *b, *c;
     s32 n;
 #if !defined(VERSION_SLPS_01144)
-    u32 *fl = &D_8009BCEC;
+    u32 *fl = &D_8009BCEC_U32;
     *fl |= 8;
 #endif
     if (D_8009C114 == 0xff) {

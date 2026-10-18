@@ -8,7 +8,6 @@ void func_8004D448(GameObject *o);
 
 void func_80045EFC(GameObject *o)
 {
-    extern u8 D_800A539A;
     if (o->visible == 0) return;
     if ((o->unkA & 0x10) && o->unkA0 == 0) return;
     if ((*(s32 *)&GAME) == 9 && D_8009BCCC != 0x20 && D_8009BCA2 == 1 &&
@@ -103,13 +102,11 @@ end:
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004637C);
-extern u8 D_800A5399[];
-extern u8 D_800A539A[];
 void func_8004637C(void)
 {
     u8 *p = &PLAYER.obj;
-    if (D_800A5399[0] != 0) {
-        switch (D_800A539A[0]) {
+    if (D_800A5399_U8Arr[0] != 0) {
+        switch (D_800A539A_U8Arr[0]) {
         case 0:
             func_80046428(p);
             break;
@@ -176,12 +173,7 @@ void func_80046CDC(void)
 
 typedef struct { char pad[7]; s8 b7; char pad8[0x18 - 8]; u16 w18, w1a; } PL_46EC0;
 typedef struct { char pad[0x4c]; u16 w4c; } C4C_46EC0;
-extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
-extern char D_1F8000C0_CharArr[] asm("D_1F8000C0");
 extern PL_46EC0 *D_8009B698;
-extern u8 D_800A5435;
-extern u16 *D_800A53BC;
-extern s32 D_800A5424;
 extern s32 fixedMulCos(s32, s16);
 extern s32 fixedMulSin2(s32, s16);
 extern s32 fixedMulSin(s32, s16);
@@ -320,7 +312,7 @@ void func_80046EC0(GameObject *o)
         k = PLAYER.obj.animFrame;
     switch (k) {
     case 0: case 1: case 2: case 3:
-        switch (*D_800A53BC) {
+        switch (*D_800A53BC_U16Ptr) {
         case 0x8b: break;
         case 0x94: idx += 2; break;
         case 0x97: idx += 4; break;
@@ -330,7 +322,7 @@ void func_80046EC0(GameObject *o)
         }
         break;
     case 4: case 5:
-        switch (*D_800A53BC) {
+        switch (*D_800A53BC_U16Ptr) {
         case 0x8e: case 0x8f: case 0x90: idx += 6; break;
         case 0x95: idx += 8; break;
         case 0x98: idx += 10; break;
@@ -340,7 +332,7 @@ void func_80046EC0(GameObject *o)
         }
         break;
     case 6: case 7:
-        switch (*D_800A53BC) {
+        switch (*D_800A53BC_U16Ptr) {
         case 0x91: case 0x92: case 0x93: idx += 0xc; break;
         case 0x96: idx += 0xe; break;
         case 0x99: idx += 0x10; break;
@@ -370,9 +362,9 @@ void func_80046EC0(GameObject *o)
         p->v3 = 0x1f;
         s.x = D_8009B6A0->x;
         s.y = D_8009B6A0->y;
-        if (D_800A5460 && *D_800A53BC >= 0xa9) {
-            c = fixedMulCos2((D_800A5424 + 0x40) & 0xff, 0x18);
-            sn = fixedMulSin2((D_800A5424 + 0x40) & 0xff, 0x18);
+        if (D_800A5460 && *D_800A53BC_U16Ptr >= 0xa9) {
+            c = fixedMulCos2((D_800A5424_S32 + 0x40) & 0xff, 0x18);
+            sn = fixedMulSin2((D_800A5424_S32 + 0x40) & 0xff, 0x18);
         } else {
             s16 t0;
             s16 kk;
@@ -382,20 +374,20 @@ void func_80046EC0(GameObject *o)
             if (o->animFrame & 1) {
                 if (D_800A5448 <= 0) {
                     kk = k;
-                    an = D_800A5424 + 0x180;
+                    an = D_800A5424_S32 + 0x180;
                     an -= t0;
                     c = fixedMulCos2(an & 0xff, kk);
                     sn = fixedMulSin2(an & 0xff, kk);
                 } else {
                     kk = k;
-                    an = D_800A5424 + 0x180;
+                    an = D_800A5424_S32 + 0x180;
                     an -= t0;
                     c = fixedMulCos2(an & 0xff, kk);
                     sn = fixedMulSin2(an & 0xff, kk);
                 }
             } else {
                 kk = k;
-                an = t0 + D_800A5424;
+                an = t0 + D_800A5424_S32;
                 c = fixedMulCos2(an & 0xff, kk);
                 sn = fixedMulSin2(an & 0xff, kk);
             }
@@ -437,8 +429,8 @@ void func_80046EC0(GameObject *o)
     p->v3 = p->v2;
     *(u16 *)((char *)p + 14) = cl;
     }
-    if (D_800A5460 && *D_800A53BC >= 0xa9) {
-        s32 t, g = D_800A5424;
+    if (D_800A5460 && *D_800A53BC_U16Ptr >= 0xa9) {
+        s32 t, g = D_800A5424_S32;
         if (o->animFrame & 1)
             t = g + 0xc0;
         else
@@ -474,7 +466,6 @@ INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A6A0);
 INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AA70);
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AD8C);
-extern s16 D_1F800250;
 extern GameObject **D_1F800260;
 
 void func_8004AD8C(void)
@@ -483,13 +474,13 @@ void func_8004AD8C(void)
     GameObject **p;
     GameObject *o;
     if (D_1F8001C6 != 0) {
-        n = D_1F800250;
+        n = D_1F800250_S16;
         p = D_1F800260;
         while (n != 0) {
             o = *p++;
             n--;
             if (o->unkA == 0xd) {
-                switch ((*(u8 *)&D_800A539A)) {
+                switch ((*(u8 *)&D_800A539A_U8Arr)) {
                 case 0: func_8004A6A0(o); break;
                 case 1: func_800E9EB8(o); break;
                 case 2: func_800EB490(o); break;
@@ -500,7 +491,7 @@ void func_8004AD8C(void)
             }
         }
     } else {
-        D_1F800250 = D_1F800246;
+        D_1F800250_S16 = D_1F800246;
         D_1F800260 = D_1F80021C;
         if (D_1F800246 == 0)
             return;
@@ -509,7 +500,7 @@ void func_8004AD8C(void)
             D_1F800246--;
             if (o->visible) {
                 if (o->unkA == 0xd) {
-                    switch ((*(u8 *)&D_800A539A)) {
+                    switch ((*(u8 *)&D_800A539A_U8Arr)) {
                     case 0: func_8004A6A0(o); break;
                     case 1: func_800E9EB8(o); break;
                     case 2: func_800EB490(o); break;
@@ -553,7 +544,7 @@ void func_8004AFAC(void)
             case 3: case 11: func_80049994(o); break;
             case 12: drawMessageBoxFrame(o); break;
             case 13:
-                switch ((*(u8 *)&D_800A539A)) {
+                switch ((*(u8 *)&D_800A539A_U8Arr)) {
                 case 0: func_8004A6A0(o); break;
                 case 1: func_800E9EB8(o); break;
                 case 2: func_800EB490(o); break;
@@ -589,7 +580,7 @@ void func_8004AFAC(void)
                 case 3: case 11: func_80049994(o); break;
                 case 12: drawMessageBoxFrame(o); break;
                 case 13:
-                    switch ((*(u8 *)&D_800A539A)) {
+                    switch ((*(u8 *)&D_800A539A_U8Arr)) {
                     case 0: func_8004A6A0(o); break;
                     case 1: func_800E9EB8(o); break;
                     case 2: func_800EB490(o); break;

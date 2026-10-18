@@ -5,13 +5,6 @@
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80135E84);
 
 typedef struct { s8 a; u8 b; u8 c; s8 d; } R4_35E84;
-extern u8 D_800A5399[];
-extern u16 *D_800A53BC;
-extern s32 D_800A5424[];
-extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
-extern Fix16 *D_800A53DC_Fix16PtrArr[] asm("D_800A53DC");
-extern u8 D_800A53A7[];
-extern s32 D_800A53FC[];
 extern R4_35E84 D_80011F64[];
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
@@ -38,7 +31,7 @@ void func_80135E84(GameObject *o)
         o->step = 0;
         break;
     case 3:
-        {register u8 v asm("$3") = D_800A5399[0];
+        {register u8 v asm("$3") = D_800A5399_U8Arr[0];
         D_8009C213[0] = 3;
         o->active = 2;
         o->visible = v;
@@ -46,7 +39,7 @@ void func_80135E84(GameObject *o)
         o->category |= 0x80;
         *(s8 *)&o->unkF = -7;}
         asm("");
-        r = &D_80011F64[((s8 *)&D_80012014)[*D_800A53BC]];
+        r = &D_80011F64[((s8 *)&D_80012014)[*D_800A53BC_U16Ptr]];
         o->anim = D_8013D8E0[r->a];
         if (r->a == 6) {
             o->animFrame ^= 1;
@@ -422,7 +415,6 @@ void func_80136A4C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_80136CA0);
-extern GameObject PLAYER_GameObject asm("PLAYER");
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern void setEventStarted(s32, s32, s32);
 

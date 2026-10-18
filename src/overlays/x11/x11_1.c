@@ -12,10 +12,6 @@ INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80116814);
 typedef struct V_168B0 { char c[12]; } V_168B0;
 typedef struct { void **p; s32 pad[2]; } E12_168B0;
 extern E12_168B0 D_80118F14[];
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
-extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
-extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
 extern GameObject *showMessageBoxDirect(s32, s32, V_168B0 *);
 
 void func_801168B0(GameObject *o)

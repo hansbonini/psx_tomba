@@ -14,7 +14,6 @@ typedef struct {
     u16 p18[3];
     u16 uv2;
 } Face_24CFC;
-extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
 
 
 char *func_80024CFC(long *f, char *vtx, unsigned long *ot)
@@ -82,7 +81,6 @@ typedef struct {
     u16 p20[3];
     u16 uv3;
 } Face_24EEC;
-extern unsigned long *D_1F8001E0_UnsignedLongPtrArr[] asm("D_1F8001E0");
 
 
 
@@ -746,7 +744,6 @@ typedef struct {
     unsigned long w14;
     u16 x2, y2;
 } PolyFT3_26694;
-extern char *D_1F800164_CharPtrArr[] asm("D_1F800164");
 
 
 static __inline__ char *drawF3_26694(long *f, char *vtx, unsigned long *ot)
@@ -1865,10 +1862,6 @@ void func_80029008(void)
 INCLUDE_RODATA("nonmatchings/main/render/ui", D_80010368);
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_8002907C);
-extern u8 D_8009BCF8[];
-extern u8 D_800B07C8[];
-extern u8 D_800A5464[];
-extern u8 D_8009BCD9[];
 
 void func_8002907C(GameObject *o)
 {
@@ -1896,7 +1889,7 @@ void func_8002907C(GameObject *o)
     case 0:
         if (--o->unk4C <= 0) {
             o->unk4C = 0;
-            if (D_8009BCD9[0] - 1 < ((u8 *)&D_8009BCD8)[0])
+            if (D_8009BCD9_U8Arr[0] - 1 < ((u8 *)&D_8009BCD8)[0])
                 o->unk48 = 0;
         }
         break;
@@ -1927,59 +1920,59 @@ void func_8002907C(GameObject *o)
         break;
     }
     for (i = 0; i < 3; i++) {
-        if (D_8009C40C[D_8007C280[i]] != 0 && D_8009BCF8[0] == D_8007C288[i]) {
+        if (D_8009C40C[D_8007C280[i]] != 0 && D_8009BCF8_U8Arr[0] == D_8007C288[i]) {
             switch (D_800A5464[0]) {
             case 0:
-                if (--D_800B07C8[4 + i] == 0) {
-                    D_800B07C8[4 + i] = 3;
-                    if (++D_8009BCF8[0x40f] >= 0x3c) {
+                if (--D_800B07C8_U8Arr[4 + i] == 0) {
+                    D_800B07C8_U8Arr[4 + i] = 3;
+                    if (++D_8009BCF8_U8Arr[0x40f] >= 0x3c) {
                         D_800A5464[0] = 1;
-                        D_8009BCF8[0x40f] = 0x3c;
-                        D_800B07C8[4 + i] = 0;
-                        D_800B07C8[12 + i] = 1;
-                        D_800B07C8[8 + i] = 6;
+                        D_8009BCF8_U8Arr[0x40f] = 0x3c;
+                        D_800B07C8_U8Arr[4 + i] = 0;
+                        D_800B07C8_U8Arr[12 + i] = 1;
+                        D_800B07C8_U8Arr[8 + i] = 6;
                     }
                 }
                 break;
             case 1:
                 break;
             case 2:
-                D_800B07C8[4 + i] = 0x78;
-                D_800B07C8[8 + i] = 0;
-                D_800B07C8[12 + i] = 0;
-                D_8009BCF8[0x40f] = 0;
+                D_800B07C8_U8Arr[4 + i] = 0x78;
+                D_800B07C8_U8Arr[8 + i] = 0;
+                D_800B07C8_U8Arr[12 + i] = 0;
+                D_8009BCF8_U8Arr[0x40f] = 0;
                 break;
             case 3:
-                D_800B07C8[8 + i] = 0;
-                if (--D_800B07C8[4 + i] == 0) {
+                D_800B07C8_U8Arr[8 + i] = 0;
+                if (--D_800B07C8_U8Arr[4 + i] == 0) {
                     D_800A5464[0] = 0;
-                    D_800B07C8[4 + i] = 1;
+                    D_800B07C8_U8Arr[4 + i] = 1;
                 }
                 break;
             }
-            if (D_800B07C8[8 + i] != 0 && --D_800B07C8[8 + i] == 0) {
-                if (++D_800B07C8[12 + i] >= 4)
-                    D_800B07C8[12 + i] = 0;
-                D_800B07C8[8 + i] = 6;
+            if (D_800B07C8_U8Arr[8 + i] != 0 && --D_800B07C8_U8Arr[8 + i] == 0) {
+                if (++D_800B07C8_U8Arr[12 + i] >= 4)
+                    D_800B07C8_U8Arr[12 + i] = 0;
+                D_800B07C8_U8Arr[8 + i] = 6;
             }
         } else {
-            if (D_800B07C8[4 + i] != 0) {
-                D_800B07C8[i] = 0x78;
-                D_800B07C8[4 + i]--;
-                if (++D_8009BCF8[0x40c + i] >= 0x3c) {
-                    if (D_8009BCF8[0x408 + i] == 9) {
-                        D_8009BCF8[0x40c + i] = 0x3c;
-                        D_800B07C8[4 + i] = 0;
+            if (D_800B07C8_U8Arr[4 + i] != 0) {
+                D_800B07C8_U8Arr[i] = 0x78;
+                D_800B07C8_U8Arr[4 + i]--;
+                if (++D_8009BCF8_U8Arr[0x40c + i] >= 0x3c) {
+                    if (D_8009BCF8_U8Arr[0x408 + i] == 9) {
+                        D_8009BCF8_U8Arr[0x40c + i] = 0x3c;
+                        D_800B07C8_U8Arr[4 + i] = 0;
                     } else {
-                        D_8009BCF8[0x408 + i]++;
-                        D_8009BCF8[0x40c + i] -= 0x3c;
-                        D_800B07C8[12 + i] = 1;
-                        D_800B07C8[8 + i] = 6;
+                        D_8009BCF8_U8Arr[0x408 + i]++;
+                        D_8009BCF8_U8Arr[0x40c + i] -= 0x3c;
+                        D_800B07C8_U8Arr[12 + i] = 1;
+                        D_800B07C8_U8Arr[8 + i] = 6;
                     }
                 }
             }
-            if (D_800B07C8[i] != 0)
-                D_800B07C8[i]--;
+            if (D_800B07C8_U8Arr[i] != 0)
+                D_800B07C8_U8Arr[i]--;
             p = (u8 *)o + i;
             if (p[0x64] != 0 && --p[0x60] == 0) {
                 if (++p[0x64] >= 4)

@@ -201,7 +201,6 @@ static __inline__ s32 inr_443CC(s16 m, s16 lo, s16 hi)
 }
 s32 func_800443CC(void *o, s32 x, s32 y)
 {
-    extern u16 D_1F800282;
     s16 n, m;
     register s32 r asm("$4");
     u16 w, a, c;
@@ -392,7 +391,6 @@ test:
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80045310);
 typedef struct O_45310 { char p[0x44]; s16 *q; } O_45310;
-extern s16 D_1F800282;
 s32 func_80045310(O_45310 *o, s16 a, s16 b)
 {
     s16 n;
@@ -438,7 +436,7 @@ s32 func_80045310(O_45310 *o, s16 a, s16 b)
         if ((s16)(x - b) <= 0) {
             D_1F80027E = k;
             D_1F800280 = h;
-            D_1F800282 = flags;
+            D_1F800282_S16 = flags;
             D_1F800284 = (flags & 0xe00) >> 9;
             return 1;
         }

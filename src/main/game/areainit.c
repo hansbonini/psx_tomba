@@ -3,14 +3,11 @@
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_80032DB4);
 typedef struct { void **p; s32 a, b; } E12_32DB4;
-extern u8 D_800A5399;
-extern u8 D_800A5464[];
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 
 void func_80032DB4(GameObject *o)
 {
-    extern u8 D_800A53A7[];
     extern E12_32DB4 D_8007D2F0[];
     s32 t;
     u32 u, w;
@@ -100,9 +97,6 @@ void func_8003301C(u8 *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
 extern s32 *D_8007D2F0[];
-extern u8 D_800A5399;
-extern u8 D_800A53A7;
-extern u8 D_8009BCF8;
 
 void func_800330EC(GameObject *o)
 {
@@ -139,7 +133,7 @@ void func_800330EC(GameObject *o)
             o->anim = (void *)D_8007D2F0[o->subtype * 3][o->unkC];
             readAnimFrameCount(o);
             o->visible = D_800A5399;
-            c = D_800A53A7;
+            c = D_800A53A7_U8;
             o->objectIndex = 0x7f;
             o->unkF = c - 1;
             if (D_8009BCF8 == 3)
@@ -201,11 +195,9 @@ void func_800332CC(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033374);
-extern s32 D_800A53AC;
 
 void func_80033374(char a, char b, char c)
 {
-    extern s32 D_800A53A8;
     s32 t;
     char *p = allocObjectLayer3();
     if (p != 0) {
@@ -213,8 +205,8 @@ void func_80033374(char a, char b, char c)
         p[2] = 0x4e;
         p[3] = a;
         p[0xc] = b;
-        *(s32 *)(p + 0x10) = D_800A53A8;
-        *(s32 *)(p + 0x14) = D_800A53AC;
+        *(s32 *)(p + 0x10) = D_800A53A8_S32;
+        *(s32 *)(p + 0x14) = D_800A53AC_S32;
         t = D_800A53B0;
         p[5] = c;
         *(s32 *)(p + 0x18) = t;
@@ -222,7 +214,6 @@ void func_80033374(char a, char b, char c)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033404);
-extern s32 D_800A53A8[];
 
 void func_80033404(s32 a, s32 b)
 {

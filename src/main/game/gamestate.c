@@ -1,14 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-extern u32 D_80076FAC_data[] asm("D_80076FAC");
-extern u32 D_80077084_data[] asm("D_80077084");
-extern u32 D_8007716C_data[] asm("D_8007716C");
-extern u32 D_800771FC_data[] asm("D_800771FC");
-extern u32 D_8007722C_data[] asm("D_8007722C");
 extern u32 D_80077274[];
 extern u32 D_8007728C[];
-extern u32 D_800772BC_data[] asm("D_800772BC");
 
 u32 D_80076E88[3] = {
     0x000A000A, 0x000B000A, 0x000D000C

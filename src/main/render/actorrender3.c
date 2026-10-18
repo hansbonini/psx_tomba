@@ -6,8 +6,6 @@
 typedef struct { s16 n, p2, x0, y0, x1, y1; char pad[8]; } ENT_4B450;
 typedef struct { ENT_4B450 e[7]; } ROW_4B450;
 typedef struct { char pad[0x4c]; u16 w4c; } C4C_4B450;
-extern unsigned long LZ_FILE_CTRL_UnsignedLong asm("LZ_FILE_CTRL");
-extern char D_1F8000C0_CharArr[] asm("D_1F8000C0");
 extern ROW_4B450 LOAD_BUFFER_ROW_4B450Arr[] asm("LOAD_BUFFER");
 
 
@@ -560,7 +558,6 @@ typedef struct {
     u16 x3, y3;
     u8 u3, v3; u16 pad3;
 } PolyFT4_4CC84;
-extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
 static __inline__ s32 project_4CC84(void)
 {
     gte_ldv0(&D_1F800060);

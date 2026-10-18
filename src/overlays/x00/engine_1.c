@@ -325,7 +325,6 @@ void func_800EDA30(char *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDB40);
-extern s16 D_8009BCAE;
 
 void func_800EDB40(GameObject *o)
 {
@@ -392,7 +391,6 @@ typedef struct TO_EDD2C {
     char p3[0xb6 - 0xb4];
     s16 w6;
 } TO_EDD2C;
-extern s16 D_8009BCAE;
 
 static __inline__ void add_EDD2C(TO_EDD2C *p)
 {
@@ -443,7 +441,6 @@ void func_800EDE44(void *o, u16 x, s16 y)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDEBC);
-extern GameObject *D_8009B698_GameObjectPtr asm("D_8009B698");
 
 void func_800EDEBC(GameObject *o, u16 anim)
 {
@@ -565,7 +562,6 @@ void func_800EE1F0(TO_EE1F0 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE26C);
-extern u8 D_8009BCF8;
 
 s16 func_800EE26C(void)
 {

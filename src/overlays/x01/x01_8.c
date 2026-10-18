@@ -6,8 +6,6 @@
 typedef struct { s16 z, y, x; } P3_37888;
 
 extern P3_37888 D_8013BD24[];
-extern void *D_8013DA88_VoidPtrArr[] asm("D_8013DA88");
-extern s32 D_1F8002D4[];
 extern s32 fixedMulSin(s32, s32);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 

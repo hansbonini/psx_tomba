@@ -130,7 +130,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BB4C);
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BD20);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BDC0);
-extern u16 D_800A53AE_U16 asm("D_800A53AE");
 
 void func_8011BDC0(GameObject *o)
 {

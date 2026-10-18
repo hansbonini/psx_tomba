@@ -24,18 +24,13 @@ typedef struct {
     char pc0[0xcc - 0xc0];
     s16 wcc;
 } S_1F7E4;
-extern s32 *D_1F800334_S32PtrArr[] asm("D_1F800334");
 #define DAT_1f800334p D_1F800334_S32PtrArr[0]
-extern s32 D_1F800334_S32Arr[] asm("D_1F800334");
 #define DAT_1f800334 D_1F800334_S32Arr[0]
 #define DAT_1f800318p D_1F800318[0]
-extern s32 D_1F800318_S32Arr[] asm("D_1F800318");
 #define DAT_1f800318 D_1F800318_S32Arr[0]
 #define DAT_1f800314p D_1F800314[0]
-extern s32 D_1F800314_S32Arr[] asm("D_1F800314");
 #define DAT_1f800314 D_1F800314_S32Arr[0]
 #define DAT_1f800310p FOUR_DATA[0]
-extern s32 FOUR_DATA_S32Arr[] asm("FOUR_DATA");
 #define DAT_1f800310 FOUR_DATA_S32Arr[0]
 extern char D_800E3188[];
 
@@ -251,7 +246,6 @@ void func_8011FBE0(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_8011FF1C);
 extern void probeCollisionAtDepthA(GameObject *, s32, s32);
 typedef struct G_1FF1C { char p[0x16]; s16 y; } G_1FF1C;
-extern s32 D_800A5424;
 
 void func_8011FF1C(GameObject *o)
 {
@@ -276,7 +270,7 @@ void func_8011FF1C(GameObject *o)
         (*(Fix16 **)&D_800A53D8)->p.whole = o->h->p.whole;
         (*(G_1FF1C *)&PLAYER).y = o->y.p.whole - 8;
         (*(Fix16 **)&D_800A53DC)->p.whole = o->d->p.whole;
-        D_800A5424 = o->unk84 >> 4;
+        D_800A5424_S32 = o->unk84 >> 4;
 
     }
     o->velH = o->velH - o->velX;

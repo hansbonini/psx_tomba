@@ -277,13 +277,6 @@ loop:
 
 
 typedef struct { s16 m[3][3]; s16 pad; s32 t[3]; } MAT_16498;
-extern s32 D_1F800168_S32Arr[] asm("D_1F800168");
-extern s32 D_1F80016C_S32Arr[] asm("D_1F80016C");
-extern u8 PLAYER_U8Arr[] asm("PLAYER");
-extern s16 D_800A5408_S16Arr[] asm("D_800A5408");
-extern s32 D_800A53A8[];
-extern s32 D_800A53AC[];
-extern s32 D_800A53B0_S32Arr[] asm("D_800A53B0");
 
 void func_80116498(GameObject *o)
 {
@@ -334,7 +327,7 @@ void func_80116498(GameObject *o)
         D_800A5408_S16Arr[0] = 0x18;
         D_800A540A[0] = 0x30;
         D_800A53A8[0] = o->x.raw;
-        D_800A53AC[0] = o->y.raw;
+        D_800A53AC_S32Arr[0] = o->y.raw;
         D_800A53B0_S32Arr[0] = o->z.raw;
         D_1F800168_S32Arr[0] = o->x.raw;
         D_1F80016C_S32Arr[0] = o->y.raw;
@@ -1046,7 +1039,6 @@ typedef struct {
     u16 uv3;
     s8 dx, dy;
 } EL_1C234;
-extern s32 LZ_FILE_CTRL_S32 asm("LZ_FILE_CTRL");
 
 static __inline__ s32 ot_1C234(u32 *a, s32 b, s32 c, s32 z, u32 e)
 {

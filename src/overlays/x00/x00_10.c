@@ -9,7 +9,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135A94);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DD0);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DDC);
-extern u32 D_8009BCEC[];
 
 void func_80135DDC(GameObject *o)
 {
@@ -44,7 +43,7 @@ void func_80135DDC(GameObject *o)
             n->animFrame = 0;
             n->subtype = 0;
             n->z.p.whole = -0x28;
-            f = D_8009BCEC[0];
+            f = D_8009BCEC_U32Arr[0];
             if (f & 8) if (f & 0x10) {
                 n->x.p.whole = 0xc29;
                 n->y.p.whole = -0x2e3;
@@ -64,11 +63,7 @@ void func_80135DDC(GameObject *o)
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135F04);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80136024);
-extern GameObject PLAYER_GameObject asm("PLAYER");
-extern GameObject *D_800A5428;
 extern u8 D_800A5458;
-extern u8 D_8009C226_U8 asm("D_8009C226");
-extern s32 D_8009BCEC_S32 asm("D_8009BCEC");
 extern char D_800108A8[];
 extern GameObject *showMessageBox(s32, s32, s32, s32);
 extern void setEventStarted(s32, s32, s32);
@@ -245,7 +240,7 @@ void func_80136024(GameObject *o)
         D_8009BCA6 = 0;
         D_8009BCA7 = 0;
         D_8009BCAA = 0;
-        D_8009BCEC[0] |= 0x80;
+        D_8009BCEC_U32Arr[0] |= 0x80;
         break;
     case 4:
         if (--o->clut != 0)
@@ -270,7 +265,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366B0);
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366BC);
 typedef struct N_366BC { char p0; char f1; char f2; char f3; char p1[0xe]; s16 x; char p2[2]; s16 y; char p3[2]; s16 z; char p4[0x2e - 0x1c]; s16 w; } N_366BC;
 typedef struct O_366BC { char p0[4]; u8 state; char p1[0x1c-5]; N_366BC *n; } O_366BC;
-extern u8 D_8009C376;
 
 void func_801366BC(O_366BC *o)
 {
@@ -284,7 +278,7 @@ void func_801366BC(O_366BC *o)
         if (n) {
             n->p0 = 1;
             n->f2 = 0x15;
-            if (D_8009C376 == 0) {
+            if (D_8009C376_U8 == 0) {
                 n->w = 1;
                 n->x = 0x140;
                 n->y = -0x32;
@@ -305,9 +299,7 @@ void func_801366BC(O_366BC *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013679C);
-extern u8 D_800A5401;
 extern u8 D_800A5458;
-extern u8 D_800A5444;
 
 s16 func_8013679C(GameObject *o)
 {
@@ -326,7 +318,7 @@ s16 func_8013679C(GameObject *o)
             if (D_8009C40F != 0) {
                 if (D_8009C225 == 0) {
                     if ((*(s16 *)&D_800A53AE) < -0x110) {
-                        if (D_800A5444 == 3)
+                        if (D_800A5444_U8 == 3)
                             goto l6ac;
                         if (D_8009BCA8 == 0)
                             return n;
@@ -352,7 +344,7 @@ s16 func_8013679C(GameObject *o)
                 }
             } else {
                 if (D_8009C225 == 0) {
-                    if ((*(s16 *)&D_800A53AE) < -0x110 && D_800A5444 == 3) {
+                    if ((*(s16 *)&D_800A53AE) < -0x110 && D_800A5444_U8 == 3) {
                     l6ac:
                         if ((*(u8 **)&D_800A547C)[2] == 0x15) {
                             n++;
@@ -374,7 +366,7 @@ s16 func_8013679C(GameObject *o)
         } else {
             if (D_8009C375 != 0)
                 n = 1;
-            if (((*(s32 *)&D_8009BCEC) & 0x40) == 0 || D_8009C363 != 0)
+            if (((*(s32 *)&D_8009BCEC_U32Arr) & 0x40) == 0 || D_8009C363 != 0)
                 n++;
             if (n == 0)
                 o->state = 2;
@@ -387,7 +379,6 @@ s16 func_8013679C(GameObject *o)
 typedef struct { GameObject o; u8 bc0; } BigObj_36AFC;
 extern BigObj_36AFC PLAYER_BigObj_36AFC asm("PLAYER");
 #define X PLAYER_BigObj_36AFC.o
-extern u8 D_8009C375_U8Arr[] asm("D_8009C375");
 extern u8 *D_8009B698;
 extern void *D_80139F60;
 extern char D_800108A8[];
@@ -675,7 +666,7 @@ void func_801373FC(u8 *o)
             if (q != 0) {
                 q[0] = 1;
                 q[2] = 0x15;
-                if (D_8009C376 == 0) {
+                if (D_8009C376_U8 == 0) {
                     *(s16 *)(q + 0x2e) = 1;
                     *(s16 *)(q + 0x12) = 0x140;
                     *(s16 *)(q + 0x16) = -0x32;

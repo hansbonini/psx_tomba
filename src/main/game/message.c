@@ -132,10 +132,6 @@ void func_8002EBC4(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002ED1C);
-extern u8 D_800A5399;
-extern u16 *D_800A53BC[];
-extern s32 D_800A5424;
-extern u8 D_800A53A7[];
 
 void func_8002ED1C(GameObject *o)
 {
@@ -146,16 +142,16 @@ void func_8002ED1C(GameObject *o)
         o->anim = (*(void **)&D_80014C8C);
         readAnimFrameCount(o);
         if (D_800A5416 > 0 && *D_800A53BC[0] == 0x47)
-            o->unk8C = D_800A5424;
+            o->unk8C = D_800A5424_S32;
     } else if (D_800A539D == 4 && D_800A5416 >= -0xc7) {
         o->anim = (*(void **)&D_80014C8C);
         readAnimFrameCount(o);
         if (D_800A5416 > 0)
-            o->unk8C = D_800A5424;
+            o->unk8C = D_800A5424_S32;
     } else {
         o->anim = D_80014C90;
         readAnimFrameCount(o);
-        d = D_800A5424;
+        d = D_800A5424_S32;
         o->unk8C = (u8)((PLAYER.obj.animFrame & 1) ? d - 0x20 : d + 0x20);
     }
     o->h->p.whole = ((Fix16 **)&D_800A53D8)[0]->p.whole;
@@ -213,8 +209,6 @@ void updateStrikeBurst(GameObject *o)
 INCLUDE_ASM("nonmatchings/main/game/message", func_8002F05C);
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F138);
-extern s32 D_800A53A8[];
-extern u8 D_800A53A7[];
 
 void func_8002F138(void)
 {
@@ -244,7 +238,6 @@ void func_8002F138(void)
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F220);
 void func_8002F220(GameObject *o)
 {
-    extern u16 D_800A53B2;
     u8 s = o->state;
     s16 t;
     switch (s) {
@@ -260,7 +253,7 @@ void func_8002F220(GameObject *o)
         } else {
             o->y.p.whole = -0x28;
         }
-        t = D_800A53B2;
+        t = D_800A53B2_U16;
         o->state = 1;
         o->subState = 0;
         o->z.p.whole = t;
@@ -292,7 +285,6 @@ void func_8002F220(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F404);
-extern u16 D_800A53B2[];
 
 void func_8002F404(GameObject *o)
 {
@@ -434,7 +426,6 @@ void func_8002F804(GameObject *a, s16 b, char c)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", clearTalkPose);
-extern u8 D_800A539A;
 extern u8 TALK_POSE;
 void func_800EDDDC(u8 *p, s32 a, s32 b);
 void clearTalkPose(void)

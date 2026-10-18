@@ -4,7 +4,6 @@
 INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004DC34);
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004DD14);
-extern u8 D_800A539A;
 
 void func_8004DD14(void)
 {
@@ -102,8 +101,6 @@ void func_8004E3EC(void)
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E468);
 typedef struct { s16 x, y; } Pt_4E468;
 extern Pt_4E468 D_8007EC5C[];
-extern u8 D_8009BCF8;
-extern char D_800B07C8[];
 
 void func_8004E468(char *o)
 {
@@ -161,7 +158,6 @@ typedef struct {
     char pad20[0x52 - 0x20];
     s16 n;
 } SPR_4E900;
-extern u8 D_8009BCD9;
 extern void func_8004F3DC(SPR_4E900 *s, s32 x, s32 y, s32 v);
 
 void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
@@ -212,7 +208,6 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004EB10);
 typedef struct { u8 a, pa, b, pb, c, pc; } Col6_4EB10;
-extern u8 D_8009BCF8;
 extern Col6_4EB10 D_8007EC80[];
 
 void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)

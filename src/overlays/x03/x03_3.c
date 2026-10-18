@@ -363,7 +363,6 @@ void func_8011F158(s32 a, char *p)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011F188);
-extern GameObject *D_1F8003C0;
 
 void func_8011F188(GameObject *a, GameObject *b)
 {
@@ -514,7 +513,6 @@ s32 func_8011F8F4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011FA40);
-extern u16 D_1F800282;
 extern s16 probeCollisionAtDepthA(GameObject *, s32, s32);
 
 s32 func_8011FA40(GameObject *o)
@@ -584,7 +582,6 @@ s32 func_8011FB5C(O_1FB5C *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011FC48);
-extern u16 D_1F80016E;
 
 u8 func_8011FC48(s32 a)
 {

@@ -683,12 +683,6 @@ INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80119798);
 
 
 
-extern u8 D_8009D6DD_U8Arr[] asm("D_8009D6DD");
-extern u8 D_8009D6DE_U8Arr[] asm("D_8009D6DE");
-extern u8 D_8009D6DF_U8Arr[] asm("D_8009D6DF");
-extern u8 D_8009E3ED_U8Arr[] asm("D_8009E3ED");
-extern u8 D_8009E3EE_U8Arr[] asm("D_8009E3EE");
-extern u8 D_8009E3EF_U8Arr[] asm("D_8009E3EF");
 
 void func_80119818(GameObject *o)
 {
@@ -1073,7 +1067,6 @@ void func_8011AAF4(GameObject *o)
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8011ADC0);
 
-extern GameObject *D_8009B698_GameObjectPtr asm("D_8009B698");
 
 void func_8011ADC0(GameObject *o)
 {
@@ -1147,7 +1140,6 @@ void func_8011ADC0(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8011AFCC);
-extern GameObject *D_8009E454_GameObjectPtr asm("D_8009E454");
 
 void func_8011AFCC(GameObject *o)
 {
@@ -1820,7 +1812,6 @@ INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_801223F0);
 INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80122538);
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80122650);
-extern GameObject PLAYER_GameObject asm("PLAYER");
 void func_800EDDDC(GameObject *o, s16 a, s16 c);
 void setEventStarted(s32 a, s32 b, s32 c);
 
@@ -2358,7 +2349,6 @@ void func_801263CC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_801264F8);
-extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 #define D_800A6078 D_800A53D8_Fix16PtrArr[0]
 
 void func_801264F8(GameObject *o, s32 n)
@@ -2719,7 +2709,6 @@ void func_80129E04(GameObject *o)
 INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80129F68);
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012AA08);
-extern s32 D_1F8002D0;
 
 void func_8012AA08(GameObject *o)
 {
@@ -2731,7 +2720,7 @@ void func_8012AA08(GameObject *o)
         o->unkA = 2;
         *(s32 *)((char *)o + 0x8c) = 0;
         o->unkAC = 0x23;
-        o->spriteBank = D_1F8002D0;
+        o->spriteBank = D_1F8002D0_S32;
         o->hitOffsetX = D_8012E780;
         o->hitWidth = D_8012E781;
         o->hitOffsetY = D_8012E782;
@@ -2881,7 +2870,6 @@ void func_8012C1A0(GameObject *o)
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012C2EC);
 
 
-extern s16 D_1F80016A_S16 asm("D_1F80016A");
 extern Vec3s D_8012E7CC[];
 
 void func_8012C2EC(GameObject *o)
@@ -3401,7 +3389,6 @@ void func_8012DBE8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012DC38);
-extern s16 D_800A53AE_S16 asm("D_800A53AE");
 
 void func_8012DC38(GameObject *o)
 {

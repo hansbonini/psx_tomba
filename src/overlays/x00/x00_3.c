@@ -6,16 +6,11 @@
 typedef struct { u8 p0[9]; u8 b9; } P8011F9E0_1ED30;
 
 extern P8011F9E0_1ED30 *D_8009B698;
-extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 #define D_800A6078 D_800A53D8_Fix16PtrArr[0]
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
-extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 #define D_800A603C D_800A539C_U8Arr[0]
 #define D_800A603D D_800A539D_U8Arr[0]
 #define D_800A603E D_800A539E_U8Arr[0]
-extern u8 D_800A5401[];
-#define D_800A60A1 D_800A5401[0]
+#define D_800A60A1 D_800A5401_U8Arr[0]
 extern s16 fixedMulSin(s32, s32);
 extern void setEventStarted(s32, s32, s32);
 
@@ -264,7 +259,6 @@ typedef struct O_1F5F4 {
     char p6[0x3c - 0x30]; s32 d3c; char p7[0x68 - 0x40]; u8 b68, b69; char p8[2];
     u16 w6c, w6e, w70, w72; char p9[0x90 - 0x74]; struct O_1F5F4 *child;
 } O_1F5F4;
-extern s32 D_1F8002D4;
 extern s32 D_8013A498;
 
 void func_8011F5F4(O_1F5F4 *o)
@@ -275,7 +269,7 @@ void func_8011F5F4(O_1F5F4 *o)
     case 0:
         switch (o->step) {
         case 0:
-            g = &D_1F8002D4;
+            g = &D_1F8002D4_S32;
             o->w6c = 20;
             o->w6e = 40;
             o->w70 = 12;

@@ -122,7 +122,6 @@ typedef struct {
     char p28[0x2c - 0x28]; s16 w2c, w2e, w30, w32; s32 *p34; char p38[0x78 - 0x38]; s32 d78; s32 d7c;
 } C_246B0;
 typedef struct { char p[0x4c]; u16 w4c; } O_246B0;
-extern s16 D_800A38E4;
 extern void func_8002A0A0(C_246B0 *);
 #define FLAG (SPAD->unk1C8)
 #define SFLAG ((*(s16 *)&SPAD->unk1C8))

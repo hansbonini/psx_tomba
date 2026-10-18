@@ -19,7 +19,6 @@ INCLUDE_RODATA("overlays/x16/nonmatchings/x16/x16", func_80115214);
 // INCLUDE_ASM("overlays/x16/nonmatchings/x16/x16", func_80115620);
 
 
-extern s32 D_1F8002D4;
 
 void func_80115620(GameObject *o)
 {
@@ -59,7 +58,7 @@ void func_80115620(GameObject *o)
             o->anim = D_8011A7C4[o->unkC];
             break;
         }
-        o->spriteBank = D_1F8002D4;
+        o->spriteBank = D_1F8002D4_S32;
         readAnimFrameCount(o);
         break;
     case 1:

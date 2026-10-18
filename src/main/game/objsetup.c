@@ -2,7 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", updateGrabSnout);
-extern u16 D_1F80016E[];
 extern s16 fixedMulSin2(s16 a, s16 b);
 
 void updateGrabSnout(GameObject *o)
@@ -22,7 +21,7 @@ void updateGrabSnout(GameObject *o)
         o->anim = D_80012680;
         o->spriteBank = D_1F8002D8[0];
         o->unk30 = D_1F80016A[0] << 16;
-        o->y.p.whole = D_1F80016E[0];
+        o->y.p.whole = D_1F80016E_U16Arr[0];
         o->d->p.whole = D_1F800172[0];
         o->velV = -0xc00;
         o->timer = 1;
@@ -266,9 +265,6 @@ void func_80032374(u8 *o)
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_800324B4);
 typedef struct { void **a; s32 p[2]; } A12_324B4;
 extern A12_324B4 D_8007D2F0[];
-extern u8 D_800A5399;
-extern u8 D_800A53A7;
-extern u8 D_8009BCF8;
 
 void func_800324B4(GameObject *o)
 {
@@ -277,7 +273,7 @@ void func_800324B4(GameObject *o)
         o->anim = D_8007D2F0[o->subtype].a[o->unkC];
         readAnimFrameCount(o);
         o->visible = D_800A5399;
-        o->unkF = D_800A53A7 - 1;
+        o->unkF = D_800A53A7_U8 - 1;
         o->objectIndex = 0x7f;
         if (D_8009BCF8 == 3) {
             o->objectIndex = 0x40;
@@ -300,7 +296,6 @@ void func_800324B4(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_800325C0);
-extern char D_800A5464;
 
 void func_800325C0(GameObject *o)
 {
@@ -336,7 +331,7 @@ void func_800325C0(GameObject *o)
                 PLAYER.obj.active = 3;
             else
                 PLAYER.obj.active = 1;
-            D_800A5464 = 3;
+            D_800A5464_Char = 3;
             o->objectIndex = 0;
             o->state = 2;
             goto L;
@@ -358,10 +353,10 @@ L:
     o->d->p.whole = PLAYER.obj.d->p.whole;
     switch (o->unkC) {
     case 0:
-        b = D_800A53A7 + 1;
+        b = D_800A53A7_U8 + 1;
         break;
     case 1:
-        b = D_800A53A7 - 1;
+        b = D_800A53A7_U8 - 1;
         break;
     default:
         return;
@@ -462,7 +457,7 @@ void func_80032934(GameObject *o)
                 v = o->objectIndex;
         } else if (o->timer < 0) {
             if (D_800A5478 > 0) PLAYER.obj.active = 3; else PLAYER.obj.active = 1;
-            D_800A5464 = 3;
+            D_800A5464_Char = 3;
             o->objectIndex = 0;
             o->state = 2;
             goto anim;

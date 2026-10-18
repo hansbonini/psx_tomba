@@ -441,7 +441,6 @@ extern E_593EC D_8007EDA4[];
 
 void func_800593EC(PO_593EC *o, GameObject *e)
 {
-    extern GameObject *D_1F8003C0;
     s16 d, ad, t;
     u16 ox, oy;
     char pad[8];
@@ -478,7 +477,6 @@ typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_5975C;
 
 s32 func_8005975C(PO_5975C *o, GameObject *e)
 {
-    extern GameObject *D_1F8003C0;
     s16 d, ad, dy, t;
     if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
         return 0;
@@ -553,7 +551,6 @@ s32 func_8005975C(PO_5975C *o, GameObject *e)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059A40);
-extern s32 D_1F8003C0;
 
 s32 func_8005975C();
 
@@ -561,7 +558,7 @@ s32 func_80059A40(void *o)
 {
     u8 **q = D_1F800268;
     u8 *p;
-    D_1F8003C0 = 0;
+    D_1F8003C0_S32 = 0;
     D_1F80019E = D_1F800254;
     while (D_1F80019E != 0) {
         p = *q;
@@ -574,7 +571,7 @@ s32 func_80059A40(void *o)
             }
         }
     }
-    return D_1F8003C0;
+    return D_1F8003C0_S32;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchAreaUnlayeredHandler);
@@ -599,7 +596,6 @@ typedef struct {
     char p5[0xa9 - 0x9f]; u8 ba9;
     char p6[0xe8 - 0xaa]; u16 se8; s16 sea;
 } TO_59B58;
-extern u16 D_1F800250;
 extern u8 **D_1F800260;
 extern void func_80125DA8(TO_59B58 *, u8 *);
 extern void func_80126064(TO_59B58 *, u8 *);
@@ -618,7 +614,7 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
     u8 *e;
 
     if (o->b9e != 0) return 0;
-    D_1F8003C0 = 0;
+    D_1F8003C0_S32 = 0;
     if (f) o->sea = o->s16 - 2;
     else o->sea = o->s16 - 8;
     d = 0x10;
@@ -628,8 +624,8 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
         o->b9e = (r == 2) ? 5 : 6;
         if (o->s2e & 1) o->h40->s2 -= 0xc;
         else o->h40->s2 += 0xc;
-        D_1F8003C0++;
-        return D_1F8003C0;
+        D_1F8003C0_S32++;
+        return D_1F8003C0_S32;
     }
     switch (o->anim->s4) {
     case 0: n = 9; break;
@@ -708,7 +704,7 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
             }
         }
     }
-    if (D_1F8003C0 == 0) {
+    if (D_1F8003C0_S32 == 0) {
         q = D_1F800260;
         D_1F80019E = D_1F800250;
         while (D_1F80019E != 0) {
@@ -727,7 +723,7 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
             }
         }
     }
-    return D_1F8003C0;
+    return D_1F8003C0_S32;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059F7C);
@@ -798,7 +794,6 @@ typedef struct {
     u8 b0e;
     s8 b0f;
 } S_5A184;
-extern u16 D_8009BCCA_U16Arr[] asm("D_8009BCCA");
 extern s32 APD_DATA[];
 extern void func_8005A508(S_5A184 *);
 

@@ -49,7 +49,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117C4C);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117C60);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117D3C);
-extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
 
 
 

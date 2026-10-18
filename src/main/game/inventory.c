@@ -1351,7 +1351,6 @@ typedef struct {
     char p0[0x24]; s32 d24; char p1[8]; s16 w30; s16 w32; P_2C7D8 *d34; P_2C7D8 *d38;
     u8 b3c; u8 b3d; char p2[0x1a]; u16 w58;
 } O_2C7D8;
-extern u8 D_800A5436;
 
 static __inline__ void Clamp_2C7D8(O_2C7D8 *o)
 {
@@ -1383,7 +1382,7 @@ void func_8002C7D8(O_2C7D8 *o)
     S_2C7D8 *s = &PLAYER;
     s32 t;
     if (D_8009BCA1 == 0) {
-        switch (D_800A5436) {
+        switch (D_800A5436_U8) {
         case 4:
             if ((*(u16 *)&GAME) != 10 && s->ba9 == 0)
                 goto c4;
@@ -1526,7 +1525,6 @@ typedef struct {
     char p38[0x44 - 0x38];
     u16 f44;
 } S_2CC20;
-extern u16 D_1F80016E;
 
 void func_8002CC20(S_2CC20 *o)
 {
@@ -1565,7 +1563,6 @@ typedef struct {
     char pad2[0x44 - 0x38];
     u16 w44;
 } S8002A258_2CD7C;
-extern s16 D_1F8000E6_S16Arr[] asm("CAMERA_TILT");
 
 void func_8002CD7C(S8002A258_2CD7C *o)
 {
@@ -1597,7 +1594,6 @@ void func_8002CD7C(S8002A258_2CD7C *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CEF8);
-extern u8 PLAYER_U8Arr[] asm("PLAYER");
 static __inline__ void lim_2CEF8(s16 *q, s16 x, s32 k) { if (*q < x - k) *q = x - k; }
 void func_8002CEF8(GameObject *o)
 {

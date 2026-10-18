@@ -6,7 +6,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8010E750);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8010F1C0);
 typedef struct { s16 a[3]; char pad[0x24 - 6]; u16 g[10]; char pad2[0x74 - 0x38]; } T74_0F1C0;
-extern u8 D_8009BCF8;
 extern u8 D_8009C36E;
 typedef struct { char pad[0x2e]; u16 animFrame; char p1[0xb2 - 0x30]; s16 wb2; char pad2[0xc1 - 0xb4]; u8 bc1; } P_0F1C0;
 
@@ -423,7 +422,6 @@ void func_8011023C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_8011032C);
 extern u8 D_8009C36E;
-extern u8 D_8009BCF8;
 extern u8 D_80114860[];
 
 void func_8011032C(u8 *p)
@@ -575,8 +573,6 @@ typedef struct O_108E0 { u8 b0, b1, b2, b3, b4, b5, state, b7; char p0[4]; u8 bc
   char p1[0x16-0x10]; s16 y; char p2[0x20-0x18]; s16 timer; char p3[2]; s32 *anim; char p4[0x40-0x28];
   s16 *h; s16 *d; char p5[0x6b-0x48]; u8 b6b; char p6[0xa5-0x6c]; u8 ba5; } O_108E0;
 extern T_108E0 D_80114C7C[];
-extern u8 D_800A5399;
-extern u8 D_800A53A7[];
 
 void func_801108E0(O_108E0 *o)
 {
@@ -852,7 +848,6 @@ void func_801112A8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80111554);
-extern s32 GAME_S32Arr[] asm("GAME");
 extern s32 *D_80114D58[];
 extern s32 *D_80114C98[];
 extern void func_80023020(GameObject *o);
@@ -1075,8 +1070,6 @@ void func_80111C68(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80111D20);
-extern u16 GAME_U16Arr[] asm("GAME");
-extern u8 D_8009BCA3;
 
 #define SETANIM(o) \
     o->unkAC = 1; \
@@ -1098,7 +1091,7 @@ void func_80111D20(GameObject *o)
         }
         if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0x10)) o->subState++;
     case 1:
-        if (D_8009BCA3) {
+        if (D_8009BCA3_U8) {
             o->state = 2;
             o->subState = 0;
         }
@@ -1324,7 +1317,6 @@ void func_80112708(GameObject *o)
 typedef void (*ObjFn_127D4)(GameObject *);
 typedef union { s32 w; struct { u16 a, b; } h; } Stage_127D4;
 extern Stage_127D4 GAME_Stage_127D4 asm("GAME");
-extern s32 D_1F8002D4[];
 extern ObjFn_127D4 D_801150E0[];
 extern ObjFn_127D4 D_801150FC[];
 extern ObjFn_127D4 D_80115118[];
@@ -1720,8 +1712,6 @@ void func_80113288(S_13288 *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80113610);
 typedef struct { s16 s[6]; } P6_13610;
 extern u8 *D_8009B698;
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A5401;
 
 void func_80113610(GameObject *o)
 {

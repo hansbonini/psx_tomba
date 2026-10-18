@@ -831,7 +831,6 @@ s32 func_80051DA4(TO_51DA4 *a, TO_51DA4 *b)
 
 void func_80051EE0(GameObject *o, GameObject *e)
 {
-    extern Vec2s D_8007EDD0[];
     s16 dx, dy, sx, px, cx, ax;
     s16 tx, ty;
     Vec2s *t;
@@ -1081,7 +1080,6 @@ s32 boxesOverlapFlipAware(u8* arg0, u8* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800527C8);
-extern Vec2u D_8007EDD0[];
 
 void func_800527C8(GameObject *o, GameObject *q)
 {
@@ -1093,7 +1091,7 @@ void func_800527C8(GameObject *o, GameObject *q)
     u16 b0;
 
     if ((u16)(o->d->p.whole - q->d->p.whole + 0x2d) > 0x5a) return;
-    { u16 *u = &D_8007EDD0[q->unkC].x;
+    { u16 *u = &D_8007EDD0_Vec2uArr[q->unkC].x;
     b0 = o->hitOffsetX;
     tx = *u++;
     ty = *u; }

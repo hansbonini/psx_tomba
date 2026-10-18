@@ -84,11 +84,6 @@ void func_8011792C(void) {
 // INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117934);
 
 
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
-extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
-extern u8 D_8009BCA1_U8Arr[] asm("D_8009BCA1");
-extern s16 D_1F8000F2_S16Arr[] asm("D_1F8000F2");
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern void func_800EDEBC(GameObject *, s32);
 

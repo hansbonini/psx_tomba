@@ -872,7 +872,6 @@ INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80118C2C);
 
 typedef struct { u8 b0f; char p; u16 w1e; u16 cx, cy; void **anims; } E12_18EFC;
 extern E12_18EFC D_80129F04[];
-extern s16 D_1F800186_S16Arr[] asm("D_1F800186");
 
 void func_80118EFC(GameObject *o)
 {
@@ -2031,7 +2030,6 @@ typedef struct {
     u16 uv2;
 } Face_1ECB0;
 extern PolyFT3_1ECB0 *D_1F800164_PolyFT3_1ECB0Ptr asm("D_1F800164");
-extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
 
 
 long *func_8011ECB0(long *f, unsigned long *ot)
@@ -2785,7 +2783,6 @@ void func_80123A14(GameObject *o)
 
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80123C18);
 
-extern s32 D_1F8002D4[];
 extern void setEventComplete(s32, s32);
 extern void addItemToInventory(s32, s32, s32);
 
@@ -3469,7 +3466,6 @@ void func_80128C48(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x09/nonmatchings/x09/x09", func_80128C5C);
-extern GameObject PLAYER_GameObject asm("PLAYER");
 extern void func_800EDE44(GameObject *, s32, s32);
 
 void func_80128C5C(GameObject *o)

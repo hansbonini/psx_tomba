@@ -201,7 +201,6 @@ void func_801197E8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011994C);
 
-extern s32 D_1F8002DC[];
 
 void func_8011994C(GameObject *o)
 {
@@ -415,7 +414,6 @@ void func_80119FEC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011A0C8);
-extern char SCRATCHPAD_CharArr[] asm("SCRATCHPAD");
 
 #define V5C (*(s32 *)((char *)o + 0x5c))
 #define V60 (o->unk60)
@@ -615,7 +613,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011C840);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011C914);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011C948);
-extern s16 D_800A38E4;
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
 s32 func_8011C948(GameObject *o)
@@ -639,7 +636,6 @@ s32 func_8011C948(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011CA00);
-extern s16 D_800A38E4;
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 

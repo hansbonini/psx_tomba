@@ -140,7 +140,6 @@ void func_8012175C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_11", func_80121B04);
 
-extern s16 D_1F80017A[];
 
 s32 func_80121B04(GameObject *o)
 {
@@ -152,7 +151,7 @@ s32 func_80121B04(GameObject *o)
         n->subtype = 0;
         n->unkC = 0;
         n->x.raw = (((s16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))[0] + 0xa0) << 16;
-        n->y.raw = (D_1F80017A[0] - 0xf0) << 16;
+        n->y.raw = (D_1F80017A_S16Arr[0] - 0xf0) << 16;
         n->z.raw = o->z.p.whole << 16;
     }
 }

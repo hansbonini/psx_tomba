@@ -529,7 +529,6 @@ void func_801288C0(GameObject *o)
 #undef SET_ANIM
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80128E64);
-extern void *D_8013EFFC_VoidPtrArr[] asm("D_8013EFFC");
 
 void func_80128E64(GameObject *o)
 {
@@ -894,7 +893,6 @@ void func_80129904(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80129ACC);
 
 typedef struct { s16 w0, w2, w4, w6, w8; } X_29ACC;
-extern void *D_8013F018_VoidPtrArr[] asm("D_8013F018");
 
 static __inline__ s16 wall_29ACC(GameObject *o)
 {
@@ -1187,7 +1185,6 @@ void func_8012A4BC(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012A60C);
 
 
-extern u16 D_800A38E4;
 extern s32 func_80022F6C(GameObject *);
 
 static __inline__ void setAnim_2A60C(GameObject *o, void *a)
@@ -1297,7 +1294,7 @@ void func_8012A60C(BX *b)
             }
             if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 7) == 0) {
                 if (o->y.p.whole > D_800A38EA + 0x98 ||
-                    (u16)(o->h->p.whole + 0xaa - D_800A38E4) > D_800A38E6 + 0xb0) {
+                    (u16)(o->h->p.whole + 0xaa - D_800A38E4_U16) > D_800A38E6 + 0xb0) {
                     o->state = 3;
                     o->active = 2;
                     o->visible = 0;

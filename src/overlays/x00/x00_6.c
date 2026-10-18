@@ -7,8 +7,6 @@ typedef struct {
     s16 p0, x, p4, y, p8, z;
 } Pos8012ED60_2E0A4;
 
-extern u8 D_800A53A7;
-extern s32 D_8009BCEC;
 
 static __inline__ s32 nearObj_2E0A4(GameObject *o, GameObject *p)
 {
@@ -91,7 +89,7 @@ void func_8012E0A4(GameObject *o)
         }
         break;
     case 1:
-        o->unkF = D_800A53A7 + *(u8 *)&o->unk7A;
+        o->unkF = D_800A53A7_U8 + *(u8 *)&o->unk7A;
         if (func_80022E44(o)) {
             if (o->subState == 0) {
                 if (o->unkC == 1 && nearObj_2E0A4(o, D_8009BCB0)) {
@@ -1112,9 +1110,6 @@ extern s32 angleBetweenPoints(Vec2s a, Vec2s b);
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 extern s16 probeCollisionAtDepthB(GameObject *, s16, s16);
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
-extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 
 static __inline__ s16 hit_30D14(GameObject *o)
 {
@@ -1344,7 +1339,6 @@ void func_801313EC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_801314B8);
 typedef struct { GameObject o; u16 c0, c2, c4, c6, c8, ca, cc, ce, d0; s16 d2; } E_314B8;
-extern s32 D_1F8002DC;
 extern void applyAnimVelocityX(GameObject *, u16);
 
 static __inline__ void draw_314B8(s32 a, s32 b)
@@ -1380,7 +1374,7 @@ void func_801314B8(GameObject *o)
         o->unkAC = 2;
         o->anim = D_8013A080[0];
         readAnimFrameCount(o);
-        o->spriteBank = D_1F8002DC;
+        o->spriteBank = D_1F8002DC_S32;
         o->movetab = ((char *)&D_800771FC);
         o->timer = 1;
         *(s8 *)&o->unkF = -9;
@@ -1560,7 +1554,6 @@ typedef struct { u8 b[8]; } V801328B4_31BF8;
 
 extern V801328B4_31BF8 D_80138630[][4];
 extern void (*D_80138624[])(GameObject *);
-extern s32 D_1F8002D4[];
 
 #define COPY() \
     ((V801328B4_31BF8 *)&o->unkB4)[0] = D_80138630[o->unkC][0]; \

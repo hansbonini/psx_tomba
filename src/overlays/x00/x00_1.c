@@ -3,8 +3,6 @@
 #include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_1", func_80118944);
-extern s32 D_1F8002D4;
-extern u8 D_800A53A7;
 
 typedef struct P_18944 { char p[0xcc]; s16 cc; } P_18944;
 void func_80118944(GameObject *o)
@@ -16,7 +14,7 @@ void func_80118944(GameObject *o)
         o->tpage = 9;
         o->unkA = 1;
         *(s16 *)((u8 *)o + 0x2e) = 1;
-        o->spriteBank = D_1F8002D4;
+        o->spriteBank = D_1F8002D4_S32;
         *(s32 *)((u8 *)o + 0x5c) = 0x1000;
         *(s32 *)((u8 *)o + 0x60) = 0x1000;
         *(s32 *)((u8 *)o + 0x64) = 0x1000;
@@ -66,12 +64,12 @@ void func_80118944(GameObject *o)
         if (o->subtype != 4) {
             func_80118CD8(o);
             if (o->subtype == 1)
-                o->unkF = D_800A53A7 + 10;
+                o->unkF = D_800A53A7_U8 + 10;
             else
-                o->unkF = D_800A53A7 - 2;
+                o->unkF = D_800A53A7_U8 - 2;
         } else {
             func_80118BB4(o);
-            o->unkF = D_800A53A7;
+            o->unkF = D_800A53A7_U8;
         }
         tickAnimation(o);
         if (((GameObject *)o->unk90)->subState != 5)
@@ -255,7 +253,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_1", func_80119768);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_1", func_80119798);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_1", func_8011998C);
-extern s32 D_1F8002D4_S32Arr[] asm("D_1F8002D4");
 void func_8011998C(GameObject *o)
 {
     switch (o->state) {
@@ -410,7 +407,7 @@ void func_80119E60(u8 *o)
         o[4] = s + 1;
         *(s16 *)(o + 0x2e) = 0;
         *(s16 *)(o + 0x1e) = 0xc;
-        t = D_1F8002D4;
+        t = D_1F8002D4_S32;
         o[0xd] = 0;
         o[0xa] = 0;
         *(s8 *)(o + 0xf) = -7;

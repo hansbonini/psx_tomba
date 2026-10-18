@@ -2124,7 +2124,6 @@ typedef struct O_1F084 {
     char p7[0xb2 - 0xb0]; s16 wb2;
     char p8[0xb6 - 0xb4]; s16 wb6;
 } O_1F084;
-extern u16 D_1F800282;
 extern s16 probeCollisionAtDepthA(O_1F084 *, s32, s32);
 
 s32 func_8011F084(O_1F084 *o)
@@ -2198,7 +2197,6 @@ s32 func_8011F1A0(O_1F1A0 *o)
 }
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_8011F28C);
-extern u16 D_1F80016E;
 
 u8 func_8011F28C(s32 a)
 {
@@ -2531,7 +2529,6 @@ INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80124138);
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_801244F8);
 
-extern s32 D_1F8002D4[];
 
 void func_801244F8(GameObject *o)
 {
@@ -2957,7 +2954,6 @@ INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_801267AC);
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80126DC4);
 
 
-extern s16 D_1F80016E_S16Arr[] asm("D_1F80016E");
 extern s32 angleBetweenPoints(Vec2s, Vec2s);
 
 static __inline__ s32 near_26DC4(GameObject *o)
@@ -3552,7 +3548,6 @@ void func_80129B68(GameObject *o)
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80129CC0);
 
 typedef struct { s8 a; u8 b; u8 c; s8 d; } E4_29CC0;
-extern GameObject PLAYER_GameObject asm("PLAYER");
 extern E4_29CC0 D_80011F38[];
 extern s16 fixedMulCos(s32, s32);
 extern s16 fixedMulSin(s32, s32);

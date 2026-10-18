@@ -560,7 +560,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_1", func_80118E20);
 
 
 
-extern u16 D_1F80016E[];
 typedef struct { s16 x; } SX_18F44;
 
 void func_80118F44(GameObject *o)
@@ -585,7 +584,7 @@ void func_80118F44(GameObject *o)
         case 0:
             if (D_8009BC98.unk10 && D_8009BC98.unk11 == 0xd) {
                 o->h->p.whole = (*(SX_18F44 *)&D_1F80016A).x;
-                o->y.p.whole = D_1F80016E[0] - 0x20;
+                o->y.p.whole = D_1F80016E_U16Arr[0] - 0x20;
                 o->d->p.whole = D_1F800172[0];
                 o->subState++;
             }
@@ -1223,7 +1222,6 @@ void func_8011B5C4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_1", func_8011B6A4);
-extern Fix16 *D_800A53DC_Fix16PtrArr[] asm("D_800A53DC");
 extern s16 fixedMulSin2(s32, s32);
 
 void func_8011B6A4(GameObject *o)
@@ -1547,10 +1545,6 @@ void func_8011E4F8(GameObject *o)
 
 typedef struct { s8 anim, z, ang, rad; } E4_1E600;
 
-extern u8 D_800A5399[];
-extern Fix16 * D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
-extern s32 D_800A5424[];
-extern u8 D_800A53A7[];
 extern E4_1E600 D_80011F90[];
 extern s32 fixedMulCos(s16 a, s32 b);
 extern s32 fixedMulSin(s16 a, s32 b);
@@ -1563,7 +1557,7 @@ void func_8011E600(GameObject *o)
     s32 x, y;
     u16 u;
 
-    o->visible = D_800A5399[0];
+    o->visible = D_800A5399_U8Arr[0];
     switch (o->step) {
     case 0:
         c = D_8009BCED & 1;
@@ -1600,7 +1594,7 @@ void func_8011E600(GameObject *o)
         }
         y = fixedMulCos(c, e->rad);
         x = fixedMulSin(c, e->rad);
-        o->visible = D_800A5399[0];
+        o->visible = D_800A5399_U8Arr[0];
         o->animFrame = ((u16 *)&D_800A53C6)[0] & 1;
         o->h->p.whole = D_800A53D8_Fix16PtrArr[0]->p.whole + y;
         o->y.p.whole = D_800A53AE[0] + x;

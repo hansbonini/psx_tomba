@@ -6,7 +6,6 @@
 
 
 typedef struct { Fix16 a, y, b; } FV_1EA14;
-extern u8 D_8009C1BD[];
 extern void addItemToInventory(s32, s32, s32);
 
 static __inline__ s32 vdiv_1EA14(s32 a, s32 b)
@@ -306,7 +305,6 @@ void func_8011F30C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011F43C);
 
-extern u8 D_8009C3EC_U8 asm("D_8009C3EC");
 extern void setEventStarted(s32, s32, s32);
 
 void func_8011F43C(GameObject *o)
@@ -484,12 +482,6 @@ void func_8011F940(GameObject *o)
 
 
 
-extern u8 D_8009D6DD_U8Arr[] asm("D_8009D6DD");
-extern u8 D_8009D6DE_U8Arr[] asm("D_8009D6DE");
-extern u8 D_8009D6DF_U8Arr[] asm("D_8009D6DF");
-extern u8 D_8009E3ED_U8Arr[] asm("D_8009E3ED");
-extern u8 D_8009E3EE_U8Arr[] asm("D_8009E3EE");
-extern u8 D_8009E3EF_U8Arr[] asm("D_8009E3EF");
 
 void func_8011FAD0(GameObject *o)
 {

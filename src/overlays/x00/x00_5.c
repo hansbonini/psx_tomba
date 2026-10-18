@@ -132,9 +132,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801216BC);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80121748);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80121810);
-extern s32 D_1F8002D4[];
-extern u16 D_1F80017A[];
-extern s32 D_800A38DC_S32Arr[] asm("D_800A38DC");
 
 static __inline__ void fin_21810(GameObject *o, s16 m)
 {
@@ -222,7 +219,6 @@ void func_80121810(GameObject *o)
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80121A74);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80121C00);
-extern s32 D_8009BCEC;
 
 void func_80121C00(GameObject *o)
 {
@@ -520,8 +516,6 @@ typedef struct {
     s16 x3, y3; u16 uv3, pad2;
 } PFT4_23148;
 typedef struct { u16 uv0, p0, uv1, p1, uv2; u8 w, h; u16 uv3; s8 dx, dy; } Spr_23148;
-extern char LZ_FILE_CTRL_CharArr[] asm("LZ_FILE_CTRL");
-extern s32 LZ_FILE_CTRL_S32 asm("LZ_FILE_CTRL");
 void func_80123148(GameObject *o)
 {
     Spr_23148 *s;
@@ -566,7 +560,6 @@ typedef struct {
     s16 x2, y2; u8 u2, v2; u16 pad1;
     s16 x3, y3; u8 u3, v3; u16 pad2;
 } PFT4_80123FD0_23314;
-extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
 
 #define setSemiTrans(p, abe) ((abe) ? ((p)->code |= 2) : ((p)->code &= ~2))
 #define SN(i) D_8007DB88[i]
@@ -1552,7 +1545,6 @@ void func_80125AB4(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80125C84);
 extern s16 func_80059514(void);
-extern GameObject *D_1F8003C0;
 
 void func_80125C84(GameObject *a, GameObject *b)
 {
@@ -1570,7 +1562,6 @@ void func_80125C84(GameObject *a, GameObject *b)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80125D14);
 extern s16 func_80059638(void);
-extern GameObject *D_1F8003C0;
 
 void func_80125D14(GameObject *o, GameObject *t)
 {
@@ -1767,8 +1758,6 @@ void func_801262AC(O_262AC *o, u8 *p)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", updateEvilGrass);
-extern u8 D_800A53A7[];
-extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
 
 void updateEvilGrass(GameObject *o)
 {
@@ -1946,7 +1935,6 @@ typedef struct O_26810 {
     char p7[0xb2 - 0xb0]; s16 wb2;
     char p8[0xb6 - 0xb4]; s16 wb6;
 } O_26810;
-extern u16 D_1F800282;
 extern s16 probeCollisionAtDepthA(O_26810 *, s32, s32);
 
 s32 func_80126810(O_26810 *o)
@@ -2022,7 +2010,6 @@ s32 func_80126928(O_26928 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80126A64);
-extern u16 D_1F80016E;
 
 u8 func_80126A64(s32 a)
 {
@@ -2048,8 +2035,6 @@ u8 func_80126A64(s32 a)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80126B64);
 typedef struct { u8 _p[0xa]; u8 ba, bb; s16 wc, we; } EX_26B64;
-extern u16 *D_8013951C_U16PtrArr[] asm("D_8013951C");
-extern u16 *D_80139520_U16PtrArr[] asm("D_80139520");
 
 void func_80126B64(GameObject *o)
 {
@@ -3098,7 +3083,6 @@ void func_80128EF4(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_801292F8);
 typedef struct { u8 b0, b1; char p2[8]; u8 b0a, b0b; char p0c[2]; s16 w0e; } X_292F8;
-extern u16 *D_801394A8_U16PtrArr[] asm("D_801394A8");
 
 void func_801292F8(GameObject *o)
 {
@@ -3340,7 +3324,6 @@ void func_801299E8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80129B64);
-extern u8 D_800A5444[];
 
 #define SETBOX(o) \
     { \
@@ -4737,7 +4720,6 @@ void updateChick(O_2D220 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012D3FC);
-extern u8 D_800A53A7[];
 
 void func_8012D3FC(s32 x, s32 y, s32 z)
 {
@@ -4770,8 +4752,6 @@ void func_8012D3FC(s32 x, s32 y, s32 z)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", updateEgg);
-extern u8 D_8009C616_U8Arr[] asm("D_8009C616");
-extern s32 D_800A53A8;
 
 typedef struct { s32 a, b, c; } V3_2D504;
 
@@ -4852,7 +4832,7 @@ void updateEgg(GameObject *o)
                     n->active = 1;
                     n->type = 2;
                     n->animFrame = (o->animFrame & 1) | 2;
-                    *(V3_2D504 *)&n->x = *(V3_2D504 *)&D_800A53A8;
+                    *(V3_2D504 *)&n->x = *(V3_2D504 *)&D_800A53A8_S32;
                     n->subtype = o->subtype;
                     n->unkC = o->unkC;
                     n->objectIndex = o->objectIndex;

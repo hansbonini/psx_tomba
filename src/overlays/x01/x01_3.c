@@ -187,7 +187,6 @@ void func_80120AC8(GameObject *o)
 
 
 typedef struct { GameObject o; char pc0[6]; u8 bc6; } PL_20D48;
-extern u32 D_8009BCEC[];
 extern void func_800EA16C(s32, s32, s32, s32);
 
 void func_80120D48(PL_20D48 *o)
@@ -211,7 +210,7 @@ void func_80120D48(PL_20D48 *o)
         o->o.unk9C = 1;
         o->o.state = 1;
         o->o.y.p.whole -= 8;
-        if ((D_8009BCEC[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->o.unkA7 = 1;
+        if ((D_8009BCEC_U32Arr[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->o.unkA7 = 1;
         o->o.subState = 2;
         o->o.step = 0;
     }
@@ -293,7 +292,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_3", func_8012137C);
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_3", func_80121468);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_3", func_8012154C);
-extern GameObject *D_8009E454_GameObjectPtr asm("D_8009E454");
 
 void func_8012154C(GameObject *o)
 {
@@ -337,7 +335,7 @@ void func_801215FC(GameObject *o)
         }
     }
     o->h->p.whole += (o->animFrame & 1) ? 0x10 : -0x10;
-    if ((D_8009BCEC[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->unkA7 = 1;
+    if ((D_8009BCEC_U32Arr[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->unkA7 = 1;
     o->subState = 2;
     o->step = 0;
 }

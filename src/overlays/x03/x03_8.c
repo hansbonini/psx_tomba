@@ -73,7 +73,6 @@ void func_8012BBA8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012BCCC);
 
-extern GameObject PLAYER_GameObject asm("PLAYER");
 extern s16 probeCollisionAtDepthA(GameObject *o, s16 x, s16 y);
 
 static __inline__ s32 hit_2BCCC(GameObject *o)

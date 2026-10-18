@@ -1065,11 +1065,7 @@ void func_80131564(GameObject *o)
 #undef KILL
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_80131CB0);
-extern GameObject PLAYER_GameObject asm("PLAYER");
 #define P PLAYER_GameObject
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
-extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 extern void func_800EDE44(GameObject *, s32, s32);
 
 void func_80131CB0(GameObject *o)
@@ -1874,7 +1870,6 @@ typedef struct { s16 v[6]; } V6_33A18;
 typedef struct { void **p; s32 a, b; } T12_33A18;
 extern T12_33A18 D_80135498[];
 #define P (*(GameObject *)&PLAYER)
-extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
 extern s16 probeCollisionAtDepthA(GameObject *, s32, s32);
 
 void func_80133A18(GameObject *o)

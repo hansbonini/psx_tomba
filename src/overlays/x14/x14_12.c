@@ -55,8 +55,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123038);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801230A8);
 
-extern u16 D_1F80016E[];
-extern s16 D_800A38E4;
 extern s32 angleFromDelta(s16, s16);
 extern s16 func_80044694(GameObject *, s32, s32);
 extern s16 func_80045310(GameObject *, s32, s32);
@@ -104,7 +102,7 @@ void func_801230A8(GameObject *o)
         o->h->p.whole = (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2)) + D_80125A24[nextRandom() & 7];
         o->y.p.whole = (u16)SCRATCHPAD.unk168[4].p.whole - 0xf0;
         o->d->p.whole = D_1F800172[0];
-        o->unk38 = angleFromDelta(((u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2))[0] - o->h->p.whole, D_1F80016E[0] - o->y.p.whole);
+        o->unk38 = angleFromDelta(((u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2))[0] - o->h->p.whole, D_1F80016E_U16Arr[0] - o->y.p.whole);
         o->unk8C = (u8)(o->unk38 + 0x40);
         o->unk38 = *(u8 *)&o->unk38;
         n = allocObjectLayer2();
@@ -399,7 +397,6 @@ s32 func_80123B8C(GameObject *o, u8 sub, u8 k)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123C60);
-extern s16 D_800A38E4;
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
 s32 func_80123C60(GameObject *o)

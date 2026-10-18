@@ -248,8 +248,6 @@ typedef struct {
     s32 a[6];
 } S_3D2A8;
 typedef struct { s16 v[6]; } V6_3D2A8;
-extern u8 D_800A5444[];
-extern u8 D_8009BCA7_U8Arr[] asm("D_8009BCA7");
 extern s32 showMessageBoxDirect(s32, s32, V6_3D2A8 *);
 
 void scriptOpShowMessageBox(void)
@@ -885,7 +883,6 @@ void scriptOpGetPlayerFieldE2(void)
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003E330);
 typedef struct { char p0[0x8a]; u16 c; char p1[0x1190-0x8c]; s32 v; } G_3E330;
-extern u8 D_8009BCD9;
 extern u8 D_8009BCD8[];
 
 void func_8003E330(void)
@@ -921,7 +918,6 @@ void opNop(void)
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", execGameOpcode);
 typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s32 d1194; s32 d1198; s32 d119c; } G_3E408;
-extern s16 D_800A53AC[];
 
 static __inline__ s32 op81_3E408(void)
 {
@@ -968,7 +964,7 @@ static __inline__ s32 op83_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
     PLAYER.obj.h->p.whole = g->d1190;
-    D_800A53AC[1] = g->d1194;
+    D_800A53AC_S16Arr[1] = g->d1194;
     PLAYER.obj.d->p.whole = g->d1198;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
@@ -979,7 +975,7 @@ static __inline__ s32 op84_3E408(void)
     G_3E408 *g = SCRIPT_CTX;
     s32 v;
     g->d1190 = PLAYER.obj.h->p.whole;
-    g->d1194 = D_800A53AC[1];
+    g->d1194 = D_800A53AC_S16Arr[1];
     v = PLAYER.obj.d->p.whole;
     (*(s16 *)((char *)g + 0x8a))++;
     g->d1198 = v;
@@ -1124,7 +1120,7 @@ static __inline__ s32 op92_3E408(void)
 static __inline__ s32 op93_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    if (D_8009C618[0] != 3) func_800EBD5C(&PLAYER.obj, PLAYER.obj.h->p.whole, D_800A53AC[1]);
+    if (D_8009C618[0] != 3) func_800EBD5C(&PLAYER.obj, PLAYER.obj.h->p.whole, D_800A53AC_S16Arr[1]);
     g->d1190 = PLAYER.obj.unk68;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;

@@ -78,8 +78,6 @@ s32 func_8011F97C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_8011FA04);
-extern s32 D_1F8002DC[];
-extern s16 D_800A38E4;
 extern s16 probeCollisionAtDepthB(GameObject *, s16, s16);
 
 static __inline__ s32 touch_1FA04(GameObject *o, GameObject *p)

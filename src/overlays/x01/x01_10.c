@@ -7,9 +7,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_80139DF0);
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A248);
 
 
-extern GameObject PLAYER_GameObject asm("PLAYER");
-extern u16 D_800A53C6_U16Arr[] asm("D_800A53C6");
-extern GameObject *D_800A5428[];
 extern char D_800108A8[];
 extern GameObject *showMessageBox(s32, s32, s32, s32);
 
@@ -32,12 +29,12 @@ void func_8013A248(GameObject *o)
         D_800A539C = 5;
         D_800A539D = 0;
         D_800A539E = 0;
-        D_800A5428[0] = showMessageBox(2, 0x1e, 0x80, 0x6c);
+        D_800A5428_GameObjectPtrArr[0] = showMessageBox(2, 0x1e, 0x80, 0x6c);
         D_800A53C6_U16Arr[0] = (*(Fix16 **)&D_800A53D8)->p.whole > e->h->p.whole;
         e->animFrame = (*(Fix16 **)&D_800A53D8)->p.whole < e->h->p.whole;
         o->subState++;
     case 1:
-        p = D_800A5428[0];
+        p = D_800A5428_GameObjectPtrArr[0];
         if (p->state == 2) {
             p->state = 3;
             GAME.fadeScreenControl = 3;
@@ -77,12 +74,12 @@ void func_8013A42C(GameObject *o)
         readAnimFrameCount(&PLAYER_GameObject);
         e->animFrame = 0;
         D_800A53C6 = 0;
-        (*(GameObject **)&D_800A5428) = showMessageBox(2, 0x19, 0x80, 0x6c);
+        (*(GameObject **)&D_800A5428_GameObjectPtrArr) = showMessageBox(2, 0x19, 0x80, 0x6c);
         func_800EDE44(&PLAYER_GameObject, 0, 0);
         o->subState++;
         break;
     case 1:
-        p = (*(GameObject **)&D_800A5428);
+        p = (*(GameObject **)&D_800A5428_GameObjectPtrArr);
         if (p->state == 2) {
             p->state = 3;
             D_8009BC98.unk0F = 0;
@@ -210,8 +207,6 @@ INCLUDE_RODATA("overlays/x01/nonmatchings/x01/x01_10", func_801158DC);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A854);
 
-extern u16 D_800A53AA_U16Arr[] asm("D_800A53AA");
-extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 extern s32 fixedMulSin(s32, s32);
 
 
@@ -459,7 +454,6 @@ typedef struct {
     s16 w1c, w1e, w20;
 } O_3B180;
 
-extern s16 D_1F80016E[];
 
 void func_8013B180(O_3B180 *o)
 {
@@ -496,7 +490,7 @@ void func_8013B180(O_3B180 *o)
                 e->subtype = 8;
                 e->unkC = 0;
                 e->x.p.whole = 0;
-                e->y.p.whole = D_1F80016E[0];
+                e->y.p.whole = D_1F80016E_S16Arr[0];
                 e->z.p.whole = 0;
                 o->w1c++;
                 e->unk94 = (s32)p;

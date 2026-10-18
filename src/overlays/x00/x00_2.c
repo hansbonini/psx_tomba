@@ -3,8 +3,6 @@
 #include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_80119FA8);
-extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
-extern u8 D_800A5401;
 
 void func_80119FA8(GameObject *o)
 {
@@ -243,8 +241,6 @@ void func_8011A800(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011A92C);
-extern s16 D_1F80016E;
-extern s16 D_1F80017A;
 extern s32 showMessageBox(s32, s32, s32, s32);
 
 void func_8011A92C(GameObject *o)
@@ -257,7 +253,7 @@ void func_8011A92C(GameObject *o)
             o->x.p.whole = 0xf0;
         else
             o->x.p.whole = 0x50;
-        if (D_1F80017A - 0x78 >= D_1F80016E)
+        if (D_1F80017A_S16 - 0x78 >= D_1F80016E_S16)
             o->y.p.whole = 0xd8;
         else
             o->y.p.whole = 0x78;
@@ -279,7 +275,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011AA30);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011AAF4);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011AB40);
-extern s32 D_1F8002D4[];
 
 void func_8011AB40(GameObject *o)
 {
@@ -447,7 +442,7 @@ void func_8011D500(O_1D500 *o)
     switch (o->st) {
     case 0:
         if ((u16)((*(u16 *)&D_1F80016A) - 0x400) >= 0x18) break;
-        if ((u16)(o->w16 - D_1F80016E + 0x30) > 0x60) break;
+        if ((u16)(o->w16 - D_1F80016E_S16 + 0x30) > 0x60) break;
         if (D_800A543A == 1) break;
         if (D_800A543A == 2) {
             c = o->st;
@@ -514,9 +509,6 @@ typedef struct S_1DFB8 {
     u16 wc0, pc2;
     s32 c4, c8, cc;
 } S_1DFB8;
-extern s32 D_8009BCEC[];
-extern s32 D_8009BCEC[];
-extern u8 D_8009BCA0_U8Arr[] asm("D_8009BCA0");
 extern void setEventStarted(s32, s32, s32);
 
 void func_8011DFB8(S_1DFB8 *o)
@@ -551,7 +543,7 @@ void func_8011DFB8(S_1DFB8 *o)
                     q->box3 = 100;
                     q->wc0 = 0;
                     q->b0f = 0;
-                    if (!(D_8009BCEC[0] & 1))
+                    if (!(D_8009BCEC_S32Arr[0] & 1))
                         func_80119498(q->a.p.whole, q->y.p.whole, q->b.p.whole, 0);
                     break;
                 case 0:
@@ -582,29 +574,29 @@ void func_8011DFB8(S_1DFB8 *o)
             for (q = o; ; q = q->next) {
                 if (q->b0c == 1) {
                     flag = 0;
-                    if (!(D_8009BCEC[0] & 1) && (nextRandom() & 0x3f) == 0) {
+                    if (!(D_8009BCEC_S32Arr[0] & 1) && (nextRandom() & 0x3f) == 0) {
                         o->wb4 = 2;
-                        flag = 0; if (!(D_8009BCEC[0] & 1)) flag = 1;
+                        flag = 0; if (!(D_8009BCEC_S32Arr[0] & 1)) flag = 1;
                     }
                     if (q->b69 == 1 && o->wb6 == 0) {
                         o->wb4 = 1;
                         o->wb6 = 4;
-                        if (!(D_8009BCEC[0] & 1))
+                        if (!(D_8009BCEC_S32Arr[0] & 1))
                             flag = 1;
                         q->wc0 = 0x28;
                     }
                     if (q->b68 == 1 && o->wb6 == 0) {
                         o->wb4 = 1;
                         o->wb6 = 4;
-                        if (!(D_8009BCEC[0] & 1))
+                        if (!(D_8009BCEC_S32Arr[0] & 1))
                             flag = 1;
                         q->wc0 = 0x28;
                     }
                     q->b69 = 0;
                     q->b68 = 0;
                     o->animFrame = q->animFrame;
-                    if (D_8009BCA0_U8Arr[0] == 0 && q->wc0 != 0 && --q->wc0 == 0 && !(D_8009BCEC[0] & 1)) {
-                        D_8009BCEC[0] |= 1;
+                    if (D_8009BCA0_U8Arr[0] == 0 && q->wc0 != 0 && --q->wc0 == 0 && !(D_8009BCEC_S32Arr[0] & 1)) {
+                        D_8009BCEC_S32Arr[0] |= 1;
                         setEventStarted(EVENT_CLEARTHEFOG, 0, 0);
                         playSFX(0x35);
                     }
@@ -699,8 +691,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011E850);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011E8D0);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_2", func_8011E958);
-extern u8 D_800A53A7[];
-extern s16 *D_800A53DC_S16PtrArr[] asm("D_800A53DC");
 
 void func_8011E958(GameObject *o)
 {

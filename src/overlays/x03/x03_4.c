@@ -1064,7 +1064,6 @@ void func_8012754C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80127B48);
-extern s32 D_1F8002DC[];
 
 void func_80127B48(GameObject *o)
 {

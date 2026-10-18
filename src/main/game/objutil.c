@@ -53,8 +53,6 @@ extern s16 probeCollisionAtDepthB(GameObject *, s16, s16);
 extern void func_800EA35C(s16, s16, s16, u8);
 extern void func_800224FC(s32, s16, s16, s16);
 extern s16 func_80045310(void *, s16, s16);
-extern u16 D_1F800282;
-extern u16 D_1F800282;
 
 s32 func_8003887C(GameObject *o)
 {
@@ -123,7 +121,6 @@ typedef struct {
     u8 p24[4];
     u16 w28, w2a, w2c, w2e;
 } S330_38AC0;
-extern s16 D_8007D5E4[];
 extern s16 fixedMulCos(s32, s16);
 extern s16 fixedMulSin(s32, s16);
 extern void advanceAnimFrame(GameObject *, s32);
@@ -536,7 +533,6 @@ void func_80038AC0(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A10C);
 extern u8 *D_8009B698;
-extern u8 D_800A5435;
 
 void func_8003A10C(GameObject *o)
 {
@@ -665,7 +661,6 @@ void func_8003A384(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
-extern u8 D_800A547B;
 extern u8 *D_8009B698;
 void func_8003A4F8(GameObject *o)
 {
@@ -686,7 +681,7 @@ void func_8003A4F8(GameObject *o)
     case 2:
         D_8009B6A0->mode = 0;
         *D_8009B698 = 0;
-        if ((s8)--D_800A547B < 0) D_800A547B = 0;
+        if ((s8)--D_800A547B_U8 < 0) D_800A547B_U8 = 0;
         o->state = 3;
         break;
     case 3:
