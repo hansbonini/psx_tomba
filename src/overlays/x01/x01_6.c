@@ -2105,7 +2105,7 @@ void func_80134E80(GameObject *o)
         u8 *c = &D_8009C068.event_11;
         *c = *c + 1;
         if (*c >= 9) *c = 8;
-        else printInfoMessage(*c - 1, 2);
+        else printInfoMessage(*c - 1, MSG_TYPE_INFO);
     }
     switch (o->unkC) {
     case 1:

@@ -124,7 +124,7 @@ void func_80135E84(GameObject *o)
             readAnimFrameCount(o);
             o->movetab = D_8007725C;
             o->velY = -0x400;
-            printInfoMessage(0x11, 2);
+            printInfoMessage(0x11, MSG_TYPE_INFO);
             o->step++;
         case 1:
             applyFrameVelocityX(o);

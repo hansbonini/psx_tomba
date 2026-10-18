@@ -1152,7 +1152,7 @@ static __inline__ s32 check_11F74(GameObject *o)
     }
     if (v) return 1;
 fail:
-    printInfoMessage(0, 2);
+    printInfoMessage(0, MSG_TYPE_INFO);
     return 0;
 }
 
@@ -1252,12 +1252,12 @@ static __inline__ s16 chk_12384(GameObject *o)
         f = D_8009C439;
         break;
     default:
-        printInfoMessage(0, 2);
+        printInfoMessage(0, MSG_TYPE_INFO);
         return 0;
     }
     if (f)
         return 1;
-    printInfoMessage(0, 2);
+    printInfoMessage(0, MSG_TYPE_INFO);
     return 0;
 }
 
@@ -1809,9 +1809,9 @@ void func_80113610(GameObject *o)
         tickAnimation(o);
         if (D_800A5401) {
             if ((*(u16 *)&GAME) == 2) {
-                if (D_8009C119 == 4) printInfoMessage(8, 3);
+                if (D_8009C119 == 4) printInfoMessage(8, MSG_TYPE_REWARD);
             } else if (D_8009C119 != 0xff) {
-                printInfoMessage(D_8009C119 + 7, 2);
+                printInfoMessage(D_8009C119 + 7, MSG_TYPE_INFO);
             }
             o->unk6A = 0;
             SCRIPT_OBJECTS[o->unkC] = 0;

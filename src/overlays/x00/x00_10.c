@@ -540,7 +540,7 @@ void updateCharlesTalkScene(GameObject *o)
             setEventComplete(0xa6, 0);
             o->subState = 5;
             if (D_8009C375 == 0)
-                printInfoMessage(0xc, 3);
+                printInfoMessage(MSG_ANIMALDASH_ACQUIRED, MSG_TYPE_REWARD);
             p->state = 2;
             p->subState = 3;
             p->step = 0;

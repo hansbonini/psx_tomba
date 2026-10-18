@@ -1624,7 +1624,7 @@ void func_8011E600(GameObject *o)
             }
         }
         if (c) {
-            printInfoMessage(0xf, 2);
+            printInfoMessage(MSG_EFFECT_NOTICE, MSG_TYPE_INFO);
             o->state = 3;
             o->subState = 0;
             o->step = 0;
@@ -1682,7 +1682,7 @@ void func_8011E600(GameObject *o)
                 case 3:
                     a = 0xe;
                 call:
-                    printInfoMessage(a, 3);
+                    printInfoMessage(a, MSG_TYPE_REWARD);
                     o->step = 0;
                     break;
                 default:

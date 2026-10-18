@@ -326,7 +326,7 @@ void func_80138F88(GameObject *o)
                 o->step = 0;
                 D_8009C068.event_0E = 2;
                 { s32 *q = &GAME.area00_eventControl; *q |= 0x100; }
-                printInfoMessage(0x13, 2);
+                printInfoMessage(0x13, MSG_TYPE_INFO);
                 D_8009BC98.unk0E = 0;
                 D_8009BC98.unk12 = 0;
                 D_800A5458 = 0;

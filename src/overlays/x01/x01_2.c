@@ -110,7 +110,7 @@ void func_8011EA14(GameObject *o)
         v.y.p.whole = o->y.p.whole + 0x30;
         v.b.p.whole = o->z.p.whole;
         applyItemEffect(D_8013BA60, &v, 0, 0, 1);
-        printInfoMessage(0xf, 2);
+        printInfoMessage(MSG_EFFECT_NOTICE, MSG_TYPE_INFO);
         removeItemFromInventory(ITEM_BUCKETOFWATER, 1);
         addItemToInventory(ITEM_BUCKET, 1, 0);
         D_8009C068.unk54d = 1;

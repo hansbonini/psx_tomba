@@ -19,6 +19,7 @@ typedef enum {
 typedef enum {
     MSG_ANIMALDASH_ACQUIRED    = 0x0C,
     MSG_EFFECT_NOTICE          = 0x0F,
+    MSG_FROG_RAN_AWAY          = 0x10,
     MSG_ONEUP_ACQUIRED         = 0x14,
     MSG_VITALITYMAXUP_ACQUIRED = 0x15,
     MSG_LOSTANDFOUND_STARTED   = 0x16,

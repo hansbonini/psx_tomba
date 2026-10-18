@@ -814,7 +814,7 @@ void scriptOpGiveItem(void)
 
     if (a < 0) {
         if (c != 0) {
-            printInfoMessage(0x15, 3);
+            printInfoMessage(MSG_VITALITYMAXUP_ACQUIRED, MSG_TYPE_REWARD);
             playSFX(10);
         }
         increaseMaxHealth();
@@ -1227,7 +1227,7 @@ static __inline__ s32 op9c_3E408(void)
 static __inline__ s32 op9d_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    printInfoMessage(g->d1190, 2);
+    printInfoMessage(g->d1190, MSG_TYPE_INFO);
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1275,7 +1275,7 @@ static __inline__ s32 opa2_3E408(void)
     s32 c = *(s32 *)(p + 0x1198);
     if (a < 0) {
         if (c != 0) {
-            printInfoMessage(0x15, 3);
+            printInfoMessage(MSG_VITALITYMAXUP_ACQUIRED, MSG_TYPE_REWARD);
             playSFX(10);
         }
         increaseMaxHealth();

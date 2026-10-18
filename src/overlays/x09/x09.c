@@ -2019,7 +2019,7 @@ void func_8011E194(GameObject *o)
             break;
         case 1:
             c = &D_8009C068.unk596;
-            printInfoMessage(*c + 0x29, 2);
+            printInfoMessage(*c + 0x29, MSG_TYPE_INFO);
             (*c)++;
             ((u8 *)&D_8009C068.unk685)[o->unkC] = 1;
             o->state++;
@@ -2761,7 +2761,7 @@ void func_801238A0(GameObject *o)
         readAnimFrameCount(o);
         {
             u8 *c = &D_8009C068.unk596;
-            printInfoMessage(*c + 0x29, 2);
+            printInfoMessage(*c + 0x29, MSG_TYPE_INFO);
             *c = *c + 1;
         }
         ((u8 *)&D_8009C068.unk685)[o->unkC] = 1;

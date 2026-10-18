@@ -308,7 +308,7 @@ void updateFrog(GameObject *o)
                 o->animFrame = !(PLAYER_GameObject.h->p.whole < o->h->p.whole);
                 o->velY = -0x400;
                 D_8009C984 &= ~2;
-                printInfoMessage(0x10, 2);
+                printInfoMessage(MSG_FROG_RAN_AWAY, MSG_TYPE_INFO);
                 o->step++;
             case 1:
                 applyFrameVelocityX(o);
