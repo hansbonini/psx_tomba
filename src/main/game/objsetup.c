@@ -1,12 +1,12 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031908);
+// INCLUDE_ASM("nonmatchings/main/game/objsetup", updateGrabSnout);
 extern u16 D_1F80016E[];
 extern void pushDrawListCapped(GameObject *o);
 extern s16 fixedMulSin2(s16 a, s16 b);
 
-void func_80031908(GameObject *o)
+void updateGrabSnout(GameObject *o)
 {
     extern void readAnimFrameCount(GameObject *o);
     s16 v;

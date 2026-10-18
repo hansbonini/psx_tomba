@@ -759,13 +759,13 @@ void func_80133CC4(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_80133F64);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", updateNpcCharles);
 extern s32 D_1F8002D0[];
 extern void *D_80139F60[];
 extern void *D_80139F7C[];
 extern void *D_80139F84[];
 
-void func_80133F64(GameObject *o)
+void updateNpcCharles(GameObject *o)
 {
     s32 st;
     void *an;

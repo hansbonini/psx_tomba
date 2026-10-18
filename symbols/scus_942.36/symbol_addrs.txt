@@ -1667,3 +1667,5 @@ playerFallInWater = 0x800FD49C; // type:func
 updateCameraScroll = 0x8002D784; // type:func
 CAMERA_SCROLL = 0x800A38B8;
 CAMERA_TILT = 0x1F8000E6;
+updateGrabSnout = 0x80031908; // type:func
+updatePointsBalloon = 0x80116FFC; // type:func

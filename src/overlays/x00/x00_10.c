@@ -388,7 +388,7 @@ s16 func_8013679C(GameObject *o)
     return n;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80136AFC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", updateCharlesTalkScene);
 typedef struct { GameObject o; u8 bc0; } BigObj_36AFC;
 extern BigObj_36AFC PLAYER_BigObj_36AFC asm("PLAYER");
 #define X PLAYER_BigObj_36AFC.o
@@ -416,7 +416,7 @@ static __inline__ s16 chk_36AFC(void)
         r = D_8009BCA9 == 3;
     return r;
 }
-void func_80136AFC(GameObject *o)
+void updateCharlesTalkScene(GameObject *o)
 {
     GameObject *p = *(GameObject **)&o->category;
     s16 buf[6];
@@ -717,7 +717,7 @@ void func_801373FC(u8 *o)
         break;
     case 1:
         if (func_8013679C(o) != 0)
-            func_80136AFC(o);
+            updateCharlesTalkScene(o);
         break;
     case 2:
         o[4] = 3;

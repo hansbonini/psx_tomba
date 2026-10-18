@@ -238,7 +238,7 @@ void func_8011687C(GameObject *o)
 
 INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80116C78);
 
-INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80116FFC);
+INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", updatePointsBalloon);
 
 INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8011700C);
 

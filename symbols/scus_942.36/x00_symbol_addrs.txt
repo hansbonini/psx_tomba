@@ -4,3 +4,5 @@ updateChick = 0x8012D220; // type:func
 updateFrog = 0x801327B8; // type:func
 updateBubbleDroplet = 0x801187B8; // type:func
 updateEvilGrass = 0x80126330; // type:func
+updateNpcCharles = 0x80133F64; // type:func
+updateCharlesTalkScene = 0x80136AFC; // type:func

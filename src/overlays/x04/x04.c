@@ -200,7 +200,7 @@ INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80116814);
 
 INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80116C78);
 
-INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_80116FFC);
+INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", updatePointsBalloon);
 
 INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_8011700C);
 

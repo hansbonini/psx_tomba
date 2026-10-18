@@ -373,7 +373,7 @@ INCLUDE_RODATA("overlays/x06/nonmatchings/x06/x06", func_80115274);
 
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80116C78);
 
-INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80116FFC);
+INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", updatePointsBalloon);
 
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011700C);
 

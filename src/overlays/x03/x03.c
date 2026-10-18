@@ -45,7 +45,7 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_80116814);
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_80116C78);
 
-INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_80116FFC);
+INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", updatePointsBalloon);
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_8011700C);
 

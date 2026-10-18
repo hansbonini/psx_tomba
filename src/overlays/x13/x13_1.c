@@ -78,7 +78,7 @@ void func_80116E9C(SP_16E9C *s)
 
 INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116F60);
 
-INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116FFC);
+INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", updatePointsBalloon);
 
 INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_8011700C);
 
