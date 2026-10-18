@@ -66,6 +66,43 @@ typedef struct MessageGlyph {
     /* 0x6 */ s16 y;
 } MessageGlyph;
 
+/* Info message object (printInfoMessage, updateInfoMessage): a line of text
+   on the info strip, type 0x1C. */
+typedef struct InfoMessage {
+    /* 0x00 */ u8 active;
+    /* 0x01 */ u8 visible;
+    /* 0x02 */ u8 type;
+    /* 0x03 */ u8 pad3[7];
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 padB[4];
+    /* 0x0F */ u8 unkF;
+    /* 0x10 */ Fix16 x;
+    /* 0x14 */ Fix16 y;
+    /* 0x18 */ s32 z;
+    /* 0x1C */ u8 pad1C[2];
+    /* 0x1E */ s16 tpage;
+    /* 0x20 */ s16 timer;
+    /* 0x22 */ s16 cooldownTimer;
+    /* 0x24 */ u8 pad24[8];
+    /* 0x2C */ s16 animTimer;
+    /* 0x2E */ u8 pad2E[0x86];
+    /* 0xB4 */ s16 id;
+    /* 0xB6 */ s16 kind;
+    /* 0xB8 */ u8 padB8[2];
+    /* 0xBA */ s16 lineX;
+    /* 0xBC */ s16 lineY;
+    /* 0xBE */ s16 left;
+    /* 0xC0 */ s16 top;
+    /* 0xC2 */ s16 width;
+    /* 0xC4 */ s16 lineHeight;
+    /* 0xC6 */ u16 color;
+    /* 0xC8 */ s16 text;
+    /* 0xCA */ u16 slot;
+    /* 0xCC */ s16 unkCC;
+    /* 0xCE */ s16 cursorX;
+    /* 0xD0 */ s16 cursorY;
+} InfoMessage;
+
 /* One glyph uploaded to VRAM (GLYPH_CACHE). */
 typedef struct GlyphSlot {
     /* 0x0 */ s16 id;

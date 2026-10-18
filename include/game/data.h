@@ -1231,4 +1231,13 @@ extern GameObject PLAYER_GameObject asm("PLAYER");
 extern u8 PLAYER_U8Arr[] asm("PLAYER");
 extern char SCRATCHPAD_CharArr[] asm("SCRATCHPAD");
 
+extern u8 *D_8007CF6C[];
+extern u8 D_8007CF44[];
+extern u8 *D_8007D288[];
+extern u8 D_8007D274[];
+extern s8 D_8007D2D8[];
+extern u16 D_8007D05C[];
+extern u16 D_8007D1AC[];
+extern u8 D_8009BCAB;
+
 #endif

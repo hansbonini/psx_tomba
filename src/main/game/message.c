@@ -206,7 +206,31 @@ void updateStrikeBurst(GameObject *o)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/message", func_8002F05C);
+// INCLUDE_ASM("nonmatchings/main/game/message", func_8002F05C);
+void func_8002F05C(GameObject *parent, s32 x, s32 y, s32 z)
+{
+    GameObject *o = allocObjectLayer3();
+    s32 v;
+    if (o != 0) {
+        o->active = 1;
+        o->type = 0x12;
+        o->animFrame = parent->animFrame;
+        o->x.raw = x << 16;
+        o->y.raw = y << 16;
+        o->z.raw = z << 16;
+        o->tpage = D_8009B6A0->tpage2;
+        o->clut = D_8009B6A0->clut2;
+        o->unkA = 8;
+        *(s8 *)&o->unkF = -0x1C;
+        o->unkD = 1;
+        o->subtype = 0;
+        v = SPAD->sprData[1];
+        o->category |= 0x80;
+        o->unk1D = 0x4d;
+        *(GameObject **)&o->unk90 = parent;
+        o->spriteBank = v;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F138);
 
@@ -723,7 +747,181 @@ void updateInfoMessage(S_30EF8 *o)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/message", printInfoMessage);
+// INCLUDE_ASM("nonmatchings/main/game/message", printInfoMessage);
+static inline void placeInfoMessage(InfoMessage *o, s16 x, s16 y)
+{
+    o->lineY = 0;
+    o->lineX = -((u16)o->width >> 1);
+    S16(o, 0xC0) = y + o->lineY;
+    S16(o, 0xBE) = x + o->lineX;
+}
+
+static inline void drawInfoMessageTitle(InfoMessage *o, s32 id)
+{
+    s32 i = 0;
+    s8 c;
+
+    do {
+        c = D_8007D2D8[i];
+        if (c == -1) {
+            drawInfoMessageText(o, 0);
+            return;
+        }
+        i++;
+    } while (c != id);
+    drawInfoMessageText(o, 1);
+}
+
+void *printInfoMessage(s32 id, s32 kind)
+{
+    s32 i;
+    u8 *pair;
+    u8 *index;
+    s16 skip;
+    InfoMessage *o;
+    u16 *str;
+    u16 tok;
+    u16 *q;
+    char *base;
+    u16 half;
+
+    D_8009BCAB = 0xFF;
+    for (i = 2; i >= 0; i--) {
+        if (MESSAGE_SLOTS[i].count == -1) {
+            D_8009BCAB = i;
+            MESSAGE_SLOTS[i].unk2 = i;
+            break;
+        }
+    }
+    if (D_8009BCAB == 0xFF) {
+        return NULL;
+    }
+    if (kind == 1) {
+        playSFX(0xC);
+    }
+    if ((u32)(kind - 2) < 2) {
+        pair = D_8007CF6C[id];
+        pair += GAME.selectedArea * 2;
+        if (*pair == 0xFF) {
+            pair = D_8007CF44;
+            pair += GAME.selectedArea * 2;
+        }
+    } else {
+        index = D_8007D288[GAME.selectedArea];
+        index += id;
+    }
+    skip = 0;
+    o = allocObjectLayer3();
+    if (o != NULL) {
+        o->active = 1;
+        o->type = 0x1C;
+        o->unkA = 0xC;
+        o->tpage = 0x14;
+        S16(o, 0x2C) = 0;
+        o->unkF = 0;
+        S32(o, 0x10) = 0xA00000;
+        o->z = 0;
+        o->id = id;
+        o->kind = kind;
+        o->y.raw = (0xB4 - (3 - D_8009BCAB) * 20) << 16;
+        switch (kind) {
+        case 0:
+            o->width = D_8007D05C[id] + 0x60;
+            break;
+        case 1:
+            o->width = D_8007D05C[id] + 0x78;
+            break;
+        case 2:
+        case 3:
+            o->width = D_8007D1AC[id] + 0x10;
+            break;
+        }
+        S16(o, 0xC4) = 0x14;
+        U16(o, 0xC6) = 0xFFFF;
+        placeInfoMessage(o, o->x.p.whole, o->y.p.whole);
+        i = 1;
+        o->slot = D_8009BCAB;
+        S16(o, 0x20) = i;
+        S16(o, 0xCE) = 8;
+        S16(o, 0xD0) = 6;
+        S16(o, 0x22) = 0;
+        o->unkCC = i;
+        MESSAGE_SLOTS[o->slot].count = 0;
+        base = (char *)SPAD->wfm3Data;
+        if ((u32)(kind - 2) < 2) {
+            q = (u16 *)(pair[0] * 2 + (s32)base);
+            o->text = q[8] + pair[1];
+        } else {
+            s16 c = *index;
+
+            q = (u16 *)(base + (D_8007D274[GAME.selectedArea] * 2 + 0x10));
+            if ((u8)c == 0xFF) {
+                pair = D_8007CF44 + GAME.selectedArea * 2;
+                q = (u16 *)(pair[0] * 2 + (s32)base);
+                o->text = q[8] + pair[1];
+            } else {
+                o->text = c + *q;
+            }
+        }
+        if (kind == 1) {
+            drawInfoMessageTitle(o, id);
+        }
+        base = (char *)SPAD->wfm3Data;
+        base += *(s16 *)(base + 8);
+        q = (u16 *)(base + (u16)o->text * 2);
+        str = (u16 *)(base + *(s16 *)q);
+        while (1) {
+            tok = *str++;
+            if ((u16)(tok + 2) < 2) {
+                if (kind == 0 || kind == 3) {
+                    drawInfoMessageText(o, 2);
+                }
+                return o;
+            }
+            if (skip == 0 || (s16)tok == -12) {
+                switch ((s16)tok) {
+                case (s16)MSG_CLEAR:
+                    o->cursorX = o->left + 8;
+                    o->cursorY = o->top + 8;
+                    break;
+                case (s16)MSG_BOX:
+                    half = (u16)o->width >> 1;
+                    str += 2;
+                    o->lineY = 0;
+                    o->lineX = -half;
+                    {
+                        s16 t = o->top + o->lineHeight;
+                        o->top = t + o->lineY;
+                    }
+                    {
+                        s16 t = o->left + half;
+                        o->left = t + o->lineX;
+                    }
+                    break;
+                case (s16)MSG_VOICE:
+                    o->color = *str++;
+                    break;
+                case -12:
+                    if (kind != 1) {
+                        skip ^= 1;
+                    }
+                    break;
+                default:
+                    drawMessageGlyph(o, (s16)tok);
+                    break;
+                case (s16)MSG_DELAY:
+                case (s16)MSG_WAIT:
+                case (s16)MSG_NEWLINE:
+                case (s16)MSG_CLOSE:
+                case (s16)MSG_END:
+                    break;
+                }
+            }
+        }
+    }
+    return o;
+}
+
 
 void drawInfoMessageText(void* obj, s32 stringIndex)
 {
