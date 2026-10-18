@@ -1,37 +1,13 @@
 #include "common.h"
 #include "game.h"
+#include "game/area_module.h"
 #include "game/gte.h"
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80045EFC);
-s32 func_80045D0C(GameObject *o);
-void func_8011C234(GameObject *o);
-void func_8011C500(GameObject *o);
-void func_8011C824(GameObject *o);
-void func_8011CF38(GameObject *o);
-void func_800487A4(GameObject *o);
-void func_80048BF0(GameObject *o);
-void func_80049994(GameObject *o);
-void func_8004AA70(GameObject *o);
-void func_800E9EB8(GameObject *o);
-void func_800EB490(GameObject *o);
-void func_800EAAC8(GameObject *o);
-void func_80123314(GameObject *o);
-void func_8011DF10(GameObject *o);
-void func_8011E584(GameObject *o);
-void func_8011AB74(GameObject *o);
-void func_8011B350(GameObject *o);
-void func_8004D1A0(GameObject *o);
 void func_8004D448(GameObject *o);
-void func_8004D5F0(GameObject *o);
-void func_8004D7E0(GameObject *o);
-void func_8004D91C(GameObject *o);
-void func_8004DA28(GameObject *o);
 
 void func_80045EFC(GameObject *o)
 {
-    extern void func_8004D2A8(GameObject *o);
-    extern void func_8004A6A0(GameObject *o);
-    extern void func_80049134(GameObject *o);
     extern u8 D_800A539A;
     if (o->visible == 0) return;
     if ((o->unkA & 0x10) && o->unkA0 == 0) return;
@@ -154,13 +130,9 @@ INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046428);
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046CDC);
 typedef struct { char p0[1]; u8 vis; char p1[8]; u8 k; } O_46CDC;
-extern void func_80049134(O_46CDC *);
-extern void func_8004A6A0(O_46CDC *);
 
 void func_80046CDC(void)
 {
-    extern void func_8004D2A8(O_46CDC *);
-    extern void func_80046EC0(O_46CDC *);
     s32 n;
     O_46CDC **pp;
     O_46CDC *o;
@@ -202,7 +174,6 @@ void func_80046CDC(void)
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046EC0);
 
 
-typedef struct { s16 x, y; } P_46EC0;
 typedef struct { char pad[7]; s8 b7; char pad8[0x18 - 8]; u16 w18, w1a; } PL_46EC0;
 typedef struct { char pad[0x4c]; u16 w4c; } C4C_46EC0;
 extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
@@ -211,11 +182,10 @@ extern PL_46EC0 *D_8009B698;
 extern u8 D_800A5435;
 extern u16 *D_800A53BC;
 extern s32 D_800A5424;
-extern void func_8004FE24(GameObject *, s32, s32);
 extern s32 fixedMulCos(s32, s16);
 extern s32 fixedMulSin2(s32, s16);
 extern s32 fixedMulSin(s32, s16);
-extern s32 angleBetweenPoints(P_46EC0, P_46EC0);
+extern s32 angleBetweenPoints(Vec2s, Vec2s);
 
 
 static __inline__ s32 proj_46EC0(void)
@@ -314,8 +284,8 @@ s32 m, n2, m2, n;
 
 void func_80046EC0(GameObject *o)
 {
-    P_46EC0 s;
-    P_46EC0 t;
+    Vec2s s;
+    Vec2s t;
     u8 tbl[36] = {
         0x00, 0x00, 0x06, 0x16, 0x54, 0x18, 0x00, 0x00, 0x1f, 0x18, 0x60, 0x18,
         0x00, 0x00, 0x40, 0x1d, 0x6f, 0x17, 0x00, 0x00, 0x08, 0x16, 0x58, 0x18,
@@ -555,21 +525,8 @@ void func_8004AD8C(void)
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AFAC);
 
-s32 func_80045D0C(GameObject *o);
-void func_8004B450(GameObject *o);
-void func_80123148(GameObject *o);
 void func_8004BAF0(GameObject *o);
-void drawMessageBoxFrame(GameObject *o);
-void func_800E9EB8(GameObject *o);
-void func_800EB490(GameObject *o);
-void func_800EAAC8(GameObject *o);
-void func_8004CC84(GameObject *o);
-void func_80123AC4(GameObject *o);
-void func_8011B350(GameObject *o);
 void func_800EC0E8(GameObject *o);
-void func_80117D3C(GameObject *o);
-void func_8011812C(GameObject *o);
-void func_8004D2A8(GameObject *o);
 
 void func_8004AFAC(void)
 {

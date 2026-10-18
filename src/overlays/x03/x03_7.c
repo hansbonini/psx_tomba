@@ -1,19 +1,13 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_7", func_80129EAC);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_7", func_8012A634);
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T8012B2E4_2A634;
 
-extern T8012B2E4_2A634 D_80135114[];
+extern ObjSetupHitbox D_80135114[];
 extern void advanceAnimFrame(GameObject *, s32);
-extern void readAnimFrameCount(GameObject *);
 
 void func_8012A634(GameObject *o)
 {
@@ -37,8 +31,6 @@ void func_8012A634(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_7", func_8012A7A4);
 
-extern u8 D_8009C36B;
-extern s32 tickAnimation(GameObject *);
 
 static __inline__ s32 check_2A7A4(void)
 {
@@ -104,7 +96,6 @@ s32 func_8012A98C(void)
 typedef struct { s16 v[6]; } V6_2A9BC;
 typedef struct { void **anims; s32 a; s32 b; } AT_2A9BC;
 extern AT_2A9BC D_80135128[];
-extern s32 tickAnimation(GameObject *);
 extern s32 showMessageBoxDirect(s32, s32, V6_2A9BC *);
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
@@ -288,14 +279,8 @@ void func_8012B008(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_7", func_8012B0AC);
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T8012BD5C_2B0AC;
 
-extern T8012BD5C_2B0AC D_80135120[];
+extern ObjSetupHitbox D_80135120[];
 
 void func_8012B0AC(GameObject *o)
 {

@@ -1,10 +1,8 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_801350F4);
-extern void *D_8013A4E8;
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 
 void func_801350F4(GameObject *o)
 {
@@ -83,9 +81,7 @@ void func_801350F4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_801353D4);
-extern void func_80134E50(u8 *);
 extern s32 D_1F8002D4;
-extern u8 *D_8013A4A4;
 extern u8 *D_8013A4E4;
 
 void func_801353D4(u8 *o)
@@ -139,7 +135,6 @@ void func_801353D4(u8 *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135528);
 extern u32 D_8009BCEC;
-extern u8 D_800A5402;
 
 void func_80135528(u8 *o)
 {
@@ -217,7 +212,6 @@ void func_80135528(u8 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_9", func_80135708);
-extern s16 *D_800A53D8;
 
 s32 func_80135708(void)
 {

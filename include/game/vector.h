@@ -17,4 +17,10 @@ typedef struct {
     int z;
 } VEC3;
 
+typedef struct { s16 x, y, z, pad; } Vec3s;
+
+typedef struct { s16 x, y, z, w; } Vec4s;
+
+typedef struct { u16 x, y; } Vec2u;
+
 #endif

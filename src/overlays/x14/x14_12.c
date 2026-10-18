@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x14.h"
 
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80121DF0);
 
@@ -20,7 +21,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801222E4);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80122538);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801229DC);
-extern GameObject *allocObjectLayer2(void);
 
 void func_801229DC(GameObject *o)
 {
@@ -55,11 +55,8 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123038);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801230A8);
 
-extern void *D_80129350[];
-extern u16 D_80125A24[];
 extern u16 D_1F80016E[];
 extern s16 D_800A38E4;
-extern void readAnimFrameCount(GameObject *);
 extern s32 angleFromDelta(s16, s16);
 extern s16 func_80044694(GameObject *, s32, s32);
 extern s16 func_80045310(GameObject *, s32, s32);
@@ -166,10 +163,6 @@ void func_801230A8(GameObject *o)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801234A0);
 
 
-extern u8 D_80125A34[];
-extern void *D_8012934C[];
-extern void playSFX(s32);
-extern s32 tickAnimation(GameObject *);
 
 #define SFX() do { s32 c = 0xda; if (GAME.selectedSection == 7) c = 0xf2; playSFX(c); } while (0)
 
@@ -258,7 +251,6 @@ void func_801234A0(GameObject *o)
 #undef SFX
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123760);
-extern GameObject *allocObjectLayer2(void);
 
 s32 func_80123760(GameObject *o, u8 k)
 {
@@ -285,8 +277,6 @@ s32 func_80123760(GameObject *o, u8 k)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123814);
 
 
-extern void *D_80129398;
-extern void func_801163EC(GameObject *, s32);
 extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 
 static __inline__ void setup_23814(GameObject *p)
@@ -384,7 +374,6 @@ void func_80123814(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123B8C);
-extern GameObject *allocObjectLayer2(void);
 
 s32 func_80123B8C(GameObject *o, u8 sub, u8 k)
 {
@@ -438,8 +427,6 @@ s32 func_80123C60(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123D14);
 
-extern u8 D_80125A3C[];
-extern u8 D_80125A4C[];
 
 static __inline__ s32 Near_23D14(GameObject *o, s32 r, s16 lim)
 {
@@ -456,7 +443,6 @@ s32 func_80123D14(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80123E14);
 
-extern s16 D_80125A5C[];
 extern s16 probeCollisionAtDepthA(GameObject *o, s16 x, s16 y);
 
 static __inline__ s32 land_23E14(GameObject *o)
@@ -636,7 +622,6 @@ void func_8012426C(GameObject *o)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_801244F8);
 
 
-extern void *D_801293AC[];
 
 static __inline__ void setbox_244F8(GameObject *o, s16 a, s16 b, s16 c, s16 d)
 {

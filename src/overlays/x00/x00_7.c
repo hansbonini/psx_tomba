@@ -1,12 +1,8 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_80132598);
-extern void *D_8013A4C4;
-extern void *D_8013A4CC[];
-extern void *D_8013A4D0[];
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 extern s16 probeCollisionAtDepthA(GameObject *, s32, s32);
 
 void func_80132598(GameObject *o)
@@ -89,24 +85,17 @@ extern s32 D_800A5424[];
 extern s32 D_8009BCEC[];
 #define D_8009C984 D_8009BCEC[0]
 extern s32 D_8009BCEC_S32 asm("D_8009BCEC");
-extern u8 D_8009C10F[];
 extern s32 D_1F8002D4[];
 extern void *D_8013A4D4[];
-extern char D_80077238[];
-extern void pushDrawListMain(GameObject *);
-extern void func_801322C4(GameObject *);
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
 extern void addItemToInventory(s32, s32, s32);
-extern void removeItemFromInventory(s32, s32);
 extern void showMessageBox(s32, s32, s32, s32);
 extern s32 fixedMulCos(s16 a, s32 b);
 extern s32 fixedMulSin(s16 a, s32 b);
 extern void spawnItemFixed(s32, s32, void *);
-extern void func_800EA86C(s32, s32, s32, s32);
 extern void func_80023020(GameObject *);
-extern void printInfoMessage(s32, s32);
 
 void updateFrog(GameObject *o)
 {
@@ -409,11 +398,7 @@ void updateFrog(GameObject *o)
 #undef D_8009C984
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_80133408);
-extern GameObject *allocObjectLayer2(void);
-extern void readAnimFrameCount(GameObject *);
-extern u16 D_800A53C6;
 extern s32 D_1F8002D4[];
-extern void *D_8013A4CC[];
 
 void func_80133408(s32 x, s32 y, s32 z)
 {
@@ -440,8 +425,6 @@ void func_80133408(s32 x, s32 y, s32 z)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_801334D4);
-extern void *D_8013A5B8;
-extern void *D_8013A5BC;
 
 void func_801334D4(GameObject *o)
 {
@@ -618,8 +601,6 @@ void func_80133748(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_80133A04);
-extern void *D_80139F74;
-extern void *D_80139F78;
 
 void func_80133A04(GameObject *o)
 {
@@ -693,9 +674,6 @@ void func_80133A04(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", func_80133CC4);
-extern void *D_80139F5C;
-extern void *D_80139F8C;
-extern void *D_80139F74;
 extern u8 D_8009BCA7_U8Arr[] asm("D_8009BCA7");
 extern u8 D_8009BCAA_U8Arr[] asm("D_8009BCAA");
 extern u8 D_8009BCA6_U8Arr[] asm("D_8009BCA6");
@@ -762,8 +740,6 @@ void func_80133CC4(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_7", updateNpcCharles);
 extern s32 D_1F8002D0[];
 extern void *D_80139F60[];
-extern void *D_80139F7C[];
-extern void *D_80139F84[];
 
 void updateNpcCharles(GameObject *o)
 {

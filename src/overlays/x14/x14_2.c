@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
+#include "x14.h"
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_801189F4);
-extern void playSFX(s32);
 
 static __inline__ s32 add_189F4(s32 a, s32 b)
 {
@@ -201,14 +201,7 @@ void func_801197E8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011994C);
 
-extern s16 D_80124FC4[];
-extern u16 D_80124FB4[];
-extern s16 D_80124FE0;
-extern s16 D_80124FE2;
-extern void *D_80129320;
 extern s32 D_1F8002DC[];
-extern void readAnimFrameCount(GameObject *);
-extern void freeObjectLayer4(GameObject *);
 
 void func_8011994C(GameObject *o)
 {
@@ -323,7 +316,6 @@ void func_8011994C(GameObject *o)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_80119D30);
 
 
-extern void *D_8012933C;
 
 static __inline__ void setup_19D30(GameObject *p)
 {
@@ -395,8 +387,6 @@ void func_80119D30(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_80119FEC);
 
-extern void *D_80129338;
-extern u16 D_80124FE4[];
 
 void func_80119FEC(GameObject *o)
 {
@@ -425,7 +415,6 @@ void func_80119FEC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011A0C8);
-typedef struct { s16 vx, vy, vz, pad; } SVEC_1A0C8;
 extern char SCRATCHPAD_CharArr[] asm("SCRATCHPAD");
 
 #define V5C (*(s32 *)((char *)o + 0x5c))
@@ -435,7 +424,7 @@ extern char SCRATCHPAD_CharArr[] asm("SCRATCHPAD");
 void func_8011A0C8(GameObject *o)
 {
     GameObject *e;
-    SVEC_1A0C8 v;
+    SVECTOR v;
 
     switch (o->state) {
     case 0:
@@ -478,7 +467,6 @@ void func_8011A0C8(GameObject *o)
 #undef V64
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011A22C);
-typedef struct { s16 vx, vy, vz, pad; } SVEC_1A22C;
 
 #define V5C (*(s32 *)((char *)o + 0x5c))
 #define V60 (o->unk60)
@@ -487,7 +475,7 @@ typedef struct { s16 vx, vy, vz, pad; } SVEC_1A22C;
 void func_8011A22C(GameObject *o)
 {
     GameObject *e;
-    SVEC_1A22C v;
+    SVECTOR v;
 
     switch (o->state) {
     case 0:
@@ -734,8 +722,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011DAB0);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011DE38);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_2", func_8011DE4C);
-extern s32 tickAnimation(GameObject *);
-extern void decreaseObjectTimer(void *, s32);
 
 #define ANIMS(o) (*(void ***)((char *)(o) + 0xa8))
 
@@ -817,7 +803,6 @@ void func_8011DE4C(GameObject *o)
 extern char D_8007728C[];
 extern void func_800224FC(s32, s16, s16, s16);
 extern void applyAnimVelocityX(GameObject *, u16);
-extern void func_80115F60(GameObject *);
 
 #define setbox(o, q) { u8 *p_; p_ = (u8 *)o->unk90; p_ += (q); (o)->hitOffsetX = *p_++; (o)->hitWidth = *p_++; (o)->hitOffsetY = *p_; (o)->hitHeight = p_[1]; }
 
@@ -928,9 +913,6 @@ void func_8011E194(GameObject *o)
 
 
 typedef struct { s16 v[6]; } V6_1E55C;
-extern u8 TALK_POSE;
-extern s16 D_80125164[];
-extern s32 func_80022E44__1E55C(GameObject *);
 extern GameObject *showMessageBoxDirect(s32, s32, V6_1E55C *);
 
 static __inline__ void SetAnim_1E55C(GameObject *o, s16 n)

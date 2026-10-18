@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x17.h"
 
 INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80115774);
 
@@ -56,8 +57,6 @@ INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117460);
 INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_8011767C);
 
 // INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117688);
-extern void tickAnimation(GameObject *);
-extern void func_80117460(GameObject *);
 
 void func_80117688(GameObject *o)
 {
@@ -88,10 +87,8 @@ void func_8011792C(void) {
 extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
 extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
 extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
-extern u8 TALK_POSE[];
 extern u8 D_8009BCA1_U8Arr[] asm("D_8009BCA1");
 extern s16 D_1F8000F2_S16Arr[] asm("D_1F8000F2");
-extern void playSFXWithVolume(s32, s32);
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern void func_800EDEBC(GameObject *, s32);
 
@@ -189,7 +186,6 @@ void func_80117E80(void)
 INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117ED0);
 
 // INCLUDE_ASM("overlays/x17/nonmatchings/x17/x17", func_80117EDC);
-extern void freeObjectUnlayered(GameObject *);
 
 void func_80117EDC(GameObject *o)
 {
@@ -216,7 +212,6 @@ typedef struct {
     s16 f0, f2, f4, f6, f8, fa, fc, fe, f10, f12, f14, f16, f18, f1a;
 } E28_17FBC;
 extern E28_17FBC *D_80118DA8;
-extern GameObject *allocObjectLayer2(void);
 
 void func_80117FBC(GameObject *o)
 {

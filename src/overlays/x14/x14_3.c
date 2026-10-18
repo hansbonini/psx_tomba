@@ -1,17 +1,11 @@
 #include "common.h"
 #include "game.h"
+#include "x14.h"
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_3", func_8011EC04);
 
 typedef struct { s16 a, b, c, d; } E8_1EC04;
 
-extern s32 tickAnimation(GameObject *);
-extern void func_8011CBD0(GameObject *, s32);
-extern void func_8011EB94(void);
-extern void func_8011EBCC(void);
-extern s32 func_8012225C(GameObject *);
-extern void func_8011CC8C(GameObject *);
-extern void func_80115FEC(GameObject *);
 
 void func_8011EC04(GameObject *o)
 {

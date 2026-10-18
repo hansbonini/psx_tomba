@@ -22,9 +22,7 @@ void func_800385EC(GameObject *o)
 #endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038748);
-void playSFX(s32 id);
 s32 abs(s32);
-s16 angleToPlayer(u8 *o);
 void func_80038748(u8 *o)
 {
     s32 dx, dy, d, n;
@@ -118,7 +116,6 @@ s32 func_8003887C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038AC0);
-typedef struct { s16 x, y; } P_38AC0;
 extern GameObject *D_8009C650;
 typedef struct {
     u8 b0, p1[5], b6, b7, b8, p9[0x22 - 9];
@@ -129,10 +126,8 @@ typedef struct {
 extern s16 D_8007D5E4[];
 extern s16 fixedMulCos(s32, s16);
 extern s16 fixedMulSin(s32, s16);
-extern void func_8003473C(GameObject *);
 extern void advanceAnimFrame(GameObject *, s32);
-extern s32 tickAnimation(GameObject *);
-extern s16 angleBetweenPoints(P_38AC0, P_38AC0);
+extern s16 angleBetweenPoints(Vec2s, Vec2s);
 
 #define G PLAYER.obj
 #define TB(n) D_8007D60A[(s16)(o->animFrame + o->animFrame * 2) + (n) - 1]
@@ -141,8 +136,8 @@ extern s16 angleBetweenPoints(P_38AC0, P_38AC0);
 void func_80038AC0(GameObject *o)
 {
     extern S330_38AC0 *D_8009B698;
-    P_38AC0 t;
-    P_38AC0 s;
+    Vec2s t;
+    Vec2s s;
     s16 va;
     s16 vb;
     s16 i;
@@ -709,7 +704,6 @@ void func_8003A604(int id)
 // INCLUDE_ASM("nonmatchings/main/game/objutil", unpackSpriteFrame);
 void unpackSpriteFrame(s32 a, s32 b, u8 *dst, s32 d)
 {
-    extern u8 *fillBytesUnrolled(s32, u8 *, s32);
     u8 c;
     s32 *q;
     u8 *p;

@@ -1,17 +1,13 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_8012EFFC);
 
 
-extern void *D_8013837C[];
-extern void *D_8013838C[];
 extern s32 showMessageBoxDirect(s32, s32, void *);
-extern void readAnimFrameCount(GameObject *);
-extern void tickAnimation(GameObject *);
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
-extern void removeItemFromInventory(s32, s32);
 
 static __inline__ void setAnim_2EFFC(GameObject *o, void *a)
 {
@@ -158,7 +154,6 @@ void func_8012EFFC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_8012F400);
-extern u16 GetClut(s32, s32);
 
 void func_8012F400(GameObject *o)
 {
@@ -201,8 +196,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_8012F994);
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_8012FB00);
 
 
-extern void *D_8013971C[];
-extern void *D_8013975C[];
 
 static __inline__ void setAnim_2FB00(GameObject *o, void *a)
 {
@@ -263,9 +256,6 @@ void func_8012FB00(GameObject *o)
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_8012FCE0);
 
 
-extern u16 D_80135210[];
-extern u16 D_80135218[];
-extern void freeObjectUnlayered(GameObject *);
 
 #define W1C(o) (*(s16 *)((char *)(o) + 0x1c))
 
@@ -424,8 +414,6 @@ void func_8013018C(GameObject *o)
 
 #define W1C(o) (*(u16 *)&(o)->category)
 #define W1E(o) (*(u16 *)&(o)->tpage)
-extern GameObject PLAYER__3058C;
-GameObject *allocObjectLayer2(void);
 
 static __inline__ void spawn_3058C(GameObject *o, s16 x, s16 y)
 {
@@ -556,11 +544,9 @@ void func_8013058C(GameObject *o)
 #undef W1E
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_80130900);
-typedef struct { u16 x, y; } XY_30900;
-extern XY_30900 D_80135260;
-extern XY_30900 D_80135264[];
-extern XY_30900 D_80135274[];
-extern u16 D_80135284[];
+extern Vec2u D_80135260;
+extern Vec2u D_80135264[];
+extern Vec2u D_80135274[];
 
 #define W1C(o) (*(u16 *)((char *)(o) + 0x1c))
 
@@ -602,7 +588,7 @@ void func_80130900(GameObject *o)
             if ((u16)(pl->x.p.whole - 0x834) >= 0x119) break;
             if (--o->clut != -1) break;
             {
-                XY_30900 *t;
+                Vec2u *t;
                 x = nextRandom() & 3;
                 t = &D_80135264[x];
                 x = t->x;
@@ -619,7 +605,7 @@ void func_80130900(GameObject *o)
             if ((u16)(pl->x.p.whole - 0x921) >= 0xbd) break;
             if (--o->clut != -1) break;
             {
-                XY_30900 *t;
+                Vec2u *t;
                 x = nextRandom() & 3;
                 t = &D_80135274[x];
                 x = t->x;
@@ -660,7 +646,6 @@ typedef struct {
 extern E28_30C34 D_8013534C[];
 extern E28_30C34 D_801352A4[];
 extern E28_30C34 D_80135314[];
-extern GameObject *D_8009E73C[];
 
 void func_80130C34(GameObject *o)
 {
@@ -799,8 +784,6 @@ void func_80130C34(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_80131194);
-extern s32 D_8009E644;
-void func_80127D18(s32 a, s32 b, s32 c);
 
 void func_80131194(GameObject *o)
 {
@@ -850,7 +833,6 @@ void func_80131194(GameObject *o)
 
 typedef struct { s16 v[6]; } V6_3133C;
 
-extern GameObject *D_8009E648;
 
 void func_8013133C(GameObject *o)
 {
@@ -1689,8 +1671,6 @@ typedef struct {
     s16 b0c;
 } E_331E4;
 extern E_331E4 *D_801353F8;
-extern GameObject *allocObjectLayer4(void);
-extern GameObject *allocObjectLayer2(void);
 
 void func_801331E4(GameObject *o)
 {
@@ -1894,7 +1874,6 @@ typedef struct { s16 v[6]; } V6_33A18;
 typedef struct { void **p; s32 a, b; } T12_33A18;
 extern T12_33A18 D_80135498[];
 #define P (*(GameObject *)&PLAYER)
-extern u8 D_8009C4A6;
 extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
 extern s16 probeCollisionAtDepthA(GameObject *, s32, s32);
 
@@ -2045,17 +2024,10 @@ void func_80133FD4(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_11", func_80134048);
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T80134CF8_34048;
 
-extern T80134CF8_34048 D_80135490[];
+extern ObjSetupHitbox D_80135490[];
 extern s32 SPR_DATA[];
 
-extern void readAnimFrameCount(GameObject *);
 
 void func_80134048(GameObject *o)
 {

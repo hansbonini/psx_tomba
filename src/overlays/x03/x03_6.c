@@ -1,19 +1,13 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_6", func_80129010);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_6", func_80129A28);
 
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T8012A6D8_29A28;
 
-extern T8012A6D8_29A28 D_80135108[];
-extern void readAnimFrameCount(GameObject *);
+extern ObjSetupHitbox D_80135108[];
 
 void func_80129A28(GameObject *o)
 {

@@ -1,9 +1,9 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_801162C4);
-typedef struct { u16 frac; s16 whole; } FP_162C4;
-typedef struct { char pad[0x32]; s16 y; FP_162C4 *p; } S_162C4;
+typedef struct { char pad[0x32]; s16 y; FixParts *p; } S_162C4;
 
 void func_801162C4(S_162C4 *o)
 {
@@ -73,7 +73,6 @@ typedef struct { s16 s0, s2, s4, s6, s8, sa; char pad[0x8c - 0xc]; } G2_178B8;
 typedef struct { s16 a, b, c, d, e, f, g, h, i; } T_178B8;
 extern G2_178B8 D_800A33C0[];
 extern T_178B8 D_80134A5E[];
-extern s16 *D_80134BD8[];
 
 #define g ((G2_178B8 *)e)
 
@@ -163,9 +162,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_80117C60);
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03", func_80118044);
 
 
-extern void *D_80138254[];
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 
 void func_80118044(GameObject *o)
 {

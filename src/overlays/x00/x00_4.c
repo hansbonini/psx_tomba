@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_8011F7E4);
 typedef struct {
@@ -27,21 +28,16 @@ extern s32 *D_1F800334_S32PtrArr[] asm("D_1F800334");
 #define DAT_1f800334p D_1F800334_S32PtrArr[0]
 extern s32 D_1F800334_S32Arr[] asm("D_1F800334");
 #define DAT_1f800334 D_1F800334_S32Arr[0]
-extern s32 *D_1F800318[];
 #define DAT_1f800318p D_1F800318[0]
 extern s32 D_1F800318_S32Arr[] asm("D_1F800318");
 #define DAT_1f800318 D_1F800318_S32Arr[0]
-extern s32 *D_1F800314[];
 #define DAT_1f800314p D_1F800314[0]
 extern s32 D_1F800314_S32Arr[] asm("D_1F800314");
 #define DAT_1f800314 D_1F800314_S32Arr[0]
-extern s32 *FOUR_DATA[];
 #define DAT_1f800310p FOUR_DATA[0]
 extern s32 FOUR_DATA_S32Arr[] asm("FOUR_DATA");
 #define DAT_1f800310 FOUR_DATA_S32Arr[0]
 extern char D_800E3188[];
-extern void func_80028638(s32, s32);
-extern void subtractScaledVertices(s32, s32, s32);
 
 #define SETUP(o, n, w, v, P, Q) \
     o->wac = w; \
@@ -169,7 +165,6 @@ void func_8011FA84(GameObject *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_8011FBE0);
 extern void func_800EDDDC(GameObject *, s32, s32);
-extern s32 tickAnimation(GameObject *);
 void func_8011FBE0(GameObject *o)
 {
     GameObject *g;
@@ -292,8 +287,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_80120054);
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_80120474);
 void func_80120474(u8 *o)
 {
-    extern void func_80120E30(void *);
-    extern s32 func_80120DAC(s32, s32, s32, s32);
     switch (o[6]) {
     case 0:
         if (o[0x69] == 1) {
@@ -329,7 +322,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_801205D8);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_80120708);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_8012095C);
-extern s8 D_80138238[];
 
 void func_8012095C(GameObject *o)
 {
@@ -365,7 +357,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_80120AC8);
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_80120BC0);
 extern void setEventStarted(s32, s32, s32);
 extern s32 setEventComplete(s32, s32);
-extern void freeObjectLayer4(GameObject *);
 
 void func_80120BC0(GameObject *o)
 {

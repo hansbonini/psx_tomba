@@ -343,7 +343,6 @@ typedef struct { u8 u0, v0, u1, v1, u2, v2, u3, v3; } UV8_4C258;
 extern UVT_4C258 BALLOON_TAIL_SPRITES[];
 extern UV2_4C258 D_8007EB84[];
 extern UV8_4C258 D_8007EB8C[];
-extern u16 GetClut(s32, s32);
 
 void drawBalloonFrame(R_4C258 *o_, s16 c, s16 tp)
 {
@@ -548,94 +547,6 @@ skip:
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", func_8004CC84);
 
-typedef struct GameTask_4CC84 {
-    s16 status;
-    s16 sleepTimer;
-    s32 task_id;
-    s32 task_sp;
-    s32 task_func;
-    s32 task_gp;
-    volatile u16 unk14;
-    u8 unk16;
-    u8 unk17;
-    u8 unk18;
-    u8 unk19;
-    u8 unk1a;
-    u8 unk1b;
-    u8 unk1c;
-    u8 unk1d;
-    u8 unk1e;
-    u8 unk1f;
-    u8 unk20;
-    u8 unk21;
-    u8 unk22;
-    u8 unk23;
-    u8 unk24;
-    u8 unk25;
-    u8 unk26;
-    u8 unk27;
-    u8 unk28;
-    u8 unk29;
-    u8 unk2a;
-    u8 unk2b;
-    u8 unk2c;
-    u8 unk2d;
-    u8 unk2e;
-    u8 unk2f;
-    u8 unk30;
-    u8 unk31;
-    u8 unk32;
-    u8 unk33;
-    u8 unk34;
-    u8 unk35;
-    u8 unk36;
-    u8 unk37;
-    u8 unk38;
-    u8 unk39;
-    u8 unk3a;
-    u8 unk3b;
-    u8 unk3c;
-    u8 unk3d;
-    u8 unk3e;
-    u8 unk3f;
-    u8 unk40;
-    u8 unk41;
-    u8 unk42;
-    u8 unk43;
-    u8 unk44;
-    u8 unk45;
-    u8 unk46;
-    u8 unk47;
-    s16 state0;
-    s16 state1;
-    s16 mode;
-    s16 step;
-    u8 unk50;
-    u8 unk51;
-    u8 unk52;
-    u8 unk53;
-    u8 unk54;
-    u8 unk55;
-    u8 unk56;
-    u8 unk57;
-    u16 timer;
-    u16 unk5A;
-    u16 countdown;
-    u16 unk5E;
-    s16 unk60;
-    s16 unk62;
-    u16 unk64;
-    u8 unk66;
-    u8 unk67;
-    u8 loadGameSelected;
-    u8 titleScreenSelectedOption;
-    u8 unk6A;
-    u8 unk6B;
-    u8 unk6C;
-    u8 unk6D;
-    u8 unk6E;
-    u8 unk6F;
-} GameTask_4CC84;
 
 typedef struct {
     unsigned long tag;
@@ -688,7 +599,7 @@ void func_8004CC84(GameObject *o)
 
     D_1F800060.vx = o->x.p.whole;
     D_1F800060.vy = o->y.p.whole;
-    if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&(*(GameTask_4CC84 **)&D_1F8001D4)->mode != 3)
+    if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&(*(GameTask **)&D_1F8001D4)->mode != 3)
         D_1F800060.vz = o->z.p.whole >> 2;
     else
         D_1F800060.vz = o->z.p.whole;

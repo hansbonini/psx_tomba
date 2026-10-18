@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x02.h"
 
 INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_801179D4);
 
@@ -9,8 +10,6 @@ INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80117C60);
 
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80118340);
 
-extern void *D_8011EEEC[];
-extern void readAnimFrameCount(GameObject *);
 
 void func_80118340(GameObject *o)
 {
@@ -30,8 +29,6 @@ void func_80118340(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_801183D8);
-extern void *D_8009E694[];
-extern void func_80115C78(void *, s32, s32);
 
 void func_801183D8(GameObject *o)
 {
@@ -109,7 +106,6 @@ void func_801184C8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_3", func_80118680);
 extern s32 D_1F8002D0[];
-extern void *D_8011EF08[];
 
 void func_80118680(GameObject *o)
 {

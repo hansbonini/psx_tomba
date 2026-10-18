@@ -58,7 +58,6 @@ extern int D_80077274;
 extern int D_8007728C;
 
 
-extern int D_80014CCC;
 extern int D_8012D3F8;
 extern int D_8012DDA4;
 extern int D_80131694;
@@ -158,30 +157,6 @@ u8 D_8007DD88[0xA0] = {
     1, 1, 0x15, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0
 };
 
-void rewardNone(GameObject* arg0);
-void rewardItem(GameObject* arg0);
-void rewardHeart(GameObject* arg0);
-void rewardEffectOnly(GameObject* arg0);
-void rewardBakedYam(GameObject* arg0);
-void rewardDirtyMirror(GameObject* arg0);
-void rewardVitalityMaxUp(GameObject* arg0);
-void rewardWoodBoomerang(GameObject* arg0);
-void rewardStoneBoomerang(GameObject* arg0);
-void rewardIronBoomerang(GameObject* arg0);
-void rewardOneUp(GameObject* arg0);
-void rewardGoldenBowl(GameObject* arg0);
-void rewardBitingPlantFlower(GameObject* arg0);
-void rewardGrapple(GameObject* arg0);
-void rewardGrappleJack(GameObject* arg0);
-void rewardCrystalBalls(GameObject* arg0);
-void rewardMysteriousMushroom(GameObject* arg0);
-void rewardFlowerSeeds(GameObject* arg0);
-void rewardPigBag(GameObject* arg0);
-void rewardConditionalItem(GameObject* arg0);
-void rewardJewel(GameObject* arg0);
-void rewardSafeMushroom(GameObject* arg0);
-void rewardAnimalDash(GameObject* arg0);
-void rewardPants(GameObject* arg0);
 
 void (*D_8007DE28[])(GameObject *) = {
     rewardNone,
@@ -210,24 +185,6 @@ void (*D_8007DE28[])(GameObject *) = {
     rewardPants
 };
 
-extern int D_80012190;
-extern int D_800122DC;
-extern int D_800122E0;
-extern int D_800122E4;
-extern int D_800122E8;
-extern int D_800122EC;
-extern int D_800122F0;
-extern int D_800122F4;
-extern int D_800122F8;
-extern int D_80012304;
-extern int D_80012308;
-extern int D_8001230C;
-extern int D_8001231C;
-extern int D_80012320;
-extern int D_80012324;
-extern int D_80012328;
-extern int D_80012374;
-extern int D_80012384;
 extern int D_8011787C;
 extern int D_80119484;
 extern int D_80119C84;

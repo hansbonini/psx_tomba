@@ -116,11 +116,9 @@ void loadSectionHeight(u8* self)
 // INCLUDE_ASM("nonmatchings/main/render/camera", func_800246B0);
 
 
-typedef struct { s32 x, y, z; } V3_246B0;
-typedef struct { s16 x, y; } SP_246B0;
 typedef struct { s16 a, b, c, d; } S4_246B0;
 typedef struct {
-    u8 b0; char p1[7]; V3_246B0 pos; char p14[0x20 - 0x14]; s32 d20; s32 d24;
+    u8 b0; char p1[7]; Vec3L pos; char p14[0x20 - 0x14]; s32 d20; s32 d24;
     char p28[0x2c - 0x28]; s16 w2c, w2e, w30, w32; s32 *p34; char p38[0x78 - 0x38]; s32 d78; s32 d7c;
 } C_246B0;
 typedef struct { char p[0x4c]; u16 w4c; } O_246B0;
@@ -190,7 +188,7 @@ void func_800246B0(void)
         ((s32*)&SCRATCHPAD.vrx.raw)[4] = v << 16;
     { register s32 *pp asm("$4") = c->p34;
     v = c->w2e;
-    if (v < ((SP_246B0 *)pp)->y || (v = c->w2c, ((SP_246B0 *)pp)->y < v))
+    if (v < ((Vec2s *)pp)->y || (v = c->w2c, ((Vec2s *)pp)->y < v))
         *pp = v << 16; }
     if (D_8009C068.disableSelectMenu) {
         c->d20 = 0x1000;

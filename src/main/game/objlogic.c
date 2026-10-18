@@ -27,7 +27,6 @@ void func_800349DC(Unk8009C968 *p, s32 a, s16 *o1, s16 *o2)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80034C14);
-typedef struct { s16 x, y; } XY_34C14;
 typedef struct {
     char p0[4];
     u8 b04, step, state, substep;
@@ -62,8 +61,6 @@ extern P38_34C14 PLAYER_P38_34C14 asm("PLAYER");
 extern u16 D_1F800282;
 extern u8 D_8009BCA7_U8 asm("D_8009BCA7");
 extern s32 D_8009C650;
-extern void playSFX(s32);
-extern s32 tickAnimation(GameObject *);
 extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
@@ -91,12 +88,12 @@ void func_80034AB8(GameObject *o)
 
 void func_80034C14(GameObject *o)
 {
-    extern s16 angleBetweenPoints(XY_34C14, XY_34C14);
+    extern s16 angleBetweenPoints(Vec2s, Vec2s);
     extern void advanceAnimFrame(GameObject *, s32);
     extern G330_34C14 *D_8009B698;
     extern s16 D_8007D608[];
     extern s16 D_8007D5E4[];
-    XY_34C14 t, c;
+    Vec2s t, c;
     s16 dx, dy;
     s16 i;
     s16 v;
@@ -595,7 +592,6 @@ s16 angleToPlayer(u8* self) {
 extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
-extern void playSFX(s32);
 extern u16 D_1F800282;
 extern u8 D_800A5435[];
 
@@ -821,7 +817,6 @@ void func_80036DF8(u8 *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036F98);
-typedef struct V2_36F98 { s16 x, y; } V2_36F98;
 typedef struct {
     u8 b0; char p1[6]; u8 b7; char p8[0x22 - 8];
     u16 w22; char p24[4]; u16 w28, w2a; char p2c[2]; u16 w2e;
@@ -832,16 +827,15 @@ extern u16 D_8007D5E4[];
 extern u16 D_8007D608[];
 extern u8 D_800A5444;
 extern u8 D_8009BCF8;
-extern s32 tickAnimation(GameObject *);
 
 static __inline__ s16 dir_36F98(GameObject *o)
 {
-    V2_36F98 b, a;
+    Vec2s b, a;
     a.x = o->h->p.whole;
     a.y = o->y.p.whole;
     b.x = PLAYER.obj.h->p.whole;
     b.y = PLAYER.obj.y.p.whole;
-    return ((s16 (*)(V2_36F98, V2_36F98))angleBetweenPoints)(a, b);
+    return ((s16 (*)(Vec2s, Vec2s))angleBetweenPoints)(a, b);
 }
 #define DIR dir_36F98
 
@@ -865,7 +859,7 @@ static __inline__ s16 near_36F98(GameObject *o, s32 d, s32 w)
 
 void func_80036F98(GameObject *o)
 {
-    V2_36F98 vb, va;
+    Vec2s vb, va;
     s16 a, r;
     s16 idx;
     s16 k;

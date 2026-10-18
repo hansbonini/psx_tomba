@@ -334,7 +334,6 @@ s16 func_800450FC(u8* self, s16 arg1, s16 arg2)
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80045174);
 extern s32 angleFromDelta(s32, s32);
-extern s16 D_1F80027C;
 
 s32 func_80045174(GameObject *o, s16 a, s32 b)
 {

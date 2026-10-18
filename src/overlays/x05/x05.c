@@ -1,14 +1,11 @@
 #include "common.h"
 #include "game.h"
+#include "x05.h"
 
 INCLUDE_ASM("overlays/x05/nonmatchings/x05/x05", func_8011530C);
 
 // INCLUDE_ASM("overlays/x05/nonmatchings/x05/x05", func_80115330);
 
-extern void *D_801193B8[];
-extern void readAnimFrameCount(GameObject *);
-extern void tickAnimation(GameObject *);
-extern void pushDrawListCapped(GameObject *);
 
 void func_80115330(GameObject *o)
 {
@@ -191,17 +188,10 @@ INCLUDE_RODATA("overlays/x05/nonmatchings/x05/x05", func_80115214);
 INCLUDE_ASM("overlays/x05/nonmatchings/x05/x05", func_801161C8);
 
 // INCLUDE_ASM("overlays/x05/nonmatchings/x05/x05", func_801163A0);
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T80117050_163A0;
 
-extern T80117050_163A0 D_80116A14[];
+extern ObjSetupHitbox D_80116A14[];
 extern s32 SPR_DATA[];
 
-extern void readAnimFrameCount(GameObject *);
 
 void func_801163A0(GameObject *o)
 {
@@ -236,8 +226,6 @@ void func_80116970(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x05/nonmatchings/x05/x05", func_8011697C);
-extern void func_8011659C(GameObject *);
-extern void freeObjectUnlayered(GameObject *);
 
 void func_8011697C(GameObject *o)
 {

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "game/area_module.h"
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", computeRotatedQuad);
 void computeRotatedQuad(s16* out, s32 arg1, s16 r1, s16 r2) {
@@ -827,14 +828,13 @@ s32 func_80051DA4(TO_51DA4 *a, TO_51DA4 *b)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051EE0);
-typedef struct { s16 x, y; } Off_51EE0;
 
 void func_80051EE0(GameObject *o, GameObject *e)
 {
-    extern Off_51EE0 D_8007EDD0[];
+    extern Vec2s D_8007EDD0[];
     s16 dx, dy, sx, px, cx, ax;
     s16 tx, ty;
-    Off_51EE0 *t;
+    Vec2s *t;
     s16 w;
     if ((u16)(o->d->p.whole - e->d->p.whole + 45) > 90)
         return;
@@ -1081,12 +1081,11 @@ s32 boxesOverlapFlipAware(u8* arg0, u8* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800527C8);
-typedef struct { u16 x, y; } P2_527C8;
-extern P2_527C8 D_8007EDD0[];
+extern Vec2u D_8007EDD0[];
 
 void func_800527C8(GameObject *o, GameObject *q)
 {
-    P2_527C8 *t;
+    Vec2u *t;
     s32 tx;
     u16 ty;
     s32 n;
@@ -1142,9 +1141,7 @@ void func_800527C8(GameObject *o, GameObject *q)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800529A8);
-s32 func_800505E8();
 extern void func_800224FC(s32, s32, s32, s32);
-extern void playSFX(s32);
 
 static __inline__ s16 hit_529A8(GameObject *a, GameObject *b)
 {
@@ -1311,9 +1308,8 @@ void func_80052D5C(GameObject *a, GameObject *b)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80052F20);
-typedef struct FP_52F20 { u16 frac; s16 whole; } FP_52F20;
-typedef struct O_52F20 { u8 b0; char p0[0x10-1]; FP_52F20 a; FP_52F20 y; FP_52F20 b; u8 b1c; char p1[0x40-0x1d];
-  FP_52F20 *h; FP_52F20 *d; char p2[0x68-0x48]; u8 b68; char p3; u8 b6a; char p4;
+typedef struct O_52F20 { u8 b0; char p0[0x10-1]; FixParts a; FixParts y; FixParts b; u8 b1c; char p1[0x40-0x1d];
+  FixParts *h; FixParts *d; char p2[0x68-0x48]; u8 b68; char p3; u8 b6a; char p4;
   s16 box0, box1, box2, box3; char p5[42]; u8 b9e, b9f; char p6[0xa8-0xa0]; s16 wa8; } O_52F20;
 
 static __inline__ s16 hit_52F20(O_52F20 *a, O_52F20 *b)
@@ -1376,9 +1372,7 @@ void func_80052F20(O_52F20 *a, O_52F20 *b)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800530F0);
-s32 func_800505E8();
 extern void func_800224FC(s32, s32, s32, s32);
-extern void playSFX(s32);
 
 static __inline__ s16 hit_530F0(GameObject *a, GameObject *b)
 {
@@ -2149,34 +2143,8 @@ void func_80054618(void)
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80054D60);
 void func_80124200(GameObject *o, GameObject *e);
-void func_80124280(GameObject *o, GameObject *e);
-void func_8012437C(GameObject *o, GameObject *e);
-void func_801245FC(GameObject *o, GameObject *e);
-void func_80124054(GameObject *o, GameObject *e);
-void func_80124318(GameObject *o, GameObject *e);
-void func_801243AC(GameObject *o, GameObject *e);
-void func_80123EE0(GameObject *o, GameObject *e);
-void func_801243DC(GameObject *o, GameObject *e);
-void func_801244E8(GameObject *o, GameObject *e);
-void func_801246C4(GameObject *o, GameObject *e);
-void func_80124240(GameObject *o, GameObject *e);
-void func_80124260(GameObject *o, GameObject *e);
 void func_80123390(GameObject *o, GameObject *e);
 void func_8011F7C0(GameObject *o, GameObject *e);
-void func_8011D23C(GameObject *o, GameObject *e);
-void func_80125FFC(GameObject *o, GameObject *e);
-void func_8011E964(GameObject *o, GameObject *e);
-void func_8011E868(GameObject *o, GameObject *e);
-void func_8011E78C(GameObject *o, GameObject *e);
-void func_8011E660(GameObject *o, GameObject *e);
-void func_8011E748(GameObject *o, GameObject *e);
-void func_8011FFA8(GameObject *o, GameObject *e);
-void func_8011DC04(GameObject *o, GameObject *e);
-void func_8011D208(GameObject *o, GameObject *e);
-void func_80120404(GameObject *o, GameObject *e);
-void func_8011C6B4(GameObject *o, GameObject *e);
-void func_8011BCE0(GameObject *o, GameObject *e);
-void func_8011E67C(GameObject *o, GameObject *e);
 
 static __inline__ s16 hit_54D60(GameObject *o, GameObject *e)
 {

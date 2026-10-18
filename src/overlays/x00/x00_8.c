@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_8", func_801341A0);
 typedef struct { char pad[0x4c]; s16 w4c; s16 w4e; } C4C_341A0;
 typedef struct { s16 p0, x, p4, y, p8, z; } Pos_341A0;
-extern u8 D_8009C115;
 extern u8 D_8009BCD9;
 extern u8 D_8009BCD8[];
 #define D_8009C970 D_8009BCD8[0]
@@ -17,15 +17,7 @@ extern u8 D_8009BCA2_U8Arr[] asm("D_8009BCA2");
 extern u8 D_8009BCDD_U8Arr[] asm("D_8009BCDD");
 #define D_8009C975 D_8009BCDD_U8Arr[0]
 #define D_8009D2B0 D_8009C618[0]
-extern void *D_8013A614[];
-extern void *D_8013A618[];
-extern void *D_8013A61C[];
-extern void *D_8013A620[];
-extern void *D_8013A624[];
-extern void *D_8013A628[];
-extern void *D_8013A634[];
 extern void *D_1F8002D4;
-extern s16 *D_801389E4[];
 extern u8 D_800A5401;
 extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 #define D_800A603E D_800A539E_U8Arr[0]
@@ -35,9 +27,7 @@ extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
 #define D_800A603C D_800A539C_U8Arr[0]
 extern s32 D_8009BCEC[];
 #define D_8009C984 D_8009BCEC[0]
-extern u8 D_1F8001CD[];
 #define D_1F8001CD D_1F8001CD[0]
-extern u8 D_1F8001CC[];
 #define D_1F8001CC D_1F8001CC[0]
 #define D_1F8001C6 ((s16 *)&D_1F8001C6)[0]
 extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
@@ -46,21 +36,15 @@ extern s16 D_800A53C6_S16Arr[] asm("D_800A53C6");
 #define D_800A6066 D_800A53C6_S16Arr[0]
 extern s16 D_8009C0FC_S16Arr[] asm("D_8009C0FC");
 #define D_8009CD94 D_8009C0FC_S16Arr[0]
-extern s16 D_8009C108[];
 #define D_8009CDA0 D_8009C108[0]
 extern s16 D_8009C0FE_S16Arr[] asm("D_8009C0FE");
 #define D_8009CD96 D_8009C0FE_S16Arr[0]
 #define D_800A60D2 ((s16 *)&D_800A5432)[0]
 #define D_800A60D0 ((s16 *)&D_800A5430)[0]
-extern void readAnimFrameCount(GameObject *);
-extern void applyAnimVelocityY(GameObject *, s32);
 extern s32 showMessageBox(s32, s32, s32, s32);
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
-extern void dispatchAreaItemUpdate(GameObject *, Pos_341A0 *, s32);
 extern void addItemToInventory(s32, s32, s32);
-extern void playSFX(s32);
-extern void tickAnimation(GameObject *);
 
 void func_801341A0(GameObject *o)
 {
@@ -449,13 +433,12 @@ void func_801341A0(GameObject *o)
 #undef D_800A60D0
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_8", func_80134E50);
-typedef struct { s16 x, y; } P_34E50;
-extern s32 angleBetweenPoints(P_34E50 a, P_34E50 b);
+extern s32 angleBetweenPoints(Vec2s a, Vec2s b);
 extern u16 D_1F80016E;
 
 void func_80134E50(GameObject *o)
 {
-    P_34E50 a, b;
+    Vec2s a, b;
     u32 d;
     switch (o->subState) {
     case 0:

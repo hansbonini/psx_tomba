@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "optsub00.h"
 
 typedef struct optsubSprite {
     /* 0x00 */ s16 unk0;
@@ -29,19 +30,6 @@ typedef struct optsubRequest {
     /* 0x14 */ s32   unk14;
 } optsubRequest;
 
-extern u8    D_800E9348[];
-extern u8    D_800E9648;
-extern u8    D_800E9C64;
-extern s32   D_800E9C90[];
-extern s32   D_800E9CF4[];
-extern s32   D_800E9D08[];
-extern s32   D_800E9D8C[];
-extern s32   D_800E9DB4;
-extern s32   D_800E9DB8;
-extern u8    D_800E9DBC;
-extern u8    D_800E9DD4;
-extern u8    D_800E9E14[];
-extern u8    D_800E9E44[];
 extern optsubRect D_800E9E74[];
 extern optsubRect D_800E9EA4[];
 extern optsubSprite D_800E9EB4[];
@@ -49,29 +37,9 @@ extern optsubSprite D_800E9EE4[];
 extern optsubSprite* D_800EA2A4[];
 extern optsubSprite D_800EA2BC[];
 extern optsubSprite D_800EA2EC[];
-extern s16   D_800EA36C;
-extern s16   D_800EA370;
-extern s16   D_800EA374;
-extern s16   D_800EA378;
-extern u16   D_800EA37C;
-extern s16   D_800EA380;
-extern void* SEQ_DATA;
 
 s32 fixedMulSin2(s16 arg0, s16 arg1);
-void drawOptsubSpriteList();
-void func_800E7EFC(void);
 void drawOptsubSprite(optsubSprite* arg0, s16 tpage, u8 arg2);
-void func_800E8160();
-void func_800E82F4(void);
-void func_800E83EC(s32 arg0, s32 arg1);
-void func_800E8570(s32 arg0);
-void func_800E8680();
-void func_800E8814(void);
-void drawOptsubText(s16 arg0, s16 arg1, s32 arg2);
-void func_800E8964(s16 arg0, s16 arg1, s32 arg2);
-void func_800E89CC(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-void drawOptsubNumber(s16 arg0, s16 arg1, s32 arg2);
-void func_800E8B6C();
 
 INCLUDE_ASM("overlays/optsub00/nonmatchings/optsub00", drawOptsubSpriteList);
 

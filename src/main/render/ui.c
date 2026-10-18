@@ -1680,7 +1680,6 @@ s16 func_800287F8(u8 *p, s16 mode)
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_800288C4);
 typedef struct { char p0[9]; u8 b9; } G_288C4;
-extern u16 D_800A5474;
 
 #define AXIS(v, c, a, hi, lo) ({                                  \
     s32 d;                                                      \
@@ -1749,7 +1748,6 @@ typedef struct { char c[6]; } B_28B34;
 
 void func_80028B34(void)
 {
-    extern void PadSetActAlign(s32, void *);
     extern B_28B34 D_80010368;
     B_28B34 buf;
     char *p;
@@ -1795,7 +1793,6 @@ void func_80028B34(void)
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_80028CE4);
 extern s32 PadSetAct(s32, u8 *, s32);
-extern void PadSetActAlign(s32, s8 *);
 
 typedef struct { s8 b[6]; } PadAlign_28CE4;
 extern PadAlign_28CE4 D_80010368;

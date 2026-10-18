@@ -1,104 +1,16 @@
 #include "common.h"
 #include "game.h"
+#include "x01.h"
 
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_80139DF0);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A248);
 
 
-typedef struct GameTask_3A248 {
-    s16 status;
-    s16 sleepTimer;
-    s32 task_id;
-    s32 task_sp;
-    s32 task_func;
-    s32 task_gp;
-    volatile u16 unk14;
-    u8 unk16;
-    u8 unk17;
-    u8 unk18;
-    u8 unk19;
-    u8 unk1a;
-    u8 unk1b;
-    u8 unk1c;
-    u8 unk1d;
-    u8 unk1e;
-    u8 unk1f;
-    u8 unk20;
-    u8 unk21;
-    u8 unk22;
-    u8 unk23;
-    u8 unk24;
-    u8 unk25;
-    u8 unk26;
-    u8 unk27;
-    u8 unk28;
-    u8 unk29;
-    u8 unk2a;
-    u8 unk2b;
-    u8 unk2c;
-    u8 unk2d;
-    u8 unk2e;
-    u8 unk2f;
-    u8 unk30;
-    u8 unk31;
-    u8 unk32;
-    u8 unk33;
-    u8 unk34;
-    u8 unk35;
-    u8 unk36;
-    u8 unk37;
-    u8 unk38;
-    u8 unk39;
-    u8 unk3a;
-    u8 unk3b;
-    u8 unk3c;
-    u8 unk3d;
-    u8 unk3e;
-    u8 unk3f;
-    u8 unk40;
-    u8 unk41;
-    u8 unk42;
-    u8 unk43;
-    u8 unk44;
-    u8 unk45;
-    u8 unk46;
-    u8 unk47;
-    s16 state0;
-    s16 state1;
-    s16 mode;
-    s16 step;
-    u8 unk50;
-    u8 unk51;
-    u8 unk52;
-    u8 unk53;
-    u8 unk54;
-    u8 unk55;
-    u8 unk56;
-    u8 unk57;
-    u16 timer;
-    u16 unk5A;
-    u16 countdown;
-    u16 unk5E;
-    s16 unk60;
-    s16 unk62;
-    u16 unk64;
-    u8 unk66;
-    u8 unk67;
-    u8 loadGameSelected;
-    u8 titleScreenSelectedOption;
-    u8 unk6A;
-    u8 unk6B;
-    u8 unk6C;
-    u8 unk6D;
-    u8 unk6E;
-    u8 unk6F;
-} GameTask_3A248;
 extern GameObject PLAYER_GameObject asm("PLAYER");
 extern u16 D_800A53C6_U16Arr[] asm("D_800A53C6");
 extern GameObject *D_800A5428[];
 extern char D_800108A8[];
-extern void readAnimFrameCount(GameObject *);
 extern GameObject *showMessageBox(s32, s32, s32, s32);
 
 void func_8013A248(GameObject *o)
@@ -140,8 +52,8 @@ void func_8013A248(GameObject *o)
             D_8009C068.unk57f = 0;
             GAME.nextSpawnPoint = 0;
             GAME.nextSection = GAME.selectedSection;
-            (*(GameTask_3A248 **)&D_1F8001D4)->mode = 7;
-            (*(GameTask_3A248 **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&D_1F8001D4)->mode = 7;
+            (*(GameTask **)&D_1F8001D4)->step = 0;
         }
         break;
     }
@@ -194,7 +106,6 @@ void func_8013A42C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A58C);
-extern void func_80139C04(void);
 
 void func_8013A58C(void)
 {
@@ -224,8 +135,6 @@ void func_8013A58C(void)
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A670);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013A67C);
-extern GameObject *allocObjectLayer8(void);
-extern void func_80113C20(GameObject *, char, s32, s32, s16);
 
 void func_8013A67C(GameObject *o)
 {
@@ -303,7 +212,6 @@ INCLUDE_RODATA("overlays/x01/nonmatchings/x01/x01_10", func_801158DC);
 
 extern u16 D_800A53AA_U16Arr[] asm("D_800A53AA");
 extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
-extern GameObject *D_8009E654[];
 extern s32 fixedMulSin(s32, s32);
 
 
@@ -398,10 +306,7 @@ void func_8013A854(GameObject *o)
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ACB0);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ACBC);
-extern GameObject *allocObjectLayer2(void);
 extern s16 func_80138E64(GameObject *);
-extern void func_80138F88(GameObject *);
-extern void freeObjectUnlayered(GameObject *);
 
 void func_8013ACBC(GameObject *o)
 {
@@ -442,8 +347,6 @@ void func_8013ACBC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013ADE8);
 
-extern void func_80139410(GameObject *);
-extern void func_80139610(GameObject *);
 
 static __inline__ s16 check_3ADE8(GameObject *o)
 {
@@ -482,7 +385,6 @@ void func_8013ADE8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_10", func_8013AF5C);
-void func_801397E8(GameObject *o);
 s16 func_8013999C(GameObject *o);
 
 void func_8013AF5C(GameObject *o)
@@ -557,7 +459,6 @@ typedef struct {
     s16 w1c, w1e, w20;
 } O_3B180;
 
-extern u16 D_8013BD38[];
 extern s16 D_1F80016E[];
 
 void func_8013B180(O_3B180 *o)
@@ -613,11 +514,9 @@ void func_8013B180(O_3B180 *o)
 typedef struct { char pad[0xa]; s16 w0a; } W0AS_3B360;
 #define W0A(p) (((W0AS_3B360 *)(p))->w0a)
 
-typedef struct { s16 x; s16 y; } XY_3B360;
 
 extern GameObject *D_8009BCB0[];
-extern u16 D_8013BD58[];
-extern XY_3B360 D_8013BD48[];
+extern Vec2s D_8013BD48[];
 
 void func_8013B360(GameObject *o)
 {

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x18.h"
 
 INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158A0);
 
@@ -9,11 +10,6 @@ INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158DC);
 
 // INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_801158F8);
 
-extern void *D_8011BE40[];
-extern u16 GetClut(s32, s32);
-extern void readAnimFrameCount(GameObject *);
-extern void pushDrawListCapped(GameObject *);
-extern s32 tickAnimation(GameObject *);
 
 void func_801158F8(GameObject *o)
 {
@@ -52,12 +48,9 @@ void func_801158F8(GameObject *o)
 
 // INCLUDE_ASM("overlays/x18/nonmatchings/x18/x18", func_80115A40);
 
-typedef struct { s16 x, y, z, pad; } P4_15A40;
 
-extern void *D_8011BDFC[];
-extern s16 D_801197F0[];
 
-#define PT(o) ((P4_15A40 *)((char *)(o) + 0xb4))
+#define PT(o) ((Vec3s *)((char *)(o) + 0xb4))
 
 void func_80115A40(GameObject *o)
 {

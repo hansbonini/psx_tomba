@@ -64,7 +64,6 @@ void func_8003C9D4(void)
 
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003CE18);
 typedef struct { char p0[0x8a]; u16 c; char p1[0x1190 - 0x8c]; s32 idx, k, sub, x, y, z; } G_3CE18;
-extern GameObject *allocObjectLayer2(void);
 
 void func_8003CE18(void)
 {

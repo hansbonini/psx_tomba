@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x06.h"
 
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80115464);
 
@@ -19,7 +20,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_801158DC);
 typedef void (*Fn_1590C)(GameObject *);
 extern Fn_1590C D_8007C5D4[];
 extern void func_8002A334(GameObject *);
-extern s32 tryStartItemInteraction(GameObject *, s32, u8);
 
 void func_8011590C(GameObject *o)
 {
@@ -75,7 +75,6 @@ typedef struct { s16 s0, s2, s4, s6, s8, sa; char pad[0x8c - 0xc]; } G2_15D0C;
 typedef struct { s16 a, b, c, d, e, f, g, h, i; } T_15D0C;
 extern G2_15D0C D_800A33C0[];
 extern T_15D0C D_8011E342[];
-extern s16 *D_8011E4BC[];
 
 #define g ((G2_15D0C *)e)
 
@@ -166,7 +165,6 @@ typedef struct {
 extern E118_160A0 LOAD_BUFFER_E118_160A0ArrArr7[][7] asm("LOAD_BUFFER");
 typedef struct { char pad[0xc2]; u16 wc2, wc4, wc6; s16 wc8; } X118_160A0;
 #define X(o) ((X118_160A0 *)(o))
-extern u16 GetClut(s32, s32);
 
 void func_801160A0(s32 n, s16 x, s16 y, s16 z, s16 t)
 {
@@ -281,23 +279,11 @@ loop:
 typedef struct { s16 m[3][3]; s16 pad; s32 t[3]; } MAT_16498;
 extern s32 D_1F800168_S32Arr[] asm("D_1F800168");
 extern s32 D_1F80016C_S32Arr[] asm("D_1F80016C");
-extern s32 D_1F800170[];
-extern void *D_80121D50[];
-extern void *D_8011E620;
-extern void *D_8011E634;
-extern void *D_8011E610[];
-extern void *D_8011E624[];
 extern u8 PLAYER_U8Arr[] asm("PLAYER");
-extern s16 D_800A5404[];
-extern s16 D_800A5406[];
 extern s16 D_800A5408_S16Arr[] asm("D_800A5408");
-extern s16 D_800A540A[];
 extern s32 D_800A53A8[];
 extern s32 D_800A53AC[];
 extern s32 D_800A53B0_S32Arr[] asm("D_800A53B0");
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
-extern void loadImageRect(void *, s32, s32, s32, s32);
 
 void func_80116498(GameObject *o)
 {
@@ -398,7 +384,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80117840);
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_801178B8);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_801179BC);
-extern s32 rsin(s32);
 
 void func_801179BC(GameObject *o)
 {
@@ -465,15 +450,7 @@ typedef struct {
     s16 ca;
     s16 cc;
 } Sub_17FBC;
-typedef struct { s16 x, y, z, w; } E_17FBC;
 
-extern char D_8011F1E4[];
-extern char D_8011E73C[];
-extern void *D_80121D78[];
-extern void *D_80121D50[];
-extern s32 rcos(s32);
-extern void readAnimFrameCount(GameObject *);
-extern void func_80117B60(GameObject *);
 
 #define SUB(o) ((Sub_17FBC *)((char *)(o) + 0xb4))
 
@@ -510,14 +487,14 @@ static __inline__ void upd_17FBC(GameObject *o, Sub_17FBC *t)
 static __inline__ void pos_17FBC(GameObject *o)
 {
     Sub_17FBC *s;
-    E_17FBC *e;
+    Vec4s *e;
     s16 d;
 
     func_80117B60(o);
     upd_17FBC(o, SUB(o));
     func_80117840(o);
     s = SUB(o);
-    e = *(E_17FBC **)&o->unkA8;
+    e = *(Vec4s **)&o->unkA8;
     e += o->animTimer;
     o->unk34 = (SUB(o)->div > 0 ? (o->unk34 = SUB(o)->rad * o->unk76 / SUB(o)->div) + e->y : e->y) - 0x20;
     o->unk38 = (rsin(s->ang) * s->rad) >> 20;
@@ -618,9 +595,6 @@ typedef struct {
     s16 ca;
     s16 cc;
 } Sub_18470;
-typedef struct { s16 x, y, z, w; } E_18470;
-extern void *D_80121D7C[];
-extern void *D_80121D80[];
 
 #define SUB(o) ((Sub_18470 *)((char *)(o) + 0xb4))
 
@@ -657,12 +631,12 @@ static __inline__ void upd_18470(GameObject *o, Sub_18470 *t)
 static __inline__ void pos_18470(GameObject *o)
 {
     Sub_18470 *s;
-    E_18470 *e;
+    Vec4s *e;
 
     upd_18470(o, SUB(o));
     func_80117840(o);
     s = SUB(o);
-    e = *(E_18470 **)&o->unkA8;
+    e = *(Vec4s **)&o->unkA8;
     e += o->animTimer;
     o->unk34 = (SUB(o)->div > 0 ? (o->unk34 = SUB(o)->rad * o->unk76 / SUB(o)->div) + e->y : e->y) - 0x20;
     o->unk38 = (rsin(s->ang) * s->rad) >> 20;
@@ -809,8 +783,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80119798);
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80119A8C);
 
 typedef struct { char p[0x1c]; s16 w1c; } X_19A8C;
-extern s32 func_8011A304(GameObject *);
-extern s32 func_8011A588(GameObject *);
 
 void func_80119A8C(GameObject *o)
 {
@@ -858,8 +830,6 @@ void func_80119A8C(GameObject *o)
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_80119BCC);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011A238);
-extern void func_80022C08(GameObject *, s32);
-extern void freeObjectLayer4(GameObject *);
 
 void func_8011A238(GameObject *o)
 {
@@ -916,8 +886,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011ABF4);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011AD80);
 extern void (*D_8007DE28[])(GameObject *);
-extern s32 func_8011DF14(GameObject *o);
-extern s32 tickAnimation(GameObject *o);
 
 void func_8011AD80(GameObject *o)
 {
@@ -1079,7 +1047,6 @@ typedef struct {
     s8 dx, dy;
 } EL_1C234;
 extern s32 LZ_FILE_CTRL_S32 asm("LZ_FILE_CTRL");
-extern void SetSemiTrans(void *, s32);
 
 static __inline__ s32 ot_1C234(u32 *a, s32 b, s32 c, s32 z, u32 e)
 {
@@ -1198,8 +1165,6 @@ s32 func_8011D6A8(void)
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011D6F8);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011D858);
-extern void func_80055A44(void *);
-extern void func_8005548C(void *);
 
 void func_8011D858(void)
 {
@@ -1220,9 +1185,6 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011DE38);
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011DF14);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011E068);
-extern void *D_80122360[];
-extern void *D_80122364;
-extern void *D_8012236C[];
 extern void applyAnimVelocityX(GameObject *, u16);
 
 static __inline__ void setbox_1E068(GameObject *o, s16 a, s16 b, s16 c, s16 d)

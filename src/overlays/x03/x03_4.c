@@ -1,18 +1,12 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80125048);
 
 extern s16 probeCollisionAtDepthA(GameObject *, s32, s32);
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 extern s16 isObjectPastReferenceX(GameObject *);
 extern s32 func_80124A44(GameObject *, s16);
-extern void *D_801388B4[];
-extern u8 D_80135000[];
-extern u8 D_801350A4[];
-extern u8 D_8013509C[];
-extern u16 D_8013507C[];
 
 #define SET() \
     { u8 *p; \
@@ -360,8 +354,6 @@ void func_8012567C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80125EB8);
 typedef struct B_25EB8 { u8 c[4]; } B_25EB8;
-extern u8 D_801350AB[];
-extern u8 D_801350B3[];
 
 void func_80125EB8(GameObject *o)
 {
@@ -406,8 +398,6 @@ void func_80125EB8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80126068);
-extern void *D_8013892C;
-extern s16 func_80043D2C(GameObject *, s16, s16);
 
 void func_80126068(GameObject *o)
 {
@@ -468,8 +458,6 @@ void func_80126174(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80126288);
 
-extern void *D_801388C4;
-extern void playSFX(s32);
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
 #if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
@@ -583,7 +571,6 @@ void func_8012659C(GameObject *o)
 
 typedef struct { s16 w0, w2; } X_267DC;
 #define XS(o) ((X_267DC *)((char *)(o) + 0xb4))
-extern void *D_801388D4[];
 
 static __inline__ s32 Side_267DC(GameObject *o)
 {
@@ -775,7 +762,6 @@ void func_801267DC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80127098);
 
-extern void spawnItemNotification(s32, s32);
 
 static __inline__ void setAnimN_27098(GameObject *o, s16 n)
 {
@@ -917,9 +903,6 @@ typedef struct { char p[0xd2]; s16 wd2; } E_2754C;
 typedef void (*Fn_2754C)(GameObject *);
 
 extern Fn_2754C D_801350BC[];
-extern u16 D_8013508C[];
-extern void func_80124B84(GameObject *);
-extern void func_80124CFC(GameObject *);
 extern void func_80023020(GameObject *);
 extern s32 func_80022F6C(GameObject *);
 
@@ -1082,7 +1065,6 @@ void func_8012754C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80127B48);
 extern s32 D_1F8002DC[];
-extern void *D_801388C8[];
 
 void func_80127B48(GameObject *o)
 {

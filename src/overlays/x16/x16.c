@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x16.h"
 
 INCLUDE_ASM("overlays/x16/nonmatchings/x16/x16", func_801154B8);
 
@@ -18,13 +19,7 @@ INCLUDE_RODATA("overlays/x16/nonmatchings/x16/x16", func_80115214);
 // INCLUDE_ASM("overlays/x16/nonmatchings/x16/x16", func_80115620);
 
 
-extern void *D_8011A7A8[];
-extern void *D_8011A7B8[];
-extern void *D_8011A7C4[];
 extern s32 D_1F8002D4;
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
-extern void pushDrawListCapped(GameObject *);
 
 void func_80115620(GameObject *o)
 {
@@ -174,8 +169,6 @@ void func_801161B0(GameObject *o)
 INCLUDE_ASM("overlays/x16/nonmatchings/x16/x16", func_80116240);
 
 // INCLUDE_ASM("overlays/x16/nonmatchings/x16/x16", func_8011624C);
-extern void func_801161B0(GameObject *);
-extern void freeObjectUnlayered(GameObject *);
 
 void func_8011624C(GameObject *o)
 {
@@ -200,7 +193,6 @@ typedef struct {
     s16 f0, f2, f4, f6, f8, fa, fc, fe, f10, f12, f14, f16, f18, f1a;
 } E28_162D8;
 extern E28_162D8 *D_80118024;
-extern GameObject *allocObjectLayer2(void);
 
 void func_801162D8(GameObject *o)
 {
@@ -273,8 +265,6 @@ typedef struct {
     s16 b0c;
 } E_16578;
 extern E_16578 *D_80118060;
-extern GameObject *allocObjectLayer4(void);
-extern GameObject *allocObjectLayer2(void);
 
 void func_80116578(GameObject *o)
 {

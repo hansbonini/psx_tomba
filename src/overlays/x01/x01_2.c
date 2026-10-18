@@ -1,19 +1,12 @@
 #include "common.h"
 #include "game.h"
+#include "x01.h"
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011EA14);
 
 
 typedef struct { Fix16 a, y, b; } FV_1EA14;
-extern void *D_8013DA7C[];
-extern void *D_8013DA84;
-extern char D_8013BA60[];
 extern u8 D_8009C1BD[];
-extern void readAnimFrameCount(GameObject *);
-extern GameObject *allocObjectLayer2(void);
-extern void applyItemEffect(char *, FV_1EA14 *, s32, s32, s32);
-extern void printInfoMessage(s32, s32);
-extern void removeItemFromInventory(s32, s32);
 extern void addItemToInventory(s32, s32, s32);
 
 static __inline__ s32 vdiv_1EA14(s32 a, s32 b)
@@ -123,8 +116,6 @@ void func_8011EA14(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011EDF8);
-extern void func_8011E600(GameObject *);
-extern void func_8011EA14(GameObject *);
 
 void func_8011EDF8(GameObject *o)
 {
@@ -148,8 +139,6 @@ typedef struct {
     void **tab;
 } Ent_1EE60;
 extern Ent_1EE60 D_8013BA68[];
-extern s32 tickAnimation(GameObject *);
-extern void freeObjectLayer4(GameObject *);
 
 void func_8011EE60(GameObject *o)
 {
@@ -211,16 +200,10 @@ void func_8011EE60(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011F0CC);
 
-typedef struct { Fix16 x, y, z; } V3_1F0CC;
-extern void *D_8013D944[];
-extern char D_8013BA98[];
-void func_80117CE8(s16 x, s16 y, s16 z);
-void func_800322A4(s32 a, s32 x, s32 y, s32 z);
-void func_8002367C(s32 a);
 
 void func_8011F0CC(GameObject *o)
 {
-    V3_1F0CC v;
+    Vec3Fix v;
 
     switch (o->state) {
     case 0:
@@ -274,7 +257,6 @@ void func_8011F0CC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011F30C);
 
-extern void func_80022D3C(GameObject *, s32);
 
 void func_8011F30C(GameObject *o)
 {
@@ -325,8 +307,6 @@ void func_8011F30C(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011F43C);
 
 extern u8 D_8009C3EC_U8 asm("D_8009C3EC");
-extern u8 D_800A38BD[];
-extern u8 D_8009C3EC[];
 extern void setEventStarted(s32, s32, s32);
 
 void func_8011F43C(GameObject *o)
@@ -503,94 +483,6 @@ void func_8011F940(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011FAD0);
 
 
-typedef struct GameTask_1FAD0 {
-    s16 status;
-    s16 sleepTimer;
-    s32 task_id;
-    s32 task_sp;
-    s32 task_func;
-    s32 task_gp;
-    volatile u16 unk14;
-    u8 unk16;
-    u8 unk17;
-    u8 unk18;
-    u8 unk19;
-    u8 unk1a;
-    u8 unk1b;
-    u8 unk1c;
-    u8 unk1d;
-    u8 unk1e;
-    u8 unk1f;
-    u8 unk20;
-    u8 unk21;
-    u8 unk22;
-    u8 unk23;
-    u8 unk24;
-    u8 unk25;
-    u8 unk26;
-    u8 unk27;
-    u8 unk28;
-    u8 unk29;
-    u8 unk2a;
-    u8 unk2b;
-    u8 unk2c;
-    u8 unk2d;
-    u8 unk2e;
-    u8 unk2f;
-    u8 unk30;
-    u8 unk31;
-    u8 unk32;
-    u8 unk33;
-    u8 unk34;
-    u8 unk35;
-    u8 unk36;
-    u8 unk37;
-    u8 unk38;
-    u8 unk39;
-    u8 unk3a;
-    u8 unk3b;
-    u8 unk3c;
-    u8 unk3d;
-    u8 unk3e;
-    u8 unk3f;
-    u8 unk40;
-    u8 unk41;
-    u8 unk42;
-    u8 unk43;
-    u8 unk44;
-    u8 unk45;
-    u8 unk46;
-    u8 unk47;
-    s16 state0;
-    s16 state1;
-    s16 mode;
-    s16 step;
-    u8 unk50;
-    u8 unk51;
-    u8 unk52;
-    u8 unk53;
-    u8 unk54;
-    u8 unk55;
-    u8 unk56;
-    u8 unk57;
-    u16 timer;
-    u16 unk5A;
-    u16 countdown;
-    u16 unk5E;
-    s16 unk60;
-    s16 unk62;
-    u16 unk64;
-    u8 unk66;
-    u8 unk67;
-    u8 loadGameSelected;
-    u8 titleScreenSelectedOption;
-    u8 unk6A;
-    u8 unk6B;
-    u8 unk6C;
-    u8 unk6D;
-    u8 unk6E;
-    u8 unk6F;
-} GameTask_1FAD0;
 
 extern u8 D_8009D6DD_U8Arr[] asm("D_8009D6DD");
 extern u8 D_8009D6DE_U8Arr[] asm("D_8009D6DE");
@@ -658,8 +550,8 @@ void func_8011FAD0(GameObject *o)
         o->unk76 = o->unk74;
         o->unk78 = o->unk74;
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask_1FAD0 **)&D_1F8001D4)->mode = 7;
-            (*(GameTask_1FAD0 **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&D_1F8001D4)->mode = 7;
+            (*(GameTask **)&D_1F8001D4)->step = 0;
             D_8009D6DD_U8Arr[0] = 0xff;
             D_8009D6DE_U8Arr[0] = 0xff;
             D_8009D6DF_U8Arr[0] = 0xff;
@@ -674,9 +566,6 @@ void func_8011FAD0(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8011FD7C);
 
 
-extern char D_8013BAA0[];
-extern s16 D_8013BAE0[];
-extern void pushDrawListLayer4(GameObject *);
 
 static __inline__ s32 onscreen_1FD7C(GameObject *o)
 {
@@ -799,7 +688,6 @@ void func_8011FD7C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_80120174);
 
-extern void pushDrawListLayer7(GameObject *);
 
 void func_80120174(GameObject *o)
 {
@@ -846,8 +734,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8012029C);
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8012042C);
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_801205D8);
-extern void func_801367F8(s32, s32, s32, s32);
-extern void func_80135C0C(s32, s32, s32);
 
 void func_801205D8(GameObject *o)
 {

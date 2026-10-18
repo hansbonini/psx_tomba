@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x14.h"
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_8011F7E0);
 
@@ -7,13 +8,6 @@
 typedef struct { s32 a; s16 t; s16 b; } E8_1F7E0;
 typedef struct { s16 w[8]; } B4_1F7E0;
 
-extern s32 tickAnimation(GameObject *o);
-extern void func_8011CBD0(GameObject *o, s32 n);
-extern void func_8011CC8C(GameObject *o);
-extern void func_80115FEC(GameObject *o);
-extern void func_80116778(GameObject *o);
-extern void func_8011EB94(void);
-extern void func_8011EBCC(void);
 
 void func_8011F7E0(GameObject *o)
 {
@@ -67,7 +61,6 @@ void func_8011F7E0(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_8011F97C);
-extern GameObject *allocObjectLayer2(void);
 
 s32 func_8011F97C(GameObject *o)
 {
@@ -86,11 +79,8 @@ s32 func_8011F97C(GameObject *o)
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_8011FA04);
 extern s32 D_1F8002DC[];
-extern void *D_80129344[];
 extern s16 D_800A38E4;
-extern void readAnimFrameCount(GameObject *);
 extern s16 probeCollisionAtDepthB(GameObject *, s16, s16);
-extern void func_800230BC(GameObject *, s32);
 
 static __inline__ s32 touch_1FA04(GameObject *o, GameObject *p)
 {
@@ -282,7 +272,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120708);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120738);
 
-extern u8 D_80125900[];
 
 void func_80120738(GameObject *o)
 {
@@ -377,7 +366,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120AB0);
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120AC8);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120BA0);
-extern GameObject *allocObjectLayer2(void);
 
 void func_80120BA0(GameObject *o, s32 sub)
 {
@@ -405,7 +393,6 @@ void func_80120BA0(GameObject *o, s32 sub)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120C90);
-extern GameObject *allocObjectLayer4(void);
 
 #define SPAWN(o, X, Y, Z) { \
     e = allocObjectLayer4(); \

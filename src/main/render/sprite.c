@@ -107,8 +107,6 @@ extern char D_800B07C8[];
 
 void func_8004E468(char *o)
 {
-    extern void func_8004ED80(char *, s32, s32);
-    extern void func_8004EB10(char *, s32, s32, s32, s32);
     extern void func_8004E900();
     extern void func_8004E590(char *, s32, s32);
     extern void addDrawModePrim(s32, s32);
@@ -219,7 +217,6 @@ extern Col6_4EB10 D_8007EC80[];
 
 void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
 {
-    extern void addTilePrim(s16 *, s32, s32, s32);
     SPRT *p;
     u8 *s;
     s16 r[4];

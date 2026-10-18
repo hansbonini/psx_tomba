@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C330);
 
@@ -8,7 +9,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C5D0);
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C75C);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012C868);
-extern s16 func_80043D2C(GameObject *, s16, s16);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 
 static __inline__ s32 land_2C868(GameObject *o)
@@ -66,8 +66,6 @@ s32 func_8012C9BC(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CA90);
 
-extern u16 D_80135170[];
-extern s32 isOnScreen(s16, s16);
 
 static __inline__ s32 inview_2CA90(GameObject *o)
 {
@@ -121,10 +119,6 @@ void func_8012CA90(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CC64);
-extern s16 D_80135190[];
-extern void *D_80139ABC;
-extern s32 tickAnimation(GameObject *);
-extern void readAnimFrameCount(GameObject *);
 
 void func_8012CC64(GameObject *o)
 {
@@ -222,8 +216,6 @@ void func_8012CDB8(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_9", func_8012CFFC);
-extern void *D_80139AB4[];
-extern void *D_80139A50[];
 
 void func_8012CFFC(GameObject *o)
 {

@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x14.h"
 
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_11", func_801212D4);
 
@@ -14,11 +15,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_11", func_80121748);
 
 typedef struct { void *a[3]; } AT_2175C;
 extern AT_2175C D_80129374[];
-extern void readAnimFrameCount(GameObject *);
-extern void func_80022C08(GameObject *, s32);
-extern void func_80120C90(GameObject *, s32);
-extern void func_80120E90(GameObject *);
-extern void func_8012104C(GameObject *);
 
 void func_8012175C(GameObject *o)
 {
@@ -145,7 +141,6 @@ void func_8012175C(GameObject *o)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_11", func_80121B04);
 
 extern s16 D_1F80017A[];
-extern GameObject *allocObjectLayer2(void);
 
 s32 func_80121B04(GameObject *o)
 {

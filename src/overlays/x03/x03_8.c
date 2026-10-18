@@ -1,18 +1,13 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012B35C);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012B9DC);
 
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T8012C68C_2B9DC;
 
-extern T8012C68C_2B9DC D_80135138[];
+extern ObjSetupHitbox D_80135138[];
 extern void advanceAnimFrame(GameObject *, s32);
 
 void func_8012B9DC(GameObject *o)
@@ -42,7 +37,6 @@ void func_8012B9DC(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012BBA8);
-extern s32 tickAnimation(GameObject *);
 
 void func_8012BBA8(GameObject *o)
 {
@@ -80,9 +74,6 @@ void func_8012BBA8(GameObject *o)
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_8", func_8012BCCC);
 
 extern GameObject PLAYER_GameObject asm("PLAYER");
-extern void *D_80138D8C[];
-extern void *D_80138D88[];
-extern void readAnimFrameCount(GameObject *o);
 extern s16 probeCollisionAtDepthA(GameObject *o, s16 x, s16 y);
 
 static __inline__ s32 hit_2BCCC(GameObject *o)
@@ -153,8 +144,6 @@ void func_8012BCCC(GameObject *o)
 
 typedef struct { char c[12]; } B12_2BF60;
 
-extern void *D_80138D80[];
-extern void *D_80138D70[];
 extern GameObject *showMessageBoxDirect(s32, s32, B12_2BF60 *);
 
 void func_8012BF60(GameObject *o)

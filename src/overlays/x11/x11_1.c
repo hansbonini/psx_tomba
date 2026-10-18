@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x11.h"
 
 INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801163DC);
 
@@ -16,7 +17,6 @@ extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
 extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 extern s16 D_800A544A_S16Arr[] asm("D_800A544A");
 extern GameObject *showMessageBoxDirect(s32, s32, V_168B0 *);
-extern void readAnimFrameCount(GameObject *);
 
 void func_801168B0(GameObject *o)
 {
@@ -127,14 +127,8 @@ INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_801184E8);
 INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118764);
 
 // INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118A48);
-typedef struct {
-    u8 b0, b1, b2, b3;
-    u16 w4;
-    s16 w6;
-    void **anim;
-} T8011977C_18A48;
 
-extern T8011977C_18A48 D_80118F0C[];
+extern ObjSetupHitbox D_80118F0C[];
 
 void func_80118A48(GameObject *o)
 {
@@ -177,7 +171,6 @@ typedef struct {
     s16 f0, f2, f4, f6, f8, fa, fc, fe, f10, f12, f14, f16, f18, f1a;
 } E28_18CBC;
 extern E28_18CBC *D_80118FC8;
-extern GameObject *allocObjectLayer2(void);
 
 void func_80118CBC(GameObject *o)
 {
@@ -224,8 +217,6 @@ void func_80118E68(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11_1", func_80118E74);
-extern void func_80118CBC(GameObject *);
-extern void freeObjectUnlayered(GameObject *);
 
 void func_80118E74(GameObject *o)
 {

@@ -5,14 +5,11 @@
 typedef struct { void **p; s32 a, b; } E12_32DB4;
 extern u8 D_800A5399;
 extern u8 D_800A5464[];
-extern s16 D_800A5468;
-extern void readAnimFrameCount(GameObject *);
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 
 void func_80032DB4(GameObject *o)
 {
-    extern void tickAnimation(GameObject *);
     extern u8 D_800A53A7[];
     extern E12_32DB4 D_8007D2F0[];
     s32 t;
@@ -84,9 +81,6 @@ void func_80032DB4(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_8003301C);
-void func_800325C0(u8 *o);
-void func_80032934(u8 *o);
-void func_800327D8(u8 *o);
 void func_8003301C(u8 *o)
 {
     switch (o[3]) {
@@ -105,8 +99,6 @@ void func_8003301C(u8 *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 extern s32 *D_8007D2F0[];
 extern u8 D_800A5399;
 extern u8 D_800A53A7;
@@ -172,7 +164,6 @@ void func_800330EC(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
-extern void func_80032374(GameObject *);
 void func_800332CC(GameObject *o)
 {
     switch (o->state) {
@@ -231,7 +222,6 @@ void func_80033374(char a, char b, char c)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_80033404);
-extern GameObject *allocObjectLayer3();
 extern s32 D_800A53A8[];
 
 void func_80033404(s32 a, s32 b)

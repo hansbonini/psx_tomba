@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x14.h"
 #include "game/gte.h"
 
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_801170E4);
@@ -49,8 +50,6 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117C60);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117D3C);
 extern long LZ_FILE_CTRL_Long asm("LZ_FILE_CTRL");
-extern s32 insertPrimWithBias(void *, s32, s32, s32, u32);
-extern s32 insertPrim(void *, s32, s32, s32, u32);
 
 
 
@@ -168,7 +167,6 @@ void func_80117D3C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_8011812C);
-extern void getBaseMatrix__1812C(MATRIX *);
 
 
 void func_8011812C(GameObject *o)
@@ -276,7 +274,6 @@ void func_80118420(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_8011855C);
-extern s16 D_80124F74[];
 
 void func_8011855C(GameObject *o)
 {
@@ -322,7 +319,6 @@ void func_8011855C(GameObject *o)
 INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80118694);
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80118960);
-extern void freeObjectLayer4(GameObject *);
 
 void func_80118960(GameObject *o)
 {

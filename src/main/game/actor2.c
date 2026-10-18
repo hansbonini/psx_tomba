@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "game/area_module.h"
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_80055E0C);
 static __inline__ s32 hit_55E0C(GameObject *a, GameObject *b)
@@ -527,24 +528,11 @@ void func_80057044(void)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_80057188);
-extern u8 D_8007EDFC[];
 void func_8012608C(GameObject *o);
 void func_8012738C(GameObject *o);
-void func_8011C840(GameObject *o);
 
 void func_80057188(void)
 {
-    extern void func_80127414(GameObject *o);
-    extern void func_80127314(GameObject *o);
-    extern void func_80126BC4(GameObject *o);
-    extern void func_801260C0(GameObject *o);
-    extern void func_80125FA4(GameObject *o);
-    extern void func_80125E94(GameObject *o);
-    extern void func_80120D60(GameObject *o);
-    extern void func_80120CB4(GameObject *o);
-    extern void func_801209E4(GameObject *o);
-    extern void func_801203D4(GameObject *o);
-    extern void func_8011F720(GameObject *o);
     extern void func_8011ED98(GameObject *o);
     extern void func_8011ED24(GameObject *o);
     s16 n;
@@ -617,19 +605,8 @@ void func_80057188(void)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_800574BC);
-void func_80125E94(GameObject *o, GameObject *e);
-void func_80125FA4(GameObject *o, GameObject *e);
-void func_801260C0(GameObject *o, GameObject *e);
-void func_80127414(GameObject *o, GameObject *e);
-void func_80127314(GameObject *o, GameObject *e);
-void func_801209E4(GameObject *o, GameObject *e);
 void func_8011ED98(GameObject *o, GameObject *e);
 void func_8011ED24(GameObject *o, GameObject *e);
-void func_8011F720(GameObject *o, GameObject *e);
-void func_80126BC4(GameObject *o, GameObject *e);
-void func_801203D4(GameObject *o, GameObject *e);
-void func_80120D60(GameObject *o, GameObject *e);
-void func_80120CB4(GameObject *o, GameObject *e);
 
 static __inline__ s16 hit_574BC(GameObject *o, GameObject *p)
 {
@@ -729,29 +706,14 @@ INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014CD0);
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_8005788C);
 typedef struct S_5788C { char p[0xc]; u8 b0c; } S_5788C;
 extern void func_80117884(S_5788C *);
-extern void func_8012A7A4(S_5788C *);
-extern void func_80128F34(S_5788C *);
-extern void func_801341B0(S_5788C *);
-extern void func_8012B22C(S_5788C *);
-extern void func_8012BBA8(S_5788C *);
 extern void func_80129BE0(S_5788C *);
-extern void func_80128D4C(S_5788C *);
 extern void func_801287D4(S_5788C *);
 extern void func_8012EDFC(S_5788C *);
-extern void func_8012F5D0(S_5788C *);
-extern void func_80129B68(S_5788C *);
-extern void func_801293D4(S_5788C *);
 extern void func_801164F4(S_5788C *);
-extern void func_801287FC(S_5788C *);
-extern void func_8012D330(S_5788C *);
-extern void func_80124F70(S_5788C *);
-extern void func_801263CC(S_5788C *);
 extern void func_80118C0C(S_5788C *);
 extern void func_801172B0(S_5788C *);
-extern void func_80117E38(S_5788C *);
 extern void func_8011784C(S_5788C *);
 extern void func_80117364(S_5788C *);
-extern void func_80116444(S_5788C *);
 extern void func_8011967C(S_5788C *);
 void func_8005788C(S_5788C *o)
 {

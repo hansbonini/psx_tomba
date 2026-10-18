@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "game/area_module.h"
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", setAnimation);
 void setAnimation(u8* self, s16 arg1)
@@ -12,7 +13,6 @@ void setAnimation(u8* self, s16 arg1)
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80057C74);
 typedef struct { char p[0x4c]; s16 w4c; s16 w4e; } G4_57C74;
-extern s32 tickAnimation(GameObject *);
 extern void func_800EDDDC(GameObject *, s32, s32);
 
 void func_80057C74(GameObject *o)
@@ -127,7 +127,6 @@ void func_80057C74(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_800580BC);
 extern void func_800EDDDC(GameObject *, s32, s32);
-extern s32 tickAnimation(GameObject *);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 
 void func_800580BC(GameObject *o)
@@ -602,22 +601,12 @@ typedef struct {
 } TO_59B58;
 extern u16 D_1F800250;
 extern u8 **D_1F800260;
-extern s16 func_800450FC(TO_59B58 *, s16, s16);
-extern void func_80125D14(TO_59B58 *, u8 *);
-extern void func_8012631C(TO_59B58 *, u8 *);
 extern void func_80125DA8(TO_59B58 *, u8 *);
 extern void func_80126064(TO_59B58 *, u8 *);
 extern void func_801261C4(TO_59B58 *, u8 *);
 extern void func_80120608(TO_59B58 *, u8 *);
-extern void func_8011D2AC(TO_59B58 *, u8 *);
-extern void func_801269B4(TO_59B58 *, u8 *);
-extern void func_8011E2B8(TO_59B58 *, u8 *);
-extern void func_8011E888(TO_59B58 *, u8 *);
-extern void func_8011E7C4(TO_59B58 *, u8 *);
 extern void func_801205F4(TO_59B58 *, u8 *);
 extern void func_8011C73C(TO_59B58 *, u8 *);
-extern void func_8011E6DC(TO_59B58 *, u8 *);
-extern void func_8012629C(TO_59B58 *, u8 *);
 extern void func_80120598(TO_59B58 *, u8 *);
 
 s32 func_80059B58(TO_59B58 *o, u8 f)
@@ -812,13 +801,9 @@ typedef struct {
 extern u16 D_8009BCCA_U16Arr[] asm("D_8009BCCA");
 extern s32 APD_DATA[];
 extern void func_8005A508(S_5A184 *);
-extern void freeObjectUnlayered(S_5A184 *);
 
 void func_8005A184(S_5A184 *o)
 {
-    extern void func_8005A7E0(S_5A184 *);
-    extern void func_8005A660(S_5A184 *);
-    extern void func_8005A3B0(S_5A184 *);
     u8 t = o->b4;
 
     switch (t) {
@@ -973,10 +958,6 @@ typedef struct {
     s16 s6, s8, sa;
     u8 bc, bd, be, bf;
 } Ent_5AA98;
-extern GameObject *allocObjectLayer2(void);
-extern GameObject *allocObjectLayer3(void);
-extern GameObject *allocObjectLayer5(void);
-extern GameObject *allocObjectLayer8(void);
 
 void func_8005AA98(Ent_5AA98 *e, s32 z)
 {

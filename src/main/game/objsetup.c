@@ -3,12 +3,10 @@
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", updateGrabSnout);
 extern u16 D_1F80016E[];
-extern void pushDrawListCapped(GameObject *o);
 extern s16 fixedMulSin2(s16 a, s16 b);
 
 void updateGrabSnout(GameObject *o)
 {
-    extern void readAnimFrameCount(GameObject *o);
     s16 v;
     switch (o->state) {
     case 0:
@@ -55,11 +53,9 @@ void updateGrabSnout(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", updateEventCube);
-extern void pushDrawListCapped(GameObject *);
 
 void updateEventCube(GameObject *o)
 {
-    extern void readAnimFrameCount(GameObject *);
     switch (o->state) {
     case 0:
         o->unkA = 7;
@@ -102,7 +98,6 @@ void updateEventCube(GameObject *o)
 INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031C90);
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031F00);
-extern GameObject *allocObjectLayer3();
 
 void func_80031F00(s32 a, s32 b, s32 c)
 {
@@ -120,11 +115,9 @@ void func_80031F00(s32 a, s32 b, s32 c)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031F88);
-extern s32 tickAnimation(GameObject *o);
 
 void func_80031F88(GameObject *o)
 {
-    extern void func_80032230(GameObject *o);
     GameObject *n;
     s16 r;
     s16 s;
@@ -276,8 +269,6 @@ extern A12_324B4 D_8007D2F0[];
 extern u8 D_800A5399;
 extern u8 D_800A53A7;
 extern u8 D_8009BCF8;
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 
 void func_800324B4(GameObject *o)
 {

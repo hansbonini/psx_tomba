@@ -1,10 +1,10 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80115AA8);
 typedef struct { char p[2]; u16 s2; } P_15AA8;
 typedef struct { char p[0x32]; s16 w32; P_15AA8 *p34; } S_15AA8;
-extern u16 D_8009BCCA;
 void func_80115AA8(S_15AA8 *o)
 {
     s16 t;
@@ -34,8 +34,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80116814);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801168F4);
 extern s16 D_1F80016E;
-extern void tryStartItemInteraction(GameObject *, s32, s32);
-extern void func_8002CEF8(GameObject *);
 
 void func_801168F4(GameObject *o)
 {
@@ -149,10 +147,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80117C4C);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80117C60);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80117CEC);
-extern u8 D_8009BCCE;
-extern u8 D_8009C10E;
-extern void func_80117B5C(GameObject *);
-extern void pushDrawListCapped(GameObject *);
 
 void func_80117CEC(GameObject *o)
 {
@@ -235,13 +229,10 @@ typedef struct {
     char p5[0x40 - 0x30]; H_17F10 *h; char p6[0x82 - 0x44]; s16 vel;
 } O_17F10;
 extern E_17F10 D_801379A8[];
-extern s32 D_8013A51C[];
-extern void readAnimFrameCount(O_17F10 *);
 extern s16 probeCollisionAtDepthA(O_17F10 *, s32, s32);
 
 void func_80117F10(O_17F10 *o)
 {
-    extern void tickAnimation(O_17F10 *);
     E_17F10 *t;
     switch (o->state) {
     case 0:
@@ -284,7 +275,6 @@ void func_80117F10(O_17F10 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801180DC);
-extern char *allocObjectLayer3(void);
 
 void func_801180DC(char *o, s16 b, s16 c, s32 d)
 {
@@ -353,7 +343,6 @@ void func_801181C0(u8 *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801182E0);
 extern s32 D_1F8002D4[];
-extern void *D_8013A450[];
 
 void func_801182E0(GameObject *o)
 {
@@ -408,7 +397,6 @@ void func_801182E0(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_80118500);
-extern char *allocObjectLayer3(void);
 
 void func_80118500(s16 a, s16 b, s16 c, s16 d)
 {
@@ -435,9 +423,6 @@ void func_80118500(s16 a, s16 b, s16 c, s16 d)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801185BC);
 typedef struct P_185BC { char p[0x24]; s32 w24; char q[0x3c - 0x28]; s32 w3c; } P_185BC;
-extern s32 D_8013A538;
-extern s32 tickAnimation(char *);
-extern void playSFX(s32);
 
 void func_801185BC(char *o)
 {
@@ -470,8 +455,6 @@ void func_801185BC(char *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801186AC);
 typedef struct P_186AC { char p[0x24]; void *anim; char q[0x3c - 0x28]; s32 w3c; } P_186AC;
-extern s16 D_801379C0[];
-extern void *D_8013A53C[];
 
 void func_801186AC(char *o)
 {
@@ -504,7 +487,6 @@ void func_801186AC(char *o)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", updateBubbleDroplet);
 typedef struct P_187B8 { char p[0x24]; void *anim; char q[0x3c - 0x28]; s32 w3c; } P_187B8;
-extern char D_8013AB58[];
 extern void func_80023020(char *);
 
 void updateBubbleDroplet(char *o)
@@ -539,7 +521,6 @@ void updateBubbleDroplet(char *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801188D4);
-extern char *allocObjectLayer3();
 
 void func_801188D4(s32 a, s32 x, s32 y, s32 z)
 {

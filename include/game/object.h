@@ -302,4 +302,13 @@ typedef struct {
     s16 unk6;
 } unk_8007E868;
 
+/* Setup table entry of the area objects: hitbox (b0 hitOffsetX, b1 hitWidth,
+   b2 hitOffsetY, b3 hitHeight), w4 tpage, w6 SPR_DATA index, anim table. */
+typedef struct {
+    u8 b0, b1, b2, b3;
+    u16 w4;
+    s16 w6;
+    void **anim;
+} ObjSetupHitbox;
+
 #endif

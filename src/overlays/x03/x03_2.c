@@ -1,15 +1,12 @@
 #include "common.h"
 #include "game.h"
+#include "x03.h"
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011B018);
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011B1CC);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011B3A0);
-extern void *D_80138C28[];
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
-extern void playSFX(s32);
 
 static __inline__ void setAnim_1B3A0(GameObject *o, void *a)
 {
@@ -133,11 +130,7 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BB4C);
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BD20);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BDC0);
-extern void *D_80138C2C[];
 extern u16 D_800A53AE_U16 asm("D_800A53AE");
-extern void func_8011AA44(GameObject *);
-extern void func_8011ABC0(GameObject *);
-extern void func_8011AD84(GameObject *);
 
 void func_8011BDC0(GameObject *o)
 {
@@ -210,8 +203,6 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011BFF8);
 
 
 
-extern void *D_80138C30[];
-extern void freeObjectLayer4(GameObject *);
 
 static __inline__ void setAnim_1C174(GameObject *o, void *a)
 {
@@ -300,12 +291,6 @@ void func_8011C174(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_2", func_8011C3CC);
-extern u8 D_80134DD8[];
-extern void *D_80138C34[];
-extern s16 D_8007D788[];
-extern s16 D_8007DB88[];
-extern void readAnimFrameCount(GameObject *);
-extern void pushDrawListCapped(GameObject *);
 
 void func_8011C3CC(GameObject *o)
 {

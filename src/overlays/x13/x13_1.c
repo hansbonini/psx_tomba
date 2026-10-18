@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x13.h"
 
 INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13_1", func_80116330);
 
@@ -13,8 +14,6 @@ extern R6_16D04 D_80117560[];
 extern R6_16D04 D_80117574[];
 extern R6_16D04 D_801175AC[];
 extern R6_16D04 D_801175F4[];
-void func_80116F60(s32 a, s32 b, s32 c);
-void func_80117164(s32 a, s32 b, s32 c, s32 d);
 void addDrawModePrim(s32 a, s32 b);
 
 void func_80116D04(s32 a, s32 b, s32 c, s32 d)

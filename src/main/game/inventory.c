@@ -602,7 +602,6 @@ void func_8002ABC0(O_2ABC0 *o)
 
 void func_8002AD74(u8 *o)
 {
-    extern void stepScrollApproachX(u8 *);
     s32 *p, t;
     switch (*(s16 *)(o + 0x5c)) {
     case 0:
@@ -765,8 +764,6 @@ INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B110);
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B278);
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B3E8);
-void func_8002B110();
-void func_8002B278();
 
 static __inline__ void decay_2B3E8(void)
 {
@@ -1444,7 +1441,6 @@ typedef struct S_2CA40 {
     char p0[0x20]; s32 vy; s32 vx; char p1[0x6e - 0x28];
     u8 b6e, b6f, b70, b71, b72, b73;
 } S_2CA40;
-void func_8002A9FC();
 void func_8002ABC0();
 void func_8002CA40(S_2CA40 *o)
 {

@@ -2,13 +2,6 @@
 #include "game.h"
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80022C08);
-void pushDrawListLayer1(GameObject *o);
-void pushDrawListMain(GameObject *o);
-void pushDrawListCapped(GameObject *o);
-void pushDrawListLayer4(GameObject *o);
-void pushDrawListLayer5(GameObject *o);
-void pushDrawListLayer7(GameObject *o);
-void pushDrawListLayer8(GameObject *o);
 
 s32 func_80022C08(GameObject *o, s32 x)
 {
@@ -30,13 +23,6 @@ s32 func_80022C08(GameObject *o, s32 x)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80022D3C);
-void pushDrawListLayer1(GameObject *o);
-void pushDrawListMain(GameObject *o);
-void pushDrawListCapped(GameObject *o);
-void pushDrawListLayer4(GameObject *o);
-void pushDrawListLayer5(GameObject *o);
-void pushDrawListLayer7(GameObject *o);
-void pushDrawListLayer8(GameObject *o);
 
 s32 func_80022D3C(GameObject *o, s32 x)
 {
@@ -353,7 +339,6 @@ void spawnLayer3Object(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80023928);
-extern GameObject *allocObjectLayer2(void);
 
 GameObject *func_80023928(GameObject *p)
 {

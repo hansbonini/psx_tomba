@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135728);
 
@@ -8,7 +9,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135A94);
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DD0);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80135DDC);
-extern GameObject *allocObjectLayer2(void);
 extern u32 D_8009BCEC[];
 
 void func_80135DDC(GameObject *o)
@@ -68,10 +68,8 @@ extern GameObject PLAYER_GameObject asm("PLAYER");
 extern GameObject *D_800A5428;
 extern u8 D_800A5458;
 extern u8 D_8009C226_U8 asm("D_8009C226");
-extern u8 D_8009C226[];
 extern s32 D_8009BCEC_S32 asm("D_8009BCEC");
 extern char D_800108A8[];
-extern void readAnimFrameCount(GameObject *);
 extern GameObject *showMessageBox(s32, s32, s32, s32);
 extern void setEventStarted(s32, s32, s32);
 extern void setEventComplete(s32, s32);
@@ -272,7 +270,6 @@ INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366B0);
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_801366BC);
 typedef struct N_366BC { char p0; char f1; char f2; char f3; char p1[0xe]; s16 x; char p2[2]; s16 y; char p3[2]; s16 z; char p4[0x2e - 0x1c]; s16 w; } N_366BC;
 typedef struct O_366BC { char p0[4]; u8 state; char p1[0x1c-5]; N_366BC *n; } O_366BC;
-extern u8 D_8009C225;
 extern u8 D_8009C376;
 
 void func_801366BC(O_366BC *o)
@@ -310,9 +307,7 @@ void func_801366BC(O_366BC *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013679C);
 extern u8 D_800A5401;
 extern u8 D_800A5458;
-extern u8 D_8009C40F;
 extern u8 D_800A5444;
-extern u8 D_8009C375;
 
 s16 func_8013679C(GameObject *o)
 {
@@ -394,18 +389,8 @@ extern BigObj_36AFC PLAYER_BigObj_36AFC asm("PLAYER");
 #define X PLAYER_BigObj_36AFC.o
 extern u8 D_8009C375_U8Arr[] asm("D_8009C375");
 extern u8 *D_8009B698;
-extern void *D_80139F5C;
 extern void *D_80139F60;
-extern void *D_80139F68;
-extern void *D_80139F6C;
-extern void *D_80139F74;
-extern char D_80138A0E[];
 extern char D_800108A8[];
-extern s32 tickAnimation(GameObject *);
-extern void applyItemEffect(void *, void *, s32, s32, s32);
-extern void removeItemFromInventory(s32, s32);
-extern void printInfoMessage(s32, s32);
-extern void playSFX(s32);
 
 #define CEBD (*(volatile u8 *)&D_8009C225)
 
@@ -629,7 +614,6 @@ void updateCharlesTalkScene(GameObject *o)
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013728C);
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_80137298);
-extern void func_80135528(u8 *);
 
 static __inline__ s32 chk_37298(void)
 {
@@ -638,7 +622,6 @@ static __inline__ s32 chk_37298(void)
 
 void func_80137298(u8 *o)
 {
-    extern void freeObjectUnlayered(void);
     switch (o[4]) {
     case 0:
         func_80135528(o);
@@ -657,10 +640,6 @@ void func_80137298(u8 *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_10", func_8013734C);
-extern void func_80135DDC(GameObject *);
-extern s16 func_80135F04(GameObject *);
-extern void func_80136024(GameObject *);
-extern void freeObjectUnlayered(GameObject *);
 
 void func_8013734C(GameObject *o)
 {

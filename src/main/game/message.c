@@ -3,10 +3,6 @@
 
 
 // INCLUDE_ASM("nonmatchings/main/game/message", updateImpactEffect);
-extern void readAnimFrameCount(GameObject *);
-extern void playSFX(s32);
-extern void pushDrawListCapped(GameObject *);
-extern s32 tickAnimation(GameObject *);
 
 void updateImpactEffect(GameObject *o)
 {
@@ -82,7 +78,6 @@ void initMsgBoxB(u8* self)
 extern void func_80023020(GameObject *);
 extern s16 fixedMulCos(s32, s32);
 extern s16 fixedMulSin(s32, s32);
-extern s32 tickAnimation(GameObject *);
 
 void func_8002EBC4(GameObject *o)
 {
@@ -298,7 +293,6 @@ void func_8002F220(GameObject *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F404);
 extern u16 D_800A53B2[];
-extern void readAnimFrameCount(GameObject *);
 
 void func_8002F404(GameObject *o)
 {
@@ -404,7 +398,6 @@ void dispatchMsgBoxHandler(u8* self)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F804);
-typedef struct { s32 x, y, z; } V3_2F804;
 void func_8002F804(GameObject *a, s16 b, char c)
 {
     GameObject *o = allocObjectLayer3();
@@ -412,7 +405,7 @@ void func_8002F804(GameObject *a, s16 b, char c)
         o->active = 1;
         o->type = 0x13;
         o->animFrame = a->animFrame;
-        *(V3_2F804 *)&o->x = *(V3_2F804 *)&a->x;
+        *(Vec3L *)&o->x = *(Vec3L *)&a->x;
         if (b == 0) {
             o->tpage = 0;
             o->clut = GetClut(0x80, 0x1f0);

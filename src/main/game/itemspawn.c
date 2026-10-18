@@ -3,7 +3,6 @@
 
 s16 probeCollisionAtDepthB(u8*, s16, s16);
 s32 probeCollisionAtDepthA(u8*, s16, s16);
-s16 func_80043D2C(u8*, s16, s16);
 
 INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_8004117C);
 
@@ -50,7 +49,6 @@ void spawnItemChest(short arg0, short arg1, int arg2)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80041940);
-extern GameObject *allocObjectLayer5(void);
 extern Fix16 D_800A53AC[];
 
 void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
@@ -151,7 +149,6 @@ extern void (*D_8007DE28[])(GameObject *);
 
 void func_80041DB4(GameObject *o)
 {
-    extern void tickAnimation(GameObject *);
     s32 k;
     switch (o->state) {
     case 0:
@@ -250,7 +247,6 @@ void spawnItemFromEntry(u8* arg0, s16* arg1, s32 arg2, s32 arg3, u8* arg4) {
 typedef struct { u16 a, b; } VP_42204;
 extern VP_42204 D_8007E918[];
 extern void (*D_8007DE28[])(GameObject *);
-extern s32 tickAnimation(GameObject *);
 
 void func_80042204(GameObject *o)
 {

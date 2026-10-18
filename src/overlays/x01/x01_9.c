@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x01.h"
 
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_801381B4);
 
@@ -9,11 +10,6 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_801384AC);
 
 
 
-extern void *D_8013EE08[];
-extern void *D_8013EE30[];
-extern void *D_8013EE34[];
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 extern void setEventComplete(s32, s32);
 
 void func_801387A4(GameObject *o)
@@ -159,7 +155,6 @@ void func_80138C4C(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_80138DB8);
-extern GameObject *allocObjectLayer2(void);
 
 void func_80138DB8(GameObject *o)
 {
@@ -224,7 +219,6 @@ extern GameObject *D_8009B698;
 typedef struct { char pad[0x24]; u16 a; } AnimH_38F88;
 extern char D_800108A8[];
 extern GameObject *showMessageBox(s32, s32, s32, s32);
-extern void printInfoMessage(s32, s32);
 
 void func_80138F88(GameObject *o)
 {

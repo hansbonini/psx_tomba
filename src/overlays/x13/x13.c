@@ -1,108 +1,16 @@
 #include "common.h"
 #include "game.h"
+#include "x13.h"
 
 // INCLUDE_ASM("overlays/x13/nonmatchings/x13/x13", func_80115304);
 
 
-typedef struct GameTask_15304 {
-    s16 status;
-    s16 sleepTimer;
-    s32 task_id;
-    s32 task_sp;
-    s32 task_func;
-    s32 task_gp;
-    volatile u16 unk14;
-    u8 unk16;
-    u8 unk17;
-    u8 unk18;
-    u8 unk19;
-    u8 unk1a;
-    u8 unk1b;
-    u8 unk1c;
-    u8 unk1d;
-    u8 unk1e;
-    u8 unk1f;
-    u8 unk20;
-    u8 unk21;
-    u8 unk22;
-    u8 unk23;
-    u8 unk24;
-    u8 unk25;
-    u8 unk26;
-    u8 unk27;
-    u8 unk28;
-    u8 unk29;
-    u8 unk2a;
-    u8 unk2b;
-    u8 unk2c;
-    u8 unk2d;
-    u8 unk2e;
-    u8 unk2f;
-    u8 unk30;
-    u8 unk31;
-    u8 unk32;
-    u8 unk33;
-    u8 unk34;
-    u8 unk35;
-    u8 unk36;
-    u8 unk37;
-    u8 unk38;
-    u8 unk39;
-    u8 unk3a;
-    u8 unk3b;
-    u8 unk3c;
-    u8 unk3d;
-    u8 unk3e;
-    u8 unk3f;
-    u8 unk40;
-    u8 unk41;
-    u8 unk42;
-    u8 unk43;
-    u8 unk44;
-    u8 unk45;
-    u8 unk46;
-    u8 unk47;
-    s16 state0;
-    s16 state1;
-    s16 mode;
-    s16 step;
-    u8 unk50;
-    u8 unk51;
-    u8 unk52;
-    u8 unk53;
-    u8 unk54;
-    u8 unk55;
-    u8 unk56;
-    u8 unk57;
-    u16 timer;
-    u16 unk5A;
-    u16 countdown;
-    u16 unk5E;
-    s16 unk60;
-    s16 unk62;
-    u16 unk64;
-    u8 unk66;
-    u8 unk67;
-    u8 loadGameSelected;
-    u8 titleScreenSelectedOption;
-    u8 unk6A;
-    u8 unk6B;
-    u8 unk6C;
-    u8 unk6D;
-    u8 unk6E;
-    u8 unk6F;
-} GameTask_15304;
 
 typedef void (*Fn_15304)(GameObject *);
 
 extern Fn_15304 D_8007C59C[];
-extern u32 stepScrollReturnY(GameObject *);
-extern u32 stepScrollClearX(GameObject *);
 extern void func_8002A798(GameObject *);
-extern void func_8002A480(GameObject *);
-extern void syncObjectTargetY(GameObject *);
 extern void func_8002BB9C(GameObject *);
-extern s32 stepPlayerXToward(s32);
 
 void func_80115304(GameObject *o)
 {
@@ -158,8 +66,8 @@ void func_80115304(GameObject *o)
             { s32 *g = &SCRATCHPAD.vpy.raw; *g += *k << 8; }
         }
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask_15304 **)&D_1F8001D4)->mode = 7;
-            (*(GameTask_15304 **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&D_1F8001D4)->mode = 7;
+            (*(GameTask **)&D_1F8001D4)->step = 0;
         }
         break;
     }

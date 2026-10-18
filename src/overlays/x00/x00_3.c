@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x00.h"
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_3", func_8011ED30);
 typedef struct { u8 p0[9]; u8 b9; } P8011F9E0_1ED30;
@@ -7,7 +8,6 @@ typedef struct { u8 p0[9]; u8 b9; } P8011F9E0_1ED30;
 extern P8011F9E0_1ED30 *D_8009B698;
 extern Fix16 *D_800A53D8_Fix16PtrArr[] asm("D_800A53D8");
 #define D_800A6078 D_800A53D8_Fix16PtrArr[0]
-extern void *D_8013A49C;
 extern u8 D_800A539C_U8Arr[] asm("D_800A539C");
 extern u8 D_800A539D_U8Arr[] asm("D_800A539D");
 extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
@@ -16,10 +16,6 @@ extern u8 D_800A539E_U8Arr[] asm("D_800A539E");
 #define D_800A603E D_800A539E_U8Arr[0]
 extern u8 D_800A5401[];
 #define D_800A60A1 D_800A5401[0]
-extern s16 D_800A5418;
-extern s16 D_800A541A;
-extern void readAnimFrameCount(GameObject *);
-extern s32 tickAnimation(GameObject *);
 extern s16 fixedMulSin(s32, s32);
 extern void setEventStarted(s32, s32, s32);
 
@@ -222,7 +218,6 @@ void func_8011ED30(GameObject *o)
 #undef BOB
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_3", func_8011F4B4);
-extern void func_8011EAEC(u8 *);
 extern s16 fixedMulSin(s32, s32);
 extern u8 *D_8013A494;
 
@@ -271,7 +266,6 @@ typedef struct O_1F5F4 {
 } O_1F5F4;
 extern s32 D_1F8002D4;
 extern s32 D_8013A498;
-extern void freeObjectLayer4(O_1F5F4 *);
 
 void func_8011F5F4(O_1F5F4 *o)
 {

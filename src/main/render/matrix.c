@@ -6,7 +6,6 @@ INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004CFE0);
 INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D0C0);
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D1A0);
-extern void func_80026694(s32, s32, void *, s32);
 void func_8004D1A0(char *o)
 {
     getBaseMatrix(&SCRATCHPAD.workMatrix);
@@ -61,7 +60,6 @@ typedef struct {
 
 void func_8004D448(O_4D448 *o)
 {
-    extern void func_80026E48(s32, s32 *, O_4D448 *, s32, s32);
     getBaseMatrix(&D_1F800020);
     switch (D_1F8001C8 & 1) {
     case 0:
@@ -127,8 +125,6 @@ void func_8004D5F0(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
-extern MATRIX D_1F800090;
-extern void func_800279E8(s32, s32, char *);
 void func_8004D7E0(char *o)
 {
     getBaseMatrix(&D_1F800020);
@@ -168,7 +164,6 @@ void func_8004D91C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004DA28);
-extern void func_80026E48(s32, s32, void *, s32, s32);
 void func_8004DA28(char *o)
 {
     ((s16 *)&D_1F800060)[0] = *(u16 *)((u8 *)o + 0x12);
@@ -185,7 +180,6 @@ void func_8004DA28(char *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004DB3C);
-extern void func_80027600(s32, s32);
 
 void func_8004DB3C(void)
 {

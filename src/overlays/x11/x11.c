@@ -1,5 +1,6 @@
 #include "common.h"
 #include "game.h"
+#include "x11.h"
 
 INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_801154A4);
 
@@ -74,11 +75,7 @@ INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_80116064);
 INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_801160A0);
 
 // INCLUDE_ASM("overlays/x11/nonmatchings/x11/x11", func_801161A4);
-extern s16 D_8007DB88[];
-extern void *D_8011B750[];
-extern s32 tickAnimation(GameObject *);
 extern void applyAnimVelocityX(GameObject *, s32);
-extern void readAnimFrameCount(GameObject *);
 
 static inline void SetAnim_161A4(GameObject *o, void *a)
 {
