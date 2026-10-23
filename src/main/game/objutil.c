@@ -12,14 +12,10 @@ s16 distanceToPlayer(u8* self)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_800385EC);
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("nonmatchings/main/game/objutil", func_800385EC);
-#else
 void func_800385EC(GameObject *o)
 {
     initObjectAC(o);
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038748);
 s32 abs(s32);

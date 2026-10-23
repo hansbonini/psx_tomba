@@ -157,14 +157,14 @@ void func_8004DFA0(GameObject *o)
 typedef struct { s16 tpage; s16 x; s16 y; u8 u; u8 v; s16 w; s16 h; s16 cx; s16 cy; s16 semi; } SprPart;
 extern SprPart *D_8007EBEC[];
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E244);
-#else
 void func_8004E244(GameObject *o)
 {
     SprPart *e = D_8007EBEC[o->subtype];
     SPRT *p;
     DR_MODE *dm;
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+    short r[4];
+#endif
 
     while (e->tpage != 0x7FFF) {
         p = (SPRT *)D_1F800164;
@@ -177,7 +177,7 @@ void func_8004E244(GameObject *o)
         p->w = e->w;
         p->h = e->h;
         p->x0 = o->x.p.whole + e->x;
-        p->y0 = o->y.p.whole + e->y;
+        p->y0 = o->y.p.whole + e->y + NTSC_PAL(0, 0x18);
         p->u0 = e->u;
         p->v0 = e->v;
         p->clut = GetClut(e->cx, e->cy);
@@ -189,8 +189,16 @@ void func_8004E244(GameObject *o)
         e++;
         D_1F800164 += sizeof(DR_MODE);
     }
-}
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+    r[0] = 0;
+    r[1] = 0;
+    r[2] = 0x140;
+    r[3] = 0x10;
+    addTilePrim(r, 0, 0, 1);
+    r[1] = 0xF0;
+    addTilePrim(r, 0, 0, 1);
 #endif
+}
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004E3EC);
 

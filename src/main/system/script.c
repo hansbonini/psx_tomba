@@ -391,7 +391,54 @@ void scriptOpPopVars(void)
     p->pc++;
 }
 
-INCLUDE_ASM("nonmatchings/main/system/script", func_8003BB48);
+static inline s32 readScriptValueTo(u8 *ctx, u8 mode, u8 *arg, s32 *tmp)
+{
+    s32 k;
+
+    if (mode == 0) {
+        return *(s32 *)(ctx + *arg * 4 + 0x1090);
+    }
+    for (k = 0; k < 4; k++) {
+        ((char *)tmp)[k] = arg[k];
+    }
+    return *tmp;
+}
+
+void func_8003BB48(u8 mode)
+{
+    ScriptContext *p = SCRIPT_CTX;
+    u8 *code = SCRIPT_CODE;
+    s32 a, b;
+    u8 *q;
+    u8 *ctx;
+    s32 tmp;
+    s32 k;
+
+    a = readScriptValueTo((u8 *)p, 0, &code[p->pc + 1], &tmp);
+    q = (u8 *)(p->pc + (s32)code);
+    q += 2;
+    ctx = (u8 *)SCRIPT_CTX;
+    if (mode == 0) {
+        b = *(s32 *)(ctx + *q * 4 + 0x1090);
+    } else {
+        for (k = 0; k < 4; k++) {
+            ((char *)&tmp)[k] = q[k];
+        }
+        b = tmp;
+    }
+    if (a == b) {
+        p->cmpFlag = 0;
+    } else if (a < b) {
+        p->cmpFlag = 1;
+    } else {
+        p->cmpFlag = 2;
+    }
+    if (mode == 0) {
+        p->pc += 3;
+    } else {
+        p->pc += 6;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/system/script", func_8003BC34);
 void func_8003BC34(u8 op)

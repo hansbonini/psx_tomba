@@ -162,14 +162,10 @@ extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80034AB8);
-#if defined(VERSION_SCES_01330)
-INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80034AB8);
-#else
 void func_80034AB8(GameObject *o)
 {
     initObjectAC(o);
 }
-#endif
 
 #define IDX(o, i) \
     i = o->subState * 6; \

@@ -1834,7 +1834,242 @@ void func_8002CEF8(GameObject *o)
     }
 }
 
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CFF4);
+typedef struct {
+    /* 0x00 */ u16 posX;
+    /* 0x02 */ u16 posY;
+    /* 0x04 */ u8 kind;
+    /* 0x05 */ u8 area;
+    /* 0x06 */ u8 section;
+    /* 0x07 */ u8 entrance;
+} DoorEntry;
+
+typedef struct {
+    /* 0x00 */ u8 pad00[6];
+    /* 0x06 */ u8 step;
+    /* 0x07 */ u8 unk7;
+    /* 0x08 */ u8 pad08[0x18];
+    /* 0x20 */ s32 zoom;
+    /* 0x24 */ s32 angle;
+    /* 0x28 */ u8 pad28[0x17];
+    /* 0x3F */ u8 kind;
+    /* 0x40 */ u8 pad40[0xC];
+    /* 0x4C */ u16 posX;
+    /* 0x4E */ u8 pad4E[2];
+    /* 0x50 */ u16 posY;
+    /* 0x52 */ u8 pad52[0x16];
+    /* 0x68 */ DoorEntry *entry;
+    /* 0x6C */ u8 pad6C[2];
+    /* 0x6E */ u8 unk6E;
+    /* 0x6F */ u8 unk6F;
+    /* 0x70 */ u8 pad70;
+    /* 0x71 */ u8 unk71;
+    /* 0x72 */ u8 unk72;
+    /* 0x73 */ u8 unk73;
+} DoorTransition;
+
+extern DoorEntry **D_8007C54C[];
+extern u8 D_8009C10A_A[] asm("D_8009C10A");
+extern u16 D_8009C0FE_A[] asm("D_8009C0FE");
+
+static inline s32 settleDoorAngle(DoorTransition *o)
+{
+    if (o->angle != 0) {
+        if (o->angle > 0) {
+            o->angle -= 0x80;
+        } else {
+            o->angle += 0x80;
+        }
+        return 0;
+    }
+    o->unk71 = 0;
+    o->unk72 = 0;
+    o->unk73 = 0;
+    return 1;
+}
+
+static inline s32 stepDoorZoom(DoorTransition *o)
+{
+    if (o->zoom == 0) return 0;
+    if (o->zoom > 0) {
+        o->zoom -= 0x100;
+    } else {
+        o->zoom += 0x100;
+    }
+    return 1;
+}
+
+static inline s32 stepCameraTilt(void)
+{
+    s16 t = VIEW_CAMERA.rot[1].p.whole;
+
+    if (t != 0) {
+        if (t > 0) {
+            VIEW_CAMERA.rot[1].p.whole = t -= 2;
+            if (t < 0) VIEW_CAMERA.rot[1].p.whole = 0;
+        } else {
+            VIEW_CAMERA.rot[1].p.whole = t += 2;
+            if (t > 0) VIEW_CAMERA.rot[1].p.whole = 0;
+        }
+        return 1;
+    }
+    return 0;
+}
+
+static inline s32 settleDoorView(DoorTransition *o)
+{
+    if (stepDoorZoom(o) | stepCameraTilt()) return 0;
+    o->unk6E = 0;
+    o->unk6F = 0;
+    return 1;
+}
+
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CFF4);
+#else
+void func_8002CFF4(o)
+DoorTransition *o;
+{
+    Player *pl = &PLAYER;
+    s32 k;
+    s32 t;
+    DoorEntry *e;
+    Task *task;
+
+    if (D_8009BCA0 != 0) {
+        func_8002C7D8((O_2C7D8 *)o);
+        return;
+    }
+    switch (o->step) {
+    case 0:
+        if (settleDoorAngle(o) & settleDoorView(o)) {
+            o->step++;
+        }
+        break;
+    case 1:
+        e = &D_8007C54C[GAME.selectedArea][D_8009BCCA][(u16)D_8009BCEA];
+        o->unk7 = 0;
+        o->entry = e;
+        o->step++;
+        o->posX = (*(DoorEntry **)&o->entry)->posX;
+        o->posY = (*(DoorEntry **)&o->entry)->posY;
+        D_8009C10A_A[0] = 1;
+        o->kind = (*(DoorEntry **)&o->entry)->kind;
+        if (o->kind == 2) {
+            D_8009C10A = 0;
+            o->step = 3;
+            D_8009BCA4 = 0;
+            D_8009BCDD = 3;
+        } else if (o->kind == 3) {
+            D_8009C10A = 0;
+            o->step = 4;
+        }
+        D_8009C0FC_U16Arr[0] = k = (*(DoorEntry **)&o->entry)->area;
+        D_8009C0FE_A[0] = (*(DoorEntry **)&o->entry)->section;
+        D_8009C108[0] = (*(DoorEntry **)&o->entry)->entrance;
+        if (k != GAME_A) {
+            stopBgm(1);
+        }
+        switch (GAME_B) {
+        case 1:
+            switch (D_8009BCCA) {
+            case 2:
+                if (D_8009C0FE == 4) {
+                    pl->obj.visible = 1;
+                    pl->obj.state = 5;
+                    pl->obj.subState = 0xA;
+                    pl->obj.step = 0;
+                    pl->obj.timer = 30;
+                    pl->obj.animFrame = 0;
+                    break;
+                }
+                pl->obj.state = 5;
+                pl->obj.visible = 0;
+                pl->obj.subState = 0x40;
+                pl->obj.step = 0;
+                break;
+            case 4:
+                if (D_8009C0FE == 2) break;
+                pl->obj.state = 5;
+                pl->obj.visible = 0;
+                pl->obj.subState = 0x40;
+                pl->obj.step = 0;
+                break;
+            default:
+                pl->obj.state = 5;
+                pl->obj.visible = 0;
+                pl->obj.subState = 0x40;
+                pl->obj.step = 0;
+                break;
+            }
+            break;
+        case 9:
+            if (D_8009BCCA == 0) {
+                if (D_8009C0FC_U16Arr[0] == 1) break;
+                pl->obj.state = 5;
+                pl->obj.visible = 0;
+                pl->obj.subState = 0x40;
+                pl->obj.step = 0;
+                break;
+            }
+            pl->obj.state = 5;
+            pl->obj.visible = 0;
+            pl->obj.subState = 0x40;
+            pl->obj.step = 0;
+            break;
+        case 3:
+            if (D_8009BCCA == 0 || D_8009BCCA == 4) {
+                if (D_8009C0FC_U16Arr[0] == 9) break;
+                pl->obj.state = 5;
+                pl->obj.visible = 0;
+                pl->obj.subState = 0x40;
+                pl->obj.step = 0;
+                break;
+            }
+            pl->obj.state = 5;
+            pl->obj.visible = 0;
+            pl->obj.subState = 0x40;
+            pl->obj.step = 0;
+            break;
+        case 4:
+            if (((u8 *)&pl->obj)[0xA2] == 0) {
+                pl->obj.state = 5;
+                pl->obj.subState = 0x41;
+                pl->obj.step = 0;
+            }
+            break;
+        default:
+            t = (u16)SPAD->currentTask->state2;
+            if (t == 0) break;
+            if (t < 3) {
+                pl->obj.state = 5;
+                pl->obj.visible = 0;
+                pl->obj.subState = 0x41;
+                pl->obj.step = 0;
+            } else if (t < 7) {
+                if (t < 4) break;
+                pl->obj.state = 4;
+                pl->obj.visible = 0;
+                pl->obj.subState = 7;
+            }
+            break;
+        }
+        break;
+    case 2:
+        if (func_80029CDC((S_29CDC *)o)) {
+            o->step++;
+        }
+        break;
+    case 3:
+        if (D_8009BCDD != 1) break;
+    case 4:
+        task = SPAD->currentTask;
+        task->state2 = 7;
+        task->step.value = 0;
+        break;
+    }
+}
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", dispatchSectionInit);
 void dispatchSectionInit(void)
@@ -2152,7 +2387,74 @@ typedef struct {
 } PopupIcon;
 
 #if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DBD8);
+void func_8002DBD8(PopupIcon *o)
+{
+    s32 u0, v0, u1, v1;
+    s16 s;
+
+    switch (o->state) {
+    case 0:
+        o->unkA = 0x14;
+        o->unkA4 = 1;
+        o->slot2 = acquireSpriteSlot(o->spriteId2);
+        if (o->active == 1) {
+            o->slot = s = acquireSpriteSlot(o->spriteId);
+            u0 = SPRITE_SLOTS[s].val[0] * 4;
+            v0 = SPRITE_SLOTS[s].val[1] << 8;
+            u1 = u0 + SPRITE_SLOTS[s].val[2];
+            v1 = v0 + (SPRITE_SLOTS[s].val[3] << 8);
+            o->uv[1] = u0 | v0;
+            o->uv[3] = v0 | u1;
+            o->uv[0] = u0 | v1;
+            o->uv[2] = u1 | v1;
+        }
+        o->state++;
+        break;
+    case 1:
+        if (D_8009C10A != 1) {
+            func_8002DEC4(o);
+        }
+        if (o->active & 1) {
+            o->visible = 1;
+            pushDrawListLayer8(o);
+        }
+        break;
+    case 2:
+        if (o->active == 1) {
+            if (--SPRITE_SLOTS[o->slot].refCount == 0) {
+                SPRITE_SLOTS[o->slot].id = -1;
+            }
+        }
+        if (D_8009C618[0] != 3) {
+            if (o->cmd & 0x7FFF) {
+                if (o->eventId != 0) {
+                    setEventStarted(o->eventId, 0, 3);
+                }
+                if ((o->cmd & 0x7FFF) == 2) break;
+                if (o->flagD0 == 0 || (o->cmd & 0x7FFF) == 3) {
+                    D_8009BCA7_U8Arr[0] = 0;
+                    D_8009BCAA_U8Arr[0] = 0;
+                    if ((o->cmd & 0x7FFF) != 4 && (D_800A5436[0] == 0 || D_800A5444[0] < 2)) {
+                        D_800A539C = 1;
+                        D_800A539D = 0;
+                        D_800A539E = 0;
+                        D_800A539F = 0;
+                    } else {
+                        D_8009BCA6 = 0;
+                    }
+                }
+            }
+            if ((o->cmd & 0x8000) && (o->cmd & 0x7FFF) != 2) {
+                D_8009BC9B = 0;
+            }
+        }
+        o->state++;
+        break;
+    case 3:
+        freeObjectLayer8(o);
+        break;
+    }
+}
 #else
 void func_8002DBD8(PopupIcon *o)
 {
@@ -2219,7 +2521,145 @@ void func_8002DBD8(PopupIcon *o)
 }
 #endif
 
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
+#else
+void func_8002DEC4(PopupIcon *o)
+{
+    s32 done;
+    s32 u0, v0;
+    char first;
+    s32 u1, v1;
+    s32 dx;
+    s32 yy;
+    s32 px, py;
+    s32 t;
+
+    switch (o->subState) {
+    case 0:
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
+        o->subState++;
+        break;
+    case 1:
+        done = --o->timer == 0;
+        if (done) {
+            o->velY = -0x800;
+            o->subState++;
+            o->timer = 30;
+            dx = o->x.p.whole - 0xA0;
+            px = (o->destX - dx) << 8;
+            o->velX = px / 30;
+            yy = o->y.p.whole + 0x78;
+            dx = yy;
+            px = (o->destY - dx) << 8;
+            o->velZ = px / 30;
+        }
+        break;
+    case 2:
+        o->posX.raw += o->velX << 8;
+        o->posY.raw += o->velZ << 8;
+        o->posY.raw += o->velY << 8;
+        o->velY += 0x88;
+        if (--o->timer == 0) {
+            first = o->subtype == 0;
+            o->timer = first ? 0xB4 : 0x5A;
+            o->phaseA = 0;
+            o->stepA = (nextRandom() & 3) + 3;
+            o->phaseB = 0;
+            o->stepB = (nextRandom() & 7) + 3;
+            o->subState++;
+        }
+        break;
+    case 3:
+        if (o->subtype == 0) {
+            o->posY.raw = ((u16)o->destY + (s16)fixedMulSin(o->phaseA, 4)) << 16;
+        }
+        o->rotZ = (s16)fixedMulSin(o->phaseB, 0x80);
+        o->phaseA += o->stepA;
+        o->phaseB += o->stepB;
+        o->phaseA &= 0xFF;
+        o->phaseB &= 0xFF;
+        if (--o->timer == 0) {
+            o->rotZ = 0;
+            if (o->subtype == 0) {
+                o->subState++;
+            } else {
+                o->timer = 1;
+                o->subState = 5;
+            }
+        }
+        break;
+    case 4:
+        o->posX.raw += 0x80000;
+        if (o->posX.raw > 0x1400000) {
+            o->state++;
+        }
+        break;
+    case 5:
+        if (--o->timer == 0) {
+            o->timer = 30;
+            o->rotX = 0;
+            o->subState++;
+        }
+        break;
+    case 6:
+        o->posX.raw += (((u16)o->homeX << 16) - o->posX.raw) >> 3;
+        o->posY.raw += (((u16)o->homeY << 16) - o->posY.raw) >> 3;
+        o->rotX += 0x40;
+        if (o->rotX >= 0x400) {
+            if (o->unkCC >= 0x80) {
+                u0 = SPRITE_SLOTS[o->slot2].val[0] * 4;
+                v0 = SPRITE_SLOTS[o->slot2].val[1] << 8;
+                u1 = u0 + SPRITE_SLOTS[o->slot2].val[2];
+                v1 = v0 + (SPRITE_SLOTS[o->slot2].val[3] << 8);
+                o->rotX = 0xC00;
+                o->subState++;
+                o->uv[1] = u0 | v0;
+                o->uv[3] = v0 | u1;
+                o->uv[0] = u0 | v1;
+                o->uv[2] = u1 | v1;
+            } else {
+                o->state++;
+            }
+        }
+        break;
+    case 7:
+        o->rotX += 0x40;
+        if (o->rotX == 0x1000) {
+            o->timer = (nextRandom() & 0x1F) + 0x5A;
+            o->subState++;
+        }
+    case 8:
+        if (--o->timer == 0) {
+            o->stepA = (nextRandom() & 0x7F) - 0x40;
+            o->stepB = (nextRandom() & 0x7F) - 0x40;
+            o->phaseB = (nextRandom() & 0x7F) - 0x40;
+            o->velY = nextRandom() & 0x13;
+            o->subState++;
+        }
+        break;
+    case 9:
+        o->rotX = (o->rotX + (u16)o->stepA) & 0xFFF;
+        o->rotY = (o->rotY + (u16)o->stepB) & 0xFFF;
+        o->rotZ = (o->rotZ + (u16)o->phaseB) & 0xFFF;
+        o->velY += 2;
+        o->posY.raw += o->velY << 12;
+        if (o->posY.raw > 0x1100000) {
+            o->state++;
+        }
+        break;
+    }
+    t = o->posX.p.whole + 0xA0;
+    o->x.p.whole = t;
+    py = o->posZ.p.whole;
+    o->z.p.whole = py;
+    t = o->posY.p.whole - 0x78;
+    o->y.p.whole = t;
+}
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", stubInventory3);
 void stubInventory3(void) {

@@ -4,7 +4,162 @@
 s16 probeCollisionAtDepthB(u8*, s16, s16);
 s32 probeCollisionAtDepthA(u8*, s16, s16);
 
-INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_8004117C);
+// INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_8004117C);
+typedef struct { s16 h; s16 v; } VT_4117C;
+extern VT_4117C D_8007E8F4[];
+extern void (*D_8007DE28[])(GameObject *);
+extern u8 D_8009C132, D_8009C163, D_8009C3EF, D_8009C175, D_8009C371;
+s16 func_80043AB0(GameObject *o, s16 x, s16 y, s32 dir);
+
+void func_8004117C(GameObject *o)
+{
+    s32 k;
+
+    switch (o->state) {
+    case 0:
+        o->cooldownTimer = 0;
+        if (o->subtype == 0x3F && D_8009C132 != 0xFF) {
+            o->state = 3;
+            break;
+        }
+        if (o->subtype == 0x9E && D_8009C163 != 0xFF) {
+            o->state = 3;
+            break;
+        }
+        if (o->subtype == 0x90 && D_8009C3EF < 4) break;
+        if (o->subtype == 0x3C && (D_8009C175 == 0 || D_8009C175 == 0xFF)) {
+            o->state = 3;
+            break;
+        }
+        if (o->subtype == 3 && o->unkC == 1 && (D_8009C114 != 0xFF || D_8009C371 != 0)) {
+            o->state = 3;
+            break;
+        }
+        initItemObject(o);
+        switch (o->type) {
+        case 1:
+            o->timer = 0x3C;
+            break;
+        case 2:
+            o->unkB4 = 1;
+            break;
+        case 3:
+            o->active = 4;
+            o->unkB4 = 1;
+            o->timer = 0x1E;
+            break;
+        case 4:
+            o->unkB4 = 0;
+            break;
+        case 5:
+        case 8:
+            o->velY = -0x500;
+            o->timer = 0x3C;
+            o->unk34 = o->y.p.whole << 16;
+            break;
+        case 10:
+            if (o->velV != 0) {
+                o->unkB4 = 1;
+            } else {
+                o->unkB4 = 0;
+            }
+            o->timer = 0x1E;
+            break;
+        }
+        o->state++;
+        break;
+    case 1:
+        k = 8;
+        if (o->subtype == 2 && o->unkC >= 4)
+            k = 0x1C;
+        switch (o->type) {
+        case 1:
+        case 3:
+        case 10:
+            if (o->timer != 0 && --o->timer == 0)
+                o->active = 1;
+        }
+        switch (o->type) {
+        case 2:
+        case 3:
+        case 4:
+        case 10:
+            if (o->unk68 & 1) {
+                o->unk68 = 0;
+                o->unkB4 = 1;
+                o->velH = D_8007E8F4[o->animFrame].h;
+                o->velV = D_8007E8F4[o->animFrame].v;
+            } else if (o->touchFlag & 1) {
+                o->touchFlag = 0;
+                if (o->velV <= 0x100) {
+                    if (o->type == 4) {
+                        o->velH = 0;
+                        o->velV = 0;
+                    }
+                    o->unkB4 = 0;
+                    o->active = 2;
+                } else {
+                    o->velV = -o->velV / 4;
+                }
+            } else if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + k)) {
+                if (o->velV <= 0x100) {
+                    if (o->type == 4) {
+                        o->velH = 0;
+                        o->velV = 0;
+                    }
+                    o->unkB4 = 0;
+                    o->active = 2;
+                } else {
+                    o->velV = -o->velV / 4;
+                }
+            } else if (func_80043AB0(o, o->h->p.whole + 8, o->y.p.whole, 0) ||
+                       func_80043AB0(o, o->h->p.whole - 8, o->y.p.whole, 1)) {
+                o->velH = -o->velH;
+            }
+            if ((u16)o->unkB4 != 0) {
+                if (o->type == 10) {
+                    applyObjectSpeedXY((u8 *)o);
+                    if (o->velV < 0x800)
+                        o->velV += 0x20;
+                    if (o->y.p.whole - ((Fix16 *)&o->unk34)->p.whole >= -7) {
+                        o->unkB4 = 0;
+                        o->velV = 0;
+                    }
+                } else {
+                    applyObjectSpeedXY((u8 *)o);
+                    o->velV += 0x20;
+                }
+            }
+            break;
+        case 5:
+        case 8:
+            o->unk30 += o->velH << 8;
+            o->unk34 += o->velV << 8;
+            o->unk34 += o->velY << 8;
+            o->h->raw = o->unk30;
+            o->y.raw = o->unk34;
+            *o->d = *(Fix16 *)&o->unk38;
+            if (o->velY < 0x800)
+                o->velY += 0x28;
+            if (o->velY > 0)
+                o->active = 1;
+            if (--o->timer == 0)
+                o->state++;
+            break;
+        }
+        if (o->cooldownTimer != 0)
+            o->cooldownTimer--;
+        if (func_80022E44(o))
+            tickAnimation(o);
+        break;
+    case 2:
+        D_8007DE28[D_8007DD88[o->subtype]](o);
+        break;
+    case 3:
+        freeObjectLayer5(o);
+        break;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", spawnItem);
 void spawnItem(short id, short arg1, int arg2)
