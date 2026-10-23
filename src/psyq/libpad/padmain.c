@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libstamp.h"
 #include "padlocal.h"
 
 extern u8 func_8006A40C_x[] asm("func_8006A40C");
@@ -7,6 +8,17 @@ extern u8 func_8006A524_x[] asm("func_8006A524");
 extern u8 func_8006A5E4_x[] asm("func_8006A5E4");
 extern u8 func_8006A670_x[] asm("func_8006A670");
 
+#if REGION == REGION_EU && VERSION == 1 && LANGUAGE != LANGUAGE_NONE
+PsyqStamp libpad_stamp = PSYQ_STAMP(PSYQ_LIB_PAD, 4, 3, 1, 40, 0, 49, 24);
+#else
+PsyqStamp libpad_stamp = PSYQ_STAMP(PSYQ_LIB_PAD, 4, 2, 1, 34, 19, 12, 22);
+#endif
+u32 D_80097510_d[1] asm("D_80097510") = {
+    0x00000000,
+};
+u32 D_80097514_d[1] asm("D_80097514") = {
+    0x00000000,
+};
 u32 D_80097518_d[1] asm("D_80097518") = {
     0x00000000,
 };

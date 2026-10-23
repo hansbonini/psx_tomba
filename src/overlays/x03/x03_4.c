@@ -460,7 +460,7 @@ void func_80126174(GameObject *o)
 
 extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_80126288);
 #else
 void func_80126288(GameObject *o)
@@ -522,7 +522,7 @@ void func_80126288(GameObject *o)
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_8012659C);
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_4", func_8012659C);
 #else
 void func_8012659C(GameObject *o)

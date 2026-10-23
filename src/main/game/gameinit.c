@@ -648,14 +648,38 @@ void freeObjectUnlayered(s32* arg0)
     *--D_1F800210 = (s32)arg0;
 }
 
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
 const char BUILD_DATE[] asm("D_80010000") = "98/7/31";
 
+#if LANGUAGE == LANGUAGE_ENGLISH || LANGUAGE == LANGUAGE_FRENCH
 const char BUILD_TIME[] asm("D_80010008") = "9:16";
-#elif defined(VERSION_SCES_01331)
+#elif LANGUAGE == LANGUAGE_GERMAN || LANGUAGE == LANGUAGE_ITALIAN
+const char BUILD_TIME[] asm("D_80010008") = "9:17";
+#elif LANGUAGE == LANGUAGE_DUTCH || LANGUAGE == LANGUAGE_SPANISH
+const char BUILD_TIME[] asm("D_80010008") = "9:18";
+#elif LANGUAGE == LANGUAGE_PORTUGUESE || LANGUAGE == LANGUAGE_SWEDISH
+const char BUILD_TIME[] asm("D_80010008") = "9:19";
+#else
+const char BUILD_TIME[] asm("D_80010008") = "9:20";
+#endif
+#elif REGION == REGION_EU && VERSION == 1
 const char BUILD_DATE[] asm("D_80010000") = "98/8/26";
 
+#if LANGUAGE == LANGUAGE_ENGLISH
 const char BUILD_TIME[] asm("D_80010008") = "14:10";
+#elif LANGUAGE == LANGUAGE_FRENCH || LANGUAGE == LANGUAGE_GERMAN || LANGUAGE == LANGUAGE_ITALIAN
+const char BUILD_TIME[] asm("D_80010008") = "14:11";
+#elif LANGUAGE == LANGUAGE_DUTCH
+const char BUILD_TIME[] asm("D_80010008") = "14:12";
+#elif LANGUAGE == LANGUAGE_SPANISH || LANGUAGE == LANGUAGE_PORTUGUESE || LANGUAGE == LANGUAGE_SWEDISH
+const char BUILD_TIME[] asm("D_80010008") = "14:13";
+#else
+const char BUILD_TIME[] asm("D_80010008") = "14:14";
+#endif
+#elif REGION == REGION_JP
+const char BUILD_DATE[] asm("D_80010000") = "97/12/2";
+
+const char BUILD_TIME[] asm("D_80010008") = "10:25";
 #else
 const char BUILD_DATE[] asm("D_80010000") = "98/3/22";
 

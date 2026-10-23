@@ -1576,14 +1576,14 @@ void func_80028638(s32 *src, char *dst)
         i++;
     } while (i < 8);
 }
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
 void func_80025B4C_sces01330(void)
 {
     if (D_8009EB58 == 0 && PadInfoMode(0, 2, 0) != 0 && D_1F8003DA == 7)
         PadSetMainMode(0, 1, 0);
 }
 #endif
-#if defined(VERSION_SCES_01331)
+#if REGION == REGION_EU && VERSION == 1
 void func_80025B98_sces01331(void)
 {
     if (D_8009EB58 == 0 && PadInfoMode(0, 2, 0) != 0 && D_1F8003DA == 7)

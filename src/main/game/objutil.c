@@ -69,7 +69,7 @@ s32 func_8003887C(GameObject *o)
                 if (D_1F800282 & 2) o->touchFlag = 1;
             }
         }
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         k = (D_1F800282 >> 5) & 0xf;
         if (!(D_1F800282 & 0x3000)) {
             switch (k) {
@@ -381,7 +381,7 @@ void func_80038AC0(GameObject *o)
                 G.unk9D = 0;
                 o->unkA5 = 0;
                 if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
                     func_800EFBEC_slps01144(&G);
 #endif
                     D_8009B698->b0 = 0;
@@ -390,7 +390,7 @@ void func_80038AC0(GameObject *o)
                     o->step = 0;
                     D_8009BC9C = 0;
                 } else {
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
                     func_800EBA70(D_8009C61A[0], o);
 #endif
                     o->unkAA += (o->animFrame & 1) ? -0x40 : 0x40;
@@ -404,7 +404,7 @@ void func_80038AC0(GameObject *o)
         func_800348FC(o);
         advanceAnimFrame(&G, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
             func_80028A74(0, 0, 0xc0, 2);
 #endif
             playSFX(3);
@@ -417,7 +417,7 @@ void func_80038AC0(GameObject *o)
         o->unkAA += TK(1);
         if (o->unkAA > 0xff) o->unkAA -= 0x100;
         if (o->unkAA < 0) o->unkAA += 0x100;
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         if (o->animFrame & 1) o->unk8C = (o->unkAA + 0x80) & 0xff;
         else o->unk8C = (u8)o->unkAA;
 #endif
@@ -458,7 +458,7 @@ void func_80038AC0(GameObject *o)
         func_800348FC(o);
         advanceAnimFrame(&G, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
             func_80028A74(0, 0, 0xff, 2);
 #endif
             playSFXWithNote(3, 6);
@@ -472,7 +472,7 @@ void func_80038AC0(GameObject *o)
         o->unkAA += TK(1);
         if (o->unkAA > 0xff) o->unkAA -= 0x100;
         if (o->unkAA < 0) o->unkAA += 0x100;
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         if (o->animFrame & 1) o->unk8C = (o->unkAA + 0x80) & 0xff;
         else o->unk8C = (u8)o->unkAA;
 #endif
@@ -593,7 +593,7 @@ void func_8003A10C(GameObject *o)
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A310);
 void func_8003A310(u8 *o)
 {
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
     if ((u8)(o[6] - 6) < 2) return;
 #endif
     switch (*(u16 *)(o + 0x2e)) {
@@ -613,7 +613,7 @@ void func_8003A384(GameObject *o)
     switch (o->subState) {
     case 0:
         func_80038AC0(o);
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         if (o->step == 6 || o->step == 7)
             break;
 #endif
@@ -627,7 +627,7 @@ void func_8003A384(GameObject *o)
         break;
     case 1:
         func_80038AC0(o);
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         if (o->step == 6 || o->step == 7)
             break;
 #endif
@@ -641,7 +641,7 @@ void func_8003A384(GameObject *o)
         break;
     case 2:
         func_80038AC0(o);
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         if (o->step == 6 || o->step == 7)
             break;
 #endif
@@ -667,7 +667,7 @@ void func_8003A4F8(GameObject *o)
     if (D_800A545F) o->state = 2;
     switch (o->state) {
     case 0:
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
         initObjectAC(o);
 #else
         func_800385EC(o);

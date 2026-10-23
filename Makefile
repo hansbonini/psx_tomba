@@ -48,8 +48,24 @@ GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 OPT_FLAGS           := -O2
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR)
-DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM -DVERSION_$(subst .,,$(GAME_NAME))
-CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MP -undef -Wall -lang-c -nostdinc
+# Release macros for the C (include/version.h): REGION from the serial,
+# VERSION = revision (last digit of the SCES serial, 0 elsewhere), LANGUAGE
+# from the European MAIN<n> a build folder belongs to.
+REGION_NAME         := $(if $(filter scus_%,$(VERSION)),US,$(if $(filter slps_%,$(VERSION)),JP,EU))
+REVISION            := $(if $(filter sces_%,$(VERSION)),$(shell echo $(VERSION) | rev | cut -c1),0)
+DEFAULT_LANGUAGE    := $(if $(filter JP,$(REGION_NAME)),JAPANESE,$(if $(filter EU,$(REGION_NAME)),NONE,ENGLISH))
+LANGUAGE_OF_main0   := ENGLISH
+LANGUAGE_OF_main1   := FRENCH
+LANGUAGE_OF_main2   := GERMAN
+LANGUAGE_OF_main3   := ITALIAN
+LANGUAGE_OF_main4   := DUTCH
+LANGUAGE_OF_main5   := SPANISH
+LANGUAGE_OF_main6   := PORTUGUESE
+LANGUAGE_OF_main7   := SWEDISH
+LANGUAGE_OF_main8   := DANISH
+language_of          = -DLANGUAGE=LANGUAGE_$(or $(LANGUAGE_OF_$(notdir $1)),$(DEFAULT_LANGUAGE))
+DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM -DREGION=REGION_$(REGION_NAME) -DVERSION=$(REVISION)
+CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -include version.h -P -MP -undef -Wall -lang-c -nostdinc
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
@@ -345,7 +361,7 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 define make_object_rules
 $1/%.i: %.c
 	@mkdir -p $$(dir $$@)
-	$$(CPP) -P -MMD -MP -MT $$@ -MF $$@.d $$(CPP_FLAGS) -o $$@ $$<
+	$$(CPP) -P -MMD -MP -MT $$@ -MF $$@.d $$(CPP_FLAGS) $(call language_of,$1) -o $$@ $$<
 
 $1/%.c.s: $1/%.i
 	@mkdir -p $$(dir $$@)

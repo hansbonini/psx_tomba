@@ -830,7 +830,7 @@ s32 startBgmTrack(s32 id)
     BGM_SEQ_ID = SsSeqOpen(SEQ_DATA[BGM_TRACK_DEFS[id].seq], vab);
     SsSetMVol(100, 100);
     SsSeqSetVol(BGM_SEQ_ID, BGM_TRACK_VOLUME[id], BGM_TRACK_VOLUME[id]);
-#ifdef VERSION_PAL
+#if REGION == REGION_EU
     BGM_MUTED = 0;
 #endif
     BGM_FADE_ACTIVE = 0;

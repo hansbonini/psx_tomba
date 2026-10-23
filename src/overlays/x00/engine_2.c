@@ -571,7 +571,7 @@ extern E **D_801144E0[];
 
 #define LOADP() p = (u8 *)D_801144E0[(*(u16 *)&GAME)]; p = ((u8 **)p)[D_8009BCCA]; p += (*(u16 *)&D_8009BCEA) * 4
 
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
 INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", initPlayer);
 #else
 void initPlayer(GameObject *o)
@@ -7036,7 +7036,7 @@ static __inline__ s16 calc_FE970(void)
 
 #define SET(a, b) { S16(o, 0xee) = a; S16(o, 0xf2) = b; break; }
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800FE970);
 #else
 void func_800FE970(GameObject *o, s32 arg)

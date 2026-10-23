@@ -25,7 +25,7 @@ void func_80032DB4(GameObject *o)
         o->unk88 = 0;
         break;
     case 1:
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         if (o->unkC == 0 && !(D_1F8001F8 & 3))
             func_80028A74(0, 0, 0xff, 2);
 #endif
@@ -49,7 +49,7 @@ void func_80032DB4(GameObject *o)
         if (((u8 *)&PLAYER.obj.touchFlag)[0])
             o->timer = 0;
         if (--o->timer <= 0) {
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
             if (D_800A5468 > 0)
                 PLAYER.obj.active = 3;
             else
@@ -84,11 +84,11 @@ void func_8003301C(u8 *o)
     case 0: func_800325C0(o); break;
     case 1: func_80032934(o); break;
     case 2: func_80032DB4(o); break;
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
     case 9: func_800327D8(o); break;
 #endif
     }
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
     if ((SPAD->unk1F8 & 3) == 0) playSFXWithNote(3, 0xc);
 #else
     if (o[3] != 9 && (SPAD->unk1F8 & 3) == 0) playSFXWithNote(3, 0xc);
@@ -114,13 +114,13 @@ void func_800330EC(GameObject *o)
         case 2:
             func_80032DB4(o);
             break;
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
         case 9:
             func_800327D8(o);
             break;
 #endif
         }
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
         if ((D_1F8001F8 & 3) == 0)
 #else
         if (o->subtype != 9 && (D_1F8001F8 & 3) == 0)
@@ -162,7 +162,7 @@ void func_800332CC(GameObject *o)
 {
     switch (o->state) {
     case 0:
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
         {
             u8 *p = (u8 *)o;
             *(u16 *)(p + 0x1e) = D_8007D2E8[p[3]].tpage;
@@ -250,7 +250,7 @@ static __inline__ void spawn_33488(s16 sub, s32 idx)
 
 void func_80033488(s16 n)
 {
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
     PLAYER.obj.active = 7;
 #else
     if (n != 2) PLAYER.obj.active = 7;
@@ -278,7 +278,7 @@ void func_80033488(s16 n)
     }
 }
 
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
 void func_80033858(void) {
 }
 #endif
@@ -327,6 +327,6 @@ void dispatchAreaInitB(void)
             return;
     }
 }
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
 INCLUDE_ASM("nonmatchings/main/game/areainit", func_80031688_slps01144);
 #endif

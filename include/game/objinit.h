@@ -8,7 +8,7 @@ static __inline__ void initObjectAC(GameObject *o)
 {
     D_8009B6A0 = (ObjectAC *)&o->unkAC;
     if (o->step == 0) {
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
         o->unkB0 = 0;
         o->unkB4 = 0x20;
 #else

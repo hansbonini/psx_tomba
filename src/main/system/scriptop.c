@@ -692,7 +692,7 @@ void func_8003DCF0(void)
                 D_8009BCA7 = 1;
             if (PLAYER.obj.state == PLAYER_ACTIVE) {
                 D_8009BCA7 = 0;
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
                 PLAYER.obj.active = 1;
 #else
                 if (GAME.selectedArea != AREA00_VILLAGEOFALLBEGINNINGS || D_800A5478 == 0)

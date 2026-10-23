@@ -351,7 +351,7 @@ void func_801182E0(GameObject *o)
         o->unkB6 = 0x80;
         o->unkB8 = 0;
         o->unkBA = 0;
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
         o->tpage = 0x2a;
 #else
         o->tpage = (GetGraphType() == 1 || GetGraphType() == 2) ? 0x8a : 0x2a;

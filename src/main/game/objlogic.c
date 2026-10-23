@@ -632,7 +632,7 @@ void func_80036494(GameObject *o)
         o->state = 2;
     switch (o->state) {
     case 0:
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
         initObjectAC(o);
 #else
         func_80034AB8(o);

@@ -152,7 +152,7 @@ void func_800246B0(void)
     }
     ((s32*)&SCRATCHPAD.vrx.raw)[0] = 0;
     ((s32*)&SCRATCHPAD.vrx.raw)[1] = 0;
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
     ((s32*)&SCRATCHPAD.vrx.raw)[2] = 0xFDE00000;
 #else
     if ((((u16 *)&GAME)[0] == 4 && D_8009BCCA < 4) || *(s32 *)((u16 *)&GAME) == 0x50000)

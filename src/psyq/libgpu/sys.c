@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libstamp.h"
 #include "psyq/libgpu.h"
 
 extern u8 D_80015BA8_x[] asm("D_80015BA8");
@@ -20,6 +21,7 @@ extern u8 _status_x[] asm("_status");
 extern u8 _sync_x[] asm("_sync");
 extern u8 printf_x[] asm("printf");
 
+PsyqStamp libgpu_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_GPU, 19, 38, 52);
 u32 D_80090C54_d[16] asm("D_80090C54") = {
     (u32)D_80015BA8_x, (u32)_addque_x, (u32)_addque2_x, (u32)_clr_x,
     (u32)_ctl_x, (u32)_cwb_x, (u32)_cwc_x, (u32)_drs_x,

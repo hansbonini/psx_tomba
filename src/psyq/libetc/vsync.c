@@ -1,6 +1,8 @@
 #include "common.h"
+#include "psyq/libstamp.h"
 #include "psyq/libetc.h"
 
+PsyqStamp libetc_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_ETC, 19, 30, 52);
 u32 D_80096408_d[1] asm("D_80096408") = {
     0x1F801814,
 };

@@ -162,7 +162,7 @@ void func_8004E244(GameObject *o)
     SprPart *e = D_8007EBEC[o->subtype];
     SPRT *p;
     DR_MODE *dm;
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
     short r[4];
 #endif
 
@@ -189,7 +189,7 @@ void func_8004E244(GameObject *o)
         e++;
         D_1F800164 += sizeof(DR_MODE);
     }
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
     r[0] = 0;
     r[1] = 0;
     r[2] = 0x140;
@@ -210,7 +210,7 @@ void func_8004E3EC(void)
         if (D_8009BCA7 != 0) {
             D_800B0778 = 0x78;
         }
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
         if (D_800B0778 == 0 && p[0]) {
 #else
         if (D_800B0778 == 0 && (p[0] & 1)) {
@@ -235,7 +235,7 @@ void func_8004E468(char *o)
     addDrawModePrim(*(s16 *)(env + 0x14), 1);
     func_8004E590(o, 0x18, NTSC_PAL(0xD0, 0xF0));
     func_8004E714(o, 0x12c, 0x10);
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
     func_8004E900(o, 0x24, 0x1c);
 #else
     func_8004E900(o, 0x24, 0x1c, *(s16 *)(o + 0x52));
@@ -345,7 +345,7 @@ extern void func_8004F3DC(SPR_4E900 *s, s16 x, s16 y, u16 v);
 
 void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 {
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
 #define N_4E900 s->n
 #else
 #define N_4E900 ((s16)n)
@@ -419,7 +419,7 @@ void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
     addDrawModePrim(0x14, 1);
     r[0] = x + 0x13;
     r[1] = y + 2;
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
     r[2] = D_8009C104[idx];
 #else
     if (!flag && D_8009C40C[D_8007EC70[idx]] && D_8009BCF8 == D_8007EC78[idx])
@@ -628,7 +628,7 @@ void func_8004FB54(u8 a)
     P_4FB54 *p;
     void *r;
     s32 t, m;
-#if defined(VERSION_SCES_01330) || defined(VERSION_SLPS_01144)
+#if (REGION == REGION_EU && VERSION == 0) || REGION == REGION_JP
     p = D_1F800164;
     SetDrawMode(p, 0, 0, 0, 0);
     AddPrim(D_1F8001E0 + 0x10, p);
@@ -655,19 +655,19 @@ void func_8004FB54(u8 a)
     }
     p->b12 = a;
     AddPrim(D_1F8001E0 + 0x10, r);
-#if defined(VERSION_SCES_01330) || defined(VERSION_SLPS_01144)
+#if (REGION == REGION_EU && VERSION == 0) || REGION == REGION_JP
     p = D_1F800164 = (P_4FB54 *)((char *)D_1F800164 + 0x10);
 #else
     r = D_1F800164 = (P_4FB54 *)((char *)D_1F800164 + 0x10);
 #endif
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
     if (D_1F8003D1 == 1 || (u32)(D_8009BCA4 - 1) < 2) {
         m = 0x20;
     } else {
         m = 0x40;
     }
 #else
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
     if ((u32)(D_8009BCA4 - 1) < 2) {
 #else
     if (D_1F8003D1 == 1 || (u32)(D_8009BCA4 - 1) < 2) {
@@ -681,7 +681,7 @@ void func_8004FB54(u8 a)
         else m = 0x40;
     }
 #endif
-#if defined(VERSION_SCES_01330) || defined(VERSION_SLPS_01144)
+#if (REGION == REGION_EU && VERSION == 0) || REGION == REGION_JP
     SetDrawMode(p, 0, 0, m, 0);
     AddPrim(D_1F8001E0 + 0x10, p);
 #else

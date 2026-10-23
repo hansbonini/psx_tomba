@@ -333,7 +333,7 @@ void drawMessageBox(O_4BDE4 *o)
             D_1F800164 = (char *)D_1F800164 + 0x14;
         }
     }
-#if !defined(VERSION_SCES_01330)
+#if !(REGION == REGION_EU && VERSION == 0)
     if (GetGraphType() != 1)
         GetGraphType();
 #endif

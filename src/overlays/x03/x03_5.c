@@ -122,7 +122,7 @@ void func_8012897C(GameObject *o)
             o->unk90 = showMessageBoxDirect(2, 0xf, &b);
             o->anim = ((AT_2897C *)&D_801350D4)[o->subtype].anims[9];
             advanceAnimFrame(o, 0);
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
             PLAYER.obj.animFrame = 0;
             PLAYER.obj.state = PLAYER_SCRIPTED;
             PLAYER.obj.subState = PLAYER_IDLE;
@@ -143,7 +143,7 @@ void func_8012897C(GameObject *o)
         p = (GameObject *)o->unk90;
         if (p->state == 2) {
             p->state = 3;
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
             o->animFrame = 1;
 #endif
             o->anim = ((AT_2897C *)&D_801350D4)[o->subtype].anims[0];

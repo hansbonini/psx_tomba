@@ -138,7 +138,7 @@ void func_80135528(u8 *o)
 {
     u8 *a, *b, *c;
     s32 n;
-#if !defined(VERSION_SLPS_01144)
+#if REGION != REGION_JP
     u32 *fl = &D_8009BCEC_U32;
     *fl |= 8;
 #endif

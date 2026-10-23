@@ -1,4 +1,7 @@
 #include "common.h"
+#include "psyq/libstamp.h"
+
+PsyqStamp libcard_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_CARD, 19, 14, 52);
 
 // INCLUDE_ASM("nonmatchings/psyq/libcard/init", InitCARD);
 void InitCARD(long val)

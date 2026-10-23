@@ -1260,7 +1260,7 @@ void func_800EC0E8(GameObject *o)
     insertPrimWithBias(p, D_1F8001E0 + 0x10, LZ_FILE_CTRL_Long, (s8)o->unkF, 0x8000000);
     D_1F800164 += 0x24;
     q = (u8 *)D_1F800164;
-#if defined(VERSION_SCES_01330)
+#if REGION == REGION_EU && VERSION == 0
     m = 0x20;
 #else
     if (GetGraphType() == 1) m = 0x80;

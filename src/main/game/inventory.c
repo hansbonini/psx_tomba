@@ -157,7 +157,7 @@ u8 applyGoldenBowl(void)
 // INCLUDE_ASM("nonmatchings/main/game/inventory", tryStartItemInteraction);
 int tryStartItemInteraction(int arg0, char arg1, int arg2) {
     GAME.disableSelectMenu = 0;
-#ifdef VERSION_PAL
+#if REGION == REGION_EU
     if (D_8009BC98.unk08 != 0) {
         return 0;
     }
@@ -1924,7 +1924,7 @@ static inline s32 settleDoorView(DoorTransition *o)
     return 1;
 }
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CFF4);
 #else
 void func_8002CFF4(o)
@@ -2386,7 +2386,7 @@ typedef struct {
     /* 0xD2 */ u16 eventId;
 } PopupIcon;
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 void func_8002DBD8(PopupIcon *o)
 {
     s32 u0, v0, u1, v1;
@@ -2522,7 +2522,7 @@ void func_8002DBD8(PopupIcon *o)
 #endif
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
 #else
 void func_8002DEC4(PopupIcon *o)

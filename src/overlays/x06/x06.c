@@ -965,7 +965,7 @@ extern void func_8011B084(P_1AFF0 *, s32, s32);
 extern void func_8011B7F0(P_1AFF0 *, s32, s32);
 extern void func_8011BF5C(P_1AFF0 *, s32, s32, s32);
 
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011AFF0);
 #else
 void func_8011AFF0(P_1AFF0 *p)

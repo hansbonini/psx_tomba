@@ -1049,7 +1049,7 @@ static __inline__ s32 land_29E9C(GameObject *o)
     return 0;
 }
 
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_80129E9C);
 #else
 void func_80129E9C(GameObject *o)
@@ -1225,7 +1225,7 @@ static __inline__ void setw_2A60C(GameObject *o, s16 a, s16 b, s16 c, s16 d)
 
 typedef struct { GameObject t; char pad[0xd2 - 0xc0]; u16 wd2; } BX;
 #define o (&b->t)
-#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
+#if REGION == REGION_EU
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_4", func_8012A60C);
 #else
 void func_8012A60C(BX *b)

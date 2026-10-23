@@ -203,7 +203,7 @@ void clearTaskFlag10(s32 id)
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/task", vblankHandler);
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
 INCLUDE_ASM("nonmatchings/main/system/task", vblankHandler);
 #else
 void vblankHandler(void)
@@ -242,7 +242,7 @@ void setTaskEntry(TaskEntry* arg0, int arg1)
     arg0->func = arg1;
     arg0->saved_reg_gp = GetGp();
 }
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
 void func_80016ACC_slps01144(u_long *addr)
 {
     TIM_IMAGE tim;
@@ -257,7 +257,7 @@ void func_80016ACC_slps01144(u_long *addr)
     DrawSync(0);
 }
 #endif
-#if defined(VERSION_SLPS_01144)
+#if REGION == REGION_JP
 void func_80016B38_slps01144(u_long *addr)
 {
     TIM_IMAGE tim;
