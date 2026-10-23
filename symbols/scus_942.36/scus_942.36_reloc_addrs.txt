@@ -1,0 +1,16 @@
+rom:0xC364 reloc:MIPS_HI16 symbol:SCRATCHPAD addend:0x1D4
+rom:0xC368 reloc:MIPS_LO16 symbol:SCRATCHPAD addend:0x1D4
+rom:0xC75C reloc:MIPS_HI16 symbol:SCRATCHPAD addend:0x1D4
+rom:0xC760 reloc:MIPS_LO16 symbol:SCRATCHPAD addend:0x1D4
+rom:0x7928 reloc:MIPS_HI16 symbol:0x801FD80C
+rom:0x7930 reloc:MIPS_LO16 symbol:0x801FD80C
+rom:0x7974 reloc:MIPS_HI16 symbol:0x801FD800
+rom:0x797C reloc:MIPS_LO16 symbol:0x801FD800
+rom:0x7988 reloc:MIPS_HI16 symbol:0x801FD808
+rom:0x7990 reloc:MIPS_LO16 symbol:0x801FD808
+rom:0x7994 reloc:MIPS_HI16 symbol:0x801FD810
+rom:0x799C reloc:MIPS_LO16 symbol:0x801FD810
+rom:0x79A8 reloc:MIPS_HI16 symbol:0x801FD804
+rom:0x79B0 reloc:MIPS_LO16 symbol:0x801FD804
+rom:0x7A94 reloc:MIPS_HI16 symbol:0x801FD804
+rom:0x7A9C reloc:MIPS_LO16 symbol:0x801FD804

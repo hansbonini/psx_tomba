@@ -640,7 +640,7 @@ void gameTask(void)
     task->step.value = 0;
     task->unk6A = 0;
     setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
-    setRGB0((DRAWENV*)DRAW_ENV_2, 0, 0, 0);
+    setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
     scratch->unk1DC = -1;
     scratch->unk1DE = 0;
     D_8009EB4C = 0;

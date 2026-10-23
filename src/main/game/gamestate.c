@@ -919,7 +919,7 @@ void areaMode2Handler(void)
             break;
         case 2:
             setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
-            setRGB0((DRAWENV*)DRAW_ENV_2, 0, 0, 0);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
             temp_a0->state2 = 8;
             temp_a0->step.value = 0;
             break;
@@ -1007,7 +1007,7 @@ void inventoryScreenHandler(void)
             StoreImage((RECT* ) &rect, (u32* )0x801FBBA0);
             GetDrawEnv(&drawenv);
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 248, 200, 192);
-            setRGB0((DRAWENV*)(DRAW_ENV_2), 248, 200, 192);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, 248, 200, 192);
             D_8009B000 = drawenv.r0;
             D_8009B004 = drawenv.g0;
             D_8009B008 = drawenv.b0;
@@ -1069,7 +1069,7 @@ void inventoryScreenHandler(void)
             LoadImage((RECT* ) &rect, (u32* )0x801FBBA0);
             (*(s8 *)&SPAD->loadComplete) = 0U;
             setRGB0((DRAWENV*)(&DRAW_ENV_1), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
-            setRGB0((DRAWENV*)(DRAW_ENV_2), (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, (s8) D_8009B000, (s8) D_8009B004, (s8) D_8009B008);
             var_a0 = (D_80076FAC[(u32)GAME.selectedArea + (u16)D_8009EBA0]);
             queueSystemLoadList(((s16*)var_a0)[GAME.selectedSection], 1);
             temp_v1_2 = CURRENT_TASK;
@@ -1098,7 +1098,7 @@ void inventoryScreenHandler(void)
             GAME.keepBgm = 0;
             stopBgm(0);
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
-            setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
             (CURRENT_TASK)->loadGameSelected = 1;
             temp_v0_2 = SCRATCHPAD.currentTask;
             temp_v0_2->state0 = 1;
@@ -1213,7 +1213,7 @@ void areaMode4Handler(void)
         case 3:
             temp_v1_3 = SCRATCHPAD.currentTask;
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
-            setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
             temp_v1_3->state2 = 8;
             temp_v1_3->step.value = 0U;
         break;
@@ -1305,7 +1305,7 @@ void areaMode5Handler(void)
         case 3:
             temp_v1_3 = SCRATCHPAD.currentTask;
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
-            setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
             temp_v1_3->state2 = 8;
             temp_v1_3->step.value = 0U;
         break;
@@ -1396,7 +1396,7 @@ void areaMode6Handler(void)
         case 3:
             temp_v1_3 = SCRATCHPAD.currentTask;
             setRGB0((DRAWENV*)(&DRAW_ENV_1), 0, 0, 0);
-            setRGB0((DRAWENV*)(DRAW_ENV_2), 0, 0, 0);
+            setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
             temp_v1_3->state2 = 8;
             temp_v1_3->step.value = 0U;
         break;
@@ -1729,7 +1729,7 @@ void transitionToGameOver(void)
     temp_v1 = scratch->currentTask;
     scratch->unk1CF = 1;
     setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
-    setRGB0((DRAWENV*)DRAW_ENV_2, 0, 0, 0);
+    setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
     temp_v1->state1 = 3;
     temp_v1->state2 = 0;
 }

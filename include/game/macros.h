@@ -32,7 +32,6 @@
 #define MOVIE_DEC_IMGBUF ((u_long*)((byte*)&MOVIE_DEC_ENV+0xC))
 #define MOVIE_DEC_DISPENV ((DISPENV*)((byte*)&MOVIE_DEC_ENV+0x24))
 #define LZ_FILE_CTRL ((lz_t*)0x1F800070)
-#define DRAW_ENV_2 ((void*)0x8009E3D4)
 
 /* A field of a struct reached by its byte offset. */
 #define S8(o, n) (*(s8 *)((char *)(o) + (n)))

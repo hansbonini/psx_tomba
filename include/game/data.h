@@ -156,6 +156,7 @@ extern short SOUND_QUEUE_COUNT;
 extern int D_8009CA04;
 extern u_long OT_FRAMEBUFFER;
 extern DRAWENV* DRAW_ENV_1;
+extern DRAWENV* DRAW_ENV_2;
 extern char D_8009D6DD;
 extern char D_8009D6DE;
 extern char D_8009D6DF;

@@ -48,11 +48,6 @@
                 );
         #endif
 
-        __asm__(".include \"include/macro.inc\"                         # maspsx-keep\n"        \
-                "\t.set\treorder                                        # maspsx-keep\n"        \
-                "\t.set\tat                                             # maspsx-keep\n"        \
-        );
-
 #else
         #ifndef INCLUDE_ASM
                 #define INCLUDE_ASM(FOLDER, NAME)
@@ -60,6 +55,13 @@
         #ifndef INCLUDE_RODATA
                 #define INCLUDE_RODATA(FOLDER, NAME)
         #endif
+#endif
+
+#if !defined(SPLAT) && !defined(M2CTX) && !defined(PERMUTER)
+        __asm__(".include \"include/macro.inc\"                         # maspsx-keep\n"        \
+                "\t.set\treorder                                        # maspsx-keep\n"        \
+                "\t.set\tat                                             # maspsx-keep\n"        \
+        );
 #endif
 
 #endif

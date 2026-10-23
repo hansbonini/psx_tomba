@@ -105,11 +105,90 @@ void* startIntr(void) {
     return &D_80096418.unk0;
 }
 
+typedef struct IntrEnv {
+    u16 initialized;
+    u16 inInterrupt;
+    void (*handlers[11])();
+    u16 enabledMask;
+} IntrEnv;
+extern IntrEnv D_80096418_Env asm("D_80096418");
+extern s32 D_800974B0;
+
 INCLUDE_RODATA("nonmatchings/psyq/libetc/intr", D_800161F8);
 
-INCLUDE_ASM("nonmatchings/psyq/libetc/intr", trapIntr);
+// INCLUDE_ASM("nonmatchings/psyq/libetc/intr", trapIntr);
+void trapIntr()
+{
+    int i;
+    u16 mask;
 
-INCLUDE_ASM("nonmatchings/psyq/libetc/intr", setIntr);
+    if (!D_80096418_Env.initialized) {
+        printf("unexpected interrupt(%04x)\n", *D_800974A4);
+        ReturnFromException();
+    }
+    D_80096418_Env.inInterrupt = 1;
+    while ((mask = (D_80096418_Env.enabledMask & *D_800974A4) & *D_800974A8) != 0) {
+        for (i = 0; mask && i < 11; ++i, mask >>= 1) {
+            if (mask & 1) {
+                *D_800974A4 = ~(1 << i);
+                if (D_80096418_Env.handlers[i]) {
+                    D_80096418_Env.handlers[i]();
+                }
+            }
+        }
+    }
+    if (*D_800974A4 & *D_800974A8) {
+        if (D_800974B0++ > 0x800) {
+            printf("intr timeout(%04x:%04x)\n", *D_800974A4, *D_800974A8);
+            D_800974B0 = 0;
+            *D_800974A4 = 0;
+        }
+    } else {
+        D_800974B0 = 0;
+    }
+    D_80096418_Env.inInterrupt = 0;
+    ReturnFromException();
+}
+
+// INCLUDE_ASM("nonmatchings/psyq/libetc/intr", setIntr);
+
+void (*setIntr(int index, void (*fn)()))()
+{
+    void (*old)();
+    u16 mask;
+    int newMask;
+
+    old = D_80096418_Env.handlers[index];
+    if (fn != old && D_80096418_Env.initialized) {
+        mask = *D_800974A8;
+        *D_800974A8 = 0;
+        newMask = mask & 0xFFFF;
+        if (fn != NULL) {
+            D_80096418_Env.handlers[index] = fn;
+            newMask |= 1 << index;
+            D_80096418_Env.enabledMask |= 1 << index;
+        } else {
+            D_80096418_Env.handlers[index] = NULL;
+            newMask &= ~(1 << index);
+            D_80096418_Env.enabledMask &= ~(1 << index);
+        }
+        if (index == 0) {
+            ChangeClearPAD(fn == NULL);
+            ChangeClearRCnt(3, fn == NULL);
+        }
+        if (index == 4) {
+            ChangeClearRCnt(0, fn == NULL);
+        }
+        if (index == 5) {
+            ChangeClearRCnt(1, fn == NULL);
+        }
+        if (index == 6) {
+            ChangeClearRCnt(2, fn == NULL);
+        }
+        *D_800974A8 = newMask;
+    }
+    return old;
+}
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", stopIntr);
 

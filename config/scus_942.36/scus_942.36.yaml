@@ -38,7 +38,7 @@ options:
   symbol_addrs_path:
     - ./symbols/scus_942.36/symbol_addrs.txt
   reloc_addrs_path:
-    - ./symbols/scus_942.36/reloc_addrs.txt
+    - ./symbols/scus_942.36/scus_942.36_reloc_addrs.txt
 
   undefined_funcs_auto_path: ./linker/scus_942.36/undefined_funcs_auto.scus_942.36.txt
   undefined_syms_auto_path: ./linker/scus_942.36/undefined_syms_auto.scus_942.36.txt
