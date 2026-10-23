@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libstamp.h"
 
 long Lzc(long a);
 
@@ -79,4 +80,5 @@ long csqrt(long a)
     }
 }
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/cor_05", func_80063294);
+// INCLUDE_ASM("nonmatchings/psyq/libgte/cor_05", func_80063294);
+const PsyqStamp libgte_stamp SECTION(".text") = PSYQ_SDK_STAMP(PSYQ_LIB_GTE, 21, 54, 52);

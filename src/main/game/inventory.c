@@ -1090,7 +1090,14 @@ s32 stepScrollClearX(u8* self)
     return 1;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B6A8);
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B6A8);
+void func_8002B6A8(u8 *o)
+{
+    if (D_1F8000F2_S16Arr[0] + D_1F8000F2_S16Arr[-6] < S16(o, 0x30))
+        D_1F8000F2_S16Arr[-6] = S16(o, 0x30) - D_1F8000F2_S16Arr[0];
+    else if (D_1F8000F2_S16Arr[0] + D_1F8000F2_S16Arr[-6] > S16(o, 0x32))
+        D_1F8000F2_S16Arr[-6] = S16(o, 0x32) - D_1F8000F2_S16Arr[0];
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B704);
 typedef struct { char p[0x24]; s32 d24; char q[0x70 - 0x28]; s8 b70, b71, b72, b73; } S_2B704;
@@ -1924,9 +1931,6 @@ static inline s32 settleDoorView(DoorTransition *o)
     return 1;
 }
 
-#if REGION == REGION_EU
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CFF4);
-#else
 void func_8002CFF4(o)
 DoorTransition *o;
 {
@@ -1937,6 +1941,9 @@ DoorTransition *o;
     Task *task;
 
     if (D_8009BCA0 != 0) {
+#if REGION == REGION_EU
+        D_8009C10A = 0;
+#endif
         func_8002C7D8((O_2C7D8 *)o);
         return;
     }
@@ -2069,7 +2076,6 @@ DoorTransition *o;
         break;
     }
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", dispatchSectionInit);
 void dispatchSectionInit(void)
@@ -2522,9 +2528,6 @@ void func_8002DBD8(PopupIcon *o)
 #endif
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
-#if REGION == REGION_EU
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
-#else
 void func_8002DEC4(PopupIcon *o)
 {
     s32 done;
@@ -2546,6 +2549,23 @@ void func_8002DEC4(PopupIcon *o)
     case 1:
         done = --o->timer == 0;
         if (done) {
+#if REGION == REGION_EU
+            if (o->active == 1) {
+                dx = o->x.p.whole - 0xA0;
+                px = (o->destX - dx) << 8;
+                o->velX = px / 30;
+                yy = o->y.p.whole + 0x78;
+                dx = yy;
+                px = (o->destY - dx) << 8;
+                o->velZ = px / 30;
+            } else {
+                o->velX = 0;
+                o->velZ = 0;
+            }
+            o->velY = -0x800;
+            o->subState++;
+            o->timer = 30;
+#else
             o->velY = -0x800;
             o->subState++;
             o->timer = 30;
@@ -2556,6 +2576,7 @@ void func_8002DEC4(PopupIcon *o)
             dx = yy;
             px = (o->destY - dx) << 8;
             o->velZ = px / 30;
+#endif
         }
         break;
     case 2:
@@ -2606,8 +2627,8 @@ void func_8002DEC4(PopupIcon *o)
         }
         break;
     case 6:
-        o->posX.raw += (((u16)o->homeX << 16) - o->posX.raw) >> 3;
-        o->posY.raw += (((u16)o->homeY << 16) - o->posY.raw) >> 3;
+        o->posX.raw += (((u16)o->homeX << 16) - o->posX.raw) >> NTSC_PAL(3, 2);
+        o->posY.raw += (((u16)o->homeY << 16) - o->posY.raw) >> NTSC_PAL(3, 2);
         o->rotX += 0x40;
         if (o->rotX >= 0x400) {
             if (o->unkCC >= 0x80) {
@@ -2617,6 +2638,9 @@ void func_8002DEC4(PopupIcon *o)
                 v1 = v0 + (SPRITE_SLOTS[o->slot2].val[3] << 8);
                 o->rotX = 0xC00;
                 o->subState++;
+#if REGION == REGION_EU
+                o->active = 1;
+#endif
                 o->uv[1] = u0 | v0;
                 o->uv[3] = v0 | u1;
                 o->uv[0] = u0 | v1;
@@ -2659,7 +2683,6 @@ void func_8002DEC4(PopupIcon *o)
     t = o->posY.p.whole - 0x78;
     o->y.p.whole = t;
 }
-#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", stubInventory3);
 void stubInventory3(void) {
@@ -2699,4 +2722,156 @@ void cloneItemPickupObject(u8* src)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", updateItemGetIcon);
+// INCLUDE_ASM("nonmatchings/main/game/inventory", updateItemGetIcon);
+static inline void initHeldItemIcon(GameObject *o)
+{
+    o->tpage = 0x14;
+    o->unkD = 1;
+    o->clut = 0x7ED7;
+    o->animFrame = 0;
+    o->anim = *(void **)D_800123CC;
+    o->spriteBank = D_1F8002D8[0];
+    o->state++;
+    o->timer = 0x78;
+    readAnimFrameCount(o);
+}
+
+extern s32 D_8009BCBC_Arr[] asm("D_8009BCBC");
+
+void updateItemGetIcon(GameObject *o)
+{
+    GameObject *owner;
+    s32 dx, dy;
+    s32 st;
+    u8 state = o->state;
+
+    switch (state) {
+    case 0:
+        if (o->subtype != 0) {
+            {
+                register GameObject *self = o;
+                initHeldItemIcon(self);
+            }
+            break;
+        }
+        D_8009BCBC_Arr[0] = 1;
+        o->tpage = 0x15;
+        *(s8 *)&o->unkF = -9;
+        o->animFrame = 0;
+        o->state++;
+        o->animFrame = 1;
+        o->unkD = 0;
+        o->unkA = 0;
+        o->anim = *D_8007C838[o->unkC];
+        o->spriteBank = D_1F8002D8[0];
+        o->x.p.whole = D_1F80016A[0];
+        o->y.p.whole = D_1F80016E_U16Arr[0] - 0x1E;
+        o->z.p.whole = D_1F800172[0];
+        if (GAME.selectedArea == 2 && (D_8009BCCA == 0 || D_8009BCCA == 3)) {
+            o->velV = -0x3E0;
+            *(s8 *)&o->unkF = -0x12;
+        } else {
+            o->velV = -0x380;
+            *(s8 *)&o->unkF = -9;
+        }
+        o->timer = 0x78;
+        o->unk34 = 0;
+        readAnimFrameCount(o);
+        playSFX(0x1A);
+        break;
+    case 1:
+        if (o->subtype != 0) {
+            owner = (GameObject *)o->unk90;
+            if (*(u16 *)&owner->state == 2) {
+                switch (o->unkC) {
+                case 0x0:
+                    if (owner->unkAC != 0xF) o->state = 3;
+                    dx = 0;
+                    dy = -0x10;
+                    break;
+                case 0x2:
+                    dx = 0;
+                    dy = 0;
+                    st = owner->step;
+                    if (st != 4) {
+                        if (st < 4) goto fail;
+                        if (st >= 8) goto fail;
+                        dy = -0x26;
+                        break;
+                    }
+                    dx = (owner->animFrame & 1) ? -0xC : 0xC;
+                    dy = -0x10;
+                    break;
+                case 0x8:
+                    dx = 0;
+                    dy = -0x20;
+                    break;
+                case 0x1E:
+                    dx = (owner->animFrame & 1) ? -0xC : 0xC;
+                    dy = -0x1C;
+                    break;
+                case 0x13:
+                    dx = 0;
+                    dy = -0x10;
+                    break;
+                case 0x38:
+                    st = owner->step;
+                    if (st < 3) goto fail;
+                    if (st < 6) goto twenty;
+                    if (st == 6) goto twelve;
+                    goto fail;
+                twenty:
+                    dx = (owner->animFrame & 1) ? -0x14 : 0x14;
+                    dy = -0x10;
+                    break;
+                twelve:
+                    dx = (owner->animFrame & 1) ? -0xC : 0xC;
+                    dy = -0x18;
+                    break;
+                fail:
+                    o->state = 3;
+                    break;
+                }
+                o->h->p.whole = owner->h->p.whole + dx;
+                o->y.p.whole = owner->y.p.whole + dy;
+                o->d->p.whole = owner->d->p.whole;
+                if (D_8009BCAA_U8Arr[0] == 0) {
+                    tickAnimation(o);
+                }
+                if (o->state == 1) {
+                    func_80022E44(o);
+                }
+            } else {
+                o->state = 3;
+            }
+            break;
+        }
+        o->visible = 1;
+        pushDrawListCapped(o);
+        switch (o->subState) {
+        case 0:
+            o->velV += 0x20;
+            if (o->velV >= 0x101) {
+                o->subState++;
+            }
+            o->unk34 += o->velV << 8;
+            break;
+        case 1:
+            if (--o->timer == -1) {
+                o->state++;
+            }
+            break;
+        }
+        o->x.p.whole = D_1F80016A[0];
+        o->y.raw = D_1F80016C_S32Arr[0] + o->unk34;
+        o->z.p.whole = D_1F800172[0];
+        break;
+    case 2:
+        D_8009BCBC = 0;
+        o->state++;
+        break;
+    case 3:
+        freeObjectLayer3(o);
+        break;
+    }
+}

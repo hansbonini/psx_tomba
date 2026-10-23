@@ -94,7 +94,70 @@ void updateEventCube(GameObject *o)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031C90);
+// INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031C90);
+static inline void setupPoolType31(GameObject *p)
+{
+    p->state = 1;
+    p->type = 0x31;
+    p->animFrame = 1;
+    p->active = 1;
+    p->unkA = 0;
+    p->unkB = 0;
+    p->unkF = 0;
+    p->tpage = 0x14;
+    p->unkD = 1;
+    p->clut = ((p->unkC + 0x1FC) << 6) | 0x17;
+    p->spriteBank = D_1F8002D8[0];
+    p->anim = *(void **)D_80012364;
+    readAnimFrameCount(p);
+}
+
+void func_80031C90(GameObject *o)
+{
+    GameObject *p;
+    u16 r;
+    s32 s;
+
+    switch (o->state) {
+    case 0:
+        switch (o->subtype) {
+        case 0:
+            if ((((scratchpad *)((void *)0x1F800000))->unk1F8 + D_1F800198) & 1) {
+                if (--o->timer == -1) {
+                    o->state = 3;
+                    break;
+                }
+                p = allocObjectLayer3();
+                if (p != NULL) {
+                    r = nextRandom();
+                    s = ((r & 1) << 11) + 0x800;
+                    p->h->raw = o->h->raw;
+                    p->y.raw = o->y.raw;
+                    p->d->raw = o->d->raw;
+                    p->h->raw += (D_8007DB88[r & 0xF0] * s) >> 4;
+                    p->y.raw += (D_8007D988[r & 0xF0] * s) >> 4;
+                    setupPoolType31(p);
+                }
+            }
+            break;
+        case 1:
+            setupPoolType31(o);
+            break;
+        }
+        break;
+    case 1:
+        func_80022E44(o);
+        if (tickAnimation(o) != 0) {
+            o->state = 3;
+        }
+        break;
+    case 2:
+        break;
+    case 3:
+        freeObjectLayer3(o);
+        break;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031F00);
 

@@ -1,7 +1,113 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_8004339C);
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_8004339C);
+extern u16 D_8009B0D0;
+extern s16 D_8009B0D4, D_8009B0D8, D_8009B0DC, D_8009B0E0, D_8009B0E4, D_8009B0E8;
+extern u16 D_8009B0EC;
+extern s16 D_8009B0F0, D_8009B0F4, D_8009B0F8;
+#define x (x_ & 7)
+#define xi ((s16)(x_ & 7))
+s16 func_8004339C(u8 *o_, s16 x_, s16 y)
+{
+    register GameObject *o asm("$9") = (GameObject *)o_;
+    s32 k;
+    s16 d;
+    s32 lim;
+    s32 s;
+    s32 f;
+    u16 a;
+    s16 b;
+    u16 r;
+
+    D_8009B0D8 = *D_1F800278++;
+    if (D_8009B0D8 == 0)
+        return 0;
+    asm("" : "=r"(o) : "0"(o));
+    k = 0;
+    do {
+        D_8009B0D8--;
+        D_8009B0E4 = *D_1F800278++;
+        if (D_8009B0E4 & 0x10) {
+            D_1F800278 += 3;
+            continue;
+        }
+        if (!(D_8009B0E4 & 1)) {
+            D_1F800278 += 3;
+            k++;
+            continue;
+        }
+        D_8009B0DC = *D_1F800278++;
+        D_8009B0E0 = *D_1F800278++;
+        D_8009B0EC = *D_1F800278++;
+        if (k != 0) {
+            if (D_8009B0E0 > 0) {
+                if (D_8009B0DC + D_8009B0E0 + 0x20 < y)
+                    return 0;
+            } else {
+                if (D_8009B0DC + 0x20 < y)
+                    return 0;
+            }
+        }
+        k++;
+        a = D_8009B0DC;
+        b = D_8009B0E0;
+        if (b == 0)
+            goto plain;
+        asm("" : "=r"(a) : "0"(a));
+        D_8009B0F4 = D_8009B0EC & 0xF;
+        D_8009B0F8 = (D_8009B0EC >> 4) & 0xF;
+        if (D_8009B0F8 == 0) {
+            if (b > 0) {
+            plain:
+                D_8009B0D0 = a;
+            } else
+                D_8009B0D0 = a + b;
+        } else {
+            r = b * (xi - D_8009B0F4) / D_8009B0F8;
+            D_8009B0E8 = x;
+            D_8009B0D0 = a + r;
+        }
+        d = D_8009B0D0 - y;
+        asm("" : "=r"(d) : "0"(d));
+        D_8009B0D4 = d;
+        s = D_8009B0EC;
+        D_8009B0F0 = (s16)s >> 8;
+        if (D_8009B0F0 == 1) {
+        asm("" : "=r"(s) : "0"(s));
+            lim = s & 0xF;
+            D_8009B0F4 = lim;
+            lim = xi - lim;
+            lim += 0x10;
+            goto common;
+        } else if (D_8009B0F0 == 2) {
+            lim = s & 0xF;
+            f = ((s16)s >> 4) & 0xF;
+            D_8009B0F4 = lim;
+            lim = lim + f;
+            lim = lim - xi;
+            lim += 0x10;
+            D_8009B0F8 = f;
+        common:
+            f = (-(s16)d < lim);
+            D_8009B0E8 = x;
+            if (f && (s16)d <= 0) {
+            hit:
+                o->y.p.frac = 0;
+                o->y.p.whole += d;
+                D_1F80027E = D_8009B0E0;
+                D_1F800280 = D_8009B0DC;
+                D_1F800282 = D_8009B0E4;
+                D_1F800284 = (D_8009B0E4 & 0xE00) >> 9;
+                return 1;
+            }
+        } else if ((s16)d <= 0)
+            goto hit;
+    } while (D_8009B0D8 != 0);
+    return 0;
+}
+#undef x
+#undef xi
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", probeCollisionAtDepthA);
 s16 probeCollisionAtDepthA(u8* self, s16 arg1, s16 arg2)
@@ -10,19 +116,181 @@ s16 probeCollisionAtDepthA(u8* self, s16 arg1, s16 arg2)
     return func_8004339C(self, arg1, arg2);
 }
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_80043740);
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_80043740);
+s32 func_80043740(GameObject *o, s32 x_, s32 y_, s32 fl_)
+{
+    s32 x = x_;
+    register s32 y asm("$23") = y_;
+    register s32 fl asm("$22") = fl_;
+    s32 ret;
+    s32 ys;
+    s32 f1;
+    s16 cnt;
+    s16 n;
+    u16 a;
+    u16 f;
+    register u16 b asm("$9");
+    register u16 c asm("$4");
+    s16 bs, d;
+    s32 r, k;
+    register u32 xm asm("$9");
+    u8 *t;
+    register Fix16 *h asm("$3");
+    s32 sx;
+    char pad[24];
+
+    n = *D_1F800278++;
+    if (n == 0)
+        return 0;
+    if (0) {
+    hit:
+        D_1F800284 = (f & 0xE00) >> 9;
+        D_1F800282 = f;
+        o->h->p.whole -= r;
+        return k;
+    }
+    cnt = 0;
+    ret = 0;
+    ys = (s16)y_;
+    f1 = fl_ & 1;
+    while (n != 0) {
+    top:
+        f = *D_1F800278++;
+        n--;
+        if ((f & 0xC) == 0) {
+            D_1F800278 += 3;
+            continue;
+        }
+        a = *D_1F800278++;
+        b = *D_1F800278++;
+        c = *D_1F800278++;
+        bs = b;
+        if (bs == 0)
+            continue;
+        asm("" : "=r"(a) : "0"(a));
+        d = y - a;
+        if (bs < 0) {
+            if (d < bs)
+                continue;
+            if (d > 0)
+                return ret;
+        } else {
+            if (bs < d)
+                return ret;
+            if (d < 0)
+                continue;
+        }
+        {
+            s32 q = ((c >> 4) & 0xF) * (ys - (s16)a) / (s16)b;
+            s32 tt = x & 7;
+
+            xm = tt;
+            asm("" : "=r"(xm) : "0"(xm));
+            sx = tt << 24;
+            r = tt - (c & 0xF) - q;
+        }
+        if (f & 0x10) {
+            if (!f1 && (f & 4)) {
+                {
+                    register s32 t asm("$2");
+                    s32 s1;
+
+                    s1 = sx >> 24;
+                    asm("" : "=r"(s1) : "0"(s1));
+                    t = x - 1;
+                    x = t - s1;
+                }
+                h = o->h;
+                asm("" : "=r"(h) : "0"(h));
+                {
+                    s32 s2;
+                    u16 t;
+
+                    t = h->p.whole;
+                    s2 = sx >> 24;
+                    asm("" : "=r"(s2) : "0"(s2));
+                    t = t - 1;
+                    h->p.whole = t - s2;
+                }
+                ret = 1;
+            } else if (f & 8) {
+                {
+                    s32 t;
+
+                    t = x + 8;
+                    x = t - xm;
+                }
+                ret = 2;
+                h = o->h;
+                h->p.whole = h->p.whole + 8 - xm;
+            }
+            D_1F800284 = (f & 0xE00) >> 9;
+            cnt++;
+            if (cnt >= 8)
+                return ret;
+            {
+                s32 w3 = fl & 0xFF00;
+                register s32 w5 asm("$5") = w3;
+
+                if (w3 != 0xFF00) {
+                    asm("" :: "r"(w5));
+                    t = D_8007EB44;
+                    t += *(u16 *)(t + 8);
+                    {
+                        s32 i2 = ((s16)x / 8) * 2;
+                        register u32 o2 asm("$3") = *(u16 *)(t + i2);
+                        register u16 *p asm("$2") = (u16 *)(t + o2);
+
+                        D_1F800278 = p;
+                    }
+                } else {
+                    D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, o->d->p.whole);
+                }
+            }
+            {
+                s32 nn;
+                s16 *q = (s16 *)D_1F800278;
+
+                D_1F800278++;
+                nn = *q;
+                n = nn;
+                if (nn != 0)
+                    goto top;
+            }
+            break;
+        }
+        if (!f1) {
+            if (!(f & 4))
+                continue;
+            if ((s16)r >= 0) {
+                k = 1;
+                goto hit;
+            }
+            return ret;
+        } else {
+            if (!(f & 8))
+                continue;
+            if ((s16)r <= 0) {
+                k = 2;
+                goto hit;
+            }
+            return ret;
+        }
+    }
+    return ret;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80043AB0);
 typedef struct {
     char pad[0x44];
     s16 *p44;
 } O8004065C_43AB0;
-extern s16 func_80043740(O8004065C_43AB0 *, s32, s32, s16);
+extern s32 func_80043740(GameObject *, s32, s32, s32);
 
 s16 func_80043AB0(O8004065C_43AB0 *o, s16 a, s16 b, s32 c)
 {
     SPAD->unk278 = getCollisionPlaneAt(a, o->p44[1]);
-    return func_80043740(o, a, b, (c & 1) | 0xff00);
+    return func_80043740((GameObject *)o, a, b, (s16)((c & 1) | 0xff00));
 }
 
 INCLUDE_ASM("nonmatchings/main/game/collision", func_80043B3C);

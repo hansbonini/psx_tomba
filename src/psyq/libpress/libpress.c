@@ -237,5 +237,3 @@ static int timeout(char* arg0) {
     *mdec1 = 0x60000000;
     return 0;
 }
-
-INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", func_8005D748);

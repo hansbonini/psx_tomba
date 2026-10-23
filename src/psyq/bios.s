@@ -10,31 +10,7 @@
  * @see https://psx-spx.consoledev.net/kernelbios/#bios-function-summary
  */
 
-.macro DEFINE_FN fn_name, call_code, fn_num
-    .set noat
-    .set noreorder
-    .global \fn_name
-    .type \fn_name, @function
-    \fn_name:
-      addiu   $t2, $zero, \call_code
-      jr      $t2
-      addiu   $t1, $zero, \fn_num
-    .size \fn_name, . - \fn_name
-      nop
-.endm
-
-.macro DEFINE_SYS_FN fn_name, fn_num
-    .set noreorder
-    .set noat
-    .global \fn_name
-    .type \fn_name, @function
-    \fn_name:
-      addiu   $a0, $zero, \fn_num
-      syscall 0
-      jr      $ra
-      nop
-    .size \fn_name, . - \fn_name
-.endm
+.include "psyq/bios.inc"
 
 #ifdef FUNC_1
   DEFINE_SYS_FN EnterCriticalSection, 0x1

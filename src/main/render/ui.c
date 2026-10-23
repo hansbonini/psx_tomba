@@ -1804,7 +1804,61 @@ void func_80028CE4(void)
         PadSetActAlign(0, &align.b[0]);
 }
 
+// INCLUDE_ASM("nonmatchings/main/render/ui", func_80028D70);
+typedef struct { u16 kind; char p2[6]; u8 x; u8 y; char pA[2]; } PadState;
+
+#if REGION == REGION_EU
 INCLUDE_ASM("nonmatchings/main/render/ui", func_80028D70);
+#else
+s16 func_80028D70(port)
+s16 port;
+{
+    PadState *g = (PadState *)D_8009C978 + port;
+    s32 kind;
+    s32 btn;
+    s32 y;
+    s32 a, b;
+
+    switch (port) {
+    case 0:
+        if (D_8009EB58 != 0) return 0;
+        PadInfoMode(0, 2, 0);
+        btn = ~D_8009EB5A;
+        y = (D_8009EB59 >> 4) & 7;
+        g->kind = kind = y;
+        break;
+    case 1:
+        if (D_8009EB7A != 0) return 0;
+        PadInfoMode(1, 2, 0);
+        btn = ~D_8009EB7C;
+        y = (D_8009EB7B >> 4) & 7;
+        g->kind = kind = y;
+        break;
+    }
+    switch ((u16)kind) {
+    case 4:
+        g->x = 0x80;
+        g->y = 0x80;
+        break;
+    case 7:
+        if (port != 0) break;
+        g->x = D_8009EB5E;
+        g->y = kind = D_8009EB5F;
+        if (!(btn & 0xF0)) {
+            btn &= 0xFF0F;
+            a = (g->x == 0) << 7;
+            if (g->x == 0xFF) a = 0x20;
+            b = ((u8)kind == 0) << 4;
+            a |= btn;
+            y = 0x40;
+            if ((u8)kind == 0xFF) b = y;
+            btn = b | a;
+        }
+        break;
+    }
+    return btn;
+}
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_80028EF4);
 typedef struct { char a; char pad[0x1f]; void *p[6]; char pad2[0x5c - 0x38]; char r[3][4]; } GT_28EF4;

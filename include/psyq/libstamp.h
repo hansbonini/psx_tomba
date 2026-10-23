@@ -17,11 +17,13 @@
  *
  * libpad is 4.2.1 in SCUS-94236, SCES-01330 and the menu of SCES-01331, and
  * 4.3.1 in the MAINs of SCES-01331; SLPS-01144 links an older libpad
- * without a stamp.
+ * without a stamp. libapi follows it: 4.2.0 (build 33) and 4.3.0 (build
+ * 37) in the same executables, and the 3.7 of the SDK in SLPS-01144.
  */
 
 /* The libraries are numbered in alphabetical order. */
 typedef enum PsyqLib {
+    PSYQ_LIB_API  = 0x00, /* libapi */
     PSYQ_LIB_C2   = 0x02, /* libc2 */
     PSYQ_LIB_CARD = 0x03, /* libcard */
     PSYQ_LIB_CD   = 0x04, /* libcd */

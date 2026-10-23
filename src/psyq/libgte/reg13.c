@@ -9,13 +9,39 @@ void SetGeomScreen(long h) {
 
 __asm__("nop");
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", LightColor);
+void LightColor(VECTOR* v0, VECTOR* v1) {
+    gte_ldlvl(v0);
+    gte_lcir_b();
+    gte_stlvl(v1);
+}
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", DpqColorLight);
+void DpqColorLight(VECTOR* v0, CVECTOR* v1, long p, CVECTOR* v2) {
+    gte_ldlvl(v0);
+    gte_ldrgb_dp(v1, p);
+    gte_dpcl_b();
+    gte_strgb(v2);
+}
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", DpqColor3);
+void DpqColor3(CVECTOR* v0, CVECTOR* v1, CVECTOR* v2, long p, CVECTOR* volatile v3, CVECTOR* volatile v4,
+               CVECTOR* volatile v5) {
+    gte_ldrgb3(v0, v1, v2);
+    gte_lddp(p);
+    gte_dpct_b();
+    {
+        register CVECTOR* r0 asm("$8") = v3;
+        register CVECTOR* r1 asm("$9") = v4;
+        register CVECTOR* r2 asm("$10") = v5;
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", Intpl);
+        gte_strgb3(r0, r1, r2);
+    }
+}
+
+void Intpl(VECTOR* v0, long p, CVECTOR* v1) {
+    gte_ldlvl(v0);
+    gte_lddp(p);
+    gte_intpl_b();
+    gte_strgb(v1);
+}
 
 VECTOR* Square12(VECTOR* v0, VECTOR* v1) {
     /* Without the pin GCC copies v1 to $v0 up front and stores through it. */
@@ -55,9 +81,13 @@ long AverageZ4(long sz0, long sz1, long sz2, long sz3) {
     return otz;
 }
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", OuterProduct12);
+void OuterProduct12(VECTOR* v0, VECTOR* v1, VECTOR* v2) {
+    gte_OuterProduct_t(v0, v1, v2, 1);
+}
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", OuterProduct0);
+void OuterProduct0(VECTOR* v0, VECTOR* v1, VECTOR* v2) {
+    gte_OuterProduct_t(v0, v1, v2, 0);
+}
 
 long Lzc(long data) {
     long count;
@@ -70,6 +100,27 @@ long Lzc(long data) {
 
 __asm__("nop");
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", RotTransPers);
+long RotTransPers(SVECTOR* v0, long* sxy, long* p, long* flag) {
+    long f;
+    long sz;
 
-INCLUDE_ASM("nonmatchings/psyq/libgte/reg13", RotMatrix);
+    gte_ldv0(v0);
+    gte_rtps_b();
+    gte_stsxy(sxy);
+    gte_stdp(p);
+    gte_read_flag(f);
+    gte_read_sz3(sz);
+    *flag = f;
+    return sz >> 2;
+}
+
+__asm__("nop");
+
+MATRIX* RotMatrix(SVECTOR* r, MATRIX* m) {
+    register MATRIX* ret asm("$2");
+
+    gte_RotMatrix_t(r, m, ret);
+    return ret;
+}
+
+__asm__("nop");

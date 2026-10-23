@@ -1,4 +1,5 @@
 #include "common.h"
+#include "psyq/libstamp.h"
 
 #define JB_SP 1
 extern int setjmp(jmp_buf);
@@ -151,9 +152,14 @@ void memclr(s32* mem, int len) {
     }
 }
 
-INCLUDE_ASM("nonmatchings/psyq/libetc/intr", func_80068534);
-
-INCLUDE_ASM("nonmatchings/psyq/libetc/intr", _96_remove);
+// INCLUDE_ASM("nonmatchings/psyq/libetc/intr", func_80068534);
+#if REGION == REGION_JP
+const PsyqStamp libapi_stamp SECTION(".text") = PSYQ_SDK_STAMP(PSYQ_LIB_API, 18, 38, 52);
+#elif REGION == REGION_EU && VERSION == 1 && LANGUAGE != LANGUAGE_NONE
+const PsyqStamp libapi_stamp SECTION(".text") = PSYQ_STAMP(PSYQ_LIB_API, 4, 3, 0, 37, 10, 20, 54);
+#else
+const PsyqStamp libapi_stamp SECTION(".text") = PSYQ_STAMP(PSYQ_LIB_API, 4, 2, 0, 33, 6, 53, 26);
+#endif
 
 INCLUDE_RODATA("nonmatchings/psyq/libetc/intr", D_80016264);
 

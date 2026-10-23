@@ -204,7 +204,26 @@ void clearTaskFlag10(s32 id)
 
 // INCLUDE_ASM("nonmatchings/main/system/task", vblankHandler);
 #if REGION == REGION_JP
-INCLUDE_ASM("nonmatchings/main/system/task", vblankHandler);
+extern volatile u_long D_800A1380_slps01144;
+extern volatile u_short D_800A1382_slps01144;
+extern volatile u_short D_800A1384_slps01144;
+extern volatile u_short D_800A1386_slps01144;
+extern u_short D_8009E4B6_slps01144;
+u_long func_80064B74_slps01144(int id);
+
+void vblankHandler(void)
+{
+    scratchpad* scratch = PSX_SCRATCH;
+    volatile u_long* pad = &D_800A1380_slps01144;
+
+    D_800A1384_slps01144 = *(volatile u_short*)pad;
+    D_800A1386_slps01144 = D_800A1382_slps01144;
+    *pad = func_80064B74_slps01144(1);
+    scratch->joypadPressed = *(volatile u_short*)pad & ~D_800A1384_slps01144;
+    D_8009E4B6_slps01144 = D_800A1382_slps01144 & ~D_800A1386_slps01144;
+    scratch->vblankCount++;
+    scratch->frameCount++;
+}
 #else
 void vblankHandler(void)
 {
