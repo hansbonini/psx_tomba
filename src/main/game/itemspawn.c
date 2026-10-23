@@ -359,7 +359,65 @@ u8* getCollisionColumnPtr(s16 arg0, u8 arg1) {
     return base + off;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/itemspawn", getCollisionPlaneAt);
+// INCLUDE_ASM("nonmatchings/main/game/itemspawn", getCollisionPlaneAt);
+typedef struct { s16 x, y; } PlaneOrigin;
+extern PlaneOrigin D_8007E9E4[];
+extern PlaneOrigin D_8007E9E8[];
+extern PlaneOrigin *D_8007E9F8[];
+extern PlaneOrigin *D_8007EA04;
+extern u8 *D_8007EAF4[];
+extern char D_8007EB74[];
+
+char *getCollisionPlaneAt(x, y)
+s16 x;
+s16 y;
+{
+    PlaneOrigin *t;
+    char *b;
+    s16 r, c;
+    u8 lim;
+
+    if (x < D_800A38E4 - 0xaa || D_800A38E6 + 0xaa < x || ((*(s32 *)&GAME) != 0xe && x < 0))
+        return D_8007EB74;
+    if (GAME.selectedArea == 0 && D_8009BCCA != 3) {
+        if (y >= 0x10f) {
+            b = (char *)WHM_DATA_S32Arr[0];
+            y -= 0x10e;
+        } else {
+            b = (char *)WHM_DATA_S32Arr[1];
+        }
+        t = D_8007E9F8[GAME.selectedArea];
+        t += D_8009BCCA;
+    } else if ((GAME.selectedArea == 4 || GAME.selectedArea == 12) && D_8009BCCA < 4) {
+        t = &D_8007E9E8[D_8009BCCA];
+        b = (char *)WHM_DATA_S32Arr[SPAD->unk1C8 & 1];
+    } else if (GAME.selectedArea == 3 && (D_8009BCCA == 1 || D_8009BCCA == 5)) {
+        if (PLAYER.obj.d->p.whole < 0) {
+            b = (char *)WHM_DATA_S32Arr[1];
+            t = D_8007E9E4;
+            y += 0x5a;
+        } else {
+            t = D_8007EA04;
+            b = (char *)WHM_DATA_S32Arr[0];
+            t += D_8009BCCA;
+        }
+    } else {
+        t = D_8007E9F8[GAME.selectedArea];
+        b = (char *)WHM_DATA_S32Arr[0];
+        t += D_8009BCCA;
+    }
+    if (SPAD->unk1C8 & 1)
+        r = (t->y - y) / 90;
+    else
+        r = (y - t->y) / 90;
+    { u8 *q = D_8007EAF4[GAME.selectedArea]; lim = q[D_8009BCCA]; }
+    if (lim < r) r = lim;
+    if (r < 0) r = 0;
+    b += *(u16 *)(b + 8 + r * 2);
+    c = (x - t->x) / 8;
+    if (c < 0) c = 0;
+    return b + *(u16 *)(b + (c << 1));
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", readCollisionTileShape);
 inline s32 readCollisionTileShape(u8* arg0) {

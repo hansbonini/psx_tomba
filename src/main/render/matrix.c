@@ -1,9 +1,65 @@
 #include "common.h"
 #include "game.h"
 
-INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004CFE0);
+// INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004CFE0);
+void func_8004CFE0(void)
+{
+    s32 n;
+    s32 *p;
+    s32 a;
 
-INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D0C0);
+    if (D_1F8001C6 != 0) {
+        n = (*(s16 *)&D_1F800256);
+        p = (s32 *)D_1F80026C;
+        if (n != 0) {
+            do {
+                a = *p++;
+                n--;
+                func_80045EFC(a);
+            } while (n != 0);
+        }
+    } else {
+        (*(s16 *)&D_1F800256) = D_1F800248;
+        D_1F80026C = (void *)D_1F800228;
+        if (D_1F800248 != 0) {
+            do {
+                a = *D_1F800228++;
+                D_1F800248 = D_1F800248 - 1;
+                func_80045EFC(a);
+            } while ((*(s16 *)&D_1F800248) != 0);
+        }
+    }
+}
+
+// INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D0C0);
+void func_8004D0C0(void)
+{
+    s32 n;
+    s32 *p;
+    s32 a;
+
+    if (D_1F8001C6 != 0) {
+        n = (*(s16 *)&D_1F800254);
+        p = (s32 *)D_1F800268;
+        if (n != 0) {
+            do {
+                a = *p++;
+                n--;
+                func_80045EFC(a);
+            } while (n != 0);
+        }
+    } else {
+        (*(s16 *)&D_1F800254) = D_1F80024C;
+        D_1F800268 = (void *)D_1F800224;
+        if (D_1F80024C != 0) {
+            do {
+                a = *D_1F800224++;
+                D_1F80024C = D_1F80024C - 1;
+                func_80045EFC(a);
+            } while ((*(s16 *)&D_1F80024C) != 0);
+        }
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D1A0);
 void func_8004D1A0(char *o)

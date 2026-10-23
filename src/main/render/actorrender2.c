@@ -123,7 +123,164 @@ void func_8004637C(void)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046428);
+typedef struct { char pad[7]; s8 b7; char pad8[0x18 - 8]; u16 w18, w1a; char pad1C[0xC]; u16 w28[2]; } PL_46EC0;
+typedef struct { char pad[0x4c]; u16 w4c; } C4C_46EC0;
+extern PL_46EC0 *D_8009B698;
+extern s32 fixedMulCos(s32, s16);
+extern s32 fixedMulSin2(s32, s16);
+extern s32 fixedMulSin(s32, s16);
+extern s32 angleBetweenPoints(Vec2s, Vec2s);
+
+
+static __inline__ s32 proj_46EC0(void)
+{
+    gte_ldv0((s16 *)&D_1F800060);
+    gte_rtps();
+    gte_stflg(&D_1F80008C);
+    if (D_1F80008C < 0) return 1;
+    gte_stsxy(&LZ_FILE_CTRL_Long);
+    gte_stszotz(&D_1F800074);
+    return 0;
+}
+
+static __inline__ s32 otadd_46EC0(unsigned long *a, char *b, s32 c, s16 d, unsigned long e)
+{
+    s32 k = c * 4;
+    k += d * 4;
+    if (k < 0) k = 0;
+    k += (s32)b;
+    if ((u32)(k - (s32)D_1F8001E0) >= 0xca0) return 1;
+    {
+        unsigned long v = *(unsigned long *)k;
+        *(unsigned long *)k = (unsigned long)a;
+        *a = v | e;
+    }
+    return 0;
+}
+
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046428);
+#define A0_46428 (ang & 0xff)
+#define A1_46428 ((ang + 0x80) & 0xff)
+#define SN_46428(i) D_8007DB88[i]
+#define CS_46428(i) D_8007D988[i]
+#define C_46428 fr->w
+#define D_46428 fr->h
+
+void func_80046428(o)
+GameObject *o;
+{
+    extern void uploadSpriteFrame();
+    POLY_FT4 *p;
+    s16 *e;
+    s16 n;
+    SprFrag *fr;
+    s16 s;
+    s32 xy;
+    s16 x, y;
+    s32 ang;
+    s16 A, B;
+    s16 u, w;
+    u16 af;
+    u8 c;
+
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    s = *(s16 *)o->anim;
+    xy = LZ_FILE_CTRL_Long;
+    e = (s16 *)o->spriteBank;
+    e += s * 2;
+    fr = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    n = ((u16 *)e)[0];
+    x = xy;
+    y = (u32)xy >> 16;
+    if (D_8009B698->w28[SPAD->frameBufferIndex] != s) {
+        if (GAME.selectedArea == 6) {
+            switch (D_8009BCCA) {
+            case 0:
+            case 1:
+                break;
+            default:
+                uploadSpriteFrame(o);
+            }
+        }
+        uploadSpriteFrame(o);
+    }
+    ang = o->unk8C;
+    D_8009B698->w18 = x;
+    D_8009B698->w1a = y;
+    do {
+        A = fr->dx;
+        B = fr->dy;
+        p = (POLY_FT4 *)D_1F800164;
+        p->code = 0x2d;
+        SetSemiTrans(p, 0);
+        p->tpage = o->tpage;
+        if (n & 2)
+            p->clut = o->clut;
+        else
+            p->clut = *(u16 *)((u8 *)o + 0xc4);
+        p->u0 = fr->u + ((u8)SPAD->frameBufferIndex << 6) + 4;
+        p->v0 = fr->v + 4;
+        c = C_46428;
+        p->u2 = p->u0;
+        p->u1 = p->u0 + c;
+        p->v1 = p->v0;
+        p->v2 = p->v0 + D_46428;
+        p->u3 = p->u0 + C_46428;
+        p->v3 = p->v0 + D_46428;
+        if (o->unk9D)
+            af = D_8009B698->b7;
+        else
+            af = o->animFrame;
+        if (af & 1) {
+            u = -(A + C_46428);
+            w = B;
+            p->x1 = x + ((-u * SN_46428(A1_46428)) >> 12) + ((-w * SN_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
+            p->y1 = y + ((-u * CS_46428(A1_46428)) >> 12) + ((-w * CS_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
+            p->x0 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + ((-w * SN_46428((A0_46428 + 0x40) & 0xff)) >> 12);
+            p->y0 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + ((-w * CS_46428((A0_46428 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + ((-u * SN_46428(A1_46428)) >> 12) + (((w + D_46428) * SN_46428((A1_46428 + 0x40) & 0xff)) >> 12);
+            p->y3 = y + ((-u * CS_46428(A1_46428)) >> 12) + (((w + D_46428) * CS_46428((A1_46428 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + (((w + D_46428) * SN_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+            p->y2 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + (((w + D_46428) * CS_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+        } else {
+            u = A;
+            w = B;
+            p->x0 = x + ((-u * SN_46428(A1_46428)) >> 12) + ((-w * SN_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
+            p->y0 = y + ((-u * CS_46428(A1_46428)) >> 12) + ((-w * CS_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
+            p->x1 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + ((-w * SN_46428((A0_46428 + 0x40) & 0xff)) >> 12);
+            p->y1 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + ((-w * CS_46428((A0_46428 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + ((-u * SN_46428(A1_46428)) >> 12) + (((w + D_46428) * SN_46428((A1_46428 + 0x40) & 0xff)) >> 12);
+            p->y2 = y + ((-u * CS_46428(A1_46428)) >> 12) + (((w + D_46428) * CS_46428((A1_46428 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + (((w + D_46428) * SN_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+            p->y3 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + (((w + D_46428) * CS_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+        }
+        {
+            s32 k = D_1F800074;
+            unsigned long m;
+
+            do {
+            } while (0);
+            m = 0x9000000;
+            if (!otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, k, (s8)o->unkF, m))
+                D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        }
+        fr++;
+    } while (--n);
+}
+#undef A0_46428
+#undef A1_46428
+#undef SN_46428
+#undef CS_46428
+#undef C_46428
+#undef D_46428
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046CDC);
 typedef struct { char p0[1]; u8 vis; char p1[8]; u8 k; } O_46CDC;
@@ -170,41 +327,6 @@ void func_80046CDC(void)
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046EC0);
 
-
-typedef struct { char pad[7]; s8 b7; char pad8[0x18 - 8]; u16 w18, w1a; } PL_46EC0;
-typedef struct { char pad[0x4c]; u16 w4c; } C4C_46EC0;
-extern PL_46EC0 *D_8009B698;
-extern s32 fixedMulCos(s32, s16);
-extern s32 fixedMulSin2(s32, s16);
-extern s32 fixedMulSin(s32, s16);
-extern s32 angleBetweenPoints(Vec2s, Vec2s);
-
-
-static __inline__ s32 proj_46EC0(void)
-{
-    gte_ldv0((s16 *)&D_1F800060);
-    gte_rtps();
-    gte_stflg(&D_1F80008C);
-    if (D_1F80008C < 0) return 1;
-    gte_stsxy(&LZ_FILE_CTRL_Long);
-    gte_stszotz(&D_1F800074);
-    return 0;
-}
-
-static __inline__ s32 otadd_46EC0(unsigned long *a, char *b, s32 c, s16 d, unsigned long e)
-{
-    s32 k = c * 4;
-    k += d * 4;
-    if (k < 0) k = 0;
-    k += (s32)b;
-    if ((u32)(k - (s32)D_1F8001E0) >= 0xca0) return 1;
-    {
-        unsigned long v = *(unsigned long *)k;
-        *(unsigned long *)k = (unsigned long)a;
-        *a = v | e;
-    }
-    return 0;
-}
 
 #define COS(i) D_8007DB88[i]
 #define SIN(i) D_8007D988[i]
@@ -449,21 +571,626 @@ void func_80046EC0(GameObject *o)
 #undef SIN
 #undef SHADOW
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80047FC8);
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80047FC8);
+#define A0_47FC8 (ang & 0xff)
+#define A1_47FC8 ((ang + 0x80) & 0xff)
+#define SN_47FC8(i) D_8007DB88[i]
+#define CS_47FC8(i) D_8007D988[i]
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_800487A4);
+void func_80047FC8(GameObject *o)
+{
+    POLY_FT4 *p;
+    s16 *e;
+    s32 n;
+    SprFrag *f;
+    s32 xy;
+    s16 x, y;
+    s32 ang;
+    s16 A, B, C, D;
+    s16 u, w;
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80048BF0);
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    xy = LZ_FILE_CTRL_Long;
+    e = (s16 *)o->spriteBank;
+    e += *(u16 *)o->anim * 2;
+    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    n = e[0];
+    x = xy;
+    y = (u32)xy >> 16;
+    ang = o->unk8C;
+    do {
+        A = f->dx;
+        B = f->dy;
+        p = (POLY_FT4 *)D_1F800164;
+        C = f->w;
+        D = f->h;
+        if ((o->animFrame & 1) == 0) {
+            u = A;
+            w = B;
+            p->x0 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + ((-w * SN_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
+            p->y0 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + ((-w * CS_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
+            p->x1 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + ((-w * SN_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
+            p->y1 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + ((-w * CS_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + (((w + D) * SN_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
+            p->y2 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + (((w + D) * CS_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + (((w + D) * SN_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+            p->y3 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + (((w + D) * CS_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+        } else {
+            u = -(A + C);
+            w = B;
+            p->x1 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + ((-w * SN_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
+            p->y1 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + ((-w * CS_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
+            p->x0 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + ((-w * SN_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
+            p->y0 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + ((-w * CS_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + (((w + D) * SN_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
+            p->y3 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + (((w + D) * CS_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + (((w + D) * SN_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+            p->y2 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + (((w + D) * CS_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+        }
+        p->code = 0x2c;
+        if (o->subtype == 0)
+            SetSemiTrans(p, 1);
+        else
+            SetSemiTrans(p, 0);
+        p->tpage = o->tpage;
+        p->clut = o->clut;
+        if (o->subtype == 0) {
+            if (o->unkD & 0x40) {
+                p->r0 = 0x20;
+                p->g0 = 0x20;
+                p->b0 = 0x20;
+            } else {
+                p->r0 = 0x40;
+                p->g0 = 0x40;
+                p->b0 = 0x40;
+            }
+        } else {
+            p->r0 = 0x80;
+            p->g0 = 0x80;
+            p->b0 = 0x80;
+        }
+        *(u16 *)&p->u0 = *(u16 *)f + 0x80;
+        *(u16 *)&p->u1 = f->uv1 + 0x80;
+        *(u16 *)&p->u2 = f->uv2 + 0x80;
+        *(u16 *)&p->u3 = f->uv3 + 0x80;
+        if (!otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000))
+            D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        f++;
+    } while (--n);
+}
+#undef A0_47FC8
+#undef A1_47FC8
+#undef SN_47FC8
+#undef CS_47FC8
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80049134);
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_800487A4);
+static __inline__ s32 quadOnScreen(POLY_FT4 *p)
+{
+    if ((u16)p->y0 < NTSC_PAL(0xE0, 0x100) || (u16)p->y1 < NTSC_PAL(0xE0, 0x100) || (u16)p->y2 < NTSC_PAL(0xE0, 0x100) || (u16)p->y3 < NTSC_PAL(0xE0, 0x100)) {
+        if ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)
+            return 1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80049994);
+void func_800487A4(GameObject *o)
+{
+    POLY_FT4 *p;
+    s16 *e;
+    SprFrag *f;
+    s32 n;
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A300);
+    if (o->anim == NULL) return;
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    e = (s16 *)(o->spriteBank + *(s16 *)o->anim * 4);
+    n = e[0];
+    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    do {
+        p = (POLY_FT4 *)D_1F800164;
+        if (o->animFrame & 1) {
+            p->x0 = f->dx + LZ_FILE_CTRL_Long;
+            p->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
+            p->x1 = p->x0 + f->w;
+            p->x2 = p->x0;
+            p->y1 = p->y0;
+            p->y2 = p->y0 + f->h;
+            p->x3 = p->x1;
+            p->y3 = p->y2;
+        } else {
+            p->x0 = LZ_FILE_CTRL_Long - f->dx;
+            p->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
+            p->x1 = p->x0 - f->w;
+            p->x2 = p->x0;
+            p->y1 = p->y0;
+            p->y2 = p->y0 + f->h;
+            p->x3 = p->x1;
+            p->y3 = p->y2;
+        }
+        if (quadOnScreen(p)) {
+            p->code = 0x2d;
+            SetSemiTrans(p, o->unkD >> 7);
+            *(u32 *)&p->u0 = *(u32 *)f;
+            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&p->u2 = f->uv2;
+            *(u16 *)&p->u3 = f->uv3;
+            p->tpage += o->tpage;
+            if (o->unkD & 1)
+                p->clut = o->clut;
+            if (o->unkB) {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+            } else {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+            }
+            D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        }
+    next:
+        f++;
+        n--;
+    } while (n != 0);
+}
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A6A0);
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80048BF0);
+void func_80048BF0(GameObject *o)
+{
+    POLY_FT4 *p;
+    s16 *e;
+    SprFrag *f;
+    s32 n;
+    u32 k;
+    s32 d;
 
-INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AA70);
+    if (o->anim == NULL) return;
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    e = (s16 *)(o->spriteBank + *(s16 *)o->anim * 4);
+    n = e[0];
+    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    if (o->unkA == 1) {
+        switch (SPAD->unk1C8 & 1) {
+        case 0:
+            d = VIEW_CAMERA.pos[2].p.whole - o->z.p.whole;
+            k = o->buffSize * (d * 7 + 0x1000) >> 12;
+            break;
+        case 1:
+            d = o->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
+            k = o->buffSize * (d * 7 + 0x1000) >> 12;
+            break;
+        }
+    } else {
+        k = SPAD->loadSlots[4];
+    }
+    do {
+        p = (POLY_FT4 *)D_1F800164;
+        if (o->animFrame & 1) {
+            p->x0 = LZ_FILE_CTRL_Long + ((f->dx * k - 0x1000) >> 12);
+            p->y0 = (LZ_FILE_CTRL_Long >> 16) + ((f->dy * k - 0x1000) >> 12);
+            p->x1 = p->x0 + ((f->w * k + 0x1000) >> 12);
+            p->y1 = p->y0;
+            p->x2 = p->x0;
+            p->y2 = p->y0 + ((f->h * k + 0x1000) >> 12);
+            p->x3 = p->x1;
+            p->y3 = p->y2;
+        } else {
+            p->x0 = LZ_FILE_CTRL_Long - ((f->dx * k - 0x1000) >> 12);
+            p->y0 = (LZ_FILE_CTRL_Long >> 16) + ((f->dy * k - 0x1000) >> 12);
+            p->x1 = p->x0 - ((f->w * k + 0x1000) >> 12);
+            p->y1 = p->y0;
+            p->x2 = p->x0;
+            p->y2 = p->y0 + ((f->h * k + 0x1000) >> 12);
+            p->x3 = p->x1;
+            p->y3 = p->y2;
+        }
+        if (quadOnScreen(p)) {
+            p->code = 0x2d;
+            SetSemiTrans(p, o->unkD >> 7);
+            *(u32 *)&p->u0 = *(u32 *)f;
+            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&p->u2 = f->uv2;
+            *(u16 *)&p->u3 = f->uv3;
+            p->tpage += o->tpage;
+            if (o->unkD & 1)
+                p->clut = o->clut;
+            if (o->unkB) {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+            } else {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+            }
+            D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        }
+    next:
+        f++;
+        n--;
+    } while (n != 0);
+}
+
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80049134);
+#define A0_49134 (ang & 0xff)
+#define SN_49134(i) D_8007DB88[i]
+#define CS_49134(i) D_8007D988[i]
+#define A1_49134 ((ang + 0x80) & 0xff)
+
+void func_80049134(GameObject *o)
+{
+    POLY_FT4 *p;
+    s16 *e;
+    SprFrag *f;
+    s32 xy;
+    s16 x, y;
+    s32 d;
+    s32 ang;
+    s16 A, B, C, D;
+    s16 u, w;
+
+    if (o->anim == NULL) return;
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    xy = LZ_FILE_CTRL_Long;
+    x = xy;
+    y = (u32)xy >> 16;
+    d = o->spriteBank;
+    d += *(u16 *)o->anim * 4;
+    e = (s16 *)d;
+    D_1F800078 = e[0];
+    f = (SprFrag *)(o->spriteBank + e[1]);
+    ang = o->unk8C;
+    do {
+        A = f->dx;
+        B = f->dy;
+        p = (POLY_FT4 *)D_1F800164;
+        C = f->w;
+        D = f->h;
+        if (o->animFrame & 1) {
+            u = A;
+            w = B;
+            p->x0 = x + ((-u * SN_49134(A1_49134)) >> 12) + ((-w * SN_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
+            p->y0 = y + ((-u * CS_49134(A1_49134)) >> 12) + ((-w * CS_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
+            p->x1 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + ((-w * SN_49134((A0_49134 + 0x40) & 0xff)) >> 12);
+            p->y1 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + ((-w * CS_49134((A0_49134 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + ((-u * SN_49134(A1_49134)) >> 12) + (((w + D) * SN_49134((A1_49134 + 0x40) & 0xff)) >> 12);
+            p->y2 = y + ((-u * CS_49134(A1_49134)) >> 12) + (((w + D) * CS_49134((A1_49134 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + (((w + D) * SN_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+            p->y3 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + (((w + D) * CS_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+        } else {
+            u = -(A + C);
+            w = B;
+            p->x1 = x + ((-u * SN_49134(A1_49134)) >> 12) + ((-w * SN_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
+            p->y1 = y + ((-u * CS_49134(A1_49134)) >> 12) + ((-w * CS_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
+            p->x0 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + ((-w * SN_49134((A0_49134 + 0x40) & 0xff)) >> 12);
+            p->y0 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + ((-w * CS_49134((A0_49134 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + ((-u * SN_49134(A1_49134)) >> 12) + (((w + D) * SN_49134((A1_49134 + 0x40) & 0xff)) >> 12);
+            p->y3 = y + ((-u * CS_49134(A1_49134)) >> 12) + (((w + D) * CS_49134((A1_49134 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + (((w + D) * SN_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+            p->y2 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + (((w + D) * CS_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+        }
+        if (quadOnScreen(p)) {
+            p->code = 0x2d;
+            SetSemiTrans(p, o->unkD >> 7);
+            *(u32 *)&p->u0 = *(u32 *)f;
+            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&p->u2 = f->uv2;
+            *(u16 *)&p->u3 = f->uv3;
+            p->tpage += o->tpage;
+            if (o->unkD & 1)
+                p->clut = o->clut;
+            if (o->unkB) {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+            } else {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+            }
+            D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        }
+    next:
+        f++;
+        D_1F800078--;
+    } while (D_1F800078 != 0);
+}
+#undef A0_49134
+#undef A1_49134
+#undef SN_49134
+#undef CS_49134
+
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80049994);
+#define A0_49994 (ang & 0xff)
+#define SN_49994(i) D_8007DB88[i]
+#define CS_49994(i) D_8007D988[i]
+#define A1_49994 ((ang + 0x80) & 0xff)
+
+void func_80049994(GameObject *o)
+{
+    POLY_FT4 *p;
+    s16 *e;
+    SprFrag *f;
+    s32 xy;
+    u32 s;
+    s16 x, y;
+    s32 d;
+    s32 ang;
+    s16 A, B, C, D;
+    s16 u, w;
+
+    if (o->anim == NULL) return;
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    xy = LZ_FILE_CTRL_Long;
+    x = xy;
+    y = (u32)xy >> 16;
+    d = o->spriteBank;
+    d += *(u16 *)o->anim * 4;
+    e = (s16 *)d;
+    D_1F800078 = e[0];
+    f = (SprFrag *)(o->spriteBank + e[1]);
+    if (o->unkA & 1) {
+        switch (SPAD->unk1C8 & 1) {
+        case 0:
+            d = VIEW_CAMERA.pos[2].p.whole - o->z.p.whole;
+            s = o->buffSize * (d * 7 + 0x1000) >> 12;
+            break;
+        case 1:
+            d = o->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
+            s = o->buffSize * (d * 7 + 0x1000) >> 12;
+            break;
+        }
+    } else {
+        s = SPAD->loadSlots[4];
+    }
+    ang = o->unk8C;
+    do {
+        A = (f->dx * s - 0x1800) >> 12;
+        B = (f->dy * s - 0x1800) >> 12;
+        C = (f->w * s + 0x1800) >> 12;
+        D = (f->h * s + 0x1800) >> 12;
+        p = (POLY_FT4 *)D_1F800164;
+        if (o->animFrame & 1) {
+            u = A;
+            w = B;
+            p->x0 = x + ((-u * SN_49994(A1_49994)) >> 12) + ((-w * SN_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
+            p->y0 = y + ((-u * CS_49994(A1_49994)) >> 12) + ((-w * CS_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
+            p->x1 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + ((-w * SN_49994((A0_49994 + 0x40) & 0xff)) >> 12);
+            p->y1 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + ((-w * CS_49994((A0_49994 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + ((-u * SN_49994(A1_49994)) >> 12) + (((w + D) * SN_49994((A1_49994 + 0x40) & 0xff)) >> 12);
+            p->y2 = y + ((-u * CS_49994(A1_49994)) >> 12) + (((w + D) * CS_49994((A1_49994 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + (((w + D) * SN_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+            p->y3 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + (((w + D) * CS_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+        } else {
+            u = -(A + C);
+            w = B;
+            p->x1 = x + ((-u * SN_49994(A1_49994)) >> 12) + ((-w * SN_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
+            p->y1 = y + ((-u * CS_49994(A1_49994)) >> 12) + ((-w * CS_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
+            p->x0 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + ((-w * SN_49994((A0_49994 + 0x40) & 0xff)) >> 12);
+            p->y0 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + ((-w * CS_49994((A0_49994 + 0x40) & 0xff)) >> 12);
+            p->x3 = x + ((-u * SN_49994(A1_49994)) >> 12) + (((w + D) * SN_49994((A1_49994 + 0x40) & 0xff)) >> 12);
+            p->y3 = y + ((-u * CS_49994(A1_49994)) >> 12) + (((w + D) * CS_49994((A1_49994 + 0x40) & 0xff)) >> 12);
+            p->x2 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + (((w + D) * SN_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+            p->y2 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + (((w + D) * CS_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+        }
+        if (quadOnScreen(p)) {
+            p->code = 0x2d;
+            SetSemiTrans(p, o->unkD >> 7);
+            *(u32 *)&p->u0 = *(u32 *)f;
+            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&p->u2 = f->uv2;
+            *(u16 *)&p->u3 = f->uv3;
+            p->tpage += o->tpage;
+            if (o->unkD & 1)
+                p->clut = o->clut;
+            if (o->unkB) {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+            } else {
+                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+            }
+            D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        }
+    next:
+        f++;
+        D_1F800078--;
+    } while (D_1F800078 != 0);
+}
+#undef A0_49994
+#undef A1_49994
+#undef SN_49994
+#undef CS_49994
+
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A300);
+void func_8004A300(GameObject *o)
+{
+    SPRT *s;
+    s16 *e;
+    SprFrag *f;
+    s32 n;
+    s32 tp;
+
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    e = (s16 *)(*(volatile s32 *)&o->spriteBank + *(u16 *)o->anim * 4);
+    s = (SPRT *)D_1F800164_Volatile;
+    n = e[0];
+    f = (SprFrag *)(o->spriteBank + e[1]);
+    tp = f->tpage;
+    SetDrawMode((DR_MODE *)s, 0, 0, 0, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    D_1F800164 += sizeof(DR_MODE);
+    do {
+        s = (SPRT *)D_1F800164;
+        s->w = f->w;
+        s->h = f->h;
+        s->x0 = f->dx + LZ_FILE_CTRL_Long;
+        s->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
+        if (((u16)s->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(s->y0 + s->h) < NTSC_PAL(0xF1, 0x101)) &&
+            ((u16)s->x0 < 0x141 || (u16)(s->x0 + s->w) < 0x141)) {
+            SetSprt(s);
+            SetSemiTrans(s, o->unkD >> 7);
+            s->code |= 1;
+            *(s32 *)&s->u0 = *(s32 *)f;
+            if (o->unkD & 1) {
+                s->clut = o->clut;
+            }
+            AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+            D_1F800164 += sizeof(SPRT);
+        }
+        f++;
+        n--;
+    } while (n != 0);
+    s = (SPRT *)D_1F800164;
+    SetDrawMode((DR_MODE *)s, 0, 0, o->tpage + (s16)tp, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    D_1F800164 += sizeof(DR_MODE);
+}
+
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A6A0);
+void func_8004A6A0(GameObject *o)
+{
+    SPRT *s;
+    s16 *e;
+    SprFrag *f;
+    s32 n;
+    s32 tp;
+
+    D_1F800060.vx = o->x.p.whole;
+    D_1F800062 = o->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+        D_1F800064 = o->z.p.whole >> 2;
+    else
+        D_1F800064 = o->z.p.whole;
+    SetRotMatrix(D_1F8000C0);
+    SetTransMatrix(D_1F8000C0_CharArr);
+    if (proj_46EC0()) return;
+    e = (s16 *)o->spriteBank;
+    e += *(u16 *)o->anim * 2;
+    s = (SPRT *)D_1F800164;
+    n = e[0];
+    f = (SprFrag *)(o->spriteBank + e[1]);
+    tp = f->tpage;
+    SetDrawMode((DR_MODE *)s, 0, 0, 0, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    D_1F800164 += sizeof(DR_MODE);
+    do {
+        s = (SPRT *)D_1F800164;
+        s->w = f->w;
+        s->h = f->h;
+        s->x0 = f->dx + LZ_FILE_CTRL_Long;
+        s->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
+        if (((u16)s->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(s->y0 + s->h) < NTSC_PAL(0xF1, 0x101)) &&
+            ((u16)s->x0 < 0x141 || (u16)(s->x0 + s->w) < 0x141)) {
+            SetSprt(s);
+            SetSemiTrans(s, o->unkD >> 7);
+            s->code |= 1;
+            *(s32 *)&s->u0 = *(s32 *)f;
+            if (o->unkD & 1) {
+                s->clut = o->clut;
+            }
+            SetShadeTex(s, 0);
+            s->r0 = o->objectIndex;
+            s->g0 = o->objectIndex;
+            s->b0 = o->objectIndex;
+            AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+            D_1F800164 += sizeof(SPRT);
+        }
+        f++;
+        n--;
+    } while (n != 0);
+    s = (SPRT *)D_1F800164;
+    SetDrawMode((DR_MODE *)s, 0, 0, o->tpage + (s16)tp, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    D_1F800164 += sizeof(DR_MODE);
+}
+
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AA70);
+void func_8004AA70(GameObject *o)
+{
+    POLY_FT4 *p;
+    SprFrag *f;
+    u8 *v0, *v1, *v2, *v3;
+
+    getBaseMatrix(&SCRATCHPAD.workMatrix);
+    ((s16 *)&D_1F800060)[0] = o->x.p.whole;
+    ((s16 *)&D_1F800060)[1] = o->y.p.whole;
+    ((s16 *)&D_1F800060)[2] = o->z.p.whole;
+    SetRotMatrix(SCRATCH_VIEW_MATRIX);
+    ApplyRotMatrix(&D_1F800060, (VECTOR *)&SCRATCHPAD.workMatrix.t[0]);
+    SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
+    SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
+    SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
+    SetTransMatrix(&SCRATCHPAD.workMatrix);
+    v0 = (u8 *)o + 0xb4;
+    v1 = (u8 *)o + 0xbc;
+    v2 = (u8 *)o + 0xc4;
+    v3 = (u8 *)o + 0xcc;
+    p = (POLY_FT4 *)D_1F800164;
+    gte_ldv3(v0, v1, v2);
+    gte_rtpt();
+    gte_stsxy3_ft4(p);
+    gte_ldv0(v3);
+    gte_rtps();
+    gte_avsz4();
+    gte_stotz(&LZ_FILE_CTRL_Long);
+    gte_stsxy(&p->x3);
+    if (quadOnScreen(p)) {
+        f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + ((s16 *)(o->spriteBank + (*(u16 *)o->anim << 2)))[1]);
+        p->code = 0x2d;
+        SetSemiTrans(p, o->unkD >> 7);
+        *(u32 *)&p->u0 = *(u32 *)f;
+        *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+        *(u16 *)&p->u2 = f->uv2;
+        *(u16 *)&p->u3 = f->uv3;
+        p->tpage += o->tpage;
+        if (o->unkD & 1)
+            p->clut = o->clut;
+        {
+            s32 c = LZ_FILE_CTRL_Long;
+            unsigned long e;
+
+            do {
+            } while (0);
+            e = 0x9000000;
+            if (!otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, c, (s8)o->unkF, e))
+                D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
+        }
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AD8C);
 extern GameObject **D_1F800260;

@@ -159,7 +159,145 @@ void decreaseObjectTimer(u8* self, u8 arg1)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/actor1", func_800505E8);
+// INCLUDE_ASM("nonmatchings/main/game/actor1", func_800505E8);
+s32 func_800505E8(o, p)
+GameObject *o;
+GameObject *p;
+{
+    u8 c;
+    s32 r;
+    GameObject **d;
+
+    switch (o->type) {
+    case 0:
+        r = 1;
+        o->active = 2;
+        o->unkA5 = 0;
+        o->unkA8 = 0x4ff;
+        break;
+    case 1:
+        r = 0;
+        o->unkA5 = 0;
+        o->active = 2;
+        o->state = 2;
+        o->subState = 0;
+        o->step = 0;
+        break;
+    case 10:
+        r = 7;
+        o->unk6A = 1;
+        o->active = 2;
+        break;
+    case 4:
+        r = 0;
+        o->active = 2;
+        o->state = 2;
+        o->unkA5 = 0;
+        o->subState = 1;
+        o->step = 0;
+        break;
+    case 5:
+    case 6:
+    case 7:
+        o->unk6A = 1;
+        o->active = 2;
+        r = o->type - 1;
+        if ((p->category & 0x7f) == 4)
+            o->unkA8 = 0x4ff;
+        break;
+    case 8:
+        r = 2;
+        d = &(*(GameObject **)&D_8009BC98.unk04);
+        p->unk68 = 0;
+        *d = 0;
+        o->unkA5 = 0;
+        o->active = 2;
+        if (o->unkA8 > 0x500)
+            o->unkA8 = 0x4ff;
+        c = p->category & 0x7f;
+        if (c == 4) {
+            switch (p->type) {
+            case 0x24:
+                (*(GameObject **)&D_8009BC98.unk04) = p;
+                p->unk68 = 1;
+                o->touchFlag = 1;
+                o->x.p.whole = p->x.p.whole;
+                o->y.p.whole = p->y.p.whole + 0x12;
+                break;
+            case 2:
+            case 4:
+            case 5:
+            case 0x1d:
+                (*(GameObject **)&D_8009BC98.unk04) = p;
+                p->unk68 = 1;
+                o->touchFlag = 1;
+                if (o->y.p.whole < p->y.p.whole)
+                    o->y.p.whole = p->y.p.whole + 4;
+                break;
+            case 3:
+            case 6:
+            case 0xb:
+            case 0x39:
+                goto hit;
+            default:
+                goto miss;
+            }
+        } else {
+            if (c != 2)
+                goto miss;
+            if (p->type == 0xe)
+                goto land;
+            if (p->type != 0x38 || p->subtype == 0)
+                goto miss;
+            *d = p;
+            o->x.p.whole = p->x.p.whole;
+            o->y.p.whole = p->y.p.whole + 8;
+            goto land;
+        }
+        break;
+    case 9:
+        r = 3;
+        D_8009BC9C_ObjPtrArr[0] = 0;
+        o->unkA5 = 0;
+        o->active = 2;
+        if (o->unkA8 > 0x500)
+            o->unkA8 = 0x4ff;
+        c = p->category & 0x7f;
+        if (c == 4) {
+            switch (p->type) {
+            case 2:
+            case 4:
+            case 5:
+            case 0x1d:
+            case 0x24:
+                (*(GameObject **)&D_8009BC98.unk04) = p;
+            case 3:
+            case 6:
+            case 0xb:
+            case 0x39:
+                break;
+            default:
+                goto miss;
+            }
+        hit:
+            p->unk68 = 1;
+            o->touchFlag = 1;
+            if (o->y.p.whole < p->y.p.whole)
+                o->y.p.whole = p->y.p.whole + 4;
+        } else if (c == 2 && p->type == 0xe) {
+        land:
+            p->unk68 = 1;
+            o->touchFlag = 1;
+        } else {
+        miss:
+            o->touchFlag = 0;
+        }
+        break;
+    }
+    if (o->type != 1 && o->unk98 == 2)
+        r += 6;
+    return r;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", resolveHitResultA);
 s32 resolveHitResultA(u8* arg0, u8* arg1) {
@@ -527,9 +665,132 @@ s32 boxesOverlap(u8* arg0, u8* arg1) {
     return 1;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051090);
+// INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051090);
+s16 func_80051090(o, e)
+GameObject *o;
+GameObject *e;
+{
+    s16 dx, dy, sx, sy, px, cx, cy;
 
-INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051284);
+    if ((u16)(o->d->p.whole - e->d->p.whole + 45) > 90) {
+        return 0;
+    }
+    px = sx = e->hitOffsetX + o->hitOffsetX;
+    dx = o->h->p.whole - e->h->p.whole;
+    if ((u16)(dx + sx) > e->hitWidth + o->hitWidth) {
+        return 0;
+    }
+    dy = o->y.p.whole - e->y.p.whole;
+    sy = e->hitOffsetY + o->hitOffsetY;
+    if ((u16)(dy + sy) > o->hitHeight + e->hitHeight) {
+        return 0;
+    }
+    cx = px;
+    if (dx < 0) {
+        dx = -dx;
+        px = -sx;
+    } else {
+        px = (e->hitWidth - e->hitOffsetX) + (o->hitWidth - o->hitOffsetX);
+        cx = px;
+    }
+    cy = sy;
+    if (dy < 0) {
+        dy = -dy;
+        sy = -sy;
+    } else {
+        sy = (e->hitHeight - e->hitOffsetY) + (o->hitHeight - o->hitOffsetY);
+        cy = sy;
+    }
+    if (cx - dx < cy - dy || sy > 0) {
+        o->h->p.whole = e->h->p.whole + px;
+        if (px < 0) {
+            o->unkA6 = 2;
+        } else {
+            o->unkA6 = 3;
+        }
+        return 2;
+    }
+    if (o->unk9C & 1) {
+        return 0;
+    }
+    o->unkB0 = 0;
+    o->y.p.whole = e->y.p.whole - (e->hitOffsetY + o->hitOffsetY);
+    o->y.p.frac = 0;
+    o->touchFlag = 1;
+    o->velY = 0;
+    e->touchFlag = 1;
+    return 1;
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051284);
+s16 func_80051284(a, b)
+GameObject *a;
+GameObject *b;
+{
+    s16 dx, dz, adx, px, pz, ex, ez;
+    u16 sx;
+
+    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2D) >= 0x5B) {
+        return 0;
+    }
+    sx = b->hitOffsetX + a->hitOffsetX;
+    px = sx;
+    dx = a->h->p.whole - b->h->p.whole;
+    adx = dx;
+    if ((u16)(dx + sx) > b->hitWidth + a->hitWidth) {
+        return 0;
+    }
+    dz = a->y.p.whole - b->y.p.whole;
+    pz = b->hitOffsetY + a->hitOffsetY;
+    if ((u16)(dz + pz) > a->hitHeight + b->hitHeight) {
+        return 0;
+    }
+    ex = px;
+    if (dx < 0) {
+        adx = -dx;
+        px = -sx;
+    } else {
+        px = (b->hitWidth - b->hitOffsetX) + (a->hitWidth - a->hitOffsetX);
+        ex = px;
+    }
+    ez = pz;
+    if (dz < 0) {
+        dz = -dz;
+        pz = -pz;
+    } else {
+        pz = (b->hitHeight - b->hitOffsetY) + (a->hitHeight - a->hitOffsetY);
+        ez = pz;
+    }
+    if (ex - adx < ez - dz) {
+        a->h->p.whole = b->h->p.whole + px;
+        if (px < 0) {
+            a->unkA6 = 2;
+        } else {
+            a->unkA6 = 3;
+        }
+        return 2;
+    }
+    if (pz <= 0) {
+        u16 by;
+
+        if (a->unk9C & 1) {
+            return 0;
+        }
+        by = b->y.p.whole;
+        a->unkB0 = 0;
+        a->y.p.frac = 0;
+        a->touchFlag = 1;
+        a->velY = 0;
+        a->y.p.whole = by + pz;
+        b->touchFlag = 1;
+        return 1;
+    }
+    a->y.p.whole = b->y.p.whole + pz;
+    if (a->velY < 0) {
+        a->velY = 0;
+    }
+    return 3;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051488);
 s32 func_80051488(GameObject *o, GameObject *e)
@@ -1726,14 +1987,55 @@ void callObjectInteraction(void)
     func_80051284();
 }
 
-INCLUDE_ASM("nonmatchings/main/game/actor1", func_80053BB4);
+// INCLUDE_ASM("nonmatchings/main/game/actor1", func_80053BB4);
+s32 func_80053BB4(GameObject *a, GameObject *b)
+{
+    s32 dy;
+    s16 d;
+
+    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2D) >= 0x5B) {
+        return 0;
+    }
+    if ((u16)(a->h->p.whole - b->h->p.whole + ((u16)b->hitOffsetX + (u16)a->hitOffsetX)) > b->hitWidth + a->hitWidth) {
+        return 0;
+    }
+    dy = (u16)a->y.p.whole - (u16)b->y.p.whole;
+    if ((u16)(dy + ((u16)b->hitOffsetY + (u16)a->hitOffsetY)) > a->hitHeight + b->hitHeight) {
+        return 0;
+    }
+    d = dy;
+    if (d <= 0) {
+        if (a->unk9C & 1) {
+            return 0;
+        }
+        a->unkB0 = 0;
+        d = (u16)b->y.p.whole - ((u16)b->hitOffsetY + (u16)a->hitOffsetY);
+        a->y.p.frac = 0;
+        a->touchFlag = 1;
+        a->velY = 0;
+        a->y.p.whole = d;
+        b->touchFlag = 1;
+        return 1;
+    }
+    if (a->unk9C == 0) {
+        return 0;
+    }
+    if (d < 9) {
+        return 3;
+    }
+    a->y.p.whole = (u16)b->y.p.whole + ((b->hitHeight - (u16)b->hitOffsetY) + (a->hitHeight - (u16)a->hitOffsetY));
+    if (a->velY < 0) {
+        a->velY = 0;
+    }
+    return 3;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", dispatchObjectContact);
 void dispatchObjectContact(u8* arg0, u8* arg1) {
     switch (arg1[0xC]) {
     case 3:
         if (*(u16*)&GAME == 1 || (D_8009C62B & 0x40)) {
-            func_80053BB4();
+            func_80053BB4((GameObject *)arg0, (GameObject *)arg1);
         }
         break;
     case 4:
@@ -2460,6 +2762,92 @@ void func_8005548C(GameObject *o)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/actor1", func_80055A44);
+// INCLUDE_ASM("nonmatchings/main/game/actor1", func_80055A44);
+void func_80055A44(void *self)
+{
+    GameObject *o = self;
+    GameObject **pp;
+    GameObject *e;
 
-INCLUDE_ASM("nonmatchings/main/game/actor1", func_80055BA0);
+    if (D_8009BCA0 == 0 && D_8009C618[0] != 3) {
+        pp = (GameObject **)D_1F800228;
+        for (D_1F80019E = D_1F800248; D_1F80019E != 0; ) {
+            e = *pp++;
+            D_1F80019E--;
+            if (!(e->active & 3))
+                continue;
+            if (hit_54D60(o, e)) {
+                o->unk6A = 1;
+                e->active = 4;
+                e->state = 2;
+                e->subState = 0;
+                e->step = 0;
+            }
+        }
+    }
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/actor1", func_80055BA0);
+void func_80055BA0(void)
+{
+    s16 *p;
+    GameObject *pl;
+
+    if (SPAD->unk1A5 != 0) {
+        return;
+    }
+    if (*(s32 *)&GAME == 6) {
+        func_8011D858();
+        return;
+    }
+    p = &D_80114670[(s16)D_800A53BC[0][1] * 4];
+    D_800A5404[0] = *p++;
+    D_800A5406[0] = *p++;
+    D_800A5408_S16Arr[0] = p[0];
+    D_800A540A[0] = p[1];
+    func_80057044();
+    func_80056E00();
+    func_80057188();
+    pl = &PLAYER.obj;
+    switch (pl->active) {
+    case 1:
+    case 2:
+    case 3:
+    case 7:
+        switch (pl->unk9E) {
+        case 0:
+        case 5:
+        case 6:
+            func_80054D60(pl);
+        }
+        func_80055A44(pl);
+        if (D_8009BCAA | D_8009BCA7) {
+            break;
+        }
+        func_8005548C(pl);
+        goto check;
+    case 4:
+    case 6:
+        func_80055A44(pl);
+        if (D_8009BCAA | D_8009BCA7) {
+            break;
+        }
+    check:
+        if (SPAD->unk1A4 == 0 && (u16)SPAD->currentTask->state2 == 1 && D_8009C618[0] != 3 &&
+            D_800A38EA + 0x98 < pl->y.p.whole) {
+            pl->active = 5;
+            pl->state = 2;
+            pl->subState = 3;
+            pl->step = 0;
+        }
+    case 0:
+    default:
+        if (!(D_8009BCAA | D_8009BCA7) && ((u16 *)&GAME)[0] == 0 && D_8009BCCA == 2) {
+            func_80125AB4(pl);
+        }
+    }
+    func_80053F08();
+    func_80053DA0();
+    func_80054618();
+    func_800574BC();
+}

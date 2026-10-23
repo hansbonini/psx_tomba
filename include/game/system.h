@@ -161,7 +161,8 @@ typedef struct scratchpad {
     /* 0x19E */ s16 unk19E;
     /* 0x1A0 */ u8 unk1A0[4];
     /* 0x1A4 */ u8 unk1A4;
-    /* 0x1A5 */ u8 pad1A5[0x6];
+    /* 0x1A5 */ u8 unk1A5;
+    /* 0x1A6 */ u8 pad1A6[0x5];
     /* 0x1AB */ u8 unk1AB;
     /* 0x1AC */ u8 pad1AC[0x7];
     /* 0x1B3 */ u8 unk1B3;
@@ -396,4 +397,46 @@ typedef struct GameTask {
     u8 unk6F;
 } GameTask;
 
+/* View matrix plus camera rotation and position (scratchpad 0x0C0..0x0F7). */
+typedef struct ViewCamera {
+    MATRIX m;
+    Fix16 rot[3];
+    Fix16 pos[3];
+} ViewCamera;
+
 #endif
+
+/* Camera that follows the player (CAMERA_SCROLL, 0x84 bytes). */
+typedef struct CameraScroll {
+    /* 0x00 */ u8 active;
+    /* 0x01 */ u8 pad01[7];
+    /* 0x08 */ Vec3L pos;
+    /* 0x14 */ s32 velX;
+    /* 0x18 */ s32 velY;
+    /* 0x1C */ u8 pad1C[4];
+    /* 0x20 */ s32 rotX;
+    /* 0x24 */ s32 rotY;
+    /* 0x28 */ u8 pad28[4];
+    /* 0x2C */ s16 minX;
+    /* 0x2E */ s16 maxX;
+    /* 0x30 */ s16 minY;
+    /* 0x32 */ s16 maxY;
+    /* 0x34 */ s32 *targetX;
+    /* 0x38 */ s32 *targetZ;
+    /* 0x3C */ u8 pad3C;
+    /* 0x3D */ u8 settled;
+    /* 0x3E */ u8 rising;
+    /* 0x3F */ u8 pad3F[5];
+    /* 0x44 */ u16 edgeFlags;
+    /* 0x46 */ u8 pad46[6];
+    /* 0x4C */ u16 unk4C;
+    /* 0x4E */ u8 pad4E[0x1E];
+    /* 0x6C */ u8 tiltTimer;
+    /* 0x6D */ u8 pad6D;
+    /* 0x6E */ s8 tiltLevel;
+    /* 0x6F */ s8 tiltStep;
+    /* 0x70 */ u8 pad70[8];
+    /* 0x78 */ s32 rotXOffset;
+    /* 0x7C */ s32 rotYOffset;
+    /* 0x80 */ u8 pad80[4];
+} CameraScroll;
