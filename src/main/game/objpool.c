@@ -468,9 +468,55 @@ void func_800593EC(PO_593EC *o, GameObject *e)
     D_1F8003C0 = e;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059514);
+// INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059514);
+s32 func_80059514(PO_593EC *o, GameObject *e)
+{
+    s16 d, ad, w;
+    u16 t;
 
-INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059638);
+    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+        return 0;
+    d = o->we8 - o->t.h->p.whole;
+    ad = d;
+    if (d < 0) ad = -d;
+    d = o->we8 - e->h->p.whole;
+    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
+    else t = e->hitOffsetX + d;
+    w = e->hitWidth;
+    if ((u16)t > w + ad)
+        return 0;
+    ad = e->hitOffsetY + (o->wea - e->y.p.whole);
+    if ((u16)ad > e->hitHeight)
+        return 0;
+    if (!(o->t.animFrame & 1)) D_1F8003BC = -e->hitOffsetX;
+    else D_1F8003BC = w - e->hitOffsetX;
+    return 1;
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059638);
+s32 func_80059638(PO_593EC *o, GameObject *e)
+{
+    s16 d, ad, w;
+    u16 t;
+
+    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+        return 0;
+    d = o->we8 - o->t.h->p.whole;
+    ad = d;
+    if (d < 0) ad = -d;
+    d = o->we8 - e->h->p.whole;
+    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
+    else t = e->hitOffsetX + d;
+    w = e->hitWidth;
+    if ((u16)t > w + ad)
+        return 0;
+    ad = e->hitOffsetY + (o->wea - e->y.p.whole);
+    if ((u16)ad > e->hitHeight)
+        return 0;
+    if (!(o->t.animFrame & 1)) D_1F8003BC = -e->hitOffsetX;
+    else D_1F8003BC = w - e->hitOffsetX;
+    return 1;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005975C);
 typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_5975C;
@@ -886,11 +932,30 @@ void func_8005A3B0(s8 *o)
     } while (i < 10);
 }
 
-INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005A508);
-
-// INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005A660);
 typedef struct { s8 f0; char p1; u8 f2; char p3[0xc]; u8 ff; } R_5A660;
 extern R_5A660 ***D_8007F0C8[];
+
+
+// INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005A508);
+void func_8005A508(S_5A184 *o)
+{
+    extern void func_8005AA98(R_5A660 *, s32);
+    R_5A660 ***tbl;
+    R_5A660 *r;
+    s16 i;
+    s32 s;
+    tbl = D_8007F0C8[GAME.selectedArea];
+    for (r = *tbl[D_8009BCCA & 7]; r->f2 < 0xff; r++)
+        func_8005AA98(r, -1);
+    i = ((s16 *)&D_8007B294)[GAME.selectedArea];
+    if (((s16 *)&D_8007B294)[GAME.selectedArea] >= 16) i = 15;
+    for (r = *tbl[i]; r->f2 < 0xff; r++) {
+        s = r->ff >> 2;
+        if (!func_80023608(s) && (r->f0 == D_8009BCCA || r->f0 == ~D_8009BCCA)) func_8005AA98(r, s);
+    }
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005A660);
 
 void func_8005A660(s8 *o)
 {
@@ -1159,7 +1224,23 @@ void func_8005B1A4(u8* self)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005B1F8);
+// INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005B1F8);
+void func_8005B1F8(u8 *o)
+{
+    R_5A660 ***tbl;
+    R_5A660 *r;
+    s16 i;
+    s32 s;
+    tbl = D_8007F0C8[GAME.selectedArea];
+    for (r = *tbl[D_8009BCCA & 7]; r->f2 < 0xff; r++)
+        func_8005AA98((Ent_5AA98 *)r, -1);
+    i = ((s16 *)&D_8007B294)[GAME.selectedArea];
+    if (((s16 *)&D_8007B294)[GAME.selectedArea] >= 16) i = 15;
+    for (r = *tbl[i]; r->f2 < 0xff; r++) {
+        s = r->ff >> 2;
+        if (!func_80023608(s) && (r->f0 == D_8009BCCA || r->f0 == ~D_8009BCCA)) func_8005AA98((Ent_5AA98 *)r, s);
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchUnlayeredByVariant);
 void dispatchUnlayeredByVariant(u8* self)

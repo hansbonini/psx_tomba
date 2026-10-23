@@ -2,11 +2,110 @@
 #include "game.h"
 #include "game/objinit.h"
 
-INCLUDE_ASM("nonmatchings/main/game/objlogic", func_8003473C);
+// INCLUDE_ASM("nonmatchings/main/game/objlogic", func_8003473C);
+void func_8003473C(GameObject *o)
+{
+    switch (o->subState) {
+    case 0:
+        switch (o->animFrame) {
+        case 0: case 1: case 2: case 3:
+            D_800A53BC_U16Ptr = (u16 *)D_80011040;
+            break;
+        case 4: case 5:
+            D_800A53BC_U16Ptr = (u16 *)D_80011048;
+            break;
+        case 6: case 7:
+            D_800A53BC_U16Ptr = (u16 *)D_80011050;
+            break;
+        }
+        break;
+    case 1:
+        switch (o->animFrame) {
+        case 0: case 1: case 2: case 3:
+            D_800A53BC_U16Ptr = (u16 *)D_800110D0;
+            break;
+        case 4: case 5:
+            D_800A53BC_U16Ptr = (u16 *)D_800110D8;
+            break;
+        case 6: case 7:
+            D_800A53BC_U16Ptr = (u16 *)D_800110E0;
+            break;
+        }
+        break;
+    case 2:
+        break;
+    }
+}
 
-INCLUDE_ASM("nonmatchings/main/game/objlogic", func_8003481C);
+// INCLUDE_ASM("nonmatchings/main/game/objlogic", func_8003481C);
+void func_8003481C(GameObject *o)
+{
+    switch (o->subState) {
+    case 0:
+        switch (o->animFrame) {
+        case 0: case 1: case 2: case 3:
+            D_800A53BC_U16Ptr = (u16 *)D_80011058;
+            break;
+        case 4: case 5:
+            D_800A53BC_U16Ptr = (u16 *)D_80011060;
+            break;
+        case 6: case 7:
+            D_800A53BC_U16Ptr = (u16 *)D_80011068;
+            break;
+        }
+        break;
+    case 1:
+        switch (o->animFrame) {
+        case 0: case 1: case 2: case 3:
+            D_800A53BC_U16Ptr = (u16 *)D_800110E8;
+            break;
+        case 4: case 5:
+            D_800A53BC_U16Ptr = (u16 *)D_800110F0;
+            break;
+        case 6: case 7:
+            D_800A53BC_U16Ptr = (u16 *)D_800110F8;
+            break;
+        }
+        break;
+    case 2:
+        break;
+    }
+}
 
-INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800348FC);
+// INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800348FC);
+void func_800348FC(GameObject *o)
+{
+    switch (o->subState) {
+    case 0:
+        switch (o->animFrame) {
+        case 0: case 1: case 2: case 3:
+            D_800A53BC_U16Ptr = (u16 *)D_80010FE0;
+            break;
+        case 4: case 5:
+            D_800A53BC_U16Ptr = (u16 *)D_80011000;
+            break;
+        case 6: case 7:
+            D_800A53BC_U16Ptr = (u16 *)D_80011020;
+            break;
+        }
+        break;
+    case 1:
+        switch (o->animFrame) {
+        case 0: case 1: case 2: case 3:
+            D_800A53BC_U16Ptr = (u16 *)D_80011070;
+            break;
+        case 4: case 5:
+            D_800A53BC_U16Ptr = (u16 *)D_80011090;
+            break;
+        case 6: case 7:
+            D_800A53BC_U16Ptr = (u16 *)D_800110B0;
+            break;
+        }
+        break;
+    case 2:
+        break;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800349DC);
 extern s32 fixedMulCos(s32 a, s16 b);
@@ -552,7 +651,90 @@ void func_800365DC(u8* self)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036618);
+// INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036618);
+s16 func_80036618(u8 *self)
+{
+    GameObject *o = (GameObject *)self;
+    Vec2s b, a;
+    GameObject *list[64];
+    GameObject **p;
+    GameObject *q, *t;
+    Fix16 *h1, *h2;
+    short i, m, n, c, k;
+    short best;
+    int wx, wy;
+    short x;
+
+    p = (*(GameObject ***)&SPAD->unk260);
+    D_1F80019E = D_1F800250;
+    for (i = 0; i < 0x40; i++)
+        list[i] = 0;
+    n = 0;
+    if ((x = D_1F80019E) != 0) {
+        wx = 0x80;
+        wy = 0x90;
+        do {
+        q = *p++;
+        D_1F80019E = x - 1;
+        if ((q->active & 1) && D_8007D638[q->type]) {
+            k = o->d->p.whole - q->d->p.whole + 0x2d;
+            c = (unsigned short)k < 0x5a;
+            if (o->animFrame & 1)
+                k = o->h->p.whole - q->h->p.whole;
+            else
+                k = q->h->p.whole - o->h->p.whole;
+            if ((unsigned short)k < wx)
+                c++;
+            k = o->y.p.whole - q->y.p.whole + 0x20;
+            if ((unsigned short)k < wy)
+                c++;
+            if (c == 3) {
+                list[n] = q;
+                n++;
+            }
+        }
+        } while ((x = D_1F80019E) != 0);
+    }
+    for (k = 0; k < n; k++) {
+        m = k;
+        best = list[k]->y.p.whole;
+        for (i = k; i < n; i++) {
+            if (list[i]->y.p.whole > best) {
+                m = i;
+                best = list[i]->y.p.whole;
+            }
+        }
+        t = list[k];
+        list[k] = list[m];
+        list[m] = t;
+    }
+    if (n != 0) {
+        do {} while (0);
+        k = 0x14;
+        if (n == 0) goto LX;
+        if (n != 0) goto T;
+        return 0;
+    LX:
+        if (i != 0) goto T;
+        n--;
+    T:
+        a.x = o->h->p.whole;
+        a.y = o->y.p.whole;
+        for (i = 0; list[i] != 0; i++) {
+            int r; int u;
+            b.x = list[i]->h->p.whole;
+            b.y = list[i]->y.p.whole;
+            u = angleBetweenPoints(a, b); r = u;
+            u = u - (unsigned short)o->unkAA; if ((unsigned char)(u + k) < k * 2) {
+                o->unkAC = r;
+                if (o->y.p.whole < b.y)
+                    return 2;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", isPlayerInRange);
 s32 isPlayerInRange(u8* self, s16 arg1, s16 arg2)
@@ -659,7 +841,7 @@ void func_80036C88(O_36C88 *o)
     s16 t;
     f = o->af;
     f = f * 3;
-    func_8003473C();
+    func_8003473C((GameObject *)o);
     advanceAnimFrame(&PLAYER.obj, 0);
     o->wac = D_8007D60C[(s16)f];
     switch (o->af & 7) {
@@ -1239,4 +1421,28 @@ void func_800383AC(GameObject *o)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800384F0);
+// INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800384F0);
+void func_800384F0(GameObject *o, s32 n)
+{
+    volatile s32 *p = D_1F800340;
+    s32 q, a, b;
+    u8 c;
+    u16 s;
+
+    n <<= 2;
+    q = p[0];
+    a = p[0];
+    b = *(s32 *)(q + n + 4);
+    o->unkA4 = 1;
+    o->unkA0 = a + b;
+    c = D_800A53A7[0];
+    o->unkA = 0x11;
+    o->unkF = c - 2;
+    o->x.p.whole = D_800A53AA;
+    o->y.p.whole = D_800A53AE[0];
+    s = D_800A53B2[0];
+    o->unk84 = 0;
+    o->unk88 = 0;
+    o->unk8C = 0;
+    o->z.p.whole = s;
+}

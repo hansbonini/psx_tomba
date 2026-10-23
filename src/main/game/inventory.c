@@ -307,7 +307,26 @@ void dispatchAreaItemHandler(s32 arg0)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A0A0);
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A0A0);
+void func_8002A0A0(u8 *o)
+{
+    S32(o, 0x08) = *(s32 *)PTR(o, 0x34) - 0xA00000;
+    S32(o, 0x0C) = VIEW_CAMERA.pos[1].raw + NTSC_PAL(0x780000, 0x800000);
+    S32(o, 0x10) = *(s32 *)PTR(o, 0x38);
+    getBaseMatrix(&VIEW_CAMERA.m);
+    RotMatrixY((((S32(o, 0x24) >> 8) + (S32(o, 0x7C) >> 8)) << 12) / 360, &VIEW_CAMERA.m);
+    RotMatrixX((((S32(o, 0x20) >> 8) + (S32(o, 0x78) >> 8)) << 12) / 360, &VIEW_CAMERA.m);
+    VIEW_CAMERA.m.t[0] = -VIEW_CAMERA.rot[0].p.whole;
+    VIEW_CAMERA.m.t[1] = -VIEW_CAMERA.rot[1].p.whole;
+    VIEW_CAMERA.m.t[2] = -VIEW_CAMERA.rot[2].p.whole;
+    D_1F800060.vx = -VIEW_CAMERA.pos[0].p.whole;
+    D_1F800060.vy = -VIEW_CAMERA.pos[1].p.whole;
+    D_1F800060.vz = -VIEW_CAMERA.pos[2].p.whole;
+    ApplyMatrixSV(&VIEW_CAMERA.m, &D_1F800060, &D_1F800068);
+    VIEW_CAMERA.m.t[0] += D_1F800068.vx;
+    VIEW_CAMERA.m.t[1] += D_1F800068.vy;
+    VIEW_CAMERA.m.t[2] += D_1F800068.vz;
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A240);
 typedef struct { u8 b0; char p[0x15]; s16 w16; } S_2A240;
@@ -386,7 +405,119 @@ void func_8002A334(S_2A334 *o)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A480);
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A480);
+void func_8002A480(GameObject *o_)
+{
+    CameraScroll *o = (CameraScroll *)o_;
+    GameObject *g;
+    unsigned char flag;
+    int v;
+    int k;
+    int m;   
+
+    g = &PLAYER.obj;
+    if (D_8009C618[0] >= 3)
+        return;
+    flag = 0;
+    k = 0x400000;
+    m = 0x340000;
+    v = D_800A53AC_S32 - NTSC_PAL(0x780000, 0x800000);
+    v -= D_1F8000F0.raw;
+    v += k;
+    if (v < 0) {
+        v += m;
+        if (v >= 0) {
+            o->velY = 0;
+            o->settled = 1;
+            o->rising = 0;
+            return;
+        }
+        flag = 1;
+    }
+    if (!flag) {
+        if (o->rising) {
+            switch (g->unk9E) {
+            case 4:
+                if (U8(g, 0xA9))
+                    goto clampA;
+                goto clr;
+            case 0:
+            case 7:
+            case 8:
+            case 9:
+            clampA:
+                D_1F8000F0_S32Arr[0] = g->y.raw + k - NTSC_PAL(0x780000, 0x800000);
+                if (D_1F8000F2 > o->maxY) {
+                    D_1F8000F0.raw = o->maxY << 16;
+                    o->velY = 0;
+                    o->edgeFlags |= 8;
+                }
+                return;
+            default:
+            clr:
+                o->rising = 0;
+                break;
+            }
+        }
+        if (v > 0x10000) {
+            if (v < o->velY) {
+                if (v < 0x40000)
+                    o->velY = v;
+                else {
+                    o->velY = 0x40000;
+                    o->rising = 1;
+                }
+            } else {
+                if (o->velY < 0)
+                    o->velY = 0;
+                o->velY += 0x8000;
+            }
+            D_1F8000F0_S32Arr[0] += o->velY;
+            if (D_1F8000F2 > o->maxY) {
+                D_1F8000F0.raw = o->maxY << 16;
+                o->velY = 0;
+                o->edgeFlags |= 8;
+            }
+            return;
+        }
+        D_1F8000F0_S32Arr[0] = g->y.raw + k - NTSC_PAL(0x780000, 0x800000);
+        if (D_1F8000F2 > o->maxY) {
+            D_1F8000F0.raw = o->maxY << 16;
+            o->velY = 0;
+            o->edgeFlags |= 8;
+        }
+        return;
+    }
+    if (g->unk9C == 0) {
+        if (v < -0x40000) {
+            if (o->velY < v) {
+                if (v > -0x40000)
+                    goto set;
+                o->velY = -0x40000;
+            } else {
+                if (o->velY > 0)
+                    o->velY = 0;
+                o->velY -= 0x4000;
+            }
+        } else
+            goto set;
+    } else {
+        if (v >= -0x400000)
+            return;
+        v += 0x400000;
+        if (v > -0x40000) {
+        set:
+            o->velY = v;
+        } else
+            o->velY = -0x40000;
+    }
+    D_1F8000F0_S32Arr[0] += o->velY;
+    if (D_1F8000F2 < o->minY) {
+        D_1F8000F0.raw = o->minY << 16;
+        o->velY = 0;
+        o->edgeFlags |= 4;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A798);
 typedef struct O_2A798 { char p0[0x14]; s32 y; char p1[0x2c-0x18]; s16 h2c; s16 h2e; char p2[0x34-0x30]; s32 *d34;
@@ -759,9 +890,98 @@ s32 stepScrollReturnX(u8* self)
     return 0;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B110);
+static inline s32 cameraTargetY(void)
+{
+    s32 t;
 
-INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B278);
+    if (D_800A5436[0] == 3) {
+        t = (u16)SPAD->vpy.p.whole - 0x14;
+        return t - D_800A53CC;
+    }
+    return (u16)SPAD->vpy.p.whole - (u16)SPAD->unk168[1].p.whole;
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B110);
+void func_8002B110(u8 *o)
+{
+    char pad;
+    s16 n;
+    s32 s;
+    s32 r;
+
+    r = cameraTargetY();
+    s = r;
+    r = 0;
+    n = s;
+    n += D_1F8000E6_S16Arr[0];
+    if (n != -0x50) {
+        if (n > -0x50) {
+            if (n >= -0x33) {
+                SPAD->vpy.p.whole -= 2;
+                if (SPAD->vpy.p.whole < S16(o, 0x30)) {
+                    SPAD->vpy.p.whole = S16(o, 0x30);
+                } else {
+                    s -= 2;
+                }
+            } else {
+                D_1F8000E6_S16Arr[0] -= 2;
+            }
+            if ((s16)s + D_1F8000E6_S16Arr[0] < -0x50) {
+                D_1F8000E6_S16Arr[0] = -0x50 - s;
+            }
+        } else {
+            D_1F8000E6_S16Arr[0] += 2;
+            if ((s16)s + D_1F8000E6_S16Arr[0] > -0x50) {
+                D_1F8000E6_S16Arr[0] = -0x50 - s;
+            }
+        }
+    }
+    if (SPAD->vpy.p.whole + SPAD->vry.p.whole < S16(o, 0x30)) {
+        SPAD->vry.p.whole = S16(o, 0x30) - SPAD->vpy.p.whole;
+    }
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B278);
+void func_8002B278(u8 *o)
+{
+    char pad;
+    s16 n;
+    s32 s;
+    s32 r;
+    u8 *b;
+
+    b = o;
+    r = cameraTargetY();
+    s = r;
+    r = 0;
+    n = s;
+    n += D_1F8000E6_S16Arr[0];
+    if (n != 0x3A) {
+        if (n < 0x3A) {
+            if (n < -6) {
+                SPAD->vpy.p.whole += 2;
+                if (S16(b, 0x32) < SPAD->vpy.p.whole) {
+                    SPAD->vpy.p.whole = S16(b, 0x32);
+                } else {
+                    s += 2;
+                }
+            } else {
+                D_1F8000E6_S16Arr[0] += 2;
+            }
+            if ((s16)s + D_1F8000E6_S16Arr[0] > 0x3A) {
+                D_1F8000E6_S16Arr[0] = 0x3A - s;
+            }
+        } else {
+            D_1F8000E6_S16Arr[0] -= 2;
+            if ((s16)s + D_1F8000E6_S16Arr[0] < 0x3A) {
+                D_1F8000E6_S16Arr[0] = 0x3A - s;
+            }
+        }
+    }
+    if (SPAD->vpy.p.whole + SPAD->vry.p.whole > S16(b, 0x32)) {
+        SPAD->vry.p.whole = S16(b, 0x32) - SPAD->vpy.p.whole;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B3E8);
 
@@ -791,13 +1011,13 @@ void func_8002B3E8(char *o, s32 a)
     k = PAD_PRESSED;
     if (*k & 0x10) {
         if (a != 0 || *(s32 *)(o + 0x20) < -0x9ff) {
-            func_8002B110(o, a);
+            func_8002B110(o);
             return;
         }
         decay_2B3E8();
     } else if (*k & 0x40) {
         if (a != 0 || *(s32 *)(o + 0x20) >= 0xa00) {
-            func_8002B278(o, a);
+            func_8002B278(o);
             return;
         }
         decay_2B3E8();
@@ -1881,7 +2101,123 @@ void updateObjectsLayer8(void)
 void stubInventory2(void) {
 }
 
+// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DBD8);
+typedef struct {
+    /* 0x00 */ u8 active;
+    /* 0x01 */ u8 visible;
+    /* 0x02 */ u8 type;
+    /* 0x03 */ u8 subtype;
+    /* 0x04 */ u8 state;
+    /* 0x05 */ u8 subState;
+    /* 0x06 */ u8 pad06[4];
+    /* 0x0A */ u8 unkA;
+    /* 0x0B */ u8 pad0B[5];
+    /* 0x10 */ Fix16 x;
+    /* 0x14 */ Fix16 y;
+    /* 0x18 */ Fix16 z;
+    /* 0x1C */ u8 pad1C[4];
+    /* 0x20 */ s16 timer;
+    /* 0x22 */ u8 pad22[0xE];
+    /* 0x30 */ Fix16 posX;
+    /* 0x34 */ Fix16 posY;
+    /* 0x38 */ Fix16 posZ;
+    /* 0x3C */ u8 pad3C[0x30];
+    /* 0x6C */ u16 uv[4];
+    /* 0x74 */ u8 pad74[0xA];
+    /* 0x7E */ s16 velY;
+    /* 0x80 */ s16 velX;
+    /* 0x82 */ s16 velZ;
+    /* 0x84 */ s32 rotX;
+    /* 0x88 */ s32 rotY;
+    /* 0x8C */ s32 rotZ;
+    /* 0x90 */ u8 pad90[0x14];
+    /* 0xA4 */ u8 unkA4;
+    /* 0xA5 */ u8 padA5[0xF];
+    /* 0xB4 */ s16 phaseA;
+    /* 0xB6 */ s16 stepA;
+    /* 0xB8 */ s16 phaseB;
+    /* 0xBA */ s16 stepB;
+    /* 0xBC */ u16 spriteId;
+    /* 0xBE */ u16 slot;
+    /* 0xC0 */ u16 spriteId2;
+    /* 0xC2 */ s16 slot2;
+    /* 0xC4 */ s16 destX;
+    /* 0xC6 */ s16 destY;
+    /* 0xC8 */ s16 homeX;
+    /* 0xCA */ s16 homeY;
+    /* 0xCC */ u16 unkCC;
+    /* 0xCE */ u16 cmd;
+    /* 0xD0 */ u16 flagD0;
+    /* 0xD2 */ u16 eventId;
+} PopupIcon;
+
+#if defined(VERSION_SCES_01330) || defined(VERSION_SCES_01331)
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DBD8);
+#else
+void func_8002DBD8(PopupIcon *o)
+{
+    s32 state = o->state;
+    s32 u0, v0, u1, v1;
+    s16 s;
+
+    switch (state) {
+    case 0:
+        o->unkA = 0x14;
+        o->unkA4 = 1;
+        o->slot2 = acquireSpriteSlot(o->spriteId2);
+        o->slot = s = acquireSpriteSlot(o->spriteId);
+        u0 = SPRITE_SLOTS[s].val[0] * 4;
+        v0 = SPRITE_SLOTS[s].val[1] << 8;
+        u1 = u0 + SPRITE_SLOTS[s].val[2];
+        v1 = v0 + (SPRITE_SLOTS[s].val[3] << 8);
+        o->uv[1] = u0 | v0;
+        o->uv[3] = v0 | u1;
+        o->uv[0] = u0 | v1;
+        o->uv[2] = u1 | v1;
+        o->state++;
+        break;
+    case 1:
+        if (D_8009C10A != state) {
+            func_8002DEC4(o);
+        }
+        o->visible = 1;
+        pushDrawListLayer8(o);
+        break;
+    case 2:
+        if (--SPRITE_SLOTS[o->slot].refCount == 0) {
+            SPRITE_SLOTS[o->slot].id = -1;
+        }
+        if (D_8009C618[0] != 3) {
+            if (o->cmd & 0x7FFF) {
+                if (o->eventId != 0) {
+                    setEventStarted(o->eventId, 0, 3);
+                }
+                if ((o->cmd & 0x7FFF) == state) break;
+                if (o->flagD0 == 0 || (o->cmd & 0x7FFF) == 3) {
+                    D_8009BCA7_U8Arr[0] = 0;
+                    D_8009BCAA_U8Arr[0] = 0;
+                    if ((o->cmd & 0x7FFF) != 4 && (D_800A5436[0] == 0 || D_800A5444[0] < 2)) {
+                        D_800A539C = 1;
+                        D_800A539D = 0;
+                        D_800A539E = 0;
+                        D_800A539F = 0;
+                    } else {
+                        D_8009BCA6 = 0;
+                    }
+                }
+            }
+            if ((o->cmd & 0x8000) && (o->cmd & 0x7FFF) != 2) {
+                D_8009BC9B = 0;
+            }
+        }
+        o->state++;
+        break;
+    case 3:
+        freeObjectLayer8(o);
+        break;
+    }
+}
+#endif
 
 INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002DEC4);
 

@@ -320,7 +320,68 @@ s32 func_80044694(O_44694 *o, s16 x, s16 y)
     return 0;
 }
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_800448D4);
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_800448D4);
+s32 func_800448D4(GameObject *o, s16 x, s16 y)
+{
+    s16 *p;
+    s16 n;
+    s32 cnt;
+    u16 a;
+    u16 b;
+    u16 c;
+    u16 d;
+    s32 lo;
+    s32 hi;
+    s32 cs;
+    s16 k;
+    s16 r;
+    s16 cc;
+    char xm;
+    s32 ys;
+
+    p = getCollisionPlaneAt((s16)x, o->d->p.whole);
+    D_1F800278 = (u16 *)(p + 1);
+    n = *p;
+    if (n == 0) return 0;
+    cnt = 0;
+    ys = (s16)y;
+    xm = x & 7;
+    while (n != 0) {
+        a = *D_1F800278++;
+        n--;
+        if ((a & 0xc) == 0 || (a & 0x10)) {
+            D_1F800278 += 3;
+            cnt++;
+            continue;
+        }
+        b = *D_1F800278++;
+        c = *(volatile u16 *)D_1F800278++;
+        cs = (s16)c;
+        d = *D_1F800278++;
+        if (cs == 0) continue;
+        lo = d & 0xf;
+        hi = (d >> 4) & 0xf;
+        if (cnt != 0 && (s16)b + 0x10 < ys) break;
+        cnt++;
+        k = y - b;
+        cc = cs;
+        if (cc < 0) {
+            if (k < cc) continue;
+            if (k > 0) return 0;
+        } else {
+            if (cs < k) break;
+            if (k < 0) continue;
+        }
+        if (a & 0x10) {
+            if (a & 4) return 1;
+            return (a >> 2) & 2;
+        }
+        r = xm - lo - hi * (ys - (s16)b) / (s16)c;
+        if (a & 4) return r >= 0;
+        if (a & 8) return (r < 1) << 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("nonmatchings/main/game/collision", func_80044B0C);
 
@@ -503,6 +564,84 @@ s32 func_80045570(GameObject *o, s16 a, s32 b)
     return check_45570(o, a, b);
 }
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_80045780);
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_80045780);
+s32 func_80045780(s16 a, s32 b, s16 c)
+{
+    s16 *q;
+    s32 nn;
+    s32 empty;
+    s32 n;
+    u16 f, y, h;
+    s32 d;
+    char pad[8];
 
-INCLUDE_ASM("nonmatchings/main/game/collision", func_800458B0);
+    q = getCollisionPlaneAt(a, c);
+    D_1F800278 = (u16 *)(q + 1);
+    nn = *q;
+    empty = nn == 0;
+    n = nn;
+    if (empty) return 0;
+    do {
+        f = *D_1F800278++;
+        n--;
+        if (f & 0x4000) {
+            if (f & 0x10) goto take;
+        }
+        D_1F800278 += 3;
+        continue;
+take:
+        y = *D_1F800278++;
+        h = *D_1F800278++;
+        D_1F800278++;
+        d = b - y - h;
+        if ((u16)(d - 1) > -(s16)h) {
+            if ((s16)d > 0) return 0;
+            continue;
+        }
+        y += 8;
+        if ((u16)(b - y - h - 1) > -(s16)h) return 2;
+        return 1;
+    } while ((s16)n != 0);
+    return 0;
+}
+
+// INCLUDE_ASM("nonmatchings/main/game/collision", func_800458B0);
+s32 func_800458B0(s16 a, s32 b, s16 c)
+{
+    s16 *q;
+    s32 nn;
+    s32 empty;
+    s32 n;
+    u16 f, y, h;
+    s32 d;
+    char pad[8];
+
+    q = getCollisionPlaneAt(a, c);
+    D_1F800278 = (u16 *)(q + 1);
+    nn = *q;
+    empty = nn == 0;
+    n = nn;
+    if (empty) return 0;
+    do {
+        f = *D_1F800278++;
+        n--;
+        if (f & 0x4000) {
+            if (f & 0x10) goto take;
+        }
+        D_1F800278 += 3;
+        continue;
+take:
+        y = *D_1F800278++;
+        h = *D_1F800278++;
+        D_1F800278++;
+        d = b - y - h;
+        if ((u16)(d - 1) > -(s16)h) {
+            if ((s16)d > 0) return 0;
+            continue;
+        }
+        y += 8;
+        if ((u16)(b - y - h - 1) > -(s16)h) return 2;
+        return 1;
+    } while ((s16)n != 0);
+    return 0;
+}

@@ -24,4 +24,17 @@ typedef struct LightEnv {
 #define SCRATCH_VIEW_MATRIX ((MATRIX*)D_1F8000C0)
 #define SCRATCH_BASE_MATRIX ((MATRIX*)(&D_1F8000F8))
 
+/* One part of a sprite frame in a SPR/WPP bank: the UVs and CLUT/tpage of the
+   SPRT or POLY_FT4, its size and its offset from the object. */
+typedef struct SprFrag {
+    /* 0x00 */ u8 u, v;
+    /* 0x02 */ u16 clut;
+    /* 0x04 */ u16 uv1;
+    /* 0x06 */ u16 tpage;
+    /* 0x08 */ u16 uv2;
+    /* 0x0A */ u8 w, h;
+    /* 0x0C */ u16 uv3;
+    /* 0x0E */ s8 dx, dy;
+} SprFrag;
+
 #endif

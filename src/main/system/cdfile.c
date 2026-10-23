@@ -1908,7 +1908,89 @@ void queueAreaSectionLists(s32 area, s32 section, s32 reloadArea)
     LOAD_SLOTS[3] = LOAD_NEXT_ADDR;
 }
 
-INCLUDE_ASM("nonmatchings/main/system/cdfile", queueLoadList);
+// INCLUDE_ASM("nonmatchings/main/system/cdfile", queueLoadList);
+s32 queueLoadList(e, unused, base)
+LoadRecord *e;
+s32 unused;
+s32 base;
+{
+    s32 pending = 0;
+    s32 saved;
+    u8 t;
+    s32 lo;
+
+    while (e->fileId != -1) {
+        if ((e->kind & 0xd0) != 0xd0 && e->kind != 0x55 && pending == 1) {
+            base = saved;
+            pending = 0;
+        }
+        if (e->addr != 0) base = e->addr;
+        if (e->slot != 0xff) {
+            if (e->slot < 0x80) LOAD_SLOTS[e->slot] = base;
+            else base = LOAD_SLOTS[e->slot & 0x7f];
+        }
+        if (e->kind == LOAD_KIND_INS) {
+            saved = base;
+            base = (s32)D_800E7388;
+            pending = 1;
+        } else if (e->kind == LOAD_KIND_LDSYS) {
+            pending = 1;
+            saved = base;
+            base = (s32)D_80097FA8;
+        }
+        CD_QUEUE[D_1F80029C * 2] = (s32)e;
+        CD_QUEUE_DST[D_1F80029C * 2] = base;
+        D_1F80029C = (D_1F80029C + 1) & 0x7f;
+        if ((s32)(e->type & 0xf) < 3) {
+            t = e->kind;
+            lo = t & 0xf;
+            switch (t & 0xf0) {
+            case 0x00: case LOAD_KIND_GRPX: case LOAD_KIND_NONE: break;
+            case LOAD_KIND_SPR: SPR_DATA[lo] = base; break;
+            case LOAD_KIND_FOUR: FOUR_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WMD: WMD_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WPP: WPP_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WHM: WHM_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_APD: APD_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WVD: case LOAD_KIND_UNKA: break;
+            case LOAD_KIND_SEQ: SEQ_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WSS: WSS_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WFM3: WFM3_DATA_S32Arr[lo] = base; break;
+            }
+            if ((e->kind & 0xf0) != LOAD_KIND_GRPX) base += e->arg;
+            e++;
+        } else {
+            do {
+                t = e->kind;
+                lo = t & 0xf;
+                switch (t & 0xf0) {
+                case 0x00: case LOAD_KIND_GRPX: case LOAD_KIND_NONE: break;
+                case LOAD_KIND_SPR: SPR_DATA[lo] = base; break;
+                case LOAD_KIND_FOUR: FOUR_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WMD: WMD_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WPP: WPP_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WHM: WHM_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_APD: APD_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WVD: WVD_BODIES[lo] = base; break;
+                case LOAD_KIND_UNKA: WVD_HEADERS[lo] = base; break;
+                case LOAD_KIND_SEQ: SEQ_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WSS: WSS_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WFM3: WFM3_DATA_S32Arr[lo] = base; break;
+                }
+                if ((e->kind & 0xf0) != LOAD_KIND_GRPX) base += e->arg;
+                e++;
+            } while (e->type == LOAD_TYPE_SUB);
+        }
+        switch (base & 3) {
+        case 1: base++;
+        case 2: base++;
+        case 3: base++;
+        }
+    }
+    if (pending == 1) LOAD_NEXT_ADDR = saved;
+    else LOAD_NEXT_ADDR = base;
+    return 0;
+}
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", queueSystemLoadList);
 void queueSystemLoadList(s32 id, s32 start)
