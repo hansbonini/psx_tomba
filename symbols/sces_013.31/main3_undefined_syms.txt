@@ -501,3 +501,6 @@ kMaxPrograms = 0x8009D660;
 spuVmMaxVoice = 0x8009D6D0;
 PROVIDE(PadInfoMode = 0x8006911C);
 PROVIDE(PadSetMainMode = 0x800693C8);
+D_8009BC9B = 0x8009C96B;
+D_800A539F = 0x800A6077;
+acquireSpriteSlot = 0x8005B38C;

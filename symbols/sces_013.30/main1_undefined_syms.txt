@@ -504,3 +504,6 @@ _svm_voice = 0x8009BEE8;
 jtbl_8009AFB4_main = 0x8009B754;
 kMaxPrograms = 0x8009D130;
 spuVmMaxVoice = 0x8009D1A0;
+D_8009BC9B = 0x8009C43B;
+D_800A539F = 0x800A5B57;
+acquireSpriteSlot = 0x8005B388;
