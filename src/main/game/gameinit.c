@@ -648,10 +648,14 @@ void freeObjectUnlayered(s32* arg0)
     *--D_1F800210 = (s32)arg0;
 }
 
-#if !defined(VERSION_SCUS_94236)
-INCLUDE_RODATA("nonmatchings/main/game/gameinit", D_80010000);
+#if defined(VERSION_SCES_01330)
+const char BUILD_DATE[] asm("D_80010000") = "98/7/31";
 
-INCLUDE_RODATA("nonmatchings/main/game/gameinit", D_80010008);
+const char BUILD_TIME[] asm("D_80010008") = "9:16";
+#elif defined(VERSION_SCES_01331)
+const char BUILD_DATE[] asm("D_80010000") = "98/8/26";
+
+const char BUILD_TIME[] asm("D_80010008") = "14:10";
 #else
 const char BUILD_DATE[] asm("D_80010000") = "98/3/22";
 

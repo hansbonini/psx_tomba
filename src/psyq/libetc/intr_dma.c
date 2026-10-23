@@ -1,5 +1,16 @@
 #include "common.h"
 
+u32 D_800974DC_d[1] asm("D_800974DC") = {
+    0x1F8010F4,
+};
+u32 D_800974E0_d[8] asm("D_800974E0") = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+u32 D_80097500_d[1] asm("D_80097500") = {
+    0x1F801080,
+};
+
 typedef void (*Callback)();
 
 Callback setIntrDMA(int index, Callback callback);

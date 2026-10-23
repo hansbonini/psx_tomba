@@ -2,6 +2,12 @@
 #include "game.h"
 #include "game/area_module.h"
 
+u32 D_8007EDD0_d[11] asm("D_8007EDD0") = {
+    0xFFFA0010, 0xFFFA0010, 0x00000000, 0xFFFE0010,
+    0xFFFE0018, 0xFFFE001C, 0xFFFE000A, 0xFFFE0010,
+    0xFFFE0010, 0x00000000, 0x00000010,
+};
+
 // INCLUDE_ASM("nonmatchings/main/game/actor1", computeRotatedQuad);
 void computeRotatedQuad(s16* out, s32 arg1, s16 r1, s16 r2) {
     s32 angle = arg1 & 0xFF;

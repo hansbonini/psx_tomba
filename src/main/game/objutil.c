@@ -2,6 +2,10 @@
 #include "game.h"
 #include "game/objinit.h"
 
+u32 D_8007D6A0_d[1] asm("D_8007D6A0") = {
+    0x00000001,
+};
+
 // INCLUDE_ASM("nonmatchings/main/game/objutil", distanceToPlayer);
 s16 distanceToPlayer(u8* self)
 {

@@ -1,6 +1,29 @@
 #include "common.h"
 #include "game.h"
 
+u32 D_8007B290_d[1] asm("D_8007B290") = {
+    0x00000017,
+};
+u32 D_8007B294_d[12] asm("D_8007B294") = {
+    0x00050006, 0x00060006, 0x00040014, 0x00050003,
+    0x00070004, 0x00050009, 0x00020014, 0x00010008,
+    0x000B0007, 0x00030003, 0x00010001, 0x00010001,
+};
+u32 BUTTON_CONFIGS_d[1] asm("BUTTON_CONFIGS") = {
+    0x40008000,
+};
+u32 D_8007B2C8_d[11] asm("D_8007B2C8") = {
+    0x10002000, 0x10004000, 0x20008000, 0x40002000,
+    0x10008000, 0x80004000, 0x10002000, 0x10002000,
+    0x80004000, 0x20001000, 0x80004000,
+};
+
+asm(
+    ".globl D_8007B296\nD_8007B296 = D_8007B294 + 2\n"
+    ".globl D_8007B2C6\nD_8007B2C6 = BUTTON_CONFIGS + 2\n"
+    ".globl D_8007B2CA\nD_8007B2CA = D_8007B2C8 + 2\n"
+);
+
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80022C08);
 
 s32 func_80022C08(GameObject *o, s32 x)

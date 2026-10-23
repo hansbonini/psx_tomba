@@ -1,6 +1,126 @@
 #include "common.h"
 #include "psyq/libgpu.h"
 
+extern u8 D_80015BA8_x[] asm("D_80015BA8");
+extern u8 D_80090C54_x[] asm("D_80090C54");
+extern u8 _addque_x[] asm("_addque");
+extern u8 _addque2_x[] asm("_addque2");
+extern u8 _clr_x[] asm("_clr");
+extern u8 _ctl_x[] asm("_ctl");
+extern u8 _cwb_x[] asm("_cwb");
+extern u8 _cwc_x[] asm("_cwc");
+extern u8 _drs_x[] asm("_drs");
+extern u8 _dws_x[] asm("_dws");
+extern u8 _exeque_x[] asm("_exeque");
+extern u8 _getctl_x[] asm("_getctl");
+extern u8 _otc_x[] asm("_otc");
+extern u8 _param_x[] asm("_param");
+extern u8 _reset_x[] asm("_reset");
+extern u8 _status_x[] asm("_status");
+extern u8 _sync_x[] asm("_sync");
+extern u8 printf_x[] asm("printf");
+
+u32 D_80090C54_d[16] asm("D_80090C54") = {
+    (u32)D_80015BA8_x, (u32)_addque_x, (u32)_addque2_x, (u32)_clr_x,
+    (u32)_ctl_x, (u32)_cwb_x, (u32)_cwc_x, (u32)_drs_x,
+    (u32)_dws_x, (u32)_exeque_x, (u32)_getctl_x, (u32)_otc_x,
+    (u32)_param_x, (u32)_reset_x, (u32)_status_x, (u32)_sync_x,
+};
+u32 D_80090C94_d[1] asm("D_80090C94") = {
+    (u32)D_80090C54_x,
+};
+u32 GPU_printf_d[1] asm("GPU_printf") = {
+    (u32)printf_x,
+};
+u32 GPU_INFO_d[32] asm("GPU_INFO") = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+u32 D_80090D1C_d[5] asm("D_80090D1C") = {
+    0x00000400, 0x00000400, 0x00000400, 0x00000400,
+    0x00000400,
+};
+u32 D_80090D30_d[7] asm("D_80090D30") = {
+    0x00000200, 0x00000400, 0x00000400, 0x00000200,
+    0x00000400, 0x04FFFFFF, 0x80000000,
+};
+u32 D_80090D4C_d[1] asm("D_80090D4C") = {
+    0x00000000,
+};
+u32 D_80090D50_d[1] asm("D_80090D50") = {
+    0x00000000,
+};
+u32 D_80090D54_d[1] asm("D_80090D54") = {
+    0x00000000,
+};
+u32 D_80090D58_d[5] asm("D_80090D58") = {
+    0x04FFFFFF, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000,
+};
+u32 GPU_DATA_d[1] asm("GPU_DATA") = {
+    0x1F801810,
+};
+u32 GPU_STATUS_d[1] asm("GPU_STATUS") = {
+    0x1F801814,
+};
+u32 DMA1_MADR_d[1] asm("DMA1_MADR") = {
+    0x1F8010A0,
+};
+u32 DMA1_BCR_d[1] asm("DMA1_BCR") = {
+    0x1F8010A4,
+};
+u32 DMA1_CHCR_d[1] asm("DMA1_CHCR") = {
+    0x1F8010A8,
+};
+u32 DMA2_MADR_d[1] asm("DMA2_MADR") = {
+    0x1F8010E0,
+};
+u32 DMA2_BCR_d[1] asm("DMA2_BCR") = {
+    0x1F8010E4,
+};
+u32 DMA2_CHCR_d[1] asm("DMA2_CHCR") = {
+    0x1F8010E8,
+};
+u32 DPCR_d[1] asm("DPCR") = {
+    0x1F8010F0,
+};
+u32 D_80090D90_d[1] asm("D_80090D90") = {
+    0x00000000,
+};
+u32 D_80090D94_d[1] asm("D_80090D94") = {
+    0x00000000,
+};
+u32 D_80090D98_d[2] asm("D_80090D98") = {
+    0x00000000, 0x00000000,
+};
+u32 GPU_QIN_d[1] asm("GPU_QIN") = {
+    0x00000000,
+};
+u32 GPU_QOUT_d[1] asm("GPU_QOUT") = {
+    0x00000000,
+};
+u32 D_80090DA8_d[1] asm("D_80090DA8") = {
+    0x00000000,
+};
+u32 D_80090DAC_d[1] asm("D_80090DAC") = {
+    0x00000000,
+};
+u32 D_80090DB0_d[1] asm("D_80090DB0") = {
+    0x00000000,
+};
+u32 D_80090DB4_d[1] asm("D_80090DB4") = {
+    0x00000000,
+};
+u32 D_80090DB8_d[1] asm("D_80090DB8") = {
+    0x00000000,
+};
+
 #define OT_TYPE u_long
 #define CMD_CLEAR_CACHE 0x01000000
 #define CMD_COPY_VRAM_TO_CPU 0xC0000000

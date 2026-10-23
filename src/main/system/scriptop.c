@@ -1,6 +1,21 @@
 #include "common.h"
 #include "game.h"
 
+extern u8 D_80110C6C_x[] asm("D_80110C6C");
+extern u8 D_8011D33C_x[] asm("D_8011D33C");
+extern u8 D_8011E194_x[] asm("D_8011E194");
+extern u8 func_80036494_x[] asm("func_80036494");
+extern u8 func_800383AC_x[] asm("func_800383AC");
+extern u8 func_8003A4F8_x[] asm("func_8003A4F8");
+extern u8 func_8003F3D4_x[] asm("func_8003F3D4");
+extern u8 func_8003F9A4_x[] asm("func_8003F9A4");
+
+u32 D_8007D6A4_d[11] asm("D_8007D6A4") = {
+    (u32)func_80036494_x, (u32)func_8003F3D4_x, (u32)func_8003F9A4_x, (u32)D_8011D33C_x,
+    (u32)D_8011E194_x, (u32)func_800383AC_x, (u32)func_800383AC_x, (u32)func_800383AC_x,
+    (u32)func_8003A4F8_x, (u32)func_8003A4F8_x, (u32)D_80110C6C_x,
+};
+
 // INCLUDE_ASM("nonmatchings/main/system/scriptop", func_8003C9D4);
 typedef struct { char p0[0x84]; u8 *p84; u8 b88; char p89; u16 w8a; } S_3C9D4;
 

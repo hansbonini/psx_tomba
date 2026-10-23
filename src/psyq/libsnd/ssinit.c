@@ -1,6 +1,14 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+u32 D_800975E4_d[4] asm("D_800975E4") = {
+    0x00000000, 0x30001000, 0x000000BF, 0x00000000,
+};
+u32 D_800975F4_d[8] asm("D_800975F4") = {
+    0x3FFF3FFF, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+
 typedef void (*SndSsMarkCallbackProc)(short seq_no, short sep_no, short data);
 extern SndSsMarkCallbackProc _SsMarkCallback[32][16];
 extern short D_800975E4[];

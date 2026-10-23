@@ -2,6 +2,26 @@
 #include "game.h"
 #include "game/area_module.h"
 
+u32 D_8007EDFC_d[26] asm("D_8007EDFC") = {
+    0x01010001, 0x00000000, 0x00010001, 0x00010001,
+    0x01000100, 0x00010000, 0x00000001, 0x00000000,
+    0x00010100, 0x01000000, 0x00000000, 0x00000001,
+    0x00000000, 0x00000000, 0x00010001, 0x00000000,
+    0x00000000, 0x01000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000,
+};
+u32 D_8007EE64_d[31] asm("D_8007EE64") = {
+    0x00010000, 0x00000000, 0x00010001, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000100, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00010101, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000,
+};
+
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_80055E0C);
 static __inline__ s32 hit_55E0C(GameObject *a, GameObject *b)
 {
@@ -689,19 +709,20 @@ void dispatchAreaEnemyDraw(void)
     }
 }
 
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014C8C);
+extern const u32 D_80014CBC_ro[] asm("D_80014CBC");
+extern const u32 D_80014CC4_ro[] asm("D_80014CC4");
+extern const u32 D_80014CD0_ro[] asm("D_80014CD0");
 
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014C90);
-
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014C94);
-
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014CB4);
-
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014CBC);
-
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014CC4);
-
-INCLUDE_RODATA("nonmatchings/main/game/actor2", D_80014CD0);
+const u32 D_80014C8C_ro[] asm("D_80014C8C") = { (u32)D_80014CBC_ro };
+const u32 D_80014C90_ro[] asm("D_80014C90") = { (u32)D_80014CC4_ro };
+const u32 D_80014C94_ro[] asm("D_80014C94") = {
+    0x00000000, 0x00020000, 0x00000001, 0x00020000,
+    0x00000002, 0x00020000, 0x00000003, 0x80020000,
+};
+const u32 D_80014CB4_ro[] asm("D_80014CB4") = { 0x00000004, 0x80020000 };
+const u32 D_80014CBC_ro[] asm("D_80014CBC") = { 0x00000005, 0x803C0000 };
+const u32 D_80014CC4_ro[] asm("D_80014CC4") = { 0x00000006, 0x803C0000, (u32)D_80014CD0_ro };
+const u32 D_80014CD0_ro[] asm("D_80014CD0") = { 0x001A0052, 0x80050000 };
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_8005788C);
 typedef struct S_5788C { char p[0xc]; u8 b0c; } S_5788C;

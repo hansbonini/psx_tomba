@@ -2,6 +2,38 @@
 #include "game.h"
 #include "game/gte.h"
 
+u32 D_8007EB84_d[2] asm("D_8007EB84") = {
+    0x80A880A0, 0x88A888A0,
+};
+u32 D_8007EB8C_d[1] asm("D_8007EB8C") = {
+    0x80B780B0,
+};
+u32 D_8007EB90_d[7] asm("D_8007EB90") = {
+    0x88B788B0, 0x80BF80B8, 0x88BF88B8, 0x88B888B0,
+    0x8FB88FB0, 0x88C088B8, 0x8FC08FB8,
+};
+u32 BALLOON_TAIL_SPRITES_d[1] asm("BALLOON_TAIL_SPRITES") = {
+    0x008000C0,
+};
+u32 D_8007EBB0_d[15] asm("D_8007EBB0") = {
+    0x00100008, 0x008000DF, 0x0010FFF8, 0x008000D7,
+    0x0008FFF0, 0x008F00DF, 0xFFF0FFF8, 0x008F00C7,
+    0xFFF0FFF8, 0x008F00D8, 0xFFF00008, 0x008000C8,
+    0x00080010, 0x008000D8, 0x00100008,
+};
+
+asm(
+    ".globl D_8007EB85\nD_8007EB85 = D_8007EB84 + 1\n"
+    ".globl D_8007EB8D\nD_8007EB8D = D_8007EB8C + 1\n"
+    ".globl D_8007EB8E\nD_8007EB8E = D_8007EB8C + 2\n"
+    ".globl D_8007EB8F\nD_8007EB8F = D_8007EB8C + 3\n"
+    ".globl D_8007EB91\nD_8007EB91 = D_8007EB90 + 1\n"
+    ".globl D_8007EB92\nD_8007EB92 = D_8007EB90 + 2\n"
+    ".globl D_8007EB93\nD_8007EB93 = D_8007EB90 + 3\n"
+    ".globl D_8007EBAE\nD_8007EBAE = BALLOON_TAIL_SPRITES + 2\n"
+    ".globl D_8007EBB2\nD_8007EBB2 = D_8007EBB0 + 2\n"
+);
+
 // INCLUDE_ASM("nonmatchings/main/render/actorrender3", func_8004B450);
 typedef struct { s16 n, p2, x0, y0, x1, y1; char pad[8]; } ENT_4B450;
 typedef struct { ENT_4B450 e[7]; } ROW_4B450;

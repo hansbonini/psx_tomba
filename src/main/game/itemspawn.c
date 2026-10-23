@@ -1,6 +1,199 @@
 #include "common.h"
 #include "game.h"
 
+extern u8 D_8007E924_x[] asm("D_8007E924");
+extern u8 D_8007E974_x[] asm("D_8007E974");
+extern u8 D_8007E994_x[] asm("D_8007E994");
+extern u8 D_8007E9AC_x[] asm("D_8007E9AC");
+extern u8 D_8007E9C4_x[] asm("D_8007E9C4");
+extern u8 D_8007EA48_x[] asm("D_8007EA48");
+extern u8 D_8007EA50_x[] asm("D_8007EA50");
+extern u8 D_8007EA58_x[] asm("D_8007EA58");
+extern u8 D_8007EA60_x[] asm("D_8007EA60");
+extern u8 D_8007EA68_x[] asm("D_8007EA68");
+extern u8 D_8007EA80_x[] asm("D_8007EA80");
+extern u8 D_8007EA84_x[] asm("D_8007EA84");
+extern u8 D_8007EA88_x[] asm("D_8007EA88");
+extern u8 D_8007EA90_x[] asm("D_8007EA90");
+extern u8 D_8007EA94_x[] asm("D_8007EA94");
+extern u8 D_8007EA9C_x[] asm("D_8007EA9C");
+extern u8 D_8007EAA8_x[] asm("D_8007EAA8");
+extern u8 D_8007EAB0_x[] asm("D_8007EAB0");
+extern u8 D_8007EAC8_x[] asm("D_8007EAC8");
+extern u8 D_8007EACC_x[] asm("D_8007EACC");
+extern u8 D_8007EAD4_x[] asm("D_8007EAD4");
+extern u8 D_8007EAD8_x[] asm("D_8007EAD8");
+extern u8 D_8007EAE0_x[] asm("D_8007EAE0");
+extern u8 D_8007EAEC_x[] asm("D_8007EAEC");
+extern u8 D_8007EAF0_x[] asm("D_8007EAF0");
+extern u8 D_80115EA8_x[] asm("D_80115EA8");
+extern u8 D_80116064_x[] asm("D_80116064");
+extern u8 D_8011AD80_x[] asm("D_8011AD80");
+extern u8 D_8011E46C_x[] asm("D_8011E46C");
+extern u8 D_80122A34_x[] asm("D_80122A34");
+extern u8 D_80122D60_x[] asm("D_80122D60");
+extern u8 D_80122E68_x[] asm("D_80122E68");
+extern u8 D_8012325C_x[] asm("D_8012325C");
+extern u8 D_8012E538_x[] asm("D_8012E538");
+extern u8 D_8012E774_x[] asm("D_8012E774");
+extern u8 D_8012E938_x[] asm("D_8012E938");
+extern u8 D_8012ECBC_x[] asm("D_8012ECBC");
+extern u8 D_8012EE78_x[] asm("D_8012EE78");
+extern u8 D_8012F034_x[] asm("D_8012F034");
+extern u8 D_8012F220_x[] asm("D_8012F220");
+extern u8 D_8012F4FC_x[] asm("D_8012F4FC");
+extern u8 D_8012F860_x[] asm("D_8012F860");
+extern u8 D_8012FC6C_x[] asm("D_8012FC6C");
+extern u8 D_8012FED8_x[] asm("D_8012FED8");
+extern u8 D_8013016C_x[] asm("D_8013016C");
+extern u8 dispatchAreaItemDraw_x[] asm("dispatchAreaItemDraw");
+extern u8 dispatchAreaItemInit_x[] asm("dispatchAreaItemInit");
+extern u8 func_8004117C_x[] asm("func_8004117C");
+extern u8 func_80041DB4_x[] asm("func_80041DB4");
+extern u8 func_80042204_x[] asm("func_80042204");
+
+u32 D_8007E8A8_d[19] asm("D_8007E8A8") = {
+    (u32)func_8004117C_x, (u32)func_8004117C_x, (u32)func_8004117C_x, (u32)func_8004117C_x,
+    (u32)func_8004117C_x, (u32)func_8004117C_x, (u32)D_80122E68_x, (u32)dispatchAreaItemInit_x,
+    (u32)func_8004117C_x, (u32)func_80041DB4_x, (u32)func_80042204_x, (u32)D_80122A34_x,
+    (u32)D_80122D60_x, (u32)D_8012325C_x, (u32)D_8011E46C_x, (u32)D_80115EA8_x,
+    (u32)D_8011AD80_x, (u32)D_80116064_x, (u32)dispatchAreaItemDraw_x,
+};
+u32 D_8007E8F4_d[3] asm("D_8007E8F4") = {
+    0xFF000080, 0xFF00FF80, 0xFF000000,
+};
+u32 D_8007E900_d[3] asm("D_8007E900") = {
+    0x04010401, 0x04040401, 0x00000004,
+};
+u32 D_8007E90C_d[3] asm("D_8007E90C") = {
+    0xFF000080, 0xFF00FF80, 0xFF000000,
+};
+u32 D_8007E918_d[3] asm("D_8007E918") = {
+    0xFF000080, 0xFF00FF80, 0xFF000000,
+};
+u32 D_8007E924_d[20] asm("D_8007E924") = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+u32 D_8007E974_d[8] asm("D_8007E974") = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x04B00000, 0x0A460000, 0x00000000, 0x00000000,
+};
+u32 D_8007E994_d[6] asm("D_8007E994") = {
+    0x00000000, 0x00000000, 0x00820000, 0x01700000,
+    0x08800000, 0x0B400000,
+};
+u32 D_8007E9AC_d[6] asm("D_8007E9AC") = {
+    0x0B400000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000,
+};
+u32 D_8007E9C4_d[8] asm("D_8007E9C4") = {
+    0x0000FFC0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+u32 D_8007E9E4_d[1] asm("D_8007E9E4") = {
+    0x00001498,
+};
+u32 D_8007E9E8_d[4] asm("D_8007E9E8") = {
+    0x01680000, 0x05460000, 0x01680000, 0x05A00000,
+};
+u32 D_8007E9F8_d[3] asm("D_8007E9F8") = {
+    (u32)D_8007E974_x, (u32)D_8007E994_x, (u32)D_8007E924_x,
+};
+u32 D_8007EA04_d[17] asm("D_8007EA04") = {
+    (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E924_x,
+    (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E9AC_x, (u32)D_8007E924_x,
+    (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E9C4_x,
+    (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E924_x, (u32)D_8007E924_x,
+    (u32)D_8007E924_x,
+};
+u32 D_8007EA48_d[2] asm("D_8007EA48") = {
+    0x00050505, 0x00000000,
+};
+u32 D_8007EA50_d[2] asm("D_8007EA50") = {
+    0x00000000, 0x00000000,
+};
+u32 D_8007EA58_d[2] asm("D_8007EA58") = {
+    0x00000100, 0x00000000,
+};
+u32 D_8007EA60_d[2] asm("D_8007EA60") = {
+    0x00010101, 0x00000101,
+};
+u32 D_8007EA68_d[6] asm("D_8007EA68") = {
+    0x05030607, 0x00000000, 0x00010000, 0x00000000,
+    0x01000000, 0x00000000,
+};
+u32 D_8007EA80_d[1] asm("D_8007EA80") = {
+    0x01000100,
+};
+u32 D_8007EA84_d[1] asm("D_8007EA84") = {
+    0x00000000,
+};
+u32 D_8007EA88_d[2] asm("D_8007EA88") = {
+    0x00000000, 0x00000000,
+};
+u32 D_8007EA90_d[1] asm("D_8007EA90") = {
+    0x00000000,
+};
+u32 D_8007EA94_d[2] asm("D_8007EA94") = {
+    0x00000001, 0x00000000,
+};
+u32 D_8007EA9C_d[3] asm("D_8007EA9C") = {
+    0x00020001, 0x00020001, 0x00000000,
+};
+u32 D_8007EAA8_d[2] asm("D_8007EAA8") = {
+    0x01000100, 0x00000000,
+};
+u32 D_8007EAB0_d[6] asm("D_8007EAB0") = {
+    0x05030607, 0x00000000, 0x00010000, 0x00000000,
+    0x01000000, 0x00000000,
+};
+u32 D_8007EAC8_d[1] asm("D_8007EAC8") = {
+    0x00000001,
+};
+u32 D_8007EACC_d[2] asm("D_8007EACC") = {
+    0x00000000, 0x00000001,
+};
+u32 D_8007EAD4_d[1] asm("D_8007EAD4") = {
+    0x00000000,
+};
+u32 D_8007EAD8_d[2] asm("D_8007EAD8") = {
+    0x00000000, 0x00000000,
+};
+u32 D_8007EAE0_d[3] asm("D_8007EAE0") = {
+    0x00000000, 0x00000000, 0x00000000,
+};
+u32 D_8007EAEC_d[1] asm("D_8007EAEC") = {
+    0x00000000,
+};
+u32 D_8007EAF0_d[1] asm("D_8007EAF0") = {
+    0x00000100,
+};
+u32 D_8007EAF4_d[20] asm("D_8007EAF4") = {
+    (u32)D_8007EA48_x, (u32)D_8007EA50_x, (u32)D_8007EA58_x, (u32)D_8007EA60_x,
+    (u32)D_8007EA68_x, (u32)D_8007EA80_x, (u32)D_8007EA84_x, (u32)D_8007EA88_x,
+    (u32)D_8007EA90_x, (u32)D_8007EA94_x, (u32)D_8007EA9C_x, (u32)D_8007EAA8_x,
+    (u32)D_8007EAB0_x, (u32)D_8007EAC8_x, (u32)D_8007EACC_x, (u32)D_8007EAD4_x,
+    (u32)D_8007EAD8_x, (u32)D_8007EAE0_x, (u32)D_8007EAEC_x, (u32)D_8007EAF0_x,
+};
+u32 D_8007EB44_d[12] asm("D_8007EB44") = {
+    (u32)D_8012E538_x, (u32)D_8012E774_x, (u32)D_8012E938_x, (u32)D_8012ECBC_x,
+    (u32)D_8012EE78_x, (u32)D_8012F034_x, (u32)D_8012F220_x, (u32)D_8012F4FC_x,
+    (u32)D_8012F860_x, (u32)D_8012FC6C_x, (u32)D_8012FED8_x, (u32)D_8013016C_x,
+};
+u32 D_8007EB74_d[2] asm("D_8007EB74") = {
+    0x00000000, 0x00000000,
+};
+
+asm(
+    ".globl D_8007E8F6\nD_8007E8F6 = D_8007E8F4 + 2\n"
+    ".globl D_8007E90E\nD_8007E90E = D_8007E90C + 2\n"
+    ".globl D_8007E91A\nD_8007E91A = D_8007E918 + 2\n"
+);
+
 s16 probeCollisionAtDepthB(u8*, s16, s16);
 s32 probeCollisionAtDepthA(u8*, s16, s16);
 

@@ -1,5 +1,16 @@
 #include "common.h"
 
+u32 D_800974B4_d[8] asm("D_800974B4") = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+u32 Vcount_d[1] asm("Vcount") = {
+    0x00000000,
+};
+u32 D_800974D8_d[1] asm("D_800974D8") = {
+    0x1F801114,
+};
+
 extern void InterruptCallback(int, void (*)());
 void trapIntrVSync(void);
 extern void setIntrVSync(int, void (*)(void));

@@ -3,6 +3,17 @@
 #include "game/area_module.h"
 #include "game/gte.h"
 
+u32 D_8007EB7C_d[1] asm("D_8007EB7C") = {
+    0x00100010,
+};
+u32 D_8007EB80_d[1] asm("D_8007EB80") = {
+    0xFFF8FFF8,
+};
+
+asm(
+    ".globl D_8007EB82\nD_8007EB82 = D_8007EB80 + 2\n"
+);
+
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80045EFC);
 void func_8004D448(GameObject *o);
 

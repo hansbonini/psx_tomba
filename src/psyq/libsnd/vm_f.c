@@ -1,6 +1,10 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+u32 _svm_sreg_d[1] asm("_svm_sreg") = {
+    0x1F801C00,
+};
+
 extern u16* _svm_sreg;
 extern s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 extern char _svm_sreg_dirty[NUM_SPU_CHANNELS];

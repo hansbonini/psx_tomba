@@ -1,6 +1,10 @@
 #include "common.h"
 #include "padlocal.h"
 
+u32 D_800975A8_d[4] asm("D_800975A8") = {
+    0x1F801040, 0x00000000, 0x00000000, 0x00000000,
+};
+
 /* PSY-Q LIBPAD PADPORTD: PadInitDirect, func_8006AB4C,
  * func_8006ABB4, func_8006ACA8, func_8006ACB8,
  * func_8006AD74, func_8006AFF0, func_8006B028. */

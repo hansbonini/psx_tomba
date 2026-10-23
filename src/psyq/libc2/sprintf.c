@@ -1,6 +1,11 @@
 #include "common.h"
 #include "psyq/stdarg.h"
 
+u32 D_8007FAF4_d[5] asm("D_8007FAF4") = {
+    0x00000000, 0x00000000, 0x00000000, 0x0C037350,
+    0x003799DA,
+};
+
 #define testAndCast(n, cond, t) do {if (cond) {n = (t)n;}} while (0)
 
 typedef struct {

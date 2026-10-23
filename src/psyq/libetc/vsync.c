@@ -1,6 +1,19 @@
 #include "common.h"
 #include "psyq/libetc.h"
 
+u32 D_80096408_d[1] asm("D_80096408") = {
+    0x1F801814,
+};
+u32 D_8009640C_d[1] asm("D_8009640C") = {
+    0x1F801110,
+};
+u32 D_80096410_d[1] asm("D_80096410") = {
+    0x00000000,
+};
+u32 D_80096414_d[1] asm("D_80096414") = {
+    0x00000000,
+};
+
 extern volatile s32* D_80096408;
 extern volatile s32* D_8009640C;
 extern volatile s32 D_80096410; // HSync counter

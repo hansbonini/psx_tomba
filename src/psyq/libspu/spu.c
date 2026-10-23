@@ -2,6 +2,71 @@
 #include "psyq/stdarg.h"
 #include "libspu_internal.h"
 
+u32 _spu_RXX_d[1] asm("_spu_RXX") = {
+    0x1F801C00,
+};
+u32 dma_spu_madr_d[1] asm("dma_spu_madr") = {
+    0x1F8010C0,
+};
+u32 dma_spu_bcr_d[1] asm("dma_spu_bcr") = {
+    0x1F8010C4,
+};
+u32 dma_spu_chcr_d[1] asm("dma_spu_chcr") = {
+    0x1F8010C8,
+};
+u32 dma_dpcr_d[1] asm("dma_dpcr") = {
+    0x1F8010F0,
+};
+u32 D_80097C5C_d[1] asm("D_80097C5C") = {
+    0x1F801014,
+};
+u32 _spu_tsa_d[1] asm("_spu_tsa") = {
+    0x00000000,
+};
+u32 _spu_transMode_d[1] asm("_spu_transMode") = {
+    0x00000000,
+};
+u32 _spu_addrMode_d[1] asm("_spu_addrMode") = {
+    0x00000000,
+};
+u32 _spu_mem_mode_d[1] asm("_spu_mem_mode") = {
+    0x00000002,
+};
+u32 _spu_mem_mode_plus_d[1] asm("_spu_mem_mode_plus") = {
+    0x00000003,
+};
+u32 _spu_mem_mode_unit_d[1] asm("_spu_mem_mode_unit") = {
+    0x00000008,
+};
+u32 _spu_mem_mode_unitM_d[1] asm("_spu_mem_mode_unitM") = {
+    0x00000007,
+};
+u32 _spu_inTransfer_d[1] asm("_spu_inTransfer") = {
+    0x00000001,
+};
+u32 _spu_transferCallback_d[1] asm("_spu_transferCallback") = {
+    0x00000000,
+};
+u32 _spu_IRQCallback_d[1] asm("_spu_IRQCallback") = {
+    0x00000000,
+};
+u32 _spu_dummy_d[4] asm("_spu_dummy") = {
+    0x07070707, 0x07070707, 0x07070707, 0x07070707,
+};
+u32 D_80097C98_d[1] asm("D_80097C98") = {
+    0x00000000,
+};
+u32 spu_madr_d[1] asm("spu_madr") = {
+    0x00000000,
+};
+u32 spu_bcr_d[1] asm("spu_bcr") = {
+    0x00000000,
+};
+
+asm(
+    ".globl D_80097C62\nD_80097C62 = _spu_tsa + 2\n"
+);
+
 #define SPU_CTRL_MASK_TRANSFER_DMA_READ (3 << 4)
 #define SPU_CTRL_MASK_TRANSFER_DMA_WRITE (2 << 4)
 extern volatile unsigned* dma_spu_madr;

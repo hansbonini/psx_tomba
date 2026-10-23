@@ -1,6 +1,13 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+extern u8 SsSeqCalledTbyT_x[] asm("SsSeqCalledTbyT");
+
+u32 _snd_seq_tick_env_d[6] asm("_snd_seq_tick_env") = {
+    0x0000003C, 0x00000001, (u32)SsSeqCalledTbyT_x, 0x00000000,
+    0x007F0000, 0x00000000,
+};
+
 extern struct SndSeqTickEnv _snd_seq_tick_env;
 void _SsTrapIntrVSync(void);
 void _SsSeqCalledTbyT_1per2(void);
