@@ -432,7 +432,282 @@ void func_80058960(GameObject *o)
 }
 #undef SETANIM
 
-INCLUDE_ASM("nonmatchings/main/game/objpool", func_80058E14);
+// INCLUDE_ASM("nonmatchings/main/game/objpool", func_80058E14);
+extern void *D_80015578[];
+extern void *D_80015590[];
+extern void *D_800155A4[];
+extern void *D_800155BC[];
+
+void func_80058E14(GameObject *o)
+{
+    Player *pl = &PLAYER;
+    s32 f;
+
+    switch (o->state) {
+    case 0:
+        if (o->subtype == 0) {
+            o->state = 3;
+            break;
+        }
+        o->unk6A = 0;
+        switch (GAME.selectedArea) {
+        case 0:
+            o->tpage = 0xE;
+            *(void ***)&o->unkA8 = D_80015590;
+            break;
+        case 1:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+            case 1:
+                o->tpage = 0xB;
+                break;
+            case 2:
+            case 3:
+            case 4:
+                o->tpage = 6;
+                break;
+            }
+            *(void ***)&o->unkA8 = D_80015590;
+            break;
+        case 2:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_800155BC;
+                o->unk6A = 1;
+                break;
+            case 3:
+                o->tpage = 0x10;
+                *(void ***)&o->unkA8 = D_800155A4;
+                o->unk6A = 3;
+                break;
+            case 4:
+            case 5:
+                o->tpage = 0x11;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            case 1:
+            case 2:
+                o->tpage = 0xE;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            }
+            break;
+        case 3:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+            case 4:
+                o->tpage = 0xD;
+                break;
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 6:
+                o->tpage = 5;
+                break;
+            }
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 4:
+            o->tpage = 0x10;
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 5:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+            case 2:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_800155BC;
+                o->unk6A = 2;
+                break;
+            case 1:
+            case 3:
+                o->tpage = 0xB;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            }
+            break;
+        case 6:
+            o->tpage = 0xF;
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 8:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+            case 2:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_800155BC;
+                o->unk6A = 2;
+                break;
+            case 1:
+            case 3:
+                o->tpage = 0xE;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            }
+            break;
+        case 9:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+                o->tpage = 0xC;
+                *(void ***)&o->unkA8 = D_80015590;
+                break;
+            case 1:
+                o->tpage = 0x12;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            case 2:
+                o->tpage = 0x11;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            case 3:
+                o->tpage = 0xB;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            case 4:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            case 5:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            }
+            break;
+        case 10:
+            switch ((s32)D_8009BCCA) {
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+                o->tpage = 7;
+                break;
+            case 8:
+                o->tpage = 0xC;
+                break;
+            }
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 11:
+            o->tpage = 0xD;
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 13:
+            o->tpage = 0xD;
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 14:
+            o->tpage = 0xA;
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 16:
+            switch ((s32)D_8009BCCA) {
+            case 4: case 5: case 6:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            }
+            break;
+        case 17:
+            o->tpage = 0xB;
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 18:
+            switch ((s32)D_8009BCCA) {
+            case 1:
+                o->tpage = 0xA;
+                break;
+            case 2:
+                o->tpage = 9;
+                break;
+            }
+            *(void ***)&o->unkA8 = D_80015578;
+            break;
+        case 19:
+            switch ((s32)D_8009BCCA) {
+            case 0:
+                o->tpage = 0xF;
+                *(void ***)&o->unkA8 = D_800155BC;
+                o->unk6A = 1;
+                break;
+            case 1:
+                o->tpage = 0xE;
+                *(void ***)&o->unkA8 = D_80015578;
+                break;
+            case 2:
+                o->tpage = 0x12;
+                *(void ***)&o->unkA8 = D_800155A4;
+                o->unk6A = 2;
+                break;
+            }
+            break;
+        }
+        o->category |= 0x80;
+        o->state++;
+        f = pl->obj.unkF;
+        o->unkA = 2;
+        o->animFrame = 0;
+        o->unk84 = 0;
+        o->unk88 = 0;
+        o->unk8C = 0;
+        o->hitOffsetX = 0x10;
+        o->hitWidth = 0x20;
+        o->hitOffsetY = 0x10;
+        o->hitHeight = 0x20;
+        o->unkD = 0x81;
+        o->unkF = f + 1;
+        o->clut = GetClut(0x80, 0x1F9);
+        o->spriteBank = SPR_DATA[15];
+        o->unkAC = 3;
+        o->anim = (*(void ***)&o->unkA8)[3];
+        readAnimFrameCount(o);
+        if (o->subtype == 1) {
+            o->x.p.whole = pl->obj.x.p.whole;
+            o->y.p.whole = pl->obj.y.p.whole;
+            o->z.p.whole = pl->obj.z.p.whole;
+        }
+        if (*(s32 *)&GAME == 0x1000D) {
+            o->state = 4;
+        }
+        break;
+    case 1:
+        func_80022E44(o);
+        if (o->subtype == 0) {
+            tickAnimation(o);
+            break;
+        }
+        switch (o->unk6A) {
+        case 0:
+            switch (D_8009C361) {
+            case 0:
+                func_80057C74(o);
+                break;
+            case 1:
+                func_800580BC(o);
+                break;
+            }
+            break;
+        case 1:
+        case 2:
+        case 3:
+            switch (D_8009C361) {
+            case 0:
+                func_80058464(o);
+                break;
+            case 1:
+                func_80058960(o);
+                break;
+            }
+            break;
+        }
+        break;
+    case 2:
+    case 3:
+        freeObjectLayer2(o);
+        break;
+    case 4:
+        func_801156E8(o);
+        break;
+    }
+}
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_800593EC);
 typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_593EC;

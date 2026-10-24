@@ -191,7 +191,33 @@ void scriptTickWait(void)
     }
 }
 
-INCLUDE_ASM("nonmatchings/main/system/script", func_8003B5D8);
+// INCLUDE_ASM("nonmatchings/main/system/script", func_8003B5D8);
+static __inline__ s32 rd_3B5D8(u8 *g, u8 c, u8 *t)
+{
+    s32 tmp;
+    s32 k;
+    if (c == 0)
+        return *(s32 *)(g + *t * 4 + 0x1090);
+    for (k = 0; k < 4; k++)
+        ((char *)&tmp)[k] = t[k];
+    return tmp;
+}
+
+void func_8003B5D8(u8 kind)
+{
+    ScriptContext *o = SCRIPT_CTX;
+    u8 *code = SCRIPT_CODE;
+    u8 dst = code[o->pc + 1];
+    u8 *p;
+
+    p = (u8 *)(o->pc + (s32)code);
+    p += 2;
+    *(s32 *)((u8 *)o + dst * 4 + 0x1090) = rd_3B5D8((u8 *)o, kind, p);
+    if (kind == 0)
+        o->pc += 3;
+    else
+        o->pc += 6;
+}
 
 // INCLUDE_ASM("nonmatchings/main/system/script", scriptOpSwapVars);
 void scriptOpSwapVars(void)
