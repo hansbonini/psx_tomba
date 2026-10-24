@@ -618,7 +618,178 @@ void addTilePrim(short* p, u_char r0, u_char g0, u_char b0)
     return;
 }
 
+// INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004F5A4);
+typedef struct { s16 x; s16 y; u8 *text; } MenuLine;
+typedef struct { s16 x; s16 y; } MenuPos;
+extern MenuLine D_8007ED10[];
+extern MenuLine D_8007ED30[];
+extern MenuLine D_8007ED50[];
+extern MenuLine D_8007ED70[];
+extern u8 D_8007EC94[][2];
+extern MenuPos D_8007ED98[];
+extern u8 D_8009C10B_Arr[] asm("D_8009C10B");
+
+#if REGION == REGION_JP || REGION == REGION_EU
 INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004F5A4);
+#else
+void func_8004F5A4(void)
+{
+    MenuLine *l;
+    s32 kind;
+    u8 *c;
+    u8 ch;
+    u16 x;
+    s16 y;
+    TILE *t;
+    SPRT *s;
+    void *r;
+    s32 tp;
+    s16 *e;
+    SprFrag *f;
+    POLY_FT4 *p;
+    s16 n;
+    s32 k;
+    s32 w;
+    s32 tpage;
+
+    t = (TILE *)D_1F800164;
+    t->w = 0x140;
+    t->h = 0xF0;
+    setlen(t, 3);
+    t->x0 = 0;
+    t->y0 = 0;
+    t->code = 0x60;
+    SetSemiTrans(t, 1);
+    t->r0 = 0x20;
+    t->g0 = 0x20;
+    t->b0 = 0x20;
+    AddPrim((u_long *)D_1F8001E0 + 4, t);
+    r = D_1F800164 = D_1F800164 + sizeof(TILE);
+    SetDrawMode(r, 0, 0, 0, 0);
+    AddPrim((u_long *)D_1F8001E0 + 4, r);
+    D_1F800164 = D_1F800164 + sizeof(DR_MODE);
+    switch (SPAD->unk3CD) {
+    case 0:
+        l = D_8007ED70;
+        kind = 1;
+        break;
+    case 1:
+        l = D_8007ED10;
+        kind = 0;
+        break;
+    case 2:
+        l = D_8007ED30;
+        kind = 2;
+        break;
+    case 3:
+        kind = 2;
+        l = D_8007ED50;
+        break;
+    }
+    for (; l->x != -1; l++) {
+        x = l->x;
+        y = l->y;
+        c = l->text;
+        while ((ch = *c) != 0xFF) {
+            c++;
+            if (ch) {
+                s = (SPRT *)D_1F800164;
+                setlen(s, 4);
+                s->code = 0x65;
+                SetSemiTrans(s, 0);
+                s->x0 = x;
+                s->y0 = y;
+                s->u0 = D_8007EC94[ch][0];
+                s->v0 = D_8007EC94[ch][1];
+                s->w = 8;
+                s->h = 0x10;
+                s->clut = GetClut(0x160, 0x1E3);
+                AddPrim((u_long *)D_1F8001E0 + 1, s);
+                D_1F800164 = D_1F800164 + sizeof(SPRT);
+            }
+            x += 8;
+        }
+    }
+    r = D_1F800164;
+    if (GetGraphType() == 1)
+        tp = 0x24;
+    else if (GetGraphType() == 2)
+        tp = 0x24;
+    else
+        tp = 0x14;
+    SetDrawMode(r, 0, 0, tp, 0);
+    AddPrim((u_long *)D_1F8001E0 + 1, r);
+    t = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
+    switch (kind) {
+    case 0:
+        t->x0 = 0x74;
+        k = D_8009C10B_Arr[0];
+        t->w = 0x50;
+        t->h = 0x10;
+        k <<= 4;
+        k += 0x48;
+        t->y0 = k;
+        break;
+    case 1:
+        t->x0 = 0x84;
+        k = D_8009C10B_Arr[0];
+        t->w = 0x38;
+        t->h = 0x10;
+        k <<= 4;
+        k += 0x48;
+        t->y0 = k;
+        break;
+    case 2:
+        k = D_8009C10B_Arr[0];
+        t->y0 = 0x68;
+        t->w = 0x18;
+        t->h = 0x10;
+        t->x0 = k * 0x34 + 0x78;
+        break;
+    }
+    setlen(t, 3);
+    t->code = 0x60;
+    SetSemiTrans(t, 1);
+    t->r0 = 0xFF;
+    t->g0 = 0xFF;
+    t->b0 = 0;
+    AddPrim((u_long *)D_1F8001E0 + 1, t);
+    D_1F800164 = D_1F800164 + sizeof(TILE);
+    e = (s16 *)(D_1F8002D8[0] + *((s16 **)D_800123E4)[kind] * 4);
+    n = e[0];
+    f = (SprFrag *)(D_1F8002D8[0] + e[1]);
+    do {
+        p = (POLY_FT4 *)D_1F800164;
+        setlen(p, 9);
+        p->code = 0x2D;
+        SetSemiTrans(p, 1);
+        *(u32 *)&p->u0 = *(u32 *)f;
+        *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+        *(u16 *)&p->u2 = *(u32 *)&f->uv2;
+        *(u16 *)&p->u3 = *(u32 *)&f->uv3;
+        p->tpage = 0x14;
+        p->x0 = D_8007ED98[kind].x + f->dx;
+        p->y0 = D_8007ED98[kind].y + f->dy;
+        w = f->w;
+        p->x2 = p->x0;
+        p->x1 = p->x0 + w;
+        p->y1 = p->y0;
+        p->y2 = p->y0 + f->h;
+        p->x3 = p->x1;
+        p->y3 = p->y2;
+        p->clut = GetClut(0x160, 0x1E5);
+        if (GetGraphType() == 1 || GetGraphType() == 2)
+            tpage = 0x24;
+        else
+            tpage = 0x14;
+        p->tpage = tpage;
+        AddPrim((u_long *)D_1F8001E0 + 1, p);
+        f++;
+        n--;
+        D_1F800164 = D_1F800164 + sizeof(POLY_FT4);
+    } while (n != 0);
+}
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004FB54);
 typedef struct { char p0[0xc]; u8 b0c, b0d, b0e, b0f, b10, b11, b12, b13; s16 s14, s16, s18, s1a; } P_4FB54;
