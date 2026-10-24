@@ -56,6 +56,9 @@ extern GameObject *showMessageBox();
 extern s16 D_800A53AA_S16 asm("D_800A53AA");
 extern s16 D_800A53AA_S16Arr[] asm("D_800A53AA");
 
+#if REGION == REGION_JP
+INCLUDE_ASM("nonmatchings/main/game/areamisc", func_80033964);
+#else
 void func_80033964(GameObject *o)
 {
     GameObject *box;
@@ -220,3 +223,4 @@ void func_80033964(GameObject *o)
         break;
     }
 }
+#endif
