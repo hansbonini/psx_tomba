@@ -184,6 +184,7 @@ segments:
       - [0x11594, c, psyq/libsnd/ssstart]
       - [0x117FC, c, psyq/libsnd/ut_ron]
       - [0x1181C, c, psyq/libsnd/ut_roff]
+      - [0x118CC, c, psyq/libapi/counter]
       - [0x11A3C, c, psyq/libsnd/sscall]
       - [0x11CB0, c, psyq/libsnd/cres]
       - [0x11F90, c, psyq/libsnd/decres]

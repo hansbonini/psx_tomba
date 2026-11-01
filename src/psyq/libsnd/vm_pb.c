@@ -1,11 +1,46 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+extern s16 _svm_sreg_buf[24 * 8];
+extern char _svm_sreg_dirty[24];
+extern struct SpuVoice _svm_voice[24];
 s16 note2pitch2(u16 note, u16 fine);
 short _SsVmPBVoice(short voice, short seq_sep_no, short vabId, short prog,
                    int pitch);
 
-INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_pb", _SsVmPBVoice);
+short _SsVmPBVoice(short voice, short seq_sep_no, short vabId, short prog,
+                   int pitch) {
+    short bend;
+    unsigned short note;
+    int fine;
+    unsigned short tone;
+    int fake;
+
+    bend = pitch - 64;
+    if (_svm_voice[voice].unke == seq_sep_no &&
+        _svm_voice[voice].vabId == vabId && _svm_voice[voice].prog == prog) {
+        fake = _svm_cur.field_7_fake_program;
+        tone = _svm_voice[voice].tone;
+        note = _svm_voice[voice].note;
+        fake <<= 4;
+        tone += fake;
+        if (bend > 0) {
+            note += bend * _svm_tn[tone].pbmax / 63;
+            fine = (bend * _svm_tn[tone].pbmax % 63) * 2;
+        } else if (bend < 0) {
+            note = note + bend * _svm_tn[tone].pbmin / 64 - 1;
+            fine = (bend * _svm_tn[tone].pbmin % 64) * 2 + 127;
+        } else {
+            fine = 0;
+        }
+        _svm_cur.field_C_vag_idx = _svm_voice[voice].tone;
+        _svm_cur.field_0x1a = voice;
+        _svm_sreg_buf[voice * 8 + 2] = note2pitch2(note, fine);
+        _svm_sreg_dirty[voice] |= 4;
+        return 1;
+    }
+    return 0;
+}
 
 int _SsVmPitchBend(short seq_sep_no, short vabId, short prog,
                    unsigned short pitch) {

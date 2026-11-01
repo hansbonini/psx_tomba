@@ -629,8 +629,293 @@ extern u8 D_8007EC94[][2];
 extern MenuPos D_8007ED98[];
 extern u8 D_8009C10B_Arr[] asm("D_8009C10B");
 
-#if REGION == REGION_JP || REGION == REGION_EU
-INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004F5A4);
+#if REGION == REGION_JP
+extern s16 D_800783F0_slps01144[];
+extern s16 D_800783F8_slps01144[];
+extern s16 D_80078404_slps01144[];
+extern s16 **D_800783CC_slps01144[];
+extern s16 **D_800783E8_slps01144[];
+void func_8004F5A4(void)
+{
+    TILE *t;
+    void *r;
+    s16 *e;
+    SprFrag *f;
+    POLY_FT4 *p;
+    s32 i;
+    s16 n;
+    s32 w;
+    s16 **q;
+    t = (TILE *)D_1F800164;
+    t->w = 0x140;
+    t->h = 0xF0;
+    t->x0 = 0;
+    t->y0 = 0;
+    setlen(t, 3);
+    t->code = 0x60;
+    SetSemiTrans(t, 1);
+    t->r0 = 0x20;
+    t->g0 = 0x20;
+    t->b0 = 0x20;
+    AddPrim((u_long *)D_1F8001E0 + 4, t);
+    r = D_1F800164 = D_1F800164 + sizeof(TILE);
+    SetDrawMode(r, 0, 0, 0, 0);
+    AddPrim((u_long *)D_1F8001E0 + 4, r);
+    t = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
+    if (D_8009C10B_Arr[0] < 4) {
+        t->w = 0x30;
+        t->h = 0xC;
+        t->x0 = 0x88;
+        t->y0 = D_800783F0_slps01144[D_8009C10B_Arr[0]];
+        setlen(t, 3);
+        t->code = 0x60;
+        SetSemiTrans(t, 1);
+        t->r0 = 0xFF;
+        t->g0 = 0xFF;
+        t->b0 = 0;
+        AddPrim((u_long *)D_1F8001E0 + 1, t);
+        r = D_1F800164 = D_1F800164 + sizeof(TILE);
+        SetDrawMode(r, 0, 0, 0, 0);
+        AddPrim((u_long *)D_1F8001E0 + 1, r);
+        D_1F800164 = D_1F800164 + sizeof(DR_MODE);
+    }
+    if (D_8009C10B_Arr[0] < 4)
+        i = 5;
+    else
+        i = 1;
+    for (; i >= 0; i--) {
+        if (D_8009C10B_Arr[0] < 4)
+            q = D_800783CC_slps01144[i];
+        else
+            q = D_800783E8_slps01144[i];
+        e = (s16 *)(D_1F8002D8[0] + *q[0] * 4);
+        n = e[0];
+        f = (SprFrag *)(D_1F8002D8[0] + e[1]);
+        do {
+            p = (POLY_FT4 *)D_1F800164;
+            setlen(p, 9);
+            p->code = 0x2D;
+            if (i == 0)
+                SetSemiTrans(p, 1);
+            else
+                SetSemiTrans(p, 0);
+            *(u32 *)&p->u0 = *(u32 *)f;
+            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&p->u2 = *(u32 *)&f->uv2;
+            *(u16 *)&p->u3 = *(u32 *)&f->uv3;
+            if (i != 0) {
+                p->u1 = p->u1 + 1;
+                p->u3 = p->u3 + 1;
+                p->v2 = p->v2 + 1;
+                p->v3 = p->v3 + 1;
+            }
+            p->tpage = 0x14;
+            p->x0 = (s16)(f->dx + 0xA0) + D_80078404_slps01144[i];
+            p->y0 = D_800783F8_slps01144[i] + f->dy;
+            w = f->w;
+            p->x2 = p->x0;
+            p->x1 = p->x0 + w;
+            p->y1 = p->y0;
+            p->y2 = p->y0 + f->h;
+            p->x3 = p->x1;
+            p->y3 = p->y2;
+            if (i == 0) {
+                p->clut = GetClut(0x160, 0x1E5);
+                AddPrim((u_long *)D_1F8001E0 + 2, p);
+            } else {
+                p->clut = GetClut(0x160, 0x1E3);
+                AddPrim((u_long *)D_1F8001E0, p);
+            }
+            f++;
+            n--;
+            D_1F800164 = D_1F800164 + sizeof(POLY_FT4);
+        } while (n != 0);
+    }
+}
+#elif REGION == REGION_EU
+#if LANGUAGE == LANGUAGE_GERMAN || LANGUAGE == LANGUAGE_ITALIAN || LANGUAGE == LANGUAGE_DUTCH || LANGUAGE == LANGUAGE_DANISH
+#define MENU_KIND_0 3
+#define MENU_KIND_2 4
+#define MENU_KIND_3 4
+#elif LANGUAGE == LANGUAGE_SPANISH
+#define MENU_KIND_0 1
+#define MENU_KIND_2 4
+#define MENU_KIND_3 4
+#elif LANGUAGE == LANGUAGE_PORTUGUESE
+#define MENU_KIND_0 1
+#define MENU_KIND_2 2
+#define MENU_KIND_3 4
+#else
+#define MENU_KIND_0 1
+#define MENU_KIND_2 2
+#define MENU_KIND_3 2
+#endif
+
+void func_8004F5A4(void)
+{
+    MenuLine *l;
+    s32 kind;
+    u8 *c;
+    u8 ch;
+    u16 x;
+    s16 y;
+    TILE *t;
+    SPRT *s;
+    void *r;
+    s32 tp;
+    s16 *e;
+    SprFrag *f;
+    POLY_FT4 *p;
+    s16 n;
+    s32 k;
+    s32 w;
+
+    switch (SPAD->unk3CD) {
+    case 0:
+        l = D_8007ED70;
+        kind = MENU_KIND_0;
+        break;
+    case 1:
+        l = D_8007ED10;
+        kind = 0;
+        break;
+    case 2:
+        l = D_8007ED30;
+        kind = MENU_KIND_2;
+        break;
+    case 3:
+        kind = MENU_KIND_3;
+        l = D_8007ED50;
+        break;
+    }
+    t = (TILE *)D_1F800164;
+    t->w = 0x140;
+    t->h = 0x100;
+    setlen(t, 3);
+    t->x0 = 0;
+    t->y0 = 0;
+    t->code = 0x60;
+    SetSemiTrans(t, 1);
+    t->r0 = 0x20;
+    t->g0 = 0x20;
+    t->b0 = 0x20;
+    AddPrim((u_long *)D_1F8001E0 + 4, t);
+    r = D_1F800164 = D_1F800164 + sizeof(TILE);
+    SetDrawMode(r, 0, 0, 0, 0);
+    AddPrim((u_long *)D_1F8001E0 + 4, r);
+    D_1F800164 = D_1F800164 + sizeof(DR_MODE);
+    for (; l->x != -1; l++) {
+        x = l->x;
+        y = l->y;
+        c = l->text;
+        while ((ch = *c) != 0xFF) {
+            c++;
+            if (ch) {
+                s = (SPRT *)D_1F800164;
+                setlen(s, 4);
+                s->code = 0x65;
+                SetSemiTrans(s, 0);
+                s->x0 = x;
+                s->y0 = y;
+                s->u0 = D_8007EC94[ch][0];
+                s->v0 = D_8007EC94[ch][1];
+                s->w = 8;
+                s->h = 0x10;
+                s->clut = GetClut(0x160, 0x1E3);
+                AddPrim((u_long *)D_1F8001E0 + 1, s);
+                D_1F800164 = D_1F800164 + sizeof(SPRT);
+            }
+            x += 8;
+        }
+    }
+    r = D_1F800164;
+#if VERSION == 0
+    tp = 0x14;
+#else
+    if (GetGraphType() == 1)
+        tp = 0x24;
+    else if (GetGraphType() == 2)
+        tp = 0x24;
+    else
+        tp = 0x14;
+#endif
+    SetDrawMode(r, 0, 0, tp, 0);
+    AddPrim((u_long *)D_1F8001E0 + 1, r);
+    t = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
+    switch (kind) {
+    case 0:
+        t->x0 = 0x74;
+        k = D_8009C10B_Arr[0];
+        t->w = 0x50;
+        t->h = 0x10;
+        k <<= 4;
+        k += 0x58;
+        t->y0 = k;
+        break;
+    case 1:
+        t->x0 = 0x84;
+        k = D_8009C10B_Arr[0];
+        t->w = 0x38;
+        t->h = 0x10;
+        k <<= 4;
+        k += 0x58;
+        t->y0 = k;
+        break;
+    case 3:
+        t->x0 = 0x74;
+        k = D_8009C10B_Arr[0];
+        t->w = 0x58;
+        t->h = 0x10;
+        k <<= 4;
+        k += 0x58;
+        t->y0 = k;
+        break;
+    case 2:
+    case 4:
+        k = D_8009C10B_Arr[0];
+        t->y0 = 0x78;
+        t->w = 0x28;
+        t->h = 0x10;
+        t->x0 = k * 0x30 + 0x74;
+        break;
+    }
+    setlen(t, 3);
+    t->code = 0x60;
+    SetSemiTrans(t, 1);
+    t->r0 = 0xFF;
+    t->g0 = 0xFF;
+    t->b0 = 0;
+    AddPrim((u_long *)D_1F8001E0 + 1, t);
+    D_1F800164 = D_1F800164 + sizeof(TILE);
+    e = (s16 *)(D_1F8002D8[0] + *((s16 **)D_800123E4)[kind] * 4);
+    n = e[0];
+    f = (SprFrag *)(D_1F8002D8[0] + e[1]);
+    do {
+        p = (POLY_FT4 *)D_1F800164;
+        setlen(p, 9);
+        p->code = 0x2D;
+        SetSemiTrans(p, 1);
+        *(u32 *)&p->u0 = *(u32 *)f;
+        *(u32 *)&p->u1 = *(u32 *)&f->uv1;
+        *(u16 *)&p->u2 = *(u16 *)&f->uv2;
+        *(u16 *)&p->u3 = *(u16 *)&f->uv3;
+        p->tpage = 0x14;
+        p->x0 = D_8007ED98[kind].x + f->dx;
+        p->y0 = D_8007ED98[kind].y + f->dy;
+        w = f->w;
+        p->x2 = p->x0;
+        p->x1 = p->x0 + w;
+        p->y1 = p->y0;
+        p->y2 = p->y0 + f->h;
+        p->x3 = p->x1;
+        p->y3 = p->y2;
+        p->clut = GetClut(0x160, 0x1E5);
+        AddPrim((u_long *)D_1F8001E0 + 1, p);
+        f++;
+        n--;
+        D_1F800164 = D_1F800164 + sizeof(POLY_FT4);
+    } while (n != 0);
+}
 #else
 void func_8004F5A4(void)
 {

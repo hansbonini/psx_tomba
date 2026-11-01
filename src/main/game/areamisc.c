@@ -56,9 +56,6 @@ extern GameObject *showMessageBox();
 extern s16 D_800A53AA_S16 asm("D_800A53AA");
 extern s16 D_800A53AA_S16Arr[] asm("D_800A53AA");
 
-#if REGION == REGION_JP
-INCLUDE_ASM("nonmatchings/main/game/areamisc", func_80033964);
-#else
 void func_80033964(GameObject *o)
 {
     GameObject *box;
@@ -117,6 +114,11 @@ void func_80033964(GameObject *o)
         o->unk84 = 0;
         o->unk88 = 0;
         o->unk8C = 0;
+#if REGION == REGION_JP
+        if (o->animFrame == 1) {
+            o->unk88 = -0x400;
+        }
+#else
         if (o->animFrame == 1) {
             o->unk88 = -0x400;
         } else if (o->animFrame == 2) {
@@ -126,6 +128,7 @@ void func_80033964(GameObject *o)
             o->unk88 = 0x400;
             o->active = 2;
         }
+#endif
         break;
     case 1:
         func_80022E44((u8 *)o);
@@ -141,6 +144,18 @@ void func_80033964(GameObject *o)
                         if (D_8009C13E == 0xFF) o->subtype = 0x23;
                         break;
                     }
+#if REGION == REGION_JP
+                    tone = D_8007D454[o->subtype].tone;
+                    msg = D_8007D454[o->subtype].msg;
+                    switch (o->subtype) {
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 6:
+                        tone += (u16)BUTTON_CONFIG_INDEX;
+                        break;
+                    }
+#else
                     msg = D_8007D454[o->subtype].msg;
                     switch (o->subtype) {
                     case 2:
@@ -159,6 +174,7 @@ void func_80033964(GameObject *o)
                         tone = D_8007D454[o->subtype].tone;
                         break;
                     }
+#endif
                     o->unk90 = (s32)showMessageBox((s16)msg, (s16)tone, 0xA0, 0x8C);
                     o->subState++;
                 }
@@ -223,4 +239,3 @@ void func_80033964(GameObject *o)
         break;
     }
 }
-#endif
