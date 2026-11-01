@@ -403,7 +403,8 @@ $(foreach b,$(TARGET_BUILDS),$(eval $(call make_object_rules,$(word 1,$(subst :,
 # Only units fully in C can be listed (INCLUDE_ASM depends on MASPSX).
 GNU_AS_UNITS := psyq/libpad/padmain psyq/libpad/padcmd psyq/libpad/padentry \
                 psyq/libpad/padif psyq/libpad/padportd psyq/libpad/padseqd \
-                psyq/libpad/waitrc2
+                psyq/libpad/waitrc2 psyq/libapi/func_8005B4CC \
+                psyq/libapi/counter
 GNU_AS_OBJS  := $(foreach b,$(TARGET_BUILDS),$(foreach u,$(GNU_AS_UNITS),$(word 1,$(subst :, ,$b))/src/$(u).c.o))
 
 $(GNU_AS_OBJS): %.c.o: %.i
