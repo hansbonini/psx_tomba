@@ -22,65 +22,26 @@ u32 mdec_coef[33] = {
     0x30FB89BE, 0xB8E318F8, 0x82756A6D, 0x95927D8A,
     0xE707471C,
 };
-u32 d0_madr_d[1] asm("d0_madr") = {
-    0x1F801080,
-};
-u32 d0_bcr_d[1] asm("d0_bcr") = {
-    0x1F801084,
-};
-u32 d0_chcr_d[1] asm("d0_chcr") = {
-    0x1F801088,
-};
-u32 d1_madr_d[1] asm("d1_madr") = {
-    0x1F801090,
-};
-u32 d1_bcr_d[1] asm("d1_bcr") = {
-    0x1F801094,
-};
-u32 d1_chcr_d[1] asm("d1_chcr") = {
-    0x1F801098,
-};
-u32 d2_madr_d[1] asm("d2_madr") = {
-    0x1F8010A0,
-};
-u32 d2_bcr_d[1] asm("d2_bcr") = {
-    0x1F8010A4,
-};
-u32 d2_chcr_d[1] asm("d2_chcr") = {
-    0x1F8010A8,
-};
-u32 d3_madr_d[1] asm("d3_madr") = {
-    0x1F8010B0,
-};
-u32 d3_bcr_d[1] asm("d3_bcr") = {
-    0x1F8010B4,
-};
-u32 d3_chcr_d[1] asm("d3_chcr") = {
-    0x1F8010B8,
-};
-u32 mdec0_d[1] asm("mdec0") = {
-    0x1F801820,
-};
-u32 mdec1_d[1] asm("mdec1") = {
-    0x1F801824,
-};
-u32 d_pcr_d[1] asm("d_pcr") = {
-    0x1F8010F0,
-};
+u_int volatile* d0_madr = (u_int volatile*)0x1F801080;
+u_int volatile* d0_bcr = (u_int volatile*)0x1F801084;
+u_int volatile* d0_chcr = (u_int volatile*)0x1F801088;
+u_int volatile* d1_madr = (u_int volatile*)0x1F801090;
+u_int volatile* d1_bcr = (u_int volatile*)0x1F801094;
+u_int volatile* d1_chcr = (u_int volatile*)0x1F801098;
+u_int volatile* d2_madr = (u_int volatile*)0x1F8010A0;
+u_int volatile* d2_bcr = (u_int volatile*)0x1F8010A4;
+u_int volatile* d2_chcr = (u_int volatile*)0x1F8010A8;
+u_int volatile* d3_madr = (u_int volatile*)0x1F8010B0;
+u_int volatile* d3_bcr = (u_int volatile*)0x1F8010B4;
+u_int volatile* d3_chcr = (u_int volatile*)0x1F8010B8;
+u_int volatile* mdec0 = (u_int volatile*)0x1F801820;
+volatile u_long* mdec1 = (volatile u_long*)0x1F801824;
+u_int volatile* d_pcr = (u_int volatile*)0x1F8010F0;
 
-extern u_int volatile* d1_madr;
-extern u_int volatile* d1_bcr;
 
-extern u_int volatile* d0_madr;
-extern u_int volatile* d0_bcr;
-extern u_int volatile* d0_chcr;
-extern u_int volatile* mdec0;
-extern u_int volatile* d_pcr;
 
-extern u_int volatile* d1_chcr;
 static int timeout(char* arg0);
 
-extern volatile u_long* mdec1;
 
 typedef struct {
     u_char iq_y[64];

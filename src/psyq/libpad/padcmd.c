@@ -124,7 +124,7 @@ int _padLoadActInfo(padPort *obj, unsigned char *buffer) {
     if (obj->capabilities != 0) {
         return 0;
     }
-    if (D_8009752C() != 0) {
+    if (_padFuncChkEng() != 0) {
 
 return_zero:
     return 0;
@@ -287,7 +287,7 @@ int _padSetActAlign(padPort *obj, u8 *command) {
     int result;
     int active;
 
-    result = D_8009752C(obj);
+    result = _padFuncChkEng(obj);
     if (result != 0) {
         return 0;
     } else {
@@ -365,7 +365,7 @@ int _padSetMainMode(padPort *obj, int byte1, int byte2) {
     register int result;
 
     compareByte = byte1;
-    result = D_8009752C(obj);
+    result = _padFuncChkEng(obj);
     if (result != 0) {
         return 0;
     }
@@ -411,7 +411,7 @@ int func_8006A2F8(padPort *arg0) {
         return 0;
     }
 
-    D_80097514(arg0);
+    _padFuncClrInfo(arg0);
     return 0;
 }
 void _padCmdParaMode(padPort *obj, unsigned char value) {

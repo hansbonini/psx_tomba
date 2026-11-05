@@ -1,7 +1,7 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-extern s32 D_8009BC7C;
+extern s32 StMode;
 
 void StCdInterrupt2(u_char intr, u_char* result);
 void data_ready_callback();
@@ -12,9 +12,9 @@ int CdRead2(long mode) {
     CdControl(CdlSetmode, &param, NULL);
     if (mode & CdlModeStream) {
         if (mode & CdlModeSize1) {
-            D_8009BC7C = 0;
+            StMode = 0;
         } else {
-            D_8009BC7C = 1;
+            StMode = 1;
         }
         CdDataCallback(data_ready_callback);
         CdReadyCallback(StCdInterrupt2);

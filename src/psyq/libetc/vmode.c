@@ -1,10 +1,7 @@
 #include "common.h"
 
-u32 D_80097504_d[1] asm("D_80097504") = {
-    0x00000000,
-};
+int D_80097504 = 0;
 
-extern int D_80097504;
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/vmode", SetVideoMode);
 

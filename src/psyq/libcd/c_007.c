@@ -1,9 +1,14 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-extern int D_800A188C;
-extern StHEADER* D_800A326C;
-extern int D_800A3340;
+volatile s8* c007_cd_reg0 = (volatile s8*)0x1F801800;
+volatile s8* c007_cd_reg1 = (volatile s8*)0x1F801801;
+volatile s8* c007_cd_reg2 = (volatile s8*)0x1F801802;
+volatile s8* c007_cd_reg3 = (volatile s8*)0x1F801803;
+
+extern int StRingIdx3;
+extern StHEADER* StRingAddr;
+extern int StRingSize;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_007", StFreeRing);
 u_long StFreeRing(u_long *base)
@@ -14,16 +19,16 @@ u_long StFreeRing(u_long *base)
     StHEADER* temp_v0;
     StHEADER* temp_v0_2;
 
-    temp_a1 = (base - (u_long*)&D_800A326C[D_800A3340]) / 504;
-    temp_v0 = &D_800A326C[temp_a1];
-    nSectors = D_800A326C[temp_a1].nSectors;
+    temp_a1 = (base - (u_long*)&StRingAddr[StRingSize]) / 504;
+    temp_v0 = &StRingAddr[temp_a1];
+    nSectors = StRingAddr[temp_a1].nSectors;
     if ((short)temp_v0->id != 4) {
         return 1;
     }
     for (i = 0; i < nSectors; i++) {
-        temp_v0_2 = &D_800A326C[i+temp_a1];
+        temp_v0_2 = &StRingAddr[i+temp_a1];
         *(short*)temp_v0_2 = 0;
     }
-    D_800A188C = i+temp_a1;
+    StRingIdx3 = i+temp_a1;
     return 0;
 }

@@ -1,33 +1,22 @@
 #include "common.h"
 
-u32 D_800974B4_d[8] asm("D_800974B4") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-};
-u32 Vcount_d[1] asm("Vcount") = {
-    0x00000000,
-};
-u32 D_800974D8_d[1] asm("D_800974D8") = {
-    0x1F801114,
-};
+void (*vb_callbacks[8])(void) = {0};
+volatile int Vcount = 0;
+int* vb_rcnt1_mode = (int*)0x1F801114;
 
 extern void InterruptCallback(int, void (*)());
 void trapIntrVSync(void);
 extern void setIntrVSync(int, void (*)(void));
 void VSync_memclr(s32*, int);
-extern volatile int Vcount;
-extern int* D_800974D8;
 void setIntrVSync(int index, void (*callback)(void));
-
-extern void (*D_800974B4[8])(void);
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_vb", startIntrVSync);
 
 void* startIntrVSync(void)
 {
-    *D_800974D8 = 0x107;
+    *vb_rcnt1_mode = 0x107;
     Vcount = 0;
-    VSync_memclr(D_800974B4, 8);
+    VSync_memclr(vb_callbacks, 8);
     InterruptCallback(0, trapIntrVSync);
     return setIntrVSync;
 }
@@ -39,7 +28,7 @@ void trapIntrVSync(void) {
     s32 i;
 
     i = 0;
-    cb = D_800974B4;
+    cb = vb_callbacks;
     Vcount += 1;
     (void)Vcount;
     do {
@@ -54,8 +43,8 @@ void trapIntrVSync(void) {
 
 void setIntrVSync(int index, void (*callback)(void))
 {
-    if (callback != D_800974B4[index]) {
-        D_800974B4[index] = callback;
+    if (callback != vb_callbacks[index]) {
+        vb_callbacks[index] = callback;
     }
 }
 

@@ -1,18 +1,16 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-u32 D_800975E4_d[4] asm("D_800975E4") = {
-    0x00000000, 0x30001000, 0x000000BF, 0x00000000,
+short default_voice[8] = {
+    0x0000, 0x0000, 0x1000, 0x3000, 0x00BF, 0x0000, 0x0000, 0x0000,
 };
-u32 D_800975F4_d[8] asm("D_800975F4") = {
-    0x3FFF3FFF, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+short default_state[16] = {
+    0x3FFF, 0x3FFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 };
 
 typedef void (*SndSsMarkCallbackProc)(short seq_no, short sep_no, short data);
 extern SndSsMarkCallbackProc _SsMarkCallback[32][16];
-extern short D_800975E4[];
-extern short D_800975F4[];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssinit", _SsInit);
 
@@ -24,10 +22,10 @@ void _SsInit(void) {
     for (i = 0; i < 24; i++) {
         for (j = 0; j < 8; j++) {
 #ifdef VERSION_PC
-            write_16(0x1F801C00 + (i * 8 + j) * 2, D_800975E4[j], __FILE__,
+            write_16(0x1F801C00 + (i * 8 + j) * 2, default_voice[j], __FILE__,
                      __LINE__);
 #else
-            *var_a2++ = D_800975E4[j];
+            *var_a2++ = default_voice[j];
 #endif
         }
     }
@@ -35,9 +33,9 @@ void _SsInit(void) {
     var_a2 = (u16*)0x1F801D80;
     for (i = 0; i < 16; i++) {
 #ifdef VERSION_PC
-        write_16(0x1F801D80 + i * 2, D_800975F4[i], __FILE__, __LINE__);
+        write_16(0x1F801D80 + i * 2, default_state[i], __FILE__, __LINE__);
 #else
-        *var_a2++ = D_800975F4[i];
+        *var_a2++ = default_state[i];
 #endif
     }
 

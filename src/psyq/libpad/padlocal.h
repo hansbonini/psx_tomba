@@ -170,37 +170,37 @@ void setRC2wait(int);
 int chkRC2wait(void);
 
 /* State. */
-extern int (*D_80097510)(int);                  /* DMA/transfer completion */
-extern void (*D_80097514)(padPort*);            /* reset object */
-extern int (*D_80097518)(padPort*, int);        /* read payload byte */
-extern void (*D_8009751C)(padPort*);            /* actuator map */
-extern int (*D_80097520)(padPort*);             /* channel id of object */
-extern padPort* (*D_80097524)(int);             /* object of channel */
-extern int (*D_80097528)(padPort*);             /* state dispatch */
-extern int (*D_8009752C)();                     /* transfer busy */
-extern void (*D_80097530)(padPort*);            /* response handler */
-extern void (*D_80097534)(padPort*);            /* swap byte field */
-extern int (*D_80097538)(void);
-extern void (*D_8009753C)(void);
-extern void (*D_80097540)(void);
-extern padPort* D_80097544;                     /* port objects */
-extern int D_80097548;                          /* service ready */
-extern int D_8009754C;
-extern int D_80097550;                          /* active port index */
-extern int D_80097554;                          /* command step */
-extern int D_80097558;                          /* actuator cost total */
-extern int D_8009755C;                          /* multitap command byte */
-extern int D_80097560;                          /* port 1 absent */
-extern int D_80097564;                          /* last port index */
-extern int D_80097568[];                        /* channel counts */
-extern padIntr* D_80097570;
-extern padSio* D_80097574;
+extern int (*_padFuncNextPort)(int);                  /* DMA/transfer completion */
+extern void (*_padFuncClrInfo)(padPort*);            /* reset object */
+extern int (*_padFuncGetTxd)(padPort*, int);        /* read payload byte */
+extern void (*_padFuncCurrLimit)(padPort*);            /* actuator map */
+extern int (*_padFuncPtr2Port)(padPort*);             /* channel id of object */
+extern padPort* (*_padFuncPort2Info)(int);             /* object of channel */
+extern int (*_padFuncSendAuto)(padPort*);             /* state dispatch */
+extern int (*_padFuncChkEng)();                     /* transfer busy */
+extern void (*_padFuncRecvAuto)(padPort*);            /* response handler */
+extern void (*_padFuncClrCmdNo)(padPort*);            /* swap byte field */
+extern int (*_padFuncIntGun)(void);
+extern void (*_padFuncSetGunPort)(void);
+extern void (*_padFuncGetGunPos)(void);
+extern padPort* _padInfoDir;                     /* port objects */
+extern int _padIntExec;                          /* service ready */
+extern int _padGunExec;
+extern int _padSioChan;                          /* active port index */
+extern int _padSioState;                          /* command step */
+extern int _padTotalCurr;                          /* actuator cost total */
+extern int _padModeMtap;                          /* multitap command byte */
+extern int _padChanStart;                          /* port 1 absent */
+extern int _padChanStop;                          /* last port index */
+extern int _padFixResult[];                        /* channel counts */
+extern padIntr* padmain_istat;
+extern padSio* padmain_sio;
 extern int D_80097578;                          /* vsync callback pending */
 extern int D_80097588;
-extern volatile u8* D_8009758C;
+extern volatile u8* padif_sio;
 extern int D_80097590;
-extern int (*D_80097594[])(void);               /* command step handlers */
-extern padSio* D_800975A8;
+extern int (*padIntFunc[])(void);               /* command step handlers */
+extern padSio* padportd_sio;
 extern int D_8009B2E0[];                        /* VSync interrupt queue node */
 extern int D_8009B2F0[2];                       /* idle frames per port */
 extern u8* D_8009B300;

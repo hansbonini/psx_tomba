@@ -1,25 +1,30 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-extern int D_8009B69C;
-extern short D_8009BC74;
-extern int D_8009BC78;
-extern int D_8009C85C;
-extern int D_8009C860;
-extern int D_8009C95C;
-extern int D_8009C9FC;
-extern int D_800A3028;
+volatile s8* c005_cd_reg0 = (volatile s8*)0x1F801800;
+volatile s8* c005_cd_reg1 = (volatile s8*)0x1F801801;
+volatile s8* c005_cd_reg2 = (volatile s8*)0x1F801802;
+volatile s8* c005_cd_reg3 = (volatile s8*)0x1F801803;
+
+extern int Stframe_no;
+extern short Stsector_offset;
+extern int StRgb24;
+extern int StFunc1;
+extern int StFunc2;
+extern int StCHANNEL;
+extern int CChannel;
+extern int StEmu_Addr;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_005", StSetStream);
 void StSetStream(u_long mode, u_long start_frame, u_long end_frame, void (*func1)(), void (*func2)())
 {
     StSetMask(1, start_frame, end_frame);
-    D_800A3028 = 0;
-    D_8009C85C = func1;
-    D_8009BC78 = mode & 1;
-    D_8009C9FC = 0;
-    D_8009C95C = 0;
-    D_8009BC74 = 0;
-    D_8009B69C = 0;
-    D_8009C860 = func2;
+    StEmu_Addr = 0;
+    StFunc1 = func1;
+    StRgb24 = mode & 1;
+    CChannel = 0;
+    StCHANNEL = 0;
+    Stsector_offset = 0;
+    Stframe_no = 0;
+    StFunc2 = func2;
 }

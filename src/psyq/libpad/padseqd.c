@@ -6,10 +6,10 @@
 void _padInitDirSeq(void) {
     void (*response_handler)(padPort *);
 
-    D_80097528 = func_8006B080;
-    D_8009752C = func_8006B494;
+    _padFuncSendAuto = func_8006B080;
+    _padFuncChkEng = func_8006B494;
     response_handler = func_8006B154;
-    D_80097530 = response_handler;
+    _padFuncRecvAuto = response_handler;
 }
 
 int func_8006B080(padPort *obj) {
@@ -87,10 +87,10 @@ void func_8006B154(padPort *port) {
         port->pad_50[0] == 0) ||
         (!func_8006B494(port) && !port->saved_command && !port->retryCount &&
         port->currentId != old))
-        D_80097514(port);
+        _padFuncClrInfo(port);
     port->retryCount = 0;
     if ((u8)(port->sequenceStep - 2) < 252 && port->response_3c[0] != 0xf3)
-        D_80097514(port);
+        _padFuncClrInfo(port);
     {
         register int state = port->sequenceStep;
         register int one;
@@ -160,7 +160,7 @@ void _dirFailAuto(padPort *port) {
             return;
         }
         if (port->communicationState)
-            D_80097514(port);
+            _padFuncClrInfo(port);
     }
     if (*port->response_3c != 0xf3) {
         port->output_30[0] = 255;

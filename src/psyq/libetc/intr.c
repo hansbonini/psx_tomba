@@ -11,137 +11,116 @@ void memclr(s32* mem, int len);
 
 typedef int jmp_buf[12];
 struct Intr {
-    u16 unk0;
-    u16 isCbContext;
-    s16 D_800B5FFC[24];
-    s32 D_800B602C;
+    u16 initialized;
+    u16 inInterrupt;
+    void (*handlers[11])();
+    u16 enabledMask;
+    s16 savedMask;
+    s32 savedDpcr;
     jmp_buf env;
     s32 stack[0x400];
 };
-extern struct Intr D_80096418;
 extern int VSyncCallback(void (*f)());
 struct intr {
     const char* ver;
-    void (*cb)();
+    void (*dma)();
     void (*set)(int arg0, void (*cb)(void));
     int (*start)();
     int (*stop)();
-    int (*unk14)(int, void (*f)());
+    int (*vsync)(int, void (*f)());
     int (*restart)();
-    short* unk1C;
+    short* env;
 };
-extern struct intr* D_800974A0;
 int VSyncCallback(void (*func)());
-extern volatile u16* D_800974A8;
-extern volatile s32* D_800974AC;
 void HookEntryInt(jmp_buf env);
-extern volatile u16* D_800974A4;
 
-extern const char D_800161F8[];
+extern const char intr_id[];
 void* startIntr(void);
 void (*setIntr(int index, void (*fn)()))();
 u16* stopIntr(void);
 u16* restartIntr(void);
 
-struct Intr D_80096418_d asm("D_80096418") = { 0 };
-u32 D_80097480_d[8] asm("D_80097480") = {
-    (u32)D_800161F8, 0x00000000, (u32)setIntr, (u32)startIntr,
-    (u32)stopIntr, 0x00000000, (u32)restartIntr, (u32)&D_80096418_d,
+struct Intr intr_env = {0};
+struct intr intr_table = {
+    intr_id, NULL, (void*)setIntr, (void*)startIntr,
+    (void*)stopIntr, NULL, (void*)restartIntr, (short*)&intr_env,
 };
-u32 D_800974A0_d[1] asm("D_800974A0") = {
-    (u32)D_80097480_d,
-};
-u32 D_800974A4_d[1] asm("D_800974A4") = {
-    0x1F801070,
-};
-u32 D_800974A8_d[1] asm("D_800974A8") = {
-    0x1F801074,
-};
-u32 D_800974AC_d[1] asm("D_800974AC") = {
-    0x1F8010F0,
-};
-u32 D_800974B0_d[1] asm("D_800974B0") = {
-    0x00000000,
-};
+struct intr* intr_table_ptr = &intr_table;
+volatile u16* intr_istat = (volatile u16*)0x1F801070;
+volatile u16* intr_imask = (volatile u16*)0x1F801074;
+volatile s32* intr_dpcr = (volatile s32*)0x1F8010F0;
+s32 intr_timeout = 0;
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", ResetCallback);
 
-int ResetCallback(void) { return D_800974A0->start(); }
+int ResetCallback(void) { return intr_table_ptr->start(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", InterruptCallback);
 
 void InterruptCallback(int arg0, void (*cb)(void)) {
-    D_800974A0->set(arg0, cb);
+    intr_table_ptr->set(arg0, cb);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", DMACallback);
 
-void DMACallback(void) { D_800974A0->cb(); }
+void DMACallback(void) { intr_table_ptr->dma(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", VSyncCallback);
 
-int VSyncCallback(void (*func)()) { return D_800974A0->unk14(4, func); }
+int VSyncCallback(void (*func)()) { return intr_table_ptr->vsync(4, func); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", VSyncCallbacks);
 
-int VSyncCallbacks(int n, void (*func)()) { return D_800974A0->unk14(n, func); }
+int VSyncCallbacks(int n, void (*func)()) { return intr_table_ptr->vsync(n, func); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", StopCallback);
 
-int StopCallback(void) { return D_800974A0->stop(); }
+int StopCallback(void) { return intr_table_ptr->stop(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", RestartCallback);
 
-int RestartCallback(void) { return D_800974A0->restart(); }
+int RestartCallback(void) { return intr_table_ptr->restart(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", CheckCallback);
 
-int CheckCallback() { return D_80096418.isCbContext; }
+int CheckCallback() { return intr_env.inInterrupt; }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", GetIntrMask);
 
-int GetIntrMask() { return *D_800974A8; }
+int GetIntrMask() { return *intr_imask; }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", SetIntrMask);
 
 int SetIntrMask(int mask) {
-    int prev = *D_800974A8;
-    *D_800974A8 = mask;
+    int prev = *intr_imask;
+    *intr_imask = mask;
     return prev;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", startIntr);
 
 void* startIntr(void) {
-    if (D_80096418.unk0) {
+    if (intr_env.initialized) {
         return NULL;
     }
-    *D_800974A4 = *D_800974A8 = 0;
-    *D_800974AC = 0x33333333;
-    memclr(&D_80096418, sizeof(D_80096418) / sizeof(s32));
-    if (setjmp(D_80096418.env)) {
+    *intr_istat = *intr_imask = 0;
+    *intr_dpcr = 0x33333333;
+    memclr(&intr_env, sizeof(intr_env) / sizeof(s32));
+    if (setjmp(intr_env.env)) {
         trapIntr();
     }
-    D_80096418.env[JB_SP] = &D_80096418.stack[0x3EC];
-    HookEntryInt(D_80096418.env);
-    D_80096418.unk0 = 1;
-    D_800974A0->unk14 = startIntrVSync();
-    D_800974A0->cb = startIntrDMA();
+    intr_env.env[JB_SP] = &intr_env.stack[0x3EC];
+    HookEntryInt(intr_env.env);
+    intr_env.initialized = 1;
+    intr_table_ptr->vsync = startIntrVSync();
+    intr_table_ptr->dma = startIntrDMA();
     _96_remove();
     ExitCriticalSection();
-    return &D_80096418.unk0;
+    return &intr_env.initialized;
 }
 
-typedef struct IntrEnv {
-    u16 initialized;
-    u16 inInterrupt;
-    void (*handlers[11])();
-    u16 enabledMask;
-} IntrEnv;
-extern IntrEnv D_80096418_Env asm("D_80096418");
-extern s32 D_800974B0;
 
-const char D_800161F8[] = "$Id: intr.c,v 1.74 1996/12/04 07:30:16 makoto Exp $";
+const char intr_id[] = "$Id: intr.c,v 1.74 1996/12/04 07:30:16 makoto Exp $";
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", trapIntr);
 void trapIntr()
@@ -149,31 +128,31 @@ void trapIntr()
     int i;
     u16 mask;
 
-    if (!D_80096418_Env.initialized) {
-        printf("unexpected interrupt(%04x)\n", *D_800974A4);
+    if (!intr_env.initialized) {
+        printf("unexpected interrupt(%04x)\n", *intr_istat);
         ReturnFromException();
     }
-    D_80096418_Env.inInterrupt = 1;
-    while ((mask = (D_80096418_Env.enabledMask & *D_800974A4) & *D_800974A8) != 0) {
+    intr_env.inInterrupt = 1;
+    while ((mask = (intr_env.enabledMask & *intr_istat) & *intr_imask) != 0) {
         for (i = 0; mask && i < 11; ++i, mask >>= 1) {
             if (mask & 1) {
-                *D_800974A4 = ~(1 << i);
-                if (D_80096418_Env.handlers[i]) {
-                    D_80096418_Env.handlers[i]();
+                *intr_istat = ~(1 << i);
+                if (intr_env.handlers[i]) {
+                    intr_env.handlers[i]();
                 }
             }
         }
     }
-    if (*D_800974A4 & *D_800974A8) {
-        if (D_800974B0++ > 0x800) {
-            printf("intr timeout(%04x:%04x)\n", *D_800974A4, *D_800974A8);
-            D_800974B0 = 0;
-            *D_800974A4 = 0;
+    if (*intr_istat & *intr_imask) {
+        if (intr_timeout++ > 0x800) {
+            printf("intr timeout(%04x:%04x)\n", *intr_istat, *intr_imask);
+            intr_timeout = 0;
+            *intr_istat = 0;
         }
     } else {
-        D_800974B0 = 0;
+        intr_timeout = 0;
     }
-    D_80096418_Env.inInterrupt = 0;
+    intr_env.inInterrupt = 0;
     ReturnFromException();
 }
 
@@ -185,19 +164,19 @@ void (*setIntr(int index, void (*fn)()))()
     u16 mask;
     int newMask;
 
-    old = D_80096418_Env.handlers[index];
-    if (fn != old && D_80096418_Env.initialized) {
-        mask = *D_800974A8;
-        *D_800974A8 = 0;
+    old = intr_env.handlers[index];
+    if (fn != old && intr_env.initialized) {
+        mask = *intr_imask;
+        *intr_imask = 0;
         newMask = mask & 0xFFFF;
         if (fn != NULL) {
-            D_80096418_Env.handlers[index] = fn;
+            intr_env.handlers[index] = fn;
             newMask |= 1 << index;
-            D_80096418_Env.enabledMask |= 1 << index;
+            intr_env.enabledMask |= 1 << index;
         } else {
-            D_80096418_Env.handlers[index] = NULL;
+            intr_env.handlers[index] = NULL;
             newMask &= ~(1 << index);
-            D_80096418_Env.enabledMask &= ~(1 << index);
+            intr_env.enabledMask &= ~(1 << index);
         }
         if (index == 0) {
             ChangeClearPAD(fn == NULL);
@@ -212,7 +191,7 @@ void (*setIntr(int index, void (*fn)()))()
         if (index == 6) {
             ChangeClearRCnt(2, fn == NULL);
         }
-        *D_800974A8 = newMask;
+        *intr_imask = newMask;
     }
     return old;
 }
@@ -220,17 +199,17 @@ void (*setIntr(int index, void (*fn)()))()
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", stopIntr);
 
 u16* stopIntr(void) {
-    if (D_80096418.unk0) {
+    if (intr_env.initialized) {
         EnterCriticalSection();
-        D_80096418.D_800B5FFC[0x17] = *D_800974A8;
-        D_80096418.D_800B602C = *D_800974AC;
-        *D_800974A4 = *D_800974A8 = 0;
-        *D_800974AC &= 0x77777777;
+        intr_env.savedMask = *intr_imask;
+        intr_env.savedDpcr = *intr_dpcr;
+        *intr_istat = *intr_imask = 0;
+        *intr_dpcr &= 0x77777777;
         ResetEntryInt();
-        if (D_800974AC && D_800974AC) {
+        if (intr_dpcr && intr_dpcr) {
         }
-        D_80096418.unk0 = 0;
-        return &D_80096418.unk0;
+        intr_env.initialized = 0;
+        return &intr_env.initialized;
     }
     return NULL;
 }
@@ -238,15 +217,15 @@ u16* stopIntr(void) {
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", restartIntr);
 
 u16* restartIntr(void) {
-    if (D_80096418.unk0) {
+    if (intr_env.initialized) {
         return NULL;
     }
-    HookEntryInt(D_80096418.env);
-    D_80096418.unk0 = 1;
-    *D_800974A8 = D_80096418.D_800B5FFC[0x17];
-    *D_800974AC = D_80096418.D_800B602C;
+    HookEntryInt(intr_env.env);
+    intr_env.initialized = 1;
+    *intr_imask = intr_env.savedMask;
+    *intr_dpcr = intr_env.savedDpcr;
     ExitCriticalSection();
-    return &D_80096418.unk0;
+    return &intr_env.initialized;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", memclr);

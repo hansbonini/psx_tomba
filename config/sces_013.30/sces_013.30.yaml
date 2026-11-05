@@ -264,6 +264,7 @@ segments:
       - [0x9E1A8, .data, psyq/libetc/intr_dma]
       - [0x9E1D0, .data, psyq/libetc/vmode]
       - [0x9E1D4, .data, psyq/libpad/padmain]
+      - [0x9E254, .data, psyq/libpad/padif]
       - [0x9E274, .data, psyq/libpad/padportd]
       - [0x9E284, data]
       - [0x9E2E0, .data, psyq/libsnd/ssstart]

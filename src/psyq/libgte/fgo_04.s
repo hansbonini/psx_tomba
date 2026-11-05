@@ -15,9 +15,9 @@ glabel RotMatrixX
      andi       $t7, $t7, 0xFFF
 .LRotMatrixX_1:
     sll        $t8, $t7, 2
-    lui        $t9, %hi(D_80091750)
+    lui        $t9, %hi(rcossin_tbl)
     addu       $t9, $t9, $t8
-    lw         $t9, %lo(D_80091750)($t9)
+    lw         $t9, %lo(rcossin_tbl)($t9)
     nop
     sll        $t6, $t9, 16
     sra        $t6, $t6, 16
@@ -26,9 +26,9 @@ glabel RotMatrixX
      sra        $t0, $t9, 16
 .LRotMatrixX_2:
     sll        $t8, $t9, 2
-    lui        $t9, %hi(D_80091750)
+    lui        $t9, %hi(rcossin_tbl)
     addu       $t9, $t9, $t8
-    lw         $t9, %lo(D_80091750)($t9)
+    lw         $t9, %lo(rcossin_tbl)($t9)
     nop
     sll        $t8, $t9, 16
     sra        $t1, $t8, 16

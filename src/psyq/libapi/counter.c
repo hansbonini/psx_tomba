@@ -9,20 +9,10 @@ typedef struct {
     short : 16;
     int : 32;
 } RootCounter;
-extern int (*_interruptReg)[2];
-extern volatile RootCounter (*_rootCounter0)[3];
-extern long _interruptMasks[4];
 
-u32 _interruptReg_d[1] asm("_interruptReg") = {
-    0x1F801070,
-};
-u32 _rootCounter0_d[1] asm("_rootCounter0") = {
-    0x1F801100,
-};
-u32 _interruptMasks_d[6] asm("_interruptMasks") = {
-    0x00000010, 0x00000020, 0x00000040, 0x00000001,
-    0x00000000, 0x00000000,
-};
+int (*_interruptReg)[2] = (int (*)[2])0x1F801070;
+volatile RootCounter (*_rootCounter0)[3] = (volatile RootCounter (*)[3])0x1F801100;
+long _interruptMasks[6] = {0x10, 0x20, 0x40, 0x01, 0, 0};
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_roff", SetRCnt);
 
@@ -82,7 +72,7 @@ long StartRCnt(u_long spec)
     return i < 3;
 }
 
-long func_8006E5F4(u_long spec) {
+long StopRCnt(u_long spec) {
     int i;
 
     i = spec & 0xFFFF;

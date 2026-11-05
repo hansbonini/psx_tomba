@@ -3,23 +3,11 @@
 #include "psyq/libetc.h"
 
 PsyqStamp libetc_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_ETC, 19, 30, 52);
-u32 D_80096408_d[1] asm("D_80096408") = {
-    0x1F801814,
-};
-u32 D_8009640C_d[1] asm("D_8009640C") = {
-    0x1F801110,
-};
-u32 D_80096410_d[1] asm("D_80096410") = {
-    0x00000000,
-};
-u32 D_80096414_d[1] asm("D_80096414") = {
-    0x00000000,
-};
+volatile s32* vsync_gpustat = (volatile s32*)0x1F801814;
+volatile s32* vsync_rcnt1 = (volatile s32*)0x1F801110;
+volatile s32 Hcount = 0;
+volatile s32 D_80096414 = 0;
 
-extern volatile s32* D_80096408;
-extern volatile s32* D_8009640C;
-extern volatile s32 D_80096410; // HSync counter
-extern volatile s32 D_80096414; 
 extern volatile s32 Vcount; // VSync counter
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/vsync", VSync);
@@ -30,8 +18,8 @@ int VSync(int mode) {
     int v;
     int n;
 
-    syncFlag = *D_80096408;
-    elapsed = (*D_8009640C - D_80096410) & 0xFFFF;
+    syncFlag = *vsync_gpustat;
+    elapsed = (*vsync_rcnt1 - Hcount) & 0xFFFF;
     if (mode < 0) {
         return Vcount;
     }
@@ -42,14 +30,14 @@ int VSync(int mode) {
     v = mode > 0 ? D_80096414 - n + mode : D_80096414;
     timeout = mode > 0 ? mode - n : 0;
     v_wait(v, timeout);
-    syncFlag = *D_80096408;
+    syncFlag = *vsync_gpustat;
     v_wait(Vcount + 1, 1);
-    if (syncFlag & 0x400000 && (syncFlag ^ *D_80096408) >= 0) {
+    if (syncFlag & 0x400000 && (syncFlag ^ *vsync_gpustat) >= 0) {
         do {
-        } while (!((syncFlag ^ *D_80096408) & 0x80000000));
+        } while (!((syncFlag ^ *vsync_gpustat) & 0x80000000));
     }
     D_80096414 = Vcount;
-    D_80096410 = *D_8009640C;
+    Hcount = *vsync_rcnt1;
     return elapsed;
 }
 

@@ -1,43 +1,6 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-u32 D_80096300_d[1] asm("D_80096300") = {
-    0x00000000,
-};
-u32 D_80096304_d[1] asm("D_80096304") = {
-    0x00000000,
-};
-u32 D_80096308_d[1] asm("D_80096308") = {
-    0x00000000,
-};
-u32 D_8009630C_d[1] asm("D_8009630C") = {
-    0x00000000,
-};
-u32 D_80096310_d[1] asm("D_80096310") = {
-    0x00000000,
-};
-u32 D_80096314_d[1] asm("D_80096314") = {
-    0x00000000,
-};
-u32 D_80096318_d[1] asm("D_80096318") = {
-    0x00000000,
-};
-u32 D_8009631C_d[1] asm("D_8009631C") = {
-    0x00000000,
-};
-u32 D_80096320_d[1] asm("D_80096320") = {
-    0x00000000,
-};
-u32 D_80096324_d[1] asm("D_80096324") = {
-    0x00000000,
-};
-u32 D_80096328_d[1] asm("D_80096328") = {
-    0x00000000,
-};
-u32 D_8009632C_d[1] asm("D_8009632C") = {
-    0x00000000,
-};
-
 typedef struct {
 /*0x00*/    int nsectors;
 /*0x04*/    u_long* buf_start;
@@ -50,14 +13,11 @@ typedef struct {
 /*0x20*/    int pos;
 /*0x24*/    CdlCB cbsync;
 /*0x28*/    CdlCB cbready;
-/*0x2C*/    CdlCB cbdata;
-/*0x30*/    int block_mode; 
-/*0x34*/    u_char* unk34;
-/*0x38*/    int unk38;
 } ReadAttr_t;
 
-extern CdlCB D_80096300;
-extern volatile ReadAttr_t D_80096304;
+CdlCB cdread_callback = 0;
+volatile ReadAttr_t ReadAttr = {0};
+
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", cb_read);
 void cb_read(u_char arg0, u_char* arg1)
@@ -65,37 +25,37 @@ void cb_read(u_char arg0, u_char* arg1)
     int pos[3];
 
     if (arg0 == 1) {
-        if (D_80096304.status > 0) {
-            if (D_80096304.secsize == 0x200) {
+        if (ReadAttr.status > 0) {
+            if (ReadAttr.secsize == 0x200) {
                 CdGetSector(pos, 3);
-                if (CdPosToInt(pos) != D_80096304.pos) {
+                if (CdPosToInt(pos) != ReadAttr.pos) {
                     puts("CdRead: sector error\n");
-                    D_80096304.status = -1;
+                    ReadAttr.status = -1;
                 }
             }
-            CdGetSector(D_80096304.buf_cur, D_80096304.secsize);
-            D_80096304.buf_cur += D_80096304.secsize;
-            D_80096304.status--;
-            D_80096304.pos++;
+            CdGetSector(ReadAttr.buf_cur, ReadAttr.secsize);
+            ReadAttr.buf_cur += ReadAttr.secsize;
+            ReadAttr.status--;
+            ReadAttr.pos++;
         }
     } else {
-        D_80096304.status = -1;
+        ReadAttr.status = -1;
     }
-    D_80096304.vb_attempt_start = VSync(-1);
-    if (D_80096304.status < 0) {
+    ReadAttr.vb_attempt_start = VSync(-1);
+    if (ReadAttr.status < 0) {
         cd_read_retry(true);
     }
-    if (VSync(-1) > (D_80096304.vb_start + 1200)) {
-        D_80096304.status = -1;
+    if (VSync(-1) > (ReadAttr.vb_start + 1200)) {
+        ReadAttr.status = -1;
     }
-    if (D_80096304.status && VSync(-1) <= D_80096304.vb_start + 1200) {
+    if (ReadAttr.status && VSync(-1) <= ReadAttr.vb_start + 1200) {
         return;
     }
-    CdSyncCallback(D_80096304.cbsync);
-    CdReadyCallback(D_80096304.cbready);
+    CdSyncCallback(ReadAttr.cbsync);
+    CdReadyCallback(ReadAttr.cbready);
     CdControl(CdlPause, 0, 0);
-    if (D_80096300 != NULL) {
-        D_80096300(D_80096304.status == 0 ? CdlComplete : CdlDiskError, arg1);
+    if (cdread_callback != NULL) {
+        cdread_callback(ReadAttr.status == 0 ? CdlComplete : CdlDiskError, arg1);
     }
 }
 
@@ -110,64 +70,64 @@ int cd_read_retry(int retry) {
             puts("CdRead: Shell open...\n");
         }
         CdControlF(CdlNop, NULL);
-        D_80096304.vb_start = VSync(-1);
-        D_80096304.status = -1;
-        return D_80096304.status;
+        ReadAttr.vb_start = VSync(-1);
+        ReadAttr.status = -1;
+        return ReadAttr.status;
     }
     if (retry) {
         puts("CdRead: retry...\n");
         CdControl(CdlPause, NULL, NULL);
         if (!CdControl(CdlSetloc, CdLastPos(), NULL)) {
-            return D_80096304.status = -1;
+            return ReadAttr.status = -1;
         }
     }
     CdFlush();
-    mode2 = D_80096304.mode;
+    mode2 = ReadAttr.mode;
     mode = mode2; // FAKE
     if ((char)mode2 != CdMode() || retry) {
         if (!CdControl(CdlSetmode, &mode, NULL)) {
-            D_80096304.status = -1;
-            return D_80096304.status;
+            ReadAttr.status = -1;
+            return ReadAttr.status;
         }
     }
-    D_80096304.pos = CdPosToInt(CdLastPos());
+    ReadAttr.pos = CdPosToInt(CdLastPos());
     CdReadyCallback(&cb_read);
-    D_80096304.buf_cur = D_80096304.buf_start;
+    ReadAttr.buf_cur = ReadAttr.buf_start;
     CdControlF(CdlReadN, NULL);
-    D_80096304.status = D_80096304.nsectors;
-    D_80096304.vb_attempt_start = VSync(-1);
-    return D_80096304.status;
+    ReadAttr.status = ReadAttr.nsectors;
+    ReadAttr.vb_attempt_start = VSync(-1);
+    return ReadAttr.status;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdReadBreak);
 void CdReadBreak(void)
 {
-    D_80096304.status = 0;
-    CdSyncCallback(D_80096304.cbsync);
-    CdReadyCallback(D_80096304.cbready);
+    ReadAttr.status = 0;
+    CdSyncCallback(ReadAttr.cbsync);
+    CdReadyCallback(ReadAttr.cbready);
     CdControl(CdlPause, NULL, NULL);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdRead);
 int CdRead(int sectors, u_long* buf, int mode) {
-    D_80096304.mode = mode;
-    switch (D_80096304.mode & (CdlModeSize0 | CdlModeSize1)) {
+    ReadAttr.mode = mode;
+    switch (ReadAttr.mode & (CdlModeSize0 | CdlModeSize1)) {
     case 0:
-        D_80096304.secsize = 0x200;
+        ReadAttr.secsize = 0x200;
         break;
     case CdlModeSize1:
-        D_80096304.secsize = 0x249;
+        ReadAttr.secsize = 0x249;
         break;
     default:
-        D_80096304.secsize = 0x246;
+        ReadAttr.secsize = 0x246;
         break;
     }
-    D_80096304.mode |= CdlModeSize1;
-    D_80096304.buf_start = buf;
-    D_80096304.nsectors = sectors;
-    D_80096304.cbsync = CdSyncCallback(NULL);
-    D_80096304.cbready = CdReadyCallback(NULL);
-    D_80096304.vb_start = VSync(-1);
+    ReadAttr.mode |= CdlModeSize1;
+    ReadAttr.buf_start = buf;
+    ReadAttr.nsectors = sectors;
+    ReadAttr.cbsync = CdSyncCallback(NULL);
+    ReadAttr.cbready = CdReadyCallback(NULL);
+    ReadAttr.vb_start = VSync(-1);
     if (CdStatus() & (CdlStatPlay | CdlStatSeek | CdlStatRead)) {
         CdControlB(CdlPause, NULL, NULL);
     }
@@ -180,12 +140,12 @@ int CdReadSync(int mode, u_char* result) {
 
     while (true) {
         var_s0 = -1;
-        if (VSync(-1) <= D_80096304.vb_start + 1200) {
-            if (D_80096304.status < 0 || VSync(-1) > D_80096304.vb_attempt_start + 60) {
+        if (VSync(-1) <= ReadAttr.vb_start + 1200) {
+            if (ReadAttr.status < 0 || VSync(-1) > ReadAttr.vb_attempt_start + 60) {
                 cd_read_retry(true);
-                var_s0 = D_80096304.nsectors;
+                var_s0 = ReadAttr.nsectors;
             } else {
-                var_s0 = D_80096304.status;
+                var_s0 = ReadAttr.status;
             }
         }
         if (mode != 0 || var_s0 <= 0) {
@@ -197,7 +157,7 @@ int CdReadSync(int mode, u_char* result) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdReadCallback);
 CdlCB CdReadCallback(CdlCB func) {
-    CdlCB prevFunc = D_80096300;
-    D_80096300 = func;
+    CdlCB prevFunc = cdread_callback;
+    cdread_callback = func;
     return prevFunc;
 }

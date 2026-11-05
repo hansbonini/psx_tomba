@@ -2,79 +2,29 @@
 #include "psyq/stdarg.h"
 #include "libspu_internal.h"
 
-u32 _spu_RXX_d[1] asm("_spu_RXX") = {
-    0x1F801C00,
-};
-u32 dma_spu_madr_d[1] asm("dma_spu_madr") = {
-    0x1F8010C0,
-};
-u32 dma_spu_bcr_d[1] asm("dma_spu_bcr") = {
-    0x1F8010C4,
-};
-u32 dma_spu_chcr_d[1] asm("dma_spu_chcr") = {
-    0x1F8010C8,
-};
-u32 dma_dpcr_d[1] asm("dma_dpcr") = {
-    0x1F8010F0,
-};
-u32 D_80097C5C_d[1] asm("D_80097C5C") = {
-    0x1F801014,
-};
-u32 _spu_tsa_d[1] asm("_spu_tsa") = {
-    0x00000000,
-};
-u32 _spu_transMode_d[1] asm("_spu_transMode") = {
-    0x00000000,
-};
-u32 _spu_addrMode_d[1] asm("_spu_addrMode") = {
-    0x00000000,
-};
-u32 _spu_mem_mode_d[1] asm("_spu_mem_mode") = {
-    0x00000002,
-};
-u32 _spu_mem_mode_plus_d[1] asm("_spu_mem_mode_plus") = {
-    0x00000003,
-};
-u32 _spu_mem_mode_unit_d[1] asm("_spu_mem_mode_unit") = {
-    0x00000008,
-};
-u32 _spu_mem_mode_unitM_d[1] asm("_spu_mem_mode_unitM") = {
-    0x00000007,
-};
-u32 _spu_inTransfer_d[1] asm("_spu_inTransfer") = {
-    0x00000001,
-};
-u32 _spu_transferCallback_d[1] asm("_spu_transferCallback") = {
-    0x00000000,
-};
-u32 _spu_IRQCallback_d[1] asm("_spu_IRQCallback") = {
-    0x00000000,
-};
-u32 _spu_dummy_d[4] asm("_spu_dummy") = {
-    0x07070707, 0x07070707, 0x07070707, 0x07070707,
-};
-u32 D_80097C98_d[1] asm("D_80097C98") = {
-    0x00000000,
-};
-u32 spu_madr_d[1] asm("spu_madr") = {
-    0x00000000,
-};
-u32 spu_bcr_d[1] asm("spu_bcr") = {
-    0x00000000,
-};
-
-asm(
-    ".globl D_80097C62\nD_80097C62 = _spu_tsa + 2\n"
-);
+union SpuUnion* _spu_RXX = (union SpuUnion*)0x1F801C00;
+volatile unsigned* dma_spu_madr = (volatile unsigned*)0x1F8010C0;
+volatile unsigned* dma_spu_bcr = (volatile unsigned*)0x1F8010C4;
+volatile unsigned* dma_spu_chcr = (volatile unsigned*)0x1F8010C8;
+volatile unsigned* dma_dpcr = (volatile unsigned*)0x1F8010F0;
+volatile s32* spu_delay = (volatile s32*)0x1F801014;
+u16 _spu_tsa = 0;
+s32 _spu_transMode = 0;
+int _spu_addrMode = 0;
+int _spu_mem_mode = 2;
+s32 _spu_mem_mode_plus = 3;
+int _spu_mem_mode_unit = 8;
+s32 _spu_mem_mode_unitM = 7;
+s32 _spu_inTransfer = 1;
+void (* volatile _spu_transferCallback)() = 0;
+void (* volatile _spu_IRQCallback)() = 0;
+s8 _spu_dummy[16] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+int D_80097C98 = 0;
+int spu_madr = 0;
+int spu_bcr = 0;
 
 #define SPU_CTRL_MASK_TRANSFER_DMA_READ (3 << 4)
 #define SPU_CTRL_MASK_TRANSFER_DMA_WRITE (2 << 4)
-extern volatile unsigned* dma_spu_madr;
-extern volatile unsigned* dma_spu_bcr;
-extern volatile unsigned* dma_spu_chcr;
-extern int D_80097C98;
-extern int spu_madr;
-extern int spu_bcr;
 void _spu_FsetDelayW(void);
 void _spu_FsetDelayR(void);
 
@@ -89,11 +39,6 @@ void _spu_FsetDelayR(void);
 #define SPU_CTRL_MASK_MUTE_SPU (1 << 14)
 extern volatile u16 _spu_RQ[10];
 void _spu_writeByIO(unsigned char* addr, u_long size);
-extern volatile unsigned* dma_dpcr;
-extern int _spu_addrMode;
-extern int _spu_mem_mode;
-extern int _spu_mem_mode_unit;
-extern s8 _spu_dummy[16];
 #define SPU_CTRL_MASK_SRAM_TRANSFER_MODE ((1 << 4) | (1 << 5))
 #define SPUR(field) (_spu_RXX->rxx.field)
 #define SPUW(field,val) _spu_RXX->rxx.field = (val)
@@ -101,7 +46,6 @@ extern s8 _spu_dummy[16];
 void _spu_FwaitFs(void);
 extern s32 _spu_mem_mode;
 extern s32 _spu_mem_mode_unit;
-extern volatile s32* D_80097C5C;
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_init);
 
@@ -273,7 +217,7 @@ void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
     *dma_spu_madr = arg0;
     *dma_spu_bcr = (arg2 << 16) | 0x10;
     D_80097C98 = 1;
-    *dma_spu_chcr = 0x01000200;
+    *dma_spu_chcr = 16777728;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_t);
@@ -346,9 +290,9 @@ int _spu_t(int arg0, ...) {
         *dma_spu_madr = spu_madr;
         *dma_spu_bcr = (spu_bcr << 0x10) | 0x10;
         if (D_80097C98 == 1) {
-            channelControl = 0x01000200;
+            channelControl = 16777728;
         } else {
-            channelControl = 0x01000201;
+            channelControl = 16777729;
         }
         *dma_spu_chcr = channelControl;
         break;
@@ -442,13 +386,13 @@ void _spu_FsetPCR(s32 high_priority) {
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FsetDelayW);
 
 void _spu_FsetDelayW(void) {
-    *D_80097C5C = (*D_80097C5C & 0xF0FFFFFF) | 0x20000000;
+    *spu_delay = (*spu_delay & 0xF0FFFFFF) | 0x20000000;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FsetDelayR);
 
 void _spu_FsetDelayR(void) {
-    *D_80097C5C = (*D_80097C5C & 0xF0FFFFFF) | 0x22000000;
+    *spu_delay = (*spu_delay & 0xF0FFFFFF) | 0x22000000;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FwaitFs);

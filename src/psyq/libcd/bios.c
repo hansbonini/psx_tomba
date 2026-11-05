@@ -2,221 +2,89 @@
 #include "psyq/libstamp.h"
 #include "psyq/libcd.h"
 
-extern u8 CD_COM_x[] asm("CD_COM");
-extern u8 CD_POS_x[] asm("CD_POS");
-extern u8 CD_STATUS_x[] asm("CD_STATUS");
-extern u8 D_80015F34_x[] asm("D_80015F34");
-extern u8 D_8001612C_x[] asm("D_8001612C");
-extern u8 D_800962C8_x[] asm("D_800962C8");
-extern u8 D_8009B2A8_x[] asm("D_8009B2A8");
-
-PsyqStamp libcd_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_CD, 19, 14, 52);
-u32 CD_CBSYNC_d[1] asm("CD_CBSYNC") = {
-    0x00000000,
-};
-u32 CD_CBREADY_d[2] asm("CD_CBREADY") = {
-    0x00000000, 0x00000000,
-};
-u32 CD_DEBUG_d[1] asm("CD_DEBUG") = {
-    0x00000000,
-};
-u32 CD_STATUS_d[1] asm("CD_STATUS") = {
-    0x00000000,
-};
-u32 CD_STATUS1_d[1] asm("CD_STATUS1") = {
-    0x00000000,
-};
-u32 D_80096004_d[1] asm("D_80096004") = {
-    0x00000000,
-};
-u32 CD_POS_d[1] asm("CD_POS") = {
-    0x00000002,
-};
-u32 CD_MODE_d[1] asm("CD_MODE") = {
-    0x00000000,
-};
-u32 CD_COMSTR_d[32] asm("CD_COMSTR") = {
-    (u32)D_80015F34_x + 0xF4, (u32)D_80015F34_x + 0xEC, (u32)D_80015F34_x + 0xE0, (u32)D_80015F34_x + 0xD8,
-    (u32)D_80015F34_x + 0xCC, (u32)D_80015F34_x + 0xC0, (u32)D_80015F34_x + 0xB4, (u32)D_80015F34_x + 0xA8,
-    (u32)D_80015F34_x + 0xA0, (u32)D_80015F34_x + 0x94, (u32)D_80015F34_x + 0x88, (u32)D_80015F34_x + 0x80,
-    (u32)D_80015F34_x + 0x74, (u32)D_80015F34_x + 0x64, (u32)D_80015F34_x + 0x58, (u32)D_80015F34_x + 0x54,
-    (u32)D_80015F34_x + 0x48, (u32)D_80015F34_x + 0x3C, (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x30,
-    (u32)D_80015F34_x + 0x24, (u32)D_80015F34_x + 0x18, (u32)D_80015F34_x + 0xC, (u32)D_80015F34_x + 0x54,
-    (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x,
-    (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x54,
-};
-u32 CD_INTSTR_d[8] asm("CD_INTSTR") = {
-    (u32)D_80015F34_x + 0x134, (u32)D_80015F34_x + 0x128, (u32)D_80015F34_x + 0x11C, (u32)D_80015F34_x + 0x110,
-    (u32)D_80015F34_x + 0x108, (u32)D_80015F34_x + 0xFC, (u32)D_80015F34_x + 0x54, (u32)D_80015F34_x + 0x54,
-};
-u32 D_800960B0_d[32] asm("D_800960B0") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000001, 0x00000000,
-    0x00000000, 0x00000001, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-};
-u32 D_80096130_d[32] asm("D_80096130") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000001, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000001,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-};
-u32 D_800961B0_d[32] asm("D_800961B0") = {
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-    0x00000000, 0x00000000, 0x00000001, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-    0x00000001, 0x00000001, 0x00000001, 0x00000001,
-};
-u32 D_80096230_d[25] asm("D_80096230") = {
-    0x00000000, 0x00000000, 0x00000003, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000002, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000001, 0x00000000,
-    0x00000001, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000,
-};
-u32 D_80096294_d[7] asm("D_80096294") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000,
-};
-u32 D_800962B0_d[1] asm("D_800962B0") = {
-    0x1F801800,
-};
-u32 D_800962B4_d[1] asm("D_800962B4") = {
-    0x1F801801,
-};
-u32 D_800962B8_d[1] asm("D_800962B8") = {
-    0x1F801802,
-};
-u32 D_800962BC_d[1] asm("D_800962BC") = {
-    0x1F801803,
-};
-u32 D_800962C0_d[1] asm("D_800962C0") = {
-    0x1F801020,
-};
-u32 D_800962C4_d[1] asm("D_800962C4") = {
-    0x1F801C00,
-};
-u32 D_800962C8_d[1] asm("D_800962C8") = {
-    0x00000000,
-};
-u32 D_800962CC_d[6] asm("D_800962CC") = {
-    (u32)D_800962C8_x, (u32)D_8009B2A8_x, (u32)CD_COM_x, (u32)CD_STATUS_x,
-    (u32)CD_POS_x, (u32)D_8001612C_x,
-};
-u32 D_800962E4_d[1] asm("D_800962E4") = {
-    0x1F801018,
-};
-u32 D_800962E8_d[1] asm("D_800962E8") = {
-    0x1F8010F0,
-};
-u32 D_800962EC_d[1] asm("D_800962EC") = {
-    0x1F8010B0,
-};
-u32 D_800962F0_d[1] asm("D_800962F0") = {
-    0x1F8010B4,
-};
-u32 D_800962F4_d[1] asm("D_800962F4") = {
-    0x1F8010B8,
-};
-
-asm(
-    ".globl CD_COM\nCD_COM = CD_MODE + 1\n"
-    ".globl D_800962C9\nD_800962C9 = D_800962C8 + 1\n"
-    ".globl D_800962CA\nD_800962CA = D_800962C8 + 2\n"
-);
-// #include "psyq/libetc.h"
-
-typedef struct {                          
-    unsigned char sync;  // sync state    
-    unsigned char ready; // ready state   
-    unsigned char c;                      
-} CdlIntr;  
+typedef struct {
+    unsigned char sync;
+    unsigned char ready;
+    unsigned char c;
+} CdlIntr;
 
 typedef struct Result_t {
     int unk0;
     int unk4;
 } Result_t;
 
-extern CdlCB (*CD_CBREADY)(u_char, u_char*); 
-extern CdlCB (*CD_CBSYNC)(u_char, u_char*);  
+extern char cd_result_sync[];
+extern char cd_result_ready[];
+extern char cd_result_end[];
+extern int cd_alarm;
+extern int cd_alarm_count;
+extern char* cd_alarm_func[];
+extern const char cd_id[];
 
-const char D_80015F34[] = "CdlReadS";
-const char D_80015F40[] = "CdlSeekP";
-const char D_80015F4C[] = "CdlSeekL";
-const char D_80015F58[] = "CdlGetTD";
-const char D_80015F64[] = "CdlGetTN";
-const char D_80015F70[] = "CdlGetlocP";
-const char D_80015F7C[] = "CdlGetlocL";
-const char D_80015F88[] = "?";
-const char D_80015F8C[] = "CdlSetmode";
-const char D_80015F98[] = "CdlSetfilter";
-const char D_80015FA8[] = "CdlDemute";
-const char D_80015FB4[] = "CdlMute";
-const char D_80015FBC[] = "CdlReset";
-const char D_80015FC8[] = "CdlPause";
-const char D_80015FD4[] = "CdlStop";
-const char D_80015FDC[] = "CdlStandby";
-const char D_80015FE8[] = "CdlReadN";
-const char D_80015FF4[] = "CdlBackword";
-const char D_80016000[] = "CdlForward";
-const char D_8001600C[] = "CdlPlay";
-const char D_80016014[] = "CdlSetloc";
-const char D_80016020[] = "CdlNop";
-const char D_80016028[] = "CdlSync";
-const char D_80016030[] = "DiskError";
-const char D_8001603C[] = "DataEnd";
-const char D_80016044[] = "Acknowledge";
-const char D_80016050[] = "Complete";
-const char D_8001605C[] = "DataReady";
-const char D_80016068[] = "NoIntr";
-
-extern int CD_DEBUG; // CD_DEBUG
-extern u_char CD_COM;
-extern u_char CD_MODE;
-extern int CD_STATUS;
-extern int CD_STATUS1;
-extern int D_80096004;
-extern CdlLOC CD_POS;
-extern const char* CD_COMSTR[]; // CD_COMSTR
-extern const char* CD_INTSTR[];
-extern const char* D_800960B0[];
-extern int D_80096130[]; 
-extern const char* D_800961B0[];
-extern int D_80096230[]; // CD_COMATTR
-extern int D_80096294;
-extern volatile u_char* D_800962B4;
-extern volatile u_char* D_800962B8;
-extern volatile int* D_800962C0;
-extern void* D_800962C4;
-extern volatile CdlIntr D_800962C8; // CD_INTR
-extern void* D_800962CC[];
-extern volatile unsigned char* D_800962B0;
-extern s32* D_800962E4;
-extern s32* D_800962E8;
-extern s32* D_800962EC;
-extern s32* D_800962F0;
-extern volatile s32* D_800962F4;
-extern char D_8009B2A8[];
-extern char D_8009B2B0[];
-extern volatile u_char* D_800962BC;
-extern char D_8009B2B8[];
-extern int D_8009B2C0;
-extern int D_8009B2C4; // timeout
-extern char* D_8009B2C8[];
+PsyqStamp libcd_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_CD, 19, 14, 52);
+CdlCB (*CD_cbsync)(u_char, u_char*) = NULL;
+CdlCB (*CD_cbready)(u_char, u_char*) = NULL;
+int CD_cbread = 0;
+int CD_debug = 0;
+int CD_status = 0;
+int CD_status1 = 0;
+int CD_nopen = 0;
+CdlLOC CD_pos = {2, 0, 0, 0};
+u_char CD_mode = 0;
+u_char CD_com = 0;
+const char* CD_comstr[] = {
+    "CdlSync",    "CdlNop",
+    "CdlSetloc",  "CdlPlay",
+    "CdlForward", "CdlBackword",
+    "CdlReadN",   "CdlStandby",
+    "CdlStop",    "CdlPause",
+    "CdlReset",   "CdlMute",
+    "CdlDemute",  "CdlSetfilter",
+    "CdlSetmode", "?",
+    "CdlGetlocL", "CdlGetlocP",
+    "?",          "CdlGetTN",
+    "CdlGetTD",   "CdlSeekL",
+    "CdlSeekP",   "?",
+    "?",          "?",
+    "?",          "CdlReadS",
+    "?",          "?",
+    "?",          "?",
+};
+const char* CD_intstr[] = {
+    "NoIntr",  "DataReady", "Complete", "Acknowledge",
+    "DataEnd", "DiskError", "?",        "?",
+};
+int cd_com_ack[32] = {
+    0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+    0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+};
+int cd_com_ready[32] = {
+    0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+};
+int cd_com_stat[32] = {
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+};
+int cd_com_nparam[32] = {
+    0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0,
+    0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+volatile u_char* cd_reg0 = (volatile u_char*)0x1F801800;
+volatile u_char* cd_reg1 = (volatile u_char*)0x1F801801;
+volatile u_char* cd_reg2 = (volatile u_char*)0x1F801802;
+volatile u_char* cd_reg3 = (volatile u_char*)0x1F801803;
+volatile int* cd_com_delay = (volatile int*)0x1F801020;
+void* cd_spu = (void*)0x1F801C00;
+volatile CdlIntr cd_intr = {0, 0, 0};
+void* cd_info[] = {
+    (void*)&cd_intr, cd_result_sync, &CD_com, &CD_status, &CD_pos, (void*)cd_id,
+};
+s32* cd_delay = (s32*)0x1F801018;
+s32* cd_dpcr = (s32*)0x1F8010F0;
+s32* cd_d3_madr = (s32*)0x1F8010B0;
+s32* cd_d3_bcr = (s32*)0x1F8010B4;
+volatile s32* cd_d3_chcr = (volatile s32*)0x1F8010B8;
 
 void CD_flush(void);
 void callback(void);
@@ -234,14 +102,14 @@ static inline void rescpy(void* _dst, void* _src) {
 }
 
 static inline int get_alarm(void) {
-    if ((D_8009B2C0 < VSync(-1)) || D_8009B2C4++ > 0x3C0000) {
+    if ((cd_alarm < VSync(-1)) || cd_alarm_count++ > 0x3C0000) {
         puts("CD timeout: ");
         
         printf("%s:(%s) Sync=%s, Ready=%s\n",
-            D_8009B2C8[0],
-            CD_COMSTR[CD_COM],
-            CD_INTSTR[D_800962C8.sync],
-            CD_INTSTR[D_800962C8.ready]);
+            cd_alarm_func[0],
+            CD_comstr[CD_com],
+            CD_intstr[cd_intr.sync],
+            CD_intstr[cd_intr.ready]);
         CD_flush();
         return -1;
     } 
@@ -255,9 +123,9 @@ int getintr(void) {
     int i, j;
     int bHasError;
 
-    *D_800962B0 = 1;
+    *cd_reg0 = 1;
 
-    nReg = *D_800962BC & 0x7;
+    nReg = *cd_reg3 & 0x7;
 
     if (nReg == 0) {
         return 0;
@@ -265,74 +133,74 @@ int getintr(void) {
 
     bHasError = 0;
 
-    while (nReg != (*D_800962BC & 7)) {
-        nReg = *D_800962BC & 0x7;
+    while (nReg != (*cd_reg3 & 7)) {
+        nReg = *cd_reg3 & 0x7;
     }
 
     for (i = 0; i < 8; i++) {
-        if ((*D_800962B0 & 0x20) == 0) {
+        if ((*cd_reg0 & 0x20) == 0) {
             break;
         }
-        buf[i] = *D_800962B4;
+        buf[i] = *cd_reg1;
     }
     for (j = i; j < 8; j++) {
         buf[j] = 0;
     }
 
-    *D_800962B0 = 1;
-    *D_800962BC = 7;
-    *D_800962B8 = 7;
-    if (nReg != 3 || D_800961B0[CD_COM]) {
-        if (!(CD_STATUS & CdlStatShellOpen) && (buf[0] & CdlStatShellOpen)) {
-            D_80096004++;
+    *cd_reg0 = 1;
+    *cd_reg3 = 7;
+    *cd_reg2 = 7;
+    if (nReg != 3 || cd_com_stat[CD_com]) {
+        if (!(CD_status & CdlStatShellOpen) && (buf[0] & CdlStatShellOpen)) {
+            CD_nopen++;
         }
-        CD_STATUS = buf[0];
-        CD_STATUS1 = buf[1];
-        bHasError = CD_STATUS;
+        CD_status = buf[0];
+        CD_status1 = buf[1];
+        bHasError = CD_status;
         bHasError &= (CdlStatError | CdlStatSeekError | CdlStop | CdlStatShellOpen);
     }
-    if ((nReg == 5) && (0 < CD_DEBUG)) {
+    if ((nReg == 5) && (0 < CD_debug)) {
         printf("DiskError: ");
-        if (CD_DEBUG > 0)
-            printf("com=%s,code=(%02x:%02x)\n", CD_COMSTR[CD_COM], CD_STATUS, CD_STATUS1);
+        if (CD_debug > 0)
+            printf("com=%s,code=(%02x:%02x)\n", CD_comstr[CD_com], CD_status, CD_status1);
     }
     switch (nReg) {
     case 3:
         if (bHasError) {
-            D_800962C8.sync = CdlDiskError;
-            rescpy(&D_8009B2A8, &buf);
+            cd_intr.sync = CdlDiskError;
+            rescpy(&cd_result_sync, &buf);
             return 2;
         }
-        if (D_800960B0[CD_COM]) {
-            D_800962C8.sync = CdlAcknowledge;
-            rescpy(&D_8009B2A8, &buf);
+        if (cd_com_ack[CD_com]) {
+            cd_intr.sync = CdlAcknowledge;
+            rescpy(&cd_result_sync, &buf);
             return 1;
         }
-        D_800962C8.sync = CdlComplete;
-        rescpy(&D_8009B2A8, &buf);
+        cd_intr.sync = CdlComplete;
+        rescpy(&cd_result_sync, &buf);
         return 2;
     case 2:
-        D_800962C8.sync = bHasError ? CdlDiskError : CdlComplete;
-        rescpy(&D_8009B2A8, &buf);
+        cd_intr.sync = bHasError ? CdlDiskError : CdlComplete;
+        rescpy(&cd_result_sync, &buf);
         return 2;
     case 1:
         if (bHasError && i == 1) {
             bHasError = 0;
         }
-        D_800962C8.ready = bHasError ? CdlDiskError : CdlDataReady;
-        rescpy(&D_8009B2B0, &buf);
-        *D_800962B0 = 0;
-        *D_800962BC = 0;
+        cd_intr.ready = bHasError ? CdlDiskError : CdlDataReady;
+        rescpy(&cd_result_ready, &buf);
+        *cd_reg0 = 0;
+        *cd_reg3 = 0;
         return 4;
     case 4:
-        D_800962C8.ready = D_800962C8.c = CdlDataEnd;
-        rescpy(&D_8009B2B8, &buf);
-        rescpy(&D_8009B2B0, &buf);
+        cd_intr.ready = cd_intr.c = CdlDataEnd;
+        rescpy(&cd_result_end, &buf);
+        rescpy(&cd_result_ready, &buf);
         return 4;
     case 5:
-        D_800962C8.sync = D_800962C8.ready = CdlDiskError;
-        rescpy(&D_8009B2A8, &buf);
-        rescpy(&D_8009B2B0, &buf);
+        cd_intr.sync = cd_intr.ready = CdlDiskError;
+        rescpy(&cd_result_sync, &buf);
+        rescpy(&cd_result_ready, &buf);
         return 6;
     default:
         puts("CDROM: unknown intr");
@@ -353,9 +221,9 @@ int CD_sync(int mode, unsigned char* result) {
     char com, s, r;
     char** name;
 
-    D_8009B2C0 = VSync(-1) + 0x3C0;
-    D_8009B2C4 = 0;
-    D_8009B2C8[0] = "CD_sync";  
+    cd_alarm = VSync(-1) + 0x3C0;
+    cd_alarm_count = 0;
+    cd_alarm_func[0] = "CD_sync";  
 
     while (true) {
         if (get_alarm() != 0) {
@@ -363,24 +231,24 @@ int CD_sync(int mode, unsigned char* result) {
         }
 
         if (CheckCallback()) {
-            temp_s1 = D_800962B0[0] & 3;
+            temp_s1 = cd_reg0[0] & 3;
 
             while (intr = getintr()) {
-                if (intr & 4 && CD_CBREADY != NULL) {
-                    CD_CBREADY(D_800962C8.ready, D_8009B2B0);
+                if (intr & 4 && CD_cbready != NULL) {
+                    CD_cbready(cd_intr.ready, cd_result_ready);
                 }
-                if (intr & 2 && CD_CBSYNC != NULL) {
-                    CD_CBSYNC(D_800962C8.sync, D_8009B2A8);
+                if (intr & 2 && CD_cbsync != NULL) {
+                    CD_cbsync(cd_intr.sync, cd_result_sync);
                 }
             }
-            D_800962B0[0] = temp_s1;
+            cd_reg0[0] = temp_s1;
         }
 
-        sync = D_800962C8.sync;
+        sync = cd_intr.sync;
         if (sync == 2 || sync == 5) {
-            D_800962C8.sync = 2;
+            cd_intr.sync = 2;
             dst = result;
-            src = D_8009B2A8;
+            src = cd_result_sync;
             if (dst != NULL) {
                 for (i = 7; i != -1; i--) {
                     *dst++ = *src++;
@@ -406,9 +274,9 @@ int CD_ready(int arg0, u_char* arg1) {
     u_char* src;
     u_char* dst;
     
-    D_8009B2C0 = VSync(-1) + 0x3C0;
-    D_8009B2C4 = 0;
-    D_8009B2C8[0] = "CD_ready";
+    cd_alarm = VSync(-1) + 0x3C0;
+    cd_alarm_count = 0;
+    cd_alarm_func[0] = "CD_ready";
     
     while (true) {
         if (get_alarm() != 0) {
@@ -416,23 +284,23 @@ int CD_ready(int arg0, u_char* arg1) {
         }
         
         if (CheckCallback()) {
-            temp_s1 = D_800962B0[0] & 3;
+            temp_s1 = cd_reg0[0] & 3;
 
             while (intr = getintr()) {
-                if (intr & 4 && CD_CBREADY != NULL) {
-                    CD_CBREADY(D_800962C8.ready, D_8009B2B0);
+                if (intr & 4 && CD_cbready != NULL) {
+                    CD_cbready(cd_intr.ready, cd_result_ready);
                 }
-                if (intr & 2 && CD_CBSYNC != NULL) {
-                    CD_CBSYNC(D_800962C8.sync, D_8009B2A8);
+                if (intr & 2 && CD_cbsync != NULL) {
+                    CD_cbsync(cd_intr.sync, cd_result_sync);
                 }
             }
-            D_800962B0[0] = temp_s1;
+            cd_reg0[0] = temp_s1;
         }
         
-        c = D_800962C8.c;
+        c = cd_intr.c;
         if (c != 0) {
-            D_800962C8.c = 0;
-            src = &D_8009B2B8;
+            cd_intr.c = 0;
+            src = &cd_result_end;
             if (arg1 != NULL) {
                 dst = arg1;
                 for (i = 7; i != -1; i--) {
@@ -441,11 +309,11 @@ int CD_ready(int arg0, u_char* arg1) {
             }
             return c;
         }
-        ready = D_800962C8.ready;
+        ready = cd_intr.ready;
         if (ready != 0) {
-            D_800962C8.ready = 0;
+            cd_intr.ready = 0;
             dst = arg1;
-            src = &D_8009B2B0;
+            src = &cd_result_ready;
             if (dst != NULL) {
                 for (i = 7; i != -1; i--) {
                     *dst++ = *src++;
@@ -469,13 +337,13 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
     u8* src;
     u8* dst;
     
-    if (CD_DEBUG > 1) {
-        printf("%s...\n", CD_COMSTR[arg0]);
+    if (CD_debug > 1) {
+        printf("%s...\n", CD_comstr[arg0]);
     }
     
-    if ((D_80096230[arg0] != 0) && (arg1 == 0)) {
-        if (CD_DEBUG > 0) {
-            printf("%s: no param\n", CD_COMSTR[arg0]);
+    if ((cd_com_nparam[arg0] != 0) && (arg1 == 0)) {
+        if (CD_debug > 0) {
+            printf("%s: no param\n", CD_comstr[arg0]);
         }
         
         return -2;
@@ -484,155 +352,156 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
     CD_sync(0, 0);
     if (arg0 == 0x2) {
         for (i = 0; i < 4; i++) {
-            ((u8*)&CD_POS)[i] = ((u8*)arg1)[i];
+            ((u8*)&CD_pos)[i] = ((u8*)arg1)[i];
         }
     }
     if (arg0 == 0xE) {
-        CD_MODE = *arg1;
+        CD_mode = *arg1;
     }
     
-    D_800962C8.sync = 0;
-    if (D_80096130[arg0] != 0) {
-        D_800962C8.ready = 0;
+    cd_intr.sync = 0;
+    if (cd_com_ready[arg0] != 0) {
+        cd_intr.ready = 0;
     }
     
-    *D_800962B0 = 0;
-    for (i = 0; i < D_80096130[0x40 + arg0]; i++) {
-        *D_800962B8 = arg1[i];
+    *cd_reg0 = 0;
+    for (i = 0; i < cd_com_ready[0x40 + arg0]; i++) {
+        *cd_reg2 = arg1[i];
     }
     
-    CD_COM = arg0;
-    *D_800962B4 = arg0;   
+    CD_com = arg0;
+    *cd_reg1 = arg0;   
     if (arg3 != 0) return 0;
-    D_8009B2C0 = VSync(-1) + 0x3C0;
-    D_8009B2C4 = 0;
-    D_8009B2C8[0] = "CD_cw";
+    cd_alarm = VSync(-1) + 0x3C0;
+    cd_alarm_count = 0;
+    cd_alarm_func[0] = "CD_cw";
     
-    while ( D_800962C8.sync == 0) {
+    while ( cd_intr.sync == 0) {
         if (get_alarm() != 0) {
             return -1;
         }
         
         if (CheckCallback()) {
-            temp_s1 = D_800962B0[0] & 3;
+            temp_s1 = cd_reg0[0] & 3;
             while (intr = getintr()) {
-                if (intr & 4 && CD_CBREADY != NULL) {
-                    CD_CBREADY(D_800962C8.ready, D_8009B2B0);
+                if (intr & 4 && CD_cbready != NULL) {
+                    CD_cbready(cd_intr.ready, cd_result_ready);
                 }
-                if (intr & 2 && CD_CBSYNC != NULL) {
-                    CD_CBSYNC(D_800962C8.sync, D_8009B2A8);
+                if (intr & 2 && CD_cbsync != NULL) {
+                    CD_cbsync(cd_intr.sync, cd_result_sync);
                 }
             }
-            D_800962B0[0] = temp_s1;
+            cd_reg0[0] = temp_s1;
         }
     }
 
-    rescpy(arg2, D_8009B2A8);
+    rescpy(arg2, cd_result_sync);
 
-    return D_800962C8.sync == 5 ? -1 : 0;
+    return cd_intr.sync == 5 ? -1 : 0;
 }
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_vol);
 int CD_vol(CdlATV* vol)
 {
-    *D_800962B0 = 2;
-    *D_800962B8 = vol->val0;
-    *D_800962BC = vol->val1;
-    *D_800962B0 = 3;
-    *D_800962B4 = vol->val2;
-    *D_800962B8 = vol->val3;
-    *D_800962BC = 0x20;
+    *cd_reg0 = 2;
+    *cd_reg2 = vol->val0;
+    *cd_reg3 = vol->val1;
+    *cd_reg0 = 3;
+    *cd_reg1 = vol->val2;
+    *cd_reg2 = vol->val3;
+    *cd_reg3 = 0x20;
     return 0;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_flush);
 void CD_flush(void)
 {
-    *D_800962B0 = 1;
-    if (*D_800962BC & 7) {
+    *cd_reg0 = 1;
+    if (*cd_reg3 & 7) {
         do {
-            *D_800962B0 = 1;
-            *D_800962BC = 7;
-            *D_800962B8 = 7;
-        } while (*D_800962BC & 7);
+            *cd_reg0 = 1;
+            *cd_reg3 = 7;
+            *cd_reg2 = 7;
+        } while (*cd_reg3 & 7);
     }
-    D_800962C8.ready = D_800962C8.c = 0;
-    D_800962C8.sync = 2;
-    *D_800962B0 = 0;
-    *D_800962BC = 0;
-    *D_800962C0 = 0x1325;
+    cd_intr.ready = cd_intr.c = 0;
+    cd_intr.sync = 2;
+    *cd_reg0 = 0;
+    *cd_reg3 = 0;
+    *cd_com_delay = 0x1325;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_initvol);
 int CD_initvol(void) {
     CdlATV vol;
     // 0x800962C4 + 0x1b8 = 0x8009647C (current main vol left).
-    if (*((volatile u16*)((u32)D_800962C4 + 0x1b8)) == 0 &&
-    *((volatile u16*)((u32)D_800962C4 + 0x1ba)) == 0) {
+    if (*((volatile u16*)((u32)cd_spu + 0x1b8)) == 0 &&
+    *((volatile u16*)((u32)cd_spu + 0x1ba)) == 0) {
         // 0x800962C4 + 0x180 = 0x80096444 (main vol left/right).
-        *((volatile u16*)((u32)D_800962C4 + 0x180)) = 0x3fff;
-        *((volatile u16*)((u32)D_800962C4 + 0x182)) = 0x3fff;
+        *((volatile u16*)((u32)cd_spu + 0x180)) = 0x3fff;
+        *((volatile u16*)((u32)cd_spu + 0x182)) = 0x3fff;
     }
     // 0x800962C4 + 0x1b0 = 0x80096474 (CD volume left/right).
-    *((volatile u16*)((u32)D_800962C4 + 0x1b0)) = 0x3fff;
-    *((volatile u16*)((u32)D_800962C4 + 0x1b2)) = 0x3fff;
+    *((volatile u16*)((u32)cd_spu + 0x1b0)) = 0x3fff;
+    *((volatile u16*)((u32)cd_spu + 0x1b2)) = 0x3fff;
     // Enable spu, unmute spu and enable cd audio.
-    *((volatile u16*)((u32)D_800962C4 + 0x1aa)) =
+    *((volatile u16*)((u32)cd_spu + 0x1aa)) =
     (1 << 15) | (1 << 14) | (1 << 0);
     vol.val0 = vol.val2 = 0x80;
     vol.val1 = vol.val3 = 0;
-    *D_800962B0 = 2;
-    *D_800962B8 = vol.val0;
-    *D_800962BC = vol.val1;
-    *D_800962B0 = 3;
-    *D_800962B4 = vol.val2;
-    *D_800962B8 = vol.val3;
-    *D_800962BC = 0x20;
+    *cd_reg0 = 2;
+    *cd_reg2 = vol.val0;
+    *cd_reg3 = vol.val1;
+    *cd_reg0 = 3;
+    *cd_reg1 = vol.val2;
+    *cd_reg2 = vol.val3;
+    *cd_reg3 = 0x20;
     return 0;
 }
 
 //INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_initintr);
 void CD_initintr(void) {
-    CD_CBREADY = 0;
-    CD_CBSYNC = 0;
-    CD_STATUS1 = 0;
-    CD_STATUS = 0;
+    CD_cbready = 0;
+    CD_cbsync = 0;
+    CD_status1 = 0;
+    CD_status = 0;
     ResetCallback();
     InterruptCallback(2, callback);
 }
 
-const char D_8001612C[] = "$Id: bios.c,v 1.81 1996/12/16 06:24:14 makoto Exp $";
+
+const char cd_id[] = "$Id: bios.c,v 1.81 1996/12/16 06:24:14 makoto Exp $";
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_init);
 int CD_init(void) {
     puts("CD_init:");
-    printf("addr=%08x\n", &D_800962CC);
-    CD_COM = 0;
-    CD_MODE = 0;
-    CD_CBREADY = 0;
-    CD_CBSYNC = 0;
-    CD_STATUS1 = 0;
-    CD_STATUS = 0;
+    printf("addr=%08x\n", &cd_info);
+    CD_com = 0;
+    CD_mode = 0;
+    CD_cbready = 0;
+    CD_cbsync = 0;
+    CD_status1 = 0;
+    CD_status = 0;
     ResetCallback();
     InterruptCallback(2, &callback);
     
-    *D_800962B0 = 1;
-    while (*D_800962BC & 7) {
-        *D_800962B0 = 1;
-        *D_800962BC = 7;
-        *D_800962B8 = 7;
+    *cd_reg0 = 1;
+    while (*cd_reg3 & 7) {
+        *cd_reg0 = 1;
+        *cd_reg3 = 7;
+        *cd_reg2 = 7;
     }
     
-    D_800962C8.ready = D_800962C8.c = 0;
-    D_800962C8.sync = 2;
+    cd_intr.ready = cd_intr.c = 0;
+    cd_intr.sync = 2;
     
-    *D_800962B0 = 0;
-    *D_800962BC = 0;
-    *D_800962C0 = 0x1325; // COM_DELAY
+    *cd_reg0 = 0;
+    *cd_reg3 = 0;
+    *cd_com_delay = 0x1325; // COM_DELAY
     
     CD_cw(1, 0, 0, 0);
-    if (CD_STATUS & 0x10) {
+    if (CD_status & 0x10) {
         CD_cw(1, 0, 0, 0);
     }
     if (CD_cw(0xA, 0, 0, 0) != 0) {
@@ -653,14 +522,14 @@ int CD_init(void) {
 int CD_datasync(int arg0) {
     int sync;
 
-    D_8009B2C0 = VSync(-1) + 0x3C0;
-    D_8009B2C4 = 0;
-    D_8009B2C8[0] = "CD_datasync";    
+    cd_alarm = VSync(-1) + 0x3C0;
+    cd_alarm_count = 0;
+    cd_alarm_func[0] = "CD_datasync";    
     while (true) {
         if (get_alarm() != 0) {
             return -1;
         }
-        if (!(*D_800962F4 & 0x01000000)) {
+        if (!(*cd_d3_chcr & 0x01000000)) {
             sync = 0;
             break;
         }
@@ -674,24 +543,24 @@ int CD_datasync(int arg0) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_getsector);
 int CD_getsector(int arg0, int arg1) {
-    *D_800962B0 = 0;
-    *D_800962BC = 0x80;
-    *D_800962E4 = 0x20943;
-    *D_800962C0 = 0x1323;
-    *D_800962E8 |= 0x8000;
-    *D_800962EC = arg0;
-    *D_800962F0 = arg1 | 0x10000;
-    while (!(*D_800962B0 & 0x40)){};
-    *D_800962F4 = 0x11000000;
-    while (*D_800962F4 & 0x01000000){};
-    *D_800962C0 = 0x1325;
+    *cd_reg0 = 0;
+    *cd_reg3 = 0x80;
+    *cd_delay = 0x20943;
+    *cd_com_delay = 0x1323;
+    *cd_dpcr |= 0x8000;
+    *cd_d3_madr = arg0;
+    *cd_d3_bcr = arg1 | 0x10000;
+    while (!(*cd_reg0 & 0x40)){};
+    *cd_d3_chcr = 0x11000000;
+    while (*cd_d3_chcr & 0x01000000){};
+    *cd_com_delay = 0x1325;
     return 0;
 }
 
 //INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_set_test_parmnum);
 void CD_set_test_parmnum(int arg0)
 {
-    D_80096294 = arg0;
+    cd_com_nparam[25] = arg0;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", callback);
@@ -699,15 +568,15 @@ void callback(void) {
     int intr;
     int temp_s1;
     
-    temp_s1 = D_800962B0[0] & 3;
+    temp_s1 = cd_reg0[0] & 3;
 
     while (intr = getintr()) {
-        if (intr & 4 && CD_CBREADY != NULL) {
-            CD_CBREADY(D_800962C8.ready, D_8009B2B0);
+        if (intr & 4 && CD_cbready != NULL) {
+            CD_cbready(cd_intr.ready, cd_result_ready);
         }
-        if (intr & 2 && CD_CBSYNC != NULL) {
-            CD_CBSYNC(D_800962C8.sync, D_8009B2A8);
+        if (intr & 2 && CD_cbsync != NULL) {
+            CD_cbsync(cd_intr.sync, cd_result_sync);
         }
     }
-    D_800962B0[0] = temp_s1;
+    cd_reg0[0] = temp_s1;
 }

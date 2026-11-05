@@ -7,19 +7,19 @@
  * func_8006A5E4, func_8006A670. */
 
 int func_8006A40C(padPort *port) {
-    D_80097590 = D_80097528(port);
+    D_80097590 = _padFuncSendAuto(port);
     return _padSioRW(port, -2);
 }
 
 void func_8006A44C(padPort *obj) {
-    if (D_80097550 == D_80097560 && D_8009754C != 0) {
-        D_80097540();
-        D_8009753C();
+    if (_padSioChan == _padChanStart && _padGunExec != 0) {
+        _padFuncGetGunPos();
+        _padFuncSetGunPort();
     }
 
     if (D_80097590 != 0) {
-        D_80097528(obj->subPorts);
-        D_80097528(obj->subPorts + 1);
+        _padFuncSendAuto(obj->subPorts);
+        _padFuncSendAuto(obj->subPorts + 1);
     }
 
     /* Read again for the argument: the original reloads the byte. */
@@ -36,13 +36,13 @@ int func_8006A524(padPort *obj) {
     int value;
 
     if (D_80097590 != 0) {
-        D_80097528(obj->subPorts + 2);
-        D_80097528(obj->subPorts + 3);
+        _padFuncSendAuto(obj->subPorts + 2);
+        _padFuncSendAuto(obj->subPorts + 3);
     }
 
     value = 0;
     if (obj->command == 0) {
-        value = D_8009755C;
+        value = _padModeMtap;
     }
 
     result = func_8006979C(obj, value);
@@ -77,7 +77,7 @@ int func_8006A5E4(padPort *obj) {
 
     asm volatile("" : : : "$4");
     call_obj = card;
-    value = D_80097518(call_obj, needs_ack);
+    value = _padFuncGetTxd(call_obj, needs_ack);
     call_obj = card;
     result = func_8006979C(call_obj, value & 0xFF);
     /* Match debt: architectural zero keeps the result copy in the first
@@ -111,9 +111,9 @@ int func_8006A670(padPort *inPort) {
     register int three;
     register int result;
     register padPort *arg;
-    D_8009751C(inPort);
+    _padFuncCurrLimit(inPort);
     mode = 0;
-    if (D_8009755C) {
+    if (_padModeMtap) {
         register int id = port->response_3c[0];
         {
             register int eight = 8;
@@ -135,9 +135,9 @@ int func_8006A670(padPort *inPort) {
             padAddr at;
             at.obj = port->subPorts;
             at.word += offset;
-            D_8009751C(at.obj);
+            _padFuncCurrLimit(at.obj);
         }
-        result = func_8006979C(port, (u8)D_80097518(port, 1));
+        result = func_8006979C(port, (u8)_padFuncGetTxd(port, 1));
         if (result < 0)
             return result;
         setRC2wait(60);
@@ -152,14 +152,14 @@ int func_8006A670(padPort *inPort) {
     }
 setup:
     {
-        register int original = D_80097550;
+        register int original = _padSioChan;
         register int opposite;
         opposite = !original;
         if (D_80097588 >= 2) {
             register int *count;
             register padAddr table;
             register int scaled;
-            table.count = D_80097568;
+            table.count = _padFixResult;
             scaled = opposite * 4;
             table.word = scaled + table.word;
             count = table.count;
@@ -177,12 +177,12 @@ setup:
                     register int scaled;
                     register padAddr child asm("$3");
                     scaled = remaining * sizeof(padPort);
-                    child.obj = D_80097544;
+                    child.obj = _padInfoDir;
                     child.word = offset + child.word;
                     child.obj = child.obj->subPorts;
                     child.word += scaled;
                     other = child.obj - 1;
-                    D_80097530(other);
+                    _padFuncRecvAuto(other);
                 }
                 {
                     register int value = *count;
@@ -204,17 +204,17 @@ setup:
                     {
                 paired:
                     do {
-                    D_80097530(other - 1);
+                    _padFuncRecvAuto(other - 1);
                     result = 1;
                     break;
                 primary:
                     {
                         register padAddr base asm("$2");
-                        base.obj = D_80097544;
+                        base.obj = _padInfoDir;
                         other = (padPort *)(base.bytes + offset);
                     }
-                    D_80097530(other);
-                    D_80097534(other);
+                    _padFuncRecvAuto(other);
+                    _padFuncClrCmdNo(other);
                     result = -1;
                     } while (0);
                     *count = result;
@@ -223,7 +223,7 @@ setup:
                 arg = port;
                     }
             call_transfer:
-                result = _padSioRW(port, (u8)D_80097518(arg, mode));
+                result = _padSioRW(port, (u8)_padFuncGetTxd(arg, mode));
                 if (result < 0)
                     return result;
                 setRC2wait(60);
@@ -237,7 +237,7 @@ setup:
         }
     }
     while (--D_80097588 > 0) {
-        result = _padSioRW(port, (u8)D_80097518(port, mode));
+        result = _padSioRW(port, (u8)_padFuncGetTxd(port, mode));
         if (result < 0)
             return result;
         setRC2wait(60);
@@ -250,9 +250,17 @@ setup:
         }
     }
     func_80069A60();
-    port->response_3c[port->response_index++] = *D_8009758C;
-    D_80097510(0);
+    port->response_3c[port->response_index++] = *padif_sio;
+    _padFuncNextPort(0);
     result = 0;
 done:
     return result;
 }
+
+int D_80097588 = 0;
+volatile u8* padif_sio = (volatile u8*)0x1F801040;
+int D_80097590 = 0;
+int (*padIntFunc[5])(void) = {
+    (int (*)(void))func_8006A40C, (int (*)(void))func_8006A44C, (int (*)(void))func_8006A524,
+    (int (*)(void))func_8006A5E4, (int (*)(void))func_8006A670,
+};

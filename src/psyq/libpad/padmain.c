@@ -2,108 +2,38 @@
 #include "psyq/libstamp.h"
 #include "padlocal.h"
 
-extern u8 func_8006A40C_x[] asm("func_8006A40C");
-extern u8 func_8006A44C_x[] asm("func_8006A44C");
-extern u8 func_8006A524_x[] asm("func_8006A524");
-extern u8 func_8006A5E4_x[] asm("func_8006A5E4");
-extern u8 func_8006A670_x[] asm("func_8006A670");
-
 #if REGION == REGION_EU && VERSION == 1 && LANGUAGE != LANGUAGE_NONE
 PsyqStamp libpad_stamp = PSYQ_STAMP(PSYQ_LIB_PAD, 4, 3, 1, 40, 0, 49, 24);
 #else
 PsyqStamp libpad_stamp = PSYQ_STAMP(PSYQ_LIB_PAD, 4, 2, 1, 34, 19, 12, 22);
 #endif
-u32 D_80097510_d[1] asm("D_80097510") = {
-    0x00000000,
-};
-u32 D_80097514_d[1] asm("D_80097514") = {
-    0x00000000,
-};
-u32 D_80097518_d[1] asm("D_80097518") = {
-    0x00000000,
-};
-u32 D_8009751C_d[1] asm("D_8009751C") = {
-    0x00000000,
-};
-u32 D_80097520_d[1] asm("D_80097520") = {
-    0x00000000,
-};
-u32 D_80097524_d[1] asm("D_80097524") = {
-    0x00000000,
-};
-u32 D_80097528_d[1] asm("D_80097528") = {
-    0x00000000,
-};
-u32 D_8009752C_d[1] asm("D_8009752C") = {
-    0x00000000,
-};
-u32 D_80097530_d[1] asm("D_80097530") = {
-    0x00000000,
-};
-u32 D_80097534_d[1] asm("D_80097534") = {
-    0x00000000,
-};
-u32 D_80097538_d[1] asm("D_80097538") = {
-    0x00000000,
-};
-u32 D_8009753C_d[1] asm("D_8009753C") = {
-    0x00000000,
-};
-u32 D_80097540_d[1] asm("D_80097540") = {
-    0x00000000,
-};
-u32 D_80097544_d[1] asm("D_80097544") = {
-    0x00000000,
-};
-u32 D_80097548_d[1] asm("D_80097548") = {
-    0x00000000,
-};
-u32 D_8009754C_d[1] asm("D_8009754C") = {
-    0x00000000,
-};
-u32 D_80097550_d[1] asm("D_80097550") = {
-    0x00000000,
-};
-u32 D_80097554_d[1] asm("D_80097554") = {
-    0x00000000,
-};
-u32 D_80097558_d[1] asm("D_80097558") = {
-    0x00000000,
-};
-u32 D_8009755C_d[1] asm("D_8009755C") = {
-    0x00000000,
-};
-u32 D_80097560_d[1] asm("D_80097560") = {
-    0x00000000,
-};
-u32 D_80097564_d[1] asm("D_80097564") = {
-    0x00000001,
-};
-u32 D_80097568_d[2] asm("D_80097568") = {
-    0xFFFFFFFF, 0xFFFFFFFF,
-};
-u32 D_80097570_d[1] asm("D_80097570") = {
-    0x1F801070,
-};
-u32 D_80097574_d[1] asm("D_80097574") = {
-    0x1F801040,
-};
-u32 D_80097578_d[4] asm("D_80097578") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-};
-u32 D_80097588_d[1] asm("D_80097588") = {
-    0x00000000,
-};
-u32 D_8009758C_d[1] asm("D_8009758C") = {
-    0x1F801040,
-};
-u32 D_80097590_d[1] asm("D_80097590") = {
-    0x00000000,
-};
-u32 D_80097594_d[5] asm("D_80097594") = {
-    (u32)func_8006A40C_x, (u32)func_8006A44C_x, (u32)func_8006A524_x, (u32)func_8006A5E4_x,
-    (u32)func_8006A670_x,
-};
+int (*_padFuncNextPort)(int) = 0;
+void (*_padFuncClrInfo)(padPort*) = 0;
+int (*_padFuncGetTxd)(padPort*, int) = 0;
+void (*_padFuncCurrLimit)(padPort*) = 0;
+int (*_padFuncPtr2Port)(padPort*) = 0;
+padPort* (*_padFuncPort2Info)(int) = 0;
+int (*_padFuncSendAuto)(padPort*) = 0;
+int (*_padFuncChkEng)() = 0;
+void (*_padFuncRecvAuto)(padPort*) = 0;
+void (*_padFuncClrCmdNo)(padPort*) = 0;
+int (*_padFuncIntGun)(void) = 0;
+void (*_padFuncSetGunPort)(void) = 0;
+void (*_padFuncGetGunPos)(void) = 0;
+padPort* _padInfoDir = 0;
+int _padIntExec = 0;
+int _padGunExec = 0;
+int _padSioChan = 0;
+int _padSioState = 0;
+int _padTotalCurr = 0;
+int _padModeMtap = 0;
+int _padChanStart = 0;
+int _padChanStop = 1;
+int _padFixResult[2] = {-1, -1};
+padIntr* padmain_istat = (padIntr*)0x1F801070;
+padSio* padmain_sio = (padSio*)0x1F801040;
+int D_80097578 = 0;
+int D_8009757C[3] = {0};
 
 int PadEnableCom(int mask)
 {
@@ -112,35 +42,35 @@ int PadEnableCom(int mask)
     register int* p1 asm("$18");
     int* p2;
 
-    old = (D_80097564 << 1) | (D_80097560 == 0);
+    old = (_padChanStop << 1) | (_padChanStart == 0);
     if (old != mask) {
-        D_80097548 = 0;
+        _padIntExec = 0;
 
         if (mask & 1) {
             p1 = &D_8009B2F0[0];
             frames = *p1;
-            D_80097560 = 0;
+            _padChanStart = 0;
             if (frames >= 150) {
-                D_80097514(D_80097544);
+                _padFuncClrInfo(_padInfoDir);
             }
             *p1 = 0;
         } else {
-            D_80097560 = 1;
+            _padChanStart = 1;
         }
 
         if (mask & 2) {
             p2 = &D_8009B2F0[1];
             frames = *p2;
-            D_80097564 = 1;
+            _padChanStop = 1;
             if (frames >= 150) {
-                D_80097514(D_80097544 + 1);
+                _padFuncClrInfo(_padInfoDir + 1);
             }
             *p2 = 0;
         } else {
-            D_80097564 = 0;
+            _padChanStop = 0;
         }
 
-        D_80097548 = 1;
+        _padIntExec = 1;
     }
 
     return old;
@@ -160,12 +90,12 @@ void _padSetVsyncParam(void)
 
 int func_80068FF0(void)
 {
-    if (!(D_80097570->mask & 1) || !(D_80097570->stat & 1)) {
+    if (!(padmain_istat->mask & 1) || !(padmain_istat->stat & 1)) {
         return 0;
     }
 
-    if (D_80097538 != NULL) {
-        D_80097538();
+    if (_padFuncIntGun != NULL) {
+        _padFuncIntGun();
     }
 
     return 1;
@@ -180,7 +110,7 @@ int func_80069058(void)
     int cur;
     int next;
 
-    cur = D_80097560;
+    cur = _padChanStart;
     next = 1;
     D_80097578 = next;
     if (cur != 0) {
@@ -192,7 +122,7 @@ int func_80069058(void)
         }
     }
 
-    if (D_80097564 == 0) {
+    if (_padChanStop == 0) {
         frames = &D_8009B2F0[1];
         cur = *frames;
         if (cur < 150) {
@@ -201,25 +131,25 @@ int func_80069058(void)
         }
     }
 
-    if (D_80097548 != 0) {
-        idx = D_80097560;
-        last = D_80097564;
+    if (_padIntExec != 0) {
+        idx = _padChanStart;
+        last = _padChanStop;
         if (last >= idx) {
-            port = (padPort*)((int)D_80097544 + (((idx << 4) - idx) << 4));
-            D_80097554 = 0;
-            D_80097550 = idx;
+            port = (padPort*)((int)_padInfoDir + (((idx << 4) - idx) << 4));
+            _padSioState = 0;
+            _padSioChan = idx;
             if (_padInitSioMode(port) == 0) {
-                D_80097510(0xFFFF);
+                _padFuncNextPort(0xFFFF);
             }
 
-            D_80097558 = 0;
-            while (D_80097564 >= D_80097550) {
-                idx = D_80097550;
-                port = (padPort*)((int)D_80097544 + (((idx << 4) - idx) << 4));
+            _padTotalCurr = 0;
+            while (_padChanStop >= _padSioChan) {
+                idx = _padSioChan;
+                port = (padPort*)((int)_padInfoDir + (((idx << 4) - idx) << 4));
                 func_800694FC(port);
             }
 
-            D_80097574->baud = 0x88;
+            padmain_sio->baud = 0x88;
         }
     }
 
@@ -236,16 +166,16 @@ int _padChkVsync(void)
 
 void _padStartCom(void)
 {
-    D_80097548 = 0;
+    _padIntExec = 0;
     EnterCriticalSection();
     SysDeqIntRP(2, D_8009B2E0);
     SysEnqIntRP(2, D_8009B2E0);
-    D_80097570->stat = ~1;
-    D_80097570->mask |= 1;
+    padmain_istat->stat = ~1;
+    padmain_istat->mask |= 1;
     ChangeClearRCnt(3, 0);
     ExitCriticalSection();
-    D_80097514(D_80097544);
-    D_80097514(D_80097544 + 1);
+    _padFuncClrInfo(_padInfoDir);
+    _padFuncClrInfo(_padInfoDir + 1);
     {
         register int* frames = D_8009B2F0;
 
@@ -253,7 +183,7 @@ void _padStartCom(void)
         frames[1] = 0;
         frames[0] = 0;
     }
-    D_80097548 = 1;
+    _padIntExec = 1;
 }
 
 void _padStopCom(void)
@@ -266,16 +196,16 @@ void _padStopCom(void)
 
 int _padInitSioMode(padPort* port)
 {
-    register padSio* sio = D_80097574;
+    register padSio* sio = padmain_sio;
     sio->ctrl = 0x40;
     sio->ctrl = 0;
     sio->mode = 0xD;
     sio->baud = 0x88;
     setRC2wait(port->currentId == 8 ? 80 : 145);
     {
-        int index = D_80097550;
+        int index = _padSioChan;
         {
-            register padSio* regs = D_80097574;
+            register padSio* regs = padmain_sio;
             register int control = 0x1003;
             if (index) {
                 control = 0x3003;
@@ -283,40 +213,40 @@ int _padInitSioMode(padPort* port)
             regs->ctrl = control;
         }
         {
-            register int* address asm("$1") = D_80097568 + index;
+            register int* address asm("$1") = _padFixResult + index;
             register int remaining asm("$2") = *address;
             if (remaining >= 0) {
                 if (remaining > 0) {
-                    register int* counts = D_80097568;
+                    register int* counts = _padFixResult;
                     do {
                         padAddr count;
                         count.count = counts;
-                        count.word = (D_80097550 * 4) + count.word;
+                        count.word = (_padSioChan * 4) + count.word;
                         (*count.count)--;
-                        D_80097530(port->subPorts + *count.count);
-                    } while (counts[D_80097550] > 0);
+                        _padFuncRecvAuto(port->subPorts + *count.count);
+                    } while (counts[_padSioChan] > 0);
                 }
                 {
-                    register int index = D_80097550;
+                    register int index = _padSioChan;
                     register int* table asm("$3");
                     register int* count;
-                    table = D_80097568;
+                    table = _padFixResult;
                     count = &table[index];
                     if (*count == 0) {
                         register int value asm("$3") = -1;
                         register padPort* arg asm("$4") = port;
                         void (*callback)(padPort*);
                         asm("" : : "r"(arg));
-                        callback = D_80097530;
+                        callback = _padFuncRecvAuto;
                         *count = value;
                         callback(arg);
-                        D_80097534(port);
+                        _padFuncClrCmdNo(port);
                     }
                 }
             }
         }
     }
-    sio = D_80097574;
+    sio = padmain_sio;
     if (sio->stat & 0x200) {
         {
             register int control = sio->ctrl;
@@ -325,10 +255,10 @@ int _padInitSioMode(padPort* port)
         if (sio->stat & 0x200) {
             sio->data = 1;
             func_80069A60();
-            (void)D_80097574->data;
+            (void)padmain_sio->data;
             return 0;
         }
-        D_80097570->stat = ~0x80;
+        padmain_istat->stat = ~0x80;
     }
     if (port->pad_50[0] && port->command) {
         return 0;
@@ -340,26 +270,26 @@ int _padInitSioMode(padPort* port)
 
 void func_800694FC(padPort* port)
 {
-    register int* index asm("$5") = &D_80097554;
+    register int* index asm("$5") = &_padSioState;
     register int count;
     register int result;
     register int (*next)(void) asm("$2");
     count = *index;
-    next = D_80097594[count];
+    next = padIntFunc[count];
     *index = count + 1;
     result = next();
     if (result >= 0) {
-        if (D_80097554) {
+        if (_padSioState) {
             setRC2wait(60);
             if (!_padClrIntSio0()) {
-                D_80097510(-3);
+                _padFuncNextPort(-3);
             }
         }
-        if (D_80097554 >= 5) {
-            D_80097554--;
+        if (_padSioState >= 5) {
+            _padSioState--;
         }
     } else {
-        D_80097510(result);
+        _padFuncNextPort(result);
     }
 }
 
@@ -374,19 +304,19 @@ int _padSioRW(padPort* inObj, int inByte)
     register int result asm("$2");
 
     if (outgoing < 0) {
-        received = D_80097574->data;
+        received = padmain_sio->data;
         port->response_index = 0xFF;
         port->payload_index = 1;
         *port->statusBuffer = ~outgoing;
         replyByte = received;
-        if (!(D_80097574->stat & 1)) {
+        if (!(padmain_sio->stat & 1)) {
             do {
-            } while (!(D_80097574->stat & 1));
+            } while (!(padmain_sio->stat & 1));
         }
         do {
         } while (chkRC2wait() == 0);
         result = ~outgoing;
-        D_80097574->data = result;
+        padmain_sio->data = result;
         result = replyByte;
         return result;
     }
@@ -405,7 +335,7 @@ int _padSioRW(padPort* inObj, int inByte)
         }
     }
     {
-        register padSio* registers = D_80097574;
+        register padSio* registers = padmain_sio;
         register u_long timer = *(volatile u_short*)0x1F801120;
         register u_long ready = registers->stat;
         register padSio* cursor;
@@ -420,8 +350,8 @@ int _padSioRW(padPort* inObj, int inByte)
         }
     }
     {
-        register padSio* sio = D_80097574;
-        register padIntr* irq = D_80097570;
+        register padSio* sio = padmain_sio;
+        register padIntr* irq = padmain_istat;
         received = sio->data;
         replyByte = received;
         sio->baud = baud;
@@ -431,9 +361,9 @@ int _padSioRW(padPort* inObj, int inByte)
                     result = -20;
                     return result;
                 }
-            } while ((D_80097570->stat & 0x80) == 0);
+            } while ((padmain_istat->stat & 0x80) == 0);
         }
-        D_80097574->data = (u_char)outgoing;
+        padmain_sio->data = (u_char)outgoing;
         port->payload_index += 1;
         port->response_3c[port->response_index] = replyByte;
         result = port->response_index;
@@ -467,14 +397,14 @@ int func_8006979C(padPort* obj, int value)
     }
 
     {
-        padSio* ready_sio = D_80097574;
+        padSio* ready_sio = padmain_sio;
         do {
             poll_status = ready_sio->stat;
         } while ((poll_status & 2) == 0);
     }
     setRC2wait(400);
 
-    sio = D_80097574;
+    sio = padmain_sio;
     received = sio->data;
     if (obj->response_index != 0 || (received >> 4) != 8) {
         sio->baud = baud;
@@ -482,7 +412,7 @@ int func_8006979C(padPort* obj, int value)
         sio->baud = 0x22;
     }
 
-    irq = D_80097570;
+    irq = padmain_istat;
     if (!(irq->stat & 0x80)) {
         register padIntr* poll_irq;
         counter = (volatile u_short*)0x1F801120;
@@ -512,13 +442,13 @@ int func_8006979C(padPort* obj, int value)
         } while (!(poll_irq->stat & 0x80));
     }
 
-    if (obj->currentId != 8 && D_80097554 == 2) {
+    if (obj->currentId != 8 && _padSioState == 2) {
         setRC2wait(60);
         while (!chkRC2wait()) {
         }
     }
 
-    D_80097574->data = value;
+    padmain_sio->data = value;
     obj->payload_index++;
     if (obj->response_index != 0xFF) {
         /* The response cursor is read again after the payload update. */
@@ -531,21 +461,21 @@ int func_8006979C(padPort* obj, int value)
 
 int _padClrIntSio0(void)
 {
-    D_80097570->stat = ~0x80;
+    padmain_istat->stat = ~0x80;
 
-    while (D_80097574->stat & 0x80) {
+    while (padmain_sio->stat & 0x80) {
         if (chkRC2wait()) {
             return 0;
         }
     }
 
-    D_80097574->ctrl |= 0x10;
+    padmain_sio->ctrl |= 0x10;
     return 1;
 }
 
 void func_80069A60(void)
 {
-    while (!(D_80097574->stat & 2)) {
+    while (!(padmain_sio->stat & 2)) {
     }
 }
 

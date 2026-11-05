@@ -1,50 +1,43 @@
 #include "common.h"
 #include "psyq/libcd.h"
 
-u32 D_80095F64_d[32] asm("D_80095F64") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000001,
-    0x00000000, 0x00000000, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000001, 0x00000001, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000001,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+int D_80095F64[32] = {
+    0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
 };
 
-extern int D_80095F64[];
-extern CdlCB CD_CBSYNC;
-extern s32 CD_DEBUG;
-extern CdlCB CD_CBREADY;
-extern u8 CD_STATUS;
-extern CdlLOC CD_POS;
-extern const char* CD_COMSTR[];
-extern const char* CD_INTSTR[];
-extern u8 CD_COM;
-extern u8 CD_MODE;
+extern CdlCB CD_cbsync;
+extern s32 CD_debug;
+extern CdlCB CD_cbready;
+extern u8 CD_status;
+extern CdlLOC CD_pos;
+extern const char* CD_comstr[];
+extern const char* CD_intstr[];
+extern u8 CD_com;
+extern u8 CD_mode;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdStatus);
 int CdStatus(void)
 {
-    return CD_STATUS;
+    return CD_status;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdMode);
 int CdMode(void)
 {
-    return CD_MODE;
+    return CD_mode;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdLastCom);
 int CdLastCom(void)
 {
-    return CD_COM;
+    return CD_com;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdLastPos);
 CdlLOC* CdLastPos(void)
 {
-    return &CD_POS;
+    return &CD_pos;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdReset);
@@ -73,8 +66,8 @@ void CdFlush(void)
 s32 CdSetDebug(s32 level) {
     s32 lastLevel;
 
-    lastLevel = CD_DEBUG;
-    CD_DEBUG = level;
+    lastLevel = CD_debug;
+    CD_debug = level;
     return lastLevel;
 }
 
@@ -85,7 +78,7 @@ char* CdComstr(u_char com)
     if (com >= 0x1c) {
         return "none";
     }
-    return CD_COMSTR[com];
+    return CD_comstr[com];
 }
 
 
@@ -94,7 +87,7 @@ char* CdIntstr(u_char intr) {
     if (intr >= 7) {
         return "none";
     }
-    return CD_INTSTR[intr];
+    return CD_intstr[intr];
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdSync);
@@ -110,39 +103,39 @@ int CdReady(int mode, u_char* result) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdSyncCallback);
 CdlCB CdSyncCallback(CdlCB func) {
-    CdlCB old = CD_CBSYNC;
-    CD_CBSYNC = func;
+    CdlCB old = CD_cbsync;
+    CD_cbsync = func;
     return old;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdReadyCallback);
 CdlCB CdReadyCallback(CdlCB func) {
-    CdlCB old = CD_CBREADY;
-    CD_CBREADY = func;
+    CdlCB old = CD_cbready;
+    CD_cbready = func;
     return old;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/sys", CdControl);
 static inline int loop(u_char com, u_char* param, u_char* result, int arg3) {
     int i;
-    CdlCB cbprev = CD_CBSYNC;
+    CdlCB cbprev = CD_cbsync;
     for (i = 3; i != -1; --i) {
-        CD_CBSYNC = 0;
+        CD_cbsync = 0;
 
-        if (com != 1 && (CD_STATUS & CdlStatShellOpen) != 0) {
+        if (com != 1 && (CD_status & CdlStatShellOpen) != 0) {
             CD_cw(CdlNop, 0, 0, 0);
         }
 
         if (param == 0 || D_80095F64[com] == 0 ||
             CD_cw(CdlSetloc, param, result, 0) == 0) {
-            CD_CBSYNC = cbprev;
+            CD_cbsync = cbprev;
             if (CD_cw(com, param, result, arg3) == 0) {
                 return 0;
             }
         }
     }
 
-    CD_CBSYNC = cbprev;
+    CD_cbsync = cbprev;
     return -1;
 }
 

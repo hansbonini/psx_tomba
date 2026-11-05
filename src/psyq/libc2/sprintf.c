@@ -1,9 +1,6 @@
 #include "common.h"
 #include "psyq/stdarg.h"
 
-u32 D_8007FAF4_d[3] asm("D_8007FAF4") = {
-    0x00000000, 0x00000000, 0x00000000,
-};
 
 #define testAndCast(n, cond, t) do {if (cond) {n = (t)n;}} while (0)
 
@@ -21,7 +18,8 @@ typedef struct {
     int precision;
 } SprintfConfig;
 
-extern SprintfConfig D_8007FAF4;
+SprintfConfig D_8007FAF4 = {0};
+
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/sprintf", sprintf);
 int sprintf(char* out, char* f, ...) {

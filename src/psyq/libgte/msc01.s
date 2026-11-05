@@ -31,9 +31,9 @@ glabel SquareRoot0
 .LSquareRoot0_2:
     addi       $t4, $t4, -0x40
     sll        $t4, $t4, 1
-    lui        $t5, %hi(D_800915D0)
+    lui        $t5, %hi(SQRT)
     addu       $t5, $t5, $t4
-    lh         $t5, %lo(D_800915D0)($t5)
+    lh         $t5, %lo(SQRT)($t5)
     nop
     sllv       $t5, $t5, $t1
     srl        $v0, $t5, 12

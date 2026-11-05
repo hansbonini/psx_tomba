@@ -1,31 +1,20 @@
 #include "common.h"
 
-u32 D_800974DC_d[1] asm("D_800974DC") = {
-    0x1F8010F4,
-};
-u32 D_800974E0_d[8] asm("D_800974E0") = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-};
-u32 D_80097500_d[1] asm("D_80097500") = {
-    0x1F801080,
-};
-
 typedef void (*Callback)();
+
+volatile unsigned long* dma_dicr = (volatile unsigned long*)0x1F8010F4;
+Callback dma_callbacks[8] = {0};
+unsigned long* dma_madr = (unsigned long*)0x1F801080;
 
 Callback setIntrDMA(int index, Callback callback);
 void trapIntrDMA(void);
 void DMA_memclr(int* ptr, int size);
 
-extern volatile unsigned long* D_800974DC;
-extern Callback D_800974E0[8];
-extern unsigned long* D_80097500;
-
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_dma", startIntrDMA);
 void* startIntrDMA(void)
 {
-    DMA_memclr(&D_800974E0, 8);
-    *D_800974DC = 0;
+    DMA_memclr(&dma_callbacks, 8);
+    *dma_dicr = 0;
     InterruptCallback(3, &trapIntrDMA);
     return &setIntrDMA;
 }
@@ -35,34 +24,34 @@ void trapIntrDMA(void) {
     u32 mask;
     int i;
 
-    while((mask = ((u32) *D_800974DC >> 24) & 0x7f) != 0) {
+    while((mask = ((u32) *dma_dicr >> 24) & 0x7f) != 0) {
         for (i = 0; mask != 0 && i < 7; i++, mask >>= 1) {
             if (mask & 1) {
-                *D_800974DC &= (0xffffff | (1 << (i + 24)));
-                if (D_800974E0[i] != 0) {
-                     D_800974E0[i]();
+                *dma_dicr &= (0xffffff | (1 << (i + 24)));
+                if (dma_callbacks[i] != 0) {
+                     dma_callbacks[i]();
                 }
             }
         }
     }
-    if (((*D_800974DC & 0xFF000000) == 0x80000000) || (*D_800974DC & 0x8000)) {
-        printf("DMA bus error: code=%08x\n", *D_800974DC);
+    if (((*dma_dicr & 0xFF000000) == 0x80000000) || (*dma_dicr & 0x8000)) {
+        printf("DMA bus error: code=%08x\n", *dma_dicr);
         for (i = 0; i < 7; i++) {
-            printf("MADR[%d]=%08x\n", i, D_80097500[4 * i]);
+            printf("MADR[%d]=%08x\n", i, dma_madr[4 * i]);
         }
     }
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_dma", setIntrDMA);
 Callback setIntrDMA(int index, Callback callback) {
-    Callback prev = D_800974E0[index];
+    Callback prev = dma_callbacks[index];
     if (callback != prev) {
         if (callback != 0) {
-            D_800974E0[index] = callback;
-            *D_800974DC = (*D_800974DC & 0xFFFFFF) | 0x800000 | ((1 << (index + 0x10)));
+            dma_callbacks[index] = callback;
+            *dma_dicr = (*dma_dicr & 0xFFFFFF) | 0x800000 | ((1 << (index + 0x10)));
         } else {
-            D_800974E0[index] = 0;
-            *D_800974DC = ((*D_800974DC & 0xFFFFFF) | 0x800000) & ~(1 << (index + 0x10));
+            dma_callbacks[index] = 0;
+            *dma_dicr = ((*dma_dicr & 0xFFFFFF) | 0x800000) & ~(1 << (index + 0x10));
         }
     }
     return prev;

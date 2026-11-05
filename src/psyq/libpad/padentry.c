@@ -22,10 +22,10 @@ void PadStopCom(void) {
 int PadChkMtap(int arg0)
 {
   register int index;
-  if (D_8009755C != 0)
+  if (_padModeMtap != 0)
   {
     index = arg0 >> 4;
-    return D_80097544[index].currentId == 8;
+    return _padInfoDir[index].currentId == 8;
   }
   return 0;
 }
@@ -33,7 +33,7 @@ int PadChkMtap(int arg0)
 int PadGetState(int channel) {
     padPort *obj;
 
-    obj = D_80097524(channel);
+    obj = _padFuncPort2Info(channel);
     if ((*(u32 *)&obj->payload_28_len & 0xFFFF0000) == 0
         && (obj == obj->ownerPort || obj->pad_38[0] == 0)
         && obj->output_30[0] == 0) {
@@ -55,7 +55,7 @@ int PadGetState(int channel) {
 int PadInfoMode(int channel, int mode, int index) {
     padPort *obj;
 
-    obj = D_80097524(channel);
+    obj = _padFuncPort2Info(channel);
     switch (mode) {
     case 1:
         return obj->currentId;
@@ -85,7 +85,7 @@ int PadInfoAct(int channel, int index, int field) {
     padPort *obj;
     PadCapabilityRecord *entry;
 
-    obj = D_80097524(channel);
+    obj = _padFuncPort2Info(channel);
     if (index < 0) {
         return obj->actuatorCount;
     }
@@ -114,7 +114,7 @@ int PadInfoComb(int channel, int index0, int index1) {
     padPort *obj;
     PadCombinationRecord *entry;
 
-    obj = D_80097524(channel);
+    obj = _padFuncPort2Info(channel);
     if (index0 < 0) {
         return obj->combinationCount;
     }
@@ -132,13 +132,13 @@ int PadInfoComb(int channel, int index0, int index1) {
 }
 
 void PadSetActAlign(int channel, u8 *command) {
-    _padSetActAlign(D_80097524(channel), command);
+    _padSetActAlign(_padFuncPort2Info(channel), command);
 }
 
 void PadSetMainMode(int channel, unsigned char byte1, unsigned char byte2) {
-    _padSetMainMode(D_80097524(channel), byte1, byte2);
+    _padSetMainMode(_padFuncPort2Info(channel), byte1, byte2);
 }
 
 void PadSetAct(int channel, u8 *payload, int size) {
-    _padSetAct(D_80097524(channel), payload, size);
+    _padSetAct(_padFuncPort2Info(channel), payload, size);
 }

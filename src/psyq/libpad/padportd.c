@@ -1,9 +1,9 @@
 #include "common.h"
 #include "padlocal.h"
 
-u32 D_800975A8_d[4] asm("D_800975A8") = {
-    0x1F801040, 0x00000000, 0x00000000, 0x00000000,
-};
+padSio* padportd_sio = (padSio*)0x1F801040;
+int D_800975AC[3] = {0};
+
 
 /* PSY-Q LIBPAD PADPORTD: PadInitDirect, func_8006AB4C,
  * func_8006ABB4, func_8006ACA8, func_8006ACB8,
@@ -23,21 +23,21 @@ int PadInitDirect(u8 *output0, u8 *output1) {
     padPort *clearObj;
     int count;
 
-    D_80097548 = 0;
-    D_8009755C = 0;
+    _padIntExec = 0;
+    _padModeMtap = 0;
     _padInitDirSeq();
 
     obj = &D_8009B3A0[0];
-    D_80097510 = func_8006ABB4;
-    D_80097514 = func_8006AB4C;
-    D_80097518 = func_8006ACB8;
-    D_8009751C = func_8006AD74;
-    D_80097520 = func_8006AFF0;
-    D_80097524 = func_8006B028;
+    _padFuncNextPort = func_8006ABB4;
+    _padFuncClrInfo = func_8006AB4C;
+    _padFuncGetTxd = func_8006ACB8;
+    _padFuncCurrLimit = func_8006AD74;
+    _padFuncPtr2Port = func_8006AFF0;
+    _padFuncPort2Info = func_8006B028;
     swapCommand = func_8006ACA8;
     asm volatile("" : "=r"(clearObj) : "0"(obj));
-    D_80097544 = obj;
-    D_80097534 = swapCommand;
+    _padInfoDir = obj;
+    _padFuncClrCmdNo = swapCommand;
 
     bzero(clearObj, sizeof(padPort) * 2);
     i = 0;
@@ -71,7 +71,7 @@ int PadInitDirect(u8 *output0, u8 *output1) {
     } while (i < 2);
 
     _padSetVsyncParam();
-    D_80097548 = 1;
+    _padIntExec = 1;
     return 1;
 }
 
@@ -121,10 +121,10 @@ int func_8006ABB4(int result) {
 
     objects = &D_8009B3A0[0];
     ignoredResult = -9;
-    channelResults = &D_80097568[0];
+    channelResults = &_padFixResult[0];
 
     do {
-        index = D_80097550;
+        index = _padSioChan;
         offset = index * sizeof(padPort);
         obj = (padPort *)(offset + (int)objects);
 
@@ -138,13 +138,13 @@ int func_8006ABB4(int result) {
             }
         }
 
-        asm("" : "=r"(control), "=r"(index) : "0"(D_800975A8), "1"(D_80097550));
-        D_80097554 = 0;
+        asm("" : "=r"(control), "=r"(index) : "0"(padportd_sio), "1"(_padSioChan));
+        _padSioState = 0;
         asm volatile("" : : : "memory");
         control->ctrl = 0;
-        limit = D_80097564;
+        limit = _padChanStop;
         index += 1;
-        D_80097550 = index;
+        _padSioChan = index;
         asm volatile("" : : : "memory");
         if (limit >= index) {
             nextResult = _padInitSioMode(
@@ -260,9 +260,9 @@ void func_8006AD74(padPort *port) {
                     int total;
                     costRecord.capability = port->capabilities;
                     costRecord.word = offset + costRecord.word;
-                    total = D_80097558 + costRecord.capability->activationCost;
+                    total = _padTotalCurr + costRecord.capability->activationCost;
                     if (total < 61)
-                        D_80097558 = total;
+                        _padTotalCurr = total;
                     else {
                         goto deny;
                     selected:
@@ -296,10 +296,10 @@ void func_8006AD74(padPort *port) {
         if (((unsigned)(port->currentId - 4) < 2 || port->currentId == 7) &&
             !port->currentExtendedId && port->payload_28_len >= 2) {
             if ((port->payload_28[0] & 192) == 64 && (port->payload_28[1] & 1) &&
-                D_80097558 + 10 < 61) {
+                _padTotalCurr + 10 < 61) {
                 port->actuatorEnabled[1] = 1;
                 port->actuatorEnabled[0] = 1;
-                D_80097558 += 10;
+                _padTotalCurr += 10;
             }
         } else {
             asm("" ::: "memory");
