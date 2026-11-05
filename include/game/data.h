@@ -104,11 +104,8 @@ extern U8Pair D_8007C2B8[];
 extern u8 D_8007D638[];
 extern int D_8007D6A0;
 extern u_char D_8007D6D0;
-extern u_char D_8007E61C[];
-extern int D_8007E6E4[];
-extern int D_8007E868;
-extern int D_8007E86C;
-extern int D_8007E86E;
+extern u_char ITEM_INIT_INDEX[];
+extern struct ItemInit *ITEM_INIT_TABLE[];
 
 /* --- RAM / ROM data 0x8009____ --- */
 extern DISPENV D_8009AFE8;

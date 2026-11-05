@@ -108,6 +108,22 @@ void _SsVmDoAllocate(void);
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_keyv", SsUtKeyOnV);
 
+/**
+ * @brief Key on a specific voice
+ * 
+ * Plays a tone of a VAB program on the given voice with the given note,
+ * fine tune and volume, bypassing voice allocation.
+ * 
+ * @param voice Voice number (0-23)
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param tone Tone number
+ * @param note Note number
+ * @param fine Fine tune
+ * @param voll Left volume (0-127)
+ * @param volr Right volume (0-127)
+ * @return Voice number, or -1 on error
+ */
 short SsUtKeyOnV(short voice, short vabId, short prog, short tone, short note,
                  short fine, short voll, short volr) {
     int tn;
@@ -177,6 +193,14 @@ short SsUtKeyOnV(short voice, short vabId, short prog, short tone, short note,
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_keyv", SsUtKeyOffV);
 
+/**
+ * @brief Key off a specific voice
+ * 
+ * Releases the given voice.
+ * 
+ * @param voice Voice number (0-23)
+ * @return 0 on success, -1 on error
+ */
 short SsUtKeyOffV(short voice) {
     if (_snd_ev_flag == 1) {
         return -1;

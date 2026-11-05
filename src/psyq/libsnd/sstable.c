@@ -3,6 +3,16 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/sstable", SsSetTableSize);
 
+/**
+ * @brief Set the SEQ/SEP attribute table
+ * 
+ * Registers the work area used to hold the playback state of the sequences
+ * and initializes it.
+ * 
+ * @param table Work area (SS_SEQ_TABSIZ * s_max * t_max bytes)
+ * @param s_max Maximum number of SEQ/SEP opened at once
+ * @param t_max Maximum number of sequences per SEP
+ */
 void SsSetTableSize(char* table, short s_max, short t_max) {
     s32 i, j;
     struct SeqStruct* pTypedTable;

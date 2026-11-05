@@ -1,6 +1,17 @@
 #include "common.h"
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/memcpy", memcpy);
+/**
+ * @brief Copy a block of memory
+ * 
+ * Copies arg2 bytes from arg1 to arg0, one byte at a time. The areas must
+ * not overlap.
+ * 
+ * @param arg0 Destination buffer
+ * @param arg1 Source buffer
+ * @param arg2 Number of bytes to copy
+ * @return The destination pointer, or NULL if the destination is NULL
+ */
 u8* memcpy(u8* arg0, u8* arg1, s32 arg2)
 {
     s32 var_a2;

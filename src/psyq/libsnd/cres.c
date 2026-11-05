@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/cres", _SsSndCrescendo);
 
+/**
+ * @brief Internal: advance a crescendo by one tick
+ * 
+ * Raises the sequence volume step by step according to the crescendo
+ * settings and clears the crescendo flag when it ends.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsSndCrescendo(s16 arg0, s16 arg1) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
     u16 voll, volr;

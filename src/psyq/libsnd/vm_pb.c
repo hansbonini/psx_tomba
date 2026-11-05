@@ -8,6 +8,19 @@ s16 note2pitch2(u16 note, u16 fine);
 short _SsVmPBVoice(short voice, short seq_sep_no, short vabId, short prog,
                    int pitch);
 
+/**
+ * @brief Internal: apply pitch bend to one voice
+ * 
+ * If the voice belongs to the sequence and program, recomputes its pitch
+ * from the bend value and the pitch bend range of its tone.
+ * 
+ * @param voice Voice number
+ * @param seq_sep_no Sequence handle
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param pitch Pitch bend value (64 = center)
+ * @return 1 if the voice was updated, 0 otherwise
+ */
 short _SsVmPBVoice(short voice, short seq_sep_no, short vabId, short prog,
                    int pitch) {
     short bend;
@@ -42,6 +55,17 @@ short _SsVmPBVoice(short voice, short seq_sep_no, short vabId, short prog,
     return 0;
 }
 
+/**
+ * @brief Internal: apply pitch bend to all voices of a program
+ * 
+ * Calls _SsVmPBVoice() for every voice.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param pitch Pitch bend value (64 = center)
+ * @return Number of voices updated
+ */
 int _SsVmPitchBend(short seq_sep_no, short vabId, short prog,
                    unsigned short pitch) {
     short voice;

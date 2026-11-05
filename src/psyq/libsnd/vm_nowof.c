@@ -68,6 +68,13 @@ extern struct SpuVoice _svm_voice[24];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_nowof", _SsVmKeyOffNow);
 
+/**
+ * @brief Internal: queue a key off for the current voice
+ * 
+ * Marks the voice as free and adds it to the pending key off mask.
+ * 
+ * @param mode Unused
+ */
 void _SsVmKeyOffNow(int mode) {
     int bitsUpper;
     int bitsLower;

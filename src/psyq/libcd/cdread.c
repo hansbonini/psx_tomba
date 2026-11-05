@@ -20,6 +20,17 @@ volatile ReadAttr_t ReadAttr = {0};
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", cb_read);
+/**
+ * @brief Internal: data ready callback used by CdRead()
+ * 
+ * Copies each sector into the destination buffer, checks the sector
+ * position in 2048-byte mode, retries on errors and, when all sectors are
+ * read (or on timeout/error), restores the previous callbacks, pauses the
+ * drive and calls the CdReadCallback() function.
+ * 
+ * @param arg0 Interrupt type (CdlDataReady on success)
+ * @param arg1 Result bytes of the interrupt
+ */
 void cb_read(u_char arg0, u_char* arg1)
 {
     int pos[3];
@@ -60,6 +71,15 @@ void cb_read(u_char arg0, u_char* arg1)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", cd_read_retry);
+/**
+ * @brief Internal: (re)start the CdRead() transfer
+ * 
+ * Handles an open shell, optionally seeks back to the start position, sets
+ * the read mode if needed, installs cb_read() and issues CdlReadN.
+ * 
+ * @param retry Non-zero when retrying after an error (pauses and re-seeks first)
+ * @return Number of sectors remaining, or -1 on failure
+ */
 int cd_read_retry(int retry) {
     char mode;
     int mode2;
@@ -100,6 +120,11 @@ int cd_read_retry(int retry) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdReadBreak);
+/**
+ * @brief Abort a read started with CdRead()
+ * 
+ * Restores the previous callbacks and pauses the drive.
+ */
 void CdReadBreak(void)
 {
     ReadAttr.status = 0;
@@ -109,6 +134,18 @@ void CdReadBreak(void)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdRead);
+/**
+ * @brief Read sectors from the CD-ROM in the background
+ * 
+ * Starts reading the given number of sectors from the position set by
+ * CdlSetloc into buf. The read continues in the background; use
+ * CdReadSync() or CdReadCallback() to know when it finishes.
+ * 
+ * @param sectors Number of sectors to read
+ * @param buf Destination buffer
+ * @param mode CD-ROM mode used for reading (CdlModeSpeed, CdlModeSize0/1, ...)
+ * @return 1 if the read was started, 0 on failure
+ */
 int CdRead(int sectors, u_long* buf, int mode) {
     ReadAttr.mode = mode;
     switch (ReadAttr.mode & (CdlModeSize0 | CdlModeSize1)) {
@@ -135,6 +172,15 @@ int CdRead(int sectors, u_long* buf, int mode) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdReadSync);
+/**
+ * @brief Wait for or check a read started with CdRead()
+ * 
+ * Monitors the background read, retrying on errors or stalls.
+ * 
+ * @param mode 0 = wait until the read finishes, 1 = return the current state immediately
+ * @param result Buffer receiving the last status result (may be NULL)
+ * @return Number of sectors still to read (0 when finished), or -1 on error
+ */
 int CdReadSync(int mode, u_char* result) {
     int var_s0;
 
@@ -156,6 +202,14 @@ int CdReadSync(int mode, u_char* result) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/cdread", CdReadCallback);
+/**
+ * @brief Set the callback called when CdRead() finishes
+ * 
+ * The callback receives CdlComplete or CdlDiskError and the result bytes.
+ * 
+ * @param func New callback function (NULL to disable)
+ * @return Previous callback function
+ */
 CdlCB CdReadCallback(CdlCB func) {
     CdlCB prevFunc = cdread_callback;
     cdread_callback = func;

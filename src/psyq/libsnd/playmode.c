@@ -3,6 +3,17 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/playmode", Snd_SetPlayMode);
 
+/**
+ * @brief Internal: start or pause a sequence
+ * 
+ * Sets the loop count and either starts playback (restoring the sequence
+ * volume) or requests a pause.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ * @param arg2 SSPLAY_PLAY (1) or SSPLAY_PAUSE (0)
+ * @param arg3 Number of repetitions (SSPLAY_INFINITY = 0)
+ */
 void Snd_SetPlayMode(s16 arg0, s16 arg1, u8 arg2, s16 arg3) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
 

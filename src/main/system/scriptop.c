@@ -82,7 +82,7 @@ typedef struct { char p0[0x8a]; u16 c; char p1[0x1190 - 0x8c]; s32 idx, k, sub, 
 
 void func_8003CE18(void)
 {
-    extern void func_800ED1D4(GameObject *o, s32 n);
+    extern void func_800ED1D4(GameObject *obj, s32 n);
     G_3CE18 *g = SCRIPT_CTX;
     s32 k = g->k;
     s32 idx = g->idx;
@@ -92,93 +92,87 @@ void func_8003CE18(void)
     s32 z = g->z;
     switch (k) {
     case 2: case 9: case 10: {
-        GameObject *o = allocObjectLayer2();
-        if (o == 0) break;
-        if (k == 9) o->active = 1; else o->active = 2;
-        if (k == 9) o->type = 0x19; else o->type = 0x18;
-        o->animFrame = 0;
-        o->subtype = sub;
-        o->x.raw = x << 16;
-        o->y.raw = y << 16;
-        o->z.raw = z << 16;
-        o->objectIndex = 0x80;
-        o->unkC = idx;
-        o->unkD = 0;
-        o->unk68 = 0;
-        o->unk9C = 0;
-        o->unkE = 0;
-        o->unkF = 0;
-        o->unk74 = 0;
-        o->unk76 = 0;
-        o->unk94 = 0;
+        GameObject *obj = allocObjectLayer2();
+        if (obj == 0) break;
+        if (k == 9) obj->active = 1; else obj->active = 2;
+        if (k == 9) obj->type = 0x19; else obj->type = 0x18;
+        obj->animFrame = 0;
+        obj->id = sub;
+        obj->x.raw = x << 16;
+        obj->y.raw = y << 16;
+        obj->z.raw = z << 16;
+        obj->objectIndex = 0x80;
+        obj->param = idx;
+        obj->drawFlags = 0;
+        obj->unk68 = 0;
+        obj->unk9C = 0;
+        obj->unkE = 0;
+        obj->priority = 0;
+        obj->unk74 = 0;
+        obj->unk76 = 0;
+        obj->child = 0;
         switch (k) {
         case 9:
-            o->unkA = 13;
-            func_800ED1D4(o, 1);
+            obj->drawType = DRAW_SPRT;
+            func_800ED1D4(obj, 1);
             break;
         case 10:
-            o->unkA = 0x10;
-            o->unkA0 = 0;
+            obj->drawType = DRAW_MODEL;
+            obj->model = 0;
             break;
         case 2:
-            o->unkA = 2;
+            obj->drawType = DRAW_SPRITE_ROTATED;
             break;
         }
-        o->state = 0;
-        o->subState = 0;
-        o->step = 0;
-        SCRIPT_OBJECTS[idx] = o;
+        setObjState(obj, 0, 0, 0);
+        SCRIPT_OBJECTS[idx] = obj;
         break;
     }
     case 3: {
-        GameObject *o = allocObjectLayer3();
-        if (o == 0) break;
-        o->active = 1;
-        o->type = 0x2e;
-        o->animFrame = 0;
-        o->subtype = sub;
-        o->x.raw = x << 16;
-        o->y.raw = y << 16;
-        o->z.raw = z << 16;
-        o->objectIndex = 0x80;
-        o->unkA = 0x10;
-        o->unkC = idx;
-        o->unkD = 0;
-        o->unk68 = 0;
-        o->unkF = 0;
-        o->unkE = 0;
-        o->unk74 = 0;
-        o->unk76 = 0;
-        o->unk94 = 0;
-        o->state = 0;
-        o->subState = 0;
-        o->step = 0;
-        SCRIPT_OBJECTS[idx] = o;
+        GameObject *obj = allocObjectLayer3();
+        if (obj == 0) break;
+        obj->active = 1;
+        obj->type = 0x2e;
+        obj->animFrame = 0;
+        obj->id = sub;
+        obj->x.raw = x << 16;
+        obj->y.raw = y << 16;
+        obj->z.raw = z << 16;
+        obj->objectIndex = 0x80;
+        obj->drawType = DRAW_MODEL;
+        obj->param = idx;
+        obj->drawFlags = 0;
+        obj->unk68 = 0;
+        obj->priority = 0;
+        obj->unkE = 0;
+        obj->unk74 = 0;
+        obj->unk76 = 0;
+        obj->child = 0;
+        setObjState(obj, 0, 0, 0);
+        SCRIPT_OBJECTS[idx] = obj;
         break;
     }
     case 4: {
-        GameObject *o = allocObjectLayer4();
+        GameObject *obj = allocObjectLayer4();
         u8 c;
-        if (o == 0) break;
+        if (obj == 0) break;
         c = 1;
-        o->active = c;
-        o->type = 0x1e;
-        o->animFrame = 0;
-        o->subtype = sub;
-        o->x.raw = x << 16;
-        o->y.raw = y << 16;
-        o->z.raw = z << 16;
-        o->unkA = 2;
-        o->unkC = idx;
-        o->unkD = 0;
-        o->unk68 = 0;
-        o->objectIndex = c;
-        o->unkF = 0;
-        o->unk94 = 0;
-        o->state = 0;
-        o->subState = 0;
-        o->step = 0;
-        SCRIPT_OBJECTS[idx] = o;
+        obj->active = c;
+        obj->type = 0x1e;
+        obj->animFrame = 0;
+        obj->id = sub;
+        obj->x.raw = x << 16;
+        obj->y.raw = y << 16;
+        obj->z.raw = z << 16;
+        obj->drawType = DRAW_SPRITE_ROTATED;
+        obj->param = idx;
+        obj->drawFlags = 0;
+        obj->unk68 = 0;
+        obj->objectIndex = c;
+        obj->priority = 0;
+        obj->child = 0;
+        setObjState(obj, 0, 0, 0);
+        SCRIPT_OBJECTS[idx] = obj;
         break;
     }
     case 5: case 6: case 7: case 8:
@@ -193,23 +187,23 @@ typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s
 void func_8003D0E4(void)
 {
     G_3D0E4 *g = SCRIPT_CTX;
-    GameObject *o;
+    GameObject *obj;
     s32 b, a;
-    o = SCRIPT_OBJECTS[g->d1190];
+    obj = SCRIPT_OBJECTS[g->d1190];
     a = g->d1194;
     b = g->d1198;
-    if (o != 0) {
-        o->unk74 = a;
-        o->unk76 = b;
-        switch (o->type & 0x7f) {
+    if (obj != 0) {
+        obj->unk74 = a;
+        obj->unk76 = b;
+        switch (obj->type & 0x7f) {
         case 0x18:
-            func_80112AA4(o);
+            func_80112AA4(obj);
             break;
         case 0x19:
-            func_800EBDD8(o);
+            func_800EBDD8(obj);
             break;
         case 0x2e:
-            func_800E76A8(o);
+            func_800E76A8(obj);
             break;
         }
     }
@@ -268,50 +262,50 @@ extern s32 showMessageBoxDirect(s32, s32, V6_3D2A8 *);
 void scriptOpShowMessageBox(void)
 {
     S_3D2A8 *s = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[s->idx];
+    GameObject *obj = SCRIPT_OBJECTS[s->idx];
     V6_3D2A8 tmp;
     u32 cmd = s->cmd;
 
-    if (o != 0) {
+    if (obj != 0) {
         switch (cmd) {
         case 1:
-            o->unk6A = 1;
-            o->timer = s->a[0];
+            obj->unk6A = 1;
+            obj->timer = s->a[0];
         case 0:
         case 9:
-            o->unk6A = 0;
-            o->subState = cmd;
-            o->step = 0;
+            obj->unk6A = 0;
+            obj->subState = cmd;
+            obj->step = 0;
             break;
         case 2:
-            o->timer = s->a[0];
-            o->velX = s->a[1];
-            o->unk6A = 1;
-            o->subState = cmd;
-            o->step = 0;
+            obj->timer = s->a[0];
+            obj->velX = s->a[1];
+            obj->unk6A = 1;
+            obj->subState = cmd;
+            obj->step = 0;
             break;
         case 3:
-            o->timer = s->a[0];
-            o->unk30 = s->a[1];
-            o->unk34 = s->a[2];
-            o->unk98 = s->a[3];
-            o->unk9A = s->a[4];
-            o->unk6A = 1;
-            o->subState = cmd;
-            o->step = 0;
+            obj->timer = s->a[0];
+            obj->localX = s->a[1];
+            obj->localY = s->a[2];
+            obj->unk98 = s->a[3];
+            obj->unk9A = s->a[4];
+            obj->unk6A = 1;
+            obj->subState = cmd;
+            obj->step = 0;
             break;
         case 8:
             tmp.v[1] = s->a[3];
             tmp.v[3] = s->a[4];
             tmp.v[5] = s->a[5];
         case 4:
-            if (cmd == 4) tmp = *(V6_3D2A8 *)&o->x;
-            o->unk90 = showMessageBoxDirect(s->a[0], s->a[1], &tmp);
-            switch (o->type & 0x7f) {
+            if (cmd == 4) tmp = *(V6_3D2A8 *)&obj->x;
+            obj->parent = showMessageBoxDirect(s->a[0], s->a[1], &tmp);
+            switch (obj->type & 0x7f) {
             case 0x18:
-                o->unk74 = s->a[2];
-                o->unk76 = 0;
-                func_80112AA4(o);
+                obj->unk74 = s->a[2];
+                obj->unk76 = 0;
+                func_80112AA4(obj);
                 (*(u8 *)&D_8009C618) = 2;
                 D_8009BCA7 = 1;
                 D_800A539C = 5;
@@ -319,18 +313,18 @@ void scriptOpShowMessageBox(void)
                 D_800A539E = 0;
                 break;
             case 0x19:
-                o->unk68 = 2;
+                obj->unk68 = 2;
                 D_800A5444[0] = 3;
                 D_8009C618[0] = 2;
                 D_8009BCA7_U8Arr[0] = 1;
                 if (s->a[2] & 0x80) {
-                    o->unk74 = o->animFrame + (s->a[2] & 0x7f);
+                    obj->unk74 = obj->animFrame + (s->a[2] & 0x7f);
                 } else {
-                    o->animFrame = o->touchFlag - 1;
-                    o->unk74 = o->animFrame + s->a[2];
+                    obj->animFrame = obj->touchFlag - 1;
+                    obj->unk74 = obj->animFrame + s->a[2];
                 }
-                o->unk76 = 0;
-                func_800EBDD8(o);
+                obj->unk76 = 0;
+                func_800EBDD8(obj);
                 {
                     u16 *k = &PLAYER.obj.animFrame;
                     D_800A539C = 1;
@@ -341,43 +335,43 @@ void scriptOpShowMessageBox(void)
                 break;
             }
             D_8009BCAA = 1;
-            o->unk6A = 1;
-            o->subState = 4;
-            o->step = 0;
+            obj->unk6A = 1;
+            obj->subState = 4;
+            obj->step = 0;
             break;
         case 5:
             {
-            s32 ty = o->type & 0x7f;
+            s32 ty = obj->type & 0x7f;
             if (ty == 0x18) goto L1;
             if (ty == 0x19) {
             L1:
-                o->velX = s->a[0];
-                o->velY = s->a[1];
+                obj->velX = s->a[0];
+                obj->velY = s->a[1];
             }
             }
-            o->unk6A = 1;
-            o->subState = cmd;
-            o->step = 0;
+            obj->unk6A = 1;
+            obj->subState = cmd;
+            obj->step = 0;
             break;
         case 6:
-            o->unk6A = 0;
-            o->subState = cmd;
-            o->step = 0;
+            obj->unk6A = 0;
+            obj->subState = cmd;
+            obj->step = 0;
             break;
         case 7:
             {
-            s32 ty = o->type & 0x7f;
+            s32 ty = obj->type & 0x7f;
             if (ty == 0x18) goto L2;
             if (ty == 0x19) {
             L2:
-                o->velX = s->a[0];
-                o->velY = s->a[1];
-                o->unk78 = s->a[2];
+                obj->velX = s->a[0];
+                obj->velY = s->a[1];
+                obj->unk78 = s->a[2];
             }
             }
-            o->unk6A = 1;
-            o->subState = cmd;
-            o->step = 0;
+            obj->unk6A = 1;
+            obj->subState = cmd;
+            obj->step = 0;
             break;
         }
     }
@@ -937,23 +931,23 @@ typedef struct { char pad[0x8a]; u16 w8a; char pad2[0x1190 - 0x8c]; s32 d1190; s
 static __inline__ s32 op81_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o;
+    GameObject *obj;
     s32 b, a;
     a = g->d1194;
-    o = SCRIPT_OBJECTS[g->d1190];
+    obj = SCRIPT_OBJECTS[g->d1190];
     b = g->d1198;
-    if (o != 0) {
-        o->unk74 = a;
-        o->unk76 = b;
-        switch (o->type & 0x7f) {
+    if (obj != 0) {
+        obj->unk74 = a;
+        obj->unk76 = b;
+        switch (obj->type & 0x7f) {
         case 0x18:
-            func_80112AA4(o);
+            func_80112AA4(obj);
             break;
         case 0x19:
-            func_800EBDD8(o);
+            func_800EBDD8(obj);
             break;
         case 0x2e:
-            func_800E76A8(o);
+            func_800E76A8(obj);
             break;
         }
     }
@@ -965,10 +959,10 @@ static __inline__ s32 op82_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
     GameObject **p = &SCRIPT_OBJECTS[g->d1190];
-    GameObject *o = *p;
-    if (o != 0) {
-        o->state = 3;
-        if (o->unk94 != 0) ((GameObject *)o->unk94)->state = 3;
+    GameObject *obj = *p;
+    if (obj != 0) {
+        obj->state = 3;
+        if (obj->child != 0) ((GameObject *)obj->child)->state = 3;
         *p = 0;
     }
     (*(s16 *)((char *)g + 0x8a))++;
@@ -1000,8 +994,8 @@ static __inline__ s32 op84_3E408(void)
 static __inline__ s32 op86_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) g->d1190 = o->unk6A;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) g->d1190 = obj->unk6A;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1009,11 +1003,11 @@ static __inline__ s32 op86_3E408(void)
 static __inline__ s32 op87_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) {
-        o->h->p.whole = g->d1194;
-        o->y.p.whole = g->d1198;
-        o->d->p.whole = g->d119c;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) {
+        obj->h->p.whole = g->d1194;
+        obj->y.p.whole = g->d1198;
+        obj->d->p.whole = g->d119c;
     }
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
@@ -1022,11 +1016,11 @@ static __inline__ s32 op87_3E408(void)
 static __inline__ s32 op88_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) {
-        g->d1190 = o->h->p.whole;
-        g->d1194 = o->y.p.whole;
-        g->d1198 = o->d->p.whole;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) {
+        g->d1190 = obj->h->p.whole;
+        g->d1194 = obj->y.p.whole;
+        g->d1198 = obj->d->p.whole;
     }
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
@@ -1035,8 +1029,8 @@ static __inline__ s32 op88_3E408(void)
 static __inline__ s32 op89_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) o->animFrame = g->d1194;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) obj->animFrame = g->d1194;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1044,8 +1038,8 @@ static __inline__ s32 op89_3E408(void)
 static __inline__ s32 op8a_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) g->d1190 = o->animFrame;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) g->d1190 = obj->animFrame;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1053,8 +1047,8 @@ static __inline__ s32 op8a_3E408(void)
 static __inline__ s32 op8b_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) g->d1190 = o->state == 2;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) g->d1190 = obj->state == 2;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1062,8 +1056,8 @@ static __inline__ s32 op8b_3E408(void)
 static __inline__ s32 op8c_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) o->active = g->d1194;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) obj->active = g->d1194;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1071,10 +1065,10 @@ static __inline__ s32 op8c_3E408(void)
 static __inline__ s32 op8d_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) {
-        func_80022E44(o);
-        g->d1190 = o->visible;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) {
+        func_80022E44(obj);
+        g->d1190 = obj->visible;
     }
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
@@ -1100,13 +1094,13 @@ static __inline__ s32 op8f_3E408(void)
 static __inline__ s32 op90_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) {
-        s32 t = o->type & 0x7f;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) {
+        s32 t = obj->type & 0x7f;
         if (t == 0x18) goto l;
         if (t == 0x19) {
         l:
-            g->d1190 = o->unk68;
+            g->d1190 = obj->unk68;
         }
     } else {
         g->d1190 = 0;
@@ -1144,8 +1138,8 @@ static __inline__ s32 op93_3E408(void)
 static __inline__ s32 op94_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if ((D_8009C618[0] != 3 || PLAYER.obj.objectIndex == 1) && o != 0) o->objectIndex = g->d1194;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if ((D_8009C618[0] != 3 || PLAYER.obj.objectIndex == 1) && obj != 0) obj->objectIndex = g->d1194;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1153,20 +1147,20 @@ static __inline__ s32 op94_3E408(void)
 static __inline__ s32 op95_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) {
-        switch (o->type & 0x7f) {
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) {
+        switch (obj->type & 0x7f) {
         case 0x18:
-            o->unkF = g->d1194;
+            obj->priority = g->d1194;
             break;
         case 0x19:
         case 0x2e:
             {
                 s32 c = g->d1194;
-                ((u8 *)o)[0xe] = c;
+                ((u8 *)obj)[0xe] = c;
                 switch (c & 0xff) {
-                case 1: *(s8 *)&o->unkF = -11; break;
-                case 2: o->unkF = 0x10; break;
+                case 1: *(s8 *)&obj->priority = -11; break;
+                case 2: obj->priority = 0x10; break;
                 }
             }
             break;
@@ -1299,8 +1293,8 @@ static __inline__ s32 opa2_3E408(void)
 static __inline__ s32 opa3_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) g->d1190 = o->touchFlag;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) g->d1190 = obj->touchFlag;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1308,8 +1302,8 @@ static __inline__ s32 opa3_3E408(void)
 static __inline__ s32 opa4_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) o->touchFlag = g->d1194;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) obj->touchFlag = g->d1194;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }
@@ -1317,8 +1311,8 @@ static __inline__ s32 opa4_3E408(void)
 static __inline__ s32 opa5_3E408(void)
 {
     G_3E408 *g = SCRIPT_CTX;
-    GameObject *o = SCRIPT_OBJECTS[g->d1190];
-    if (o != 0) o->unk9C = g->d1194;
+    GameObject *obj = SCRIPT_OBJECTS[g->d1190];
+    if (obj != 0) obj->unk9C = g->d1194;
     (*(s16 *)((char *)g + 0x8a))++;
     return 1;
 }

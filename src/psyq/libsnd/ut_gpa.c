@@ -3,6 +3,16 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_gpa", SsUtGetProgAtr);
 
+/**
+ * @brief Get the attributes of a VAB program
+ * 
+ * Copies the program header of the VAB into pProgAttr.
+ * 
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param pProgAttr Receives the program attributes
+ * @return 0 on success, -1 if the VAB is not open
+ */
 short SsUtGetProgAtr(short vabId, short prog, ProgAtr* pProgAttr) {
     if (_svm_vab_used[vabId] == 1) {
         _SsVmVSetUp(vabId, prog);

@@ -83,6 +83,7 @@ extern s32 D_8009B178;
 extern u8 GPU_CTLBUF[];
 extern volatile QueueItem GPU_QITEM[];
 
+/** @brief Version string of the GPU library source */
 const char D_80015BA8[] = "$Id: sys.c,v 1.129 1996/12/25 03:36:20 noda Exp $";
 
 int printf();
@@ -176,6 +177,15 @@ int ResetGraph(int mode) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", SetGraphReverse);
+/**
+ * @brief Set horizontally reversed display mode
+ * 
+ * Enables or disables the reverse (mirrored) display mode of the GPU. Only
+ * meaningful on GPU types that support it.
+ * 
+ * @param mode 0 = normal, 1 = reversed
+ * @return Previous mode
+ */
 int SetGraphReverse(int mode) {
     u_char prev = GEnv.reverse;
     if (GEnv.level >= 2) {
@@ -213,6 +223,16 @@ int SetGraphDebug(int level) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", SetGraphQueue);
+/**
+ * @brief Select whether drawing commands are queued
+ * 
+ * With queueing enabled, drawing requests are placed in the GPU queue and
+ * executed in the background through the DMA interrupt; otherwise each
+ * request runs immediately. Changing the mode resets the GPU queue.
+ * 
+ * @param mode 0 = no queue (blocking), 1 = queued (background)
+ * @return Previous mode
+ */
 int SetGraphQueue(int mode) {
     u_char prev = GEnv.D_80090C9D;
     if (GEnv.level >= 2) {
@@ -312,6 +332,16 @@ int DrawSync(int mode)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", checkRECT);
+/**
+ * @brief Internal: validate a RECT for debugging
+ * 
+ * At debug level 1, prints a message when the rectangle lies outside the
+ * frame buffer or has a non-positive size; at level 2, prints the
+ * rectangle.
+ * 
+ * @param log Name of the calling function used in the message
+ * @param r Rectangle to check
+ */
 void checkRECT(const char* log, RECT* r) {
     switch (GEnv.level) {
     case 1:
@@ -516,6 +546,15 @@ void DrawOTag(u_long* p)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", PutDrawEnv);
+/**
+ * @brief Set the current drawing environment
+ * 
+ * Builds the drawing environment packet inside env, sends it to the GPU
+ * queue and keeps a copy as the current environment.
+ * 
+ * @param env Drawing environment to apply
+ * @return env
+ */
 DRAWENV* PutDrawEnv(DRAWENV* env) {
     if (GEnv.level >= 2) {
         GPU_printf("PutDrawEnv(%08x)...\n", env);
@@ -550,12 +589,30 @@ void DrawOTagEnv(u_long* p, DRAWENV* env)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", GetDrawEnv);
+/**
+ * @brief Get the current drawing environment
+ * 
+ * Copies the drawing environment last set with PutDrawEnv() into env.
+ * 
+ * @param env Receives the drawing environment
+ * @return env
+ */
 DRAWENV* GetDrawEnv(DRAWENV* env) {
     memcpy(env, &GEnv.draw, sizeof(DRAWENV));
     return env;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", PutDispEnv);
+/**
+ * @brief Set the current display environment
+ * 
+ * Programs the display start address, the screen display range (adjusted
+ * for NTSC/PAL) and the display mode (resolution, interlace, 24-bit color)
+ * of the GPU.
+ * 
+ * @param env Display environment to apply
+ * @return env
+ */
 DISPENV* PutDispEnv(DISPENV* env)
 {
     s32 h_start;
@@ -800,6 +857,17 @@ void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", SetDrawEnv2);
+/**
+ * @brief Internal: build a drawing environment packet
+ * 
+ * Fills a DR_ENV with the clip area, drawing offset, draw mode, texture
+ * window and mask commands for env, plus a fill command when background
+ * clearing is enabled.
+ * 
+ * @param dr_env Packet to fill
+ * @param env Source drawing environment
+ * @return Undefined (no value is returned)
+ */
 int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
     DR_ENV* dr;
     RECT rect;
@@ -841,6 +909,17 @@ int SetDrawEnv2(DR_ENV* dr_env, DRAWENV* env) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_mode);
+/**
+ * @brief Internal: build a draw mode (0xE1) GPU command
+ * 
+ * Combines the dither flag, display-area drawing flag and texture page
+ * into the command layout of the current GPU type.
+ * 
+ * @param dfe 1 = allow drawing to the displayed area
+ * @param dtd 1 = enable dithering
+ * @param tpage Texture page
+ * @return GPU command word
+ */
 u_long get_mode(int dfe, int dtd, u_short tpage)
 {
     if (GEnv.version == 1 || GEnv.version == 2) {
@@ -852,6 +931,16 @@ u_long get_mode(int dfe, int dtd, u_short tpage)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_cs);
+/**
+ * @brief Internal: build a "drawing area top-left" (0xE3) GPU command
+ * 
+ * Clamps the coordinates to the frame buffer and encodes them for the
+ * current GPU type.
+ * 
+ * @param x Left X coordinate
+ * @param y Top Y coordinate
+ * @return GPU command word
+ */
 u_long get_cs(short x, short y)
 {
     x = CLAMP(x, 0, GEnv.w - 1);
@@ -863,6 +952,16 @@ u_long get_cs(short x, short y)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_ce);
+/**
+ * @brief Internal: build a "drawing area bottom-right" (0xE4) GPU command
+ * 
+ * Clamps the coordinates to the frame buffer and encodes them for the
+ * current GPU type.
+ * 
+ * @param x Right X coordinate
+ * @param y Bottom Y coordinate
+ * @return GPU command word
+ */
 u_long get_ce(short x, short y)
 {
     x = CLAMP(x, 0, GEnv.w - 1);
@@ -875,6 +974,15 @@ u_long get_ce(short x, short y)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_ofs);
+/**
+ * @brief Internal: build a drawing offset (0xE5) GPU command
+ * 
+ * Encodes the drawing offset for the current GPU type.
+ * 
+ * @param x X offset
+ * @param y Y offset
+ * @return GPU command word
+ */
 u_long get_ofs(short x, short y)
 {
     if (GEnv.version == 1 || GEnv.version == 2) {
@@ -884,6 +992,14 @@ u_long get_ofs(short x, short y)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_tw);
+/**
+ * @brief Internal: build a texture window (0xE2) GPU command
+ * 
+ * Encodes the texture window rectangle in 8-pixel units.
+ * 
+ * @param rect Texture window rectangle (may be NULL)
+ * @return GPU command word, or 0 if rect is NULL
+ */
 u_long get_tw(RECT* rect) {
     u_long code[4];
     if (rect) {
@@ -898,6 +1014,15 @@ u_long get_tw(RECT* rect) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_dx);
+/**
+ * @brief Internal: compute the horizontal display start position
+ * 
+ * Returns the display X start, adjusted for the current GPU type and the
+ * reverse display mode.
+ * 
+ * @param env Display environment
+ * @return Horizontal display start in VRAM
+ */
 u_long get_dx(DISPENV* env)
 {
     switch (GEnv.version) {
@@ -911,12 +1036,29 @@ u_long get_dx(DISPENV* env)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _status);
+/**
+ * @brief Internal: read the GPU status register
+ * 
+ * Returns the raw value of GPUSTAT.
+ * 
+ * @return GPU status
+ */
 int _status(void)
 {
     return *GPU_STATUS;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _otc);
+/**
+ * @brief Internal: clear an ordering table through DMA
+ * 
+ * Uses DMA channel 6 to build a reverse linked list of empty entries
+ * ending at ot, waiting for completion.
+ * 
+ * @param ot Address of the ordering table
+ * @param n Number of entries
+ * @return n on success, -1 on timeout
+ */
 int _otc(OT_TYPE ot, s32 n)
 {
     *DPCR |= 0x08000000;
@@ -940,6 +1082,17 @@ int _otc(OT_TYPE ot, s32 n)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _clr);
+/**
+ * @brief Internal: fill a VRAM rectangle with a color
+ * 
+ * Builds and sends a fill command packet. When the rectangle is not
+ * 64-pixel aligned a monochrome rectangle is drawn instead (temporarily
+ * resetting the drawing area).
+ * 
+ * @param rect Rectangle to fill
+ * @param color Fill color (0xBBGGRR; bit 31 sets the mask bit)
+ * @return Always 0
+ */
 s32 _clr(RECT* rect, u32 color)
 {
     s32* ptr;
@@ -973,6 +1126,16 @@ s32 _clr(RECT* rect, u32 color)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _dws);
+/**
+ * @brief Internal: transfer data from main memory to VRAM
+ * 
+ * Sends the CPU-to-VRAM command, writes the first words by I/O and the
+ * rest in 16-word blocks through DMA channel 2.
+ * 
+ * @param arg0 Destination rectangle in VRAM
+ * @param arg1 Source data
+ * @return 0 on success, -1 on timeout or empty rectangle
+ */
 s32 _dws(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
@@ -1017,6 +1180,16 @@ s32 _dws(RECT* arg0, s32* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _drs);
+/**
+ * @brief Internal: transfer data from VRAM to main memory
+ * 
+ * Sends the VRAM-to-CPU command, reads the first words by I/O and the rest
+ * in 16-word blocks through DMA channel 2.
+ * 
+ * @param arg0 Source rectangle in VRAM
+ * @param arg1 Destination buffer
+ * @return 0 on success, -1 on timeout or empty rectangle
+ */
 s32 _drs(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
@@ -1062,6 +1235,14 @@ s32 _drs(RECT* arg0, s32* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _ctl);
+/**
+ * @brief Internal: write a GPU control command
+ * 
+ * Writes the command to GP1 and remembers its parameter in the control
+ * command shadow table.
+ * 
+ * @param arg0 GP1 command word
+ */
 void _ctl(u32 arg0)
 {
     *GPU_STATUS = arg0;
@@ -1069,12 +1250,29 @@ void _ctl(u32 arg0)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _getctl);
+/**
+ * @brief Internal: read back a GPU control command
+ * 
+ * Returns the last value written for the given GP1 command.
+ * 
+ * @param arg0 GP1 command number
+ * @return Last parameter written for that command
+ */
 s32 _getctl(s32 arg0)
 {
     return *(&GPU_CTLBUF[arg0]);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _cwb);
+/**
+ * @brief Internal: send a command buffer to the GPU by I/O
+ * 
+ * Writes arg1 words to GP0 one by one.
+ * 
+ * @param arg0 Command words
+ * @param arg1 Number of words
+ * @return Always 0
+ */
 s32 _cwb(s32* arg0, s32 arg1) {
     s32* var_a0;
     s32 i;
@@ -1088,6 +1286,13 @@ s32 _cwb(s32* arg0, s32 arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _cwc);
+/**
+ * @brief Internal: send a primitive list to the GPU through DMA
+ * 
+ * Starts a linked-list DMA transfer on channel 2 from the given address.
+ * 
+ * @param arg0 Address of the first packet of the list
+ */
 void _cwc(s32 arg0) {
     *GPU_STATUS = 67108866;
     *DMA2_MADR = arg0;
@@ -1096,6 +1301,14 @@ void _cwc(s32 arg0) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _param);
+/**
+ * @brief Internal: read a GPU information value
+ * 
+ * Issues a GP1 "get GPU info" request and returns the 24-bit answer.
+ * 
+ * @param arg0 Information index
+ * @return GPU information value
+ */
 s32 _param(s32 arg0)
 {
     *GPU_STATUS = arg0 | 0x10000000;
@@ -1103,11 +1316,34 @@ s32 _param(s32 arg0)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _addque);
+/**
+ * @brief Internal: queue a GPU operation without copying its argument
+ * 
+ * Shortcut for _addque2() with a parameter size of 0.
+ * 
+ * @param arg0 Function to call
+ * @param arg1 Argument pointer passed to the function
+ * @param arg2 Second argument passed to the function
+ */
 void _addque(int arg0, int arg1, int arg2) {
     _addque2(arg0, arg1, 0, arg2);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _addque2);
+/**
+ * @brief Internal: queue a GPU operation
+ * 
+ * Executes the operation immediately when queueing is disabled or the GPU
+ * is idle; otherwise stores it (copying the argument block if a size is
+ * given) in the 64-entry queue processed by _exeque() from the DMA
+ * interrupt.
+ * 
+ * @param arg0 Function to call
+ * @param arg1 Argument block passed to the function
+ * @param arg2 Size in bytes of the argument block to copy (0 = pass the pointer as is)
+ * @param arg3 Second argument passed to the function
+ * @return Number of queued entries, 0 if executed immediately, -1 on timeout
+ */
 s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
 {
     s32 i;
@@ -1159,6 +1395,14 @@ s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _exeque);
+/**
+ * @brief Internal: execute queued GPU operations
+ * 
+ * Runs queued operations while the GPU DMA is idle and calls the DrawSync
+ * callback once the queue becomes empty.
+ * 
+ * @return Number of entries remaining in the queue
+ */
 s32 _exeque(void)
 {
     s32 result=1;
@@ -1204,6 +1448,16 @@ s32 _exeque(void)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _reset);
+/**
+ * @brief Internal: reset the GPU
+ * 
+ * Empties the queue and, depending on the mode, fully resets the GPU
+ * (clearing the control and queue buffers) or only aborts the current
+ * drawing.
+ * 
+ * @param mode 0/5 = full reset, 1/3 = cancel drawing only (bit 3 selects the extended GPU mode)
+ * @return Detected GPU type when (mode & 7) is 0, otherwise 0
+ */
 s32 _reset(s32 mode)
 {
     u_long** queue = &_qout;
@@ -1235,6 +1489,15 @@ s32 _reset(s32 mode)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _sync);
+/**
+ * @brief Internal: wait for or check GPU completion
+ * 
+ * In blocking mode processes the queue and waits until the GPU is idle. In
+ * non-blocking mode returns the number of pending operations.
+ * 
+ * @param arg0 0 = wait, 1 = return immediately
+ * @return 0 when idle, the number of pending entries (at least 1 if still drawing), or -1 on timeout
+ */
 s32 _sync(s32 arg0)
 {
     s32 temp_s0;
@@ -1265,6 +1528,12 @@ s32 _sync(s32 arg0)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", set_alarm);
+/**
+ * @brief Internal: arm the GPU timeout
+ * 
+ * Sets the deadline to about 240 VBlanks from now and resets the poll
+ * counter.
+ */
 void set_alarm(void)
 {
     D_80090DB4 = VSync(-1) + 0xF0;
@@ -1272,6 +1541,14 @@ void set_alarm(void)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_alarm);
+/**
+ * @brief Internal: check the GPU timeout
+ * 
+ * When the deadline has passed, prints the GPU state and the last queued
+ * operation and resets the GPU and its queue.
+ * 
+ * @return -1 on timeout, 0 otherwise
+ */
 s32 get_alarm(void) {
     s32 intrMask;
     volatile int *p;
@@ -1299,6 +1576,15 @@ s32 get_alarm(void) {
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", _version);
+/**
+ * @brief Internal: detect the GPU type
+ * 
+ * Queries the GPU version register and the presence of the extended
+ * features.
+ * 
+ * @param mode Reset mode (bit 3 enables the extended/high resolution mode when available)
+ * @return GPU type (0-4)
+ */
 int _version(int mode) {
     *GPU_STATUS = 268435463;
     if ((*GPU_DATA & 0xFFFFFF) != 2) { // check for GPUv2
@@ -1321,6 +1607,16 @@ int _version(int mode) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", GPU_memset);
+/**
+ * @brief Internal: fill a block of memory with a byte value
+ * 
+ * Writes value into num consecutive bytes.
+ * 
+ * @param ptr Start address
+ * @param value Byte value
+ * @param num Number of bytes
+ * @return Undefined (no value is returned)
+ */
 void * GPU_memset(s8* ptr, int value, s32 num) {
     s32 i;
     for (i = num - 1; i != -1; i--) {

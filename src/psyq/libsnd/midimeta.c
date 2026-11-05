@@ -3,6 +3,16 @@
 
 s32 _SsReadDeltaValue(s16, s16);
 
+/**
+ * @brief Internal: handle a MIDI meta event (tempo)
+ * 
+ * Reads a 3-byte tempo value, converts it to beats per minute and
+ * recomputes the number of ticks processed per interrupt.
+ * 
+ * @param access_num SEQ/SEP access number
+ * @param seq_num SEQ number within the SEP (0 for a SEQ)
+ * @param type Meta event type
+ */
 void _SsGetMetaEvent(s16 access_num, s16 seq_num, u8 type) {
     struct SeqStruct* score = &_ss_score[access_num][seq_num];
     u8 b0;

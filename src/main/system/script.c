@@ -13,8 +13,7 @@ void uploadSpriteFrame(O_3B0D4 *o)
     case 0:
         unpackSpriteFrame(WPP_DATA, *o->anim, (char *)0x801fb000, 0);
         r.y = 2;
-        r.w = 0x10;
-        r.h = 0x50;
+        setWH(&r, 0x10, 0x50);
         r.x = (*(u16 *)&D_1F8001F4) << 4;
         ClearImage(&r, 0, 0, 0);
         break;
@@ -23,8 +22,7 @@ void uploadSpriteFrame(O_3B0D4 *o)
     case 3:
         unpackSpriteFrame(D_1F800350, *o->anim, (char *)0x801fb000, 0);
         r.y = 2;
-        r.w = 0xe;
-        r.h = 0x3a;
+        setWH(&r, 0xe, 0x3a);
         r.x = (*(u16 *)&D_1F8001F4) << 4;
         ClearImage(&r, 0, 0, 0);
         break;

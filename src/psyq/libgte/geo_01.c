@@ -3,6 +3,15 @@
 extern s16 RSIN_TABLE[];
 
 // INCLUDE_ASM("nonmatchings/psyq/libgte/geo_01", rcos);
+/**
+ * @brief Fixed-point cosine
+ * 
+ * Looks up the cosine of an angle in the sine table. 4096 = 360 degrees,
+ * 4096 = 1.0.
+ * 
+ * @param a Angle (4096 = 360 degrees)
+ * @return Cosine in 1.3.12 fixed point
+ */
 int rcos(int a) {
     if (a < 0) {
         a = -a;

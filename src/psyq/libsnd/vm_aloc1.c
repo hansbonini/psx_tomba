@@ -119,6 +119,15 @@ extern VagAtr* _svm_tn;
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_aloc1", _SsVmAlloc);
 
+/**
+ * @brief Internal: allocate a voice for a new note
+ * 
+ * Returns a free voice, or steals the voice with the lowest priority
+ * (preferring released and older voices).
+ * 
+ * @param voice Unused
+ * @return Voice number, or spuVmMaxVoice if none is available
+ */
 char _SsVmAlloc(short voice) {
     u8 alloc;
     u16 lowestKeyStat;
@@ -180,6 +189,14 @@ char _SsVmAlloc(short voice) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_aloc1", note2pitch);
 
+/**
+ * @brief Internal: convert the current note to an SPU pitch
+ * 
+ * Uses the note, center note and fine shift of the current tone and the
+ * pitch table.
+ * 
+ * @return SPU pitch value
+ */
 unsigned short note2pitch(void) {
     int octave;
     int note;
@@ -215,6 +232,16 @@ unsigned short note2pitch(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_aloc1", note2pitch2);
 
+/**
+ * @brief Internal: convert a note and fine tune to an SPU pitch
+ * 
+ * Like note2pitch() but with an explicit note and additional fine tune,
+ * relative to the current tone.
+ * 
+ * @param note Note number
+ * @param fine Fine tune (0-127)
+ * @return SPU pitch value
+ */
 unsigned short note2pitch2(unsigned short note, unsigned short fine) {
     VagAtr* tn;
     int octaveBase;

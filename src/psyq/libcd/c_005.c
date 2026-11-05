@@ -16,6 +16,18 @@ extern int CChannel;
 extern int StEmu_Addr;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_005", StSetStream);
+/**
+ * @brief Set up CD-ROM streaming
+ * 
+ * Configures the frame range and the callbacks used during streaming
+ * playback.
+ * 
+ * @param mode Bit 0: 1 = 24-bit color, 0 = 16-bit color
+ * @param start_frame First frame number to read
+ * @param end_frame Last frame number to read (0xFFFFFFFF = unlimited)
+ * @param func1 Callback called whenever a frame has been completely read
+ * @param func2 Callback called at the end of the stream (user data)
+ */
 void StSetStream(u_long mode, u_long start_frame, u_long end_frame, void (*func1)(), void (*func2)())
 {
     StSetMask(1, start_frame, end_frame);

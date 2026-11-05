@@ -22,6 +22,16 @@ SprintfConfig D_8007FAF4 = {0};
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/sprintf", sprintf);
+/**
+ * @brief Write formatted text into a string buffer
+ * 
+ * Formats the variable arguments according to the printf-style format
+ * string and stores the NUL-terminated result in out.
+ * 
+ * @param out Destination buffer
+ * @param f printf-style format string
+ * @return Number of characters written, not counting the terminating NUL
+ */
 int sprintf(char* out, char* f, ...) {
     char buf[0x200] __attribute__((used));
     register SprintfConfig s;

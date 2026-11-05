@@ -3,6 +3,15 @@
 
 long Lzc(long a);
 
+/**
+ * @brief Internal: square root kernel for csqrt()
+ * 
+ * Computes the square root of a normalized argument with a hyperbolic
+ * CORDIC iteration (iteration 4 is repeated for convergence).
+ * 
+ * @param a Normalized input value
+ * @return Square root of a, scaled by the CORDIC gain
+ */
 long csqrt_1(long a)
 {
     long x[8];
@@ -55,6 +64,15 @@ long csqrt_1(long a)
     return x[7];
 }
 
+/**
+ * @brief Fixed-point square root using CORDIC
+ * 
+ * Normalizes the argument with the GTE leading zero counter, computes its
+ * square root with csqrt_1() and rescales the result.
+ * 
+ * @param a Value whose square root is computed
+ * @return Square root of a, or 0 if a is 0
+ */
 long csqrt(long a)
 {
     int e;

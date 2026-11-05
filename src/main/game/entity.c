@@ -26,41 +26,41 @@ asm(
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80022C08);
 
-s32 func_80022C08(GameObject *o, s32 x)
+s32 func_80022C08(GameObject *obj, s32 x)
 {
-    if (o->active == 0) return 0;
-    o->visible = 0;
-    if ((u16)(o->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
-    if ((u16)(D_1F800186 - o->y.p.whole + x) > (s16)x * 2 + 0xf0) return 0;
-    o->visible = 1;
-    switch (o->category & 0x7f) {
-    case 1: pushDrawListLayer1(o); return 1;
-    case 2: pushDrawListMain(o); return 1;
-    case 3: pushDrawListCapped(o); return 1;
-    case 4: pushDrawListLayer4(o); return 1;
-    case 5: pushDrawListLayer5(o); return 1;
-    case 7: pushDrawListLayer7(o); return 1;
-    case 8: pushDrawListLayer8(o);
+    if (obj->active == 0) return 0;
+    obj->visible = 0;
+    if ((u16)(obj->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
+    if ((u16)(D_1F800186 - obj->y.p.whole + x) > (s16)x * 2 + 0xf0) return 0;
+    obj->visible = 1;
+    switch (obj->category & 0x7f) {
+    case 1: pushDrawListLayer1(obj); return 1;
+    case 2: pushDrawListMain(obj); return 1;
+    case 3: pushDrawListCapped(obj); return 1;
+    case 4: pushDrawListLayer4(obj); return 1;
+    case 5: pushDrawListLayer5(obj); return 1;
+    case 7: pushDrawListLayer7(obj); return 1;
+    case 8: pushDrawListLayer8(obj);
     }
     return 1;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80022D3C);
 
-s32 func_80022D3C(GameObject *o, s32 x)
+s32 func_80022D3C(GameObject *obj, s32 x)
 {
-    if (o->active == 0) return 0;
-    o->visible = 0;
-    if ((u16)(o->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
-    o->visible = 1;
-    switch (o->category & 0x7f) {
-    case 1: pushDrawListLayer1(o); return 1;
-    case 2: pushDrawListMain(o); return 1;
-    case 3: pushDrawListCapped(o); return 1;
-    case 4: pushDrawListLayer4(o); return 1;
-    case 5: pushDrawListLayer5(o); return 1;
-    case 7: pushDrawListLayer7(o); return 1;
-    case 8: pushDrawListLayer8(o);
+    if (obj->active == 0) return 0;
+    obj->visible = 0;
+    if ((u16)(obj->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
+    obj->visible = 1;
+    switch (obj->category & 0x7f) {
+    case 1: pushDrawListLayer1(obj); return 1;
+    case 2: pushDrawListMain(obj); return 1;
+    case 3: pushDrawListCapped(obj); return 1;
+    case 4: pushDrawListLayer4(obj); return 1;
+    case 5: pushDrawListLayer5(obj); return 1;
+    case 7: pushDrawListLayer7(obj); return 1;
+    case 8: pushDrawListLayer8(obj);
     }
     return 1;
 }
@@ -132,18 +132,18 @@ void func_80023020(O_23020 *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_800230BC);
 
-void func_800230BC(GameObject *o, s32 a)
+void func_800230BC(GameObject *obj, s32 a)
 {
     s16 y;
-    if (o->active == 0) return;
-    y = o->y.p.whole;
+    if (obj->active == 0) return;
+    y = obj->y.p.whole;
     if (D_800A38EA + NTSC_PAL(0x98, 0xA0) > y) {
-        if ((u16)(o->h->p.whole - D_1F800176 + a) < (s16)a * 2 + 0x140 &&
+        if ((u16)(obj->h->p.whole - D_1F800176 + a) < (s16)a * 2 + 0x140 &&
             (u16)(D_1F800186 - y + a) < (s16)a * 2 + 0xf0) return;
     }
-    o->state = 3;
-    o->active = 2;
-    o->visible = 0;
+    obj->state = 3;
+    obj->active = 2;
+    obj->visible = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", angleFromDelta);
@@ -368,7 +368,7 @@ GameObject *func_80023928(GameObject *p)
     s32 i, n, k;
     GameObject *o;
     char pad;
-    k = p->subtype;
+    k = p->id;
     n = 0;
     for (i = 0; i < GAME.selectedArea; i++) {
         n += ((u16 *)&D_8007B294)[i];
@@ -380,10 +380,10 @@ GameObject *func_80023928(GameObject *p)
     o = allocObjectLayer2();
     if (o == 0) return 0;
 o->type = p->active;
-o->subtype = p->visible;
+o->id = p->visible;
 o->active = 2;
-o->unkC = p->type | 0x80;
-    o->objectIndex = p->subtype;
+o->param = p->type | 0x80;
+    o->objectIndex = p->id;
     return o;
 }
 

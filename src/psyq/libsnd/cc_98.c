@@ -7,6 +7,16 @@ extern SndSsMarkCallbackProc _SsMarkCallback[32][16];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/cc_98", _SsContNrpn1);
 
+/**
+ * @brief Internal: handle MIDI controller 98 (NRPN LSB)
+ * 
+ * Stores the NRPN data (or the loop count after a loop start) and calls
+ * the user mark callback for NRPN 40.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ * @param arg2 Controller data value
+ */
 void _SsContNrpn1(s16 arg0, s16 arg1, s16 arg2) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
     SndSsMarkCallbackProc temp_v0;

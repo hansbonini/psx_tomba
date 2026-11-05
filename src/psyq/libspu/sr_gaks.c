@@ -3,6 +3,17 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/sr_gaks", SpuRGetAllKeysStatus);
 
+/**
+ * @brief Get the key status of a range of voices
+ * 
+ * For each voice in the range, reports whether it is keyed on/off and
+ * whether its envelope is still sounding.
+ * 
+ * @param min First voice
+ * @param max Last voice
+ * @param status Receives one status per voice (SPU_OFF, SPU_ON, SPU_OFF_ENV_ON, SPU_ON_ENV_OFF)
+ * @return 0 on success, -3 for an invalid range
+ */
 inline s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
     s32 voice;
     u16 volumex;
@@ -44,6 +55,13 @@ inline s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/sr_gaks", SpuGetAllKeysStatus);
 
+/**
+ * @brief Get the key status of all voices
+ * 
+ * Calls SpuRGetAllKeysStatus() for every voice.
+ * 
+ * @param status Receives 24 status values
+ */
 void SpuGetAllKeysStatus(s8* status) {
     SpuRGetAllKeysStatus(0, NUM_SPU_CHANNELS, status);
 }

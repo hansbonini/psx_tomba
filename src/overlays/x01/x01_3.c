@@ -378,7 +378,7 @@ void func_80123188(Fix16 *pos, u8 c, s16 vx)
     o->subtype = 0x13;
     o->unkC = 0x80;
     {
-        u8 c2 = ((u8 **)&D_8007E6E4)[D_8007E61C[o->subtype]][3];
+        u8 c2 = ((u8 **)&ITEM_INIT_TABLE)[ITEM_INIT_INDEX[o->subtype]][3];
         o->animFrame = 0;
         o->objectIndex = c;
         o->unkF = c2;

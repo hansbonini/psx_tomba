@@ -88,6 +88,15 @@ extern s32 _spu_rev_reserve_wa;
 extern s32 _spu_rev_offsetaddr;
 s32 _SpuIsInAllocateArea_(u32);
 
+/**
+ * @brief Reserve or release the reverb work area
+ * 
+ * When reserving, SpuMalloc() will not allocate inside the reverb work
+ * area. Reservation fails if the area is already allocated.
+ * 
+ * @param on_off SPU_ON (1) = reserve, SPU_OFF (0) = release
+ * @return 1 if the area is reserved, 0 otherwise
+ */
 long SpuReserveReverbWorkArea(long on_off) {
     if (on_off != 0 && _SpuIsInAllocateArea_(_spu_rev_offsetaddr) == 0) {
         _spu_rev_reserve_wa = 1;
@@ -99,6 +108,15 @@ long SpuReserveReverbWorkArea(long on_off) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_rrwa", SpuSetReverbDepth);
 
+/**
+ * @brief Set the reverb depth
+ * 
+ * Writes the left and/or right reverb output volume selected by the mask
+ * (all when the mask is 0).
+ * 
+ * @param attr Reverb attributes (mask and depth fields are used)
+ * @return Always 0
+ */
 long SpuSetReverbDepth(SpuReverbAttr* attr) {
     u32 mask = attr->mask;
     s32 bSetAll = attr->mask == 0;

@@ -1,6 +1,16 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+/**
+ * @brief Internal: find the tones of the current program that cover the note
+ * 
+ * Collects the tone numbers and waveform numbers whose key range contains
+ * the current note.
+ * 
+ * @param tones Receives the tone numbers
+ * @param vags Receives the waveform (VAG) numbers
+ * @return Number of tones found
+ */
 u8 _SsVmSelectToneAndVag(u8* tones, u8* vags) {
     u8 count;
     u8 i;

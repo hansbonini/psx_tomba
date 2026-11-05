@@ -20,7 +20,7 @@ char *func_80024CFC(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_FT3 *p;
+    POLY_FT3 *poly;
     Face_24CFC *e;
     unsigned long len;
     unsigned long t;
@@ -37,23 +37,23 @@ char *func_80024CFC(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (POLY_FT3 *)D_1F800164;
-                    gte_stsxy3_ft3(p);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140)) {
+                    poly = (POLY_FT3 *)D_1F800164;
+                    gte_stsxy3_ft3(poly);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
-                            (*(u32 *)&p->r0) = ((Face_24CFC *)f)->c0;
-                            p->clut = ((Face_24CFC *)f)->clut;
-                            p->tpage = ((Face_24CFC *)f)->tpage;
-                            (*(u16 *)&p->u0) = ((Face_24CFC *)f)->uv0;
-                            (*(u16 *)&p->u1) = ((Face_24CFC *)f)->uv1;
-                            *(u16 *)((char *)p + 0x1c) = ((Face_24CFC *)f)->uv2;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
+                            (*(u32 *)&poly->r0) = ((Face_24CFC *)f)->c0;
+                            poly->clut = ((Face_24CFC *)f)->clut;
+                            poly->tpage = ((Face_24CFC *)f)->tpage;
+                            (*(u16 *)&poly->u0) = ((Face_24CFC *)f)->uv0;
+                            (*(u16 *)&poly->u1) = ((Face_24CFC *)f)->uv1;
+                            *(u16 *)((char *)poly + 0x1c) = ((Face_24CFC *)f)->uv2;
                             D_1F800164 = (u8 *)((POLY_FT3 *)D_1F800164 + 1);
                         }
                     }
@@ -84,11 +84,11 @@ typedef struct {
 
 
 
-char *func_80024EEC(GameObject *o, long *f, char *vtx, unsigned long *ot)
+char *func_80024EEC(GameObject *obj, long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -103,37 +103,37 @@ char *func_80024EEC(GameObject *o, long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (POLY_FT4 *)D_1F800164;
-                    gte_stsxy3_ft4(p);
+                    poly = (POLY_FT4 *)D_1F800164;
+                    gte_stsxy3_ft4(poly);
                     gte_ldv0(vtx + 0x20);
                     gte_rtps();
                     gte_stflg(&LZ_FILE_CTRL_Long);
                     if (LZ_FILE_CTRL_Long >= 0) {
-                        gte_stsxy2(&p->x3);
-                        if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT || (u16)p->y3 < SCREEN_HEIGHT) &&
-                            ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)) {
+                        gte_stsxy2(&poly->x3);
+                        if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT || (u16)poly->y3 < SCREEN_HEIGHT) &&
+                            ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)) {
                             gte_avsz4();
                             gte_stotz(&otz);
-                            (*(u32 *)&p->r0) = ((Face_24EEC *)f)->c0;
-                            p->clut = ((Face_24EEC *)f)->clut;
-                            p->tpage = ((Face_24EEC *)f)->tpage;
-                            if (o != 0 && (o->category & 0xf) == 8 && o->type == 1) {
-                                (*(u16 *)&p->u0) = o->hitOffsetX;
-                                (*(u16 *)&p->u1) = o->hitWidth;
-                                (*(u16 *)&p->u2) = o->hitOffsetY;
-                                (*(u16 *)&p->u3) = o->hitHeight;
+                            (*(u32 *)&poly->r0) = ((Face_24EEC *)f)->c0;
+                            poly->clut = ((Face_24EEC *)f)->clut;
+                            poly->tpage = ((Face_24EEC *)f)->tpage;
+                            if (obj != 0 && (obj->category & 0xf) == 8 && obj->type == 1) {
+                                (*(u16 *)&poly->u0) = obj->hitboxX;
+                                (*(u16 *)&poly->u1) = obj->hitboxW;
+                                (*(u16 *)&poly->u2) = obj->hitboxY;
+                                (*(u16 *)&poly->u3) = obj->hitboxH;
                                 otz = (long)D_1F8001E0_UnsignedLongPtrArr[0] + 0xc;
                             } else {
                                 otz = (otz << 2) + (long)ot;
                                 if ((unsigned long)(otz - (long)D_1F8001E0) >= 0xca0) goto next;
-                                (*(u16 *)&p->u0) = ((Face_24EEC *)f)->uv0;
-                                (*(u16 *)&p->u1) = ((Face_24EEC *)f)->uv1;
-                                (*(u16 *)&p->u2) = ((Face_24EEC *)f)->uv2;
-                                (*(u16 *)&p->u3) = ((Face_24EEC *)f)->uv3;
+                                (*(u16 *)&poly->u0) = ((Face_24EEC *)f)->uv0;
+                                (*(u16 *)&poly->u1) = ((Face_24EEC *)f)->uv1;
+                                (*(u16 *)&poly->u2) = ((Face_24EEC *)f)->uv2;
+                                (*(u16 *)&poly->u3) = ((Face_24EEC *)f)->uv3;
                             }
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
                             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
                         }
                     }
@@ -166,7 +166,7 @@ char *func_800251C0(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_GT3 *p;
+    POLY_GT3 *poly;
     Face_251C0 *e;
     unsigned long len;
     unsigned long t;
@@ -183,25 +183,25 @@ char *func_800251C0(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (POLY_GT3 *)D_1F800164;
-                    gte_stsxy3_gt3(p);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140)) {
+                    poly = (POLY_GT3 *)D_1F800164;
+                    gte_stsxy3_gt3(poly);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
-                            (*(u32 *)&p->r0) = ((Face_251C0 *)f)->c0;
-                            (*(u32 *)&p->r1) = ((Face_251C0 *)f)->c1;
-                            (*(u32 *)&p->r2) = ((Face_251C0 *)f)->c2;
-                            p->clut = ((Face_251C0 *)f)->clut;
-                            p->tpage = ((Face_251C0 *)f)->tpage;
-                            (*(u16 *)&p->u0) = ((Face_251C0 *)f)->uv0;
-                            (*(u16 *)&p->u1) = ((Face_251C0 *)f)->uv1;
-                            *(u16 *)((char *)p + 0x24) = ((Face_251C0 *)f)->uv2;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
+                            (*(u32 *)&poly->r0) = ((Face_251C0 *)f)->c0;
+                            (*(u32 *)&poly->r1) = ((Face_251C0 *)f)->c1;
+                            (*(u32 *)&poly->r2) = ((Face_251C0 *)f)->c2;
+                            poly->clut = ((Face_251C0 *)f)->clut;
+                            poly->tpage = ((Face_251C0 *)f)->tpage;
+                            (*(u16 *)&poly->u0) = ((Face_251C0 *)f)->uv0;
+                            (*(u16 *)&poly->u1) = ((Face_251C0 *)f)->uv1;
+                            *(u16 *)((char *)poly + 0x24) = ((Face_251C0 *)f)->uv2;
                             D_1F800164 = (u8 *)((POLY_GT3 *)D_1F800164 + 1);
                         }
                     }
@@ -237,7 +237,7 @@ char *func_800253C8(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_GT4 *p;
+    POLY_GT4 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -252,32 +252,32 @@ char *func_800253C8(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (POLY_GT4 *)D_1F800164;
-                    gte_stsxy3_gt3(p);
+                    poly = (POLY_GT4 *)D_1F800164;
+                    gte_stsxy3_gt3(poly);
                     gte_ldv0(vtx + 0x2c);
                     gte_rtps();
                     gte_stflg(&LZ_FILE_CTRL_Long);
                     if (LZ_FILE_CTRL_Long >= 0) {
-                        gte_stsxy2(&p->x3);
-                        if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT || (u16)p->y3 < SCREEN_HEIGHT) &&
-                            ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)) {
+                        gte_stsxy2(&poly->x3);
+                        if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT || (u16)poly->y3 < SCREEN_HEIGHT) &&
+                            ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)) {
                             gte_avsz4();
                             gte_stotz(&otz);
                             otz = (otz << 2) + (long)ot;
                             if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                                 t = *(unsigned long *)otz;
-                                *(unsigned long *)otz = (unsigned long)p;
-                                p->tag = t | len;
-                                (*(u32 *)&p->r0) = ((Face_253C8 *)f)->c0;
-                                (*(u32 *)&p->r1) = ((Face_253C8 *)f)->c1;
-                                (*(u32 *)&p->r2) = ((Face_253C8 *)f)->c2;
-                                (*(u32 *)&p->r3) = ((Face_253C8 *)f)->c3;
-                                p->clut = ((Face_253C8 *)f)->clut;
-                                p->tpage = ((Face_253C8 *)f)->tpage;
-                                (*(u16 *)&p->u0) = ((Face_253C8 *)f)->uv0;
-                                (*(u16 *)&p->u1) = ((Face_253C8 *)f)->uv1;
-                                (*(u16 *)&p->u2) = ((Face_253C8 *)f)->uv2;
-                                *(u16 *)((char *)p + 0x30) = ((Face_253C8 *)f)->uv3;
+                                *(unsigned long *)otz = (unsigned long)poly;
+                                poly->tag = t | len;
+                                (*(u32 *)&poly->r0) = ((Face_253C8 *)f)->c0;
+                                (*(u32 *)&poly->r1) = ((Face_253C8 *)f)->c1;
+                                (*(u32 *)&poly->r2) = ((Face_253C8 *)f)->c2;
+                                (*(u32 *)&poly->r3) = ((Face_253C8 *)f)->c3;
+                                poly->clut = ((Face_253C8 *)f)->clut;
+                                poly->tpage = ((Face_253C8 *)f)->tpage;
+                                (*(u16 *)&poly->u0) = ((Face_253C8 *)f)->uv0;
+                                (*(u16 *)&poly->u1) = ((Face_253C8 *)f)->uv1;
+                                (*(u16 *)&poly->u2) = ((Face_253C8 *)f)->uv2;
+                                *(u16 *)((char *)poly + 0x30) = ((Face_253C8 *)f)->uv3;
                                 D_1F800164 = (u8 *)((POLY_GT4 *)D_1F800164 + 1);
                             }
                         }
@@ -299,7 +299,7 @@ char *func_8002564C(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_F3 *p;
+    POLY_F3 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -307,7 +307,7 @@ char *func_8002564C(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x4000000;
         do {
-            p = (POLY_F3 *)D_1F800164;
+            poly = (POLY_F3 *)D_1F800164;
             gte_ldv3c(vtx + 4);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -315,20 +315,20 @@ char *func_8002564C(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    gte_stsxy3_f3(p);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140)) {
+                    gte_stsxy3_f3(poly);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
                             gte_ldrgb((char *)f + 0x24);
                             gte_ldv0((char *)f + 0x1c);
                             gte_nccs();
-                            gte_strgb(&p->r0);
+                            gte_strgb(&poly->r0);
                             D_1F800164 = (u8 *)((POLY_F3 *)D_1F800164 + 1);
                         }
                     }
@@ -349,7 +349,7 @@ char *func_80025810(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_F4 *p;
+    POLY_F4 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -357,7 +357,7 @@ char *func_80025810(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x5000000;
         do {
-            p = (POLY_F4 *)D_1F800164;
+            poly = (POLY_F4 *)D_1F800164;
             gte_ldv3c(vtx + 4);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -365,25 +365,25 @@ char *func_80025810(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    gte_stsxy3_f3(p);
+                    gte_stsxy3_f3(poly);
                     gte_ldv0(vtx + 0x1c);
                     gte_rtps();
                     gte_stflg(&LZ_FILE_CTRL_Long);
                     if (LZ_FILE_CTRL_Long < 0) goto next;
-                    gte_stsxy2(&p->x3);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT || (u16)p->y3 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)) {
+                    gte_stsxy2(&poly->x3);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT || (u16)poly->y3 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)) {
                         gte_avsz4();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
                             gte_ldrgb((char *)f + 0x2c);
                             gte_ldv0((char *)f + 0x24);
                             gte_nccs();
-                            gte_strgb(&p->r0);
+                            gte_strgb(&poly->r0);
                             D_1F800164 = (u8 *)((POLY_F4 *)D_1F800164 + 1);
                         }
                     }
@@ -405,7 +405,7 @@ char *func_80025A38(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_G3 *p;
+    POLY_G3 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -420,21 +420,21 @@ char *func_80025A38(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (POLY_G3 *)D_1F800164;
-                    gte_stsxy3_ft3(p);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140)) {
+                    poly = (POLY_G3 *)D_1F800164;
+                    gte_stsxy3_ft3(poly);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
                             gte_ldrgb((char *)f + 0x3c);
                             gte_ldv3c((char *)f + 0x24);
                             gte_ncct();
-                            gte_strgb3_g3(p);
+                            gte_strgb3_g3(poly);
                             D_1F800164 = (u8 *)((POLY_G3 *)D_1F800164 + 1);
                         }
                     }
@@ -455,7 +455,7 @@ char *func_80025C14(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_G4 *p;
+    POLY_G4 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -470,29 +470,29 @@ char *func_80025C14(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (POLY_G4 *)D_1F800164;
-                    gte_stsxy3_g4(p);
+                    poly = (POLY_G4 *)D_1F800164;
+                    gte_stsxy3_g4(poly);
                     gte_ldv0(vtx + 0x28);
                     gte_rtps();
                     gte_stflg(&LZ_FILE_CTRL_Long);
                     if (LZ_FILE_CTRL_Long >= 0) {
-                        gte_stsxy(&p->x3);
-                        if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT || (u16)p->y3 < SCREEN_HEIGHT) &&
-                            ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)) {
+                        gte_stsxy(&poly->x3);
+                        if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT || (u16)poly->y3 < SCREEN_HEIGHT) &&
+                            ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)) {
                             gte_avsz4();
                             gte_stotz(&otz);
                             otz = (otz << 2) + (long)ot;
                             if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                                 t = *(unsigned long *)otz;
-                                *(unsigned long *)otz = (unsigned long)p;
-                                p->tag = t | len;
+                                *(unsigned long *)otz = (unsigned long)poly;
+                                poly->tag = t | len;
                                 gte_ldrgb((char *)f + 0x50);
                                 gte_ldv0((char *)f + 0x48);
                                 gte_nccs();
-                                gte_strgb(&(*(u32 *)&p->r3));
+                                gte_strgb(&(*(u32 *)&poly->r3));
                                 gte_ldv3c((char *)f + 0x30);
                                 gte_ncct();
-                                gte_strgb3_g4(p);
+                                gte_strgb3_g4(poly);
                                 D_1F800164 = (u8 *)((POLY_G4 *)D_1F800164 + 1);
                             }
                         }
@@ -514,7 +514,7 @@ char *func_80025E74(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_F3 *p;
+    POLY_F3 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -522,7 +522,7 @@ char *func_80025E74(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x4000000;
         do {
-            p = (POLY_F3 *)D_1F800164;
+            poly = (POLY_F3 *)D_1F800164;
             gte_ldv3c(vtx + 4);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -530,17 +530,17 @@ char *func_80025E74(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    gte_stsxy3_f3(p);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140)) {
+                    gte_stsxy3_f3(poly);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
-                            *(unsigned long *)((char *)p + 4) = *f;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
+                            *(unsigned long *)((char *)poly + 4) = *f;
                             D_1F800164 = (u8 *)((POLY_F3 *)D_1F800164 + 1);
                         }
                     }
@@ -561,7 +561,7 @@ char *func_8002601C(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_F4 *p;
+    POLY_F4 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -569,7 +569,7 @@ char *func_8002601C(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x5000000;
         do {
-            p = (POLY_F4 *)D_1F800164;
+            poly = (POLY_F4 *)D_1F800164;
             gte_ldv3c(vtx + 4);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -577,22 +577,22 @@ char *func_8002601C(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    gte_stsxy3_f3(p);
+                    gte_stsxy3_f3(poly);
                     gte_ldv0(vtx + 0x1c);
                     gte_rtps();
                     gte_stflg(&LZ_FILE_CTRL_Long);
                     if (LZ_FILE_CTRL_Long >= 0) {
-                    gte_stsxy(&p->x3);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT || (u16)p->y3 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)) {
+                    gte_stsxy(&poly->x3);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT || (u16)poly->y3 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)) {
                         gte_avsz4();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
-                            *(unsigned long *)((char *)p + 4) = *f;
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
+                            *(unsigned long *)((char *)poly + 4) = *f;
                             D_1F800164 = (u8 *)((POLY_F4 *)D_1F800164 + 1);
                         }
                     }
@@ -615,7 +615,7 @@ char *func_80026228(long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_G3 *p;
+    POLY_G3 *poly;
     unsigned long len;
     unsigned long t;
 
@@ -623,7 +623,7 @@ char *func_80026228(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x6000000;
         do {
-            p = (POLY_G3 *)D_1F800164;
+            poly = (POLY_G3 *)D_1F800164;
             gte_ldv3c(vtx + 0xc);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -631,19 +631,19 @@ char *func_80026228(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    gte_stsxy3_g3(p);
-                    if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT) &&
-                        ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140)) {
+                    gte_stsxy3_g3(poly);
+                    if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT) &&
+                        ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
                         if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                             t = *(unsigned long *)otz;
-                            *(unsigned long *)otz = (unsigned long)p;
-                            p->tag = t | len;
-                            (*(u32 *)&p->r0) = f[0];
-                            (*(u32 *)&p->r1) = f[1];
-                            *(unsigned long *)((char *)p + 0x14) = f[2];
+                            *(unsigned long *)otz = (unsigned long)poly;
+                            poly->tag = t | len;
+                            (*(u32 *)&poly->r0) = f[0];
+                            (*(u32 *)&poly->r1) = f[1];
+                            *(unsigned long *)((char *)poly + 0x14) = f[2];
                             D_1F800164 = (u8 *)((POLY_G3 *)D_1F800164 + 1);
                         }
                     }
@@ -669,7 +669,7 @@ char *func_800263F0(O *o, long *f, char *vtx, unsigned long *ot)
 {
     long otz;
     s32 n;
-    POLY_G4 *p;
+    POLY_G4 *poly;
     unsigned long len;
     unsigned long t;
     s32 i;
@@ -678,7 +678,7 @@ char *func_800263F0(O *o, long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x8000000;
         do {
-            p = (POLY_G4 *)D_1F800164;
+            poly = (POLY_G4 *)D_1F800164;
             gte_ldv3c(vtx + 0x10);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -686,32 +686,32 @@ char *func_800263F0(O *o, long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    gte_stsxy3_g3(p);
+                    gte_stsxy3_g3(poly);
                     gte_ldv0(vtx + 0x28);
                     gte_rtps();
                     gte_stflg(&LZ_FILE_CTRL_Long);
                     if (LZ_FILE_CTRL_Long >= 0) {
-                        gte_stsxy(&p->x3);
-                        if (((u16)p->y0 < SCREEN_HEIGHT || (u16)p->y1 < SCREEN_HEIGHT || (u16)p->y2 < SCREEN_HEIGHT || (u16)p->y3 < SCREEN_HEIGHT) &&
-                            ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)) {
+                        gte_stsxy(&poly->x3);
+                        if (((u16)poly->y0 < SCREEN_HEIGHT || (u16)poly->y1 < SCREEN_HEIGHT || (u16)poly->y2 < SCREEN_HEIGHT || (u16)poly->y3 < SCREEN_HEIGHT) &&
+                            ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)) {
                             gte_avsz4();
                             gte_stotz(&otz);
                             otz = (otz << 2) + (long)ot;
                             if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
                                 t = *(unsigned long *)otz;
-                                *(unsigned long *)otz = (unsigned long)p;
-                                p->tag = t | len;
+                                *(unsigned long *)otz = (unsigned long)poly;
+                                poly->tag = t | len;
                                 if (o == 0 || o->b0e == 0) {
-                                    (*(u32 *)&p->r0) = f[0];
-                                    (*(u32 *)&p->r1) = f[1];
-                                    (*(u32 *)&p->r2) = f[2];
-                                    (*(u32 *)&p->r3) = f[3];
+                                    (*(u32 *)&poly->r0) = f[0];
+                                    (*(u32 *)&poly->r1) = f[1];
+                                    (*(u32 *)&poly->r2) = f[2];
+                                    (*(u32 *)&poly->r3) = f[3];
                                 } else {
                                     i = 0x12 - n;
-                                    (*(u32 *)&p->r0) = D_8007C160[i].c[0];
-                                    (*(u32 *)&p->r1) = D_8007C160[i].c[1];
-                                    (*(u32 *)&p->r2) = D_8007C160[i].c[2];
-                                    (*(u32 *)&p->r3) = D_8007C160[i].c[3];
+                                    (*(u32 *)&poly->r0) = D_8007C160[i].c[0];
+                                    (*(u32 *)&poly->r1) = D_8007C160[i].c[1];
+                                    (*(u32 *)&poly->r2) = D_8007C160[i].c[2];
+                                    (*(u32 *)&poly->r3) = D_8007C160[i].c[3];
                                 }
                                 D_1F800164 = (u8 *)((POLY_G4 *)D_1F800164 + 1);
                             }
@@ -1721,13 +1721,14 @@ void func_800288C4(void)
 #undef AXIS
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_80028A74);
-typedef struct { char c[6]; } B_28A74;
+typedef struct { u8 b[6]; } PadAlign;
+
+const PadAlign D_80010368 = { { 0x00, 0x01, 0xFF, 0xFF, 0xFF, 0xFF } };
 
 void func_80028A74(s32 a, s32 b, s32 c, s32 d)
 {
     extern void PadSetAct(u8, void *, s32, s32);
-    extern B_28A74 D_80010368;
-    B_28A74 buf;
+    PadAlign buf;
     char *p;
     buf = D_80010368;
     p = D_8009C978;
@@ -1741,12 +1742,9 @@ void func_80028A74(s32 a, s32 b, s32 c, s32 d)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_80028B34);
-typedef struct { char c[6]; } B_28B34;
-
 void func_80028B34(void)
 {
-    extern B_28B34 D_80010368;
-    B_28B34 buf;
+    PadAlign buf;
     char *p;
     buf = D_80010368;
     p = D_8009C978;
@@ -1791,12 +1789,9 @@ void func_80028B34(void)
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_80028CE4);
 extern s32 PadSetAct(s32, u8 *, s32);
 
-typedef struct { s8 b[6]; } PadAlign_28CE4;
-extern PadAlign_28CE4 D_80010368;
-
 void func_80028CE4(void)
 {
-    PadAlign_28CE4 align = D_80010368;
+    PadAlign align = D_80010368;
     D_8009C97C = 0;
     D_8009C97D = 0;
     PadSetAct(0, &D_8009C97C, 2);
@@ -1962,75 +1957,73 @@ void func_80029008(void)
     }
 }
 
-const u8 D_80010368_ro[8] asm("D_80010368") = { 0x00, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00 };
-
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_8002907C);
 
-void func_8002907C(GameObject *o)
+void func_8002907C(GameObject *obj)
 {
     s32 i;
     u8 *p;
 
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        o->clut = 0;
-        o->state++;
+        obj->clut = 0;
+        obj->state++;
         break;
     case 1:
-    if (o->clut != 0)
-        o->clut--;
-    if (D_8009BCD4 != o->d)
-        o->d = D_8009BCD4;
-    if (D_8009BCD8 != o->unk50) {
-        o->unk50 = D_8009BCD8;
-        o->unk4E = 6;
-        if (o->unk4A == 0)
-            o->unk4A++;
+    if (obj->clut != 0)
+        obj->clut--;
+    if (D_8009BCD4 != obj->d)
+        obj->d = D_8009BCD4;
+    if (D_8009BCD8 != obj->unk50) {
+        obj->unk50 = D_8009BCD8;
+        obj->unk4E = 6;
+        if (obj->unk4A == 0)
+            obj->unk4A++;
     }
-    o->unk48 = 1;
-    switch (o->unk4A) {
+    obj->unk48 = 1;
+    switch (obj->unk4A) {
     case 0:
-        if (--o->unk4C <= 0) {
-            o->unk4C = 0;
+        if (--obj->unk4C <= 0) {
+            obj->unk4C = 0;
             if (D_8009BCD9_U8Arr[0] - 1 < ((u8 *)&D_8009BCD8)[0])
-                o->unk48 = 0;
+                obj->unk48 = 0;
         }
         break;
     case 1:
-        o->unk4C = 6;
-        o->unk52 = *(s16 *)((u8 *)o + 0x54);
-        o->unk4A++;
+        obj->unk4C = 6;
+        obj->unk52 = *(s16 *)((u8 *)obj + 0x54);
+        obj->unk4A++;
         break;
     case 2:
-        if (--o->unk4C <= 0)
-            o->unk4A++;
+        if (--obj->unk4C <= 0)
+            obj->unk4A++;
         break;
     case 3:
-        o->unk4C = 6;
-        o->unk52 = o->unk50;
-        o->unk4A++;
+        obj->unk4C = 6;
+        obj->unk52 = obj->unk50;
+        obj->unk4A++;
         break;
     case 4:
-        if (--o->unk4C <= 0) {
-            if (--o->unk4E <= 0) {
-                o->unk4C = 0xb4;
-                o->unk4A = 0;
-                *(s16 *)((u8 *)o + 0x54) = o->unk50;
+        if (--obj->unk4C <= 0) {
+            if (--obj->unk4E <= 0) {
+                obj->unk4C = 0xb4;
+                obj->unk4A = 0;
+                *(s16 *)((u8 *)obj + 0x54) = obj->unk50;
             } else {
-                o->unk4A = 1;
+                obj->unk4A = 1;
             }
         }
         break;
     }
     for (i = 0; i < 3; i++) {
-        if (D_8009C40C[D_8007C280[i]] != 0 && D_8009BCF8_U8Arr[0] == D_8007C288[i]) {
+        if (D_8009C40C[D_8007C280[i]] != 0 && GAME.displayExpBar == D_8007C288[i]) {
             switch (D_800A5464[0]) {
             case 0:
                 if (--D_800B07C8_U8Arr[4 + i] == 0) {
                     D_800B07C8_U8Arr[4 + i] = 3;
-                    if (++D_8009BCF8_U8Arr[0x40f] >= 0x3c) {
+                    if (++GAME.activeExpBar >= 0x3c) {
                         D_800A5464[0] = 1;
-                        D_8009BCF8_U8Arr[0x40f] = 0x3c;
+                        GAME.activeExpBar = 0x3c;
                         D_800B07C8_U8Arr[4 + i] = 0;
                         D_800B07C8_U8Arr[12 + i] = 1;
                         D_800B07C8_U8Arr[8 + i] = 6;
@@ -2043,7 +2036,7 @@ void func_8002907C(GameObject *o)
                 D_800B07C8_U8Arr[4 + i] = 0x78;
                 D_800B07C8_U8Arr[8 + i] = 0;
                 D_800B07C8_U8Arr[12 + i] = 0;
-                D_8009BCF8_U8Arr[0x40f] = 0;
+                GAME.activeExpBar = 0;
                 break;
             case 3:
                 D_800B07C8_U8Arr[8 + i] = 0;
@@ -2062,13 +2055,13 @@ void func_8002907C(GameObject *o)
             if (D_800B07C8_U8Arr[4 + i] != 0) {
                 D_800B07C8_U8Arr[i] = 0x78;
                 D_800B07C8_U8Arr[4 + i]--;
-                if (++D_8009BCF8_U8Arr[0x40c + i] >= 0x3c) {
-                    if (D_8009BCF8_U8Arr[0x408 + i] == 9) {
-                        D_8009BCF8_U8Arr[0x40c + i] = 0x3c;
+                if (++GAME.expBar[i] >= 0x3c) {
+                    if (GAME.expLevel[i] == 9) {
+                        GAME.expBar[i] = 0x3c;
                         D_800B07C8_U8Arr[4 + i] = 0;
                     } else {
-                        D_8009BCF8_U8Arr[0x408 + i]++;
-                        D_8009BCF8_U8Arr[0x40c + i] -= 0x3c;
+                        GAME.expLevel[i]++;
+                        GAME.expBar[i] -= 0x3c;
                         D_800B07C8_U8Arr[12 + i] = 1;
                         D_800B07C8_U8Arr[8 + i] = 6;
                     }
@@ -2076,7 +2069,7 @@ void func_8002907C(GameObject *o)
             }
             if (D_800B07C8_U8Arr[i] != 0)
                 D_800B07C8_U8Arr[i]--;
-            p = (u8 *)o + i;
+            p = (u8 *)obj + i;
             if (p[0x64] != 0 && --p[0x60] == 0) {
                 if (++p[0x64] >= 4)
                     p[0x64] = 0;
@@ -2086,7 +2079,7 @@ void func_8002907C(GameObject *o)
     }
         break;
     case 2:
-        o->state++;
+        obj->state++;
         break;
     }
 }

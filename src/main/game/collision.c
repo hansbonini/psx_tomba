@@ -117,7 +117,7 @@ s16 probeCollisionAtDepthA(u8* self, s16 arg1, s16 arg2)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80043740);
-s32 func_80043740(GameObject *o, s32 x_, s32 y_, s32 fl_)
+s32 func_80043740(GameObject *obj, s32 x_, s32 y_, s32 fl_)
 {
     s32 x = x_;
     register s32 y asm("$23") = y_;
@@ -146,7 +146,7 @@ s32 func_80043740(GameObject *o, s32 x_, s32 y_, s32 fl_)
     hit:
         D_1F800284 = (f & 0xE00) >> 9;
         D_1F800282 = f;
-        o->h->p.whole -= r;
+        obj->h->p.whole -= r;
         return k;
     }
     cnt = 0;
@@ -200,7 +200,7 @@ s32 func_80043740(GameObject *o, s32 x_, s32 y_, s32 fl_)
                     t = x - 1;
                     x = t - s1;
                 }
-                h = o->h;
+                h = obj->h;
                 asm("" : "=r"(h) : "0"(h));
                 {
                     s32 s2;
@@ -221,7 +221,7 @@ s32 func_80043740(GameObject *o, s32 x_, s32 y_, s32 fl_)
                     x = t - xm;
                 }
                 ret = 2;
-                h = o->h;
+                h = obj->h;
                 h->p.whole = h->p.whole + 8 - xm;
             }
             D_1F800284 = (f & 0xE00) >> 9;
@@ -244,7 +244,7 @@ s32 func_80043740(GameObject *o, s32 x_, s32 y_, s32 fl_)
                         D_1F800278 = p;
                     }
                 } else {
-                    D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, o->d->p.whole);
+                    D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, obj->d->p.whole);
                 }
             }
             {
@@ -294,8 +294,8 @@ s16 func_80043AB0(O8004065C_43AB0 *o, s16 a, s16 b, s32 c)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80043B3C);
-s32 func_80043B3C(o, x, y)
-    GameObject *o;
+s32 func_80043B3C(obj, x, y)
+    GameObject *obj;
     s16 x;
     s16 y;
 {
@@ -339,11 +339,11 @@ s32 func_80043B3C(o, x, y)
             h = a + b * ((x - lo) % len) / len;
         d = h - y;
         if (d > 0) {
-            o->y.p.frac = 0;
+            obj->y.p.frac = 0;
             D_1F80027E = b;
             D_1F800280 = a;
             D_1F800282_S16 = fl;
-            o->y.p.whole += d;
+            obj->y.p.whole += d;
             return 1;
             do {
             } while (0);
@@ -646,7 +646,7 @@ s32 func_80044694(O_44694 *o, s16 x, s16 y)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_800448D4);
-s32 func_800448D4(GameObject *o, s16 x, s16 y)
+s32 func_800448D4(GameObject *obj, s16 x, s16 y)
 {
     s16 *p;
     s16 n;
@@ -664,7 +664,7 @@ s32 func_800448D4(GameObject *o, s16 x, s16 y)
     char xm;
     s32 ys;
 
-    p = getCollisionPlaneAt((s16)x, o->d->p.whole);
+    p = getCollisionPlaneAt((s16)x, obj->d->p.whole);
     D_1F800278 = (u16 *)(p + 1);
     n = *p;
     if (n == 0) return 0;
@@ -711,8 +711,8 @@ s32 func_800448D4(GameObject *o, s16 x, s16 y)
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80044B0C);
 s32 angleFromDelta(s32, s32);
 
-s32 func_80044B0C(o, x, y, plane)
-    GameObject *o;
+s32 func_80044B0C(obj, x, y, plane)
+    GameObject *obj;
     s16 x;
     u16 y;
     s16 plane;
@@ -771,7 +771,7 @@ s32 func_80044B0C(o, x, y, plane)
                 }
                 xm = x & 7;
                 xs = xm;
-                if (o->animFrame & 1) {
+                if (obj->animFrame & 1) {
                     if ((f & 0x18) == 0x18) {
                         x += lo + cnt - xm;
                         if (++i >= 8)
@@ -788,7 +788,7 @@ s32 func_80044B0C(o, x, y, plane)
                             p = (u16 *)(bb + o2);
                             D_1F800278 = p;
                         } else {
-                            D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, o->d->p.whole);
+                            D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, obj->d->p.whole);
                         }
                         n = *D_1F800278++;
                         if (n == 0)
@@ -812,7 +812,7 @@ s32 func_80044B0C(o, x, y, plane)
                         } else if (ang > 0xC0) {
                             D_1F80027C = ang - 0xC0;
                         }
-                        o->h->p.whole -= x0 - x;
+                        obj->h->p.whole -= x0 - x;
                         xs -= q;
                         if (!(v & 0xFF00))
                             return 1;
@@ -823,12 +823,12 @@ s32 func_80044B0C(o, x, y, plane)
                         }
                         if (e >= 9)
                             return 1;
-                        o->y.p.whole -= e;
+                        obj->y.p.whole -= e;
                         if (cnt != 0) {
                             if ((s16)k <= 0) {
-                                o->h->p.whole += lo + cnt - xs;
+                                obj->h->p.whole += lo + cnt - xs;
                             } else {
-                                o->h->p.whole += lo - xs;
+                                obj->h->p.whole += lo - xs;
                             }
                         }
                         return 2;
@@ -854,7 +854,7 @@ s32 func_80044B0C(o, x, y, plane)
                             p = (u16 *)(bb + o2);
                             D_1F800278 = p;
                         } else {
-                            D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, o->d->p.whole);
+                            D_1F800278 = (u16 *)getCollisionPlaneAt((s16)x, obj->d->p.whole);
                         }
                         n = *D_1F800278++;
                         if (n == 0)
@@ -878,7 +878,7 @@ s32 func_80044B0C(o, x, y, plane)
                         } else if (ang > 0xC0) {
                             D_1F80027C = ang - 0xC0;
                         }
-                        o->h->p.whole -= x0 - x;
+                        obj->h->p.whole -= x0 - x;
                         xs -= q;
                         if (!(v & 0xFF00))
                             return 1;
@@ -888,12 +888,12 @@ s32 func_80044B0C(o, x, y, plane)
                             e = y - h;
                         }
                         if (e < 9) {
-                            o->y.p.whole -= e;
+                            obj->y.p.whole -= e;
                             if (cnt != 0) {
                                 if ((s16)k <= 0) {
-                                    o->h->p.whole += lo + cnt - xs;
+                                    obj->h->p.whole += lo + cnt - xs;
                                 } else {
-                                    o->h->p.whole += lo - xs;
+                                    obj->h->p.whole += lo - xs;
                                 }
                             }
                             return 2;
@@ -917,7 +917,7 @@ s16 func_800450FC(u8* self, s16 arg1, s16 arg2)
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80045174);
 extern s32 angleFromDelta(s32, s32);
 
-s32 func_80045174(GameObject *o, s16 a, s32 b)
+s32 func_80045174(GameObject *obj, s16 a, s32 b)
 {
     char pad[8];
     s16 *p;
@@ -928,7 +928,7 @@ s32 func_80045174(GameObject *o, s16 a, s32 b)
     s16 s;
     s16 ws;
     u16 t3;
-    p = getCollisionPlaneAt(a, o->d->p.whole);
+    p = getCollisionPlaneAt(a, obj->d->p.whole);
     D_1F800278 = (u16 *)(p + 1);
     n = cnt = *p;
     goto test;
@@ -1028,7 +1028,7 @@ s32 func_80045310(O_45310 *o, s16 a, s16 b)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80045570);
-static __inline__ s32 check_45570(GameObject *o, s16 a, s16 b)
+static __inline__ s32 check_45570(GameObject *obj, s16 a, s16 b)
 {
     s16 *q;
     s32 nn;
@@ -1041,7 +1041,7 @@ static __inline__ s32 check_45570(GameObject *o, s16 a, s16 b)
     s16 lo;
     s32 ys;
 
-    q = getCollisionPlaneAt(a, o->d->p.whole);
+    q = getCollisionPlaneAt(a, obj->d->p.whole);
     D_1F800278 = (u16 *)(q + 1);
     nn = *q;
     n = nn;
@@ -1080,10 +1080,10 @@ take:
     return 0;
 }
 
-s32 func_80045570(GameObject *o, s16 a, s32 b)
+s32 func_80045570(GameObject *obj, s16 a, s32 b)
 {
     char pad[0x18];
-    return check_45570(o, a, b);
+    return check_45570(obj, a, b);
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/collision", func_80045780);

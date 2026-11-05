@@ -1,6 +1,17 @@
 #include "common.h"
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/bcopy", bcopy);
+/**
+ * @brief Copy a block of memory (BSD order: source first)
+ * 
+ * Copies arg2 bytes from arg0 to arg1, one byte at a time. Nothing is
+ * copied if the source is NULL.
+ * 
+ * @param arg0 Source buffer
+ * @param arg1 Destination buffer
+ * @param arg2 Number of bytes to copy
+ * @return The source pointer, or NULL if it was NULL
+ */
 u8* bcopy(u8* arg0, u8* arg1, s32 arg2)
 {
     s32 var_a2;

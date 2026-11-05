@@ -187,6 +187,18 @@ extern char spuVmMaxVoice;
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_seq", _SsVmSetSeqVol);
 
+/**
+ * @brief Internal: set the volume of a sequence
+ * 
+ * Stores the clamped left/right volume and, when requested, recomputes the
+ * volume registers of all voices of the sequence.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @param voll Left volume (0-127)
+ * @param volr Right volume (0-127)
+ * @param arg3 1 to update the playing voices immediately
+ * @return Sequence handle
+ */
 short _SsVmSetSeqVol(short seq_sep_no, u16 voll, u16 volr, short arg3) {
     struct SeqStruct* score;
     int vol;
@@ -262,6 +274,16 @@ short _SsVmSetSeqVol(short seq_sep_no, u16 voll, u16 volr, short arg3) {
     return _svm_cur.seq_sep_no;
 }
 
+/**
+ * @brief Internal: get the volume of a sequence
+ * 
+ * Returns the left and right volume of the sequence.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @param voll Receives the left volume
+ * @param volr Receives the right volume
+ * @return Sequence handle
+ */
 short _SsVmGetSeqVol(short seq_sep_no, short* voll, short* volr) {
     struct SeqStruct* score;
 
@@ -272,6 +294,14 @@ short _SsVmGetSeqVol(short seq_sep_no, short* voll, short* volr) {
     return _svm_cur.seq_sep_no;
 }
 
+/**
+ * @brief Internal: get the left volume of a sequence
+ * 
+ * Returns the left volume.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @return Left volume
+ */
 short _SsVmGetSeqLVol(short seq_sep_no) {
     struct SeqStruct* score;
 
@@ -280,6 +310,14 @@ short _SsVmGetSeqLVol(short seq_sep_no) {
     return score->unk74;
 }
 
+/**
+ * @brief Internal: get the right volume of a sequence
+ * 
+ * Returns the right volume.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @return Right volume
+ */
 short _SsVmGetSeqRVol(short seq_sep_no) {
     struct SeqStruct* score;
 
@@ -290,6 +328,13 @@ short _SsVmGetSeqRVol(short seq_sep_no) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_seq", _SsVmSeqKeyOff);
 
+/**
+ * @brief Internal: key off all voices of a sequence
+ * 
+ * Releases every voice that belongs to the sequence.
+ * 
+ * @param seq_sep_num Sequence handle
+ */
 void _SsVmSeqKeyOff(s16 seq_sep_num) {
     u8 i;
 

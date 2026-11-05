@@ -3,6 +3,16 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/miditime", _SsReadDeltaValue);
 
+/**
+ * @brief Internal: read a MIDI delta time
+ * 
+ * Decodes a variable-length quantity from the score data, scales it by 10
+ * and adds it to the elapsed time.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ * @return Delta time multiplied by 10
+ */
 s32 _SsReadDeltaValue(s16 arg0, s16 arg1) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
     s32 temp_v0;

@@ -35,7 +35,7 @@ void func_8004DC34(void)
 
 void func_8004DD14(void)
 {
-    GameObject *o;
+    GameObject *obj;
     GameObject **p;
     s32 n;
 
@@ -43,29 +43,29 @@ void func_8004DD14(void)
         n = (*(s16 *)&D_1F80025A);
         p = D_1F800270;
         while (n != 0) {
-            o = *p++;
+            obj = *p++;
             n--;
-            switch (o->unkA) {
+            switch (obj->drawType) {
             case 0:
-                func_8004A300(o);
+                func_8004A300(obj);
                 break;
             case 1:
-                func_8004DFA0(o);
+                func_8004DFA0(obj);
                 break;
             case 2:
-                func_8004E244(o);
+                func_8004E244(obj);
                 break;
             case 3:
                 if (D_800A539A & 2)
-                    func_800EBA58(o);
+                    func_800EBA58(obj);
                 else
-                    func_800EA3A4(o);
+                    func_800EA3A4(obj);
                 break;
             case 4:
                 if (((u16 *)&GAME)[0] == 4)
-                    func_8011DA28(o);
+                    func_8011DA28(obj);
                 if (((u16 *)&GAME)[0] == 0xc)
-                    func_80116308(o);
+                    func_80116308(obj);
                 break;
             }
         }
@@ -73,29 +73,29 @@ void func_8004DD14(void)
         (*(s16 *)&D_1F80025A) = D_1F800240;
         D_1F800270 = D_1F80022C;
         while (D_1F800240 != 0) {
-            o = *D_1F80022C++;
+            obj = *D_1F80022C++;
             D_1F800240--;
-            switch (o->unkA) {
+            switch (obj->drawType) {
             case 0:
-                func_8004A300(o);
+                func_8004A300(obj);
                 break;
             case 1:
-                func_8004DFA0(o);
+                func_8004DFA0(obj);
                 break;
             case 2:
-                func_8004E244(o);
+                func_8004E244(obj);
                 break;
             case 3:
                 if (D_800A539A & 2)
-                    func_800EBA58(o);
+                    func_800EBA58(obj);
                 else
-                    func_800EA3A4(o);
+                    func_800EA3A4(obj);
                 break;
             case 4:
                 if (((u16 *)&GAME)[0] == 4)
-                    func_8011DA28(o);
+                    func_8011DA28(obj);
                 if (((u16 *)&GAME)[0] == 0xc)
-                    func_80116308(o);
+                    func_80116308(obj);
                 break;
             }
         }
@@ -104,52 +104,50 @@ void func_8004DD14(void)
 
 // INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004DFA0);
 
-void func_8004DFA0(GameObject *o)
+void func_8004DFA0(GameObject *obj)
 {
     s16 pri;
-    SPRT *s;
+    SPRT *sprt;
     s16 *e;
     SprFrag *f;
     s32 n;
     s32 tp;
 
-    if (o->unkB == 2) {
-        pri = *(u16 *)&o->unkE;
+    if (obj->otMode == OT_MODE_FIXED16) {
+        pri = *(u16 *)&obj->unkE;
     } else {
-        pri = (s8)o->unkF;
+        pri = (s8)obj->priority;
     }
-    s = (SPRT *)D_1F800164;
-    SetDrawMode((DR_MODE *)s, 0, 0, 0, 0);
-    AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), s);
+    sprt = (SPRT *)D_1F800164;
+    SetDrawMode((DR_MODE *)sprt, 0, 0, 0, 0);
+    AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), sprt);
     D_1F800164 += sizeof(DR_MODE);
-    e = (s16 *)(o->spriteBank + *(u16 *)o->anim * 4);
+    e = (s16 *)(obj->spriteBank + *(u16 *)obj->anim * 4);
     n = e[0];
-    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    f = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + e[1]);
     tp = f->tpage;
     do {
-        s = (SPRT *)D_1F800164;
-        s->w = f->w;
-        s->h = f->h;
-        s->x0 = o->x.p.whole + f->dx;
-        s->y0 = o->y.p.whole + f->dy;
-        if (((u16)s->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(s->y0 + s->h) < NTSC_PAL(0xF1, 0x101)) &&
-            ((u16)s->x0 < 0x141 || (u16)(s->x0 + s->w) < 0x141)) {
-            SetSprt(s);
-            SetSemiTrans(s, o->unkD >> 7);
-            s->code |= 1;
-            *(s32 *)&s->u0 = *(s32 *)f;
-            if (o->unkD & 1) {
-                s->clut = o->clut;
+        sprt = (SPRT *)D_1F800164;
+        setWH(sprt, f->w, f->h);
+        setXY0(sprt, obj->x.p.whole + f->dx, obj->y.p.whole + f->dy);
+        if (((u16)sprt->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(sprt->y0 + sprt->h) < NTSC_PAL(0xF1, 0x101)) &&
+            ((u16)sprt->x0 < 0x141 || (u16)(sprt->x0 + sprt->w) < 0x141)) {
+            SetSprt(sprt);
+            SetSemiTrans(sprt, obj->drawFlags >> 7);
+            sprt->code |= 1;
+            *(s32 *)&sprt->u0 = *(s32 *)f;
+            if (obj->drawFlags & 1) {
+                sprt->clut = obj->clut;
             }
-            AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), s);
+            AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), sprt);
             D_1F800164 += sizeof(SPRT);
         }
         f++;
         n--;
     } while (n != 0);
-    s = (SPRT *)D_1F800164;
-    SetDrawMode((DR_MODE *)s, 0, 0, o->tpage + (s16)tp, 0);
-    AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), s);
+    sprt = (SPRT *)D_1F800164;
+    SetDrawMode((DR_MODE *)sprt, 0, 0, obj->tpage + (s16)tp, 0);
+    AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), sprt);
     D_1F800164 += sizeof(DR_MODE);
 }
 
@@ -157,35 +155,30 @@ void func_8004DFA0(GameObject *o)
 typedef struct { s16 tpage; s16 x; s16 y; u8 u; u8 v; s16 w; s16 h; s16 cx; s16 cy; s16 semi; } SprPart;
 extern SprPart *D_8007EBEC[];
 
-void func_8004E244(GameObject *o)
+void func_8004E244(GameObject *obj)
 {
-    SprPart *e = D_8007EBEC[o->subtype];
-    SPRT *p;
-    DR_MODE *dm;
+    SprPart *e = D_8007EBEC[obj->id];
+    SPRT *sprt;
+    DR_MODE *drMode;
 #if REGION == REGION_EU
     short r[4];
 #endif
 
     while (e->tpage != 0x7FFF) {
-        p = (SPRT *)D_1F800164;
-        SetSprt(p);
-        SetSemiTrans(p, e->semi);
-        p->r0 = 0x80;
-        p->g0 = 0x80;
-        p->b0 = 0x80;
-        p->code |= 1;
-        p->w = e->w;
-        p->h = e->h;
-        p->x0 = o->x.p.whole + e->x;
-        p->y0 = o->y.p.whole + e->y + NTSC_PAL(0, 0x18);
-        p->u0 = e->u;
-        p->v0 = e->v;
-        p->clut = GetClut(e->cx, e->cy);
-        AddPrim((u_long *)D_1F8001E0 + ((s8)o->unkF + 0x324), p);
+        sprt = (SPRT *)D_1F800164;
+        SetSprt(sprt);
+        SetSemiTrans(sprt, e->semi);
+        setRGB0(sprt, 0x80, 0x80, 0x80);
+        sprt->code |= 1;
+        setWH(sprt, e->w, e->h);
+        setXY0(sprt, obj->x.p.whole + e->x, obj->y.p.whole + e->y + NTSC_PAL(0, 0x18));
+        setUV0(sprt, e->u, e->v);
+        sprt->clut = GetClut(e->cx, e->cy);
+        AddPrim((u_long *)D_1F8001E0 + ((s8)obj->priority + 0x324), sprt);
         D_1F800164 += sizeof(SPRT);
-        dm = (DR_MODE *)D_1F800164;
-        SetDrawMode(dm, 0, 0, e->tpage, 0);
-        AddPrim((u_long *)D_1F8001E0 + ((s8)o->unkF + 0x324), dm);
+        drMode = (DR_MODE *)D_1F800164;
+        SetDrawMode(drMode, 0, 0, e->tpage, 0);
+        AddPrim((u_long *)D_1F8001E0 + ((s8)obj->priority + 0x324), drMode);
         e++;
         D_1F800164 += sizeof(DR_MODE);
     }
@@ -289,7 +282,7 @@ s32 y0;
     extern void func_8004F2CC(O_4E714 *o, s16 x, s16 y, s32 k);
     extern void addDrawModePrim(s32, s32);
     s16 x = x0, y = y0;
-    SPRT *p;
+    SPRT *sprt;
     u8 *q;
     s16 *e;
     SprFrag *f;
@@ -314,20 +307,18 @@ s32 y0;
     cnt = e[0];
     f = (SprFrag *)(o->base + e[1]);
     do {
-        p = (SPRT *)D_1F800164;
-        SetSprt(p);
-        p->code |= 1;
-        SetSemiTrans(p, 1);
-        p->x0 = x + f->dx;
-        p->y0 = y + f->dy;
-        p->u0 = f->u;
+        sprt = (SPRT *)D_1F800164;
+        SetSprt(sprt);
+        sprt->code |= 1;
+        SetSemiTrans(sprt, 1);
+        setXY0(sprt, x + f->dx, y + f->dy);
+        sprt->u0 = f->u;
         cnt--;
-        p->v0 = f->v;
-        p->w = f->w;
-        p->h = f->h;
-        p->clut = f->clut;
+        sprt->v0 = f->v;
+        setWH(sprt, f->w, f->h);
+        sprt->clut = f->clut;
         f++;
-        AddPrim(D_1F8001E0 + 4, p);
+        AddPrim(D_1F8001E0 + 4, sprt);
         D_1F800164 = (u8 *)((SPRT *)D_1F800164 + 1);
     } while (cnt != 0);
     addDrawModePrim(0x15, 1);
@@ -351,36 +342,33 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 #define N_4E900 ((s16)n)
 #endif
     s32 i = 0;
-    SPRT *p;
+    SPRT *sprt;
     u8 *e;
     s32 cy;
 
     for (; i < D_8009BCD9; i++) {
         {
-            p = (SPRT *)D_1F800164;
+            sprt = (SPRT *)D_1F800164;
             e = s->base + *(s16 *)(*(u8 *volatile *)&s->base + (*s->tbl[i] << 2) + 2);
-            SetSprt(p);
-            p->code |= 1;
-            SetSemiTrans(p, 0);
-            p->x0 = x + (s8)e[0xe];
-            p->y0 = y + (s8)e[0xf];
-            p->u0 = e[0];
-            p->v0 = e[1];
-            p->w = e[10];
-            p->h = e[11];
+            SetSprt(sprt);
+            sprt->code |= 1;
+            SetSemiTrans(sprt, 0);
+            setXY0(sprt, x + (s8)e[0xe], y + (s8)e[0xf]);
+            setUV0(sprt, e[0], e[1]);
+            setWH(sprt, e[10], e[11]);
             if (i < N_4E900) {
                 if (N_4E900 < 3)
-                    p->clut = GetClut(0x170, 0x1f7);
+                    sprt->clut = GetClut(0x170, 0x1f7);
                 else if (N_4E900 < 5)
-                    p->clut = GetClut(0x170, 0x1f6);
+                    sprt->clut = GetClut(0x170, 0x1f6);
                 else if (N_4E900 < 7)
-                    p->clut = GetClut(0x170, 0x1f5);
+                    sprt->clut = GetClut(0x170, 0x1f5);
                 else
-                    p->clut = GetClut(0x170, 0x1f4);
+                    sprt->clut = GetClut(0x170, 0x1f4);
             } else {
-                p->clut = GetClut(0x170, 0x1f8);
+                sprt->clut = GetClut(0x170, 0x1f8);
             }
-            AddPrim(D_1F8001E0 + 4, p);
+            AddPrim(D_1F8001E0 + 4, sprt);
             D_1F800164 = (u8 *)((SPRT *)D_1F800164 + 1);
         }
     }
@@ -393,28 +381,25 @@ void func_8004E900(SPR_4E900 *s, s16 x, s16 y, u16 n)
 typedef struct { u8 a, pa, b, pb, c, pc; } Col6_4EB10;
 extern Col6_4EB10 D_8007EC80[];
 
-void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
+void func_8004EB10(GameObject *obj, s32 idx, s16 x, s16 y, s16 flag)
 {
-    SPRT *p;
+    SPRT *sprt;
     u8 *s;
     s16 r[4];
     s32 c;
 
     if (flag)
-        func_8004F2CC(o, (s16)(x + 8), y, *(u16 *)((void **)o->movetab)[D_8009C100[idx] + 1]);
-    p = (SPRT *)D_1F800164;
-    s = (u8 *)o->z.raw + *(s16 *)(*(volatile s32 *)&o->z.raw + (*(u16 *)o->unk34 << 2) + 2);
-    SetSprt(p);
-    p->code |= 1;
-    p->x0 = x;
-    p->y0 = y;
-    p->u0 = s[0];
-    p->v0 = s[1];
-    p->w = s[10];
-    p->h = s[11];
-    c = *((u8 *)o + idx + 0x64) + 0x1e4;
-    p->clut = GetClut(0x150, idx * 4 + c);
-    AddPrim(D_1F8001E0 + 4, p);
+        func_8004F2CC(obj, (s16)(x + 8), y, *(u16 *)((void **)obj->movetab)[D_8009C100[idx] + 1]);
+    sprt = (SPRT *)D_1F800164;
+    s = (u8 *)obj->z.raw + *(s16 *)(*(volatile s32 *)&obj->z.raw + (*(u16 *)obj->localY << 2) + 2);
+    SetSprt(sprt);
+    sprt->code |= 1;
+    setXY0(sprt, x, y);
+    setUV0(sprt, s[0], s[1]);
+    setWH(sprt, s[10], s[11]);
+    c = *((u8 *)obj + idx + 0x64) + 0x1e4;
+    sprt->clut = GetClut(0x150, idx * 4 + c);
+    AddPrim(D_1F8001E0 + 4, sprt);
     ((SPRT *)D_1F800164)++;
     addDrawModePrim(0x14, 1);
     r[0] = x + 0x13;
@@ -440,7 +425,7 @@ void func_8004EB10(GameObject *o, s32 idx, s16 x, s16 y, s16 flag)
 
 void func_8004ED80(s32 o, s16 x, s16 y)
 {
-    SPRT *p;
+    SPRT *sprt;
     u8 *q;
     s32 m;
     void *ot;
@@ -467,21 +452,19 @@ void func_8004ED80(s32 o, s16 x, s16 y)
         addDrawModePrim(0x14, 1);
         break;
     case 9:
-        p = (SPRT *)D_1F800164;
+        sprt = (SPRT *)D_1F800164;
         q = (u8 *)(*(volatile s32 *)(o + 0x18) + *(s16 *)(*(volatile s32 *)(o + 0x18) + (*(*(u16 **)&D_80012314) << 2) + 2));
-        SetSprt(p);
-        p->code |= 1;
-        SetSemiTrans(p, 0);
-        p->x0 = x + (s8)q[0xe];
-        p->y0 = y + (s8)q[0xf];
-        p->u0 = q[0];
-        p->v0 = q[1];
+        SetSprt(sprt);
+        sprt->code |= 1;
+        SetSemiTrans(sprt, 0);
+        setXY0(sprt, x + (s8)q[0xe], y + (s8)q[0xf]);
+        setUV0(sprt, q[0], q[1]);
         ot = (void *)(D_1F8001E0 + 4);
-        p->w = q[0xa];
+        sprt->w = q[0xa];
         c = q[0xb];
-        p->clut = 0x7e14;
-        p->h = c;
-        AddPrim(ot, p);
+        sprt->clut = 0x7e14;
+        sprt->h = c;
+        AddPrim(ot, sprt);
         ((SPRT *)D_1F800164)++;
         addDrawModePrim(0x14, 1);
         break;
@@ -519,12 +502,10 @@ void drawMessageGlyphs(s32 a)
             else
             {    p->y0 = MESSAGE_SLOTS[a].y + MESSAGE_GLYPHS[a][i].y; }
         } else {
-            p->x0 = MESSAGE_SLOTS[a].x + MESSAGE_GLYPHS[a][i].x - 0xb;
-            p->y0 = MESSAGE_SLOTS[a].y + MESSAGE_GLYPHS[a][i].y - 10;
+            setXY0(p, MESSAGE_SLOTS[a].x + MESSAGE_GLYPHS[a][i].x - 0xb, MESSAGE_SLOTS[a].y + MESSAGE_GLYPHS[a][i].y - 10);
         }
         SETUV0(p, GLYPH_CACHE[f].u << 2, GLYPH_CACHE[f].v);
-        p->w = GLYPH_CACHE[f].w;
-        p->h = GLYPH_CACHE[f].h;
+        setWH(p, GLYPH_CACHE[f].w, GLYPH_CACHE[f].h);
         p->clut = GetClut(0x160, 0x1e3);
         AddPrim(D_1F8001E0 + 4, p);
         ((SPRT *)D_1F800164)++;
@@ -536,10 +517,10 @@ void drawMessageGlyphs(s32 a)
 // INCLUDE_ASM("nonmatchings/main/render/sprite", addDrawModePrim);
 void addDrawModePrim(short tpage, int p) {
     scratchpad* scratch = PSX_SCRATCH;
-    DR_MODE* mode = scratch->nextprim;
+    DR_MODE* drMode = scratch->nextprim;
 
-    SetDrawMode(mode, 0, 0, tpage, 0);
-    AddPrim(scratch->ot + (p * 4),mode);
+    SetDrawMode(drMode, 0, 0, tpage, 0);
+    AddPrim(scratch->ot + (p * 4),drMode);
     scratch->nextprim += sizeof(DR_MODE);
 }
 
@@ -547,26 +528,23 @@ void addDrawModePrim(short tpage, int p) {
 
 void func_8004F2CC(s32 obj, s16 x, s16 y, u16 idx)
 {
-    SPRT *p;
+    SPRT *sprt;
     u8 *s;
     s32 t;
     s32 tb;
     s32 i;
     i = idx * 4;
-    p = (SPRT *)D_1F800164;
+    sprt = (SPRT *)D_1F800164;
     s = (u8 *)(*(volatile s32 *)(obj + 0x18) + *(s16 *)(*(volatile s32 *)(obj + 0x18) + i + 2));
-    SetSprt(p);
-    p->code = p->code | 1;
-    SetSemiTrans(p, 0);
-    p->x0 = x + (s8)s[0xe];
-    p->y0 = y + (s8)s[0xf];
-    p->u0 = s[0];
-    p->v0 = s[1];
+    SetSprt(sprt);
+    sprt->code = sprt->code | 1;
+    SetSemiTrans(sprt, 0);
+    setXY0(sprt, x + (s8)s[0xe], y + (s8)s[0xf]);
+    setUV0(sprt, s[0], s[1]);
     t = D_1F8001E0;
-    p->w = s[10];
-    p->h = s[0xb];
-    p->clut = *(u16 *)(s + 2);
-    AddPrim((void *)(t + 4), p);
+    setWH(sprt, s[10], s[0xb]);
+    sprt->clut = *(u16 *)(s + 2);
+    AddPrim((void *)(t + 4), sprt);
     D_1F800164 = (u8 *)((SPRT *)D_1F800164 + 1);
 }
 
@@ -576,26 +554,24 @@ void func_8004F3DC(SPR_4E900 *a, s16 x, s16 y, u16 idx)
     s16 *e;
     s32 n;
     SprFrag *f;
-    SPRT *p;
+    SPRT *sprt;
 
     e = (s16 *)(a->base + idx * 4);
     f = (SprFrag *)(*(u8 *volatile *)&a->base + e[1]);
     n = *e;
     do {
-        p = (SPRT *)D_1F800164;
-        SetSprt(p);
-        p->code |= 1;
-        SetSemiTrans(p, 0);
-        p->x0 = x + f->dx;
-        p->y0 = y + f->dy;
-        p->u0 = f->u;
+        sprt = (SPRT *)D_1F800164;
+        SetSprt(sprt);
+        sprt->code |= 1;
+        SetSemiTrans(sprt, 0);
+        setXY0(sprt, x + f->dx, y + f->dy);
+        sprt->u0 = f->u;
         n--;
-        p->v0 = f->v;
-        p->w = f->w;
-        p->h = f->h;
-        p->clut = f->clut;
+        sprt->v0 = f->v;
+        setWH(sprt, f->w, f->h);
+        sprt->clut = f->clut;
         f++;
-        AddPrim(D_1F8001E0 + 4, p);
+        AddPrim(D_1F8001E0 + 4, sprt);
         D_1F800164 = (u8 *)((SPRT *)D_1F800164 + 1);
     } while (n != 0);
 }
@@ -637,43 +613,35 @@ extern s16 **D_800783CC_slps01144[];
 extern s16 **D_800783E8_slps01144[];
 void func_8004F5A4(void)
 {
-    TILE *t;
+    TILE *tile;
     void *r;
     s16 *e;
     SprFrag *f;
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s32 i;
     s16 n;
     s32 w;
     s16 **q;
-    t = (TILE *)D_1F800164;
-    t->w = 0x140;
-    t->h = 0xF0;
-    t->x0 = 0;
-    t->y0 = 0;
-    setlen(t, 3);
-    t->code = 0x60;
-    SetSemiTrans(t, 1);
-    t->r0 = 0x20;
-    t->g0 = 0x20;
-    t->b0 = 0x20;
-    AddPrim((u_long *)D_1F8001E0 + 4, t);
+    tile = (TILE *)D_1F800164;
+    setWH(tile, 0x140, 0xF0);
+    setXY0(tile, 0, 0);
+    setlen(tile, 3);
+    tile->code = 0x60;
+    SetSemiTrans(tile, 1);
+    setRGB0(tile, 0x20, 0x20, 0x20);
+    AddPrim((u_long *)D_1F8001E0 + 4, tile);
     r = D_1F800164 = D_1F800164 + sizeof(TILE);
     SetDrawMode(r, 0, 0, 0, 0);
     AddPrim((u_long *)D_1F8001E0 + 4, r);
-    t = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
+    tile = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
     if (D_8009C10B_Arr[0] < 4) {
-        t->w = 0x30;
-        t->h = 0xC;
-        t->x0 = 0x88;
-        t->y0 = D_800783F0_slps01144[D_8009C10B_Arr[0]];
-        setlen(t, 3);
-        t->code = 0x60;
-        SetSemiTrans(t, 1);
-        t->r0 = 0xFF;
-        t->g0 = 0xFF;
-        t->b0 = 0;
-        AddPrim((u_long *)D_1F8001E0 + 1, t);
+        setWH(tile, 0x30, 0xC);
+        setXY0(tile, 0x88, D_800783F0_slps01144[D_8009C10B_Arr[0]]);
+        setlen(tile, 3);
+        tile->code = 0x60;
+        SetSemiTrans(tile, 1);
+        setRGB0(tile, 0xFF, 0xFF, 0);
+        AddPrim((u_long *)D_1F8001E0 + 1, tile);
         r = D_1F800164 = D_1F800164 + sizeof(TILE);
         SetDrawMode(r, 0, 0, 0, 0);
         AddPrim((u_long *)D_1F8001E0 + 1, r);
@@ -692,39 +660,38 @@ void func_8004F5A4(void)
         n = e[0];
         f = (SprFrag *)(D_1F8002D8[0] + e[1]);
         do {
-            p = (POLY_FT4 *)D_1F800164;
-            setlen(p, 9);
-            p->code = 0x2D;
+            poly = (POLY_FT4 *)D_1F800164;
+            setlen(poly, 9);
+            poly->code = 0x2D;
             if (i == 0)
-                SetSemiTrans(p, 1);
+                SetSemiTrans(poly, 1);
             else
-                SetSemiTrans(p, 0);
-            *(u32 *)&p->u0 = *(u32 *)f;
-            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-            *(u16 *)&p->u2 = *(u32 *)&f->uv2;
-            *(u16 *)&p->u3 = *(u32 *)&f->uv3;
+                SetSemiTrans(poly, 0);
+            *(u32 *)&poly->u0 = *(u32 *)f;
+            *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&poly->u2 = *(u32 *)&f->uv2;
+            *(u16 *)&poly->u3 = *(u32 *)&f->uv3;
             if (i != 0) {
-                p->u1 = p->u1 + 1;
-                p->u3 = p->u3 + 1;
-                p->v2 = p->v2 + 1;
-                p->v3 = p->v3 + 1;
+                poly->u1 = poly->u1 + 1;
+                poly->u3 = poly->u3 + 1;
+                poly->v2 = poly->v2 + 1;
+                poly->v3 = poly->v3 + 1;
             }
-            p->tpage = 0x14;
-            p->x0 = (s16)(f->dx + 0xA0) + D_80078404_slps01144[i];
-            p->y0 = D_800783F8_slps01144[i] + f->dy;
+            poly->tpage = 0x14;
+            setXY0(poly, (s16)(f->dx + 0xA0) + D_80078404_slps01144[i], D_800783F8_slps01144[i] + f->dy);
             w = f->w;
-            p->x2 = p->x0;
-            p->x1 = p->x0 + w;
-            p->y1 = p->y0;
-            p->y2 = p->y0 + f->h;
-            p->x3 = p->x1;
-            p->y3 = p->y2;
+            poly->x2 = poly->x0;
+            poly->x1 = poly->x0 + w;
+            poly->y1 = poly->y0;
+            poly->y2 = poly->y0 + f->h;
+            poly->x3 = poly->x1;
+            poly->y3 = poly->y2;
             if (i == 0) {
-                p->clut = GetClut(0x160, 0x1E5);
-                AddPrim((u_long *)D_1F8001E0 + 2, p);
+                poly->clut = GetClut(0x160, 0x1E5);
+                AddPrim((u_long *)D_1F8001E0 + 2, poly);
             } else {
-                p->clut = GetClut(0x160, 0x1E3);
-                AddPrim((u_long *)D_1F8001E0, p);
+                poly->clut = GetClut(0x160, 0x1E3);
+                AddPrim((u_long *)D_1F8001E0, poly);
             }
             f++;
             n--;
@@ -759,13 +726,13 @@ void func_8004F5A4(void)
     u8 ch;
     u16 x;
     s16 y;
-    TILE *t;
-    SPRT *s;
+    TILE *tile;
+    SPRT *sprt;
     void *r;
     s32 tp;
     s16 *e;
     SprFrag *f;
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 n;
     s32 k;
     s32 w;
@@ -788,18 +755,14 @@ void func_8004F5A4(void)
         l = D_8007ED50;
         break;
     }
-    t = (TILE *)D_1F800164;
-    t->w = 0x140;
-    t->h = 0x100;
-    setlen(t, 3);
-    t->x0 = 0;
-    t->y0 = 0;
-    t->code = 0x60;
-    SetSemiTrans(t, 1);
-    t->r0 = 0x20;
-    t->g0 = 0x20;
-    t->b0 = 0x20;
-    AddPrim((u_long *)D_1F8001E0 + 4, t);
+    tile = (TILE *)D_1F800164;
+    setWH(tile, 0x140, 0x100);
+    setlen(tile, 3);
+    setXY0(tile, 0, 0);
+    tile->code = 0x60;
+    SetSemiTrans(tile, 1);
+    setRGB0(tile, 0x20, 0x20, 0x20);
+    AddPrim((u_long *)D_1F8001E0 + 4, tile);
     r = D_1F800164 = D_1F800164 + sizeof(TILE);
     SetDrawMode(r, 0, 0, 0, 0);
     AddPrim((u_long *)D_1F8001E0 + 4, r);
@@ -811,18 +774,15 @@ void func_8004F5A4(void)
         while ((ch = *c) != 0xFF) {
             c++;
             if (ch) {
-                s = (SPRT *)D_1F800164;
-                setlen(s, 4);
-                s->code = 0x65;
-                SetSemiTrans(s, 0);
-                s->x0 = x;
-                s->y0 = y;
-                s->u0 = D_8007EC94[ch][0];
-                s->v0 = D_8007EC94[ch][1];
-                s->w = 8;
-                s->h = 0x10;
-                s->clut = GetClut(0x160, 0x1E3);
-                AddPrim((u_long *)D_1F8001E0 + 1, s);
+                sprt = (SPRT *)D_1F800164;
+                setlen(sprt, 4);
+                sprt->code = 0x65;
+                SetSemiTrans(sprt, 0);
+                setXY0(sprt, x, y);
+                setUV0(sprt, D_8007EC94[ch][0], D_8007EC94[ch][1]);
+                setWH(sprt, 8, 0x10);
+                sprt->clut = GetClut(0x160, 0x1E3);
+                AddPrim((u_long *)D_1F8001E0 + 1, sprt);
                 D_1F800164 = D_1F800164 + sizeof(SPRT);
             }
             x += 8;
@@ -841,76 +801,69 @@ void func_8004F5A4(void)
 #endif
     SetDrawMode(r, 0, 0, tp, 0);
     AddPrim((u_long *)D_1F8001E0 + 1, r);
-    t = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
+    tile = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
     switch (kind) {
     case 0:
-        t->x0 = 0x74;
+        tile->x0 = 0x74;
         k = D_8009C10B_Arr[0];
-        t->w = 0x50;
-        t->h = 0x10;
+        setWH(tile, 0x50, 0x10);
         k <<= 4;
         k += 0x58;
-        t->y0 = k;
+        tile->y0 = k;
         break;
     case 1:
-        t->x0 = 0x84;
+        tile->x0 = 0x84;
         k = D_8009C10B_Arr[0];
-        t->w = 0x38;
-        t->h = 0x10;
+        setWH(tile, 0x38, 0x10);
         k <<= 4;
         k += 0x58;
-        t->y0 = k;
+        tile->y0 = k;
         break;
     case 3:
-        t->x0 = 0x74;
+        tile->x0 = 0x74;
         k = D_8009C10B_Arr[0];
-        t->w = 0x58;
-        t->h = 0x10;
+        setWH(tile, 0x58, 0x10);
         k <<= 4;
         k += 0x58;
-        t->y0 = k;
+        tile->y0 = k;
         break;
     case 2:
     case 4:
         k = D_8009C10B_Arr[0];
-        t->y0 = 0x78;
-        t->w = 0x28;
-        t->h = 0x10;
-        t->x0 = k * 0x30 + 0x74;
+        tile->y0 = 0x78;
+        setWH(tile, 0x28, 0x10);
+        tile->x0 = k * 0x30 + 0x74;
         break;
     }
-    setlen(t, 3);
-    t->code = 0x60;
-    SetSemiTrans(t, 1);
-    t->r0 = 0xFF;
-    t->g0 = 0xFF;
-    t->b0 = 0;
-    AddPrim((u_long *)D_1F8001E0 + 1, t);
+    setlen(tile, 3);
+    tile->code = 0x60;
+    SetSemiTrans(tile, 1);
+    setRGB0(tile, 0xFF, 0xFF, 0);
+    AddPrim((u_long *)D_1F8001E0 + 1, tile);
     D_1F800164 = D_1F800164 + sizeof(TILE);
     e = (s16 *)(D_1F8002D8[0] + *((s16 **)D_800123E4)[kind] * 4);
     n = e[0];
     f = (SprFrag *)(D_1F8002D8[0] + e[1]);
     do {
-        p = (POLY_FT4 *)D_1F800164;
-        setlen(p, 9);
-        p->code = 0x2D;
-        SetSemiTrans(p, 1);
-        *(u32 *)&p->u0 = *(u32 *)f;
-        *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-        *(u16 *)&p->u2 = *(u16 *)&f->uv2;
-        *(u16 *)&p->u3 = *(u16 *)&f->uv3;
-        p->tpage = 0x14;
-        p->x0 = D_8007ED98[kind].x + f->dx;
-        p->y0 = D_8007ED98[kind].y + f->dy;
+        poly = (POLY_FT4 *)D_1F800164;
+        setlen(poly, 9);
+        poly->code = 0x2D;
+        SetSemiTrans(poly, 1);
+        *(u32 *)&poly->u0 = *(u32 *)f;
+        *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+        *(u16 *)&poly->u2 = *(u16 *)&f->uv2;
+        *(u16 *)&poly->u3 = *(u16 *)&f->uv3;
+        poly->tpage = 0x14;
+        setXY0(poly, D_8007ED98[kind].x + f->dx, D_8007ED98[kind].y + f->dy);
         w = f->w;
-        p->x2 = p->x0;
-        p->x1 = p->x0 + w;
-        p->y1 = p->y0;
-        p->y2 = p->y0 + f->h;
-        p->x3 = p->x1;
-        p->y3 = p->y2;
-        p->clut = GetClut(0x160, 0x1E5);
-        AddPrim((u_long *)D_1F8001E0 + 1, p);
+        poly->x2 = poly->x0;
+        poly->x1 = poly->x0 + w;
+        poly->y1 = poly->y0;
+        poly->y2 = poly->y0 + f->h;
+        poly->x3 = poly->x1;
+        poly->y3 = poly->y2;
+        poly->clut = GetClut(0x160, 0x1E5);
+        AddPrim((u_long *)D_1F8001E0 + 1, poly);
         f++;
         n--;
         D_1F800164 = D_1F800164 + sizeof(POLY_FT4);
@@ -925,30 +878,26 @@ void func_8004F5A4(void)
     u8 ch;
     u16 x;
     s16 y;
-    TILE *t;
-    SPRT *s;
+    TILE *tile;
+    SPRT *sprt;
     void *r;
     s32 tp;
     s16 *e;
     SprFrag *f;
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 n;
     s32 k;
     s32 w;
     s32 tpage;
 
-    t = (TILE *)D_1F800164;
-    t->w = 0x140;
-    t->h = 0xF0;
-    setlen(t, 3);
-    t->x0 = 0;
-    t->y0 = 0;
-    t->code = 0x60;
-    SetSemiTrans(t, 1);
-    t->r0 = 0x20;
-    t->g0 = 0x20;
-    t->b0 = 0x20;
-    AddPrim((u_long *)D_1F8001E0 + 4, t);
+    tile = (TILE *)D_1F800164;
+    setWH(tile, 0x140, 0xF0);
+    setlen(tile, 3);
+    setXY0(tile, 0, 0);
+    tile->code = 0x60;
+    SetSemiTrans(tile, 1);
+    setRGB0(tile, 0x20, 0x20, 0x20);
+    AddPrim((u_long *)D_1F8001E0 + 4, tile);
     r = D_1F800164 = D_1F800164 + sizeof(TILE);
     SetDrawMode(r, 0, 0, 0, 0);
     AddPrim((u_long *)D_1F8001E0 + 4, r);
@@ -978,18 +927,15 @@ void func_8004F5A4(void)
         while ((ch = *c) != 0xFF) {
             c++;
             if (ch) {
-                s = (SPRT *)D_1F800164;
-                setlen(s, 4);
-                s->code = 0x65;
-                SetSemiTrans(s, 0);
-                s->x0 = x;
-                s->y0 = y;
-                s->u0 = D_8007EC94[ch][0];
-                s->v0 = D_8007EC94[ch][1];
-                s->w = 8;
-                s->h = 0x10;
-                s->clut = GetClut(0x160, 0x1E3);
-                AddPrim((u_long *)D_1F8001E0 + 1, s);
+                sprt = (SPRT *)D_1F800164;
+                setlen(sprt, 4);
+                sprt->code = 0x65;
+                SetSemiTrans(sprt, 0);
+                setXY0(sprt, x, y);
+                setUV0(sprt, D_8007EC94[ch][0], D_8007EC94[ch][1]);
+                setWH(sprt, 8, 0x10);
+                sprt->clut = GetClut(0x160, 0x1E3);
+                AddPrim((u_long *)D_1F8001E0 + 1, sprt);
                 D_1F800164 = D_1F800164 + sizeof(SPRT);
             }
             x += 8;
@@ -1004,71 +950,65 @@ void func_8004F5A4(void)
         tp = 0x14;
     SetDrawMode(r, 0, 0, tp, 0);
     AddPrim((u_long *)D_1F8001E0 + 1, r);
-    t = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
+    tile = (TILE *)(D_1F800164 = D_1F800164 + sizeof(DR_MODE));
     switch (kind) {
     case 0:
-        t->x0 = 0x74;
+        tile->x0 = 0x74;
         k = D_8009C10B_Arr[0];
-        t->w = 0x50;
-        t->h = 0x10;
+        setWH(tile, 0x50, 0x10);
         k <<= 4;
         k += 0x48;
-        t->y0 = k;
+        tile->y0 = k;
         break;
     case 1:
-        t->x0 = 0x84;
+        tile->x0 = 0x84;
         k = D_8009C10B_Arr[0];
-        t->w = 0x38;
-        t->h = 0x10;
+        setWH(tile, 0x38, 0x10);
         k <<= 4;
         k += 0x48;
-        t->y0 = k;
+        tile->y0 = k;
         break;
     case 2:
         k = D_8009C10B_Arr[0];
-        t->y0 = 0x68;
-        t->w = 0x18;
-        t->h = 0x10;
-        t->x0 = k * 0x34 + 0x78;
+        tile->y0 = 0x68;
+        setWH(tile, 0x18, 0x10);
+        tile->x0 = k * 0x34 + 0x78;
         break;
     }
-    setlen(t, 3);
-    t->code = 0x60;
-    SetSemiTrans(t, 1);
-    t->r0 = 0xFF;
-    t->g0 = 0xFF;
-    t->b0 = 0;
-    AddPrim((u_long *)D_1F8001E0 + 1, t);
+    setlen(tile, 3);
+    tile->code = 0x60;
+    SetSemiTrans(tile, 1);
+    setRGB0(tile, 0xFF, 0xFF, 0);
+    AddPrim((u_long *)D_1F8001E0 + 1, tile);
     D_1F800164 = D_1F800164 + sizeof(TILE);
     e = (s16 *)(D_1F8002D8[0] + *((s16 **)D_800123E4)[kind] * 4);
     n = e[0];
     f = (SprFrag *)(D_1F8002D8[0] + e[1]);
     do {
-        p = (POLY_FT4 *)D_1F800164;
-        setlen(p, 9);
-        p->code = 0x2D;
-        SetSemiTrans(p, 1);
-        *(u32 *)&p->u0 = *(u32 *)f;
-        *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-        *(u16 *)&p->u2 = *(u32 *)&f->uv2;
-        *(u16 *)&p->u3 = *(u32 *)&f->uv3;
-        p->tpage = 0x14;
-        p->x0 = D_8007ED98[kind].x + f->dx;
-        p->y0 = D_8007ED98[kind].y + f->dy;
+        poly = (POLY_FT4 *)D_1F800164;
+        setlen(poly, 9);
+        poly->code = 0x2D;
+        SetSemiTrans(poly, 1);
+        *(u32 *)&poly->u0 = *(u32 *)f;
+        *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+        *(u16 *)&poly->u2 = *(u32 *)&f->uv2;
+        *(u16 *)&poly->u3 = *(u32 *)&f->uv3;
+        poly->tpage = 0x14;
+        setXY0(poly, D_8007ED98[kind].x + f->dx, D_8007ED98[kind].y + f->dy);
         w = f->w;
-        p->x2 = p->x0;
-        p->x1 = p->x0 + w;
-        p->y1 = p->y0;
-        p->y2 = p->y0 + f->h;
-        p->x3 = p->x1;
-        p->y3 = p->y2;
-        p->clut = GetClut(0x160, 0x1E5);
+        poly->x2 = poly->x0;
+        poly->x1 = poly->x0 + w;
+        poly->y1 = poly->y0;
+        poly->y2 = poly->y0 + f->h;
+        poly->x3 = poly->x1;
+        poly->y3 = poly->y2;
+        poly->clut = GetClut(0x160, 0x1E5);
         if (GetGraphType() == 1 || GetGraphType() == 2)
             tpage = 0x24;
         else
             tpage = 0x14;
-        p->tpage = tpage;
-        AddPrim((u_long *)D_1F8001E0 + 1, p);
+        poly->tpage = tpage;
+        AddPrim((u_long *)D_1F8001E0 + 1, poly);
         f++;
         n--;
         D_1F800164 = D_1F800164 + sizeof(POLY_FT4);

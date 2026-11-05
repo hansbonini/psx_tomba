@@ -12,6 +12,16 @@ extern StHEADER* StRingAddr;
 extern volatile s32 StRingSize;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_009", StGetNext);
+/**
+ * @brief Get the next complete frame from the streaming ring buffer
+ * 
+ * If the next ring entry holds a complete frame, marks it as in use and
+ * returns its data and header addresses.
+ * 
+ * @param addr Receives the address of the frame data
+ * @param header Receives the address of the sector header
+ * @return 0 on success, 1 if no frame is ready
+ */
 u_long StGetNext(u_long** addr, u_long** header) {
     volatile StHEADER* ptr = &StRingAddr[StRingIdx3];
     if (ptr->id == 1) {

@@ -5,6 +5,13 @@ void _SsSndStop(s16, s16);
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/sscall", SsSeqCalledTbyT);
 
+/**
+ * @brief Process all sequences for one tick
+ * 
+ * Called from the tick interrupt: flushes the voice registers and handles
+ * playing, crescendo/decrescendo, tempo changes, pause, replay and stop
+ * requests of every open sequence.
+ */
 void SsSeqCalledTbyT(void) {
     int i;
     int j;

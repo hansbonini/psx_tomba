@@ -9,6 +9,17 @@ int D_800975AC[3] = {0};
  * func_8006ABB4, func_8006ACA8, func_8006ACB8,
  * func_8006AD74, func_8006AFF0, func_8006B028. */
 
+/**
+ * @brief Initialize the controllers in direct connection mode
+ * 
+ * Sets up the port state of both ports, the receive buffers and the
+ * library function table, then installs the VBlank hook parameters. Call
+ * PadStartCom() afterwards to start communication.
+ * 
+ * @param output0 Receive buffer for port 1
+ * @param output1 Receive buffer for port 2
+ * @return Always 1
+ */
 int PadInitDirect(u8 *output0, u8 *output1) {
     u8 *savedOutput0 = output0;
     u8 *savedOutput1 = output1;
@@ -75,6 +86,14 @@ int PadInitDirect(u8 *output0, u8 *output1) {
     return 1;
 }
 
+/**
+ * @brief Internal: clear the extended information of a port
+ * 
+ * Resets the communication state, the mode/actuator/combination tables and
+ * the actuator map of the port.
+ * 
+ * @param arg0 Controller port state
+ */
 void func_8006AB4C(padPort *arg0) {
     int count;
     int value;
@@ -106,6 +125,15 @@ void func_8006AB4C(padPort *arg0) {
     }
 }
 
+/**
+ * @brief Internal: finish the current port and move to the next one
+ * 
+ * Records the result of the transfer (error handling through
+ * _dirFailAuto), resets SIO0 and prepares the next enabled channel.
+ * 
+ * @param result Result of the transfer (0 = success, -9 = ignored, otherwise an error)
+ * @return 1 when there are no more ports to process, 0 otherwise
+ */
 int func_8006ABB4(int result) {
     register int callbackResult asm("$5") = result;
     padPort *objects;
@@ -159,6 +187,13 @@ int func_8006ABB4(int result) {
     return nextResult;
 }
 
+/**
+ * @brief Internal: mark the queued command as sent
+ * 
+ * Moves the current command byte to the saved command field and clears it.
+ * 
+ * @param obj Controller port state
+ */
 void func_8006ACA8(padPort *obj) {
     u8 command;
 
@@ -167,6 +202,16 @@ void func_8006ACA8(padPort *obj) {
     obj->saved_command = command;
 }
 
+/**
+ * @brief Internal: get the next byte to transmit
+ * 
+ * Returns the next parameter byte of the queued command or, for normal
+ * reads, the next actuator data byte if that actuator is enabled.
+ * 
+ * @param arg0 Controller port state
+ * @param needsAck Unused flag passed by the caller
+ * @return Byte to send
+ */
 int func_8006ACB8(padPort *arg0, int needsAck) {
     int index;
     int mode;
@@ -213,6 +258,15 @@ other:
     return arg0->payload_2c[index];
 }
 
+/**
+ * @brief Internal: apply the actuator power limit
+ * 
+ * Decides which actuators may run this frame, adding their current draw to
+ * the total and refusing those that would exceed the limit. Standard
+ * controllers without extended information use fixed rules.
+ * 
+ * @param port Controller port state
+ */
 void func_8006AD74(padPort *port) {
     register int limit, i, j, mask asm("$7"), active asm("$6");
     register int count;
@@ -322,6 +376,14 @@ void func_8006AD74(padPort *port) {
     }
 }
 
+/**
+ * @brief Internal: convert a port state pointer to a port number
+ * 
+ * Looks up the port state in the direct mode table.
+ * 
+ * @param entry Controller port state
+ * @return 0x10 + 0x10 * index for a known port, 0xFF otherwise
+ */
 int func_8006AFF0(padPort *entry) {
     padPort *candidate;
     int index;
@@ -341,6 +403,14 @@ int func_8006AFF0(padPort *entry) {
     return 0xFF;
 }
 
+/**
+ * @brief Internal: convert a port number to its state
+ * 
+ * Returns the state of port 2 when bits 4-7 are set, otherwise port 1.
+ * 
+ * @param value Port number (0x00 or 0x10)
+ * @return Port state
+ */
 padPort *func_8006B028(int value) {
     padPort *entry = D_8009B3A0;
 

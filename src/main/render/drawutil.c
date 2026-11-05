@@ -26,7 +26,7 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
     SPRT_8 buf;
     SPRT_8* sprt;
     SPRT_8* dst;
-    DR_MODE* mode;
+    DR_MODE* drMode;
 
     sprt = &buf;
     while (*fmt != 0) {
@@ -48,10 +48,10 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
         x += 8;
     }
 
-    mode = D_8009C8A8;
-    if ((u_int)mode < (u_int)(D_800A2008 + D_1F8001F4 * 0x780)) {
-        SetDrawMode(mode, 0, 0, 0x15, NULL);
-        addPrim(CURRENT_OT, mode);
+    drMode = D_8009C8A8;
+    if ((u_int)drMode < (u_int)(D_800A2008 + D_1F8001F4 * 0x780)) {
+        SetDrawMode(drMode, 0, 0, 0x15, NULL);
+        addPrim(CURRENT_OT, drMode);
         D_8009C8A8 += sizeof(DR_MODE);
     }
 }
@@ -61,7 +61,7 @@ void drawLoadingSprites(int arg0, int arg1)
 {
     int i;
     int j;
-    DR_MODE* mode;
+    DR_MODE* drMode;
 
 #if !(REGION == REGION_EU && VERSION == 0)
     if (GetGraphType() != 1) {
@@ -80,9 +80,9 @@ void drawLoadingSprites(int arg0, int arg1)
         }
     }
 
-    mode = D_8009C8A8;
-    SetDrawMode(mode, 0, 0, 0, NULL);
-    addPrim(CURRENT_OT, mode);
+    drMode = D_8009C8A8;
+    SetDrawMode(drMode, 0, 0, 0, NULL);
+    addPrim(CURRENT_OT, drMode);
     D_8009C8A8 += sizeof(DR_MODE);
 }
 
@@ -149,8 +149,7 @@ void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4)
     setPolyFT4(poly);
     setRGB0(poly, 128, 128, 128);
     setSemiTrans(poly, 0);
-    poly->x0 = x - pad;
-    poly->y0 = y - pad;
+    setXY0(poly, x - pad, y - pad);
     w = D_8007B30C[sprt_id].w;
     poly->x1 = pad + (x + w);
     poly->y1 = y - pad;
@@ -161,14 +160,7 @@ void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4)
     poly->x3 = pad + (x + w);
     h = D_8007B30C[sprt_id].h;
     poly->y3 = pad + (y + h);
-    poly->u0 = D_8007B30C[sprt_id].u;
-    poly->v0 = D_8007B30C[sprt_id].v;
-    poly->u1 = poly->u0 + D_8007B30C[sprt_id].w - 1;
-    poly->v1 = poly->v0;
-    poly->u2 = poly->u0;
-    poly->v2 = poly->v0 + D_8007B30C[sprt_id].h - 1;
-    poly->u3 = poly->u1;
-    poly->v3 = poly->v2;
+    setUV4(poly, D_8007B30C[sprt_id].u, D_8007B30C[sprt_id].v, poly->u0 + D_8007B30C[sprt_id].w - 1, poly->v0, poly->u0, poly->v0 + D_8007B30C[sprt_id].h - 1, poly->u1, poly->v2);
     setClut(poly, D_8007B30C[sprt_id].clutX, D_8007B30C[sprt_id].clutY);
     poly->tpage = tpage;
     addPrim(CURRENT_OT, poly);

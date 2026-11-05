@@ -11,6 +11,16 @@ extern u_long StEndFrame;
 extern u_long StSTART_FLAG;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_010", StSetMask);
+/**
+ * @brief Set the streaming start flag and frame range
+ * 
+ * Stores the start flag and the first/last frame numbers used by the
+ * streaming interrupt handler.
+ * 
+ * @param mask Start flag (1 = waiting for the start frame)
+ * @param start First frame number
+ * @param end Last frame number
+ */
 void StSetMask(u_long mask, u_long start, u_long end)
 {
     StSTART_FLAG = mask;

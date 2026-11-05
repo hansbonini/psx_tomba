@@ -3,6 +3,12 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_q", SpuQuit);
 
+/**
+ * @brief Shut down the SPU library
+ * 
+ * Removes the transfer and IRQ callbacks, the DMA callback and closes the
+ * DMA completion event.
+ */
 void SpuQuit(void) {
     if (_spu_isCalled == 1) {
         _spu_isCalled = 0;

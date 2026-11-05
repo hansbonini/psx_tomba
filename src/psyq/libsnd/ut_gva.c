@@ -3,6 +3,17 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_gva", SsUtGetVagAtr);
 
+/**
+ * @brief Get the attributes of a tone
+ * 
+ * Copies the tone (VAG attribute) of a program of the VAB into vagatrptr.
+ * 
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param toneNum Tone number within the program
+ * @param vagatrptr Receives the tone attributes
+ * @return 0 on success, -1 if the VAB is not open
+ */
 short SsUtGetVagAtr(short vabId, short prog, short toneNum, VagAtr* vagatrptr) {
     s16 temp_v1;
     if (_svm_vab_used[vabId] == 1) {

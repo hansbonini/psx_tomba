@@ -1,6 +1,17 @@
 #include "common.h"
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/strstr", strstr);
+/**
+ * @brief Find a substring
+ * 
+ * Searches str for the first occurrence of substr using a simple
+ * single-pass scan (a partial match is not rescanned from the next
+ * position).
+ * 
+ * @param str String to search in
+ * @param substr Substring to look for
+ * @return Pointer to the first occurrence, or NULL if not found
+ */
 char* strstr(const char* str, const char* substr)
 {
     const char* s = str;

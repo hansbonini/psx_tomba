@@ -103,6 +103,15 @@ struct rev_param_entry D_80097D00[10] = {
 #define SPU_REV_ATTR_VRIN (0x01 << 31)
 
 void _spu_setReverbAttr(struct rev_param_entry* arg0);
+/**
+ * @brief Internal: copy bytes
+ * 
+ * Copies size bytes from src to dst.
+ * 
+ * @param dst Destination
+ * @param src Source
+ * @param size Number of bytes
+ */
 static inline void _memcpy(char* dst, char* src, size_t size) {
     while (size--) {
         *dst++ = *src++;
@@ -111,6 +120,17 @@ static inline void _memcpy(char* dst, char* src, size_t size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_srmp", SpuSetReverbModeParam);
 
+/**
+ * @brief Set the reverb mode and parameters
+ * 
+ * Changes the reverb type (loading its preset parameters and work area
+ * address), and optionally the depth, delay time and feedback, according
+ * to the mask. Reverb is temporarily disabled while the work area changes;
+ * the work area can also be cleared.
+ * 
+ * @param attr Reverb attributes
+ * @return 0 on success, -1 on error
+ */
 long SpuSetReverbModeParam(SpuReverbAttr* attr) {
     struct rev_param_entry entry;
     u32 var_s0;
@@ -240,6 +260,14 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_srmp", _spu_setReverbAttr);
 
+/**
+ * @brief Internal: write reverb parameters to the SPU registers
+ * 
+ * Writes each reverb register selected by the flags of the entry (all when
+ * the flags are 0).
+ * 
+ * @param attr Reverb parameter set
+ */
 void _spu_setReverbAttr(struct rev_param_entry* attr) {
     u32 mask = attr->flags;
     int setAll = attr->flags == 0;

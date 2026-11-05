@@ -7,18 +7,42 @@
  * shared case body makes GCC merge {2,3} into one range compare, while
  * retail's case tree tests ==3, <4, ==2, ==6 separately. */
 
+/**
+ * @brief Check whether pad communication ran since the last call
+ * 
+ * Wrapper around _padChkVsync(); the result is discarded.
+ */
 void PadChkVsync(void) {
     _padChkVsync();
 }
 
+/**
+ * @brief Start controller communication
+ * 
+ * Hooks the pad handler into the VBlank interrupt and resets the port
+ * states.
+ */
 void PadStartCom(void) {
     _padStartCom();
 }
 
+/**
+ * @brief Stop controller communication
+ * 
+ * Unhooks the pad handler from the VBlank interrupt.
+ */
 void PadStopCom(void) {
     _padStopCom();
 }
 
+/**
+ * @brief Check whether a multitap is connected to a port
+ * 
+ * Only reports a multitap when multitap mode is enabled.
+ * 
+ * @param arg0 Port number (0x00 or 0x10)
+ * @return 1 if a multitap is connected, 0 otherwise
+ */
 int PadChkMtap(int arg0)
 {
   register int index;
@@ -30,6 +54,15 @@ int PadChkMtap(int arg0)
   return 0;
 }
 
+/**
+ * @brief Get the connection state of a controller
+ * 
+ * Reports whether a controller is connected and how far the reading of its
+ * extended information has progressed.
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @return PadStateDiscon (0), PadStateFindPad (1), PadStateFindCTP1 (2), PadStateReqInfo (4), PadStateExecCmd (5) or PadStateStable (6)
+ */
 int PadGetState(int channel) {
     padPort *obj;
 
@@ -52,6 +85,17 @@ int PadGetState(int channel) {
     }
 }
 
+/**
+ * @brief Get information about the controller modes
+ * 
+ * Returns the controller ID, the extended ID, the current mode index, the
+ * number of modes or the ID of a given mode.
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @param mode InfoModeCurID (1), InfoModeCurExID (2), InfoModeCurExOffs (3), InfoModeIdTable (4) or 100 for the frame counter
+ * @param index Mode table index for InfoModeIdTable (-1 = number of modes)
+ * @return Requested value, or 0 if unavailable
+ */
 int PadInfoMode(int channel, int mode, int index) {
     padPort *obj;
 
@@ -81,6 +125,16 @@ late_fail:
     return 0;
 }
 
+/**
+ * @brief Get information about a controller actuator
+ * 
+ * Returns one field of an actuator record, or the number of actuators.
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @param index Actuator number (-1 = number of actuators)
+ * @param field InfoActFunc (1), InfoActSub (2), InfoActSize (3), InfoActCurr (4) or InfoActSign (5)
+ * @return Requested value, or 0 if unavailable
+ */
 int PadInfoAct(int channel, int index, int field) {
     padPort *obj;
     PadCapabilityRecord *entry;
@@ -110,6 +164,17 @@ int PadInfoAct(int channel, int index, int field) {
     }
 }
 
+/**
+ * @brief Get information about actuator combinations
+ * 
+ * Returns the number of combinations, the number of actuators in a
+ * combination, or one actuator number of a combination.
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @param index0 Combination number (-1 = number of combinations)
+ * @param index1 Index within the combination (-1 = number of actuators in it)
+ * @return Requested value, or 0 if unavailable
+ */
 int PadInfoComb(int channel, int index0, int index1) {
     padPort *obj;
     PadCombinationRecord *entry;
@@ -131,14 +196,43 @@ int PadInfoComb(int channel, int index0, int index1) {
     return entry->data[index1];
 }
 
+/**
+ * @brief Assign actuators to the bytes of the actuator data
+ * 
+ * Requests the controller to map its actuators to the 6 bytes of transmit
+ * data set with PadSetAct().
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @param command 6-byte actuator map (0xFF = unused byte)
+ */
 void PadSetActAlign(int channel, u8 *command) {
     _padSetActAlign(_padFuncPort2Info(channel), command);
 }
 
+/**
+ * @brief Change the controller mode
+ * 
+ * Requests a switch to another mode (e.g. digital/analog) and optionally
+ * locks the mode switch.
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @param byte1 Mode index
+ * @param byte2 Lock flag: 3 = lock the mode switch, otherwise unlocked
+ */
 void PadSetMainMode(int channel, unsigned char byte1, unsigned char byte2) {
     _padSetMainMode(_padFuncPort2Info(channel), byte1, byte2);
 }
 
+/**
+ * @brief Set the actuator transmit data buffer
+ * 
+ * Registers the buffer that is sent to the controller actuators on every
+ * communication.
+ * 
+ * @param channel Port number (0x00 or 0x10)
+ * @param payload Actuator data buffer
+ * @param size Buffer size in bytes
+ */
 void PadSetAct(int channel, u8 *payload, int size) {
     _padSetAct(_padFuncPort2Info(channel), payload, size);
 }

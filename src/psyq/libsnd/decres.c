@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/decres", _SsSndDecrescendo);
 
+/**
+ * @brief Internal: advance a decrescendo by one tick
+ * 
+ * Lowers the sequence volume step by step according to the decrescendo
+ * settings and clears the decrescendo flag when it ends.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsSndDecrescendo(s16 arg0, s16 arg1) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
     u16 voll, volr;

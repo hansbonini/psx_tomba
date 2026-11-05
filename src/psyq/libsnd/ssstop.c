@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssstop", _SsSndStop);
 
+/**
+ * @brief Internal: stop a sequence and rewind it
+ * 
+ * Keys off its voices and resets the playback state, tempo, position and
+ * channel settings to their initial values.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsSndStop(s16 arg0, s16 arg1) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
     int i;
@@ -44,10 +53,25 @@ void _SsSndStop(s16 arg0, s16 arg1) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssstop", SsSeqStop);
 
+/**
+ * @brief Stop a SEQ
+ * 
+ * Stops the sequence and rewinds it to the beginning.
+ * 
+ * @param seq_access_num SEQ access number
+ */
 void SsSeqStop(short seq_access_num) { _SsSndStop(seq_access_num, 0); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssstop", SsSepStop);
 
+/**
+ * @brief Stop a sequence of a SEP
+ * 
+ * Stops one sequence of the SEP and rewinds it.
+ * 
+ * @param sep_access_num SEP access number
+ * @param arg1 Sequence number within the SEP
+ */
 void SsSepStop(short sep_access_num, short arg1) {
     _SsSndStop(sep_access_num, arg1);
 }

@@ -4,6 +4,16 @@
 s32 _SsReadDeltaValue(s16, s16);
 void _SsVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 vol, u16 pan);
 
+/**
+ * @brief Internal: handle MIDI controller 10 (pan)
+ * 
+ * Applies the pan value to the voices playing on the current channel,
+ * stores it and reads the next delta time.
+ * 
+ * @param access_num SEQ/SEP access number
+ * @param seq_num SEQ number within the SEP (0 for a SEQ)
+ * @param data Controller data value
+ */
 void _SsContPanpot(s16 access_num, s16 seq_num, u8 data) {
     struct SeqStruct* score = &_ss_score[access_num][seq_num];
     u8 ch = score->channel;

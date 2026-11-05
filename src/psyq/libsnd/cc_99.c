@@ -7,6 +7,17 @@ s32 _SsReadDeltaValue(s16, s16);
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/cc_99", _SsContNrpn2);
 
+/**
+ * @brief Internal: handle MIDI controller 99 (NRPN MSB)
+ * 
+ * NRPN 20 marks a loop start and NRPN 30 a loop end (jumping back while
+ * the loop count lasts); other values select the VAB attribute edited by
+ * the next data entry.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ * @param arg2 Controller data value
+ */
 void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
 

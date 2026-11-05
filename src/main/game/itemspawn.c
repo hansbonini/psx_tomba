@@ -204,152 +204,152 @@ extern void (*D_8007DE28[])(GameObject *);
 extern u8 D_8009C132, D_8009C163, D_8009C3EF, D_8009C175, D_8009C371;
 s16 func_80043AB0(GameObject *o, s16 x, s16 y, s32 dir);
 
-void func_8004117C(GameObject *o)
+void func_8004117C(GameObject *obj)
 {
     s32 k;
 
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        o->cooldownTimer = 0;
-        if (o->subtype == 0x3F && D_8009C132 != 0xFF) {
-            o->state = 3;
+        obj->cooldownTimer = 0;
+        if (obj->id == 0x3F && D_8009C132 != 0xFF) {
+            obj->state = 3;
             break;
         }
-        if (o->subtype == 0x9E && D_8009C163 != 0xFF) {
-            o->state = 3;
+        if (obj->id == 0x9E && D_8009C163 != 0xFF) {
+            obj->state = 3;
             break;
         }
-        if (o->subtype == 0x90 && D_8009C3EF < 4) break;
-        if (o->subtype == 0x3C && (D_8009C175 == 0 || D_8009C175 == 0xFF)) {
-            o->state = 3;
+        if (obj->id == 0x90 && D_8009C3EF < 4) break;
+        if (obj->id == 0x3C && (D_8009C175 == 0 || D_8009C175 == 0xFF)) {
+            obj->state = 3;
             break;
         }
-        if (o->subtype == 3 && o->unkC == 1 && (D_8009C114 != 0xFF || D_8009C371 != 0)) {
-            o->state = 3;
+        if (obj->id == 3 && obj->param == 1 && (D_8009C114 != 0xFF || D_8009C371 != 0)) {
+            obj->state = 3;
             break;
         }
-        initItemObject(o);
-        switch (o->type) {
+        initItemObject(obj);
+        switch (obj->type) {
         case 1:
-            o->timer = 0x3C;
+            obj->timer = 0x3C;
             break;
         case 2:
-            o->unkB4 = 1;
+            obj->unkB4 = 1;
             break;
         case 3:
-            o->active = 4;
-            o->unkB4 = 1;
-            o->timer = 0x1E;
+            obj->active = 4;
+            obj->unkB4 = 1;
+            obj->timer = 0x1E;
             break;
         case 4:
-            o->unkB4 = 0;
+            obj->unkB4 = 0;
             break;
         case 5:
         case 8:
-            o->velY = -0x500;
-            o->timer = 0x3C;
-            o->unk34 = o->y.p.whole << 16;
+            obj->velY = -0x500;
+            obj->timer = 0x3C;
+            obj->localY = obj->y.p.whole << 16;
             break;
         case 10:
-            if (o->velV != 0) {
-                o->unkB4 = 1;
+            if (obj->velV != 0) {
+                obj->unkB4 = 1;
             } else {
-                o->unkB4 = 0;
+                obj->unkB4 = 0;
             }
-            o->timer = 0x1E;
+            obj->timer = 0x1E;
             break;
         }
-        o->state++;
+        obj->state++;
         break;
     case 1:
         k = 8;
-        if (o->subtype == 2 && o->unkC >= 4)
+        if (obj->id == 2 && obj->param >= 4)
             k = 0x1C;
-        switch (o->type) {
+        switch (obj->type) {
         case 1:
         case 3:
         case 10:
-            if (o->timer != 0 && --o->timer == 0)
-                o->active = 1;
+            if (obj->timer != 0 && --obj->timer == 0)
+                obj->active = 1;
         }
-        switch (o->type) {
+        switch (obj->type) {
         case 2:
         case 3:
         case 4:
         case 10:
-            if (o->unk68 & 1) {
-                o->unk68 = 0;
-                o->unkB4 = 1;
-                o->velH = D_8007E8F4[o->animFrame].h;
-                o->velV = D_8007E8F4[o->animFrame].v;
-            } else if (o->touchFlag & 1) {
-                o->touchFlag = 0;
-                if (o->velV <= 0x100) {
-                    if (o->type == 4) {
-                        o->velH = 0;
-                        o->velV = 0;
+            if (obj->unk68 & 1) {
+                obj->unk68 = 0;
+                obj->unkB4 = 1;
+                obj->velH = D_8007E8F4[obj->animFrame].h;
+                obj->velV = D_8007E8F4[obj->animFrame].v;
+            } else if (obj->touchFlag & 1) {
+                obj->touchFlag = 0;
+                if (obj->velV <= 0x100) {
+                    if (obj->type == 4) {
+                        obj->velH = 0;
+                        obj->velV = 0;
                     }
-                    o->unkB4 = 0;
-                    o->active = 2;
+                    obj->unkB4 = 0;
+                    obj->active = 2;
                 } else {
-                    o->velV = -o->velV / 4;
+                    obj->velV = -obj->velV / 4;
                 }
-            } else if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + k)) {
-                if (o->velV <= 0x100) {
-                    if (o->type == 4) {
-                        o->velH = 0;
-                        o->velV = 0;
+            } else if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(obj, obj->h->p.whole, obj->y.p.whole + k)) {
+                if (obj->velV <= 0x100) {
+                    if (obj->type == 4) {
+                        obj->velH = 0;
+                        obj->velV = 0;
                     }
-                    o->unkB4 = 0;
-                    o->active = 2;
+                    obj->unkB4 = 0;
+                    obj->active = 2;
                 } else {
-                    o->velV = -o->velV / 4;
+                    obj->velV = -obj->velV / 4;
                 }
-            } else if (func_80043AB0(o, o->h->p.whole + 8, o->y.p.whole, 0) ||
-                       func_80043AB0(o, o->h->p.whole - 8, o->y.p.whole, 1)) {
-                o->velH = -o->velH;
+            } else if (func_80043AB0(obj, obj->h->p.whole + 8, obj->y.p.whole, 0) ||
+                       func_80043AB0(obj, obj->h->p.whole - 8, obj->y.p.whole, 1)) {
+                obj->velH = -obj->velH;
             }
-            if ((u16)o->unkB4 != 0) {
-                if (o->type == 10) {
-                    applyObjectSpeedXY((u8 *)o);
-                    if (o->velV < 0x800)
-                        o->velV += 0x20;
-                    if (o->y.p.whole - ((Fix16 *)&o->unk34)->p.whole >= -7) {
-                        o->unkB4 = 0;
-                        o->velV = 0;
+            if ((u16)obj->unkB4 != 0) {
+                if (obj->type == 10) {
+                    applyObjectSpeedXY((u8 *)obj);
+                    if (obj->velV < 0x800)
+                        obj->velV += 0x20;
+                    if (obj->y.p.whole - ((Fix16 *)&obj->localY)->p.whole >= -7) {
+                        obj->unkB4 = 0;
+                        obj->velV = 0;
                     }
                 } else {
-                    applyObjectSpeedXY((u8 *)o);
-                    o->velV += 0x20;
+                    applyObjectSpeedXY((u8 *)obj);
+                    obj->velV += 0x20;
                 }
             }
             break;
         case 5:
         case 8:
-            o->unk30 += o->velH << 8;
-            o->unk34 += o->velV << 8;
-            o->unk34 += o->velY << 8;
-            o->h->raw = o->unk30;
-            o->y.raw = o->unk34;
-            *o->d = *(Fix16 *)&o->unk38;
-            if (o->velY < 0x800)
-                o->velY += 0x28;
-            if (o->velY > 0)
-                o->active = 1;
-            if (--o->timer == 0)
-                o->state++;
+            obj->localX += obj->velH << 8;
+            obj->localY += obj->velV << 8;
+            obj->localY += obj->velY << 8;
+            obj->h->raw = obj->localX;
+            obj->y.raw = obj->localY;
+            *obj->d = *(Fix16 *)&obj->localZ;
+            if (obj->velY < 0x800)
+                obj->velY += 0x28;
+            if (obj->velY > 0)
+                obj->active = 1;
+            if (--obj->timer == 0)
+                obj->state++;
             break;
         }
-        if (o->cooldownTimer != 0)
-            o->cooldownTimer--;
-        if (func_80022E44(o))
-            tickAnimation(o);
+        if (obj->cooldownTimer != 0)
+            obj->cooldownTimer--;
+        if (func_80022E44(obj))
+            tickAnimation(obj);
         break;
     case 2:
-        D_8007DE28[D_8007DD88[o->subtype]](o);
+        D_8007DE28[D_8007DD88[obj->id]](obj);
         break;
     case 3:
-        freeObjectLayer5(o);
+        freeObjectLayer5(obj);
         break;
     }
 }
@@ -400,70 +400,70 @@ void spawnItemChest(short arg0, short arg1, int arg2)
 
 void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
 {
-    GameObject *o = allocObjectLayer5();
+    GameObject *obj = allocObjectLayer5();
     u8 c;
     s32 d;
 
-    if (o == 0)
+    if (obj == 0)
         return;
     c = D_8007E900[type];
-    o->type = type;
-    o->subtype = sub;
-    o->active = c;
-    o->unkC = flag | 0x80;
-    { u8 c2 = ((u8 **)&D_8007E6E4)[D_8007E61C[sub]][3];
-    o->animFrame = 0;
-    o->unkF = c2; }
-    o->h->raw = pos[0].p.whole << 16;
-    o->y.raw = pos[1].p.whole << 16;
-    o->d->raw = pos[2].p.whole << 16;
-    o->velH = vx;
-    o->velV = vy;
+    obj->type = type;
+    obj->id = sub;
+    obj->active = c;
+    obj->param = flag | 0x80;
+    { u8 c2 = ITEM_INIT_TABLE[ITEM_INIT_INDEX[sub]]->priority;
+    obj->animFrame = 0;
+    obj->priority = c2; }
+    obj->h->raw = pos[0].p.whole << 16;
+    obj->y.raw = pos[1].p.whole << 16;
+    obj->d->raw = pos[2].p.whole << 16;
+    obj->velH = vx;
+    obj->velV = vy;
     switch (type) {
     case 5:
         if (!(D_1F8001C8 & 1)) {
             d = (PLAYER.obj.h->p.whole - pos[0].p.whole) << 8;
             d /= 60;
-            o->velH = d;
+            obj->velH = d;
             d = (D_800A53AC[0].p.whole - pos[1].p.whole) << 8;
             d /= 60;
-            o->velV = d;
-            o->unk30 = pos[0].p.whole << 16;
-            o->unk34 = pos[1].p.whole << 16;
-            o->unk38 = pos[2].p.whole << 16;
+            obj->velV = d;
+            obj->localX = pos[0].p.whole << 16;
+            obj->localY = pos[1].p.whole << 16;
+            obj->localZ = pos[2].p.whole << 16;
         } else {
             d = (PLAYER.obj.h->p.whole - pos[2].p.whole) << 8;
             d /= 60;
-            o->velH = d;
+            obj->velH = d;
             d = (D_800A53AC[0].p.whole - pos[1].p.whole) << 8;
             d /= 60;
-            o->velV = d;
-            o->unk38 = pos[0].p.whole << 16;
-            o->unk34 = pos[1].p.whole << 16;
-            o->unk30 = pos[2].p.whole << 16;
+            obj->velV = d;
+            obj->localZ = pos[0].p.whole << 16;
+            obj->localY = pos[1].p.whole << 16;
+            obj->localX = pos[2].p.whole << 16;
         }
         break;
     case 8:
         if (!(D_1F8001C8 & 1)) {
             d = (pos[0].p.whole - PLAYER.obj.h->p.whole) << 8;
             d /= 60;
-            o->velH = d;
+            obj->velH = d;
             d = (pos[1].p.whole - D_800A53AC[0].p.whole) << 8;
             d /= 60;
-            o->velV = d;
-            o->unk30 = PLAYER.obj.h->raw;
-            o->unk34 = D_800A53AC[0].raw;
-            o->unk38 = PLAYER.obj.d->raw;
+            obj->velV = d;
+            obj->localX = PLAYER.obj.h->raw;
+            obj->localY = D_800A53AC[0].raw;
+            obj->localZ = PLAYER.obj.d->raw;
         } else {
             d = (pos[2].p.whole - PLAYER.obj.h->p.whole) << 8;
             d /= 60;
-            o->velH = d;
+            obj->velH = d;
             d = (pos[1].p.whole - D_800A53AC[0].p.whole) << 8;
             d /= 60;
-            o->velV = d;
-            o->unk38 = PLAYER.obj.h->raw;
-            o->unk34 = D_800A53AC[0].raw;
-            o->unk30 = PLAYER.obj.d->raw;
+            obj->velV = d;
+            obj->localZ = PLAYER.obj.h->raw;
+            obj->localY = D_800A53AC[0].raw;
+            obj->localX = PLAYER.obj.d->raw;
         }
         break;
     }
@@ -494,77 +494,77 @@ typedef struct { s16 h; s16 v; } VT_41DB4;
 extern VT_41DB4 D_8007E90C[];
 extern void (*D_8007DE28[])(GameObject *);
 
-void func_80041DB4(GameObject *o)
+void func_80041DB4(GameObject *obj)
 {
     s32 k;
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        initItemObject(o);
-        o->timer = 30;
-        o->subState = 0;
-        o->state++;
+        initItemObject(obj);
+        obj->timer = 30;
+        obj->subState = 0;
+        obj->state++;
         break;
     case 1:
         k = 8;
-        if (o->subtype == 2 && o->unkC >= 4)
+        if (obj->id == 2 && obj->param >= 4)
             k = 0x1c;
-        if (func_80022E44(o) == 0)
+        if (func_80022E44(obj) == 0)
             break;
-        switch (o->subState) {
+        switch (obj->subState) {
         case 0:
-            applyObjectSpeedXY(o);
-            if (o->velV <= 0x800)
-                o->velV += 0x20;
-            if (o->unk68 & 1) {
-                o->unk68 = 0;
-                o->velH = D_8007E90C[o->animFrame].h;
-                o->velV = D_8007E90C[o->animFrame].v;
-            } else if (o->touchFlag & 1) {
-                o->touchFlag = 0;
-                if (o->velV <= 0x100) {
-                    o->active = 2;
-                    o->subState++;
+            applyObjectSpeedXY(obj);
+            if (obj->velV <= 0x800)
+                obj->velV += 0x20;
+            if (obj->unk68 & 1) {
+                obj->unk68 = 0;
+                obj->velH = D_8007E90C[obj->animFrame].h;
+                obj->velV = D_8007E90C[obj->animFrame].v;
+            } else if (obj->touchFlag & 1) {
+                obj->touchFlag = 0;
+                if (obj->velV <= 0x100) {
+                    obj->active = 2;
+                    obj->subState++;
                 } else {
-                    o->velV = -o->velV / 4;
+                    obj->velV = -obj->velV / 4;
                 }
-            } else if (o->velV >= 0) {
-                if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + k)) {
-                    if (o->velV <= 0x100) {
-                        o->active = 2;
-                        o->subState++;
+            } else if (obj->velV >= 0) {
+                if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(obj, obj->h->p.whole, obj->y.p.whole + k)) {
+                    if (obj->velV <= 0x100) {
+                        obj->active = 2;
+                        obj->subState++;
                     } else {
-                        o->velV = -o->velV / 4;
+                        obj->velV = -obj->velV / 4;
                     }
                 }
             }
-            if (o->subtype == 0x94 && D_8009BCCA == 3 && o->y.p.whole >= -0x3bf) {
-                o->y.p.whole = -0x3c0;
-                o->active = 2;
-                o->subState++;
+            if (obj->id == 0x94 && D_8009BCCA == 3 && obj->y.p.whole >= -0x3bf) {
+                obj->y.p.whole = -0x3c0;
+                obj->active = 2;
+                obj->subState++;
             }
             break;
         case 1:
-            if (o->unk68 & 1) {
-                o->unk68 = 0;
-                o->velH = D_8007E90C[o->animFrame].h;
-                o->velV = D_8007E90C[o->animFrame].v;
-                o->subState = 0;
+            if (obj->unk68 & 1) {
+                obj->unk68 = 0;
+                obj->velH = D_8007E90C[obj->animFrame].h;
+                obj->velV = D_8007E90C[obj->animFrame].v;
+                obj->subState = 0;
             }
             break;
         }
-        tickAnimation(o);
-        if (o->timer && --o->timer == 0)
-            o->active = 1;
+        tickAnimation(obj);
+        if (obj->timer && --obj->timer == 0)
+            obj->active = 1;
         break;
     case 2:
-        if (o->unkC & 0x80) {
-            func_80023794(o->objectIndex);
-            o->unkC &= 0x7f;
+        if (obj->param & 0x80) {
+            func_80023794(obj->objectIndex);
+            obj->param &= 0x7f;
         }
-        D_8007DE28[D_8007DD88[o->subtype]](o);
+        D_8007DE28[D_8007DD88[obj->id]](obj);
         break;
     case 3:
-        freeObjectLayer5(o);
+        freeObjectLayer5(obj);
         break;
     }
 }
@@ -579,7 +579,7 @@ void spawnItemFromEntry(u8* arg0, s16* arg1, s32 arg2, s32 arg3, u8* arg4) {
         obj[2] = 9;
         obj[3] = arg0[1];
         obj[0xC] = arg0[2];
-        obj[0xF] = ((itemDef*)D_8007E6E4[D_8007E61C[arg0[1]]])->unk3;
+        obj[0xF] = ITEM_INIT_TABLE[ITEM_INIT_INDEX[arg0[1]]]->priority;
         *(s16*)(obj + 0x2E) = 0;
         **(s32**)(obj + 0x40) = arg1[1] << 16;
         *(s32*)(obj + 0x14) = arg1[3] << 16;
@@ -595,65 +595,65 @@ typedef struct { u16 a, b; } VP_42204;
 extern VP_42204 D_8007E918[];
 extern void (*D_8007DE28[])(GameObject *);
 
-void func_80042204(GameObject *o)
+void func_80042204(GameObject *obj)
 {
     char pad;
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        initItemObject(o);
-        o->active = 4;
-        if (o->velV != 0) {
-            o->unkB4 = 1;
+        initItemObject(obj);
+        obj->active = 4;
+        if (obj->velV != 0) {
+            obj->unkB4 = 1;
         } else {
-            o->unkB4 = 0;
+            obj->unkB4 = 0;
         }
-        o->timer = 30;
-        o->state++;
+        obj->timer = 30;
+        obj->state++;
         break;
     case 1:
-        if (!func_80022E44(o)) break;
-        if (o->timer != 0 && --o->timer == 0) {
-            o->active = 1;
+        if (!func_80022E44(obj)) break;
+        if (obj->timer != 0 && --obj->timer == 0) {
+            obj->active = 1;
         }
-        if (o->unk68 & 1) {
-            o->unk68 = 0;
-            o->unkB4 = 1;
-            o->velH = D_8007E918[o->animFrame].a;
-            o->velV = D_8007E918[o->animFrame].b;
-        } else if (o->touchFlag & 1) {
-            o->touchFlag = 0;
-            if (o->velV <= 0x100) {
-                o->unkB4 = 0;
-                o->active = 2;
+        if (obj->unk68 & 1) {
+            obj->unk68 = 0;
+            obj->unkB4 = 1;
+            obj->velH = D_8007E918[obj->animFrame].a;
+            obj->velV = D_8007E918[obj->animFrame].b;
+        } else if (obj->touchFlag & 1) {
+            obj->touchFlag = 0;
+            if (obj->velV <= 0x100) {
+                obj->unkB4 = 0;
+                obj->active = 2;
             } else {
-                o->velV = -o->velV / 4;
+                obj->velV = -obj->velV / 4;
             }
-        } else if (((s16 (*)(GameObject *, s32, s32))probeCollisionAtDepthA)(o, o->h->p.whole, (s16)(o->y.p.whole + 8))) {
-            o->active = 2;
-            if (o->velV <= 0x100) {
-                o->unkB4 = 0;
-                o->active = 2;
+        } else if (((s16 (*)(GameObject *, s32, s32))probeCollisionAtDepthA)(obj, obj->h->p.whole, (s16)(obj->y.p.whole + 8))) {
+            obj->active = 2;
+            if (obj->velV <= 0x100) {
+                obj->unkB4 = 0;
+                obj->active = 2;
             } else {
-                o->velV = -o->velV / 4;
+                obj->velV = -obj->velV / 4;
             }
         }
-        if (*(u16 *)&o->unkB4) {
-            applyObjectSpeedXY(o);
-            if (o->velV < 0x800) {
-                o->velV += 0x20;
+        if (*(u16 *)&obj->unkB4) {
+            applyObjectSpeedXY(obj);
+            if (obj->velV < 0x800) {
+                obj->velV += 0x20;
             }
-            if (o->y.p.whole - ((s16 *)&o->unk34)[1] >= -7) {
-                o->unkB4 = 0;
-                o->velV = 0;
+            if (obj->y.p.whole - ((s16 *)&obj->localY)[1] >= -7) {
+                obj->unkB4 = 0;
+                obj->velV = 0;
             }
         }
-        tickAnimation(o);
+        tickAnimation(obj);
         break;
     case 2:
-        D_8007DE28[D_8007DD88[o->subtype]](o);
+        D_8007DE28[D_8007DD88[obj->id]](obj);
         break;
     case 3:
-        freeObjectLayer5(o);
+        freeObjectLayer5(obj);
         break;
     }
 }
@@ -668,7 +668,7 @@ void spawnItemLinked(u8* arg0, s16 arg1, s16 arg2, s16* arg3, u16 arg4, u16 arg5
         obj[2] = 3;
         obj[3] = arg1;
         obj[0xC] = arg2 | 0x80;
-        obj[0xF] = ((itemDef*)D_8007E6E4[D_8007E61C[arg1]])->unk3;
+        obj[0xF] = ITEM_INIT_TABLE[ITEM_INIT_INDEX[arg1]]->priority;
         *(s16*)(obj + 0x2E) = 0;
         **(s32**)(obj + 0x40) = arg3[1] << 16;
         *(s32*)(obj + 0x14) = arg3[3] << 16;
@@ -817,11 +817,11 @@ s16 arg1;
 s16 func_80043AB0(GameObject *o, s16 x, s16 y, s32 dir);
 
 #define HIT(DIR) \
-    if (DIR == (o->animFrame & 1)) { \
-        if (!DIR) o->unkA6 = 2; else o->unkA6 = 3; \
+    if (DIR == (obj->animFrame & 1)) { \
+        if (!DIR) obj->unkA6 = 2; else obj->unkA6 = 3; \
     }
 
-s16 func_80042C20(GameObject *o)
+s16 func_80042C20(GameObject *obj)
 {
     s16 d;
     s16 dx;
@@ -835,11 +835,11 @@ s16 func_80042C20(GameObject *o)
     s16 dir2;
     s32 t;
 
-    if (*(u8 *)&o->unkAA != 0) return 0;
-    if (o->active == 5) return 0;
-    d = o->h->p.whole - (*(u16 *)&SPAD->unk168[0].p.whole);
+    if (*(u8 *)&obj->unkAA != 0) return 0;
+    if (obj->active == 5) return 0;
+    d = obj->h->p.whole - (*(u16 *)&SPAD->unk168[0].p.whole);
     if (d == 0) {
-        if (!(o->animFrame & 1)) {
+        if (!(obj->animFrame & 1)) {
             dx = 8; dx2 = -8; t = 0; dir2 = 1;
         } else {
             dx = -8; dx2 = 8; t = 1; dir2 = 0;
@@ -849,31 +849,31 @@ s16 func_80042C20(GameObject *o)
     } else {
         dx = -8; dx2 = 8; t = 1; dir2 = 0;
     }
-    h = o->hitOffsetY;
-    b = o->hitOffsetY;
+    h = obj->hitboxY;
+    b = obj->hitboxY;
     lo = b;
     if (h >= 8) lo = 8;
     hi = b;
     if (h >= 14) hi = 14;
     dir = t;
-    r = func_80043AB0(o, o->h->p.whole + dx, o->y.p.whole - lo, dir);
+    r = func_80043AB0(obj, obj->h->p.whole + dx, obj->y.p.whole - lo, dir);
     if (r) {
         HIT(dir)
     } else {
-        r = func_80043AB0(o, o->h->p.whole + dx, o->y.p.whole + hi, dir);
+        r = func_80043AB0(obj, obj->h->p.whole + dx, obj->y.p.whole + hi, dir);
         if (r) {
             HIT(dir)
         } else {
-            r = func_80043AB0(o, o->h->p.whole + dx, o->y.p.whole + lo, dir);
+            r = func_80043AB0(obj, obj->h->p.whole + dx, obj->y.p.whole + lo, dir);
             if (r) {
                 HIT(dir)
             }
         }
     }
     dir = dir2;
-    if (func_80043AB0(o, o->h->p.whole + dx2, o->y.p.whole + hi, dir)) {
+    if (func_80043AB0(obj, obj->h->p.whole + dx2, obj->y.p.whole + hi, dir)) {
         HIT(dir)
-    } else if (func_80043AB0(o, o->h->p.whole + dx2, o->y.p.whole + lo, dir)) {
+    } else if (func_80043AB0(obj, obj->h->p.whole + dx2, obj->y.p.whole + lo, dir)) {
         HIT(dir)
     }
     return r;

@@ -9,6 +9,16 @@ extern s32 _spu_env;
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_sk", SpuSetKey);
 
+/**
+ * @brief Key on or key off voices
+ * 
+ * Starts or releases the selected voices. When register writes are
+ * deferred (_spu_env bit 0), the request is queued instead of written
+ * immediately.
+ * 
+ * @param on_off SPU_ON (1) = key on, SPU_OFF (0) = key off
+ * @param voice_bit Bit mask of the voices (SPU_0CH..SPU_23CH)
+ */
 void SpuSetKey(long on_off, u_long voice_bit) {
     u_short lo_bits;
     u_short hi_bits;

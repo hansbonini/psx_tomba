@@ -63,9 +63,9 @@ void func_80033964(GameObject *o)
 
     switch (o->state) {
     case 0:
-        switch (o->subtype) {
+        switch (o->id) {
         case 0x13:
-            o->unkA0 = 0;
+            o->model = 0;
             break;
         case 0x22:
             if (D_8009C114 != 0 || D_800A53AA_S16 < 0x280) {
@@ -90,12 +90,12 @@ void func_80033964(GameObject *o)
             *(s16 *)((u8 *)o + 0xCE) = 0x18;
             *(s16 *)((u8 *)o + 0xD0) = 0;
             if (GAME.selectedArea == 1 || GAME.selectedArea == 7) {
-                o->unkD = 1;
+                o->drawFlags = 1;
                 o->clut = GetClut(0xD0, 0x1E5);
                 o->tpage = 7;
                 o->anim = (void *)D_8013DAB0;
             } else {
-                o->unkD = 0;
+                o->drawFlags = 0;
                 o->tpage = 8;
                 o->anim = (void *)D_8013829C;
             }
@@ -104,10 +104,7 @@ void func_80033964(GameObject *o)
             o->unkE = 0;
             break;
         }
-        o->hitOffsetX = 4;
-        o->hitWidth = 8;
-        o->hitOffsetY = 0x28;
-        o->hitHeight = 0x28;
+        setHitbox(o, 4, 0x28, 8, 0x28);
         o->state++;
         o->touchFlag = 0;
         o->subState = 0;
@@ -136,18 +133,18 @@ void func_80033964(GameObject *o)
         case 0:
             if (o->touchFlag == 1) {
                 if (D_800A5458 & 1) {
-                    switch (o->subtype) {
+                    switch (o->id) {
                     case 19:
-                        if (D_8009C255 == 2) o->subtype = 0x14;
+                        if (D_8009C255 == 2) o->id = 0x14;
                         break;
                     case 20:
-                        if (D_8009C13E == 0xFF) o->subtype = 0x23;
+                        if (D_8009C13E == 0xFF) o->id = 0x23;
                         break;
                     }
 #if REGION == REGION_JP
-                    tone = D_8007D454[o->subtype].tone;
-                    msg = D_8007D454[o->subtype].msg;
-                    switch (o->subtype) {
+                    tone = D_8007D454[o->id].tone;
+                    msg = D_8007D454[o->id].msg;
+                    switch (o->id) {
                     case 2:
                     case 3:
                     case 4:
@@ -156,8 +153,8 @@ void func_80033964(GameObject *o)
                         break;
                     }
 #else
-                    msg = D_8007D454[o->subtype].msg;
-                    switch (o->subtype) {
+                    msg = D_8007D454[o->id].msg;
+                    switch (o->id) {
                     case 2:
                         tone = D_8007D424[(s16)BUTTON_CONFIG_INDEX];
                         break;
@@ -171,18 +168,18 @@ void func_80033964(GameObject *o)
                         tone = D_8007D448[(s16)BUTTON_CONFIG_INDEX];
                         break;
                     default:
-                        tone = D_8007D454[o->subtype].tone;
+                        tone = D_8007D454[o->id].tone;
                         break;
                     }
 #endif
-                    o->unk90 = (s32)showMessageBox((s16)msg, (s16)tone, 0xA0, 0x8C);
+                    o->parent = (s32)showMessageBox((s16)msg, (s16)tone, 0xA0, 0x8C);
                     o->subState++;
                 }
                 o->touchFlag = 0;
             }
             break;
         case 1:
-            box = (GameObject *)o->unk90;
+            box = (GameObject *)o->parent;
             if (box->state >= 2) {
                 box->state++;
                 D_8009BCAA = 0;
@@ -193,29 +190,29 @@ void func_80033964(GameObject *o)
                 D_1F8001C6 = 0;
                 D_800A5458 = 0;
                 o->subState = 0;
-                if (o->subtype == 0x11) {
+                if (o->id == 0x11) {
                     setEventStarted(0x25, 0, 0);
                 }
-                if (o->subtype == 0x13 && D_8009C13A == 0) {
+                if (o->id == 0x13 && D_8009C13A == 0) {
                     setEventStarted(0x2E, 0, 0);
                     D_8009C255 = 1;
                 }
-                if (o->subtype == 0x14 && D_8009C13D == 0) {
+                if (o->id == 0x14 && D_8009C13D == 0) {
                     setEventStarted(0x31, 0, 0);
                 }
-            } else if (o->subtype == 1 && (D_8009BCEC & 1) && D_8009BC98.unk00 == o->subtype) {
+            } else if (o->id == 1 && (D_8009BCEC & 1) && D_8009BC98.unk00 == o->id) {
                 o->subState++;
             }
             break;
         case 2:
-            box = (GameObject *)o->unk90;
+            box = (GameObject *)o->parent;
             if (*(u16 *)&box->state == 0x101) {
                 box->subState = 0;
                 o->subState++;
             }
             break;
         case 3:
-            box = (GameObject *)o->unk90;
+            box = (GameObject *)o->parent;
             if (box->state >= 2) {
                 box->state++;
                 D_800A5458 = 0;
@@ -228,7 +225,7 @@ void func_80033964(GameObject *o)
             }
             break;
         }
-        if (o->subtype == 0x22 && D_800A53AA_S16Arr[0] < 0x3E8) {
+        if (o->id == 0x22 && D_800A53AA_S16Arr[0] < 0x3E8) {
             D_800A53AA_S16Arr[0] = 0x3E8;
         }
         break;

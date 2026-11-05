@@ -35,6 +35,15 @@ padSio* padmain_sio = (padSio*)0x1F801040;
 int D_80097578 = 0;
 int D_8009757C[3] = {0};
 
+/**
+ * @brief Enable or disable communication on each port
+ * 
+ * Bit 0 enables port 1 and bit 1 enables port 2. Ports disconnected for
+ * more than 150 frames have their information cleared when re-enabled.
+ * 
+ * @param mask Bit mask of the ports to enable
+ * @return Previous mask
+ */
 int PadEnableCom(int mask)
 {
     int old;
@@ -76,6 +85,12 @@ int PadEnableCom(int mask)
     return old;
 }
 
+/**
+ * @brief Internal: fill the VBlank interrupt hook entry
+ * 
+ * Sets the handler and verifier functions of the interrupt queue entry
+ * used by the pad library.
+ */
 void _padSetVsyncParam(void)
 {
     void** handlers;
@@ -88,6 +103,14 @@ void _padSetVsyncParam(void)
     handlers[2] = 0;
 }
 
+/**
+ * @brief Internal: verifier of the pad VBlank hook
+ * 
+ * Checks that the VBlank interrupt is pending and enabled and runs the
+ * light gun handler if one is installed.
+ * 
+ * @return 1 if the VBlank interrupt is pending, 0 otherwise
+ */
 int func_80068FF0(void)
 {
     if (!(padmain_istat->mask & 1) || !(padmain_istat->stat & 1)) {
@@ -101,6 +124,14 @@ int func_80068FF0(void)
     return 1;
 }
 
+/**
+ * @brief Internal: VBlank handler of the pad library
+ * 
+ * Counts the frames each port has been disabled, then communicates with
+ * every enabled port by running the state machine steps.
+ * 
+ * @return Always 0
+ */
 int func_80069058(void)
 {
     int idx;
@@ -156,6 +187,14 @@ int func_80069058(void)
     return 0;
 }
 
+/**
+ * @brief Internal: check and clear the "communication ran" flag
+ * 
+ * Returns whether the VBlank handler ran since the last call and resets
+ * the flag.
+ * 
+ * @return 1 if the handler ran, 0 otherwise
+ */
 int _padChkVsync(void)
 {
     int old = D_80097578;
@@ -164,6 +203,12 @@ int _padChkVsync(void)
     return old;
 }
 
+/**
+ * @brief Internal: start controller communication
+ * 
+ * Registers the VBlank interrupt hook, enables the VBlank interrupt, stops
+ * the BIOS from acknowledging it and clears the port information.
+ */
 void _padStartCom(void)
 {
     _padIntExec = 0;
@@ -186,6 +231,12 @@ void _padStartCom(void)
     _padIntExec = 1;
 }
 
+/**
+ * @brief Internal: stop controller communication
+ * 
+ * Lets the BIOS acknowledge the VBlank interrupt again and removes the
+ * hook.
+ */
 void _padStopCom(void)
 {
     EnterCriticalSection();
@@ -194,6 +245,15 @@ void _padStopCom(void)
     ExitCriticalSection();
 }
 
+/**
+ * @brief Internal: prepare the serial port for a controller transfer
+ * 
+ * Resets and configures SIO0, selects the channel, completes pending
+ * multitap sub-port replies and checks the ACK line.
+ * 
+ * @param port Controller port state
+ * @return 1 if the transfer can start, 0 if the port must be skipped
+ */
 int _padInitSioMode(padPort* port)
 {
     register padSio* sio = padmain_sio;
@@ -268,6 +328,14 @@ int _padInitSioMode(padPort* port)
     return 1;
 }
 
+/**
+ * @brief Internal: run one step of the port communication state machine
+ * 
+ * Calls the next step function of padIntFunc and handles the acknowledge
+ * wait or the error by moving to the next port.
+ * 
+ * @param port Controller port state
+ */
 void func_800694FC(padPort* port)
 {
     register int* index asm("$5") = &_padSioState;
@@ -293,6 +361,18 @@ void func_800694FC(padPort* port)
     }
 }
 
+/**
+ * @brief Internal: exchange one byte with the controller
+ * 
+ * A negative inByte sends the select byte (~inByte) and starts a new
+ * reply. Otherwise waits for the previous byte and the ACK, sends inByte
+ * and stores the received byte in the reply buffer, switching to the
+ * faster baud rate for multitap transfers.
+ * 
+ * @param inObj Controller port state
+ * @param inByte Byte to send, or a negative value to start the transfer
+ * @return Byte received, or -20 on ACK timeout
+ */
 int _padSioRW(padPort* inObj, int inByte)
 {
     register padPort* port = inObj;
@@ -374,6 +454,16 @@ int _padSioRW(padPort* inObj, int inByte)
     return result;
 }
 
+/**
+ * @brief Internal: exchange one byte with the controller, with timeout
+ * 
+ * Like _padSioRW() but waits for the ACK with a root counter 2 timeout and
+ * adds a delay for some steps.
+ * 
+ * @param obj Controller port state
+ * @param value Byte to send
+ * @return Byte received, or -2 on timeout
+ */
 int func_8006979C(padPort* obj, int value)
 {
     padSio* sio;
@@ -459,6 +549,14 @@ int func_8006979C(padPort* obj, int value)
     return received;
 }
 
+/**
+ * @brief Internal: acknowledge the SIO0 interrupt
+ * 
+ * Clears the controller interrupt and resets the SIO interrupt flag,
+ * waiting with a timeout for the ACK line to drop.
+ * 
+ * @return 1 on success, 0 on timeout
+ */
 int _padClrIntSio0(void)
 {
     padmain_istat->stat = ~0x80;
@@ -473,6 +571,11 @@ int _padClrIntSio0(void)
     return 1;
 }
 
+/**
+ * @brief Internal: wait until SIO0 has received a byte
+ * 
+ * Busy-waits on the RX ready bit of the SIO0 status register.
+ */
 void func_80069A60(void)
 {
     while (!(padmain_sio->stat & 2)) {

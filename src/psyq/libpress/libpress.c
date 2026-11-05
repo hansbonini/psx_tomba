@@ -1,5 +1,6 @@
 #include "common.h"
 
+/** @brief MDEC command and default quantization tables (luminance, then chrominance) */
 u32 mdec_iq[33] = {
     0x40000001, 0x13101002, 0x16161310, 0x16161616,
     0x1B1A181A, 0x1A1A1B1B, 0x1B1B1A1A, 0x1D1D1D1B,
@@ -11,6 +12,7 @@ u32 mdec_iq[33] = {
     0x22232325, 0x28262623, 0x30302828, 0x38382E2E,
     0x5345453A,
 };
+/** @brief MDEC command and default IDCT coefficient table */
 u32 mdec_coef[33] = {
     0x60000000, 0x5A825A82, 0x5A825A82, 0x5A825A82,
     0x5A825A82, 0x6A6D7D8A, 0x18F8471C, 0xB8E3E707,
@@ -64,6 +66,14 @@ int MDEC_out_sync(void);
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTReset);
 
+/**
+ * @brief Reset the MDEC (image decompression hardware)
+ * 
+ * Mode 0 also resets the interrupt callback system and reloads the default
+ * quantization and IDCT tables; mode 1 only aborts the current decoding.
+ * 
+ * @param mode 0 = full reset, 1 = abort current processing only
+ */
 void DecDCTReset(int mode) {
     if (mode == 0)
         ResetCallback();
@@ -72,6 +82,14 @@ void DecDCTReset(int mode) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTGetEnv);
 
+/**
+ * @brief Get the current MDEC decoding environment
+ * 
+ * Copies the quantization tables and the IDCT coefficients into env.
+ * 
+ * @param env Receives the decoding environment
+ * @return env
+ */
 DECDCTENV* DecDCTGetEnv(DECDCTENV* env) {
     int i;
     u32 *dst, *src;
@@ -92,6 +110,15 @@ DECDCTENV* DecDCTGetEnv(DECDCTENV* env) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTPutEnv);
 
+/**
+ * @brief Set the MDEC decoding environment
+ * 
+ * Replaces the quantization tables with those of env and uploads the
+ * tables to the MDEC.
+ * 
+ * @param env Decoding environment to apply
+ * @return env
+ */
 DECDCTENV* DecDCTPutEnv(DECDCTENV* env) {
     int i;
     u32 *dst1, *src1, *dst2, *src2;
@@ -110,10 +137,27 @@ DECDCTENV* DecDCTPutEnv(DECDCTENV* env) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTBufSize);
 
+/**
+ * @brief Get the size of a run-level encoded data block
+ * 
+ * Reads the size field of the header of the data produced by DecDCTvlc().
+ * 
+ * @param bs Run-level encoded data
+ * @return Size in 32-bit words, not including the header
+ */
 int DecDCTBufSize(u_long* bs) { return *(u_short*)bs; }
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTin);
 
+/**
+ * @brief Send run-level encoded data to the MDEC
+ * 
+ * Sets the output format bits in the data header and starts the DMA
+ * transfer to the MDEC input.
+ * 
+ * @param buf Run-level encoded data
+ * @param mode Output format: bit 0 = 24-bit (otherwise 16-bit), bit 1 = set the STP bit in 16-bit mode
+ */
 void DecDCTin(u_long* buf, int mode) {
     if (mode & 1)
         *(u32*)buf &= ~0x08000000;
@@ -128,10 +172,27 @@ void DecDCTin(u_long* buf, int mode) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTout);
 
+/**
+ * @brief Receive decoded image data from the MDEC
+ * 
+ * Starts the DMA transfer from the MDEC output into buf.
+ * 
+ * @param buf Destination buffer
+ * @param size Size in 32-bit words
+ */
 void DecDCTout(u_long* buf, int size) { MDEC_out(buf, size); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTinSync);
 
+/**
+ * @brief Wait for or check the MDEC input transfer
+ * 
+ * Mode 0 waits until the MDEC has consumed its input; mode 1 returns the
+ * busy flag.
+ * 
+ * @param mode 0 = wait, 1 = return the state immediately
+ * @return 0 when finished (1 if still busy in non-blocking mode), -1 on timeout
+ */
 int DecDCTinSync(int mode) {
     int result;
     if (mode == 0)
@@ -143,6 +204,15 @@ int DecDCTinSync(int mode) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCToutSync);
 
+/**
+ * @brief Wait for or check the MDEC output transfer
+ * 
+ * Mode 0 waits until the output DMA has finished; mode 1 returns the
+ * transfer state.
+ * 
+ * @param mode 0 = wait, 1 = return the state immediately
+ * @return 0 when finished (1 if still busy in non-blocking mode), -1 on timeout
+ */
 int DecDCToutSync(int mode) {
     int result;
     if (mode == 0)
@@ -154,14 +224,38 @@ int DecDCToutSync(int mode) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCTinCallback);
 
+/**
+ * @brief Set the MDEC input DMA completion callback
+ * 
+ * Registers a callback for DMA channel 0 (MDEC in).
+ * 
+ * @param cb Callback function (NULL to remove it)
+ * @return Previous callback
+ */
 int DecDCTinCallback(void (*cb)()) { return DMACallback(0, cb); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", DecDCToutCallback);
 
+/**
+ * @brief Set the MDEC output DMA completion callback
+ * 
+ * Registers a callback for DMA channel 1 (MDEC out).
+ * 
+ * @param cb Callback function (NULL to remove it)
+ * @return Previous callback
+ */
 int DecDCToutCallback(void (*cb)()) { return DMACallback(1, cb); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", MDEC_reset);
 
+/**
+ * @brief Internal: reset the MDEC and its DMA channels
+ * 
+ * Resets the MDEC and stops both DMA channels. Mode 0 also uploads the
+ * quantization and IDCT tables.
+ * 
+ * @param mode 0 = full reset, 1 = abort only
+ */
 void MDEC_reset(int mode) {
     switch (mode) {
     case 0:
@@ -187,6 +281,15 @@ void MDEC_reset(int mode) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", MDEC_in);
 
+/**
+ * @brief Internal: start a DMA transfer to the MDEC input
+ * 
+ * Waits for the previous input, writes the command word directly and sends
+ * the following data through DMA channel 0.
+ * 
+ * @param buf Command word followed by its data
+ * @param size Size of the data in 32-bit words
+ */
 void MDEC_in(u_long* buf, int size) {
     MDEC_in_sync();
     *d_pcr |= 0x88;
@@ -198,6 +301,14 @@ void MDEC_in(u_long* buf, int size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", MDEC_out);
 
+/**
+ * @brief Internal: start a DMA transfer from the MDEC output
+ * 
+ * Waits for the previous output and starts DMA channel 1 into buf.
+ * 
+ * @param buf Destination buffer
+ * @param size Size in 32-bit words
+ */
 void MDEC_out(u_long* buf, int size) {
     MDEC_out_sync();
     *d_pcr |= 0x88;
@@ -209,6 +320,13 @@ void MDEC_out(u_long* buf, int size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", MDEC_in_sync);
 
+/**
+ * @brief Internal: wait until the MDEC is no longer busy
+ * 
+ * Polls the MDEC status; on timeout prints the state and resets the MDEC.
+ * 
+ * @return 0 on success, -1 on timeout
+ */
 int MDEC_in_sync(void) {
     volatile int retries = 0x100000;
 
@@ -224,6 +342,13 @@ int MDEC_in_sync(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", MDEC_out_sync);
 
+/**
+ * @brief Internal: wait for the MDEC output DMA to finish
+ * 
+ * Polls DMA channel 1; on timeout prints the state and resets the MDEC.
+ * 
+ * @return 0 on success, -1 on timeout
+ */
 int MDEC_out_sync(void)
 {
     volatile int retries = 0x100000;
@@ -240,8 +365,20 @@ int MDEC_out_sync(void)
 
 // INCLUDE_ASM("nonmatchings/psyq/libpress/libpress", MDEC_status);
 
+/**
+ * @brief Internal: read the MDEC status register
+ * 
+ * Returns the raw MDEC status word.
+ * 
+ * @return MDEC status
+ */
 u_long MDEC_status(void) { return *mdec1; }
 
+/**
+ * @brief Internal: print the MDEC and DMA state
+ * 
+ * Debug output used when a timeout occurs.
+ */
 static inline void print_status(void) {
     u_long stat;
 
@@ -255,6 +392,15 @@ static inline void print_status(void) {
            (stat >> 27) & 1, (stat >> 25) & 1, (stat >> 23) & 1);
 }
 
+/**
+ * @brief Internal: report an MDEC timeout and reset the hardware
+ * 
+ * Prints the name of the waiting function and the hardware state, then
+ * resets the MDEC and its DMA channels.
+ * 
+ * @param arg0 Name of the function that timed out
+ * @return Always 0
+ */
 static int timeout(char* arg0) {
     printf("%s timeout:
 ", arg0);

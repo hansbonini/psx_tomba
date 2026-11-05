@@ -26,8 +26,8 @@ u32 D_8007EE64_d[31] asm("D_8007EE64") = {
 static __inline__ s32 hit_55E0C(GameObject *a, GameObject *b)
 {
     if ((u16)(a->d->p.whole - b->d->p.whole + 0x2d) >= 0x5b) return 0;
-    if ((u16)(a->h->p.whole - b->h->p.whole + (b->hitOffsetX + (a->hitWidth - a->hitOffsetX))) > b->hitWidth + a->hitWidth) return 0;
-    return (u16)(a->y.p.whole - b->y.p.whole + (b->hitOffsetY + (a->hitHeight - a->hitOffsetY))) <= a->hitHeight + b->hitHeight;
+    if ((u16)(a->h->p.whole - b->h->p.whole + (b->hitboxX + (a->hitboxW - a->hitboxX))) > b->hitboxW + a->hitboxW) return 0;
+    return (u16)(a->y.p.whole - b->y.p.whole + (b->hitboxY + (a->hitboxH - a->hitboxY))) <= a->hitboxH + b->hitboxH;
 }
 
 s32 func_80055E0C(GameObject *a, GameObject *b)
@@ -44,19 +44,19 @@ s32 func_80055ED4(GameObject *o, GameObject *p)
 
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return 0;
-    wx = p->hitOffsetX + (o->hitWidth - o->hitOffsetX);
+    wx = p->hitboxX + (o->hitboxW - o->hitboxX);
     px = wx;
     dx = o->h->p.whole - p->h->p.whole;
-    if ((u16)(dx + wx) > p->hitWidth + o->hitWidth)
+    if ((u16)(dx + wx) > p->hitboxW + o->hitboxW)
         return 0;
-    if ((u16)((o->y.p.whole - p->y.p.whole) + (p->hitOffsetY + (o->hitHeight - o->hitOffsetY))) > o->hitHeight + p->hitHeight)
+    if ((u16)((o->y.p.whole - p->y.p.whole) + (p->hitboxY + (o->hitboxH - o->hitboxY))) > o->hitboxH + p->hitboxH)
         return 0;
     cx = px;
     if (dx < 0) {
         dx = -dx;
         px = -px;
     } else {
-        px = o->hitOffsetX + (p->hitWidth - p->hitOffsetX);
+        px = o->hitboxX + (p->hitboxW - p->hitboxX);
         cx = px;
     }
     if ((u16)(cx - dx) < 4) {
@@ -70,7 +70,7 @@ s32 func_80055ED4(GameObject *o, GameObject *p)
     if (o->unk9C & 1)
         return 0;
     {
-        s16 w = p->y.p.whole - (p->hitOffsetY + (o->hitHeight - o->hitOffsetY));
+        s16 w = p->y.p.whole - (p->hitboxY + (o->hitboxH - o->hitboxY));
         GameObject *q = o;
         o->y.p.frac = 0;
         o->touchFlag = 1;
@@ -93,15 +93,15 @@ s32 func_8005606C(GameObject *o, GameObject *p)
 
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return 0;
-    wx = p->hitOffsetX + (o->hitWidth - o->hitOffsetX);
+    wx = p->hitboxX + (o->hitboxW - o->hitboxX);
     px = wx;
     dx = o->h->p.whole - p->h->p.whole;
-    if ((u16)(dx + wx) > p->hitWidth + o->hitWidth)
+    if ((u16)(dx + wx) > p->hitboxW + o->hitboxW)
         return 0;
     di = (u16)o->y.p.whole - (u16)p->y.p.whole;
-    hy = (u16)p->hitOffsetY + ((u16)o->hitHeight - (u16)o->hitOffsetY);
+    hy = (u16)p->hitboxY + ((u16)o->hitboxH - (u16)o->hitboxY);
     dy = di;
-    if ((u16)(di + hy) > o->hitHeight + p->hitHeight)
+    if ((u16)(di + hy) > o->hitboxH + p->hitboxH)
         return 0;
     if (((u32)(hy - -di) & 0xffff) < 0xc) {
         o->y.p.whole = p->y.p.whole - hy;
@@ -114,7 +114,7 @@ s32 func_8005606C(GameObject *o, GameObject *p)
         dx = -dx;
         px = -px;
     } else {
-        px = o->hitOffsetX + (p->hitWidth - p->hitOffsetX);
+        px = o->hitboxX + (p->hitboxW - p->hitboxX);
         cx = px;
     }
     if ((u16)(cx - dx) < 4) {
@@ -129,7 +129,7 @@ s32 func_8005606C(GameObject *o, GameObject *p)
         if (o->unk9C & 1)
             return 0;
         {
-            s16 w = p->y.p.whole - (p->hitOffsetY + (o->hitHeight - o->hitOffsetY));
+            s16 w = p->y.p.whole - (p->hitboxY + (o->hitboxH - o->hitboxY));
             GameObject *q = o;
             o->y.p.frac = 0;
             o->touchFlag = 1;
@@ -139,7 +139,7 @@ s32 func_8005606C(GameObject *o, GameObject *p)
     }
     if (o->category == 2 && *(u16 *)&o->state == 0x102)
         return 0;
-    o->y.p.whole = p->y.p.whole + (o->hitOffsetY + (p->hitHeight - p->hitOffsetY));
+    o->y.p.whole = p->y.p.whole + (o->hitboxY + (p->hitboxH - p->hitboxY));
     return 3;
 }
 
@@ -153,22 +153,22 @@ s32 func_80056284(GameObject *o, GameObject *p)
 
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return 0;
-    wx = p->hitOffsetX + (o->hitWidth - o->hitOffsetX);
+    wx = p->hitboxX + (o->hitboxW - o->hitboxX);
     px = wx;
     dx = o->h->p.whole - p->h->p.whole;
-    if ((u16)(dx + wx) > p->hitWidth + o->hitWidth)
+    if ((u16)(dx + wx) > p->hitboxW + o->hitboxW)
         return 0;
     dy = o->y.p.whole - p->y.p.whole;
-    hy = p->hitOffsetY + (o->hitHeight - o->hitOffsetY);
+    hy = p->hitboxY + (o->hitboxH - o->hitboxY);
     py = hy;
-    if ((u16)(dy + hy) > o->hitHeight + p->hitHeight)
+    if ((u16)(dy + hy) > o->hitboxH + p->hitboxH)
         return 0;
     cx = px;
     if (dx < 0) {
         dx = -dx;
         px = -px;
     } else {
-        px = o->hitOffsetX + (p->hitWidth - p->hitOffsetX);
+        px = o->hitboxX + (p->hitboxW - p->hitboxX);
         cx = px;
     }
     cy = py;
@@ -176,7 +176,7 @@ s32 func_80056284(GameObject *o, GameObject *p)
         dy = -dy;
         py = -py;
     } else {
-        py = o->hitOffsetY + (p->hitHeight - p->hitOffsetY);
+        py = o->hitboxY + (p->hitboxH - p->hitboxY);
         cy = py;
     }
     if (cx - dx < cy - dy) {
@@ -215,22 +215,22 @@ s32 func_80056498(GameObject *o, GameObject *p)
 
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return 0;
-    wx = p->hitOffsetX + (o->hitWidth - o->hitOffsetX);
+    wx = p->hitboxX + (o->hitboxW - o->hitboxX);
     px = wx;
     dx = o->h->p.whole - p->h->p.whole;
-    if ((u16)(dx + wx) > p->hitWidth + o->hitWidth)
+    if ((u16)(dx + wx) > p->hitboxW + o->hitboxW)
         return 0;
     dy = o->y.p.whole - p->y.p.whole;
-    hy = p->hitOffsetY + (o->hitHeight - o->hitOffsetY);
+    hy = p->hitboxY + (o->hitboxH - o->hitboxY);
     py = hy;
-    if ((u16)(dy + hy) > o->hitHeight + p->hitHeight)
+    if ((u16)(dy + hy) > o->hitboxH + p->hitboxH)
         return 0;
     cx = px;
     if (dx < 0) {
         dx = -dx;
         px = -px;
     } else {
-        px = o->hitOffsetX + (p->hitWidth - p->hitOffsetX);
+        px = o->hitboxX + (p->hitboxW - p->hitboxX);
         cx = px;
     }
     cy = py;
@@ -238,7 +238,7 @@ s32 func_80056498(GameObject *o, GameObject *p)
         dy = -dy;
         py = -py;
     } else {
-        py = o->hitOffsetY + (p->hitHeight - p->hitOffsetY);
+        py = o->hitboxY + (p->hitboxH - p->hitboxY);
         cy = py;
     }
     if (cx - dx < cy - dy) {
@@ -275,15 +275,15 @@ s32 func_800566E4(GameObject *o, GameObject *e)
     if ((u16)(o->d->p.whole - e->d->p.whole + 45) > 90)
         return 0;
     dx = o->h->p.whole - e->h->p.whole;
-    w = e->hitOffsetX + (o->hitWidth - o->hitOffsetX);
-    if ((u16)(dx + w) > e->hitWidth + o->hitWidth)
+    w = e->hitboxX + (o->hitboxW - o->hitboxX);
+    if ((u16)(dx + w) > e->hitboxW + o->hitboxW)
         return 0;
-    if ((u16)(o->y.p.whole - e->y.p.whole + (e->hitOffsetY + (o->hitHeight - o->hitOffsetY))) > o->hitHeight + e->hitHeight)
+    if ((u16)(o->y.p.whole - e->y.p.whole + (e->hitboxY + (o->hitboxH - o->hitboxY))) > o->hitboxH + e->hitboxH)
         return 0;
     if (dx < 0)
         r = -w;
     else
-        r = o->hitOffsetX + (e->hitWidth - e->hitOffsetX);
+        r = o->hitboxX + (e->hitboxW - e->hitboxX);
     o->h->p.whole = e->h->p.whole + r;
     o->unk9D = r < 0 ? 2 : 3;
     return 2;
@@ -298,14 +298,14 @@ s32 func_80056804(GameObject *o, GameObject *p)
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return 0;
     if (o->animFrame & 1)
-        w = o->hitOffsetX;
+        w = o->hitboxX;
     else
-        w = o->hitWidth - o->hitOffsetX;
-    if ((u16)(o->h->p.whole - p->h->p.whole + (p->hitOffsetX + w)) > p->hitWidth + o->hitWidth)
+        w = o->hitboxW - o->hitboxX;
+    if ((u16)(o->h->p.whole - p->h->p.whole + (p->hitboxX + w)) > p->hitboxW + o->hitboxW)
         return 0;
     dy = o->y.p.whole - p->y.p.whole;
-    t = p->hitOffsetY + (o->hitHeight - o->hitOffsetY);
-    if ((u16)(dy + t) > o->hitHeight + p->hitHeight)
+    t = p->hitboxY + (o->hitboxH - o->hitboxY);
+    if ((u16)(dy + t) > o->hitboxH + p->hitboxH)
         return 0;
     if (dy <= 0) {
         if (o->unk9C & 1)
@@ -317,13 +317,13 @@ s32 func_80056804(GameObject *o, GameObject *p)
     }
     if (o->category == 2 && *(u16 *)&o->state == 0x102)
         return 0;
-    o->y.p.whole = p->y.p.whole + (o->hitOffsetY + (p->hitHeight - p->hitOffsetY));
+    o->y.p.whole = p->y.p.whole + (o->hitboxY + (p->hitboxH - p->hitboxY));
     return 3;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor2", func_80056970);
-#define B0(p) ((u16)(p)->hitOffsetX)
-#define B2(p) ((u16)(p)->hitOffsetY)
+#define B0(p) ((u16)(p)->hitboxX)
+#define B2(p) ((u16)(p)->hitboxY)
 
 void func_80056970(GameObject *o, GameObject *e)
 {
@@ -336,20 +336,20 @@ void func_80056970(GameObject *o, GameObject *e)
     s16 b1;
 
     if ((u16)(o->d->p.whole - e->d->p.whole + 0x2d) >= 0x5b) return;
-    if (o->animFrame & 1) ox = B0(o); else ox = (u16)o->hitWidth - B0(o);
+    if (o->animFrame & 1) ox = B0(o); else ox = (u16)o->hitboxW - B0(o);
     w = B0(e) + ox;
     r = w;
     dx = o->h->p.whole - e->h->p.whole;
     adx = dx;
-    if ((u16)(dx + w) > e->hitWidth + (b1 = o->hitWidth)) return;
-    if ((u16)(o->y.p.whole - e->y.p.whole + (B2(e) + (o->hitHeight - B2(o)))) > o->hitHeight + e->hitHeight) return;
+    if ((u16)(dx + w) > e->hitboxW + (b1 = o->hitboxW)) return;
+    if ((u16)(o->y.p.whole - e->y.p.whole + (B2(e) + (o->hitboxH - B2(o)))) > o->hitboxH + e->hitboxH) return;
     v = r;
     if (dx < 0) {
         adx = -dx;
         r = -w;
     } else {
         if (o->animFrame & 1) ox = b1 - B0(o); else ox = B0(o);
-        r = ox + ((u16)e->hitWidth - B0(e));
+        r = ox + ((u16)e->hitboxW - B0(e));
         v = r;
     }
     if ((u16)(v - adx) < 9) {
@@ -365,7 +365,7 @@ void func_80056970(GameObject *o, GameObject *e)
     }
     if (o->unk9C & 1) return;
     (*(s16 *)&SPAD->unk19E) = 0;
-    o->y.p.whole = e->y.p.whole - (B2(e) + (o->hitHeight - B2(o)));
+    o->y.p.whole = e->y.p.whole - (B2(e) + (o->hitboxH - B2(o)));
     o->y.p.frac = 0;
     o->touchFlag = 1;
     if (o->category == 2) {
@@ -388,12 +388,10 @@ void func_80056BBC(GameObject *o, GameObject *p)
 {
     if (o->type == 0x22 || o->type == 0x2c) {
         if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) < 0x5b) {
-            if ((u16)(p->hitOffsetX + (o->h->p.whole - p->h->p.whole)) <= p->hitWidth) {
-                if ((u16)(p->hitOffsetY + (o->y.p.whole - p->y.p.whole)) <= p->hitHeight) {
+            if ((u16)(p->hitboxX + (o->h->p.whole - p->h->p.whole)) <= p->hitboxW) {
+                if ((u16)(p->hitboxY + (o->y.p.whole - p->y.p.whole)) <= p->hitboxH) {
                     o->active = 2;
-                    o->state = 2;
-                    o->subState = 0;
-                    o->step = 0;
+                    setObjState(o, 2, 0, 0);
                     p->step++;
                 }
             }
@@ -432,9 +430,9 @@ static __inline__ s16 hit_56D24(GameObject *o, GameObject *e)
 {
     if ((u16)(o->d->p.whole - e->d->p.whole + 45) > 90)
         return 0;
-    if ((u16)((o->h->p.whole - e->h->p.whole) + (e->hitOffsetX + (o->hitWidth - o->hitOffsetX))) > e->hitWidth + o->hitWidth)
+    if ((u16)((o->h->p.whole - e->h->p.whole) + (e->hitboxX + (o->hitboxW - o->hitboxX))) > e->hitboxW + o->hitboxW)
         return 0;
-    if ((u16)((o->y.p.whole - e->y.p.whole) + (e->hitOffsetY + (o->hitHeight - o->hitOffsetY))) <= o->hitHeight + e->hitHeight)
+    if ((u16)((o->y.p.whole - e->y.p.whole) + (e->hitboxY + (o->hitboxH - o->hitboxY))) <= o->hitboxH + e->hitboxH)
         return 1;
     return 0;
 }
@@ -594,13 +592,11 @@ void func_80057188(void)
             case 32:
                 if (o->type == 0x22 || o->type == 0x2c) {
                     if ((u16)(o->d->p.whole - e->d->p.whole + 0x2d) < 0x5b) {
-                        if ((u16)(e->hitOffsetX + (o->h->p.whole - e->h->p.whole)) <= e->hitWidth) {
-                            if ((u16)(e->hitOffsetY + (o->y.p.whole - e->y.p.whole)) <= e->hitHeight) {
+                        if ((u16)(e->hitboxX + (o->h->p.whole - e->h->p.whole)) <= e->hitboxW) {
+                            if ((u16)(e->hitboxY + (o->y.p.whole - e->y.p.whole)) <= e->hitboxH) {
                                 two = 2;
                                 o->active = two;
-                                o->state = two;
-                                o->subState = 0;
-                                o->step = 0;
+                                setObjState(o, two, 0, 0);
                                 e->step++;
                             }
                         }
@@ -632,9 +628,9 @@ static __inline__ s16 hit_574BC(GameObject *o, GameObject *p)
 {
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return 0;
-    if ((u16)((o->h->p.whole - p->h->p.whole) + (p->hitOffsetX + (o->hitWidth - o->hitOffsetX))) > p->hitWidth + o->hitWidth)
+    if ((u16)((o->h->p.whole - p->h->p.whole) + (p->hitboxX + (o->hitboxW - o->hitboxX))) > p->hitboxW + o->hitboxW)
         return 0;
-    if ((u16)((o->y.p.whole - p->y.p.whole) + (p->hitOffsetY + (o->hitHeight - o->hitOffsetY))) > o->hitHeight + p->hitHeight)
+    if ((u16)((o->y.p.whole - p->y.p.whole) + (p->hitboxY + (o->hitboxH - o->hitboxY))) > o->hitboxH + p->hitboxH)
         return 0;
     return 1;
 }

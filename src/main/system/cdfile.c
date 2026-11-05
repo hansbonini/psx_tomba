@@ -1731,8 +1731,7 @@ void cdLoadTask(void)
             case 2:
                 rect.x = CD_HDR[4];
                 rect.y = CD_HDR[5];
-                rect.w = CD_HDR[6];
-                rect.h = CD_HDR[7];
+                setWH(&rect, CD_HDR[6], CD_HDR[7]);
                 if (CD_FLAGS & LOAD_TYPE_ALT_BUFFER) {
                     LoadImage(&rect, (u_long*)&LOAD_BUFFER_ALT);
                 } else {

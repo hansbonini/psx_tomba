@@ -32,8 +32,8 @@ static __inline__ void initObjectAC(GameObject *o)
         D_8009C968.w0 = 0xF;
         D_8009C968.w2 = 8;
         D_8009C968.w4 = 0x5A;
-        *(s8 *)&o->unkF = -9;
-        o->unkA = 0;
+        *(s8 *)&o->priority = -9;
+        o->drawType = DRAW_SPRITE;
         o->h->p.whole = D_800A53D8[1];
         o->y.p.whole = D_800A53AE[0] - 0x10;
         o->d->p.whole = D_800A53DC[1];

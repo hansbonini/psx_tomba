@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/sstick", SsSetTickMode);
 
+/**
+ * @brief Set the sequencer tick resolution
+ * 
+ * Selects how often SsSeqCalledTbyT() is called (VSync based or a given
+ * frequency), adjusting for NTSC/PAL. Bit 0x1000 means the application
+ * calls SsSeqCalledTbyT() itself.
+ * 
+ * @param tick_mode Tick mode (SS_TICK60, SS_TICK240, SS_TICKVSYNC, ... or a frequency, optionally | SS_NOTICK)
+ */
 void SsSetTickMode(long tick_mode) {
     s32 videoMode;
 

@@ -184,6 +184,16 @@ void _SsSetNrpnVabAttr19(
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssopenq", SsSeqOpen);
 
+/**
+ * @brief Open SEQ data
+ * 
+ * Allocates an access number, analyzes the SEQ data and installs the MIDI
+ * event and controller handlers.
+ * 
+ * @param addr Start address of the SEQ data
+ * @param vab_id VAB ID used to play it
+ * @return SEQ access number, or -1 on error
+ */
 short SsSeqOpen(u_long* addr, short vab_id) {
     short bit;
     short flag;

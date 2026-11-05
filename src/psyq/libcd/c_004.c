@@ -16,6 +16,13 @@ extern int StRingIdx2;
 extern StHEADER* StRingAddr;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_004", data_ready_callback);
+/**
+ * @brief Internal: streaming DMA completion callback
+ * 
+ * Marks the frame just transferred as complete, remembers its location and
+ * frame number, advances the read index and calls the user callback set
+ * with StSetStream().
+ */
 void data_ready_callback(void)
 {
     StHEADER* ptr = &StRingAddr[StRingIdx2];
@@ -32,6 +39,15 @@ void data_ready_callback(void)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_004", StGetBackloc);
+/**
+ * @brief Get the location of the frame following the last one read
+ * 
+ * Converts the location of the last completed streaming frame to the next
+ * sector position. Only valid in 2340-byte (normal) streaming mode.
+ * 
+ * @param loc Receives the next CD-ROM position
+ * @return Frame number of the next frame, or -1 if not in the right streaming mode
+ */
 int StGetBackloc(CdlLOC* loc)
 {
     if (StMode != 0) return -1;

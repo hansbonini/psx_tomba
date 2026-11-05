@@ -53,44 +53,127 @@ s32 intr_timeout = 0;
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", ResetCallback);
 
+/**
+ * @brief Initialize the interrupt callback system
+ * 
+ * Installs the library interrupt handler, clears all callbacks and sets up
+ * the VSync and DMA dispatchers. Must be called before any other callback
+ * function.
+ * 
+ * @return Pointer to the internal interrupt state on first initialization, 0 if already initialized
+ */
 int ResetCallback(void) { return intr_table_ptr->start(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", InterruptCallback);
 
+/**
+ * @brief Set the callback of a hardware interrupt
+ * 
+ * Registers a handler for one of the interrupt sources of I_STAT (0 =
+ * VBlank, 1 = GPU, 2 = CD-ROM, 3 = DMA, 4-6 = root counters, ...).
+ * 
+ * @param arg0 Interrupt number
+ * @param cb Callback function (NULL to remove it)
+ */
 void InterruptCallback(int arg0, void (*cb)(void)) {
     intr_table_ptr->set(arg0, cb);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", DMACallback);
 
+/**
+ * @brief Set the callback of a DMA channel
+ * 
+ * Forwards its register arguments (channel number and callback function)
+ * to the DMA dispatcher installed by ResetCallback(). Declared without
+ * parameters here, but called as DMACallback(channel, func) and returns
+ * the previous callback.
+ */
 void DMACallback(void) { intr_table_ptr->dma(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", VSyncCallback);
 
+/**
+ * @brief Set the vertical blank callback
+ * 
+ * Registers a function called at the start of every vertical blank (uses
+ * dispatcher slot 4).
+ * 
+ * @param func Callback function (NULL to remove it)
+ * @return Result of the VSync dispatcher
+ */
 int VSyncCallback(void (*func)()) { return intr_table_ptr->vsync(4, func); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", VSyncCallbacks);
 
+/**
+ * @brief Set one of the vertical blank callback slots
+ * 
+ * Registers a function in a specific slot of the VSync dispatcher (8
+ * slots).
+ * 
+ * @param n Slot number (0-7)
+ * @param func Callback function (NULL to remove it)
+ * @return Result of the VSync dispatcher
+ */
 int VSyncCallbacks(int n, void (*func)()) { return intr_table_ptr->vsync(n, func); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", StopCallback);
 
+/**
+ * @brief Disable the interrupt callback system
+ * 
+ * Masks all interrupts, saves the interrupt and DMA state and removes the
+ * library interrupt handler.
+ * 
+ * @return Result of the internal stop function
+ */
 int StopCallback(void) { return intr_table_ptr->stop(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", RestartCallback);
 
+/**
+ * @brief Re-enable the interrupt callback system
+ * 
+ * Reinstalls the interrupt handler and restores the state saved by
+ * StopCallback().
+ * 
+ * @return Result of the internal restart function
+ */
 int RestartCallback(void) { return intr_table_ptr->restart(); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", CheckCallback);
 
+/**
+ * @brief Check whether the code runs inside an interrupt callback
+ * 
+ * Reads the "in interrupt" flag of the dispatcher.
+ * 
+ * @return 1 if called from an interrupt context, 0 otherwise
+ */
 int CheckCallback() { return intr_env.inInterrupt; }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", GetIntrMask);
 
+/**
+ * @brief Get the interrupt mask register
+ * 
+ * Returns the current value of I_MASK.
+ * 
+ * @return Interrupt mask
+ */
 int GetIntrMask() { return *intr_imask; }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", SetIntrMask);
 
+/**
+ * @brief Set the interrupt mask register
+ * 
+ * Writes a new value to I_MASK.
+ * 
+ * @param mask New interrupt mask
+ * @return Previous interrupt mask
+ */
 int SetIntrMask(int mask) {
     int prev = *intr_imask;
     *intr_imask = mask;
@@ -99,6 +182,15 @@ int SetIntrMask(int mask) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", startIntr);
 
+/**
+ * @brief Internal: start the interrupt dispatcher
+ * 
+ * Clears the interrupt registers and state, sets up a private stack and
+ * hooks trapIntr() into the BIOS interrupt chain, then starts the VSync
+ * and DMA dispatchers.
+ * 
+ * @return Pointer to the dispatcher state, or NULL if already started
+ */
 void* startIntr(void) {
     if (intr_env.initialized) {
         return NULL;
@@ -123,6 +215,13 @@ void* startIntr(void) {
 const char intr_id[] = "$Id: intr.c,v 1.74 1996/12/04 07:30:16 makoto Exp $";
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", trapIntr);
+/**
+ * @brief Internal: main interrupt handler
+ * 
+ * Acknowledges each pending and enabled interrupt source and calls its
+ * handler, repeating until none remain. Reports a stuck interrupt after
+ * too many retries.
+ */
 void trapIntr()
 {
     int i;
@@ -158,6 +257,17 @@ void trapIntr()
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", setIntr);
 
+/**
+ * @brief Internal: set the handler of an interrupt source
+ * 
+ * Stores the handler, updates the interrupt mask and tells the BIOS
+ * whether it should still auto-acknowledge the pad/VBlank and root counter
+ * interrupts.
+ * 
+ * @param index Interrupt number (0-10)
+ * @param fn Handler function (NULL to remove it)
+ * @return Previous handler
+ */
 void (*setIntr(int index, void (*fn)()))()
 {
     void (*old)();
@@ -198,6 +308,14 @@ void (*setIntr(int index, void (*fn)()))()
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", stopIntr);
 
+/**
+ * @brief Internal: stop the interrupt dispatcher
+ * 
+ * Saves and clears the interrupt mask and DMA enable bits and unhooks the
+ * handler.
+ * 
+ * @return Pointer to the dispatcher state, or NULL if it was not running
+ */
 u16* stopIntr(void) {
     if (intr_env.initialized) {
         EnterCriticalSection();
@@ -216,6 +334,14 @@ u16* stopIntr(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", restartIntr);
 
+/**
+ * @brief Internal: restart the interrupt dispatcher
+ * 
+ * Rehooks the handler and restores the saved interrupt mask and DMA enable
+ * bits.
+ * 
+ * @return Pointer to the dispatcher state, or NULL if it was already running
+ */
 u16* restartIntr(void) {
     if (intr_env.initialized) {
         return NULL;
@@ -230,6 +356,14 @@ u16* restartIntr(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", memclr);
 
+/**
+ * @brief Internal: clear an array of 32-bit words
+ * 
+ * Writes zero to len consecutive words.
+ * 
+ * @param mem Start address
+ * @param len Number of words
+ */
 void memclr(s32* mem, int len) {
     int i;
     for (i = len - 1; i != -1; i--) {

@@ -32,6 +32,14 @@ extern s32 D_8009B29C;
 extern s32 D_8009B2A0;
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", OpenTIM);
+/**
+ * @brief Open TIM data for reading
+ * 
+ * Sets the address from which ReadTIM() reads TIM images.
+ * 
+ * @param addr Start address of the TIM data
+ * @return Always 0
+ */
 int OpenTIM(u_long* addr)
 {
     D_8009B290 = addr;
@@ -39,6 +47,15 @@ int OpenTIM(u_long* addr)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", ReadTIM);
+/**
+ * @brief Read the next TIM image header
+ * 
+ * Parses the TIM at the current read position into timimg and advances to
+ * the next image.
+ * 
+ * @param timimg Receives the image and CLUT locations
+ * @return timimg, or NULL if the data is not a TIM
+ */
 TIM_IMAGE* ReadTIM(TIM_IMAGE* timimg)
 {
     s32 addr;
@@ -51,6 +68,16 @@ TIM_IMAGE* ReadTIM(TIM_IMAGE* timimg)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", OpenTMD);
+/**
+ * @brief Open a TMD object for reading
+ * 
+ * Locates the vertex, normal and primitive lists of the given object for
+ * use by ReadTMD().
+ * 
+ * @param tmd Start address of the TMD data (after the file header)
+ * @param obj_no Object number
+ * @return Number of primitives in the object
+ */
 int OpenTMD(u_long* tmd, int obj_no)
 {
     D_8009B2A0 = get_tmd_addr(
@@ -64,6 +91,15 @@ int OpenTMD(u_long* tmd, int obj_no)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", ReadTMD);
+/**
+ * @brief Read the next primitive of the open TMD object
+ * 
+ * Decodes the next primitive packet into tmdprim, including its vertex and
+ * normal coordinates.
+ * 
+ * @param tmdprim Receives the primitive data
+ * @return tmdprim, or NULL when there are no more primitives or the type is unknown
+ */
 TMD_PRIM* ReadTMD(TMD_PRIM* tmdprim)
 {
     s32 packet;
@@ -86,6 +122,16 @@ TMD_PRIM* ReadTMD(TMD_PRIM* tmdprim)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_tim_addr);
+/**
+ * @brief Internal: parse a TIM header
+ * 
+ * Reads the mode, the optional CLUT block and the pixel block of a TIM
+ * file.
+ * 
+ * @param timaddr Address of the TIM data
+ * @param img Receives the image description
+ * @return Size of the TIM in 32-bit words, or -1 if the ID is invalid
+ */
 s32 get_tim_addr(u32* timaddr, TIM_IMAGE* img) {
     unsigned int clut_len;
     unsigned int img_len;
@@ -119,6 +165,19 @@ s32 get_tim_addr(u32* timaddr, TIM_IMAGE* img) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", get_tmd_addr);
+/**
+ * @brief Internal: locate the lists of a TMD object
+ * 
+ * Computes the addresses of the primitive, vertex and normal lists of an
+ * object.
+ * 
+ * @param tmd TMD data (after the file header)
+ * @param objid Object number
+ * @param t_prim Receives the primitive list address
+ * @param v_ofs Receives the vertex list address
+ * @param n_ofs Receives the normal list address
+ * @return Number of primitives in the object
+ */
 u_long get_tmd_addr(
     TMD* tmd, int objid, u_long** t_prim, u_long** v_ofs, u_long** n_ofs) {
     TmdObj* obj = tmd->obj;
@@ -145,6 +204,16 @@ u_long get_tmd_addr(
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", unpack_packet);
+/**
+ * @brief Internal: decode one TMD primitive packet
+ * 
+ * Clears arg1 and fills it with the colors, texture coordinates and
+ * vertex/normal indexes of the packet, according to its type.
+ * 
+ * @param arg0 Primitive packet
+ * @param arg1 Receives the decoded primitive
+ * @return Size of the packet in bytes, or -1 for an unknown type
+ */
 s32 unpack_packet(PACKET* arg0, TMD_PRIM* arg1) {
     s32 temp_v0;
     u32 temp_v1;

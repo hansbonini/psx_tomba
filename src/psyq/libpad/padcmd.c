@@ -3,12 +3,33 @@
 
 /* Psy-Q LIBPAD PADCMD.OBJ: _padSetAct, _padSetCmd, _padSendAtLoadInfo, _padRecvAtLoadInfo, _padGetActSize, _padLoadActInfo, _padSetActAlign, _padSetMainMode, _padCmdParaMode and the command emitters. */
 
+/**
+ * @brief Internal: set the actuator (vibration) output data of a port
+ * 
+ * Stores the buffer whose bytes are sent to the actuators on every
+ * communication.
+ * 
+ * @param arg0 Controller port state
+ * @param arg1 Actuator data buffer
+ * @param arg2 Size of the buffer in bytes
+ */
 void _padSetAct(padPort *arg0, u8 *arg1, int arg2)
 {
     arg0->payload_28 = arg1;
     arg0->payload_28_len = arg2;
 }
 
+/**
+ * @brief Internal: queue a configuration command for a port
+ * 
+ * Sets the command byte and its parameter buffer to be sent during the
+ * next communication.
+ * 
+ * @param arg0 Controller port state
+ * @param arg1 Controller command byte (0x43, 0x44, ...)
+ * @param arg2 Parameter bytes
+ * @param arg3 Number of parameter bytes
+ */
 void _padSetCmd(padPort *arg0, unsigned char arg1, u8 *arg2, unsigned char arg3)
 {
     arg0->command = arg1;
@@ -16,6 +37,14 @@ void _padSetCmd(padPort *arg0, unsigned char arg1, u8 *arg2, unsigned char arg3)
     arg0->payload_2c_len = arg3;
 }
 
+/**
+ * @brief Internal: select the next query command of the controller information sequence
+ * 
+ * Depending on the current step, requests the controller status (0x45),
+ * the ID of a mode (0x4C) or a combination record (0x47).
+ * 
+ * @param arg0 Controller port state
+ */
 void _padSendAtLoadInfo(padPort *arg0)
 {
     int state = arg0->sequenceStep;
@@ -36,6 +65,17 @@ void _padSendAtLoadInfo(padPort *arg0)
 #define CARD_RESPONSE(obj) \
     (*(unsigned char * volatile *)&(obj)->response_3c)
 
+/**
+ * @brief Internal: process a reply of the controller information sequence
+ * 
+ * Stores the mode/actuator/combination counts and the current mode, then
+ * accumulates the size of the combination data. Once everything has been
+ * counted it reserves the buffers with _padLoadActInfo() and starts
+ * reading the tables.
+ * 
+ * @param obj Controller port state
+ * @return 1 to advance to the next step, 0 to stay on the current step
+ */
 int _padRecvAtLoadInfo(padPort *obj) {
     unsigned int chunk;
     register unsigned int next asm("$2");
@@ -86,6 +126,15 @@ return_zero:
     return 1;
 }
 
+/**
+ * @brief Internal: compute the buffer size needed for the controller tables
+ * 
+ * Adds up the space required by the mode ID table, the actuator records
+ * and the combination records.
+ * 
+ * @param arg0 Controller port state
+ * @return Size in bytes
+ */
 int _padGetActSize(padPort *arg0) {
     int first;
     int second;
@@ -110,6 +159,17 @@ int _padGetActSize(padPort *arg0) {
     return first + base;
 }
 
+/**
+ * @brief Internal: start reading the mode, actuator and combination tables
+ * 
+ * Lays out the mode, actuator and combination tables inside the given
+ * buffer and installs the send/receive handlers (func_80069DA4 /
+ * func_80069E4C) that read them from the controller.
+ * 
+ * @param obj Controller port state
+ * @param buffer Buffer receiving the tables
+ * @return 1 if the sequence was started, 0 if the buffer is NULL, the tables are already loaded or the port is busy
+ */
 int _padLoadActInfo(padPort *obj, unsigned char *buffer) {
     int cursor;
     int result;
@@ -158,6 +218,14 @@ initialize:
     return result;
 }
 
+/**
+ * @brief Internal: send handler for reading the controller tables
+ * 
+ * Requests the next mode ID (0x4C), actuator record (0x46) or combination
+ * record (0x47, continued with 0x4B).
+ * 
+ * @param arg0 Controller port state
+ */
 void func_80069DA4(padPort *arg0) {
     int state = arg0->sequenceStep;
 
@@ -178,6 +246,15 @@ void func_80069DA4(padPort *arg0) {
     }
 }
 
+/**
+ * @brief Internal: receive handler for reading the controller tables
+ * 
+ * Stores each reply in the mode, actuator or combination table and moves
+ * to the next record or step.
+ * 
+ * @param inPort Controller port state
+ * @return 1 to advance to the next step, 0 to stay on the current step
+ */
 int func_80069E4C(padPort *inPort) {
     register padPort *port = inPort;
     switch (port->sequenceStep) {
@@ -283,6 +360,16 @@ complete:
     return 1;
 }
 
+/**
+ * @brief Internal: start the actuator alignment sequence
+ * 
+ * Installs handlers that send the actuator map with command 0x4D and then
+ * mark the actuators as assigned.
+ * 
+ * @param obj Controller port state
+ * @param command 6-byte actuator map (actuator number for each output data byte, 0xFF = unused)
+ * @return 1 if the request was accepted, 0 if the port is busy
+ */
 int _padSetActAlign(padPort *obj, u8 *command) {
     int result;
     int active;
@@ -301,6 +388,13 @@ int _padSetActAlign(padPort *obj, u8 *command) {
     return result;
 }
 
+/**
+ * @brief Internal: send handler of the actuator alignment sequence
+ * 
+ * Queues command 0x4D with the requested 6-byte actuator map.
+ * 
+ * @param arg0 Controller port state
+ */
 void func_8006A128(padPort *arg0) {
     u8 *value = arg0->requestedActuatorMap;
 
@@ -308,6 +402,15 @@ void func_8006A128(padPort *arg0) {
     arg0->payload_2c_len = 6;
     arg0->payload_2c = value;
 }
+/**
+ * @brief Internal: receive handler of the actuator alignment sequence
+ * 
+ * Builds the local actuator map from the requested one, keeping only as
+ * many data bytes per actuator as it needs, and ends the sequence.
+ * 
+ * @param arg0 Controller port state
+ * @return Always 0
+ */
 s32 func_8006A144(padPort *arg0) {
     s32 i;
     s32 ff;
@@ -359,6 +462,17 @@ s32 func_8006A144(padPort *arg0) {
     return 0;
 }
 
+/**
+ * @brief Internal: start the main mode change sequence
+ * 
+ * Installs handlers that send command 0x44 (set mode) and then reapply the
+ * actuator map with 0x4D.
+ * 
+ * @param obj Controller port state
+ * @param byte1 Mode index to select
+ * @param byte2 Mode lock: 3 = lock the mode switch on the controller, otherwise unlocked
+ * @return 1 if the request was accepted, 0 if the port is busy
+ */
 int _padSetMainMode(padPort *obj, int byte1, int byte2) {
     register int compareByte asm("$19");
     register int flag asm("$3");
@@ -384,6 +498,14 @@ int _padSetMainMode(padPort *obj, int byte1, int byte2) {
     return result;
 }
 
+/**
+ * @brief Internal: send handler of the main mode change sequence
+ * 
+ * Queues command 0x44 with the mode and lock bytes, then command 0x4D with
+ * the actuator map.
+ * 
+ * @param arg0 Controller port state
+ */
 void func_8006A2A4(padPort *arg0) {
     int state = arg0->sequenceStep;
 
@@ -401,6 +523,15 @@ void func_8006A2A4(padPort *arg0) {
     }
 }
 
+/**
+ * @brief Internal: receive handler of the main mode change sequence
+ * 
+ * If the requested mode was already active the sequence just continues;
+ * otherwise the port information is cleared so it is read again.
+ * 
+ * @param arg0 Controller port state
+ * @return 1 to advance to the next step, 0 otherwise
+ */
 int func_8006A2F8(padPort *arg0) {
     if (arg0->modeAlreadySelected != 0) {
         if (arg0->sequenceStep == 2) {
@@ -414,35 +545,82 @@ int func_8006A2F8(padPort *arg0) {
     _padFuncClrInfo(arg0);
     return 0;
 }
+/**
+ * @brief Internal: queue command 0x43 (enter/exit configuration mode)
+ * 
+ * Sets the command byte to 0x43 with a single parameter byte.
+ * 
+ * @param obj Controller port state
+ * @param value 1 = enter configuration mode, 0 = exit
+ */
 void _padCmdParaMode(padPort *obj, unsigned char value) {
     obj->command = 0x43;
     obj->payload_2c = (unsigned char *)obj + 0x24;
     obj->pad_24[0] = value;
     obj->payload_2c_len = 1;
 }
+/**
+ * @brief Internal: queue command 0x45 (query controller status)
+ * 
+ * Sets the command byte to 0x45 without parameters.
+ * 
+ * @param obj Controller port state
+ */
 void func_8006A378(padPort *obj) {
     obj->command = 0x45;
     obj->payload_2c = 0;
     obj->payload_2c_len = 0;
 }
+/**
+ * @brief Internal: queue command 0x4C (query mode ID)
+ * 
+ * Sets the command byte to 0x4C with a mode index parameter.
+ * 
+ * @param obj Controller port state
+ * @param value Mode index
+ */
 void func_8006A38C(padPort *obj, unsigned char value) {
     obj->command = 0x4C;
     obj->payload_2c = (unsigned char *)obj + 0x24;
     obj->pad_24[0] = value;
     obj->payload_2c_len = 1;
 }
+/**
+ * @brief Internal: queue command 0x46 (query actuator information)
+ * 
+ * Sets the command byte to 0x46 with an actuator index parameter.
+ * 
+ * @param obj Controller port state
+ * @param value Actuator index
+ */
 void func_8006A3AC(padPort *obj, unsigned char value) {
     obj->command = 0x46;
     obj->payload_2c = (unsigned char *)obj + 0x24;
     obj->pad_24[0] = value;
     obj->payload_2c_len = 1;
 }
+/**
+ * @brief Internal: queue command 0x47 (query actuator combination)
+ * 
+ * Sets the command byte to 0x47 with a combination index parameter.
+ * 
+ * @param obj Controller port state
+ * @param value Combination index
+ */
 void func_8006A3CC(padPort *obj, unsigned char value) {
     obj->command = 0x47;
     obj->payload_2c = (unsigned char *)obj + 0x24;
     obj->pad_24[0] = value;
     obj->payload_2c_len = 1;
 }
+/**
+ * @brief Internal: queue command 0x4B (continue reading combination data)
+ * 
+ * Sets the command byte to 0x4B without parameters. The exact meaning of
+ * this controller command is uncertain.
+ * 
+ * @param obj Controller port state
+ */
 void func_8006A3EC(padPort *obj) {
     obj->command = 0x4B;
     obj->payload_2c = 0;

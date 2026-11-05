@@ -16,6 +16,12 @@ extern s32 StRingIdx3;
 extern s32 StRingSize;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_002", StClearRing);
+/**
+ * @brief Clear the streaming ring buffer
+ * 
+ * Resets all ring indexes and the streaming state and marks every ring
+ * entry as free.
+ */
 void StClearRing(void)
 {
     StRingIdx3 = 0;

@@ -10,6 +10,14 @@ extern s16 _svm_orev2;
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_no1", vmNoiseOn);
 
+/**
+ * @brief Internal: start a noise voice
+ * 
+ * Computes the voice volume, sets the noise clock from the note and
+ * enables noise output and key on for the voice.
+ * 
+ * @param arg0 Voice number
+ */
 void vmNoiseOn(u8 arg0) {
     struct SeqStruct* score =
         &_ss_score[_svm_cur.field_16_vag_idx & 0xFF]

@@ -11,6 +11,14 @@ void trapIntrDMA(void);
 void DMA_memclr(int* ptr, int size);
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_dma", startIntrDMA);
+/**
+ * @brief Internal: start the DMA interrupt dispatcher
+ * 
+ * Clears all DMA callbacks and DICR and registers trapIntrDMA() as the DMA
+ * interrupt handler.
+ * 
+ * @return Address of setIntrDMA(), used by DMACallback()
+ */
 void* startIntrDMA(void)
 {
     DMA_memclr(&dma_callbacks, 8);
@@ -20,6 +28,12 @@ void* startIntrDMA(void)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_dma", trapIntrDMA);
+/**
+ * @brief Internal: DMA interrupt handler
+ * 
+ * Acknowledges each DMA channel that raised an interrupt and calls its
+ * callback. Prints diagnostic information on a DMA bus error.
+ */
 void trapIntrDMA(void) {
     u32 mask;
     int i;
@@ -43,6 +57,16 @@ void trapIntrDMA(void) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_dma", setIntrDMA);
+/**
+ * @brief Internal: set the callback of a DMA channel
+ * 
+ * Stores the callback and enables or disables the interrupt of the channel
+ * in DICR.
+ * 
+ * @param index DMA channel number (0-6)
+ * @param callback Callback function (NULL to remove it)
+ * @return Previous callback
+ */
 Callback setIntrDMA(int index, Callback callback) {
     Callback prev = dma_callbacks[index];
     if (callback != prev) {
@@ -58,6 +82,14 @@ Callback setIntrDMA(int index, Callback callback) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr_dma", DMA_memclr);
+/**
+ * @brief Internal: clear an array of 32-bit words
+ * 
+ * Writes zero to size consecutive words.
+ * 
+ * @param ptr Start address
+ * @param size Number of words
+ */
 void DMA_memclr(int* ptr, int size) {
     while (size--) {
         *ptr++ = 0;

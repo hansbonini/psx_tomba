@@ -154,6 +154,16 @@ extern char _svm_sreg_dirty[24];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_nowon", _SsVmKeyOnNow);
 
+/**
+ * @brief Internal: queue a key on for the current voice
+ * 
+ * Computes the left/right volume from the VAB, program, tone, sequence and
+ * pan settings, sets the pitch and adds the voice to the pending key on
+ * mask.
+ * 
+ * @param vagCount Number of tones started for the note
+ * @param pitch SPU pitch value
+ */
 void _SsVmKeyOnNow(unsigned short vagCount, unsigned short pitch) {
     volatile int pad;
     unsigned chL;

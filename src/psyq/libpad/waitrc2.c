@@ -3,12 +3,27 @@
 
 /* PSY-Q LIBPAD WAITRC2: setRC2wait, chkRC2wait. */
 
+/**
+ * @brief Internal: start a timeout based on root counter 2
+ * 
+ * Remembers the current counter value and the limit to wait for.
+ * 
+ * @param limit Timeout limit, in units of 8 system clock cycles
+ */
 void setRC2wait(int limit) {
     int start = *(volatile u16 *)0x1F801120;
     D_8009FD80 = limit;
     D_8009B6A4 = start;
 }
 
+/**
+ * @brief Internal: check the root counter 2 timeout
+ * 
+ * Computes the time elapsed since setRC2wait(), handling counter
+ * wrap-around.
+ * 
+ * @return Non-zero when the timeout has expired
+ */
 int chkRC2wait(void) {
     register u32 current asm("$4");
     register u32 raw asm("$3");

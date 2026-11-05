@@ -67,9 +67,9 @@ static __inline__ s32 otadd_4B450(unsigned long *a, char *b, s32 c, s32 d, unsig
     return 0;
 }
 
-void func_8004B450(GameObject *o)
+void func_8004B450(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     u8 *q;
     s32 i;
     s16 *e;
@@ -83,12 +83,12 @@ void func_8004B450(GameObject *o)
     u8 w;
     s32 h;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_4B450 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_4B450()) return;
@@ -97,70 +97,56 @@ void func_8004B450(GameObject *o)
     y = xy >> 16;
     tbl = (ROW_4B450 *)LOAD_BUFFER;
     for (i = 0; i < 6; i++) {
-        if ((&tbl[*(u16 *)((u8 *)o + 0xc6)].e[i])->n > 0) {
-            d = o->spriteBank;
-            d += *(*(s16 ***)&D_800A37D0)[((u16 *)&o->unkB4)[i]] * 4;
-            p = D_1F800164;
-            q = (u8 *)(o->spriteBank + ((s16 *)d)[1]);
-            p->code = 0x2d;
-            SetSemiTrans(p, 0);
+        if ((&tbl[*(u16 *)((u8 *)obj + 0xc6)].e[i])->n > 0) {
+            d = obj->spriteBank;
+            d += *(*(s16 ***)&D_800A37D0)[((u16 *)&obj->unkB4)[i]] * 4;
+            poly = D_1F800164;
+            q = (u8 *)(obj->spriteBank + ((s16 *)d)[1]);
+            poly->code = 0x2d;
+            SetSemiTrans(poly, 0);
             u = q[0];
             v = q[1];
             w = q[10];
             h = q[11];
-            p->u0 = u;
+            poly->u0 = u;
             __asm__ volatile("");
-            p->u2 = u;
-            p->v0 = v;
-            p->u1 = u + w;
-            p->v1 = v;
-            p->v2 = v + h;
-            p->u3 = u + w;
-            p->v3 = v + h;
-            p->x0 = x + (&tbl[*(u16 *)((u8 *)o + 0xc6)].e[i])->x0 / 100;
-            p->y0 = y + (&tbl[*(u16 *)((u8 *)o + 0xc6)].e[i])->y0 / 100;
-            p->x1 = x + (&tbl[*(u16 *)((u8 *)o + 0xc6)].e[i])->x1 / 100;
-            p->y1 = p->y0;
-            p->x2 = p->x0;
-            p->y2 = y + (&tbl[*(u16 *)((u8 *)o + 0xc6)].e[i])->y1 / 100;
-            p->x3 = p->x1;
-            p->y3 = p->y2;
-            p->tpage = o->tpage;
-            p->clut = *(u16 *)(q + 2);
-            if (!otadd_4B450((unsigned long *)p, D_1F8001E0, 0, o->unkF, 0x9000000))
+            poly->u2 = u;
+            poly->v0 = v;
+            poly->u1 = u + w;
+            poly->v1 = v;
+            poly->v2 = v + h;
+            poly->u3 = u + w;
+            poly->v3 = v + h;
+            setXY4(poly, x + (&tbl[*(u16 *)((u8 *)obj + 0xc6)].e[i])->x0 / 100, y + (&tbl[*(u16 *)((u8 *)obj + 0xc6)].e[i])->y0 / 100, x + (&tbl[*(u16 *)((u8 *)obj + 0xc6)].e[i])->x1 / 100, poly->y0, poly->x0, y + (&tbl[*(u16 *)((u8 *)obj + 0xc6)].e[i])->y1 / 100, poly->x1, poly->y2);
+            poly->tpage = obj->tpage;
+            poly->clut = *(u16 *)(q + 2);
+            if (!otadd_4B450((unsigned long *)poly, D_1F8001E0, 0, obj->priority, 0x9000000))
                 D_1F800164 = (POLY_FT4 *)((char *)D_1F800164 + 0x28);
         }
     }
-    d = o->spriteBank;
+    d = obj->spriteBank;
     d += *D_800AFF10 * 4;
-    p = D_1F800164;
-    q = (u8 *)(o->spriteBank + ((s16 *)d)[1]);
-    p->code = 0x2d;
-    SetSemiTrans(p, 0);
+    poly = D_1F800164;
+    q = (u8 *)(obj->spriteBank + ((s16 *)d)[1]);
+    poly->code = 0x2d;
+    SetSemiTrans(poly, 0);
     u = q[0];
     v = q[1];
     w = q[10];
     h = q[11];
-    p->u0 = u;
+    poly->u0 = u;
     __asm__ volatile("");
-    p->u2 = u;
-    p->v0 = v;
-    p->u1 = u + w;
-    p->v1 = v;
-    p->v2 = v + h;
-    p->u3 = u + w;
-    p->v3 = v + h;
-    p->x0 = x + ((ROW_4B450 *)LOAD_BUFFER)[*(u16 *)((u8 *)o + 0xc6)].e[6].x0 / 100;
-    p->y0 = y + LOAD_BUFFER_ROW_4B450Arr[*(u16 *)((u8 *)o + 0xc6)].e[6].y0 / 100;
-    p->x1 = x + LOAD_BUFFER_ROW_4B450Arr[*(u16 *)((u8 *)o + 0xc6)].e[6].x1 / 100;
-    p->y1 = p->y0;
-    p->x2 = p->x0;
-    p->y2 = y + LOAD_BUFFER_ROW_4B450Arr[*(u16 *)((u8 *)o + 0xc6)].e[6].y1 / 100;
-    p->x3 = p->x1;
-    p->y3 = p->y2;
-    p->tpage = o->tpage;
-    p->clut = *(u16 *)(q + 2);
-    if (!otadd_4B450((unsigned long *)p, D_1F8001E0, 0, o->unkF, 0x9000000))
+    poly->u2 = u;
+    poly->v0 = v;
+    poly->u1 = u + w;
+    poly->v1 = v;
+    poly->v2 = v + h;
+    poly->u3 = u + w;
+    poly->v3 = v + h;
+    setXY4(poly, x + ((ROW_4B450 *)LOAD_BUFFER)[*(u16 *)((u8 *)obj + 0xc6)].e[6].x0 / 100, y + LOAD_BUFFER_ROW_4B450Arr[*(u16 *)((u8 *)obj + 0xc6)].e[6].y0 / 100, x + LOAD_BUFFER_ROW_4B450Arr[*(u16 *)((u8 *)obj + 0xc6)].e[6].x1 / 100, poly->y0, poly->x0, y + LOAD_BUFFER_ROW_4B450Arr[*(u16 *)((u8 *)obj + 0xc6)].e[6].y1 / 100, poly->x1, poly->y2);
+    poly->tpage = obj->tpage;
+    poly->clut = *(u16 *)(q + 2);
+    if (!otadd_4B450((unsigned long *)poly, D_1F8001E0, 0, obj->priority, 0x9000000))
         D_1F800164 = (POLY_FT4 *)((char *)D_1F800164 + 0x28);
 }
 
@@ -247,14 +233,12 @@ void func_8004BAF0(O_4BAF0 *o)
     do {
         p = D_1F800164_PolyFT4_4BAF0Ptr;
         if (o->animFrame & 1) {
-            p->x0 = o->x + e->dx;
-            p->y0 = o->y + e->dy;
+            setXY0(p, o->x + e->dx, o->y + e->dy);
             p->x1 = p->x0 + e->w;
             p->x2 = p->x0;
             p->y1 = p->y0;
         } else {
-            p->x0 = o->x - e->dx;
-            p->y0 = o->y + e->dy;
+            setXY0(p, o->x - e->dx, o->y + e->dy);
             p->x1 = p->x0 - e->w;
             p->x2 = p->x0;
             p->y1 = p->y0;
@@ -310,20 +294,14 @@ void drawMessageBox(O_4BDE4 *o)
             MESSAGE_GLYPHS[o->idx][j].id = f - (f & 0x8000);
         } else if (!(f & 0x4000) || o->v22 < 0x1f) {
             SetSprt(s);
-            s->r0 = 0x80;
-            s->g0 = 0x80;
-            s->b0 = 0x80;
+            setRGB0(s, 0x80, 0x80, 0x80);
             if (GLYPH_CACHE[f &= 0xfff].flag == 0) {
-                s->x0 = MESSAGE_SLOTS[o->idx].x + MESSAGE_GLYPHS[o->idx][j].x;
-                s->y0 = MESSAGE_SLOTS[o->idx].y + MESSAGE_GLYPHS[o->idx][j].y;
+                setXY0(s, MESSAGE_SLOTS[o->idx].x + MESSAGE_GLYPHS[o->idx][j].x, MESSAGE_SLOTS[o->idx].y + MESSAGE_GLYPHS[o->idx][j].y);
             } else {
-                s->x0 = MESSAGE_SLOTS[o->idx].x + MESSAGE_GLYPHS[o->idx][j].x - 7;
-                s->y0 = MESSAGE_SLOTS[o->idx].y + MESSAGE_GLYPHS[o->idx][j].y - 9;
+                setXY0(s, MESSAGE_SLOTS[o->idx].x + MESSAGE_GLYPHS[o->idx][j].x - 7, MESSAGE_SLOTS[o->idx].y + MESSAGE_GLYPHS[o->idx][j].y - 9);
             }
-            s->u0 = GLYPH_CACHE[(s16)f].u << 2;
-            s->v0 = GLYPH_CACHE[(s16)f].v;
-            s->w = GLYPH_CACHE[(s16)f].w;
-            s->h = GLYPH_CACHE[(s16)f].h;
+            setUV0(s, GLYPH_CACHE[(s16)f].u << 2, GLYPH_CACHE[(s16)f].v);
+            setWH(s, GLYPH_CACHE[(s16)f].w, GLYPH_CACHE[(s16)f].h);
             s->clut = MESSAGE_GLYPHS[o->idx][j].clut;
             {
                 SPRT *q = D_1F800164;
@@ -377,9 +355,9 @@ extern UV8_4C258 D_8007EB8C[];
 void drawBalloonFrame(R_4C258 *o_, s16 c, s16 tp)
 {
     register R_4C258 *o asm("$17") = o_;
-    SPRT *sp;
-    POLY_FT4 *ft;
-    TILE *ti;
+    SPRT *sprt;
+    POLY_FT4 *poly;
+    TILE *tile;
     char pad[96];
     s16 pos[4][8];
     s32 k;
@@ -391,13 +369,11 @@ void drawBalloonFrame(R_4C258 *o_, s16 c, s16 tp)
     void *p;
     register s32 f asm("$4");
     { register s32 r asm("$5"); r = (u16)o->f; f = r << 16; }
-    sp = (SPRT *)0x1f800000; ft = (POLY_FT4 *)0x1f800014; ti = (TILE *)0x1f80003c;
+    sprt = (SPRT *)0x1f800000; poly = (POLY_FT4 *)0x1f800014; tile = (TILE *)0x1f80003c;
     if ((f>>16) != -1 && (u32)(k = f >> 28) < 8) {
-        ((u8 *)ft)[3] = 9;
-        ft->code = 0x2c;
-        ft->r0 = 0x80;
-        ft->g0 = 0x80;
-        ft->b0 = 0x80;
+        ((u8 *)poly)[3] = 9;
+        poly->code = 0x2c;
+        setRGB0(poly, 0x80, 0x80, 0x80);
         switch (k) {
         case 0:
             w = 8; h = 16;
@@ -442,25 +418,24 @@ void drawBalloonFrame(R_4C258 *o_, s16 c, s16 tp)
         default:
             goto skip;
         }
-        { register s16 t asm("$2") = x + w; ft->x3 = ft->x1 = t; } asm("");
-        ft->y1 = ft->y0 = y;
-        ft->x2 = ft->x0 = x;
-        ft->y3 = ft->y2 = y + h;
-        ft->u0 = BALLOON_TAIL_SPRITES[k].u;
-        ft->v0 = BALLOON_TAIL_SPRITES[k].v;
+        { register s16 t asm("$2") = x + w; poly->x3 = poly->x1 = t; } asm("");
+        poly->y1 = poly->y0 = y;
+        poly->x2 = poly->x0 = x;
+        poly->y3 = poly->y2 = y + h;
+        setUV0(poly, BALLOON_TAIL_SPRITES[k].u, BALLOON_TAIL_SPRITES[k].v);
         { s32 w2;
         h = BALLOON_TAIL_SPRITES[k].h;
         w2 = BALLOON_TAIL_SPRITES[k].w;
-        ft->u2 = ft->u0;
-        ft->u1 = ft->u0 + w2;
-        ft->v1 = ft->v0;
-        ft->v2 = h + ft->v0;
-        ft->v3 = ft->v2;
-        ft->u3 = ft->u1; }
-        ft->clut = GetClut(0x160, c + 0x1e3);
-        ft->tpage = tp;
+        poly->u2 = poly->u0;
+        poly->u1 = poly->u0 + w2;
+        poly->v1 = poly->v0;
+        poly->v2 = h + poly->v0;
+        poly->v3 = poly->v2;
+        poly->u3 = poly->u1; }
+        poly->clut = GetClut(0x160, c + 0x1e3);
+        poly->tpage = tp;
         { void *p = D_1F800164;
-        *(POLY_FT4 *)p = *ft;
+        *(POLY_FT4 *)p = *poly;
         AddPrim((void *)(D_1F8001E0 + 8), p); }
         D_1F800164 += 0x28;
     }
@@ -474,19 +449,14 @@ skip:
     pos[3][0] = o->x + o->w - 8;
     pos[3][1] = o->y + o->h - 8;
     for (i = 0; i < 4; i++) {
-        SetSprt(sp);
-        sp->r0 = 0x80;
-        sp->g0 = 0x80;
-        sp->b0 = 0x80;
-        sp->x0 = pos[i][0];
-        sp->y0 = pos[i][1];
-        sp->u0 = D_8007EB84[i].u;
-        sp->v0 = D_8007EB84[i].v;
-        sp->w = 8;
-        sp->h = 8;
-        sp->clut = GetClut(0x160, c + 0x1e3);
+        SetSprt(sprt);
+        setRGB0(sprt, 0x80, 0x80, 0x80);
+        setXY0(sprt, pos[i][0], pos[i][1]);
+        setUV0(sprt, D_8007EB84[i].u, D_8007EB84[i].v);
+        setWH(sprt, 8, 8);
+        sprt->clut = GetClut(0x160, c + 0x1e3);
         { void *p = D_1F800164;
-        *(SPRT *)p = *sp;
+        *(SPRT *)p = *sprt;
         AddPrim((void *)(D_1F8001E0 + 8), p); }
         D_1F800164 += 0x14;
     }
@@ -523,51 +493,29 @@ skip:
     pos[3][6] = o->x + o->w;
     pos[3][7] = o->y + o->h - 8;
     for (i = 0; i < 4; i++) {
-        ((u8 *)ft)[3] = 9;
-        ft->code = 0x2c;
-        ft->r0 = 0x80;
-        ft->g0 = 0x80;
-        ft->b0 = 0x80;
-        ft->x0 = pos[i][0];
-        ft->y0 = pos[i][1];
-        ft->x1 = pos[i][2];
-        ft->y1 = pos[i][3];
-        ft->x2 = pos[i][4];
-        ft->y2 = pos[i][5];
-        ft->x3 = pos[i][6];
-        ft->y3 = pos[i][7];
-        ft->u0 = D_8007EB8C[i].u0;
-        ft->v0 = D_8007EB8C[i].v0;
-        ft->u1 = D_8007EB8C[i].u1;
-        ft->v1 = D_8007EB8C[i].v1;
-        ft->u2 = D_8007EB8C[i].u2;
-        ft->v2 = D_8007EB8C[i].v2;
-        ft->u3 = D_8007EB8C[i].u3;
-        ft->v3 = D_8007EB8C[i].v3;
-        ft->clut = GetClut(0x160, c + 0x1e3);
-        ft->tpage = tp;
+        ((u8 *)poly)[3] = 9;
+        poly->code = 0x2c;
+        setRGB0(poly, 0x80, 0x80, 0x80);
+        setXY4(poly, pos[i][0], pos[i][1], pos[i][2], pos[i][3], pos[i][4], pos[i][5], pos[i][6], pos[i][7]);
+        setUV4(poly, D_8007EB8C[i].u0, D_8007EB8C[i].v0, D_8007EB8C[i].u1, D_8007EB8C[i].v1, D_8007EB8C[i].u2, D_8007EB8C[i].v2, D_8007EB8C[i].u3, D_8007EB8C[i].v3);
+        poly->clut = GetClut(0x160, c + 0x1e3);
+        poly->tpage = tp;
         { void *p = D_1F800164;
-        *(POLY_FT4 *)p = *ft;
+        *(POLY_FT4 *)p = *poly;
         AddPrim((void *)(D_1F8001E0 + 8), p); }
         D_1F800164 += 0x28;
     }
-    ((u8 *)ti)[3] = 3;
-    ti->code = 0x60;
+    ((u8 *)tile)[3] = 3;
+    tile->code = 0x60;
     if (c) {
-        ti->r0 = 0;
-        ti->g0 = 0x50;
-        ti->b0 = 0;
+        setRGB0(tile, 0, 0x50, 0);
     } else {
-        ti->r0 = 0xf8;
-        ti->g0 = 0xe8;
-        ti->b0 = 0xd8;
+        setRGB0(tile, 0xf8, 0xe8, 0xd8);
     }
-    ti->x0 = o->x + 8;
-    ti->y0 = o->y + 8;
-    ti->w = o->w - 16;
-    ti->h = o->h - 16;
+    setXY0(tile, o->x + 8, o->y + 8);
+    setWH(tile, o->w - 16, o->h - 16);
     { void *p = D_1F800164;
-    *(TILE *)p = *ti;
+    *(TILE *)p = *tile;
     AddPrim((void *)(D_1F8001E0 + 8), p); }
     p = D_1F800164 = D_1F800164 + 0x10;
     SetDrawMode(p, 0, 0, tp, 0);
@@ -613,7 +561,7 @@ static __inline__ s32 addprim_4CC84(u32 *a, char *b, s32 c, s32 d, u32 e)
     }
     return 0;
 }
-void func_8004CC84(GameObject *o)
+void func_8004CC84(GameObject *obj)
 {
     PolyFT4_4CC84 *p;
     u8 *s;
@@ -626,40 +574,37 @@ void func_8004CC84(GameObject *o)
     s16 u;
     u8 v;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800060.vy = o->y.p.whole;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800060.vy = obj->y.p.whole;
     if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&(*(GameTask **)&D_1F8001D4)->mode != 3)
-        D_1F800060.vz = o->z.p.whole >> 2;
+        D_1F800060.vz = obj->z.p.whole >> 2;
     else
-        D_1F800060.vz = o->z.p.whole;
+        D_1F800060.vz = obj->z.p.whole;
     SetRotMatrix(&SCRATCHPAD.viewMatrix);
     SetTransMatrix(D_1F8000C0);
     if (project_4CC84()) return;
-    a = (u16 *)o->anim;
-    hh = (s16 *)(o->spriteBank + *a * 4);
+    a = (u16 *)obj->anim;
+    hh = (s16 *)(obj->spriteBank + *a * 4);
     xy = LZ_FILE_CTRL_Long;
-    s = (u8 *)(*(volatile s32 *)&o->spriteBank + hh[1]);
+    s = (u8 *)(*(volatile s32 *)&obj->spriteBank + hh[1]);
     p = D_1F800164;
     p->code = 0x2c;
-    p->r0 = o->unkB4;
-    p->g0 = o->unkB4;
-    p->b0 = o->unkB4;
+    setRGB0(p, obj->unkB4, obj->unkB4, obj->unkB4);
     SetSemiTrans(p, 1);
-    p->tpage = o->tpage;
+    p->tpage = obj->tpage;
     u = s[0]; v = s[1]; w = s[0xa]; h = s[0xb];
     p->u0 = u; p->v0 = v; p->v1 = v; p->u1 = w + u;
     p->u2 = u; p->v2 = v + h; p->u3 = w + u; p->v3 = v + h;
-    p->x0 = xy + ((s8)s[0xe] * (u16)o->unkB8) / 200;
-    p->y0 = (xy >> 16) + ((s8)s[0xf] * (u16)o->unkB8) / 200;
-    t = (w * (u16)o->unkB8) / 100;
+    setXY0(p, xy + ((s8)s[0xe] * (u16)obj->unkB8) / 200, (xy >> 16) + ((s8)s[0xf] * (u16)obj->unkB8) / 200);
+    t = (w * (u16)obj->unkB8) / 100;
     p->y1 = *(volatile u16 *)&p->y0;
     p->x2 = p->x0;
     p->x1 = p->x0 + t - 1;
-    p->y2 = p->y0 + (h * (u16)o->unkB8) / 100 - 1;
+    p->y2 = p->y0 + (h * (u16)obj->unkB8) / 100 - 1;
     p->x3 = p->x1;
     p->y3 = p->y2;
     z = SCRATCHPAD.lz.offset;
-    p->clut = o->clut;
-    if (addprim_4CC84((u32 *)p, (char *)(D_1F8001E0 + 0x10), z, o->unkF, 0x9000000) == 0)
+    p->clut = obj->clut;
+    if (addprim_4CC84((u32 *)p, (char *)(D_1F8001E0 + 0x10), z, obj->priority, 0x9000000) == 0)
         D_1F800164 = (PolyFT4_4CC84 *)((char *)D_1F800164 + 0x28);
 }

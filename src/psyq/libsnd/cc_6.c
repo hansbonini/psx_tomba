@@ -5,6 +5,17 @@ typedef struct { u8 pad[0x44]; void (*ccentry[20])(); } SsFCallEntry;
 extern SsFCallEntry SsFCALL;
 
 
+/**
+ * @brief Internal: handle MIDI controller 6 (data entry)
+ * 
+ * Depending on the pending parameter, sets the loop count, applies an RPN
+ * (pitch bend range, fine/coarse tuning) to the tones of the current
+ * program, or calls the NRPN handler that edits a VAB attribute.
+ * 
+ * @param seq_no SEQ/SEP access number
+ * @param sep_no SEQ number within the SEP (0 for a SEQ)
+ * @param data Controller data value
+ */
 void _SsContDataEntry(short seq_no, short sep_no, unsigned char data)
 {
     struct SeqStruct* score;

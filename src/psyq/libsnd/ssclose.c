@@ -3,6 +3,14 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssclose", _SsClose);
 
+/**
+ * @brief Internal: close a SEQ/SEP
+ * 
+ * Silences and keys off its voices, frees the access number and resets the
+ * score state of all its sequences.
+ * 
+ * @param seq_sep_num Access number
+ */
 void _SsClose(s16 seq_sep_num) {
     s32 seq_num;
     _SsVmSetSeqVol(seq_sep_num, 0, 0, 1);
@@ -28,14 +36,33 @@ void _SsClose(s16 seq_sep_num) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssclose", SsSeqClose);
 
+/**
+ * @brief Close a SEQ
+ * 
+ * Releases the access number obtained with SsSeqOpen().
+ * 
+ * @param seq_access_num SEQ access number
+ */
 void SsSeqClose(short seq_access_num) { _SsClose(seq_access_num); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssclose", SsSepClose);
 
+/**
+ * @brief Close a SEP
+ * 
+ * Releases the access number obtained with SsSepOpen().
+ * 
+ * @param sep_access_num SEP access number
+ */
 void SsSepClose(short sep_access_num) { _SsClose(sep_access_num); }
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssclose", SsEnd);
 
+/**
+ * @brief Stop the sound system tick
+ * 
+ * Removes the interrupt or VSync callback installed by SsStart().
+ */
 void SsEnd(void) {
     if (_snd_seq_tick_env.unk4 == 0) {
         _snd_seq_tick_env.unk17 = 0;

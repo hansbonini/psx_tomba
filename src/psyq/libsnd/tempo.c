@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/tempo", _SsSndTempo);
 
+/**
+ * @brief Internal: advance a tempo change by one tick
+ * 
+ * Moves the tempo towards the target value set by
+ * SsSeqSetAccelerando/Ritardando and recomputes the ticks per interrupt.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsSndTempo(s16 arg0, s16 arg1) {
     struct SeqStruct* pSeq = &_ss_score[arg0][arg1];
 

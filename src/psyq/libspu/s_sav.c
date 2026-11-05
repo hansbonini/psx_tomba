@@ -80,6 +80,19 @@ extern s32 _spu_env;
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_sav", _SpuSetAnyVoice);
 
+/**
+ * @brief Internal: set or clear voices in a 24-bit voice register pair
+ * 
+ * Updates the bits of a voice-mask register pair (noise, reverb, ...).
+ * When register writes are deferred (_spu_env bit 0), the change is stored
+ * in the request queue instead.
+ * 
+ * @param on_off SPU_ON (1) = set the bits, SPU_OFF (0) = clear them, other values only read
+ * @param voice_bit Bit mask of the voices
+ * @param lo_reg Register index of the low 16 bits
+ * @param hi_reg Register index of the high 8 bits
+ * @return Resulting 24-bit voice mask
+ */
 u_long _SpuSetAnyVoice(long on_off, u_long voice_bit, int lo_reg, int hi_reg) {
     u_long ret;
 

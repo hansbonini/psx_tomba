@@ -11,6 +11,15 @@ extern StHEADER* StRingAddr;
 extern int StRingSize;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_007", StFreeRing);
+/**
+ * @brief Release a frame in the streaming ring buffer
+ * 
+ * Frees the ring entries used by the frame whose data starts at base so
+ * they can be reused for reading.
+ * 
+ * @param base Start address of the frame data obtained from StGetNext()
+ * @return 0 on success, 1 if the frame was not in use
+ */
 u_long StFreeRing(u_long *base)
 {
     int temp_a1;

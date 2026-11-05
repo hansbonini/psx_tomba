@@ -2,13 +2,16 @@
 #include "psyq/stdarg.h"
 #include "libspu_internal.h"
 
+/** @brief SPU hardware register block */
 union SpuUnion* _spu_RXX = (union SpuUnion*)0x1F801C00;
 volatile unsigned* dma_spu_madr = (volatile unsigned*)0x1F8010C0;
 volatile unsigned* dma_spu_bcr = (volatile unsigned*)0x1F8010C4;
 volatile unsigned* dma_spu_chcr = (volatile unsigned*)0x1F8010C8;
 volatile unsigned* dma_dpcr = (volatile unsigned*)0x1F8010F0;
 volatile s32* spu_delay = (volatile s32*)0x1F801014;
+/** @brief Current SPU RAM transfer start address (register units) */
 u16 _spu_tsa = 0;
+/** @brief Transfer mode: 0 = DMA, 1 = I/O */
 s32 _spu_transMode = 0;
 int _spu_addrMode = 0;
 int _spu_mem_mode = 2;
@@ -16,7 +19,9 @@ s32 _spu_mem_mode_plus = 3;
 int _spu_mem_mode_unit = 8;
 s32 _spu_mem_mode_unitM = 7;
 s32 _spu_inTransfer = 1;
+/** @brief Callback called when a DMA transfer to SPU RAM completes */
 void (* volatile _spu_transferCallback)() = 0;
+/** @brief Callback called on SPU interrupt */
 void (* volatile _spu_IRQCallback)() = 0;
 s8 _spu_dummy[16] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
 int D_80097C98 = 0;
@@ -49,6 +54,16 @@ extern s32 _spu_mem_mode_unit;
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_init);
 
+/**
+ * @brief Internal: reset the SPU hardware
+ * 
+ * Enables SPU DMA, silences and resets the SPU, clears the reverb and key
+ * registers and, on a cold start, also resets the voices and writes a
+ * dummy block to SPU RAM.
+ * 
+ * @param bHot 0 = cold start, 1 = hot start
+ * @return Always 0
+ */
 int _spu_init(int bHot) {
     unsigned dmaTimer;
     int i;
@@ -127,6 +142,15 @@ int _spu_init(int bHot) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_writeByIO);
 
+/**
+ * @brief Internal: write data to SPU RAM through the transfer FIFO
+ * 
+ * Copies the buffer in 64-byte chunks using manual (I/O) transfer mode,
+ * waiting for each chunk to complete.
+ * 
+ * @param addr Source buffer
+ * @param size Size in bytes
+ */
 void _spu_writeByIO(unsigned char* addr, u_long size) {
     unsigned short spustat;
     int num_to_trans;
@@ -179,6 +203,12 @@ void _spu_writeByIO(unsigned char* addr, u_long size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FiDMA);
 
+/**
+ * @brief Internal: SPU DMA completion handler
+ * 
+ * Waits for the SPU to finish, turns off transfer mode and then calls the
+ * transfer callback or delivers the HwSPU completion event.
+ */
 void _spu_FiDMA(void) {
     u32 i;
 
@@ -206,6 +236,16 @@ void _spu_FiDMA(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_r_);
 
+/**
+ * @brief Internal: start a DMA read from SPU RAM
+ * 
+ * Sets the transfer address, switches the SPU to DMA read mode and starts
+ * DMA channel 4.
+ * 
+ * @param arg0 Destination address in main memory
+ * @param arg1 SPU RAM transfer address (register units)
+ * @param arg2 Number of 16-word blocks
+ */
 void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
     _spu_RXX->rxx.trans_addr = arg1;
     _spu_FwaitFs();
@@ -222,6 +262,15 @@ void _spu_r_(s32 arg0, u16 arg1, s32 arg2) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_t);
 
+/**
+ * @brief Internal: low-level SPU transfer control
+ * 
+ * Command 2 sets the transfer address, 1 prepares a DMA write, 0 prepares
+ * a DMA read and 3 starts the DMA with the given address and size.
+ * 
+ * @param arg0 Command (0-3) followed by its arguments
+ * @return 0 on success, -2 on timeout
+ */
 int _spu_t(int arg0, ...) {
     unsigned channelControl;
     unsigned i;
@@ -302,6 +351,16 @@ int _spu_t(int arg0, ...) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_write);
 
+/**
+ * @brief Internal: transfer data from main memory to SPU RAM
+ * 
+ * Uses I/O mode or DMA depending on the transfer mode, starting at the
+ * current transfer address.
+ * 
+ * @param arg0 Source buffer
+ * @param size Size in bytes
+ * @return size
+ */
 s32 _spu_write(u8* arg0, u32 size) {
 
     if (_spu_transMode != 0) {
@@ -316,6 +375,15 @@ s32 _spu_write(u8* arg0, u32 size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_read);
 
+/**
+ * @brief Internal: transfer data from SPU RAM to main memory
+ * 
+ * Starts a DMA read from the current transfer address.
+ * 
+ * @param arg0 Destination address
+ * @param size Size in bytes
+ * @return size
+ */
 s32 _spu_read(s32 arg0, u32 size) {
     _spu_t(2, _spu_tsa << _spu_mem_mode_plus);
     _spu_t(0);
@@ -325,6 +393,15 @@ s32 _spu_read(s32 arg0, u32 size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FsetRXX);
 
+/**
+ * @brief Internal: write an SPU register
+ * 
+ * Writes the value as is, or converted from bytes to SPU address units.
+ * 
+ * @param arg0 Register index (16-bit units)
+ * @param arg1 Value to write
+ * @param arg2 0 = raw value, non-zero = byte address to convert
+ */
 void _spu_FsetRXX(s32 arg0, u32 arg1, s32 arg2) {
     if (arg2 == 0) {
 #ifdef VERSION_PC
@@ -340,6 +417,17 @@ void _spu_FsetRXX(s32 arg0, u32 arg1, s32 arg2) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FsetRXXa);
 
+/**
+ * @brief Internal: write an SPU address register
+ * 
+ * Rounds the byte address up to the SPU memory unit and converts it to
+ * register units. Special indexes -1 and -2 only return the converted
+ * value without writing.
+ * 
+ * @param arg0 Register index, or -1 / -2
+ * @param arg1 Byte address
+ * @return Register-unit value for -1, otherwise the rounded byte address
+ */
 u32 _spu_FsetRXXa(s32 arg0, u32 arg1) {
     u32 temp_a3;
     u32 var_a1;
@@ -364,6 +452,15 @@ u32 _spu_FsetRXXa(s32 arg0, u32 arg1) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FgetRXXa);
 
+/**
+ * @brief Internal: read an SPU address register
+ * 
+ * Returns the raw register value, or converts it to a byte address.
+ * 
+ * @param arg0 Register index
+ * @param arg1 -1 = raw value, otherwise convert to bytes
+ * @return Register value
+ */
 u32 _spu_FgetRXXa(s32 arg0, s32 arg1) {
     u16 temp = _spu_RXX->raw[arg0];
     if (arg1 == -1) {
@@ -373,6 +470,13 @@ u32 _spu_FgetRXXa(s32 arg0, s32 arg1) {
     }
 }
 
+/**
+ * @brief Internal: set the DMA priority of the SPU channel
+ * 
+ * Updates the channel 4 priority in DPCR.
+ * 
+ * @param high_priority Non-zero for high priority
+ */
 void _spu_FsetPCR(s32 high_priority) {
     *dma_dpcr &= 0xFFF8FFFF;
 
@@ -385,18 +489,33 @@ void _spu_FsetPCR(s32 high_priority) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FsetDelayW);
 
+/**
+ * @brief Internal: set the SPU bus timing for writes
+ * 
+ * Programs the SPU memory delay register for DMA writes.
+ */
 void _spu_FsetDelayW(void) {
     *spu_delay = (*spu_delay & 0xF0FFFFFF) | 0x20000000;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FsetDelayR);
 
+/**
+ * @brief Internal: set the SPU bus timing for reads
+ * 
+ * Programs the SPU memory delay register for DMA reads.
+ */
 void _spu_FsetDelayR(void) {
     *spu_delay = (*spu_delay & 0xF0FFFFFF) | 0x22000000;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/spu", _spu_FwaitFs);
 
+/**
+ * @brief Internal: short busy-wait delay
+ * 
+ * Spins for a fixed number of iterations to let the SPU settle.
+ */
 void _spu_FwaitFs(void) {
     volatile int i;
     volatile int sp4;

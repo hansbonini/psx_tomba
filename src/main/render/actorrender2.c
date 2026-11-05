@@ -17,56 +17,56 @@ asm(
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80045EFC);
 void func_8004D448(GameObject *o);
 
-void func_80045EFC(GameObject *o)
+void func_80045EFC(GameObject *obj)
 {
-    if (o->visible == 0) return;
-    if ((o->unkA & 0x10) && o->unkA0 == 0) return;
+    if (obj->visible == 0) return;
+    if ((obj->drawType & 0x10) && obj->model == 0) return;
     if ((*(s32 *)&GAME) == 9 && D_8009BCCC != 0x20 && D_8009BCA2 == 1 &&
-        o->z.p.whole < 0xb6d && (o->category & 0x7f) != 8) return;
+        obj->z.p.whole < 0xb6d && (obj->category & 0x7f) != 8) return;
     if ((*(u16 *)&GAME) == 10 && (D_8009BCCA == 0 || D_8009BCCA == 4) && D_8009BCCC != 0 &&
-        (u16)(o->z.p.whole + 9) < 0x13 && (o->category & 0x7f) != 8) return;
+        (u16)(obj->z.p.whole + 9) < 0x13 && (obj->category & 0x7f) != 8) return;
     if ((*(s32 *)&GAME) == 6) {
-        switch (o->unkA) {
-        case 0: func_8011C234(o); break;
-        case 1: func_8011C500(o); break;
-        case 2: func_8011C824(o); break;
-        case 3: func_8011CF38(o); break;
-        case 0x10: goto c10;
-        case 0x11: goto c11;
-        case 0x12: goto c12;
-        case 0x13: goto c13;
-        case 0x14: goto c14;
-        case 0x15: goto c15;
-        case 0x16: goto c16;
+        switch (obj->drawType) {
+        case DRAW_SPRITE: func_8011C234(obj); break;
+        case DRAW_SPRITE_SCALED: func_8011C500(obj); break;
+        case DRAW_SPRITE_ROTATED: func_8011C824(obj); break;
+        case DRAW_SPRITE_SCALED_ROTATED: func_8011CF38(obj); break;
+        case DRAW_MODEL: goto c10;
+        case DRAW_MODEL_ROTATED: goto c11;
+        case DRAW_MODEL_EX_ROTATED: goto c12;
+        case DRAW_MODEL_ROTATED_SCALED: goto c13;
+        case DRAW_MODEL_SCREEN: goto c14;
+        case DRAW_MODEL_MATRIX: goto c15;
+        case DRAW_MODEL_EX_MATRIX: goto c16;
         }
         return;
     }
-    switch (func_80045D0C(o)) {
-    case 0: func_800487A4(o); break;
-    case 1: func_80048BF0(o); break;
-    case 2: func_80049134(o); break;
-    case 3: func_80049994(o); break;
-    case 4: func_8004AA70(o); break;
-    case 5:
+    switch (func_80045D0C(obj)) {
+    case DRAW_SPRITE: func_800487A4(obj); break;
+    case DRAW_SPRITE_SCALED: func_80048BF0(obj); break;
+    case DRAW_SPRITE_ROTATED: func_80049134(obj); break;
+    case DRAW_SPRITE_SCALED_ROTATED: func_80049994(obj); break;
+    case DRAW_SPRITE_3D: func_8004AA70(obj); break;
+    case DRAW_AREA:
         switch (D_800A539A) {
-        case 1: func_800E9EB8(o); break;
-        case 2: func_800EB490(o); break;
-        case 3: func_800EAAC8(o); break;
+        case 1: func_800E9EB8(obj); break;
+        case 2: func_800EB490(obj); break;
+        case 3: func_800EAAC8(obj); break;
         }
         break;
-    case 6: func_80123314(o); break;
-    case 7: func_8011DF10(o); break;
-    case 8: func_8011E584(o); break;
-    case 9: func_8011AB74(o); break;
-    case 10: func_8011B350(o); break;
-    case 13: func_8004A6A0(o); break;
-    case 0x10: c10: func_8004D1A0(o); break;
-    case 0x11: c11: func_8004D2A8(o); break;
-    case 0x12: c12: func_8004D448(o); break;
-    case 0x13: c13: func_8004D5F0(o); break;
-    case 0x14: c14: func_8004D7E0(o); break;
-    case 0x15: c15: func_8004D91C(o); break;
-    case 0x16: c16: func_8004DA28(o); break;
+    case DRAW_OVERLAY_6: func_80123314(obj); break;
+    case DRAW_OVERLAY_7: func_8011DF10(obj); break;
+    case DRAW_OVERLAY_8: func_8011E584(obj); break;
+    case DRAW_OVERLAY_9: func_8011AB74(obj); break;
+    case DRAW_OVERLAY_10: func_8011B350(obj); break;
+    case DRAW_SPRT: func_8004A6A0(obj); break;
+    case DRAW_MODEL: c10: func_8004D1A0(obj); break;
+    case DRAW_MODEL_ROTATED: c11: func_8004D2A8(obj); break;
+    case DRAW_MODEL_EX_ROTATED: c12: func_8004D448(obj); break;
+    case DRAW_MODEL_ROTATED_SCALED: c13: func_8004D5F0(obj); break;
+    case DRAW_MODEL_SCREEN: c14: func_8004D7E0(obj); break;
+    case DRAW_MODEL_MATRIX: c15: func_8004D91C(obj); break;
+    case DRAW_MODEL_EX_MATRIX: c16: func_8004DA28(obj); break;
     }
 }
 
@@ -177,11 +177,11 @@ static __inline__ s32 otadd_46EC0(unsigned long *a, char *b, s32 c, s16 d, unsig
 #define C_46428 fr->w
 #define D_46428 fr->h
 
-void func_80046428(o)
-GameObject *o;
+void func_80046428(obj)
+GameObject *obj;
 {
     extern void uploadSpriteFrame();
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 *e;
     s16 n;
     SprFrag *fr;
@@ -194,20 +194,20 @@ GameObject *o;
     u16 af;
     u8 c;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
-    s = *(s16 *)o->anim;
+    s = *(s16 *)obj->anim;
     xy = LZ_FILE_CTRL_Long;
-    e = (s16 *)o->spriteBank;
+    e = (s16 *)obj->spriteBank;
     e += s * 2;
-    fr = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    fr = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + e[1]);
     n = ((u16 *)e)[0];
     x = xy;
     y = (u32)xy >> 16;
@@ -218,60 +218,51 @@ GameObject *o;
             case 1:
                 break;
             default:
-                uploadSpriteFrame(o);
+                uploadSpriteFrame(obj);
             }
         }
-        uploadSpriteFrame(o);
+        uploadSpriteFrame(obj);
     }
-    ang = o->unk8C;
+    ang = obj->unk8C;
     D_8009B698->w18 = x;
     D_8009B698->w1a = y;
     do {
         A = fr->dx;
         B = fr->dy;
-        p = (POLY_FT4 *)D_1F800164;
-        p->code = 0x2d;
-        SetSemiTrans(p, 0);
-        p->tpage = o->tpage;
+        poly = (POLY_FT4 *)D_1F800164;
+        poly->code = 0x2d;
+        SetSemiTrans(poly, 0);
+        poly->tpage = obj->tpage;
         if (n & 2)
-            p->clut = o->clut;
+            poly->clut = obj->clut;
         else
-            p->clut = *(u16 *)((u8 *)o + 0xc4);
-        p->u0 = fr->u + ((u8)SPAD->frameBufferIndex << 6) + 4;
-        p->v0 = fr->v + 4;
+            poly->clut = *(u16 *)((u8 *)obj + 0xc4);
+        setUV0(poly, fr->u + ((u8)SPAD->frameBufferIndex << 6) + 4, fr->v + 4);
         c = C_46428;
-        p->u2 = p->u0;
-        p->u1 = p->u0 + c;
-        p->v1 = p->v0;
-        p->v2 = p->v0 + D_46428;
-        p->u3 = p->u0 + C_46428;
-        p->v3 = p->v0 + D_46428;
-        if (o->unk9D)
+        poly->u2 = poly->u0;
+        poly->u1 = poly->u0 + c;
+        poly->v1 = poly->v0;
+        poly->v2 = poly->v0 + D_46428;
+        poly->u3 = poly->u0 + C_46428;
+        poly->v3 = poly->v0 + D_46428;
+        if (obj->unk9D)
             af = D_8009B698->b7;
         else
-            af = o->animFrame;
+            af = obj->animFrame;
         if (af & 1) {
             u = -(A + C_46428);
             w = B;
-            p->x1 = x + ((-u * SN_46428(A1_46428)) >> 12) + ((-w * SN_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
-            p->y1 = y + ((-u * CS_46428(A1_46428)) >> 12) + ((-w * CS_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
-            p->x0 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + ((-w * SN_46428((A0_46428 + 0x40) & 0xff)) >> 12);
-            p->y0 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + ((-w * CS_46428((A0_46428 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + ((-u * SN_46428(A1_46428)) >> 12) + (((w + D_46428) * SN_46428((A1_46428 + 0x40) & 0xff)) >> 12);
-            p->y3 = y + ((-u * CS_46428(A1_46428)) >> 12) + (((w + D_46428) * CS_46428((A1_46428 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + (((w + D_46428) * SN_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
-            p->y2 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + (((w + D_46428) * CS_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+            poly->x1 = x + ((-u * SN_46428(A1_46428)) >> 12) + ((-w * SN_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
+            poly->y1 = y + ((-u * CS_46428(A1_46428)) >> 12) + ((-w * CS_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
+            setXY0(poly, x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + ((-w * SN_46428((A0_46428 + 0x40) & 0xff)) >> 12), y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + ((-w * CS_46428((A0_46428 + 0x40) & 0xff)) >> 12));
+            poly->x3 = x + ((-u * SN_46428(A1_46428)) >> 12) + (((w + D_46428) * SN_46428((A1_46428 + 0x40) & 0xff)) >> 12);
+            poly->y3 = y + ((-u * CS_46428(A1_46428)) >> 12) + (((w + D_46428) * CS_46428((A1_46428 + 0x40) & 0xff)) >> 12);
+            poly->x2 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + (((w + D_46428) * SN_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+            poly->y2 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + (((w + D_46428) * CS_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
         } else {
             u = A;
             w = B;
-            p->x0 = x + ((-u * SN_46428(A1_46428)) >> 12) + ((-w * SN_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
-            p->y0 = y + ((-u * CS_46428(A1_46428)) >> 12) + ((-w * CS_46428((A1_46428 + 0xc0) & 0xff)) >> 12);
-            p->x1 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + ((-w * SN_46428((A0_46428 + 0x40) & 0xff)) >> 12);
-            p->y1 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + ((-w * CS_46428((A0_46428 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + ((-u * SN_46428(A1_46428)) >> 12) + (((w + D_46428) * SN_46428((A1_46428 + 0x40) & 0xff)) >> 12);
-            p->y2 = y + ((-u * CS_46428(A1_46428)) >> 12) + (((w + D_46428) * CS_46428((A1_46428 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + (((w + D_46428) * SN_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
-            p->y3 = y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + (((w + D_46428) * CS_46428((A0_46428 + 0xc0) & 0xff)) >> 12);
+            setXY4(poly, x + ((-u * SN_46428(A1_46428)) >> 12) + ((-w * SN_46428((A1_46428 + 0xc0) & 0xff)) >> 12), y + ((-u * CS_46428(A1_46428)) >> 12) + ((-w * CS_46428((A1_46428 + 0xc0) & 0xff)) >> 12), x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + ((-w * SN_46428((A0_46428 + 0x40) & 0xff)) >> 12), y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + ((-w * CS_46428((A0_46428 + 0x40) & 0xff)) >> 12), x + ((-u * SN_46428(A1_46428)) >> 12) + (((w + D_46428) * SN_46428((A1_46428 + 0x40) & 0xff)) >> 12), y + ((-u * CS_46428(A1_46428)) >> 12) + (((w + D_46428) * CS_46428((A1_46428 + 0x40) & 0xff)) >> 12), x + (((u + C_46428) * SN_46428(A0_46428)) >> 12) + (((w + D_46428) * SN_46428((A0_46428 + 0xc0) & 0xff)) >> 12), y + (((u + C_46428) * CS_46428(A0_46428)) >> 12) + (((w + D_46428) * CS_46428((A0_46428 + 0xc0) & 0xff)) >> 12));
         }
         {
             s32 k = D_1F800074;
@@ -280,7 +271,7 @@ GameObject *o;
             do {
             } while (0);
             m = 0x9000000;
-            if (!otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, k, (s8)o->unkF, m))
+            if (!otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, k, (s8)obj->priority, m))
                 D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         }
         fr++;
@@ -368,43 +359,41 @@ void func_80046CDC(void)
     p->r0 = 0x40; \
     p->g0 = 0x40; \
     p->b0 = 0x40; \
-    if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF - 5, 0x9000000) == 0) \
+    if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority - 5, 0x9000000) == 0) \
         D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1); \
 }
 
-static __inline__ void quadA_46EC0(POLY_FT4 *p, s16 x, s16 y, s16 a0, s16 a1)
+static __inline__ void quadA_46EC0(POLY_FT4 *poly, s16 x, s16 y, s16 a0, s16 a1)
 {
 s32 m, n2, m2, n;
     D_8007EB80 = -(D_8007EB80 + D_8007EB7C);
     m = -D_8007EB80;
     n = -D_8007EB82;
-    p->x1 = x + ((m * COS(a1)) >> 12) + ((n * COS((a1 + 0xc0) & 0xff)) >> 12);
-    p->y1 = y + ((m * SIN(a1)) >> 12) + ((n * SIN((a1 + 0xc0) & 0xff)) >> 12);
+    poly->x1 = x + ((m * COS(a1)) >> 12) + ((n * COS((a1 + 0xc0) & 0xff)) >> 12);
+    poly->y1 = y + ((m * SIN(a1)) >> 12) + ((n * SIN((a1 + 0xc0) & 0xff)) >> 12);
     m2 = D_8007EB80 + D_8007EB7C;
-    p->x0 = x + ((m2 * COS(a0)) >> 12) + ((n * COS((a0 + 0x40) & 0xff)) >> 12);
-    p->y0 = y + ((m2 * SIN(a0)) >> 12) + ((n * SIN((a0 + 0x40) & 0xff)) >> 12);
+    setXY0(poly, x + ((m2 * COS(a0)) >> 12) + ((n * COS((a0 + 0x40) & 0xff)) >> 12), y + ((m2 * SIN(a0)) >> 12) + ((n * SIN((a0 + 0x40) & 0xff)) >> 12));
     n2 = D_8007EB82 + D_8007EB7E;
-    p->x3 = x + ((m * COS(a1)) >> 12) + ((n2 * COS((a1 + 0x40) & 0xff)) >> 12);
-    p->y3 = y + ((m * SIN(a1)) >> 12) + ((n2 * SIN((a1 + 0x40) & 0xff)) >> 12);
-    p->x2 = x + ((m2 * COS(a0)) >> 12) + ((n2 * COS((a0 + 0xc0) & 0xff)) >> 12);
-    p->y2 = y + ((m2 * SIN(a0)) >> 12) + ((n2 * SIN((a0 + 0xc0) & 0xff)) >> 12);
+    poly->x3 = x + ((m * COS(a1)) >> 12) + ((n2 * COS((a1 + 0x40) & 0xff)) >> 12);
+    poly->y3 = y + ((m * SIN(a1)) >> 12) + ((n2 * SIN((a1 + 0x40) & 0xff)) >> 12);
+    poly->x2 = x + ((m2 * COS(a0)) >> 12) + ((n2 * COS((a0 + 0xc0) & 0xff)) >> 12);
+    poly->y2 = y + ((m2 * SIN(a0)) >> 12) + ((n2 * SIN((a0 + 0xc0) & 0xff)) >> 12);
 }
 
-static __inline__ void quadB_46EC0(POLY_FT4 *p, s16 x, s16 y, s16 a0, s16 a1)
+static __inline__ void quadB_46EC0(POLY_FT4 *poly, s16 x, s16 y, s16 a0, s16 a1)
 {
 s32 m, n2, m2, n;
     m = -D_8007EB80;
     n = -D_8007EB82;
-    p->x0 = x + ((m * COS(a1)) >> 12) + ((n * COS((a1 + 0xc0) & 0xff)) >> 12);
-    p->y0 = y + ((m * SIN(a1)) >> 12) + ((n * SIN((a1 + 0xc0) & 0xff)) >> 12);
+    setXY0(poly, x + ((m * COS(a1)) >> 12) + ((n * COS((a1 + 0xc0) & 0xff)) >> 12), y + ((m * SIN(a1)) >> 12) + ((n * SIN((a1 + 0xc0) & 0xff)) >> 12));
     m2 = D_8007EB80 + D_8007EB7C;
-    p->x1 = x + ((m2 * COS(a0)) >> 12) + ((n * COS((a0 + 0x40) & 0xff)) >> 12);
-    p->y1 = y + ((m2 * SIN(a0)) >> 12) + ((n * SIN((a0 + 0x40) & 0xff)) >> 12);
+    poly->x1 = x + ((m2 * COS(a0)) >> 12) + ((n * COS((a0 + 0x40) & 0xff)) >> 12);
+    poly->y1 = y + ((m2 * SIN(a0)) >> 12) + ((n * SIN((a0 + 0x40) & 0xff)) >> 12);
     n2 = D_8007EB82 + D_8007EB7E;
-    p->x2 = x + ((m * COS(a1)) >> 12) + ((n2 * COS((a1 + 0x40) & 0xff)) >> 12);
-    p->y2 = y + ((m * SIN(a1)) >> 12) + ((n2 * SIN((a1 + 0x40) & 0xff)) >> 12);
-    p->x3 = x + ((m2 * COS(a0)) >> 12) + ((n2 * COS((a0 + 0xc0) & 0xff)) >> 12);
-    p->y3 = y + ((m2 * SIN(a0)) >> 12) + ((n2 * SIN((a0 + 0xc0) & 0xff)) >> 12);
+    poly->x2 = x + ((m * COS(a1)) >> 12) + ((n2 * COS((a1 + 0x40) & 0xff)) >> 12);
+    poly->y2 = y + ((m * SIN(a1)) >> 12) + ((n2 * SIN((a1 + 0x40) & 0xff)) >> 12);
+    poly->x3 = x + ((m2 * COS(a0)) >> 12) + ((n2 * COS((a0 + 0xc0) & 0xff)) >> 12);
+    poly->y3 = y + ((m2 * SIN(a0)) >> 12) + ((n2 * SIN((a0 + 0xc0) & 0xff)) >> 12);
 }
 
 void func_80046EC0(GameObject *o)
@@ -485,14 +474,7 @@ void func_80046EC0(GameObject *o)
         SetSemiTrans(p, 0);
         p->tpage = D_8009B6A0->tpage;
         p->clut = D_8009B6A0->clut2;
-        p->u0 = D_8009B6A0->frame * 32 - 0x80;
-        p->v0 = 0x10;
-        p->u1 = D_8009B6A0->frame * 32 - 0x61;
-        p->v1 = 0x10;
-        p->u2 = D_8009B6A0->frame * 32 - 0x80;
-        p->v2 = 0x1f;
-        p->u3 = D_8009B6A0->frame * 32 - 0x61;
-        p->v3 = 0x1f;
+        setUV4(p, D_8009B6A0->frame * 32 - 0x80, 0x10, D_8009B6A0->frame * 32 - 0x61, 0x10, D_8009B6A0->frame * 32 - 0x80, 0x1f, D_8009B6A0->frame * 32 - 0x61, 0x1f);
         s.x = D_8009B6A0->x;
         s.y = D_8009B6A0->y;
         if (D_800A5460 && *D_800A53BC_U16Ptr >= 0xa9) {
@@ -531,8 +513,7 @@ void func_80046EC0(GameObject *o)
         {
             s32 b1 = (r + 0x140) & 0xff;
             s32 b2;
-            p->x0 = t.x + fixedMulCos(b1, 8);
-            p->y0 = t.y + fixedMulSin(b1, 8);
+            setXY0(p, t.x + fixedMulCos(b1, 8), t.y + fixedMulSin(b1, 8));
             b2 = (r + 0xc0) & 0xff;
             p->x2 = t.x + fixedMulCos(b2, 8);
             p->y2 = t.y + fixedMulSin(b2, 8);
@@ -541,25 +522,18 @@ void func_80046EC0(GameObject *o)
             p->x3 = s.x + fixedMulCos(b2, 8);
             p->y3 = s.y + fixedMulSin(b2, 8);
         }
-        if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF - 3, 0x9000000) == 0)
+        if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority - 3, 0x9000000) == 0)
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
     }
     p = (POLY_FT4 *)D_1F800164;
     p->code = 0x2d;
-    SetSemiTrans(p, o->unkD >> 7);
+    SetSemiTrans(p, o->drawFlags >> 7);
     {
     u16 cl;
     p->tpage = D_8009B6A0->tpage;
     cl = D_8009B6A0->clut;
     k = (D_1F8001F8 & 3) * D_8007EB7C;
-    p->u0 = k - 0x80;
-    p->v0 = 0;
-    p->u1 = p->u0 + (u8)D_8007EB7C - 1;
-    p->v1 = p->v0;
-    p->u2 = p->u0;
-    p->v2 = p->v0 + (u8)D_8007EB7E - 1;
-    p->u3 = p->u1;
-    p->v3 = p->v2;
+    setUV4(p, k - 0x80, 0, p->u0 + (u8)D_8007EB7C - 1, p->v0, p->u0, p->v0 + (u8)D_8007EB7E - 1, p->u1, p->v2);
     *(u16 *)((char *)p + 14) = cl;
     }
     if (D_800A5460 && *D_800A53BC_U16Ptr >= 0xa9) {
@@ -575,7 +549,7 @@ void func_80046EC0(GameObject *o)
         quadA_46EC0(p, x, y, a0, a1);
     else
         quadB_46EC0(p, x, y, a0, a1);
-    if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF - 4, 0x9000000) == 0)
+    if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority - 4, 0x9000000) == 0)
         D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
 }
 #undef COS
@@ -588,9 +562,9 @@ void func_80046EC0(GameObject *o)
 #define SN_47FC8(i) D_8007DB88[i]
 #define CS_47FC8(i) D_8007D988[i]
 
-void func_80047FC8(GameObject *o)
+void func_80047FC8(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 *e;
     s32 n;
     SprFrag *f;
@@ -600,79 +574,65 @@ void func_80047FC8(GameObject *o)
     s16 A, B, C, D;
     s16 u, w;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
     xy = LZ_FILE_CTRL_Long;
-    e = (s16 *)o->spriteBank;
-    e += *(u16 *)o->anim * 2;
-    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    e = (s16 *)obj->spriteBank;
+    e += *(u16 *)obj->anim * 2;
+    f = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + e[1]);
     n = e[0];
     x = xy;
     y = (u32)xy >> 16;
-    ang = o->unk8C;
+    ang = obj->unk8C;
     do {
         A = f->dx;
         B = f->dy;
-        p = (POLY_FT4 *)D_1F800164;
+        poly = (POLY_FT4 *)D_1F800164;
         C = f->w;
         D = f->h;
-        if ((o->animFrame & 1) == 0) {
+        if ((obj->animFrame & 1) == 0) {
             u = A;
             w = B;
-            p->x0 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + ((-w * SN_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
-            p->y0 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + ((-w * CS_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
-            p->x1 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + ((-w * SN_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
-            p->y1 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + ((-w * CS_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + (((w + D) * SN_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
-            p->y2 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + (((w + D) * CS_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + (((w + D) * SN_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
-            p->y3 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + (((w + D) * CS_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+            setXY4(poly, x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + ((-w * SN_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12), y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + ((-w * CS_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12), x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + ((-w * SN_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12), y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + ((-w * CS_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12), x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + (((w + D) * SN_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12), y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + (((w + D) * CS_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12), x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + (((w + D) * SN_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12), y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + (((w + D) * CS_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12));
         } else {
             u = -(A + C);
             w = B;
-            p->x1 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + ((-w * SN_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
-            p->y1 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + ((-w * CS_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
-            p->x0 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + ((-w * SN_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
-            p->y0 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + ((-w * CS_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + (((w + D) * SN_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
-            p->y3 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + (((w + D) * CS_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + (((w + D) * SN_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
-            p->y2 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + (((w + D) * CS_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+            poly->x1 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + ((-w * SN_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
+            poly->y1 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + ((-w * CS_47FC8((A1_47FC8 + 0xc0) & 0xff)) >> 12);
+            setXY0(poly, x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + ((-w * SN_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12), y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + ((-w * CS_47FC8((A0_47FC8 + 0x40) & 0xff)) >> 12));
+            poly->x3 = x + ((-u * SN_47FC8(A1_47FC8)) >> 12) + (((w + D) * SN_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
+            poly->y3 = y + ((-u * CS_47FC8(A1_47FC8)) >> 12) + (((w + D) * CS_47FC8((A1_47FC8 + 0x40) & 0xff)) >> 12);
+            poly->x2 = x + (((u + C) * SN_47FC8(A0_47FC8)) >> 12) + (((w + D) * SN_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
+            poly->y2 = y + (((u + C) * CS_47FC8(A0_47FC8)) >> 12) + (((w + D) * CS_47FC8((A0_47FC8 + 0xc0) & 0xff)) >> 12);
         }
-        p->code = 0x2c;
-        if (o->subtype == 0)
-            SetSemiTrans(p, 1);
+        poly->code = 0x2c;
+        if (obj->id == 0)
+            SetSemiTrans(poly, 1);
         else
-            SetSemiTrans(p, 0);
-        p->tpage = o->tpage;
-        p->clut = o->clut;
-        if (o->subtype == 0) {
-            if (o->unkD & 0x40) {
-                p->r0 = 0x20;
-                p->g0 = 0x20;
-                p->b0 = 0x20;
+            SetSemiTrans(poly, 0);
+        poly->tpage = obj->tpage;
+        poly->clut = obj->clut;
+        if (obj->id == 0) {
+            if (obj->drawFlags & 0x40) {
+                setRGB0(poly, 0x20, 0x20, 0x20);
             } else {
-                p->r0 = 0x40;
-                p->g0 = 0x40;
-                p->b0 = 0x40;
+                setRGB0(poly, 0x40, 0x40, 0x40);
             }
         } else {
-            p->r0 = 0x80;
-            p->g0 = 0x80;
-            p->b0 = 0x80;
+            setRGB0(poly, 0x80, 0x80, 0x80);
         }
-        *(u16 *)&p->u0 = *(u16 *)f + 0x80;
-        *(u16 *)&p->u1 = f->uv1 + 0x80;
-        *(u16 *)&p->u2 = f->uv2 + 0x80;
-        *(u16 *)&p->u3 = f->uv3 + 0x80;
-        if (!otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000))
+        *(u16 *)&poly->u0 = *(u16 *)f + 0x80;
+        *(u16 *)&poly->u1 = f->uv1 + 0x80;
+        *(u16 *)&poly->u2 = f->uv2 + 0x80;
+        *(u16 *)&poly->u3 = f->uv3 + 0x80;
+        if (!otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority, 0x9000000))
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         f++;
     } while (--n);
@@ -683,70 +643,68 @@ void func_80047FC8(GameObject *o)
 #undef CS_47FC8
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_800487A4);
-static __inline__ s32 quadOnScreen(POLY_FT4 *p)
+static __inline__ s32 quadOnScreen(POLY_FT4 *poly)
 {
-    if ((u16)p->y0 < NTSC_PAL(0xE0, 0x100) || (u16)p->y1 < NTSC_PAL(0xE0, 0x100) || (u16)p->y2 < NTSC_PAL(0xE0, 0x100) || (u16)p->y3 < NTSC_PAL(0xE0, 0x100)) {
-        if ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140)
+    if ((u16)poly->y0 < NTSC_PAL(0xE0, 0x100) || (u16)poly->y1 < NTSC_PAL(0xE0, 0x100) || (u16)poly->y2 < NTSC_PAL(0xE0, 0x100) || (u16)poly->y3 < NTSC_PAL(0xE0, 0x100)) {
+        if ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140)
             return 1;
     }
     return 0;
 }
 
-void func_800487A4(GameObject *o)
+void func_800487A4(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 *e;
     SprFrag *f;
     s32 n;
 
-    if (o->anim == NULL) return;
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    if (obj->anim == NULL) return;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
-    e = (s16 *)(o->spriteBank + *(s16 *)o->anim * 4);
+    e = (s16 *)(obj->spriteBank + *(s16 *)obj->anim * 4);
     n = e[0];
-    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
+    f = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + e[1]);
     do {
-        p = (POLY_FT4 *)D_1F800164;
-        if (o->animFrame & 1) {
-            p->x0 = f->dx + LZ_FILE_CTRL_Long;
-            p->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
-            p->x1 = p->x0 + f->w;
-            p->x2 = p->x0;
-            p->y1 = p->y0;
-            p->y2 = p->y0 + f->h;
-            p->x3 = p->x1;
-            p->y3 = p->y2;
+        poly = (POLY_FT4 *)D_1F800164;
+        if (obj->animFrame & 1) {
+            setXY0(poly, f->dx + LZ_FILE_CTRL_Long, f->dy + (LZ_FILE_CTRL_Long >> 16));
+            poly->x1 = poly->x0 + f->w;
+            poly->x2 = poly->x0;
+            poly->y1 = poly->y0;
+            poly->y2 = poly->y0 + f->h;
+            poly->x3 = poly->x1;
+            poly->y3 = poly->y2;
         } else {
-            p->x0 = LZ_FILE_CTRL_Long - f->dx;
-            p->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
-            p->x1 = p->x0 - f->w;
-            p->x2 = p->x0;
-            p->y1 = p->y0;
-            p->y2 = p->y0 + f->h;
-            p->x3 = p->x1;
-            p->y3 = p->y2;
+            setXY0(poly, LZ_FILE_CTRL_Long - f->dx, f->dy + (LZ_FILE_CTRL_Long >> 16));
+            poly->x1 = poly->x0 - f->w;
+            poly->x2 = poly->x0;
+            poly->y1 = poly->y0;
+            poly->y2 = poly->y0 + f->h;
+            poly->x3 = poly->x1;
+            poly->y3 = poly->y2;
         }
-        if (quadOnScreen(p)) {
-            p->code = 0x2d;
-            SetSemiTrans(p, o->unkD >> 7);
-            *(u32 *)&p->u0 = *(u32 *)f;
-            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-            *(u16 *)&p->u2 = f->uv2;
-            *(u16 *)&p->u3 = f->uv3;
-            p->tpage += o->tpage;
-            if (o->unkD & 1)
-                p->clut = o->clut;
-            if (o->unkB) {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+        if (quadOnScreen(poly)) {
+            poly->code = 0x2d;
+            SetSemiTrans(poly, obj->drawFlags >> 7);
+            *(u32 *)&poly->u0 = *(u32 *)f;
+            *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&poly->u2 = f->uv2;
+            *(u16 *)&poly->u3 = f->uv3;
+            poly->tpage += obj->tpage;
+            if (obj->drawFlags & 1)
+                poly->clut = obj->clut;
+            if (obj->otMode != OT_MODE_DEPTH) {
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, 0, (s8)obj->priority, 0x9000000)) goto next;
             } else {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority, 0x9000000)) goto next;
             }
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         }
@@ -757,77 +715,63 @@ void func_800487A4(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80048BF0);
-void func_80048BF0(GameObject *o)
+void func_80048BF0(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 *e;
     SprFrag *f;
     s32 n;
     u32 k;
     s32 d;
 
-    if (o->anim == NULL) return;
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    if (obj->anim == NULL) return;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
-    e = (s16 *)(o->spriteBank + *(s16 *)o->anim * 4);
+    e = (s16 *)(obj->spriteBank + *(s16 *)obj->anim * 4);
     n = e[0];
-    f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + e[1]);
-    if (o->unkA == 1) {
+    f = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + e[1]);
+    if (obj->drawType == DRAW_SPRITE_SCALED) {
         switch (SPAD->unk1C8 & 1) {
         case 0:
-            d = VIEW_CAMERA.pos[2].p.whole - o->z.p.whole;
-            k = o->buffSize * (d * 7 + 0x1000) >> 12;
+            d = VIEW_CAMERA.pos[2].p.whole - obj->z.p.whole;
+            k = obj->buffSize * (d * 7 + 0x1000) >> 12;
             break;
         case 1:
-            d = o->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
-            k = o->buffSize * (d * 7 + 0x1000) >> 12;
+            d = obj->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
+            k = obj->buffSize * (d * 7 + 0x1000) >> 12;
             break;
         }
     } else {
         k = SPAD->loadSlots[4];
     }
     do {
-        p = (POLY_FT4 *)D_1F800164;
-        if (o->animFrame & 1) {
-            p->x0 = LZ_FILE_CTRL_Long + ((f->dx * k - 0x1000) >> 12);
-            p->y0 = (LZ_FILE_CTRL_Long >> 16) + ((f->dy * k - 0x1000) >> 12);
-            p->x1 = p->x0 + ((f->w * k + 0x1000) >> 12);
-            p->y1 = p->y0;
-            p->x2 = p->x0;
-            p->y2 = p->y0 + ((f->h * k + 0x1000) >> 12);
-            p->x3 = p->x1;
-            p->y3 = p->y2;
+        poly = (POLY_FT4 *)D_1F800164;
+        if (obj->animFrame & 1) {
+            setXY4(poly, LZ_FILE_CTRL_Long + ((f->dx * k - 0x1000) >> 12), (LZ_FILE_CTRL_Long >> 16) + ((f->dy * k - 0x1000) >> 12), poly->x0 + ((f->w * k + 0x1000) >> 12), poly->y0, poly->x0, poly->y0 + ((f->h * k + 0x1000) >> 12), poly->x1, poly->y2);
         } else {
-            p->x0 = LZ_FILE_CTRL_Long - ((f->dx * k - 0x1000) >> 12);
-            p->y0 = (LZ_FILE_CTRL_Long >> 16) + ((f->dy * k - 0x1000) >> 12);
-            p->x1 = p->x0 - ((f->w * k + 0x1000) >> 12);
-            p->y1 = p->y0;
-            p->x2 = p->x0;
-            p->y2 = p->y0 + ((f->h * k + 0x1000) >> 12);
-            p->x3 = p->x1;
-            p->y3 = p->y2;
+            setXY4(poly, LZ_FILE_CTRL_Long - ((f->dx * k - 0x1000) >> 12), (LZ_FILE_CTRL_Long >> 16) + ((f->dy * k - 0x1000) >> 12), poly->x0 - ((f->w * k + 0x1000) >> 12), poly->y0, poly->x0, poly->y0 + ((f->h * k + 0x1000) >> 12), poly->x1, poly->y2);
         }
-        if (quadOnScreen(p)) {
-            p->code = 0x2d;
-            SetSemiTrans(p, o->unkD >> 7);
-            *(u32 *)&p->u0 = *(u32 *)f;
-            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-            *(u16 *)&p->u2 = f->uv2;
-            *(u16 *)&p->u3 = f->uv3;
-            p->tpage += o->tpage;
-            if (o->unkD & 1)
-                p->clut = o->clut;
-            if (o->unkB) {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+        if (quadOnScreen(poly)) {
+            poly->code = 0x2d;
+            SetSemiTrans(poly, obj->drawFlags >> 7);
+            *(u32 *)&poly->u0 = *(u32 *)f;
+            *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&poly->u2 = f->uv2;
+            *(u16 *)&poly->u3 = f->uv3;
+            poly->tpage += obj->tpage;
+            if (obj->drawFlags & 1)
+                poly->clut = obj->clut;
+            if (obj->otMode != OT_MODE_DEPTH) {
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, 0, (s8)obj->priority, 0x9000000)) goto next;
             } else {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority, 0x9000000)) goto next;
             }
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         }
@@ -843,9 +787,9 @@ void func_80048BF0(GameObject *o)
 #define CS_49134(i) D_8007D988[i]
 #define A1_49134 ((ang + 0x80) & 0xff)
 
-void func_80049134(GameObject *o)
+void func_80049134(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 *e;
     SprFrag *f;
     s32 xy;
@@ -855,68 +799,60 @@ void func_80049134(GameObject *o)
     s16 A, B, C, D;
     s16 u, w;
 
-    if (o->anim == NULL) return;
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    if (obj->anim == NULL) return;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
     xy = LZ_FILE_CTRL_Long;
     x = xy;
     y = (u32)xy >> 16;
-    d = o->spriteBank;
-    d += *(u16 *)o->anim * 4;
+    d = obj->spriteBank;
+    d += *(u16 *)obj->anim * 4;
     e = (s16 *)d;
     D_1F800078 = e[0];
-    f = (SprFrag *)(o->spriteBank + e[1]);
-    ang = o->unk8C;
+    f = (SprFrag *)(obj->spriteBank + e[1]);
+    ang = obj->unk8C;
     do {
         A = f->dx;
         B = f->dy;
-        p = (POLY_FT4 *)D_1F800164;
+        poly = (POLY_FT4 *)D_1F800164;
         C = f->w;
         D = f->h;
-        if (o->animFrame & 1) {
+        if (obj->animFrame & 1) {
             u = A;
             w = B;
-            p->x0 = x + ((-u * SN_49134(A1_49134)) >> 12) + ((-w * SN_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
-            p->y0 = y + ((-u * CS_49134(A1_49134)) >> 12) + ((-w * CS_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
-            p->x1 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + ((-w * SN_49134((A0_49134 + 0x40) & 0xff)) >> 12);
-            p->y1 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + ((-w * CS_49134((A0_49134 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + ((-u * SN_49134(A1_49134)) >> 12) + (((w + D) * SN_49134((A1_49134 + 0x40) & 0xff)) >> 12);
-            p->y2 = y + ((-u * CS_49134(A1_49134)) >> 12) + (((w + D) * CS_49134((A1_49134 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + (((w + D) * SN_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
-            p->y3 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + (((w + D) * CS_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+            setXY4(poly, x + ((-u * SN_49134(A1_49134)) >> 12) + ((-w * SN_49134((A1_49134 + 0xc0) & 0xff)) >> 12), y + ((-u * CS_49134(A1_49134)) >> 12) + ((-w * CS_49134((A1_49134 + 0xc0) & 0xff)) >> 12), x + (((u + C) * SN_49134(A0_49134)) >> 12) + ((-w * SN_49134((A0_49134 + 0x40) & 0xff)) >> 12), y + (((u + C) * CS_49134(A0_49134)) >> 12) + ((-w * CS_49134((A0_49134 + 0x40) & 0xff)) >> 12), x + ((-u * SN_49134(A1_49134)) >> 12) + (((w + D) * SN_49134((A1_49134 + 0x40) & 0xff)) >> 12), y + ((-u * CS_49134(A1_49134)) >> 12) + (((w + D) * CS_49134((A1_49134 + 0x40) & 0xff)) >> 12), x + (((u + C) * SN_49134(A0_49134)) >> 12) + (((w + D) * SN_49134((A0_49134 + 0xc0) & 0xff)) >> 12), y + (((u + C) * CS_49134(A0_49134)) >> 12) + (((w + D) * CS_49134((A0_49134 + 0xc0) & 0xff)) >> 12));
         } else {
             u = -(A + C);
             w = B;
-            p->x1 = x + ((-u * SN_49134(A1_49134)) >> 12) + ((-w * SN_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
-            p->y1 = y + ((-u * CS_49134(A1_49134)) >> 12) + ((-w * CS_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
-            p->x0 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + ((-w * SN_49134((A0_49134 + 0x40) & 0xff)) >> 12);
-            p->y0 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + ((-w * CS_49134((A0_49134 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + ((-u * SN_49134(A1_49134)) >> 12) + (((w + D) * SN_49134((A1_49134 + 0x40) & 0xff)) >> 12);
-            p->y3 = y + ((-u * CS_49134(A1_49134)) >> 12) + (((w + D) * CS_49134((A1_49134 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + (((w + D) * SN_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
-            p->y2 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + (((w + D) * CS_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+            poly->x1 = x + ((-u * SN_49134(A1_49134)) >> 12) + ((-w * SN_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
+            poly->y1 = y + ((-u * CS_49134(A1_49134)) >> 12) + ((-w * CS_49134((A1_49134 + 0xc0) & 0xff)) >> 12);
+            setXY0(poly, x + (((u + C) * SN_49134(A0_49134)) >> 12) + ((-w * SN_49134((A0_49134 + 0x40) & 0xff)) >> 12), y + (((u + C) * CS_49134(A0_49134)) >> 12) + ((-w * CS_49134((A0_49134 + 0x40) & 0xff)) >> 12));
+            poly->x3 = x + ((-u * SN_49134(A1_49134)) >> 12) + (((w + D) * SN_49134((A1_49134 + 0x40) & 0xff)) >> 12);
+            poly->y3 = y + ((-u * CS_49134(A1_49134)) >> 12) + (((w + D) * CS_49134((A1_49134 + 0x40) & 0xff)) >> 12);
+            poly->x2 = x + (((u + C) * SN_49134(A0_49134)) >> 12) + (((w + D) * SN_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
+            poly->y2 = y + (((u + C) * CS_49134(A0_49134)) >> 12) + (((w + D) * CS_49134((A0_49134 + 0xc0) & 0xff)) >> 12);
         }
-        if (quadOnScreen(p)) {
-            p->code = 0x2d;
-            SetSemiTrans(p, o->unkD >> 7);
-            *(u32 *)&p->u0 = *(u32 *)f;
-            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-            *(u16 *)&p->u2 = f->uv2;
-            *(u16 *)&p->u3 = f->uv3;
-            p->tpage += o->tpage;
-            if (o->unkD & 1)
-                p->clut = o->clut;
-            if (o->unkB) {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+        if (quadOnScreen(poly)) {
+            poly->code = 0x2d;
+            SetSemiTrans(poly, obj->drawFlags >> 7);
+            *(u32 *)&poly->u0 = *(u32 *)f;
+            *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&poly->u2 = f->uv2;
+            *(u16 *)&poly->u3 = f->uv3;
+            poly->tpage += obj->tpage;
+            if (obj->drawFlags & 1)
+                poly->clut = obj->clut;
+            if (obj->otMode != OT_MODE_DEPTH) {
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, 0, (s8)obj->priority, 0x9000000)) goto next;
             } else {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority, 0x9000000)) goto next;
             }
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         }
@@ -936,9 +872,9 @@ void func_80049134(GameObject *o)
 #define CS_49994(i) D_8007D988[i]
 #define A1_49994 ((ang + 0x80) & 0xff)
 
-void func_80049994(GameObject *o)
+void func_80049994(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s16 *e;
     SprFrag *f;
     s32 xy;
@@ -949,82 +885,74 @@ void func_80049994(GameObject *o)
     s16 A, B, C, D;
     s16 u, w;
 
-    if (o->anim == NULL) return;
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    if (obj->anim == NULL) return;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
     xy = LZ_FILE_CTRL_Long;
     x = xy;
     y = (u32)xy >> 16;
-    d = o->spriteBank;
-    d += *(u16 *)o->anim * 4;
+    d = obj->spriteBank;
+    d += *(u16 *)obj->anim * 4;
     e = (s16 *)d;
     D_1F800078 = e[0];
-    f = (SprFrag *)(o->spriteBank + e[1]);
-    if (o->unkA & 1) {
+    f = (SprFrag *)(obj->spriteBank + e[1]);
+    if (obj->drawType & 1) {
         switch (SPAD->unk1C8 & 1) {
         case 0:
-            d = VIEW_CAMERA.pos[2].p.whole - o->z.p.whole;
-            s = o->buffSize * (d * 7 + 0x1000) >> 12;
+            d = VIEW_CAMERA.pos[2].p.whole - obj->z.p.whole;
+            s = obj->buffSize * (d * 7 + 0x1000) >> 12;
             break;
         case 1:
-            d = o->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
-            s = o->buffSize * (d * 7 + 0x1000) >> 12;
+            d = obj->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
+            s = obj->buffSize * (d * 7 + 0x1000) >> 12;
             break;
         }
     } else {
         s = SPAD->loadSlots[4];
     }
-    ang = o->unk8C;
+    ang = obj->unk8C;
     do {
         A = (f->dx * s - 0x1800) >> 12;
         B = (f->dy * s - 0x1800) >> 12;
         C = (f->w * s + 0x1800) >> 12;
         D = (f->h * s + 0x1800) >> 12;
-        p = (POLY_FT4 *)D_1F800164;
-        if (o->animFrame & 1) {
+        poly = (POLY_FT4 *)D_1F800164;
+        if (obj->animFrame & 1) {
             u = A;
             w = B;
-            p->x0 = x + ((-u * SN_49994(A1_49994)) >> 12) + ((-w * SN_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
-            p->y0 = y + ((-u * CS_49994(A1_49994)) >> 12) + ((-w * CS_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
-            p->x1 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + ((-w * SN_49994((A0_49994 + 0x40) & 0xff)) >> 12);
-            p->y1 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + ((-w * CS_49994((A0_49994 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + ((-u * SN_49994(A1_49994)) >> 12) + (((w + D) * SN_49994((A1_49994 + 0x40) & 0xff)) >> 12);
-            p->y2 = y + ((-u * CS_49994(A1_49994)) >> 12) + (((w + D) * CS_49994((A1_49994 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + (((w + D) * SN_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
-            p->y3 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + (((w + D) * CS_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+            setXY4(poly, x + ((-u * SN_49994(A1_49994)) >> 12) + ((-w * SN_49994((A1_49994 + 0xc0) & 0xff)) >> 12), y + ((-u * CS_49994(A1_49994)) >> 12) + ((-w * CS_49994((A1_49994 + 0xc0) & 0xff)) >> 12), x + (((u + C) * SN_49994(A0_49994)) >> 12) + ((-w * SN_49994((A0_49994 + 0x40) & 0xff)) >> 12), y + (((u + C) * CS_49994(A0_49994)) >> 12) + ((-w * CS_49994((A0_49994 + 0x40) & 0xff)) >> 12), x + ((-u * SN_49994(A1_49994)) >> 12) + (((w + D) * SN_49994((A1_49994 + 0x40) & 0xff)) >> 12), y + ((-u * CS_49994(A1_49994)) >> 12) + (((w + D) * CS_49994((A1_49994 + 0x40) & 0xff)) >> 12), x + (((u + C) * SN_49994(A0_49994)) >> 12) + (((w + D) * SN_49994((A0_49994 + 0xc0) & 0xff)) >> 12), y + (((u + C) * CS_49994(A0_49994)) >> 12) + (((w + D) * CS_49994((A0_49994 + 0xc0) & 0xff)) >> 12));
         } else {
             u = -(A + C);
             w = B;
-            p->x1 = x + ((-u * SN_49994(A1_49994)) >> 12) + ((-w * SN_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
-            p->y1 = y + ((-u * CS_49994(A1_49994)) >> 12) + ((-w * CS_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
-            p->x0 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + ((-w * SN_49994((A0_49994 + 0x40) & 0xff)) >> 12);
-            p->y0 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + ((-w * CS_49994((A0_49994 + 0x40) & 0xff)) >> 12);
-            p->x3 = x + ((-u * SN_49994(A1_49994)) >> 12) + (((w + D) * SN_49994((A1_49994 + 0x40) & 0xff)) >> 12);
-            p->y3 = y + ((-u * CS_49994(A1_49994)) >> 12) + (((w + D) * CS_49994((A1_49994 + 0x40) & 0xff)) >> 12);
-            p->x2 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + (((w + D) * SN_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
-            p->y2 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + (((w + D) * CS_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+            poly->x1 = x + ((-u * SN_49994(A1_49994)) >> 12) + ((-w * SN_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
+            poly->y1 = y + ((-u * CS_49994(A1_49994)) >> 12) + ((-w * CS_49994((A1_49994 + 0xc0) & 0xff)) >> 12);
+            setXY0(poly, x + (((u + C) * SN_49994(A0_49994)) >> 12) + ((-w * SN_49994((A0_49994 + 0x40) & 0xff)) >> 12), y + (((u + C) * CS_49994(A0_49994)) >> 12) + ((-w * CS_49994((A0_49994 + 0x40) & 0xff)) >> 12));
+            poly->x3 = x + ((-u * SN_49994(A1_49994)) >> 12) + (((w + D) * SN_49994((A1_49994 + 0x40) & 0xff)) >> 12);
+            poly->y3 = y + ((-u * CS_49994(A1_49994)) >> 12) + (((w + D) * CS_49994((A1_49994 + 0x40) & 0xff)) >> 12);
+            poly->x2 = x + (((u + C) * SN_49994(A0_49994)) >> 12) + (((w + D) * SN_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
+            poly->y2 = y + (((u + C) * CS_49994(A0_49994)) >> 12) + (((w + D) * CS_49994((A0_49994 + 0xc0) & 0xff)) >> 12);
         }
-        if (quadOnScreen(p)) {
-            p->code = 0x2d;
-            SetSemiTrans(p, o->unkD >> 7);
-            *(u32 *)&p->u0 = *(u32 *)f;
-            *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-            *(u16 *)&p->u2 = f->uv2;
-            *(u16 *)&p->u3 = f->uv3;
-            p->tpage += o->tpage;
-            if (o->unkD & 1)
-                p->clut = o->clut;
-            if (o->unkB) {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, 0, (s8)o->unkF, 0x9000000)) goto next;
+        if (quadOnScreen(poly)) {
+            poly->code = 0x2d;
+            SetSemiTrans(poly, obj->drawFlags >> 7);
+            *(u32 *)&poly->u0 = *(u32 *)f;
+            *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+            *(u16 *)&poly->u2 = f->uv2;
+            *(u16 *)&poly->u3 = f->uv3;
+            poly->tpage += obj->tpage;
+            if (obj->drawFlags & 1)
+                poly->clut = obj->clut;
+            if (obj->otMode != OT_MODE_DEPTH) {
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, 0, (s8)obj->priority, 0x9000000)) goto next;
             } else {
-                if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->unkF, 0x9000000)) goto next;
+                if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority, 0x9000000)) goto next;
             }
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         }
@@ -1039,157 +967,151 @@ void func_80049994(GameObject *o)
 #undef CS_49994
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A300);
-void func_8004A300(GameObject *o)
+void func_8004A300(GameObject *obj)
 {
-    SPRT *s;
+    SPRT *sprt;
     s16 *e;
     SprFrag *f;
     s32 n;
     s32 tp;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
-    e = (s16 *)(*(volatile s32 *)&o->spriteBank + *(u16 *)o->anim * 4);
-    s = (SPRT *)D_1F800164_Volatile;
+    e = (s16 *)(*(volatile s32 *)&obj->spriteBank + *(u16 *)obj->anim * 4);
+    sprt = (SPRT *)D_1F800164_Volatile;
     n = e[0];
-    f = (SprFrag *)(o->spriteBank + e[1]);
+    f = (SprFrag *)(obj->spriteBank + e[1]);
     tp = f->tpage;
-    SetDrawMode((DR_MODE *)s, 0, 0, 0, 0);
-    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    SetDrawMode((DR_MODE *)sprt, 0, 0, 0, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)obj->priority * 4 + 0x10), sprt);
     D_1F800164 += sizeof(DR_MODE);
     do {
-        s = (SPRT *)D_1F800164;
-        s->w = f->w;
-        s->h = f->h;
-        s->x0 = f->dx + LZ_FILE_CTRL_Long;
-        s->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
-        if (((u16)s->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(s->y0 + s->h) < NTSC_PAL(0xF1, 0x101)) &&
-            ((u16)s->x0 < 0x141 || (u16)(s->x0 + s->w) < 0x141)) {
-            SetSprt(s);
-            SetSemiTrans(s, o->unkD >> 7);
-            s->code |= 1;
-            *(s32 *)&s->u0 = *(s32 *)f;
-            if (o->unkD & 1) {
-                s->clut = o->clut;
+        sprt = (SPRT *)D_1F800164;
+        setWH(sprt, f->w, f->h);
+        setXY0(sprt, f->dx + LZ_FILE_CTRL_Long, f->dy + (LZ_FILE_CTRL_Long >> 16));
+        if (((u16)sprt->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(sprt->y0 + sprt->h) < NTSC_PAL(0xF1, 0x101)) &&
+            ((u16)sprt->x0 < 0x141 || (u16)(sprt->x0 + sprt->w) < 0x141)) {
+            SetSprt(sprt);
+            SetSemiTrans(sprt, obj->drawFlags >> 7);
+            sprt->code |= 1;
+            *(s32 *)&sprt->u0 = *(s32 *)f;
+            if (obj->drawFlags & 1) {
+                sprt->clut = obj->clut;
             }
-            AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+            AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)obj->priority * 4 + 0x10), sprt);
             D_1F800164 += sizeof(SPRT);
         }
         f++;
         n--;
     } while (n != 0);
-    s = (SPRT *)D_1F800164;
-    SetDrawMode((DR_MODE *)s, 0, 0, o->tpage + (s16)tp, 0);
-    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    sprt = (SPRT *)D_1F800164;
+    SetDrawMode((DR_MODE *)sprt, 0, 0, obj->tpage + (s16)tp, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)obj->priority * 4 + 0x10), sprt);
     D_1F800164 += sizeof(DR_MODE);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004A6A0);
-void func_8004A6A0(GameObject *o)
+void func_8004A6A0(GameObject *obj)
 {
-    SPRT *s;
+    SPRT *sprt;
     s16 *e;
     SprFrag *f;
     s32 n;
     s32 tp;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
     if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
-    e = (s16 *)o->spriteBank;
-    e += *(u16 *)o->anim * 2;
-    s = (SPRT *)D_1F800164;
+    e = (s16 *)obj->spriteBank;
+    e += *(u16 *)obj->anim * 2;
+    sprt = (SPRT *)D_1F800164;
     n = e[0];
-    f = (SprFrag *)(o->spriteBank + e[1]);
+    f = (SprFrag *)(obj->spriteBank + e[1]);
     tp = f->tpage;
-    SetDrawMode((DR_MODE *)s, 0, 0, 0, 0);
-    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    SetDrawMode((DR_MODE *)sprt, 0, 0, 0, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)obj->priority * 4 + 0x10), sprt);
     D_1F800164 += sizeof(DR_MODE);
     do {
-        s = (SPRT *)D_1F800164;
-        s->w = f->w;
-        s->h = f->h;
-        s->x0 = f->dx + LZ_FILE_CTRL_Long;
-        s->y0 = f->dy + (LZ_FILE_CTRL_Long >> 16);
-        if (((u16)s->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(s->y0 + s->h) < NTSC_PAL(0xF1, 0x101)) &&
-            ((u16)s->x0 < 0x141 || (u16)(s->x0 + s->w) < 0x141)) {
-            SetSprt(s);
-            SetSemiTrans(s, o->unkD >> 7);
-            s->code |= 1;
-            *(s32 *)&s->u0 = *(s32 *)f;
-            if (o->unkD & 1) {
-                s->clut = o->clut;
+        sprt = (SPRT *)D_1F800164;
+        setWH(sprt, f->w, f->h);
+        setXY0(sprt, f->dx + LZ_FILE_CTRL_Long, f->dy + (LZ_FILE_CTRL_Long >> 16));
+        if (((u16)sprt->y0 < NTSC_PAL(0xF1, 0x101) || (u16)(sprt->y0 + sprt->h) < NTSC_PAL(0xF1, 0x101)) &&
+            ((u16)sprt->x0 < 0x141 || (u16)(sprt->x0 + sprt->w) < 0x141)) {
+            SetSprt(sprt);
+            SetSemiTrans(sprt, obj->drawFlags >> 7);
+            sprt->code |= 1;
+            *(s32 *)&sprt->u0 = *(s32 *)f;
+            if (obj->drawFlags & 1) {
+                sprt->clut = obj->clut;
             }
-            SetShadeTex(s, 0);
-            s->r0 = o->objectIndex;
-            s->g0 = o->objectIndex;
-            s->b0 = o->objectIndex;
-            AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+            SetShadeTex(sprt, 0);
+            setRGB0(sprt, obj->objectIndex, obj->objectIndex, obj->objectIndex);
+            AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)obj->priority * 4 + 0x10), sprt);
             D_1F800164 += sizeof(SPRT);
         }
         f++;
         n--;
     } while (n != 0);
-    s = (SPRT *)D_1F800164;
-    SetDrawMode((DR_MODE *)s, 0, 0, o->tpage + (s16)tp, 0);
-    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)o->unkF * 4 + 0x10), s);
+    sprt = (SPRT *)D_1F800164;
+    SetDrawMode((DR_MODE *)sprt, 0, 0, obj->tpage + (s16)tp, 0);
+    AddPrim((char *)D_1F8001E0 + D_1F800074 * 4 + ((s8)obj->priority * 4 + 0x10), sprt);
     D_1F800164 += sizeof(DR_MODE);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AA70);
-void func_8004AA70(GameObject *o)
+void func_8004AA70(GameObject *obj)
 {
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     SprFrag *f;
     u8 *v0, *v1, *v2, *v3;
 
     getBaseMatrix(&SCRATCHPAD.workMatrix);
-    ((s16 *)&D_1F800060)[0] = o->x.p.whole;
-    ((s16 *)&D_1F800060)[1] = o->y.p.whole;
-    ((s16 *)&D_1F800060)[2] = o->z.p.whole;
+    ((s16 *)&D_1F800060)[0] = obj->x.p.whole;
+    ((s16 *)&D_1F800060)[1] = obj->y.p.whole;
+    ((s16 *)&D_1F800060)[2] = obj->z.p.whole;
     SetRotMatrix(SCRATCH_VIEW_MATRIX);
     ApplyRotMatrix(&D_1F800060, (VECTOR *)&SCRATCHPAD.workMatrix.t[0]);
     SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
     SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    v0 = (u8 *)o + 0xb4;
-    v1 = (u8 *)o + 0xbc;
-    v2 = (u8 *)o + 0xc4;
-    v3 = (u8 *)o + 0xcc;
-    p = (POLY_FT4 *)D_1F800164;
+    v0 = (u8 *)obj + 0xb4;
+    v1 = (u8 *)obj + 0xbc;
+    v2 = (u8 *)obj + 0xc4;
+    v3 = (u8 *)obj + 0xcc;
+    poly = (POLY_FT4 *)D_1F800164;
     gte_ldv3(v0, v1, v2);
     gte_rtpt();
-    gte_stsxy3_ft4(p);
+    gte_stsxy3_ft4(poly);
     gte_ldv0(v3);
     gte_rtps();
     gte_avsz4();
     gte_stotz(&LZ_FILE_CTRL_Long);
-    gte_stsxy(&p->x3);
-    if (quadOnScreen(p)) {
-        f = (SprFrag *)(*(volatile s32 *)&o->spriteBank + ((s16 *)(o->spriteBank + (*(u16 *)o->anim << 2)))[1]);
-        p->code = 0x2d;
-        SetSemiTrans(p, o->unkD >> 7);
-        *(u32 *)&p->u0 = *(u32 *)f;
-        *(u32 *)&p->u1 = *(u32 *)&f->uv1;
-        *(u16 *)&p->u2 = f->uv2;
-        *(u16 *)&p->u3 = f->uv3;
-        p->tpage += o->tpage;
-        if (o->unkD & 1)
-            p->clut = o->clut;
+    gte_stsxy(&poly->x3);
+    if (quadOnScreen(poly)) {
+        f = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + ((s16 *)(obj->spriteBank + (*(u16 *)obj->anim << 2)))[1]);
+        poly->code = 0x2d;
+        SetSemiTrans(poly, obj->drawFlags >> 7);
+        *(u32 *)&poly->u0 = *(u32 *)f;
+        *(u32 *)&poly->u1 = *(u32 *)&f->uv1;
+        *(u16 *)&poly->u2 = f->uv2;
+        *(u16 *)&poly->u3 = f->uv3;
+        poly->tpage += obj->tpage;
+        if (obj->drawFlags & 1)
+            poly->clut = obj->clut;
         {
             s32 c = LZ_FILE_CTRL_Long;
             unsigned long e;
@@ -1197,7 +1119,7 @@ void func_8004AA70(GameObject *o)
             do {
             } while (0);
             e = 0x9000000;
-            if (!otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, c, (s8)o->unkF, e))
+            if (!otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, c, (s8)obj->priority, e))
                 D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
         }
     }
@@ -1210,22 +1132,22 @@ void func_8004AD8C(void)
 {
     s32 n;
     GameObject **p;
-    GameObject *o;
+    GameObject *obj;
     if (D_1F8001C6 != 0) {
         n = D_1F800250_S16;
         p = D_1F800260;
         while (n != 0) {
-            o = *p++;
+            obj = *p++;
             n--;
-            if (o->unkA == 0xd) {
+            if (obj->drawType == DRAW_SPRT) {
                 switch ((*(u8 *)&D_800A539A_U8Arr)) {
-                case 0: func_8004A6A0(o); break;
-                case 1: func_800E9EB8(o); break;
-                case 2: func_800EB490(o); break;
-                case 3: func_800EAAC8(o); break;
+                case 0: func_8004A6A0(obj); break;
+                case 1: func_800E9EB8(obj); break;
+                case 2: func_800EB490(obj); break;
+                case 3: func_800EAAC8(obj); break;
                 }
             } else {
-                func_80045EFC(o);
+                func_80045EFC(obj);
             }
         }
     } else {
@@ -1234,18 +1156,18 @@ void func_8004AD8C(void)
         if (D_1F800246 == 0)
             return;
         do {
-            o = *D_1F80021C++;
+            obj = *D_1F80021C++;
             D_1F800246--;
-            if (o->visible) {
-                if (o->unkA == 0xd) {
+            if (obj->visible) {
+                if (obj->drawType == DRAW_SPRT) {
                     switch ((*(u8 *)&D_800A539A_U8Arr)) {
-                    case 0: func_8004A6A0(o); break;
-                    case 1: func_800E9EB8(o); break;
-                    case 2: func_800EB490(o); break;
-                    case 3: func_800EAAC8(o); break;
+                    case 0: func_8004A6A0(obj); break;
+                    case 1: func_800E9EB8(obj); break;
+                    case 2: func_800EB490(obj); break;
+                    case 3: func_800EAAC8(obj); break;
                     }
                 } else {
-                    func_80045EFC(o);
+                    func_80045EFC(obj);
                 }
             }
         } while ((*(s16 *)&D_1F800246) != 0);
@@ -1261,78 +1183,78 @@ void func_8004AFAC(void)
 {
     s32 n;
     GameObject **p;
-    GameObject *o;
+    GameObject *obj;
 
     if (D_1F8001C6 != 0) {
         n = D_1F800252;
         p = D_1F800264;
         while (n != 0) {
-            o = *p++;
+            obj = *p++;
             n--;
-            switch (func_80045D0C(o)) {
-            case 0: func_800487A4(o); break;
-            case 2: func_80049134(o); break;
-            case 4: func_8004B450(o); break;
-            case 5: func_80123148(o); break;
-            case 6: func_8004AA70(o); break;
-            case 7: func_8004BAF0(o); break;
-            case 8: func_80047FC8(o); break;
-            case 1: case 9: func_80048BF0(o); break;
-            case 10: drawMessageBox(o); break;
-            case 3: case 11: func_80049994(o); break;
-            case 12: drawMessageBoxFrame(o); break;
+            switch (func_80045D0C(obj)) {
+            case 0: func_800487A4(obj); break;
+            case 2: func_80049134(obj); break;
+            case 4: func_8004B450(obj); break;
+            case 5: func_80123148(obj); break;
+            case 6: func_8004AA70(obj); break;
+            case 7: func_8004BAF0(obj); break;
+            case 8: func_80047FC8(obj); break;
+            case 1: case 9: func_80048BF0(obj); break;
+            case 10: drawMessageBox(obj); break;
+            case 3: case 11: func_80049994(obj); break;
+            case 12: drawMessageBoxFrame(obj); break;
             case 13:
                 switch ((*(u8 *)&D_800A539A_U8Arr)) {
-                case 0: func_8004A6A0(o); break;
-                case 1: func_800E9EB8(o); break;
-                case 2: func_800EB490(o); break;
-                case 3: func_800EAAC8(o); break;
+                case 0: func_8004A6A0(obj); break;
+                case 1: func_800E9EB8(obj); break;
+                case 2: func_800EB490(obj); break;
+                case 3: func_800EAAC8(obj); break;
                 }
-            case 14: func_8004CC84(o); break;
-            case 16: func_8004A300(o); break;
-            case 17: func_80123AC4(o); break;
-            case 18: func_8011B350(o); break;
-            case 19: func_800EC0E8(o); break;
-            case 20: func_80117D3C(o); break;
-            case 21: func_8011812C(o); break;
-            case 22: func_8004D2A8(o); break;
+            case 14: func_8004CC84(obj); break;
+            case 16: func_8004A300(obj); break;
+            case 17: func_80123AC4(obj); break;
+            case 18: func_8011B350(obj); break;
+            case 19: func_800EC0E8(obj); break;
+            case 20: func_80117D3C(obj); break;
+            case 21: func_8011812C(obj); break;
+            case 22: func_8004D2A8(obj); break;
             }
         }
     } else {
         D_1F800252 = D_1F80024A;
         D_1F800264 = D_1F800220;
         while (D_1F80024A != 0) {
-            o = *D_1F800220++;
+            obj = *D_1F800220++;
             D_1F80024A--;
-            if (o->visible) {
-                switch (func_80045D0C(o)) {
-                case 0: func_800487A4(o); break;
-                case 2: func_80049134(o); break;
-                case 4: func_8004B450(o); break;
-                case 5: func_80123148(o); break;
-                case 6: func_8004AA70(o); break;
-                case 7: func_8004BAF0(o); break;
-                case 8: func_80047FC8(o); break;
-                case 1: case 9: func_80048BF0(o); break;
-                case 10: drawMessageBox(o); break;
-                case 3: case 11: func_80049994(o); break;
-                case 12: drawMessageBoxFrame(o); break;
+            if (obj->visible) {
+                switch (func_80045D0C(obj)) {
+                case 0: func_800487A4(obj); break;
+                case 2: func_80049134(obj); break;
+                case 4: func_8004B450(obj); break;
+                case 5: func_80123148(obj); break;
+                case 6: func_8004AA70(obj); break;
+                case 7: func_8004BAF0(obj); break;
+                case 8: func_80047FC8(obj); break;
+                case 1: case 9: func_80048BF0(obj); break;
+                case 10: drawMessageBox(obj); break;
+                case 3: case 11: func_80049994(obj); break;
+                case 12: drawMessageBoxFrame(obj); break;
                 case 13:
                     switch ((*(u8 *)&D_800A539A_U8Arr)) {
-                    case 0: func_8004A6A0(o); break;
-                    case 1: func_800E9EB8(o); break;
-                    case 2: func_800EB490(o); break;
-                    case 3: func_800EAAC8(o); break;
+                    case 0: func_8004A6A0(obj); break;
+                    case 1: func_800E9EB8(obj); break;
+                    case 2: func_800EB490(obj); break;
+                    case 3: func_800EAAC8(obj); break;
                     }
                     break;
-                case 14: func_8004CC84(o); break;
-                case 16: func_8004A300(o); break;
-                case 17: func_80123AC4(o); break;
-                case 18: func_8011B350(o); break;
-                case 19: func_800EC0E8(o); break;
-                case 20: func_80117D3C(o); break;
-                case 21: func_8011812C(o); break;
-                case 22: func_8004D2A8(o); break;
+                case 14: func_8004CC84(obj); break;
+                case 16: func_8004A300(obj); break;
+                case 17: func_80123AC4(obj); break;
+                case 18: func_8011B350(obj); break;
+                case 19: func_800EC0E8(obj); break;
+                case 20: func_80117D3C(obj); break;
+                case 21: func_8011812C(obj); break;
+                case 22: func_8004D2A8(obj); break;
                 }
             }
         }

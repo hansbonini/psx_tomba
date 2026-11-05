@@ -29,6 +29,18 @@ extern unsigned int strlen(const char *s);
 
 /* PsyQ libc prnt (derived from the 4.3BSD vfprintf).
  * a0 is unused; a1 = control (format string); a2 = argument pointer (va_list) */
+/**
+ * @brief Core formatter used by printf()
+ * 
+ * Interprets a printf-style format string and writes the result to the TTY
+ * through putchar(). Supports the usual flags, width, precision and the
+ * h/l length modifiers.
+ * 
+ * @param unused Unused (output stream placeholder)
+ * @param control Format string
+ * @param args Pointer to the variable argument list
+ * @return Number of characters written
+ */
 int prnt(void *unused, char *control, char *args)
 {
     char buf[BUF];

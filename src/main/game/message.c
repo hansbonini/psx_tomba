@@ -5,52 +5,52 @@
 
 // INCLUDE_ASM("nonmatchings/main/game/message", updateImpactEffect);
 
-void updateImpactEffect(GameObject *o)
+void updateImpactEffect(GameObject *obj)
 {
-    u8 s = o->state;
+    u8 s = obj->state;
     s32 d;
     switch (s) {
     case 0:
-        o->tpage = 0x15;
-        if (o->subtype == 0 || o->subtype == 3) {
-            o->tpage = 0x14;
+        obj->tpage = 0x15;
+        if (obj->id == 0 || obj->id == 3) {
+            obj->tpage = 0x14;
         }
-        o->unkD = 0;
-        *(s8 *)&o->unkF = -30;
-        o->unkA = 0;
-        o->animFrame = 0;
-        o->anim = ((void **)&D_80012194)[o->subtype];
-        o->spriteBank = D_1F8002D8[0];
-        o->state++;
-        readAnimFrameCount(o);
-        if (o->subtype == 2) {
-            o->unkD = 0x80;
-            o->tpage = 0x13;
-            o->anim = (*(void **)&D_800123C8);
-            playSFX(D_8007C840[o->subtype]);
+        obj->drawFlags = 0;
+        *(s8 *)&obj->priority = -30;
+        obj->drawType = DRAW_SPRITE;
+        obj->animFrame = 0;
+        obj->anim = ((void **)&D_80012194)[obj->id];
+        obj->spriteBank = D_1F8002D8[0];
+        obj->state++;
+        readAnimFrameCount(obj);
+        if (obj->id == 2) {
+            obj->drawFlags = 0x80;
+            obj->tpage = 0x13;
+            obj->anim = (*(void **)&D_800123C8);
+            playSFX(D_8007C840[obj->id]);
         }
         break;
     case 1:
-        if (o->subtype == 2) {
-            o->visible = 1;
-            pushDrawListCapped(o);
+        if (obj->id == 2) {
+            obj->visible = 1;
+            pushDrawListCapped(obj);
             if (PLAYER.obj.animFrame & 1) d = -14; else d = 14;
-            o->h->p.whole = PLAYER.obj.h->p.whole + d;
-            o->y.p.whole = (u16)PLAYER.obj.y.p.whole - 14;
-            if (tickAnimation(o)) {
-                o->state++;
+            obj->h->p.whole = PLAYER.obj.h->p.whole + d;
+            obj->y.p.whole = (u16)PLAYER.obj.y.p.whole - 14;
+            if (tickAnimation(obj)) {
+                obj->state++;
             }
-        } else if (func_80022E44(o)) {
-            if (tickAnimation(o)) {
-                o->state++;
+        } else if (func_80022E44(obj)) {
+            if (tickAnimation(obj)) {
+                obj->state++;
             }
         }
         break;
     case 2:
-        o->state = s + 1;
+        obj->state = s + 1;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeObjectLayer3(obj);
         break;
     }
 }
@@ -80,129 +80,125 @@ extern void func_80023020(GameObject *);
 extern s16 fixedMulCos(s32, s32);
 extern s16 fixedMulSin(s32, s32);
 
-void func_8002EBC4(GameObject *o)
+void func_8002EBC4(GameObject *obj)
 {
     u8 *p;
     s32 f;
     u16 u;
     s32 v;
     u8 st;
-    if (o->visible == 0)
-        func_80023020(o);
-    st = o->subState;
+    if (obj->visible == 0)
+        func_80023020(obj);
+    st = obj->subState;
     if (st != 0) {
         if (st != 1)
             return;
     } else
-        o->subState = st + 1;
-    p = (u8 *)o->unk90;
-    switch ((s16)(o->animFrame = *(u16 *)(p + 0x2e) & 7)) {
+        obj->subState = st + 1;
+    p = (u8 *)obj->parent;
+    switch ((s16)(obj->animFrame = *(u16 *)(p + 0x2e) & 7)) {
     case 0: case 2:
-        o->unk88 = 0x40;
-        o->unk8C = 0xe0;
+        obj->unk88 = 0x40;
+        obj->unk8C = 0xe0;
         break;
     case 1: case 3:
-        o->unk88 = 0x40;
-        o->unk8C = 0x20;
+        obj->unk88 = 0x40;
+        obj->unk8C = 0x20;
         break;
     case 4:
-        o->unk88 = 0x60;
-        o->unk8C = 0;
+        obj->unk88 = 0x60;
+        obj->unk8C = 0;
         break;
     case 5:
-        o->unk88 = 0x20;
-        o->unk8C = 0;
+        obj->unk88 = 0x20;
+        obj->unk8C = 0;
         break;
     case 6:
-        o->unk88 = 0x80;
-        o->unk8C = 0x20;
+        obj->unk88 = 0x80;
+        obj->unk8C = 0x20;
         break;
     case 7:
-        o->unk88 = 0;
-        o->unk8C = 0xe0;
+        obj->unk88 = 0;
+        obj->unk8C = 0xe0;
         break;
     }
-    o->x.p.whole = *(s16 *)(p + 0x12) + fixedMulCos((s16)o->unk88, 8);
-    v = o->unk88;
-    o->y.p.whole = *(s16 *)(p + 0x16) + fixedMulSin((s16)v, 8);
-    o->z.p.whole = *(s16 *)(p + 0x1a);
-    if (tickAnimation(o)) {
-        o->state = 2;
-        o->subState = 0;
+    obj->x.p.whole = *(s16 *)(p + 0x12) + fixedMulCos((s16)obj->unk88, 8);
+    v = obj->unk88;
+    obj->y.p.whole = *(s16 *)(p + 0x16) + fixedMulSin((s16)v, 8);
+    obj->z.p.whole = *(s16 *)(p + 0x1a);
+    if (tickAnimation(obj)) {
+        obj->state = 2;
+        obj->subState = 0;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002ED1C);
 
-void func_8002ED1C(GameObject *o)
+void func_8002ED1C(GameObject *obj)
 {
     s32 d;
-    o->unk8C = 0;
-    o->visible = D_800A5399;
+    obj->unk8C = 0;
+    obj->visible = D_800A5399;
     if (D_800A539D == 2 && D_800A5416 >= -0xc7 && D_800A5434 != 0) {
-        o->anim = (*(void **)&D_80014C8C);
-        readAnimFrameCount(o);
+        obj->anim = (*(void **)&D_80014C8C);
+        readAnimFrameCount(obj);
         if (D_800A5416 > 0 && *D_800A53BC[0] == 0x47)
-            o->unk8C = D_800A5424_S32;
+            obj->unk8C = D_800A5424_S32;
     } else if (D_800A539D == 4 && D_800A5416 >= -0xc7) {
-        o->anim = (*(void **)&D_80014C8C);
-        readAnimFrameCount(o);
+        obj->anim = (*(void **)&D_80014C8C);
+        readAnimFrameCount(obj);
         if (D_800A5416 > 0)
-            o->unk8C = D_800A5424_S32;
+            obj->unk8C = D_800A5424_S32;
     } else {
-        o->anim = D_80014C90;
-        readAnimFrameCount(o);
+        obj->anim = D_80014C90;
+        readAnimFrameCount(obj);
         d = D_800A5424_S32;
-        o->unk8C = (u8)((PLAYER.obj.animFrame & 1) ? d - 0x20 : d + 0x20);
+        obj->unk8C = (u8)((PLAYER.obj.animFrame & 1) ? d - 0x20 : d + 0x20);
     }
-    o->h->p.whole = ((Fix16 **)&D_800A53D8)[0]->p.whole;
-    o->y.p.whole = D_800A53AE[0] + 4;
-    o->d->p.whole = ((Fix16 **)&D_800A53DC)[0]->p.whole;
-    o->unkF = D_800A53A7[0] + 1;
-    o->unkF = PLAYER.obj.unkF + D_80011F0D[((s8 *)&D_80012014)[*D_800A53BC[0]] * 4];
+    obj->h->p.whole = ((Fix16 **)&D_800A53D8)[0]->p.whole;
+    obj->y.p.whole = D_800A53AE[0] + 4;
+    obj->d->p.whole = ((Fix16 **)&D_800A53DC)[0]->p.whole;
+    obj->priority = D_800A53A7[0] + 1;
+    obj->priority = PLAYER.obj.priority + D_80011F0D[((s8 *)&D_80012014)[*D_800A53BC[0]] * 4];
     if (D_800A5461[0] == 0)
-        o->state = 3;
+        obj->state = 3;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", updateStrikeBurst);
 
-void updateStrikeBurst(GameObject *o)
+void updateStrikeBurst(GameObject *obj)
 {
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        switch (o->subtype) {
+        switch (obj->id) {
         case 0:
-            o->anim = ((char *)&D_80014C94);
-            readAnimFrameCount(o);
-            o->state = 1;
-            o->subState = 0;
-            o->step = 0;
+            obj->anim = ((char *)&D_80014C94);
+            readAnimFrameCount(obj);
+            setObjState(obj, 1, 0, 0);
             break;
         case 1:
-            o->anim = ((char *)&D_80014C8C);
-            readAnimFrameCount(o);
-            o->state = 1;
-            o->subState = 1;
-            o->step = 0;
+            obj->anim = ((char *)&D_80014C8C);
+            readAnimFrameCount(obj);
+            setObjState(obj, 1, 1, 0);
             break;
         }
         break;
     case 1:
-        func_80022E44(o);
-        switch (o->subtype) {
+        func_80022E44(obj);
+        switch (obj->id) {
         case 0:
-            func_8002EBC4(o);
+            func_8002EBC4(obj);
             break;
         case 1:
-            func_8002ED1C(o);
+            func_8002ED1C(obj);
             break;
         }
         break;
     case 2:
-        o->state++;
+        obj->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeObjectLayer3(obj);
         break;
     }
 }
@@ -221,14 +217,14 @@ void func_8002F05C(GameObject *parent, s32 x, s32 y, s32 z)
         o->z.raw = z << 16;
         o->tpage = D_8009B6A0->tpage2;
         o->clut = D_8009B6A0->clut2;
-        o->unkA = 8;
-        *(s8 *)&o->unkF = -0x1C;
-        o->unkD = 1;
-        o->subtype = 0;
+        o->drawType = DRAW_OVERLAY_8;
+        *(s8 *)&o->priority = -0x1C;
+        o->drawFlags = 1;
+        o->id = 0;
         v = SPAD->sprData[1];
         o->category |= 0x80;
         o->unk1D = 0x4d;
-        *(GameObject **)&o->unk90 = parent;
+        *(GameObject **)&o->parent = parent;
         o->spriteBank = v;
     }
 }
@@ -237,173 +233,173 @@ void func_8002F05C(GameObject *parent, s32 x, s32 y, s32 z)
 
 void func_8002F138(void)
 {
-    GameObject *o;
+    GameObject *obj;
     s32 v;
 
-    if (D_8009C260 != 0 && (o = allocObjectLayer3()) != 0) {
-        o->active = 1;
-        o->type = 0x12;
-        o->animFrame = ((u16 *)&PLAYER.obj.animFrame)[0] & 1;
-        o->x.raw = D_800A53A8[0];
-        o->y.raw = D_800A53A8[1];
-        o->z.raw = D_800A53A8[2];
-        o->tpage = 0;
-        o->clut = GetClut(0x80, 499);
-        o->unkD = 1;
-        o->unkA = 8;
-        o->subtype = 1;
-        o->unkF = D_800A53A7[0] + 1;
+    if (D_8009C260 != 0 && (obj = allocObjectLayer3()) != 0) {
+        obj->active = 1;
+        obj->type = 0x12;
+        obj->animFrame = ((u16 *)&PLAYER.obj.animFrame)[0] & 1;
+        obj->x.raw = D_800A53A8[0];
+        obj->y.raw = D_800A53A8[1];
+        obj->z.raw = D_800A53A8[2];
+        obj->tpage = 0;
+        obj->clut = GetClut(0x80, 499);
+        obj->drawFlags = 1;
+        obj->drawType = DRAW_OVERLAY_8;
+        obj->id = 1;
+        obj->priority = D_800A53A7[0] + 1;
         v = D_1F8002CC;
-        o->category |= 0x80;
-        o->unk1D = 0x4d;
-        o->spriteBank = v;
+        obj->category |= 0x80;
+        obj->unk1D = 0x4d;
+        obj->spriteBank = v;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F220);
-void func_8002F220(GameObject *o)
+void func_8002F220(GameObject *obj)
 {
-    u8 s = o->state;
+    u8 s = obj->state;
     s16 t;
     switch (s) {
     case 0:
-        if (o->subState != 0) break;
-        o->anim = D_80014CB4;
-        readAnimFrameCount(o);
-        o->x.p.whole = D_800A53AA;
+        if (obj->subState != 0) break;
+        obj->anim = D_80014CB4;
+        readAnimFrameCount(obj);
+        obj->x.p.whole = D_800A53AA;
         if (((u16 *)&PLAYER)[2] == 0x405) {
-            o->y.p.whole = -0x24;
+            obj->y.p.whole = -0x24;
         } else if (PLAYER.obj.y.p.whole < -0xf1 && PLAYER.obj.h->p.whole >= 0xf3) {
-            o->y.p.whole = -0xf0;
+            obj->y.p.whole = -0xf0;
         } else {
-            o->y.p.whole = -0x28;
+            obj->y.p.whole = -0x28;
         }
         t = D_800A53B2_U16;
-        o->state = 1;
-        o->subState = 0;
-        o->z.p.whole = t;
+        obj->state = 1;
+        obj->subState = 0;
+        obj->z.p.whole = t;
         break;
     case 1:
-        func_80022E44(o);
-        switch (o->subState) {
+        func_80022E44(obj);
+        switch (obj->subState) {
         case 0:
-            o->subState++;
+            obj->subState++;
         case 1:
-            o->h->p.whole = PLAYER.obj.h->p.whole;
+            obj->h->p.whole = PLAYER.obj.h->p.whole;
             if (PLAYER.obj.y.p.whole < -0xf1 && PLAYER.obj.h->p.whole >= 0xf3) {
-                o->y.p.whole = -0xf0;
+                obj->y.p.whole = -0xf0;
             } else {
-                o->y.p.whole = -0x28;
+                obj->y.p.whole = -0x28;
             }
-            o->d->p.whole = PLAYER.obj.d->p.whole;
-            o->animFrame = PLAYER.obj.animFrame & 1;
+            obj->d->p.whole = PLAYER.obj.d->p.whole;
+            obj->animFrame = PLAYER.obj.animFrame & 1;
             break;
         }
         break;
     case 2:
-        o->state = s + 1;
+        obj->state = s + 1;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeObjectLayer3(obj);
         break;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F404);
 
-void func_8002F404(GameObject *o)
+void func_8002F404(GameObject *obj)
 {
-    u8 t = o->state;
+    u8 t = obj->state;
     s32 x;
 
     switch (t) {
     case 0:
-        if (o->subState == 0) {
-            o->anim = D_80012354[o->subtype];
-            readAnimFrameCount(o);
+        if (obj->subState == 0) {
+            obj->anim = D_80012354[obj->id];
+            readAnimFrameCount(obj);
             x = (*(s16 *)&D_800A53AA);
             if (PLAYER.obj.animFrame & 1) {
-                o->x.p.whole = x + 8;
+                obj->x.p.whole = x + 8;
             } else {
-                o->x.p.whole = x - 8;
+                obj->x.p.whole = x - 8;
             }
-            o->y.p.whole = PLAYER.obj.y.p.whole + 0x10;
-            o->z.p.whole = D_800A53B2[0];
-            o->state = 1;
-            o->subState = 0;
+            obj->y.p.whole = PLAYER.obj.y.p.whole + 0x10;
+            obj->z.p.whole = D_800A53B2[0];
+            obj->state = 1;
+            obj->subState = 0;
         }
         break;
     case 1:
-        func_80022E44(o);
-        if (o->visible != 0) {
-            switch (o->subState) {
+        func_80022E44(obj);
+        if (obj->visible != 0) {
+            switch (obj->subState) {
             case 0:
-                o->subState++;
+                obj->subState++;
             case 1:
-                if (tickAnimation(o)) {
-                    o->state = 2;
+                if (tickAnimation(obj)) {
+                    obj->state = 2;
                 }
                 break;
             }
         }
         break;
     case 2:
-        o->state = t + 1;
+        obj->state = t + 1;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeObjectLayer3(obj);
         break;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F56C);
-void func_8002F56C(GameObject *o)
+void func_8002F56C(GameObject *obj)
 {
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        if (o->subState == 0) {
-            o->anim = (D_80012354 + o->subtype)[o->unkC];
-            readAnimFrameCount(o);
-            o->x.p.whole = ((u16 *)&D_800A53AA)[0];
-            o->y.p.whole = (u16)PLAYER.obj.y.p.whole - 8;
-            *(s16 *)((char *)o + 0x1a) = D_800A53B2[0];
+        if (obj->subState == 0) {
+            obj->anim = (D_80012354 + obj->id)[obj->param];
+            readAnimFrameCount(obj);
+            obj->x.p.whole = ((u16 *)&D_800A53AA)[0];
+            obj->y.p.whole = (u16)PLAYER.obj.y.p.whole - 8;
+            *(s16 *)((char *)obj + 0x1a) = D_800A53B2[0];
             { u8 t = (*(u8 *)&D_800A53A7);
-            o->state = 1;
-            o->subState = 0;
-            o->unkF = t - 1; }
+            obj->state = 1;
+            obj->subState = 0;
+            obj->priority = t - 1; }
         }
         break;
     case 1:
-        func_80022E44(o);
-        if (o->visible == 0)
+        func_80022E44(obj);
+        if (obj->visible == 0)
             break;
-        switch (o->subState) {
+        switch (obj->subState) {
         case 0:
-            o->timer = 200;
-            o->unk84 = 0;
-            switch (o->unkC) {
-            case 0: o->velX = 0x10; o->velY = -0x100; o->unk88 = 1; break;
-            case 1: o->velX = 0xe; o->velY = -0x140; o->unk88 = 2; break;
-            case 2: o->velX = 0x12; o->velY = -0x180; o->unk88 = 1; break;
-            case 3: o->velX = 0x11; o->velY = -0x200; o->unk88 = 1; break;
-            case 4: o->velX = 0xf; o->velY = -0x220; o->unk88 = 2; break;
-            case 5: o->velX = 0x10; o->velY = -0x240; o->unk88 = 1; break;
+            obj->timer = 200;
+            obj->unk84 = 0;
+            switch (obj->param) {
+            case 0: obj->velX = 0x10; obj->velY = -0x100; obj->unk88 = 1; break;
+            case 1: obj->velX = 0xe; obj->velY = -0x140; obj->unk88 = 2; break;
+            case 2: obj->velX = 0x12; obj->velY = -0x180; obj->unk88 = 1; break;
+            case 3: obj->velX = 0x11; obj->velY = -0x200; obj->unk88 = 1; break;
+            case 4: obj->velX = 0xf; obj->velY = -0x220; obj->unk88 = 2; break;
+            case 5: obj->velX = 0x10; obj->velY = -0x240; obj->unk88 = 1; break;
             }
-            o->subState++;
+            obj->subState++;
         case 1:
-            o->unk84 = (o->unk84 + o->unk88) & 0xff;
-            o->h->p.whole = fixedMulCos(o->unk84, o->velX);
-            o->y.raw -= 0x10000;
-            if (--o->timer == 0)
-                o->state = 2;
+            obj->unk84 = (obj->unk84 + obj->unk88) & 0xff;
+            obj->h->p.whole = fixedMulCos(obj->unk84, obj->velX);
+            obj->y.raw -= 0x10000;
+            if (--obj->timer == 0)
+                obj->state = 2;
             break;
         }
         break;
     case 2:
-        o->state++;
+        obj->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeObjectLayer3(obj);
         break;
     }
 }
@@ -426,26 +422,26 @@ void func_8002F804(GameObject *a, s16 b, char c)
         if (b == 0) {
             o->tpage = 0;
             o->clut = GetClut(0x80, 0x1f0);
-            o->unkD = 0x81;
+            o->drawFlags = 0x81;
             o->spriteBank = D_1F8002CC;
-            o->unkA = 8;
-            *(s8 *)&o->unkF = -7;
-            o->subtype = b;
-            o->unkC = c;
+            o->drawType = DRAW_OVERLAY_8;
+            *(s8 *)&o->priority = -7;
+            o->id = b;
+            o->param = c;
             o->unk1D = 0x4d;
-            *(GameObject **)&o->unk90 = a;
+            *(GameObject **)&o->parent = a;
             o->category |= 0x80;
         } else {
             o->tpage = 0x14;
-            o->unkD = 0;
+            o->drawFlags = 0;
             o->spriteBank = D_1F8002D8[0];
-            o->unkA = 2;
-            o->subtype = b;
-            o->unkC = c;
-            o->unkF = D_800A53A7[0] - 1;
+            o->drawType = DRAW_SPRITE_ROTATED;
+            o->id = b;
+            o->param = c;
+            o->priority = D_800A53A7[0] - 1;
             o->category |= 0x80;
             o->unk1D = 0x4d;
-            *(GameObject **)&o->unk90 = a;
+            *(GameObject **)&o->parent = a;
         }
     }
 }

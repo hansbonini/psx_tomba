@@ -7,6 +7,21 @@ extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_cp", SsUtChangePitch);
 
+/**
+ * @brief Change the pitch of a voice started with SsUtKeyOn
+ * 
+ * If the voice still plays the given VAB/program/note, recalculates its
+ * pitch for the new note and fine tune.
+ * 
+ * @param voice Voice number
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param old_note Note currently playing
+ * @param old_fine Current fine tune
+ * @param new_note New note
+ * @param new_fine New fine tune
+ * @return 0 on success, -1 if the voice does not match
+ */
 short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
                       short old_fine, u_short new_note, u_short new_fine) {
     if (voice >= 0 && voice < NUM_SPU_CHANNELS) {

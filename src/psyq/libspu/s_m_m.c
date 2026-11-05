@@ -4,6 +4,15 @@
 extern int _spu_AllocLastNum;
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_m_m", SpuMalloc);
+/**
+ * @brief Allocate an area of SPU RAM
+ * 
+ * Rounds the size up to the SPU memory unit and finds a free block,
+ * avoiding the reserved reverb work area.
+ * 
+ * @param size Size in bytes
+ * @return Start address of the allocated area, or -1 on failure
+ */
 long SpuMalloc(long size) {
     s32 var_s2;
     s32 var_s3;
@@ -87,6 +96,12 @@ long SpuMalloc(long size) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_m_m", _spu_gcSPU);
 
+/**
+ * @brief Internal: compact the SPU memory allocation table
+ * 
+ * Merges adjacent free blocks and removes unused entries of the allocation
+ * table.
+ */
 void _spu_gcSPU(void) {
     int i, j;
 

@@ -3,6 +3,17 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/seqinit", _SsInitSoundSeq);
 
+/**
+ * @brief Internal: initialize the score state of a sequence
+ * 
+ * Resets the channel settings, checks the SEQ header, reads the resolution
+ * and tempo and computes the timing values.
+ * 
+ * @param arg0 Access number
+ * @param vab_id VAB used by the sequence
+ * @param addr Start of the SEQ data
+ * @return 0 on success (also for old-format data), -1 if the data is not a SEQ
+ */
 s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     struct SeqStruct* score = &_ss_score[arg0][0];
     s32 channel;

@@ -52,6 +52,13 @@ extern s32 StRingSize;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_011", StCdInterrupt);
 
+/**
+ * @brief Internal: streaming data ready handler
+ * 
+ * Called on every sector during streaming. Validates the sector header,
+ * assembles frames into the ring buffer through DMA and handles frame
+ * range, channel and end-of-stream conditions.
+ */
 void StCdInterrupt(void) {
     volatile s16 subroutine_arg8[4];
     CdlLOC loc;
@@ -240,6 +247,15 @@ void StCdInterrupt(void) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_011", mem2mem);
+/**
+ * @brief Internal: copy 32-bit words
+ * 
+ * Copies num words from src to dst.
+ * 
+ * @param dst Destination address
+ * @param src Source address
+ * @param num Number of 32-bit words to copy
+ */
 void mem2mem(s32* dst, s32* src, u32 num) {
     u32 i;
     for (i = 0; i < num; i++) {
@@ -249,6 +265,21 @@ void mem2mem(s32* dst, s32* src, u32 num) {
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_011", dma_execute);
+/**
+ * @brief Internal: start a DMA transfer on a given channel
+ * 
+ * Waits for the channel to become idle, sets or clears its interrupt
+ * enable in DICR, enables it in DPCR, programs the address and block size,
+ * waits for the CD-ROM data request and starts the transfer.
+ * 
+ * @param id DMA channel number
+ * @param addr Main memory address
+ * @param blocks Number of blocks
+ * @param size Block size in words
+ * @param control Channel control (CHCR) value
+ * @param arg5 1 to enable the DMA interrupt of the channel, otherwise disable it
+ * @param arg6 Unused
+ */
 void dma_execute(s32 id, void* addr, u32 blocks, u32 size, u32 control,
                  u_char arg5, u32 arg6) {
     s32 i;

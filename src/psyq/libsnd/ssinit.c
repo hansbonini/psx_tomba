@@ -1,9 +1,11 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+/** @brief Initial register values written to every SPU voice by _SsInit */
 short default_voice[8] = {
     0x0000, 0x0000, 0x1000, 0x3000, 0x00BF, 0x0000, 0x0000, 0x0000,
 };
+/** @brief Initial values of the SPU common registers written by _SsInit */
 short default_state[16] = {
     0x3FFF, 0x3FFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -14,6 +16,12 @@ extern SndSsMarkCallbackProc _SsMarkCallback[32][16];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssinit", _SsInit);
 
+/**
+ * @brief Internal: initialize the sound system
+ * 
+ * Writes default values to the SPU voice and common registers, initializes
+ * the voice manager for 24 voices and clears the mark callbacks.
+ */
 void _SsInit(void) {
     u16* var_a2;
     int i, j;
@@ -54,6 +62,11 @@ void _SsInit(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssinit", SsInitHot);
 
+/**
+ * @brief Initialize the sound system without a full SPU reset
+ * 
+ * Resets the callbacks, initializes the SPU library and the sound system.
+ */
 void SsInitHot(void) {
     ResetCallback();
     SpuInit();

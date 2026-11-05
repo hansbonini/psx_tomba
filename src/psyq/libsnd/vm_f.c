@@ -16,6 +16,13 @@ extern u16 _svm_orev2;
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_f", _SsVmFlush);
 
+/**
+ * @brief Internal: write pending voice changes to the SPU
+ * 
+ * Tracks finished envelopes for automatic voice release, processes
+ * automatic volume/pan changes, writes the dirty voice registers and
+ * issues the queued key on/off and reverb changes.
+ */
 void _SsVmFlush(void) {
     s32 i;
     u32 env_mask;

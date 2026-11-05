@@ -1,6 +1,7 @@
 #include "common.h"
 #include "libsnd_i.h"
 
+/** @brief Tick mode, callback and interrupt settings of the sequencer */
 struct SndSeqTickEnv _snd_seq_tick_env = {0x3C, 1, SsSeqCalledTbyT, NULL, 0, 0, 0x7F, 0, 0};
 
 void _SsTrapIntrVSync(void);
@@ -8,6 +9,15 @@ void _SsSeqCalledTbyT_1per2(void);
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ssstart", _SsStart);
 
+/**
+ * @brief Internal: start the sequencer tick
+ * 
+ * Depending on the tick mode, installs SsSeqCalledTbyT() as a VSync
+ * callback or programs root counter 2 / the VBlank interrupt to call it at
+ * the required rate.
+ * 
+ * @param arg0 0 = use VSyncCallback for the 60 Hz modes, 1 = use the interrupt / root counter
+ */
 void _SsStart(s32 arg0) {
     u16 rcnt_target;
     u32 rcnt_spec;

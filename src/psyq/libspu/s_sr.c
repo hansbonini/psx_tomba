@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_sr", SpuSetReverb);
 
+/**
+ * @brief Enable or disable reverb
+ * 
+ * Turns the reverb unit on or off. Reverb cannot be enabled if the work
+ * area is not reserved and overlaps allocated memory.
+ * 
+ * @param on_off SPU_ON (1) or SPU_OFF (0)
+ * @return Resulting reverb state
+ */
 s32 SpuSetReverb(s32 on_off) {
     u16 cnt;
     switch (on_off) {
@@ -52,6 +61,14 @@ s32 SpuSetReverb(s32 on_off) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_sr", _SpuIsInAllocateArea);
 
+/**
+ * @brief Internal: check whether an address is inside allocated SPU RAM
+ * 
+ * Walks the allocation table for a used block that covers the address.
+ * 
+ * @param arg0 SPU RAM address in bytes
+ * @return 1 if the address is inside (or below) an allocated block, 0 otherwise
+ */
 int _SpuIsInAllocateArea(unsigned arg0) {
     int i;
 
@@ -77,6 +94,15 @@ int _SpuIsInAllocateArea(unsigned arg0) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_sr", _SpuIsInAllocateArea_);
 
+/**
+ * @brief Internal: check whether a register-unit address is inside allocated SPU RAM
+ * 
+ * Same as _SpuIsInAllocateArea() but the address is first converted from
+ * SPU register units to bytes.
+ * 
+ * @param arg0 SPU RAM address in register units (8 bytes)
+ * @return 1 if the address is inside (or below) an allocated block, 0 otherwise
+ */
 int _SpuIsInAllocateArea_(unsigned arg0) {
     int i;
 

@@ -610,63 +610,63 @@ L:
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002A9FC);
 
-static __inline__ void body_2A9FC(GameObject *o)
+static __inline__ void body_2A9FC(GameObject *obj)
 {
     s32 d;
     u8 neg;
-    d = D_1F80018C - (*(Fix16 **)&o->unk34)->raw;
+    d = D_1F80018C - (*(Fix16 **)&obj->localY)->raw;
     neg = d < 0;
     if (d > 0x20000) {
-        if (d < o->y.raw) {
+        if (d < obj->y.raw) {
             if (d < 0x40000)
-                o->y.raw = d;
+                obj->y.raw = d;
             else
-                o->y.raw = 0x40000;
+                obj->y.raw = 0x40000;
         } else {
-            if (o->y.raw < 0)
-                o->y.raw = 0;
-            o->y.raw += 0x2000;
+            if (obj->y.raw < 0)
+                obj->y.raw = 0;
+            obj->y.raw += 0x2000;
         }
-        { s32 y = o->y.raw; (*(Fix16 **)&o->unk34)->raw += y; }
+        { s32 y = obj->y.raw; (*(Fix16 **)&obj->localY)->raw += y; }
     } else if (d < -0x20000) {
-        if (o->y.raw < d) {
+        if (obj->y.raw < d) {
             if (d > -0x40000)
-                o->y.raw = d;
+                obj->y.raw = d;
             else
-                o->y.raw = -0x40000;
+                obj->y.raw = -0x40000;
         } else {
-            if (o->y.raw > 0)
-                o->y.raw = 0;
-            o->y.raw -= 0x2000;
+            if (obj->y.raw > 0)
+                obj->y.raw = 0;
+            obj->y.raw -= 0x2000;
         }
-        (*(Fix16 **)&o->unk34)->raw += o->y.raw;
-        if ((*(Fix16 **)&o->unk34)->p.whole < (s16)o->animTimer) {
-            (*(Fix16 **)&o->unk34)->raw = (s16)o->animTimer << 16;
-            o->y.raw = 0;
-            *(u16 *)&o->d |= 2;
+        (*(Fix16 **)&obj->localY)->raw += obj->y.raw;
+        if ((*(Fix16 **)&obj->localY)->p.whole < (s16)obj->animTimer) {
+            (*(Fix16 **)&obj->localY)->raw = (s16)obj->animTimer << 16;
+            obj->y.raw = 0;
+            *(u16 *)&obj->d |= 2;
         }
         return;
     } else {
-        o->y.raw = d;
-        (*(Fix16 **)&o->unk34)->raw += d;
+        obj->y.raw = d;
+        (*(Fix16 **)&obj->localY)->raw += d;
         if (neg) {
-            if ((*(Fix16 **)&o->unk34)->p.whole < (s16)o->animTimer) {
-                (*(Fix16 **)&o->unk34)->raw = (s16)o->animTimer << 16;
-                o->y.raw = 0;
-                *(u16 *)&o->d |= 2;
+            if ((*(Fix16 **)&obj->localY)->p.whole < (s16)obj->animTimer) {
+                (*(Fix16 **)&obj->localY)->raw = (s16)obj->animTimer << 16;
+                obj->y.raw = 0;
+                *(u16 *)&obj->d |= 2;
             }
         }
     }
-    if ((*(Fix16 **)&o->unk34)->p.whole > (s16)o->animFrame) {
-        (*(Fix16 **)&o->unk34)->raw = (s16)o->animFrame << 16;
-        o->y.raw = 0;
-        *(u16 *)&o->d |= 1;
+    if ((*(Fix16 **)&obj->localY)->p.whole > (s16)obj->animFrame) {
+        (*(Fix16 **)&obj->localY)->raw = (s16)obj->animFrame << 16;
+        obj->y.raw = 0;
+        *(u16 *)&obj->d |= 1;
     }
 }
 
-void func_8002A9FC(GameObject *o)
+void func_8002A9FC(GameObject *obj)
 {
-    body_2A9FC(o);
+    body_2A9FC(obj);
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002ABC0);
@@ -1134,7 +1134,7 @@ static __inline__ s32 decel_2B704(S_2B704 *o)
 
 void func_8002B704(S_2B704 *o)
 {
-    GameObject *p;
+    GameObject *obj;
     if (D_8009BCA7) {
         if (o->d24 != 0) {
             if (o->d24 > 0) o->d24 -= 0x80;
@@ -1146,12 +1146,12 @@ void func_8002B704(S_2B704 *o)
         }
         return;
     }
-    p = &PLAYER;
+    obj = &PLAYER;
     switch (o->b70) {
     case 0:
-        if (p->unkA4) {
+        if (obj->modelLit) {
             o->b70 = 5;
-            if (p->animFrame & 1) {
+            if (obj->animFrame & 1) {
                 o->b71 = 0;
                 o->b73 = -10;
             } else {
@@ -1160,10 +1160,10 @@ void func_8002B704(S_2B704 *o)
             }
             break;
         }
-        switch (p->unk9E) {
+        switch (obj->unk9E) {
         case 2: case 3: case 5: case 6: case 8: case 9:
             o->b70 = 1;
-            if (p->animFrame & 1) {
+            if (obj->animFrame & 1) {
                 o->b71 = 1;
                 o->b73 = 10;
             } else {
@@ -1174,21 +1174,21 @@ void func_8002B704(S_2B704 *o)
         }
         break;
     case 1:
-        if ((p->animFrame & 1) != o->b71) {
-            o->b71 = p->animFrame & 1;
+        if ((obj->animFrame & 1) != o->b71) {
+            o->b71 = obj->animFrame & 1;
             o->b73 = -o->b73;
         }
         if (approach_2B704(o)) o->b70 = 2;
     case 2:
-        switch (p->unk9E) {
+        switch (obj->unk9E) {
         case 0: case 1: case 4: case 7: case 10: case 11: case 12:
             o->b70 = 3;
             o->b71 = 0;
             break;
         case 2: case 3: case 5: case 6: case 8: case 9:
-            if ((p->animFrame & 1) != o->b71) {
+            if ((obj->animFrame & 1) != o->b71) {
                 o->b70 = 1;
-                o->b71 = p->animFrame & 1;
+                o->b71 = obj->animFrame & 1;
                 o->b73 = -o->b73;
             }
             break;
@@ -1203,7 +1203,7 @@ void func_8002B704(S_2B704 *o)
     case 5:
         if (approach_2B704(o)) o->b70++;
     case 6:
-        if (!p->unkA4) o->b70++;
+        if (!obj->modelLit) o->b70++;
         break;
     case 7:
         if (decel_2B704(o)) o->b70 = 0;
@@ -1822,21 +1822,21 @@ void func_8002CD7C(S8002A258_2CD7C *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CEF8);
 static __inline__ void lim_2CEF8(s16 *q, s16 x, s32 k) { if (*q < x - k) *q = x - k; }
-void func_8002CEF8(GameObject *o)
+void func_8002CEF8(GameObject *obj)
 {
     s16 a, b;
     u8 *g;
-    func_8002A798(o);
-    func_8002A480(o);
+    func_8002A798(obj);
+    func_8002A480(obj);
     g = PLAYER_U8Arr;
     if (PLAYER.obj.active < 4 || PLAYER.obj.active == 7) {
-        b = *(s16 *)(o->unk34 + 2);
+        b = *(s16 *)(obj->localY + 2);
         if (PLAYER.obj.h->p.whole < (a = b - 0x90)) PLAYER.obj.h->p.whole = a;
         else if ((a = b + 0x90) < PLAYER.obj.h->p.whole) PLAYER.obj.h->p.whole = a;
         if ((*(s32 *)&GAME) == 0x2000e) {
-            lim_2CEF8((s16 *)(g + 0x16), *(s16 *)&o->unk30, NTSC_PAL(0x54, 0x5C));
+            lim_2CEF8((s16 *)(g + 0x16), *(s16 *)&obj->localX, NTSC_PAL(0x54, 0x5C));
         } else {
-            lim_2CEF8((s16 *)(g + 0x16), *(s16 *)&o->unk30, NTSC_PAL(0x88, 0x90));
+            lim_2CEF8((s16 *)(g + 0x16), *(s16 *)&obj->localX, NTSC_PAL(0x88, 0x90));
         }
     }
 }
@@ -2723,17 +2723,17 @@ void cloneItemPickupObject(u8* src)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", updateItemGetIcon);
-static inline void initHeldItemIcon(GameObject *o)
+static inline void initHeldItemIcon(GameObject *obj)
 {
-    o->tpage = 0x14;
-    o->unkD = 1;
-    o->clut = 0x7ED7;
-    o->animFrame = 0;
-    o->anim = *(void **)D_800123CC;
-    o->spriteBank = D_1F8002D8[0];
-    o->state++;
-    o->timer = 0x78;
-    readAnimFrameCount(o);
+    obj->tpage = 0x14;
+    obj->drawFlags = 1;
+    obj->clut = 0x7ED7;
+    obj->animFrame = 0;
+    obj->anim = *(void **)D_800123CC;
+    obj->spriteBank = D_1F8002D8[0];
+    obj->state++;
+    obj->timer = 0x78;
+    readAnimFrameCount(obj);
 }
 
 extern s32 D_8009BCBC_Arr[] asm("D_8009BCBC");
@@ -2747,7 +2747,7 @@ void updateItemGetIcon(GameObject *o)
 
     switch (state) {
     case 0:
-        if (o->subtype != 0) {
+        if (o->id != 0) {
             {
                 register GameObject *self = o;
                 initHeldItemIcon(self);
@@ -2756,34 +2756,34 @@ void updateItemGetIcon(GameObject *o)
         }
         D_8009BCBC_Arr[0] = 1;
         o->tpage = 0x15;
-        *(s8 *)&o->unkF = -9;
+        *(s8 *)&o->priority = -9;
         o->animFrame = 0;
         o->state++;
         o->animFrame = 1;
-        o->unkD = 0;
-        o->unkA = 0;
-        o->anim = *D_8007C838[o->unkC];
+        o->drawFlags = 0;
+        o->drawType = DRAW_SPRITE;
+        o->anim = *D_8007C838[o->param];
         o->spriteBank = D_1F8002D8[0];
         o->x.p.whole = D_1F80016A[0];
         o->y.p.whole = D_1F80016E_U16Arr[0] - 0x1E;
         o->z.p.whole = D_1F800172[0];
         if (GAME.selectedArea == 2 && (D_8009BCCA == 0 || D_8009BCCA == 3)) {
             o->velV = -0x3E0;
-            *(s8 *)&o->unkF = -0x12;
+            *(s8 *)&o->priority = -0x12;
         } else {
             o->velV = -0x380;
-            *(s8 *)&o->unkF = -9;
+            *(s8 *)&o->priority = -9;
         }
         o->timer = 0x78;
-        o->unk34 = 0;
+        o->localY = 0;
         readAnimFrameCount(o);
         playSFX(0x1A);
         break;
     case 1:
-        if (o->subtype != 0) {
-            owner = (GameObject *)o->unk90;
+        if (o->id != 0) {
+            owner = (GameObject *)o->parent;
             if (*(u16 *)&owner->state == 2) {
-                switch (o->unkC) {
+                switch (o->param) {
                 case 0x0:
                     if (owner->unkAC != 0xF) o->state = 3;
                     dx = 0;
@@ -2854,7 +2854,7 @@ void updateItemGetIcon(GameObject *o)
             if (o->velV >= 0x101) {
                 o->subState++;
             }
-            o->unk34 += o->velV << 8;
+            o->localY += o->velV << 8;
             break;
         case 1:
             if (--o->timer == -1) {
@@ -2863,7 +2863,7 @@ void updateItemGetIcon(GameObject *o)
             break;
         }
         o->x.p.whole = D_1F80016A[0];
-        o->y.raw = D_1F80016C_S32Arr[0] + o->unk34;
+        o->y.raw = D_1F80016C_S32Arr[0] + o->localY;
         o->z.p.whole = D_1F800172[0];
         break;
     case 2:

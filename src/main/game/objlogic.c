@@ -31,11 +31,11 @@ asm(
 );
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_8003473C);
-void func_8003473C(GameObject *o)
+void func_8003473C(GameObject *obj)
 {
-    switch (o->subState) {
+    switch (obj->subState) {
     case 0:
-        switch (o->animFrame) {
+        switch (obj->animFrame) {
         case 0: case 1: case 2: case 3:
             D_800A53BC_U16Ptr = (u16 *)D_80011040;
             break;
@@ -48,7 +48,7 @@ void func_8003473C(GameObject *o)
         }
         break;
     case 1:
-        switch (o->animFrame) {
+        switch (obj->animFrame) {
         case 0: case 1: case 2: case 3:
             D_800A53BC_U16Ptr = (u16 *)D_800110D0;
             break;
@@ -66,11 +66,11 @@ void func_8003473C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_8003481C);
-void func_8003481C(GameObject *o)
+void func_8003481C(GameObject *obj)
 {
-    switch (o->subState) {
+    switch (obj->subState) {
     case 0:
-        switch (o->animFrame) {
+        switch (obj->animFrame) {
         case 0: case 1: case 2: case 3:
             D_800A53BC_U16Ptr = (u16 *)D_80011058;
             break;
@@ -83,7 +83,7 @@ void func_8003481C(GameObject *o)
         }
         break;
     case 1:
-        switch (o->animFrame) {
+        switch (obj->animFrame) {
         case 0: case 1: case 2: case 3:
             D_800A53BC_U16Ptr = (u16 *)D_800110E8;
             break;
@@ -101,11 +101,11 @@ void func_8003481C(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800348FC);
-void func_800348FC(GameObject *o)
+void func_800348FC(GameObject *obj)
 {
-    switch (o->subState) {
+    switch (obj->subState) {
     case 0:
-        switch (o->animFrame) {
+        switch (obj->animFrame) {
         case 0: case 1: case 2: case 3:
             D_800A53BC_U16Ptr = (u16 *)D_80010FE0;
             break;
@@ -118,7 +118,7 @@ void func_800348FC(GameObject *o)
         }
         break;
     case 1:
-        switch (o->animFrame) {
+        switch (obj->animFrame) {
         case 0: case 1: case 2: case 3:
             D_800A53BC_U16Ptr = (u16 *)D_80011070;
             break;
@@ -190,9 +190,9 @@ extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80034AB8);
-void func_80034AB8(GameObject *o)
+void func_80034AB8(GameObject *obj)
 {
-    initObjectAC(o);
+    initObjectAC(obj);
 }
 
 #define IDX(o, i) \
@@ -227,7 +227,7 @@ void func_80034C14(GameObject *o)
         (*(P38_34C14 *)&PLAYER).b9d = 1;
         D_8009B698->b7 = o->animFrame;
         v = D_8007D60C[TB(o)];
-        o->unkA = 0;
+        o->drawType = DRAW_SPRITE;
         o->active = 2;
         o->unkAA = v;
         D_8009B6A0->mode = 0;
@@ -239,7 +239,7 @@ void func_80034C14(GameObject *o)
         D_8009B6A0->w36 = 0;
         o->unkA8 = 0;
         if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7) {
-            o->unk94 = (s32)D_8009E454;
+            o->child = (s32)D_8009E454;
             *D_8009E454 = 2;
         }
         IDX(o, i);
@@ -260,10 +260,10 @@ void func_80034C14(GameObject *o)
         o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 16);
         o->d->p.whole = (*(P38_34C14 *)&PLAYER).d->p.whole;
         o->unkA5 = 1;
-        o->hitOffsetX = 6;
-        o->hitOffsetY = 6;
-        o->hitWidth = 12;
-        o->hitHeight = 12;
+        o->hitboxX = 6;
+        o->hitboxY = 6;
+        o->hitboxW = 12;
+        o->hitboxH = 12;
         D_8009B6A0->frame = 0;
         switch (D_8009B698->b0) {
         case 2:
@@ -472,7 +472,7 @@ void func_80034C14(GameObject *o)
         if (o->animFrame & 1) {
             if (D_8009B6A0->angle < -64) {
                 if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7)
-                    *(u8 *)o->unk94 = D_8009B698->b6;
+                    *(u8 *)o->child = D_8009B698->b6;
                 if (PADOK() && (*(P38_34C14 *)&PLAYER).bac < 2 && D_8009BCA7_U8 == 0) {
                     func_800EBA70((*(u8 *)&D_8009C61A), o);
                     (*(P38_34C14 *)&PLAYER).b9d = 0;
@@ -483,21 +483,17 @@ void func_80034C14(GameObject *o)
                     PLAYER_P38_34C14.b9d = 0;
                     D_8009B6A0->mode = 0;
                     D_8009B698->b0 = 0;
-                    o->state = 2;
-                    o->subState = 0;
-                    o->step = 0;
+                    setObjState(o, 2, 0, 0);
                 }
             }
         } else if (D_8009B6A0->angle > 64) {
             if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7)
-                *(u8 *)o->unk94 = D_8009B698->b6;
+                *(u8 *)o->child = D_8009B698->b6;
             if (!PADOK() || (*(P38_34C14 *)&PLAYER).bac >= 2 || D_8009BCA7_U8 != 0) {
                 PLAYER_P38_34C14.b9d = 0;
                 D_8009B6A0->mode = 0;
                 D_8009B698->b0 = 0;
-                o->state = 2;
-                o->subState = 0;
-                o->step = 0;
+                setObjState(o, 2, 0, 0);
             } else {
                 func_800EBA70((*(u8 *)&D_8009C61A), o);
                 (*(P38_34C14 *)&PLAYER).b9d = 0;
@@ -599,9 +595,7 @@ void func_80034C14(GameObject *o)
         (*(P38_34C14 *)&PLAYER).b9d = 0;
         D_8009B6A0->mode = 0;
         D_8009B698->b0 = 0;
-        o->state = 2;
-        o->subState = 0;
-        o->step = 0;
+        setObjState(o, 2, 0, 0);
     }
 }
 #undef IDX
@@ -626,30 +620,30 @@ void func_80036440(u8* self)
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036494);
 extern u8 *D_8009B698;
-void func_80036494(GameObject *o)
+void func_80036494(GameObject *obj)
 {
     if (D_800A545F != 0)
-        o->state = 2;
-    switch (o->state) {
+        obj->state = 2;
+    switch (obj->state) {
     case 0:
 #if REGION == REGION_EU && VERSION == 0
-        initObjectAC(o);
+        initObjectAC(obj);
 #else
-        func_80034AB8(o);
+        func_80034AB8(obj);
 #endif
-        o->state++;
+        obj->state++;
         break;
     case 1:
-        func_80022E44(o);
-        switch (o->subState) {
+        func_80022E44(obj);
+        switch (obj->subState) {
         case 0:
-            func_80034C14(o);
+            func_80034C14(obj);
             break;
         case 1:
-            func_80034C14(o);
+            func_80034C14(obj);
             break;
         case 2:
-            func_80034C14(o);
+            func_80034C14(obj);
             break;
         }
         break;
@@ -658,10 +652,10 @@ void func_80036494(GameObject *o)
         *D_8009B698 = 0;
         if (--D_800A547B < 0)
             D_800A547B = 0;
-        o->state = 3;
+        obj->state = 3;
         break;
     case 3:
-        freeObjectLayer1(o);
+        freeObjectLayer1(obj);
         break;
     }
 }
@@ -794,15 +788,15 @@ extern s16 probeCollisionAtDepthB(GameObject *, s32, s32);
 extern void func_800224FC(s32, s32, s32, s32);
 extern void func_800EA35C(s32, s32, s32, s32);
 
-static __inline__ void f_36A8C(GameObject *q)
+static __inline__ void f_36A8C(GameObject *obj)
 {
-    q->unkAA = D_8007D60C[(s16)(q->animFrame + q->animFrame * 2)];
+    obj->unkAA = D_8007D60C[(s16)(obj->animFrame + obj->animFrame * 2)];
     D_800A5435_U8Arr[0] = 0;
     *D_8009B698 = 0;
-    func_800EEDE0(q);
+    func_800EEDE0(obj);
 }
 
-s32 func_80036A8C(GameObject *o)
+s32 func_80036A8C(GameObject *obj)
 {
     s32 r;
     u8 *p;
@@ -810,25 +804,25 @@ s32 func_80036A8C(GameObject *o)
     u16 u;
     s32 m;
     r = 0;
-    o->unk84 = 0x200;
-    t = o->unkA8 - 0x200;
-    o->unk88 = o->unk88 + 0x100 & 0xfff;
-    o->unkA8 = t;
-    o->velH = fixedMulCos((u8)o->unkAA, t);
-    o->velV = fixedMulSin((u8)o->unkAA, o->unkA8);
-    applyObjectSpeedXY(o);
-    if (o->active == 1 && probeCollisionAtDepthB(o, o->h->p.whole, o->y.p.whole) != 0) {
-        func_800224FC(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+    obj->unk84 = 0x200;
+    t = obj->unkA8 - 0x200;
+    obj->unk88 = obj->unk88 + 0x100 & 0xfff;
+    obj->unkA8 = t;
+    obj->velH = fixedMulCos((u8)obj->unkAA, t);
+    obj->velV = fixedMulSin((u8)obj->unkAA, obj->unkA8);
+    applyObjectSpeedXY(obj);
+    if (obj->active == 1 && probeCollisionAtDepthB(obj, obj->h->p.whole, obj->y.p.whole) != 0) {
+        func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
         u = D_1F800282;
         m = u >> 5 & 0xf;
         if ((u & 0x3000) == 0 && m < 4 && m != 0)
-            func_800EA35C(o->h->p.whole, o->y.p.whole, o->d->p.whole, (u8)o->animFrame);
+            func_800EA35C(obj->h->p.whole, obj->y.p.whole, obj->d->p.whole, (u8)obj->animFrame);
         playSFX(5);
-        o->unkA8 = 0x4ff;
+        obj->unkA8 = 0x4ff;
     }
     D_800A5424[0] = 0;
-    if (o->unkA8 < 0x500) {
-        f_36A8C(o);
+    if (obj->unkA8 < 0x500) {
+        f_36A8C(obj);
         r = 1;
     }
     return r;
@@ -1020,21 +1014,21 @@ typedef struct {
 } P_36F98;
 extern P_36F98 *D_8009B698_P_36F98Ptr asm("D_8009B698");
 
-static __inline__ s16 dir_36F98(GameObject *o)
+static __inline__ s16 dir_36F98(GameObject *obj)
 {
     Vec2s b, a;
-    a.x = o->h->p.whole;
-    a.y = o->y.p.whole;
+    a.x = obj->h->p.whole;
+    a.y = obj->y.p.whole;
     b.x = PLAYER.obj.h->p.whole;
     b.y = PLAYER.obj.y.p.whole;
     return ((s16 (*)(Vec2s, Vec2s))angleBetweenPoints)(a, b);
 }
 #define DIR dir_36F98
 
-static __inline__ s16 near_36F98(GameObject *o, s32 d, s32 w)
+static __inline__ s16 near_36F98(GameObject *obj, s32 d, s32 w)
 {
-    if ((u16)(PLAYER.obj.h->p.whole - o->h->p.whole + d) > w) return 0;
-    if ((u16)(PLAYER.obj.y.p.whole - o->y.p.whole + d) > w) return 0;
+    if ((u16)(PLAYER.obj.h->p.whole - obj->h->p.whole + d) > w) return 0;
+    if ((u16)(PLAYER.obj.y.p.whole - obj->y.p.whole + d) > w) return 0;
     return 1;
 }
 
@@ -1049,7 +1043,7 @@ static __inline__ s16 near_36F98(GameObject *o, s32 d, s32 w)
     case 6: case 7: idx += 4; break; \
     }
 
-void func_80036F98(GameObject *o)
+void func_80036F98(GameObject *obj)
 {
     Vec2s vb, va;
     s16 a, r;
@@ -1063,323 +1057,321 @@ void func_80036F98(GameObject *o)
     u8 *q;
     P_36F98 *p;
 
-    switch (o->step) {
+    switch (obj->step) {
     case 0:
         p = D_8009B698_P_36F98Ptr;
-        o->animFrame = PLAYER.obj.animFrame;
+        obj->animFrame = PLAYER.obj.animFrame;
         D_800A5435_U8Arr[0] = 1;
-        p->b7 = o->animFrame;
-        k = D_8007D60A[(s16)(o->animFrame + o->animFrame * 2) + 1];
-        o->active = 2;
-        o->unkAA = k;
+        p->b7 = obj->animFrame;
+        k = D_8007D60A[(s16)(obj->animFrame + obj->animFrame * 2) + 1];
+        obj->active = 2;
+        obj->unkAA = k;
         *(u16 *)((char *)D_8009B698_P_36F98Ptr + 0x22) = 0;
         D_8009C968.w2 = 0;
-        o->unkA8 = 0;
-        o->unk74 = 0;
-        o->objectIndex = 0;
+        obj->unkA8 = 0;
+        obj->unk74 = 0;
+        obj->objectIndex = 0;
         c = D_800A5436[0];
-        o->objectIndex = c;
+        obj->objectIndex = c;
         switch (c) {
         case 4:
             q = D_8009E454;
             k = *q;
-            o->unk74 = k;
+            obj->unk74 = k;
             *q = 2;
             goto set94;
         case 7:
             p = (P_36F98 *)D_8009E454;
-            o->unk74 = p->b0;
+            obj->unk74 = p->b0;
             p->b0 = 5;
         set94:
-            o->unk94 = (s32)D_8009E454;
+            obj->child = (s32)D_8009E454;
             break;
         }
-        IDX(o, idx);
-        if (o->animFrame & 1) a = 0xa0 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx] - 0x20;
+        IDX(obj, idx);
+        if (obj->animFrame & 1) a = 0xa0 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx] - 0x20;
         r = D_8007D5E4_U16Arr[idx + 1];
-        o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
-        o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
-        o->h->p.whole = o->velX + fixedMulCos(((u16)o->unkAA + 0x80) & 0xff, 0x10);
-        o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 0x10);
-        o->d->p.whole = PLAYER.obj.d->p.whole;
-        o->unkA5 = 1;
+        obj->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
+        obj->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
+        obj->h->p.whole = obj->velX + fixedMulCos(((u16)obj->unkAA + 0x80) & 0xff, 0x10);
+        obj->y.p.whole = obj->velY + fixedMulSin(((u16)obj->unkAA + 0x80) & 0xff, 0x10);
+        obj->d->p.whole = PLAYER.obj.d->p.whole;
+        obj->unkA5 = 1;
         p = D_8009B698_P_36F98Ptr;
-        o->hitOffsetX = 6;
-        o->hitOffsetY = 6;
-        o->hitWidth = 0xc;
-        o->hitHeight = 0xc;
+        obj->hitboxX = 6;
+        obj->hitboxY = 6;
+        obj->hitboxW = 0xc;
+        obj->hitboxH = 0xc;
         f = p->b0;
         switch (f) {
         case 2:
-            o->unkA8 = 0x1600;
+            obj->unkA8 = 0x1600;
             playSFXWithNote(3, 2);
-            o->unk98 = 1;
-            if (D_8009C61A[0] - 5 == f) o->unk98 = 2;
+            obj->unk98 = 1;
+            if (D_8009C61A[0] - 5 == f) obj->unk98 = 2;
             break;
         case 1:
-            o->unkA8 = 0x1a00;
+            obj->unkA8 = 0x1a00;
             playSFXWithNote(3, 8);
-            o->unk98 = 2;
+            obj->unk98 = 2;
             break;
         }
-        o->velH = fixedMulCos((u8)o->unkAA, o->unkA8);
-        o->velV = fixedMulSin((u8)o->unkAA, o->unkA8);
+        obj->velH = fixedMulCos((u8)obj->unkAA, obj->unkA8);
+        obj->velV = fixedMulSin((u8)obj->unkAA, obj->unkA8);
         D_8009B698_P_36F98Ptr->w28 = 0xffff;
         D_8009B698_P_36F98Ptr->w2a = 0xffff;
-        func_800348FC(o);
+        func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
-        o->step++;
-        o->unkAA += 0x80;
+        obj->step++;
+        obj->unkAA += 0x80;
         D_8009B698_P_36F98Ptr->w2e = 0xffff;
-        func_800EBA70(D_8009C61A[0], o);
+        func_800EBA70(D_8009C61A[0], obj);
         break;
     case 1:
-        SPIN(o);
-        o->unk84 = 0x100;
-        o->unk8C = 0;
+        SPIN(obj);
+        obj->unk84 = 0x100;
+        obj->unk8C = 0;
         tickAnimation(&PLAYER.obj);
-        IDX(o, idx);
-        if (o->animFrame & 1) a = 0xa0 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx] - 0x20;
+        IDX(obj, idx);
+        if (obj->animFrame & 1) a = 0xa0 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx] - 0x20;
         r = D_8007D5E4_U16Arr[idx + 1];
-        o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
-        o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
-        o->h->p.whole = o->velX + fixedMulCos((u8)o->unkAA, 0x10);
-        o->y.p.whole = o->velY + fixedMulSin((u8)o->unkAA, 0x10);
-        k = o->animFrame + o->animFrame * 2;
-        o->unkAA += D_8007D60A[k];
-        if (o->animFrame & 1) {
-            s32 x = (s16)o->unkAA, y = D_8007D60A[k + 1] + 0x40;
-            if (x < y) func_80036C88(o);
+        obj->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
+        obj->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
+        obj->h->p.whole = obj->velX + fixedMulCos((u8)obj->unkAA, 0x10);
+        obj->y.p.whole = obj->velY + fixedMulSin((u8)obj->unkAA, 0x10);
+        k = obj->animFrame + obj->animFrame * 2;
+        obj->unkAA += D_8007D60A[k];
+        if (obj->animFrame & 1) {
+            s32 x = (s16)obj->unkAA, y = D_8007D60A[k + 1] + 0x40;
+            if (x < y) func_80036C88(obj);
         } else {
-            s32 y = (s16)o->unkAA, x = D_8007D60A[k + 1] + 0xc0;
-            if (x < y) func_80036C88(o);
+            s32 y = (s16)obj->unkAA, x = D_8007D60A[k + 1] + 0xc0;
+            if (x < y) func_80036C88(obj);
         }
         break;
     case 2:
-        if (o->unk7A > 0 && --o->unk7A <= 0) o->active = 1;
-        SPIN(o);
-        o->unk84 = (o->unk84 - 0x80) & 0xfff;
+        if (obj->unk7A > 0 && --obj->unk7A <= 0) obj->active = 1;
+        SPIN(obj);
+        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
         {
             s32 w, cc, g;
-            if (o->animFrame & 1) {
-                cc = (u16)o->unkAC;
-                w = ((u16)o->unkAA - 2) & 0xff;
-                o->unkAA = w;
+            if (obj->animFrame & 1) {
+                cc = (u16)obj->unkAC;
+                w = ((u16)obj->unkAA - 2) & 0xff;
+                obj->unkAA = w;
                 w = w < cc;
             } else {
-                cc = (u16)o->unkAC;
-                w = ((u16)o->unkAA + 2) & 0xff;
-                o->unkAA = w;
+                cc = (u16)obj->unkAC;
+                w = ((u16)obj->unkAA + 2) & 0xff;
+                obj->unkAA = w;
                 w = cc < w;
             }
-            if (w) o->unkAA = cc & 0xff;
+            if (w) obj->unkAA = cc & 0xff;
         }
-        if (--o->timer <= 0) {
+        if (--obj->timer <= 0) {
             s16 g;
-            o->timer = 5;
+            obj->timer = 5;
             g = 0;
-            switch (func_80036618(o)) {
+            switch (func_80036618(obj)) {
             case 0:
             case 1:
-                o->timer = 5;
+                obj->timer = 5;
                 break;
             case 2:
-                o->timer = 5;
+                obj->timer = 5;
                 g = 1;
                 break;
             }
-            o->step = g ? 3 : 2;
+            obj->step = g ? 3 : 2;
         }
-        if (((s16 (*)(GameObject *))func_80036A8C)(o) == 0) break;
-        if (o->animFrame & 1)
-            o->unkAA = (o->unkAA - 0x40) & 0xff;
+        if (((s16 (*)(GameObject *))func_80036A8C)(obj) == 0) break;
+        if (obj->animFrame & 1)
+            obj->unkAA = (obj->unkAA - 0x40) & 0xff;
         else
-            o->unkAA = (o->unkAA + 0x40) & 0xff;
-        o->step = 4;
-        o->timer = 0;
+            obj->unkAA = (obj->unkAA + 0x40) & 0xff;
+        obj->step = 4;
+        obj->timer = 0;
         D_8009B698_P_36F98Ptr->w2e = 0xff;
         break;
     case 3:
-        if (o->unk7A > 0 && --o->unk7A <= 0) o->active = 1;
-        SPIN(o);
-        o->unk84 = (o->unk84 - 0x80) & 0xfff;
+        if (obj->unk7A > 0 && --obj->unk7A <= 0) obj->active = 1;
+        SPIN(obj);
+        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
         {
             s32 w, cc, g;
-            if (o->animFrame & 1) {
-                cc = (u16)o->unkAC;
-                w = ((u16)o->unkAA + 2) & 0xff;
-                o->unkAA = w;
+            if (obj->animFrame & 1) {
+                cc = (u16)obj->unkAC;
+                w = ((u16)obj->unkAA + 2) & 0xff;
+                obj->unkAA = w;
                 w = cc < w;
             } else {
-                cc = (u16)o->unkAC;
-                w = ((u16)o->unkAA - 2) & 0xff;
-                o->unkAA = w;
+                cc = (u16)obj->unkAC;
+                w = ((u16)obj->unkAA - 2) & 0xff;
+                obj->unkAA = w;
                 w = w < cc;
             }
-            if (w) o->unkAA = cc & 0xff;
+            if (w) obj->unkAA = cc & 0xff;
         }
-        if (--o->timer <= 0) {
+        if (--obj->timer <= 0) {
             s16 g;
-            o->timer = 5;
+            obj->timer = 5;
             g = 0;
-            switch (func_80036618(o)) {
+            switch (func_80036618(obj)) {
             case 0:
             case 1:
-                o->timer = 5;
+                obj->timer = 5;
                 break;
             case 2:
-                o->timer = 5;
+                obj->timer = 5;
                 g = 1;
                 break;
             }
-            o->step = g ? 3 : 2;
+            obj->step = g ? 3 : 2;
         }
-        if (((s16 (*)(GameObject *))func_80036A8C)(o) == 0) break;
-        if (o->animFrame & 1)
-            o->unkAA = (o->unkAA + 0x40) & 0xff;
+        if (((s16 (*)(GameObject *))func_80036A8C)(obj) == 0) break;
+        if (obj->animFrame & 1)
+            obj->unkAA = (obj->unkAA + 0x40) & 0xff;
         else
-            o->unkAA = (o->unkAA - 0x40) & 0xff;
-        o->step = 4;
-        o->timer = 0;
+            obj->unkAA = (obj->unkAA - 0x40) & 0xff;
+        obj->step = 4;
+        obj->timer = 0;
         D_8009B698_P_36F98Ptr->w2e = 0xff;
         break;
     case 4:
-        SPIN(o);
-        o->unk84 = (o->unk84 - 0x80) & 0xfff;
-        if (--o->timer <= 0) {
-            s = DIR(o);
-            o->timer = 2;
-            o->unkAC = (s - o->unkAA) & 0xff;
+        SPIN(obj);
+        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
+        if (--obj->timer <= 0) {
+            s = DIR(obj);
+            obj->timer = 2;
+            obj->unkAC = (s - obj->unkAA) & 0xff;
         }
-        if ((u16)o->unkAC < 0x80)
-            o->unkAA = (o->unkAA + 10) & 0xff;
+        if ((u16)obj->unkAC < 0x80)
+            obj->unkAA = (obj->unkAA + 10) & 0xff;
         else
-            o->unkAA = (o->unkAA - 10) & 0xff;
-        o->unkA8 += 0x80;
-        if (o->unkA8 > 0x1a00) o->unkA8 = 0x1a00;
-        o->velH = fixedMulCos(o->unkAA, o->unkA8);
-        o->velV = fixedMulSin(o->unkAA, o->unkA8);
-        applyObjectSpeedXY(o);
-        if (near_36F98(o, 0x20, 0x40)) {
-            o->unkA8 = 0x1a00;
-            o->step = 6;
+            obj->unkAA = (obj->unkAA - 10) & 0xff;
+        obj->unkA8 += 0x80;
+        if (obj->unkA8 > 0x1a00) obj->unkA8 = 0x1a00;
+        obj->velH = fixedMulCos(obj->unkAA, obj->unkA8);
+        obj->velV = fixedMulSin(obj->unkAA, obj->unkA8);
+        applyObjectSpeedXY(obj);
+        if (near_36F98(obj, 0x20, 0x40)) {
+            obj->unkA8 = 0x1a00;
+            obj->step = 6;
         }
         break;
     case 6:
-        o->unkAA = DIR(o);
-        SPIN(o);
-        o->unk84 = (o->unk84 - 0x80) & 0xfff;
-        o->velH = fixedMulCos((u8)o->unkAA, o->unkA8);
-        o->velV = fixedMulSin((u8)o->unkAA, o->unkA8);
-        applyObjectSpeedXY(o);
-        if (near_36F98(o, 0x10, 0x20)) {
+        obj->unkAA = DIR(obj);
+        SPIN(obj);
+        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
+        obj->velH = fixedMulCos((u8)obj->unkAA, obj->unkA8);
+        obj->velV = fixedMulSin((u8)obj->unkAA, obj->unkA8);
+        applyObjectSpeedXY(obj);
+        if (near_36F98(obj, 0x10, 0x20)) {
             u32 m;
-            o->unkA5 = 0;
+            obj->unkA5 = 0;
             D_800A5435_U8Arr[0] = 0;
-            o->unkAA = (o->unkAA - 0x40) & 0xff;
-            o->step++;
+            obj->unkAA = (obj->unkAA - 0x40) & 0xff;
+            obj->step++;
             m = D_8009C61A[0] - 5;
-            if (o->objectIndex == 7) {
-                *(u8 *)o->unk94 = o->unk74;
-                o->objectIndex = 0;
+            if (obj->objectIndex == 7) {
+                *(u8 *)obj->child = obj->unk74;
+                obj->objectIndex = 0;
             }
-            if (o->objectIndex == 4 && ((u8 *)o->unk94)[2] == 0x1d) {
-                *(u8 *)o->unk94 = o->unk74;
-                o->objectIndex = 0;
+            if (obj->objectIndex == 4 && ((u8 *)obj->child)[2] == 0x1d) {
+                *(u8 *)obj->child = obj->unk74;
+                obj->objectIndex = 0;
             }
             if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
                 D_800A5444_U8 >= 2 || D_800A545E != 0 || D_8009BCA7 != 0 || m >= 4 ||
                 (u8)(D_8009BCF8 - 1) < 2 || D_800A545F != 0) {
-                o->state = 2;
-                o->subState = 0;
-                o->step = 0;
+                setObjState(obj, 2, 0, 0);
             } else {
-                func_80036DF8(o);
+                func_80036DF8(obj);
             }
         }
         break;
     case 7:
-        SPIN(o);
-        o->unk8C = 0;
-        o->unk84 = 0x200;
-        o->animFrame = PLAYER.obj.animFrame;
-        func_800348FC(o);
+        SPIN(obj);
+        obj->unk8C = 0;
+        obj->unk84 = 0x200;
+        obj->animFrame = PLAYER.obj.animFrame;
+        func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xc0, 2);
             playSFX(3);
         }
         advanceAnimFrame(&PLAYER.obj, (D_8009B698_P_36F98Ptr->w22 >> 2) & 3);
-        k = o->animFrame + o->animFrame * 2;
+        k = obj->animFrame + obj->animFrame * 2;
         D_8009C968.w0 = 10;
         D_8009C968.w2 = 2;
         D_8009C968.w4 = D_8007D608_U16Arr[k];
-        o->unkAA += D_8007D60A[k];
-        if (o->unkAA > 0xff) o->unkAA -= 0x100;
-        if (o->unkAA < 0) o->unkAA += 0x100;
-        IDX(o, idx);
-        if (o->animFrame & 1) a = 0x80 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx];
+        obj->unkAA += D_8007D60A[k];
+        if (obj->unkAA > 0xff) obj->unkAA -= 0x100;
+        if (obj->unkAA < 0) obj->unkAA += 0x100;
+        IDX(obj, idx);
+        if (obj->animFrame & 1) a = 0x80 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx];
         r = D_8007D5E4_U16Arr[idx + 1];
-        o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
-        o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
-        func_800349DC(&D_8009C968, o->unkAA, &a, &r);
-        o->h->p.whole = o->velX + a;
-        o->y.p.whole = o->velY + r;
+        obj->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
+        obj->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
+        func_800349DC(&D_8009C968, obj->unkAA, &a, &r);
+        obj->h->p.whole = obj->velX + a;
+        obj->y.p.whole = obj->velY + r;
         if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
             D_800A545E = 0;
             D_8009B698_P_36F98Ptr->b0 = 2;
             D_8009B698_P_36F98Ptr->w22 = 0;
-            o->step = 0;
+            obj->step = 0;
         } else {
             D_8009B698_P_36F98Ptr->w22++;
         }
         if (D_8009B698_P_36F98Ptr->w22 > 0x3c) {
             D_8009B698_P_36F98Ptr->w22 = 0;
-            o->step++;
+            obj->step++;
         }
         break;
     case 8:
-        SPIN(o);
-        o->unk8C = 0;
-        o->unk84 = 0x200;
-        o->animFrame = PLAYER.obj.animFrame;
-        func_800348FC(o);
+        SPIN(obj);
+        obj->unk8C = 0;
+        obj->unk84 = 0x200;
+        obj->animFrame = PLAYER.obj.animFrame;
+        func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xff, 2);
             playSFXWithNote(3, 6);
         }
         advanceAnimFrame(&PLAYER.obj, (D_8009B698_P_36F98Ptr->w22 / 3) & 3);
-        o->animFrame = PLAYER.obj.animFrame;
-        k = o->animFrame + o->animFrame * 2;
+        obj->animFrame = PLAYER.obj.animFrame;
+        k = obj->animFrame + obj->animFrame * 2;
         D_8009C968.w0 = 0x10;
         D_8009C968.w2 = 4;
         D_8009C968.w4 = D_8007D608_U16Arr[k];
-        o->unkAA += D_8007D60A[k];
-        if (o->unkAA > 0xff) o->unkAA -= 0x100;
-        if (o->unkAA < 0) o->unkAA += 0x100;
-        IDX(o, idx);
-        if (o->animFrame & 1) a = 0x80 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx];
+        obj->unkAA += D_8007D60A[k];
+        if (obj->unkAA > 0xff) obj->unkAA -= 0x100;
+        if (obj->unkAA < 0) obj->unkAA += 0x100;
+        IDX(obj, idx);
+        if (obj->animFrame & 1) a = 0x80 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx];
         r = D_8007D5E4_U16Arr[idx + 1];
-        o->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
-        o->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
-        func_800349DC(&D_8009C968, o->unkAA, &a, &r);
-        o->h->p.whole = o->velX + a;
-        o->y.p.whole = o->velY + r;
+        obj->velX = PLAYER.obj.h->p.whole + fixedMulCos((u8)a, r);
+        obj->velY = PLAYER.obj.y.p.whole + fixedMulSin((u8)a, r);
+        func_800349DC(&D_8009C968, obj->unkAA, &a, &r);
+        obj->h->p.whole = obj->velX + a;
+        obj->y.p.whole = obj->velY + r;
         if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
             D_800A545E = 0;
             D_8009B698_P_36F98Ptr->b0 = 1;
             D_8009B698_P_36F98Ptr->w22 = 0;
-            o->step = 0;
+            obj->step = 0;
         }
         D_8009B698_P_36F98Ptr->w22++;
         break;
     }
     { char pady[16]; { char padz[16]; } }
-    if (o->cooldownTimer != 0 && --o->cooldownTimer <= 0) o->active = 1;
-    if (o->unk6A != 0) {
-        o->unk6A = 0;
-        o->cooldownTimer = 5;
+    if (obj->cooldownTimer != 0 && --obj->cooldownTimer <= 0) obj->active = 1;
+    if (obj->unk6A != 0) {
+        obj->unk6A = 0;
+        obj->cooldownTimer = 5;
     }
 }
 #undef DIR
@@ -1404,32 +1396,32 @@ void func_80038358(u8* self)
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800383AC);
 
-void func_800383AC(GameObject *o)
+void func_800383AC(GameObject *obj)
 {
     u8 st;
     if (D_800A545F != 0) {
-        o->state = 2;
+        obj->state = 2;
     }
-    st = o->state;
+    st = obj->state;
     switch (st) {
     case 0:
-        if (o->step == 0) {
-            o->cooldownTimer = 0;
-            func_800384F0(o, D_8009C61A[0] - 5);
+        if (obj->step == 0) {
+            obj->cooldownTimer = 0;
+            func_800384F0(obj, D_8009C61A[0] - 5);
         }
-        o->state++;
+        obj->state++;
         break;
     case 1:
-        func_80022E44(o);
-        switch (o->subState) {
+        func_80022E44(obj);
+        switch (obj->subState) {
         case 0:
-            func_80036F98(o);
+            func_80036F98(obj);
             break;
         case 1:
-            func_80036F98(o);
+            func_80036F98(obj);
             break;
         case 2:
-            func_80036F98(o);
+            func_80036F98(obj);
             break;
         }
         break;
@@ -1437,16 +1429,16 @@ void func_800383AC(GameObject *o)
         if (--D_800A547B < 0) {
             D_800A547B = 0;
         }
-        o->state = 3;
+        obj->state = 3;
         break;
     case 3:
-        freeObjectLayer1(o);
+        freeObjectLayer1(obj);
         break;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_800384F0);
-void func_800384F0(GameObject *o, s32 n)
+void func_800384F0(GameObject *obj, s32 n)
 {
     volatile s32 *p = D_1F800340;
     s32 q, a, b;
@@ -1457,16 +1449,16 @@ void func_800384F0(GameObject *o, s32 n)
     q = p[0];
     a = p[0];
     b = *(s32 *)(q + n + 4);
-    o->unkA4 = 1;
-    o->unkA0 = a + b;
+    obj->modelLit = 1;
+    obj->model = a + b;
     c = D_800A53A7[0];
-    o->unkA = 0x11;
-    o->unkF = c - 2;
-    o->x.p.whole = D_800A53AA;
-    o->y.p.whole = D_800A53AE[0];
+    obj->drawType = DRAW_MODEL_ROTATED;
+    obj->priority = c - 2;
+    obj->x.p.whole = D_800A53AA;
+    obj->y.p.whole = D_800A53AE[0];
     s = D_800A53B2[0];
-    o->unk84 = 0;
-    o->unk88 = 0;
-    o->unk8C = 0;
-    o->z.p.whole = s;
+    obj->unk84 = 0;
+    obj->unk88 = 0;
+    obj->unk8C = 0;
+    obj->z.p.whole = s;
 }

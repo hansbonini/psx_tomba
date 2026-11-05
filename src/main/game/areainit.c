@@ -6,72 +6,72 @@ typedef struct { void **p; s32 a, b; } E12_32DB4;
 extern s32 fixedMulCos(s32, s32);
 extern s32 fixedMulSin(s32, s32);
 
-void func_80032DB4(GameObject *o)
+void func_80032DB4(GameObject *obj)
 {
     extern E12_32DB4 D_8007D2F0[];
     s32 t;
     u32 u, w;
-    switch (o->step) {
+    switch (obj->step) {
     case 0:
-        o->anim = *D_8007D2F0[o->subtype].p;
-        readAnimFrameCount(o);
-        o->step++;
-        switch (o->unkC) {
-        case 0: o->unk84 = 0; break;
-        case 1: o->unk84 = 0x56; break;
-        case 2: o->unk84 = 0xab; break;
+        obj->anim = *D_8007D2F0[obj->id].p;
+        readAnimFrameCount(obj);
+        obj->step++;
+        switch (obj->param) {
+        case 0: obj->unk84 = 0; break;
+        case 1: obj->unk84 = 0x56; break;
+        case 2: obj->unk84 = 0xab; break;
         }
-        o->timer = 0x31;
-        o->unk88 = 0;
+        obj->timer = 0x31;
+        obj->unk88 = 0;
         break;
     case 1:
 #if REGION != REGION_JP
-        if (o->unkC == 0 && !(D_1F8001F8 & 3))
+        if (obj->param == 0 && !(D_1F8001F8 & 3))
             func_80028A74(0, 0, 0xff, 2);
 #endif
-        tickAnimation(o);
-        o->visible = D_800A5399;
-        o->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos((s16)o->unk84, (s16)o->unk88);
-        if (o->unkC)
+        tickAnimation(obj);
+        obj->visible = D_800A5399;
+        obj->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos((s16)obj->unk84, (s16)obj->unk88);
+        if (obj->param)
         {
-            t = fixedMulSin((s16)o->unk84, 8) + 8;
-            o->y.p.whole = PLAYER.obj.y.p.whole + t;
+            t = fixedMulSin((s16)obj->unk84, 8) + 8;
+            obj->y.p.whole = PLAYER.obj.y.p.whole + t;
         }
         else
         {
-            t = fixedMulSin((s16)o->unk84, 8) + 0x18;
-            o->y.p.whole = PLAYER.obj.y.p.whole + t;
+            t = fixedMulSin((s16)obj->unk84, 8) + 0x18;
+            obj->y.p.whole = PLAYER.obj.y.p.whole + t;
         }
-        o->d->p.whole = PLAYER.obj.d->p.whole + fixedMulSin((s16)o->unk84, (s16)o->unk88);
-        o->unk84 = (o->unk84 + 0x10) & 0xff;
-        o->unk88 += o->unk88 < 0xc;
-        o->unkF = D_800A53A7[0];
+        obj->d->p.whole = PLAYER.obj.d->p.whole + fixedMulSin((s16)obj->unk84, (s16)obj->unk88);
+        obj->unk84 = (obj->unk84 + 0x10) & 0xff;
+        obj->unk88 += obj->unk88 < 0xc;
+        obj->priority = D_800A53A7[0];
         if (((u8 *)&PLAYER.obj.touchFlag)[0])
-            o->timer = 0;
-        if (--o->timer <= 0) {
+            obj->timer = 0;
+        if (--obj->timer <= 0) {
 #if REGION == REGION_JP
             if (D_800A5468 > 0)
                 PLAYER.obj.active = 3;
             else
                 PLAYER.obj.active = 1;
             D_800A5464[0] = 3;
-            o->timer = 0;
-            o->objectIndex = o->objectIndex == 0 ? 0 : o->objectIndex - 2;
-            if (o->objectIndex == 0)
-                o->state = 2;
+            obj->timer = 0;
+            obj->objectIndex = obj->objectIndex == 0 ? 0 : obj->objectIndex - 2;
+            if (obj->objectIndex == 0)
+                obj->state = 2;
 #else
-            o->timer = 0;
+            obj->timer = 0;
             D_800A5464[0] = 3;
-            o->objectIndex = 0;
-            o->state = 2;
+            obj->objectIndex = 0;
+            obj->state = 2;
 #endif
         } else {
-            u = o->objectIndex;
+            u = obj->objectIndex;
             if (u >= 0x7f)
                 w = u;
             else
                 w = u + 8;
-            o->objectIndex = w;
+            obj->objectIndex = w;
         }
         break;
     }
@@ -98,58 +98,54 @@ void func_8003301C(u8 *o)
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800330EC);
 extern s32 *D_8007D2F0[];
 
-void func_800330EC(GameObject *o)
+void func_800330EC(GameObject *obj)
 {
     char c;
-    func_80022E44(o);
-    switch (o->subState) {
+    func_80022E44(obj);
+    switch (obj->subState) {
     case 0:
-        switch (o->subtype) {
+        switch (obj->id) {
         case 0:
-            func_800325C0(o);
+            func_800325C0(obj);
             break;
         case 1:
-            func_80032934(o);
+            func_80032934(obj);
             break;
         case 2:
-            func_80032DB4(o);
+            func_80032DB4(obj);
             break;
 #if REGION != REGION_JP
         case 9:
-            func_800327D8(o);
+            func_800327D8(obj);
             break;
 #endif
         }
 #if REGION == REGION_JP
         if ((D_1F8001F8 & 3) == 0)
 #else
-        if (o->subtype != 9 && (D_1F8001F8 & 3) == 0)
+        if (obj->id != 9 && (D_1F8001F8 & 3) == 0)
 #endif
             playSFXWithNote(3, 12);
         break;
     case 1:
-        switch (o->step) {
+        switch (obj->step) {
         case 0:
-            o->anim = (void *)D_8007D2F0[o->subtype * 3][o->unkC];
-            readAnimFrameCount(o);
-            o->visible = D_800A5399;
+            obj->anim = (void *)D_8007D2F0[obj->id * 3][obj->param];
+            readAnimFrameCount(obj);
+            obj->visible = D_800A5399;
             c = D_800A53A7_U8;
-            o->objectIndex = 0x7f;
-            o->unkF = c - 1;
+            obj->objectIndex = 0x7f;
+            obj->priority = c - 1;
             if (D_8009BCF8 == 3)
-                o->objectIndex = 0x40;
-            o->step = o->step + 1;
+                obj->objectIndex = 0x40;
+            obj->step = obj->step + 1;
             break;
         case 1:
-            if (tickAnimation(o)) {
-                o->state = 2;
-                o->subState = 0;
-                o->step = 0;
+            if (tickAnimation(obj)) {
+                setObjState(obj, 2, 0, 0);
             }
-            if (o->visible == 0) {
-                o->state = 2;
-                o->subState = 0;
-                o->step = 0;
+            if (obj->visible == 0) {
+                setObjState(obj, 2, 0, 0);
             }
             break;
         }
@@ -158,17 +154,17 @@ void func_800330EC(GameObject *o)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/areainit", func_800332CC);
-void func_800332CC(GameObject *o)
+void func_800332CC(GameObject *obj)
 {
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
 #if REGION == REGION_JP
         {
-            u8 *p = (u8 *)o;
+            u8 *p = (u8 *)obj;
             *(u16 *)(p + 0x1e) = D_8007D2E8[p[3]].tpage;
             *(s32 *)(p + 0x3c) = SPR_DATA[D_8007D2E8[p[3]].sprite];
             *(s32 *)(p + 0x24) = D_8007D2E8[p[3]].anims[p[0xc]];
-            readAnimFrameCount(o);
+            readAnimFrameCount(obj);
             p[0xa] = 0xd;
             p[0xd] = 0x80;
             *(s8 *)(p + 0xf) = -7;
@@ -178,18 +174,18 @@ void func_800332CC(GameObject *o)
             p[4]++;
         }
 #else
-        func_80032374(o);
+        func_80032374(obj);
 #endif
         break;
     case 1:
         if (PLAYER.obj.active != 5)
-            func_800330EC(o);
+            func_800330EC(obj);
         break;
     case 2:
-        o->state++;
+        obj->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeObjectLayer3(obj);
         break;
     }
 }
@@ -217,16 +213,16 @@ void func_80033374(char a, char b, char c)
 
 void func_80033404(s32 a, s32 b)
 {
-    GameObject *o = allocObjectLayer3();
-    if (o) {
-        o->active = 1;
-        o->type = 0x4e;
-        o->subtype = a;
-        o->unkC = b;
-        o->x.raw = D_800A53A8[0];
-        o->y.raw = D_800A53A8[1];
-        o->z.raw = D_800A53A8[2];
-        o->subState = 1;
+    GameObject *obj = allocObjectLayer3();
+    if (obj) {
+        obj->active = 1;
+        obj->type = 0x4e;
+        obj->id = a;
+        obj->param = b;
+        obj->x.raw = D_800A53A8[0];
+        obj->y.raw = D_800A53A8[1];
+        obj->z.raw = D_800A53A8[2];
+        obj->subState = 1;
     }
 }
 
@@ -235,16 +231,16 @@ typedef struct { s32 a, y, b; } P3_33488;
 
 static __inline__ void spawn_33488(s16 sub, s32 idx)
 {
-    GameObject *o = allocObjectLayer3();
-    if (o != 0) {
-        o->active = 1;
-        o->type = 0x4e;
-        o->subtype = sub;
-        o->unkC = idx;
-        o->x.raw = (*(P3_33488 *)&D_800A53A8).a;
-        o->y.raw = (*(P3_33488 *)&D_800A53A8).y;
-        o->z.raw = (*(P3_33488 *)&D_800A53A8).b;
-        o->subState = 0;
+    GameObject *obj = allocObjectLayer3();
+    if (obj != 0) {
+        obj->active = 1;
+        obj->type = 0x4e;
+        obj->id = sub;
+        obj->param = idx;
+        obj->x.raw = (*(P3_33488 *)&D_800A53A8).a;
+        obj->y.raw = (*(P3_33488 *)&D_800A53A8).y;
+        obj->z.raw = (*(P3_33488 *)&D_800A53A8).b;
+        obj->subState = 0;
     }
 }
 

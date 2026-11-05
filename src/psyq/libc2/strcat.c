@@ -1,6 +1,15 @@
 #include "common.h"
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/strcat", strcat);
+/**
+ * @brief Append one string to another
+ * 
+ * Copies arg1, including its terminating NUL, to the end of arg0.
+ * 
+ * @param arg0 Destination string
+ * @param arg1 String to append
+ * @return The destination string (NULL if either pointer is NULL)
+ */
 char* strcat(char* arg0, char* arg1)
 {
     char* temp_v1;

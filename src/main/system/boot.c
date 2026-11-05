@@ -180,28 +180,25 @@ void drawBootLogo(u8 color, int arg1)
     SPRT* sprt;
     SPRT* prim;
     SPRT* next;
-    DR_MODE* mode;
+    DR_MODE* drMode;
 
     entry = D_80076E40;
     sprt = (SPRT*)0x1F800000;
     while (entry->x != -1) {
         setSprt(sprt);
         setRGB0(sprt, color, color, color);
-        sprt->x0 = entry->x;
-        sprt->y0 = entry->y;
-        sprt->u0 = entry->u;
-        sprt->v0 = entry->v;
-        sprt->w = entry->w;
-        sprt->h = entry->h;
+        setXY0(sprt, entry->x, entry->y);
+        setUV0(sprt, entry->u, entry->v);
+        setWH(sprt, entry->w, entry->h);
         sprt->clut = GetClut(entry->clutX, entry->clutY);
         prim = (SPRT*)D_1F800164;
         *prim = *sprt;
         next = (SPRT*)D_1F800164;
-        mode = (DR_MODE*)(next + 1);
-        D_1F800164 = (int)mode;
+        drMode = (DR_MODE*)(next + 1);
+        D_1F800164 = (int)drMode;
         addPrim(D_1F8001E0 + 4, prim);
-        SetDrawMode(mode, arg1, 0, entry->tpage, NULL);
-        addPrim(D_1F8001E0 + 4, mode);
+        SetDrawMode(drMode, arg1, 0, entry->tpage, NULL);
+        addPrim(D_1F8001E0 + 4, drMode);
         D_1F800164 += sizeof(DR_MODE);
         entry++;
     }

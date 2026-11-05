@@ -29,12 +29,12 @@ int projectActorPosition(u8* self, long* sxy, long* otz)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", isPolyFT4OnScreen);
-int isPolyFT4OnScreen(POLY_FT4* p)
+int isPolyFT4OnScreen(POLY_FT4* poly)
 {
-    if ((u16)p->y0 >= SCREEN_HEIGHT && (u16)p->y1 >= SCREEN_HEIGHT && (u16)p->y2 >= SCREEN_HEIGHT && (u16)p->y3 >= SCREEN_HEIGHT) {
+    if ((u16)poly->y0 >= SCREEN_HEIGHT && (u16)poly->y1 >= SCREEN_HEIGHT && (u16)poly->y2 >= SCREEN_HEIGHT && (u16)poly->y3 >= SCREEN_HEIGHT) {
         return 0;
     }
-    if ((u16)p->x0 < 0x140 || (u16)p->x1 < 0x140 || (u16)p->x2 < 0x140 || (u16)p->x3 < 0x140) {
+    if ((u16)poly->x0 < 0x140 || (u16)poly->x1 < 0x140 || (u16)poly->x2 < 0x140 || (u16)poly->x3 < 0x140) {
         return 1;
     }
     return 0;
@@ -79,17 +79,17 @@ s32 insertPrim(s32* arg0, u8* arg1, s32 arg2, s16 arg3, s32 arg4)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", setupActorPolyFT4);
-void setupActorPolyFT4(u8* self, POLY_FT4* p, u_long* uv)
+void setupActorPolyFT4(u8* self, POLY_FT4* poly, u_long* uv)
 {
-    setcode(p, 0x2D);
-    SetSemiTrans(p, self[0xD] >> 7);
-    *(u_long*)&p->u0 = uv[0];
-    *(u_long*)&p->u1 = uv[1];
-    *(u16*)&p->u2 = *(u16*)&uv[2];
-    *(u16*)&p->u3 = *(u16*)&uv[3];
-    p->tpage += *(u16*)(self + 0x1E);
+    setcode(poly, 0x2D);
+    SetSemiTrans(poly, self[0xD] >> 7);
+    *(u_long*)&poly->u0 = uv[0];
+    *(u_long*)&poly->u1 = uv[1];
+    *(u16*)&poly->u2 = *(u16*)&uv[2];
+    *(u16*)&poly->u3 = *(u16*)&uv[3];
+    poly->tpage += *(u16*)(self + 0x1E);
     if (self[0xD] & 1) {
-        p->clut = *(u16*)(self + 8);
+        poly->clut = *(u16*)(self + 8);
     }
 }
 

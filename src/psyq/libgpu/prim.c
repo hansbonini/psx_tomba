@@ -5,6 +5,19 @@
 #define CMD_COPY_CPU_TO_VRAM 0xA0000000
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", GetTPage);
+/**
+ * @brief Calculate a texture page identifier
+ * 
+ * Packs the texture mode, semi-transparency rate and VRAM page position
+ * into the 16-bit tpage value used by primitives. Uses the extended layout
+ * for the newer GPU types.
+ * 
+ * @param tp Texture mode: 0 = 4-bit, 1 = 8-bit, 2 = 16-bit
+ * @param abr Semi-transparency rate (0-3)
+ * @param x Texture page X position in VRAM (multiple of 64)
+ * @param y Texture page Y position in VRAM (multiple of 256)
+ * @return Texture page identifier
+ */
 u_short GetTPage(int tp, int abr, int x, int y)
 {
     s32 result;
@@ -17,6 +30,16 @@ u_short GetTPage(int tp, int abr, int x, int y)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgpu", GetClut);
+/**
+ * @brief Calculate a CLUT identifier
+ * 
+ * Packs the VRAM position of a color lookup table into the 16-bit clut
+ * value used by primitives.
+ * 
+ * @param x CLUT X position in VRAM (multiple of 16)
+ * @param y CLUT Y position in VRAM
+ * @return CLUT identifier
+ */
 u_short GetClut(int x, int y)
 {
     return getClut(x,y);

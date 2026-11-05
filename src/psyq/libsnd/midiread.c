@@ -18,6 +18,15 @@ extern _SsFCALL SsFCALL;
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/midiread", _SsSeqPlay);
 
+/**
+ * @brief Internal: process one interrupt tick of a sequence
+ * 
+ * Consumes the elapsed time and reads and executes all MIDI events whose
+ * delta time has expired.
+ * 
+ * @param arg0 SEQ/SEP access number
+ * @param arg1 SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsSeqPlay(s16 arg0, s16 arg1) {
     struct SeqStruct* score = &_ss_score[arg0][arg1];
     s32 var_s0;
@@ -43,6 +52,16 @@ void _SsSeqPlay(s16 arg0, s16 arg1) {
     }
 }
 
+/**
+ * @brief Internal: handle the end of a sequence
+ * 
+ * Loops back to the start while repetitions remain; otherwise stops the
+ * sequence, keys off its voices and, for a SEP, starts the next sequence
+ * if one is chained.
+ * 
+ * @param access_num SEQ/SEP access number
+ * @param seq_num SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsSeqGetEof(access_num, seq_num)
 short access_num;
 short seq_num;
@@ -79,6 +98,16 @@ short seq_num;
     }
 }
 
+/**
+ * @brief Internal: read and dispatch one MIDI event
+ * 
+ * Decodes the next event (with running status) and calls the matching
+ * handler: note on, control change, program change, pitch bend, meta event
+ * or end of track.
+ * 
+ * @param access_num SEQ/SEP access number
+ * @param seq_num SEQ number within the SEP (0 for a SEQ)
+ */
 void _SsGetSeqData(s16 access_num, s16 seq_num) {
     struct SeqStruct* score = &_ss_score[access_num][seq_num];
     u8 data;

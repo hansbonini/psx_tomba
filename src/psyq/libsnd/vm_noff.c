@@ -70,6 +70,13 @@ extern struct SpuVoice _svm_voice[24];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_noff", vmNoiseOff);
 
+/**
+ * @brief Internal: stop a noise voice
+ * 
+ * Marks the voice as free and disables noise output on all voices.
+ * 
+ * @param voice Voice number
+ */
 void vmNoiseOff(char voice) {
     _svm_voice[voice].unk1b = 0;
     _svm_voice[voice].unk04 = 0;

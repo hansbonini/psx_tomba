@@ -1,5 +1,6 @@
 #include "common.h"
 
+/** @brief Quarter-wave sine table used by rsin() and rcos() (4096 = 1.0) */
 s16 RSIN_TABLE[1026] = {
     0x0000, 0x0006, 0x000D, 0x0013, 0x0019, 0x001F, 0x0026, 0x002C,
     0x0032, 0x0039, 0x003F, 0x0045, 0x004B, 0x0052, 0x0058, 0x005E,
@@ -134,6 +135,15 @@ s16 RSIN_TABLE[1026] = {
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libgte/geo_00", rsin);
+/**
+ * @brief Fixed-point sine
+ * 
+ * Looks up the sine of an angle in the sine table. 4096 = 360 degrees,
+ * 4096 = 1.0.
+ * 
+ * @param arg0 Angle (4096 = 360 degrees)
+ * @return Sine in 1.3.12 fixed point
+ */
 s32 rsin(s32 arg0) {
     if (arg0 < 0) {
         return -sin_1(-arg0 & 0xFFF);
@@ -142,6 +152,14 @@ s32 rsin(s32 arg0) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libgte/geo_00", sin_1);
+/**
+ * @brief Internal: sine of an angle in the 0-4095 range
+ * 
+ * Uses quadrant symmetry to index the quarter-wave sine table.
+ * 
+ * @param arg0 Angle in the range 0-4095
+ * @return Sine in 1.3.12 fixed point
+ */
 s32 sin_1(s32 arg0) {
     if (arg0 < 0x801) {
         if (arg0 < 0x401) {

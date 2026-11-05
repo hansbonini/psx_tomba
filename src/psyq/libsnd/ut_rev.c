@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_rev", SsUtSetReverbType);
 
+/**
+ * @brief Set the reverb type
+ * 
+ * Selects one of the reverb presets. A negative value selects the type
+ * without clearing the work area. Type 0 also turns reverb off.
+ * 
+ * @param arg0 Reverb type (SS_REV_TYPE_OFF ... SS_REV_TYPE_PIPE, optionally negated)
+ * @return Reverb type set, or -1 if invalid
+ */
 s16 SsUtSetReverbType(s16 arg0) {
     s16 var_v1;
     s32 var_a1;
@@ -32,4 +41,11 @@ s16 SsUtSetReverbType(s16 arg0) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_rev", SsUtGetReverbType);
 
+/**
+ * @brief Get the reverb type
+ * 
+ * Returns the type last set with SsUtSetReverbType().
+ * 
+ * @return Reverb type
+ */
 s16 SsUtGetReverbType(void) { return _svm_rattr.mode; }

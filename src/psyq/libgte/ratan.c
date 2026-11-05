@@ -1,5 +1,6 @@
 #include "common.h"
 
+/** @brief Arc tangent lookup table used by ratan2() */
 s16 ratan_tbl[1034] = {
     0x0000, 0x0001, 0x0002, 0x0002, 0x0003, 0x0003, 0x0004, 0x0005,
     0x0005, 0x0006, 0x0007, 0x0007, 0x0008, 0x0009, 0x0009, 0x000A,
@@ -135,6 +136,17 @@ s16 ratan_tbl[1034] = {
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libgte/ratan", func_80064414);
+/**
+ * @brief Fixed-point arc tangent of a ratio
+ * 
+ * Computes the angle of the vector with the arc tangent table, in the same
+ * way as atan2(y, x): the first argument is the numerator. 4096 = 360
+ * degrees.
+ * 
+ * @param dx Y component (numerator)
+ * @param dy X component (denominator)
+ * @return Angle in the range -2048 to 2048 (4096 = 360 degrees)
+ */
 long ratan2(long dx, long dy) {
     long ret;
     bool flag0;

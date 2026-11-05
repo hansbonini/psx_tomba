@@ -79,25 +79,25 @@ void func_8004D1A0(char *o)
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D2A8);
 
-void func_8004D2A8(GameObject *o)
+void func_8004D2A8(GameObject *obj)
 {
     getBaseMatrix(&D_1F800020);
     switch (D_1F8001C8 & 1) {
     case 0:
-        D_1F800060.vx = o->unk84;
-        D_1F800060.vy = o->unk88;
-        D_1F800060.vz = o->unk8C;
+        D_1F800060.vx = obj->unk84;
+        D_1F800060.vy = obj->unk88;
+        D_1F800060.vz = obj->unk8C;
         break;
     case 1:
-        D_1F800060.vx = o->unk8C;
-        D_1F800060.vy = o->unk88;
-        D_1F800060.vz = o->unk84;
+        D_1F800060.vx = obj->unk8C;
+        D_1F800060.vy = obj->unk88;
+        D_1F800060.vz = obj->unk84;
         break;
     }
     RotMatrix(&D_1F800060, &D_1F800020);
-    D_1F800068.vx = o->x.p.whole;
-    D_1F800068.vy = o->y.p.whole;
-    D_1F800068.vz = o->z.p.whole;
+    D_1F800068.vx = obj->x.p.whole;
+    D_1F800068.vy = obj->y.p.whole;
+    D_1F800068.vz = obj->z.p.whole;
     MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, &SCRATCHPAD.workMatrix);
     ApplyRotMatrix(&D_1F800068, SCRATCHPAD.workMatrix.t);
     SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
@@ -105,7 +105,7 @@ void func_8004D2A8(GameObject *o)
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(o->unkA0, (s32)&((struct { char pad[0x10]; s32 a[1]; } *)D_1F8001E0)->a[(s8)o->unkF], o, o->unkA4);
+    func_80026694(obj->model, (s32)&((struct { char pad[0x10]; s32 a[1]; } *)D_1F8001E0)->a[(s8)obj->priority], obj, obj->modelLit);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D448);
@@ -145,30 +145,30 @@ void func_8004D448(O_4D448 *o)
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D5F0);
 
-void func_8004D5F0(GameObject *o)
+void func_8004D5F0(GameObject *obj)
 {
     getBaseMatrix(&D_1F800020);
     switch (D_1F8001C8 & 1) {
     case 0:
-        D_1F800060.vx = o->unk84;
-        D_1F800060.vy = o->unk88;
-        D_1F800060.vz = o->unk8C;
+        D_1F800060.vx = obj->unk84;
+        D_1F800060.vy = obj->unk88;
+        D_1F800060.vz = obj->unk8C;
         break;
     case 1:
-        D_1F800060.vx = o->unk8C;
-        D_1F800060.vy = o->unk88;
-        D_1F800060.vz = o->unk84;
+        D_1F800060.vx = obj->unk8C;
+        D_1F800060.vy = obj->unk88;
+        D_1F800060.vz = obj->unk84;
         break;
     }
-    D_1F800040.vx = o->unk74;
-    D_1F800040.vy = o->unk76;
-    D_1F800040.vz = o->unk78;
-    RotMatrixZ(o->unk8C, &D_1F800020);
-    RotMatrixX(o->unk84, &D_1F800020);
-    RotMatrixY(o->unk88, &D_1F800020);
-    D_1F800068.vx = o->x.p.whole;
-    D_1F800068.vy = o->y.p.whole;
-    D_1F800068.vz = o->z.p.whole;
+    D_1F800040.vx = obj->unk74;
+    D_1F800040.vy = obj->unk76;
+    D_1F800040.vz = obj->unk78;
+    RotMatrixZ(obj->unk8C, &D_1F800020);
+    RotMatrixX(obj->unk84, &D_1F800020);
+    RotMatrixY(obj->unk88, &D_1F800020);
+    D_1F800068.vx = obj->x.p.whole;
+    D_1F800068.vy = obj->y.p.whole;
+    D_1F800068.vz = obj->z.p.whole;
     MulMatrix0(SCRATCH_VIEW_MATRIX, &D_1F800020, &SCRATCHPAD.workMatrix);
     ApplyRotMatrix(&D_1F800068, SCRATCHPAD.workMatrix.t);
     SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
@@ -177,7 +177,7 @@ void func_8004D5F0(GameObject *o)
     ScaleMatrix(&SCRATCHPAD.workMatrix, &D_1F800040);
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(o->unkA0, (*(char **)&D_1F8001E0) + ((s8)o->unkF * 4 + 0x10), o, o->unkA4);
+    func_80026694(obj->model, (*(char **)&D_1F8001E0) + ((s8)obj->priority * 4 + 0x10), obj, obj->modelLit);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
@@ -204,19 +204,19 @@ void func_8004D7E0(char *o)
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D91C);
 
-void func_8004D91C(GameObject *o)
+void func_8004D91C(GameObject *obj)
 {
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800060.vy = o->y.p.whole;
-    D_1F800060.vz = o->z.p.whole;
-    MulMatrix0(SCRATCH_VIEW_MATRIX, (MATRIX *)&o->unk48, &SCRATCHPAD.workMatrix);
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800060.vy = obj->y.p.whole;
+    D_1F800060.vz = obj->z.p.whole;
+    MulMatrix0(SCRATCH_VIEW_MATRIX, (MATRIX *)&obj->unk48, &SCRATCHPAD.workMatrix);
     ApplyRotMatrix(&D_1F800060, SCRATCHPAD.workMatrix.t);
     SCRATCHPAD.workMatrix.t[0] += SCRATCH_VIEW_MATRIX->t[0];
     SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(o->unkA0, &(*(s32 **)&D_1F8001E0)[*(s8 *)&o->unkF + 4], o, o->unkA4);
+    func_80026694(obj->model, &(*(s32 **)&D_1F8001E0)[*(s8 *)&obj->priority + 4], obj, obj->modelLit);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004DA28);

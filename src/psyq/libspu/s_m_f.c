@@ -3,6 +3,14 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_m_f", SpuFree);
 
+/**
+ * @brief Release an area allocated with SpuMalloc()
+ * 
+ * Marks the block starting at the given SPU address as free and merges
+ * free blocks.
+ * 
+ * @param arg0 Start address returned by SpuMalloc()
+ */
 void SpuFree(unsigned long arg0) {
     s32 i;
 

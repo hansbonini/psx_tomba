@@ -91,6 +91,16 @@ extern VagAtr* _svm_tn;
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_vsu", _SsVmVSetUp);
 
+/**
+ * @brief Internal: select the current VAB and program
+ * 
+ * Makes the header, program and tone tables of the VAB current and stores
+ * the program number.
+ * 
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @return 0 on success, -1 if the VAB is not open or the program is invalid
+ */
 int _SsVmVSetUp(short vabId, short prog) {
     if (vabId < 0 || vabId >= NUM_VAB) {
         return -1;
@@ -112,6 +122,14 @@ int _SsVmVSetUp(short vabId, short prog) {
 
 extern char _svm_auto_kof_mode;
 
+/**
+ * @brief Set the automatic key off mode
+ * 
+ * When enabled (0), voices whose envelope has finished are released
+ * automatically.
+ * 
+ * @param mode 0 = automatic key off, 1 = disabled
+ */
 void SsSetAutoKeyOffMode(short mode) {
     _svm_auto_kof_mode = mode;
 }

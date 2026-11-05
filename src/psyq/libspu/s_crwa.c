@@ -7,6 +7,16 @@ extern s32 _spu_zerobuf[];
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_crwa", SpuClearReverbWorkArea);
 
+/**
+ * @brief Clear the reverb work area in SPU RAM
+ * 
+ * Fills the SPU RAM area used by the given reverb mode with zeros through
+ * DMA, in 1 KB blocks, waiting for each transfer. Temporarily disables I/O
+ * transfer mode and the transfer callback.
+ * 
+ * @param rev_mode Reverb mode (SPU_REV_MODE_*) whose work area is cleared
+ * @return 0 on success, -1 if the mode is invalid or its area overlaps allocated memory
+ */
 s32 SpuClearReverbWorkArea(u32 rev_mode) {
     volatile s32 callback;
     s32 oldTransmode;

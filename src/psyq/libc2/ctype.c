@@ -14,6 +14,15 @@ char _ctype_[132] = {
 };
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/ctype", toupper);
+/**
+ * @brief Convert a character to upper case
+ * 
+ * Lower-case ASCII letters are converted; any other character is returned
+ * unchanged.
+ * 
+ * @param c Character to convert
+ * @return Upper-case equivalent of c
+ */
 char toupper(char c)
 {
     if (islower(c)) {
@@ -23,6 +32,15 @@ char toupper(char c)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/ctype", tolower);
+/**
+ * @brief Convert a character to lower case
+ * 
+ * Upper-case ASCII letters are converted; any other character is returned
+ * unchanged.
+ * 
+ * @param c Character to convert
+ * @return Lower-case equivalent of c
+ */
 char tolower(char c)
 {
     if (isupper(c)) {

@@ -14,25 +14,25 @@ typedef enum {
     OBJECT_LAYER_8 = 8,
 } OBJECT_LAYER;
 
-/* Item definition entry, reached through D_8007E6E4[D_8007E61C[item_id]].
+/* Item definition entry, reached through ITEM_INIT_TABLE[ITEM_INIT_INDEX[item_id]].
    Holds the sprite/CLUT/animation description for one item. */
-typedef struct itemDef {
-    /* 0x00 */ u_char unk0;
+typedef struct ItemInit {
+    /* 0x00 */ u_char drawType;
     /* 0x01 */ u_char unk1;
-    /* 0x02 */ u_char unk2;
-    /* 0x03 */ u_char unk3;
-    /* 0x04 */ u_char unk4;
-    /* 0x05 */ u_char unk5;
-    /* 0x06 */ u_char unk6;
-    /* 0x07 */ u_char unk7;
-    /* 0x08 */ short  x;
-    /* 0x0A */ short  y;
-    /* 0x0C */ u_char unkC;
-    /* 0x0D */ u_char unkD;
-    /* 0x0E */ u_char unkE;
-    /* 0x0F */ u_char unkF;
-    /* 0x10 */ int    unk10;
-} itemDef;
+    /* 0x02 */ u_char tpage;
+    /* 0x03 */ u_char priority;
+    /* 0x04 */ u_char spriteBank;
+    /* 0x05 */ u_char drawFlags;
+    /* 0x06 */ u_char clutMode;
+    /* 0x07 */ u_char animMode;
+    /* 0x08 */ short  clutX;
+    /* 0x0A */ short  clutY;
+    /* 0x0C */ u_char hitboxX;
+    /* 0x0D */ u_char hitboxW;
+    /* 0x0E */ u_char hitboxY;
+    /* 0x0F */ u_char hitboxH;
+    /* 0x10 */ int    anim;
+} ItemInit;
 
 /* Views over the object returned by the allocator family
    (allocObjectLayer3 / allocObjectLayer4 / allocObjectLayer7). They describe the same
@@ -98,24 +98,53 @@ typedef struct ObjectVariantView {
 } ObjectVariantView;
 
 
+typedef enum DrawType {
+    DRAW_SPRITE = 0,
+    DRAW_SPRITE_SCALED = 1,
+    DRAW_SPRITE_ROTATED = 2,
+    DRAW_SPRITE_SCALED_ROTATED = 3,
+    DRAW_SPRITE_3D = 4,
+    DRAW_AREA = 5,
+    DRAW_OVERLAY_6 = 6,
+    DRAW_OVERLAY_7 = 7,
+    DRAW_OVERLAY_8 = 8,
+    DRAW_OVERLAY_9 = 9,
+    DRAW_OVERLAY_10 = 10,
+    DRAW_SPRT = 13,
+    DRAW_NONE_14 = 14,
+    DRAW_MODEL = 0x10,
+    DRAW_MODEL_ROTATED = 0x11,
+    DRAW_MODEL_EX_ROTATED = 0x12,
+    DRAW_MODEL_ROTATED_SCALED = 0x13,
+    DRAW_MODEL_SCREEN = 0x14,
+    DRAW_MODEL_MATRIX = 0x15,
+    DRAW_MODEL_EX_MATRIX = 0x16
+} DrawType;
+
+typedef enum OtMode {
+    OT_MODE_DEPTH = 0,
+    OT_MODE_FIXED = 1,
+    OT_MODE_FIXED16 = 2
+} OtMode;
+
 /* Game object. The layout follows the TObj struct of afsenovilla/Tombi-Decomp
    (MIT licence, (c) 2026 afsenovilla and Tombi-Decomp contributors). */
 typedef struct GameObject {
     /* 0x00 */ u8 active;
     /* 0x01 */ u8 visible;
     /* 0x02 */ u8 type;
-    /* 0x03 */ u8 subtype;
+    /* 0x03 */ u8 id;
     /* 0x04 */ u8 state;
     /* 0x05 */ u8 subState;
     /* 0x06 */ u8 step;
     /* 0x07 */ u8 unk7;
     /* 0x08 */ s16 clut;
-    /* 0x0A */ u8 unkA;
-    /* 0x0B */ u8 unkB;
-    /* 0x0C */ u8 unkC;
-    /* 0x0D */ u8 unkD;
+    /* 0x0A */ u8 drawType;
+    /* 0x0B */ u8 otMode;
+    /* 0x0C */ u8 param;
+    /* 0x0D */ u8 drawFlags;
     /* 0x0E */ u8 unkE;
-    /* 0x0F */ u8 unkF;
+    /* 0x0F */ u8 priority;
     /* 0x10 */ Fix16 x;
     /* 0x14 */ Fix16 y;
     /* 0x18 */ Fix16 z;
@@ -128,9 +157,9 @@ typedef struct GameObject {
     /* 0x28 */ void* movetab;
     /* 0x2C */ u16 animTimer;
     /* 0x2E */ u16 animFrame;
-    /* 0x30 */ s32 unk30;
-    /* 0x34 */ s32 unk34;
-    /* 0x38 */ s32 unk38;
+    /* 0x30 */ s32 localX;
+    /* 0x34 */ s32 localY;
+    /* 0x38 */ s32 localZ;
     /* 0x3C */ s32 spriteBank;
     /* 0x40 */ Fix16* h;
     /* 0x44 */ Fix16* d;
@@ -152,10 +181,10 @@ typedef struct GameObject {
     /* 0x69 */ u8 touchFlag;
     /* 0x6A */ u8 unk6A;
     /* 0x6B */ u8 objectIndex;
-    /* 0x6C */ s16 hitOffsetX;
-    /* 0x6E */ s16 hitWidth;
-    /* 0x70 */ s16 hitOffsetY;
-    /* 0x72 */ s16 hitHeight;
+    /* 0x6C */ s16 hitboxX;
+    /* 0x6E */ s16 hitboxW;
+    /* 0x70 */ s16 hitboxY;
+    /* 0x72 */ s16 hitboxH;
     /* 0x74 */ s16 unk74;
     /* 0x76 */ s16 unk76;
     /* 0x78 */ s16 unk78;
@@ -167,16 +196,16 @@ typedef struct GameObject {
     /* 0x84 */ s32 unk84;
     /* 0x88 */ s32 unk88;
     /* 0x8C */ s32 unk8C;
-    /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 unk94;
+    /* 0x90 */ s32 parent;
+    /* 0x94 */ s32 child;
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ u8 unk9C;
     /* 0x9D */ u8 unk9D;
     /* 0x9E */ u8 unk9E;
     /* 0x9F */ u8 unk9F;
-    /* 0xA0 */ s32 unkA0;
-    /* 0xA4 */ u8 unkA4;
+    /* 0xA0 */ s32 model;
+    /* 0xA4 */ u8 modelLit;
     /* 0xA5 */ u8 unkA5;
     /* 0xA6 */ u8 unkA6;
     /* 0xA7 */ u8 unkA7;
@@ -194,6 +223,9 @@ typedef struct GameObject {
     /* 0xBE */ u8 unkBE;
     /* 0xBF */ u8 unkBF;
 } GameObject;
+
+#define setHitbox(o, x, y, w, h) ((o)->hitboxX = (x), (o)->hitboxW = (w), (o)->hitboxY = (y), (o)->hitboxH = (h))
+#define setObjState(o, s, ss, st) ((o)->state = (s), (o)->subState = (ss), (o)->step = (st))
 
 typedef struct ObjectAC {
     s16 x;
@@ -297,10 +329,10 @@ typedef struct {
 
 /* reward.c */
 typedef struct {
-    int unk0;
-    s16 unk4;
-    s16 unk6;
-} unk_8007E868;
+    int ap;
+    s16 clutX;
+    s16 clutY;
+} ApReward;
 
 /* Setup table entry of the area objects: hitbox (b0 hitOffsetX, b1 hitWidth,
    b2 hitOffsetY, b3 hitHeight), w4 tpage, w6 SPR_DATA index, anim table. */

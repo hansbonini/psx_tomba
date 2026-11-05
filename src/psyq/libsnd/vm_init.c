@@ -15,6 +15,14 @@ void _SsVmKeyOffNow(int mode);
 void _SsVmFlush(void);
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_init", _SsVmInit);
+/**
+ * @brief Internal: initialize the voice manager
+ * 
+ * Initializes SPU memory management, clears the VAB table and the voice
+ * states, resets the voice registers and reverb settings.
+ * 
+ * @param numVoices Number of voices to manage (at most 24)
+ */
 void _SsVmInit(u8 numVoices) {
     u16 i;
     u16 reg;

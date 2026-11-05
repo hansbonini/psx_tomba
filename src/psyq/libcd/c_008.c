@@ -9,6 +9,15 @@ volatile s8* c008_cd_reg3 = (volatile s8*)0x1F801803;
 extern StHEADER* StRingAddr;
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/c_008", init_ring_status);
+/**
+ * @brief Internal: mark a range of ring buffer sectors as free
+ * 
+ * Clears the header status of arg1 consecutive ring entries starting at
+ * index arg0.
+ * 
+ * @param arg0 Index of the first ring entry
+ * @param arg1 Number of entries to clear
+ */
 void init_ring_status(int arg0, u_long arg1)
 {
     u_long i;

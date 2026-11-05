@@ -3,6 +3,15 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libspu/s_sca", SpuSetCommonAttr);
 
+/**
+ * @brief Set the common SPU attributes
+ * 
+ * Sets the master volume (including its sweep mode), the CD audio and
+ * external input volumes, their reverb and mixing switches, according to
+ * the mask (all when the mask is 0).
+ * 
+ * @param attr Common attributes
+ */
 void SpuSetCommonAttr(SpuCommonAttr* attr) {
     u16 mvol_mode_left;
     u16 mvol_mode_right;

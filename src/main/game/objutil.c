@@ -16,9 +16,9 @@ s16 distanceToPlayer(u8* self)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_800385EC);
-void func_800385EC(GameObject *o)
+void func_800385EC(GameObject *obj)
 {
-    initObjectAC(o);
+    initObjectAC(obj);
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_80038748);
@@ -150,7 +150,7 @@ void func_80038AC0(GameObject *o)
         D_8009B698->b7 = o->animFrame;
         u = TB(2);
         o->active = 2;
-        o->unkA = 0;
+        o->drawType = DRAW_SPRITE;
         o->unkAA = u;
         D_8009B6A0->mode = 0;
         D_8009B698->w22 = 0;
@@ -161,7 +161,7 @@ void func_80038AC0(GameObject *o)
         D_8009B6A0->w36 = 0;
         o->unkA8 = 0;
         if (G.unk9E == 4 || G.unk9E == 7) {
-            o->unk94 = (s32)D_8009E454;
+            o->child = (s32)D_8009E454;
             *D_8009E454 = 2;
         }
         i = o->subState * 6;
@@ -190,10 +190,10 @@ void func_80038AC0(GameObject *o)
         o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 0x10);
         o->d->p.whole = G.d->p.whole;
         o->unkA5 = 1;
-        o->hitOffsetX = 6;
-        o->hitOffsetY = 6;
-        o->hitWidth = 0xc;
-        o->hitHeight = 0xc;
+        o->hitboxX = 6;
+        o->hitboxY = 6;
+        o->hitboxW = 0xc;
+        o->hitboxH = 0xc;
         D_8009B6A0->frame = 0;
         switch (D_8009B698->b0) {
         case 2:
@@ -363,7 +363,7 @@ void func_80038AC0(GameObject *o)
             va = t.x - s.x + 0x10;
             vb = t.y - s.y + 0x10;
             if ((u16)va < 0x20 && (u16)vb < 0x20) {
-                if (G.unk9E == 4 || G.unk9E == 7) *(u8 *)o->unk94 = D_8009B698->b6;
+                if (G.unk9E == 4 || G.unk9E == 7) *(u8 *)o->child = D_8009B698->b6;
                 o->unkAA = TB(2) + 0x80;
                 if (o->animFrame & 1) {
                     o->velX = PLAYER.obj.h->p.whole + 0x10;
@@ -380,14 +380,12 @@ void func_80038AC0(GameObject *o)
                 D_8009B6A0->mode = 0;
                 G.unk9D = 0;
                 o->unkA5 = 0;
-                if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
+                if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.modelLit || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
 #if REGION == REGION_JP
                     func_800EFBEC_slps01144(&G);
 #endif
                     D_8009B698->b0 = 0;
-                    o->state = 2;
-                    o->subState = 0;
-                    o->step = 0;
+                    setObjState(o, 2, 0, 0);
                     D_8009BC9C = 0;
                 } else {
 #if REGION != REGION_JP
@@ -440,7 +438,7 @@ void func_80038AC0(GameObject *o)
         func_800349DC(&D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.modelLit || D_8009BCA7) {
             G.unk9D = 1;
             D_8009B698->b0 = 2;
             D_8009B698->w22 = 0;
@@ -495,7 +493,7 @@ void func_80038AC0(GameObject *o)
         func_800349DC(&D_8009C968, o->unkAA, &va, &vb);
         o->h->p.whole = o->velX + va;
         o->y.p.whole = o->velY + vb;
-        if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.unkA4 || D_8009BCA7) {
+        if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.modelLit || D_8009BCA7) {
             D_8009B698->b0 = 1;
             D_8009B698->w22 = 0;
             G.unk9D = 1;
@@ -522,9 +520,7 @@ void func_80038AC0(GameObject *o)
         G.unk9D = 0;
         D_8009B6A0->mode = 0;
         D_8009B698->b0 = 0;
-        o->state = 2;
-        o->subState = 0;
-        o->step = 0;
+        setObjState(o, 2, 0, 0);
     }
 }
 #undef G
@@ -564,8 +560,8 @@ void func_8003A10C(GameObject *o)
                 dy = t->y.p.whole - o->velY;
             o->h->p.whole += dx;
             o->y.p.whole += dy;
-            PLAYER.obj.unk30 += dx;
-            PLAYER.obj.unk34 += dy;
+            PLAYER.obj.localX += dx;
+            PLAYER.obj.localY += dy;
             o->velX = t->h->p.whole;
             if ((t->category & 0x7f) == 2)
                 o->velY = t->y.p.whole + 8;
@@ -583,9 +579,7 @@ void func_8003A10C(GameObject *o)
         D_800A5435 = 0;
         *D_8009B698 = 0;
         D_800A545E = 0;
-        o->state = 2;
-        o->subState = 0;
-        o->step = 0;
+        setObjState(o, 2, 0, 0);
         D_8009BC9C = 0;
     }
 }
@@ -608,84 +602,84 @@ void func_8003A310(u8 *o)
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A384);
 
-void func_8003A384(GameObject *o)
+void func_8003A384(GameObject *obj)
 {
-    switch (o->subState) {
+    switch (obj->subState) {
     case 0:
-        func_80038AC0(o);
+        func_80038AC0(obj);
 #if REGION != REGION_JP
-        if (o->step == 6 || o->step == 7)
+        if (obj->step == 6 || obj->step == 7)
             break;
 #endif
-        switch (o->animFrame) {
-        case 0: case 1: case 2: case 3: o->unk8C = 0; break;
-        case 4: o->unk8C = 0x20; break;
-        case 5: o->unk8C = 0xe0; break;
-        case 6: o->unk8C = 0x40; break;
-        case 7: o->unk8C = 0xc0; break;
+        switch (obj->animFrame) {
+        case 0: case 1: case 2: case 3: obj->unk8C = 0; break;
+        case 4: obj->unk8C = 0x20; break;
+        case 5: obj->unk8C = 0xe0; break;
+        case 6: obj->unk8C = 0x40; break;
+        case 7: obj->unk8C = 0xc0; break;
         }
         break;
     case 1:
-        func_80038AC0(o);
+        func_80038AC0(obj);
 #if REGION != REGION_JP
-        if (o->step == 6 || o->step == 7)
+        if (obj->step == 6 || obj->step == 7)
             break;
 #endif
-        switch (o->animFrame) {
-        case 0: case 1: case 2: case 3: o->unk8C = 0; break;
-        case 4: o->unk8C = 0x20; break;
-        case 5: o->unk8C = 0xe0; break;
-        case 6: o->unk8C = 0x40; break;
-        case 7: o->unk8C = 0xc0; break;
+        switch (obj->animFrame) {
+        case 0: case 1: case 2: case 3: obj->unk8C = 0; break;
+        case 4: obj->unk8C = 0x20; break;
+        case 5: obj->unk8C = 0xe0; break;
+        case 6: obj->unk8C = 0x40; break;
+        case 7: obj->unk8C = 0xc0; break;
         }
         break;
     case 2:
-        func_80038AC0(o);
+        func_80038AC0(obj);
 #if REGION != REGION_JP
-        if (o->step == 6 || o->step == 7)
+        if (obj->step == 6 || obj->step == 7)
             break;
 #endif
-        switch (o->animFrame) {
-        case 0: case 1: case 2: case 3: o->unk8C = 0; break;
-        case 4: o->unk8C = 0x20; break;
-        case 5: o->unk8C = 0xe0; break;
-        case 6: o->unk8C = 0x40; break;
-        case 7: o->unk8C = 0xc0; break;
+        switch (obj->animFrame) {
+        case 0: case 1: case 2: case 3: obj->unk8C = 0; break;
+        case 4: obj->unk8C = 0x20; break;
+        case 5: obj->unk8C = 0xe0; break;
+        case 6: obj->unk8C = 0x40; break;
+        case 7: obj->unk8C = 0xc0; break;
         }
         break;
     case 3:
     case 4:
-        func_8003A10C(o);
+        func_8003A10C(obj);
         break;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objutil", func_8003A4F8);
 extern u8 *D_8009B698;
-void func_8003A4F8(GameObject *o)
+void func_8003A4F8(GameObject *obj)
 {
-    if (D_800A545F) o->state = 2;
-    switch (o->state) {
+    if (D_800A545F) obj->state = 2;
+    switch (obj->state) {
     case 0:
 #if REGION == REGION_EU && VERSION == 0
-        initObjectAC(o);
+        initObjectAC(obj);
 #else
-        func_800385EC(o);
+        func_800385EC(obj);
 #endif
-        o->state++;
+        obj->state++;
         break;
     case 1:
-        func_80022E44(o);
-        func_8003A384(o);
+        func_80022E44(obj);
+        func_8003A384(obj);
         break;
     case 2:
         D_8009B6A0->mode = 0;
         *D_8009B698 = 0;
         if ((s8)--D_800A547B_U8 < 0) D_800A547B_U8 = 0;
-        o->state = 3;
+        obj->state = 3;
         break;
     case 3:
-        freeObjectLayer1(o);
+        freeObjectLayer1(obj);
         break;
     }
 }

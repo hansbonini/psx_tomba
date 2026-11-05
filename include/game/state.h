@@ -491,14 +491,10 @@ typedef struct gameConfig {
     byte unk433;
     u_short nextArea;
     u_short nextSection;
-    u_char redExpLevel;
-    u_char greenExpLevel;
-    u_char blueExpLevel;
-    u_char redExpBar;
-    u_char greenExpBar;
-    u_char blueExpBar;
-    byte unk43e;
-    byte unk43f;
+    u_char expLevel[3];
+    byte unk43b;
+    u_char expBar[3];
+    u_char activeExpBar;
     u_short nextSpawnPoint;
     u_char disableSelectMenu;
     u_char inventoryScreen;

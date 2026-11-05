@@ -5,6 +5,19 @@ extern s16 _svm_sreg_buf[24 * 8];
 extern char _svm_sreg_dirty[24];
 extern struct SpuVoice _svm_voice[24];
 
+/**
+ * @brief Internal: set the volume and pan of the voices of a channel
+ * 
+ * Recomputes the volume registers of every voice playing the given program
+ * for the sequence.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param vol Channel volume (0-127)
+ * @param pan Channel pan (0-127)
+ * @return Number of voices updated
+ */
 int _SsVmSetVol(short seq_sep_no, short vabId, short prog, u16 vol, u16 pan) {
     struct SeqStruct* score;
     int count;

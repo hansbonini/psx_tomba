@@ -3,6 +3,12 @@
 
 /* Psy-Q LIBPAD PADSEQD.OBJ: _padInitDirSeq, func_8006B080, func_8006B154, _dirFailAuto, func_8006B494. */
 
+/**
+ * @brief Internal: install the direct mode sequence handlers
+ * 
+ * Sets the send, receive and busy-check functions used by the
+ * communication state machine.
+ */
 void _padInitDirSeq(void) {
     void (*response_handler)(padPort *);
 
@@ -12,6 +18,15 @@ void _padInitDirSeq(void) {
     _padFuncRecvAuto = response_handler;
 }
 
+/**
+ * @brief Internal: send handler of the information/command sequence
+ * 
+ * Chooses the command to send for the current sequence step: enter or exit
+ * configuration mode (0x43) or the step handler of the active request.
+ * 
+ * @param obj Controller port state
+ * @return Always 0
+ */
 int func_8006B080(padPort *obj) {
     register int compare asm("$2");
     int state;
@@ -70,6 +85,15 @@ done:
     return 0;
 }
 
+/**
+ * @brief Internal: receive handler of the information/command sequence
+ * 
+ * Updates the controller ID and the user receive buffer from the reply,
+ * clears the port information when the controller changed, and advances
+ * the sequence step.
+ * 
+ * @param port Controller port state
+ */
 void func_8006B154(padPort *port) {
     int old = port->currentId;
     int i;
@@ -141,6 +165,14 @@ void func_8006B154(padPort *port) {
     }
 }
 
+/**
+ * @brief Internal: handle a failed transfer
+ * 
+ * Increments the frame counter, retries a limited number of times and then
+ * clears the port information and marks the controller as disconnected.
+ * 
+ * @param port Controller port state
+ */
 void _dirFailAuto(padPort *port) {
     port->frameCounter++;
     switch (port->sequenceStep) {
@@ -169,6 +201,15 @@ void _dirFailAuto(padPort *port) {
     }
 }
 
+/**
+ * @brief Internal: check whether the port is busy
+ * 
+ * A port with extended information is idle only when its sequence has
+ * finished.
+ * 
+ * @param obj Controller port state
+ * @return 1 if busy, 0 if a new request can be accepted
+ */
 int func_8006B494(padPort *obj) {
     int value;
     int field;

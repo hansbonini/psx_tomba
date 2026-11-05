@@ -16,6 +16,20 @@ extern void vmNoiseOn(u8 voice);
 extern u16 note2pitch(void);
 extern void _SsVmKeyOnNow(u8 count, u16 pitch);
 
+/**
+ * @brief Internal: key on a note
+ * 
+ * Selects the tones of the program that cover the note, allocates a voice
+ * for each and starts them (or the noise generator).
+ * 
+ * @param seq_sep_no Sequence handle (access number | seq number << 8, or 0x21 for sound effects)
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param note Note number
+ * @param voll Velocity / volume
+ * @param pan Pan
+ * @return Bit mask of the voices started, or -1 on error
+ */
 int _SsVmKeyOn(unsigned short seq_sep_no, short vabId, short prog, unsigned short note,
                 unsigned short voll, unsigned short pan)
 {
@@ -96,6 +110,18 @@ int _SsVmKeyOn(unsigned short seq_sep_no, short vabId, short prog, unsigned shor
     return ret;
 }
 
+/**
+ * @brief Internal: key off a note
+ * 
+ * Releases every voice playing the given note of the program for this
+ * sequence.
+ * 
+ * @param seq_sep_no Sequence handle
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param note Note number
+ * @return Number of voices released
+ */
 int _SsVmKeyOff(short seq_sep_no, short vabId, short prog, unsigned short note) {
     u8 i;
     int count;
@@ -116,6 +142,19 @@ int _SsVmKeyOff(short seq_sep_no, short vabId, short prog, unsigned short note) 
     return count;
 }
 
+/**
+ * @brief Internal: key on a sound effect note
+ * 
+ * Converts the left/right volume to volume and pan and keys on the note as
+ * a sound effect.
+ * 
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param note Note number
+ * @param pitch Pitch (unused)
+ * @param voll Left volume
+ * @param volr Right volume
+ */
 void _SsVmSeKeyOn(short vabId, short prog, unsigned short note,
                   unsigned short pitch, unsigned short voll,
                   unsigned short volr) {
@@ -135,9 +174,23 @@ void _SsVmSeKeyOn(short vabId, short prog, unsigned short note,
     _SsVmKeyOn(0x21, vabId, prog, note, vol, pan);
 }
 
+/**
+ * @brief Internal: key off a sound effect note
+ * 
+ * Releases the voices playing the note as a sound effect.
+ * 
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param note Note number
+ */
 void _SsVmSeKeyOff(short vabId, short prog, unsigned short note) {
     _SsVmKeyOff(0x21, vabId, prog, note);
 }
 
+/**
+ * @brief Internal: empty placeholder
+ * 
+ * Does nothing.
+ */
 void KeyOnCheck(void) {
 }

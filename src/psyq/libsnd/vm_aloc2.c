@@ -117,6 +117,12 @@ extern char _svm_sreg_dirty[24];
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_aloc2", _SsVmDoAllocate);
 
+/**
+ * @brief Internal: set up the allocated voice for the current tone
+ * 
+ * Writes the waveform start address and ADSR of the tone (with the damper
+ * adjustment) into the voice register buffer.
+ */
 void _SsVmDoAllocate(void) {
     int i;
 
@@ -144,4 +150,9 @@ void _SsVmDoAllocate(void) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vm_aloc2", _SsVmDamperOff);
 
+/**
+ * @brief Internal: release the damper pedal
+ * 
+ * Clears the sustain adjustment applied to new notes.
+ */
 void _SsVmDamperOff(void) { _svm_damper = 0; }

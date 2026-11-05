@@ -6,11 +6,28 @@
  * func_8006A44C, func_8006A524,
  * func_8006A5E4, func_8006A670. */
 
+/**
+ * @brief Internal: communication step 0, send the start byte
+ * 
+ * Lets the sequence handler prepare the next command, then sends 0x01
+ * (controller select) to the port.
+ * 
+ * @param port Controller port state
+ * @return Byte received, or a negative error code
+ */
 int func_8006A40C(padPort *port) {
     D_80097590 = _padFuncSendAuto(port);
     return _padSioRW(port, -2);
 }
 
+/**
+ * @brief Internal: communication step 1, send the command byte
+ * 
+ * Handles the light gun hooks on the first channel and multitap sub-ports,
+ * then sends the current command or 0x42 (read data).
+ * 
+ * @param obj Controller port state
+ */
 void func_8006A44C(padPort *obj) {
     if (_padSioChan == _padChanStart && _padGunExec != 0) {
         _padFuncGetGunPos();
@@ -30,6 +47,15 @@ void func_8006A44C(padPort *obj) {
     }
 }
 
+/**
+ * @brief Internal: communication step 2, receive the controller ID
+ * 
+ * Sends the multitap flag (or 0) and reads the ID byte, from which the
+ * number of data bytes to transfer is derived.
+ * 
+ * @param obj Controller port state
+ * @return 0 on success, -9 if no valid ID was received, or a negative error code
+ */
 int func_8006A524(padPort *obj) {
     int result;
     int blockCount;
@@ -61,6 +87,15 @@ int func_8006A524(padPort *obj) {
     return 0;
 }
 
+/**
+ * @brief Internal: communication step 3, receive the 0x5A acknowledge byte
+ * 
+ * Sends the first transmit byte and checks that the controller answers
+ * with 0x5A.
+ * 
+ * @param obj Controller port state
+ * @return 0x5A on success, -9 for an unexpected reply, or a negative error code
+ */
 int func_8006A5E4(padPort *obj) {
     register padPort *card asm("$16");
     padPort *call_obj;
@@ -102,6 +137,15 @@ done:
     return ret;
 }
 
+/**
+ * @brief Internal: communication step 4, transfer the data bytes
+ * 
+ * Exchanges the remaining data bytes (handling multitap sub-ports and the
+ * actuator power limit), stores the reply and moves on to the next port.
+ * 
+ * @param inPort Controller port state
+ * @return 0 on success or a negative error code
+ */
 int func_8006A670(padPort *inPort) {
     register padPort *port = inPort;
     register int mode;
@@ -260,6 +304,7 @@ done:
 int D_80097588 = 0;
 volatile u8* padif_sio = (volatile u8*)0x1F801040;
 int D_80097590 = 0;
+/** @brief Steps of the per-port communication state machine run from the VBlank handler */
 int (*padIntFunc[5])(void) = {
     (int (*)(void))func_8006A40C, (int (*)(void))func_8006A44C, (int (*)(void))func_8006A524,
     (int (*)(void))func_8006A5E4, (int (*)(void))func_8006A670,

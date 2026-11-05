@@ -22,16 +22,24 @@ extern char* cd_alarm_func[];
 extern const char cd_id[];
 
 PsyqStamp libcd_stamp = PSYQ_SDK_STAMP(PSYQ_LIB_CD, 19, 14, 52);
+/** @brief Callback invoked when a primitive command completes (see CdSyncCallback) */
 CdlCB (*CD_cbsync)(u_char, u_char*) = NULL;
+/** @brief Callback invoked when data is ready (see CdReadyCallback) */
 CdlCB (*CD_cbready)(u_char, u_char*) = NULL;
 int CD_cbread = 0;
+/** @brief Debug message level set by CdSetDebug */
 int CD_debug = 0;
+/** @brief Last drive status byte returned by the CD-ROM controller */
 int CD_status = 0;
 int CD_status1 = 0;
 int CD_nopen = 0;
+/** @brief Last position set with CdlSetloc */
 CdlLOC CD_pos = {2, 0, 0, 0};
+/** @brief Last mode set with CdlSetmode */
 u_char CD_mode = 0;
+/** @brief Last primitive command issued */
 u_char CD_com = 0;
+/** @brief Printable names of the primitive commands */
 const char* CD_comstr[] = {
     "CdlSync",    "CdlNop",
     "CdlSetloc",  "CdlPlay",
@@ -50,6 +58,7 @@ const char* CD_comstr[] = {
     "?",          "?",
     "?",          "?",
 };
+/** @brief Printable names of the interrupt types */
 const char* CD_intstr[] = {
     "NoIntr",  "DataReady", "Complete", "Acknowledge",
     "DataEnd", "DiskError", "?",        "?",
@@ -89,6 +98,15 @@ volatile s32* cd_d3_chcr = (volatile s32*)0x1F8010B8;
 void CD_flush(void);
 void callback(void);
 
+/**
+ * @brief Internal: copy a CD-ROM result buffer
+ * 
+ * Copies the 8-byte result block from _src to _dst. Does nothing when the
+ * destination is NULL.
+ * 
+ * @param _dst Destination buffer (may be NULL)
+ * @param _src Source result buffer
+ */
 static inline void rescpy(void* _dst, void* _src) {
     char *pDst = (char*)_dst;
     char *pSrc = (char*)_src;
@@ -101,6 +119,15 @@ static inline void rescpy(void* _dst, void* _src) {
     }
 }
 
+/**
+ * @brief Internal: check the CD-ROM command timeout
+ * 
+ * Returns an error when the VSync deadline stored in cd_alarm has passed
+ * or the poll counter overflows. On timeout it prints the pending command
+ * and interrupt state and flushes the drive.
+ * 
+ * @return -1 on timeout, 0 otherwise
+ */
 static inline int get_alarm(void) {
     if ((cd_alarm < VSync(-1)) || cd_alarm_count++ > 0x3C0000) {
         puts("CD timeout: ");
@@ -117,6 +144,16 @@ static inline int get_alarm(void) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", getintr);
+/**
+ * @brief Internal: read and acknowledge one pending CD-ROM interrupt
+ * 
+ * Reads the interrupt cause from the CD-ROM controller, fetches the
+ * response bytes and updates the internal sync/ready state, the drive
+ * status (CD_status) and the result buffers. Errors are reported through
+ * the debug output.
+ * 
+ * @return Bit mask of the events handled (2 = sync/command complete, 4 = data ready), or 0 if no interrupt was pending
+ */
 int getintr(void) {
     volatile char nReg;
     volatile char buf[8];
@@ -210,6 +247,17 @@ int getintr(void) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_sync);
+/**
+ * @brief Internal: wait for the current CD-ROM command to complete
+ * 
+ * Polls the CD-ROM interrupts (also dispatching the sync/ready callbacks
+ * when callbacks are disabled) until the primitive command finishes or
+ * fails. Backend of CdSync().
+ * 
+ * @param mode 0 = block until completion, 1 = return the current state immediately
+ * @param result Buffer receiving the 8-byte command result (may be NULL)
+ * @return CdlComplete or CdlDiskError when finished, 0 if still busy (non-blocking mode), -1 on timeout
+ */
 int CD_sync(int mode, unsigned char* result) {
     int i;
     int intr;
@@ -265,6 +313,16 @@ int CD_sync(int mode, unsigned char* result) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_ready);
+/**
+ * @brief Internal: wait for CD-ROM data ready
+ * 
+ * Polls the CD-ROM interrupts until a DataReady/DataEnd event is
+ * available. Backend of CdReady().
+ * 
+ * @param arg0 0 = block until an event arrives, 1 = return immediately
+ * @param arg1 Buffer receiving the 8-byte result (may be NULL)
+ * @return Interrupt type received (CdlDataReady, CdlDataEnd, ...), 0 if none (non-blocking mode), -1 on timeout
+ */
 int CD_ready(int arg0, u_char* arg1) {
     int i;
     int c;
@@ -328,6 +386,19 @@ int CD_ready(int arg0, u_char* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_cw);
+/**
+ * @brief Internal: send a primitive command to the CD-ROM controller
+ * 
+ * Waits for the previous command, records the new command/location/mode,
+ * writes the parameter bytes and the command code to the controller and,
+ * unless asked not to, waits for the acknowledge.
+ * 
+ * @param arg0 Primitive command code (CdlNop, CdlSetloc, ...)
+ * @param arg1 Parameter bytes for the command (required for commands that take parameters)
+ * @param arg2 Buffer receiving the 8-byte acknowledge result (may be NULL)
+ * @param arg3 Non-zero to return immediately without waiting for the acknowledge
+ * @return 0 on success, -1 on error or timeout, -2 if a required parameter is missing
+ */
 int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
 {
     s32 i;
@@ -402,6 +473,15 @@ int CD_cw(u_char arg0, u_char* arg1, u_char* arg2, int arg3)
 
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_vol);
+/**
+ * @brief Internal: set the CD audio to SPU mixing volume
+ * 
+ * Writes the four attenuation values of the CD-ROM controller and applies
+ * them.
+ * 
+ * @param vol Attenuation values (left->left, left->right, right->right, right->left)
+ * @return Always 0
+ */
 int CD_vol(CdlATV* vol)
 {
     *cd_reg0 = 2;
@@ -415,6 +495,13 @@ int CD_vol(CdlATV* vol)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_flush);
+/**
+ * @brief Internal: discard all pending CD-ROM interrupts
+ * 
+ * Acknowledges every pending interrupt in the controller, resets the
+ * internal interrupt state to "complete" and restores the bus delay
+ * setting.
+ */
 void CD_flush(void)
 {
     *cd_reg0 = 1;
@@ -433,6 +520,15 @@ void CD_flush(void)
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_initvol);
+/**
+ * @brief Internal: initialize the CD audio volume
+ * 
+ * Sets the SPU master volume if it is still zero, sets the CD input
+ * volume, enables CD audio in the SPU and programs the default CD mixing
+ * attenuation.
+ * 
+ * @return Always 0
+ */
 int CD_initvol(void) {
     CdlATV vol;
     // 0x800962C4 + 0x1b8 = 0x8009647C (current main vol left).
@@ -461,6 +557,12 @@ int CD_initvol(void) {
 }
 
 //INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_initintr);
+/**
+ * @brief Internal: install the CD-ROM interrupt handler
+ * 
+ * Clears the callbacks and drive status and hooks callback() into the
+ * CD-ROM interrupt slot.
+ */
 void CD_initintr(void) {
     CD_cbready = 0;
     CD_cbsync = 0;
@@ -474,6 +576,14 @@ void CD_initintr(void) {
 const char cd_id[] = "$Id: bios.c,v 1.81 1996/12/16 06:24:14 makoto Exp $";
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_init);
+/**
+ * @brief Internal: fully initialize the CD-ROM subsystem
+ * 
+ * Installs the interrupt handler, flushes the controller and issues Nop,
+ * Reset and Demute commands, waiting for completion.
+ * 
+ * @return 0 on success, -1 on failure
+ */
 int CD_init(void) {
     puts("CD_init:");
     printf("addr=%08x\n", &cd_info);
@@ -519,6 +629,14 @@ int CD_init(void) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_datasync);
+/**
+ * @brief Internal: wait for the CD-ROM DMA transfer to finish
+ * 
+ * Polls DMA channel 3 until it is idle.
+ * 
+ * @param arg0 0 = block until the transfer ends, 1 = return the current state immediately
+ * @return 0 when the transfer has finished, 1 if still busy (non-blocking mode), -1 on timeout
+ */
 int CD_datasync(int arg0) {
     int sync;
 
@@ -542,6 +660,16 @@ int CD_datasync(int arg0) {
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_getsector);
+/**
+ * @brief Internal: transfer data from the CD-ROM sector buffer through DMA
+ * 
+ * Sets up DMA channel 3, waits for the sector buffer to be ready and
+ * copies the requested number of words to memory, blocking until done.
+ * 
+ * @param arg0 Destination address in main memory
+ * @param arg1 Transfer size in 32-bit words
+ * @return Always 0
+ */
 int CD_getsector(int arg0, int arg1) {
     *cd_reg0 = 0;
     *cd_reg3 = 0x80;
@@ -558,12 +686,26 @@ int CD_getsector(int arg0, int arg1) {
 }
 
 //INCLUDE_ASM("nonmatchings/psyq/libcd/bios", CD_set_test_parmnum);
+/**
+ * @brief Internal: set the parameter count of test command 0x19
+ * 
+ * Overrides the entry for command 0x19 (CdlTest) in the parameter count
+ * table.
+ * 
+ * @param arg0 Number of parameter bytes
+ */
 void CD_set_test_parmnum(int arg0)
 {
     cd_com_nparam[25] = arg0;
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libcd/bios", callback);
+/**
+ * @brief Internal: CD-ROM interrupt handler
+ * 
+ * Processes all pending CD-ROM interrupts and calls the user ready/sync
+ * callbacks for each event, preserving the controller register index.
+ */
 void callback(void) {
     int intr;
     int temp_s1;

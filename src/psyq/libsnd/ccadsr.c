@@ -3,6 +3,16 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ccadsr", _SsUtResolveADSR);
 
+/**
+ * @brief Internal: split the two ADSR registers into separate fields
+ * 
+ * Extracts the attack, decay, sustain and release rates, the sustain level
+ * and the mode bits.
+ * 
+ * @param arg0 ADSR register 1 value
+ * @param arg1 ADSR register 2 value
+ * @param arg2 Receives the decoded fields
+ */
 void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2) {
     arg2->unkA = arg0 & 0x8000;
     arg2->unkC = arg1 & 0x8000;
@@ -17,6 +27,16 @@ void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2) {
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ccadsr", _SsUtBuildADSR);
 
+/**
+ * @brief Internal: build the two ADSR registers from separate fields
+ * 
+ * Inverse of _SsUtResolveADSR() (the release mode bit is not written
+ * back).
+ * 
+ * @param arg0 Decoded ADSR fields
+ * @param arg1 Receives ADSR register 1
+ * @param arg2 Receives ADSR register 2
+ */
 void _SsUtBuildADSR(struct Unk* arg0, s16* arg1, s16* arg2) {
     u16 temp_t1;
     u16 var_v0;

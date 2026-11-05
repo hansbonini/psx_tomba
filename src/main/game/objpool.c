@@ -23,9 +23,7 @@ void func_80057C74(GameObject *o)
         if ((*(s32 *)&pl->state & 0xffffff) == 0x23001) {
             pl->active = 5;
             pl->visible = 1;
-            pl->state = 5;
-            pl->subState = 0x41;
-            pl->step = 0;
+            setObjState(pl, 5, 0x41, 0);
             o->timer = 50;
             o->step++;
         }
@@ -36,9 +34,7 @@ void func_80057C74(GameObject *o)
             o->timer = 16;
             o->step++;
             pl->visible = 1;
-            pl->state = 5;
-            pl->subState = 0x41;
-            pl->step = 0;
+            setObjState(pl, 5, 0x41, 0);
             pl->unk8C = 0;
             pl->animFrame = 0;
             func_800EDDDC(pl, 0, 0);
@@ -57,7 +53,7 @@ void func_80057C74(GameObject *o)
             o->unkAC = 0;
             o->anim = (*(void ***)&o->unkA8)[0];
             readAnimFrameCount(o);
-            o->unkF = pl->unkF - 2;
+            o->priority = pl->priority - 2;
         }
         break;
     case 3:
@@ -140,12 +136,10 @@ void func_800580BC(GameObject *o)
         o->h->p.whole = s->h->p.whole;
         s->h->p.whole = o->h->p.whole;
         s->y.p.whole = o->y.p.whole - 0x14;
-        o->unkF = s->unkF - 2;
+        o->priority = s->priority - 2;
         s->active = 5;
         s->visible = 1;
-        s->state = 5;
-        s->subState = 0x41;
-        s->step = 0;
+        setObjState(s, 5, 0x41, 0);
         func_800EDDDC(s, 0x2c, 0);
         o->unkAC = 1;
         o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[1];
@@ -201,7 +195,7 @@ void func_800580BC(GameObject *o)
     case 6:
         if (--o->timer == -1) {
             o->step++;
-            o->unkF = s->unkF + 1;
+            o->priority = s->priority + 1;
             o->unkAC = 3;
             o->animFrame = 0;
             o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[3];
@@ -212,9 +206,7 @@ void func_800580BC(GameObject *o)
         tickAnimation(o);
         o->h->p.whole++;
         if (o->h->p.whole >= s->h->p.whole) {
-            s->state = 5;
-            s->subState = 4;
-            s->step = 2;
+            setObjState(s, 5, 4, 2);
             D_8009C361 = 0;
             o->active = 2;
             o->state = 3;
@@ -232,11 +224,11 @@ void func_800580BC(GameObject *o)
     case 2: func_800E8758(&PLAYER.obj, a, b); break; \
     }
 
-static __inline__ void SetAnim_58464(GameObject *self, s16 n)
+static __inline__ void SetAnim_58464(GameObject *obj, s16 n)
 {
-    self->unkAC = n;
-    self->anim = (*(void ***)&self->unkA8)[n];
-    readAnimFrameCount(self);
+    obj->unkAC = n;
+    obj->anim = (*(void ***)&obj->unkA8)[n];
+    readAnimFrameCount(obj);
 }
 
 void func_80058464(GameObject *o)
@@ -248,9 +240,7 @@ void func_80058464(GameObject *o)
         if ((*(s32 *)&p->state & 0xffffff) == 0x23001) {
             p->active = 5;
             p->visible = 1;
-            p->state = 4;
-            p->subState = 0;
-            p->step = 0;
+            setObjState(p, 4, 0, 0);
             o->timer = 0x32;
             o->step++;
         }
@@ -273,7 +263,7 @@ void func_80058464(GameObject *o)
             o->timer = 0x28;
             o->step++;
             SetAnim_58464(o, 0);
-            o->unkF = p->unkF - 2;
+            o->priority = p->priority - 2;
         }
         break;
     case 3:
@@ -343,11 +333,11 @@ typedef struct { GameObject o; char pad[0x32]; s16 wf2; } BigObj_58960;
     case 2: func_800E8758(&PLAYER.obj, a, b); break; \
     }
 
-static __inline__ void SetAnim_58960(GameObject *self, s16 n)
+static __inline__ void SetAnim_58960(GameObject *obj, s16 n)
 {
-    self->unkAC = n;
-    self->anim = (*(void ***)&self->unkA8)[n];
-    readAnimFrameCount(self);
+    obj->unkAC = n;
+    obj->anim = (*(void ***)&obj->unkA8)[n];
+    readAnimFrameCount(obj);
 }
 
 void func_80058960(GameObject *o)
@@ -359,22 +349,20 @@ void func_80058960(GameObject *o)
     case 0:
         if ((*(s32 *)&p->state & 0xffffff) == 0x30504) {
             o->h->p.whole = p->h->p.whole;
-            o->unk34 = ((BigObj_58960 *)p)->wf2;
+            o->localY = ((BigObj_58960 *)p)->wf2;
             o->y.p.whole = p->y.p.whole + 0x14;
-            p->state = 4;
-            p->subState = 6;
-            p->step = 0;
+            setObjState(p, 4, 6, 0);
             SETANIM(o, 0, 6);
             SetAnim_58960(o, 1);
             o->velV = 0x100;
             o->step++;
-            o->unkF = p->unkF - 1;
+            o->priority = p->priority - 1;
         }
         break;
     case 1:
         o->y.raw += (s16)(o->velV += 8) << 8;
         p->y.raw += o->velV << 8;
-        if (o->y.p.whole > (d = o->unk34)) {
+        if (o->y.p.whole > (d = o->localY)) {
             o->timer = 0x1e;
             o->y.p.whole = d;
             o->step++;
@@ -387,7 +375,7 @@ void func_80058960(GameObject *o)
         break;
     case 3:
         p->y.raw += 0x8000;
-        if (o->unk34 < p->y.p.whole) {
+        if (o->localY < p->y.p.whole) {
             o->step++;
             SetAnim_58960(o, 0);
         }
@@ -420,9 +408,7 @@ void func_80058960(GameObject *o)
         tickAnimation(o);
         o->h->p.whole++;
         if (o->h->p.whole >= p->h->p.whole) {
-            p->state = 4;
-            p->subState = 5;
-            p->step = 2;
+            setObjState(p, 4, 5, 2);
             D_8009C361 = 0;
             o->active = 2;
             o->state = 3;
@@ -438,58 +424,58 @@ extern void *D_80015590[];
 extern void *D_800155A4[];
 extern void *D_800155BC[];
 
-void func_80058E14(GameObject *o)
+void func_80058E14(GameObject *obj)
 {
     Player *pl = &PLAYER;
     s32 f;
 
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        if (o->subtype == 0) {
-            o->state = 3;
+        if (obj->id == 0) {
+            obj->state = 3;
             break;
         }
-        o->unk6A = 0;
+        obj->unk6A = 0;
         switch (GAME.selectedArea) {
         case 0:
-            o->tpage = 0xE;
-            *(void ***)&o->unkA8 = D_80015590;
+            obj->tpage = 0xE;
+            *(void ***)&obj->unkA8 = D_80015590;
             break;
         case 1:
             switch ((s32)D_8009BCCA) {
             case 0:
             case 1:
-                o->tpage = 0xB;
+                obj->tpage = 0xB;
                 break;
             case 2:
             case 3:
             case 4:
-                o->tpage = 6;
+                obj->tpage = 6;
                 break;
             }
-            *(void ***)&o->unkA8 = D_80015590;
+            *(void ***)&obj->unkA8 = D_80015590;
             break;
         case 2:
             switch ((s32)D_8009BCCA) {
             case 0:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_800155BC;
-                o->unk6A = 1;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_800155BC;
+                obj->unk6A = 1;
                 break;
             case 3:
-                o->tpage = 0x10;
-                *(void ***)&o->unkA8 = D_800155A4;
-                o->unk6A = 3;
+                obj->tpage = 0x10;
+                *(void ***)&obj->unkA8 = D_800155A4;
+                obj->unk6A = 3;
                 break;
             case 4:
             case 5:
-                o->tpage = 0x11;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0x11;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             case 1:
             case 2:
-                o->tpage = 0xE;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xE;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             }
             break;
@@ -497,191 +483,188 @@ void func_80058E14(GameObject *o)
             switch ((s32)D_8009BCCA) {
             case 0:
             case 4:
-                o->tpage = 0xD;
+                obj->tpage = 0xD;
                 break;
             case 1:
             case 2:
             case 3:
             case 5:
             case 6:
-                o->tpage = 5;
+                obj->tpage = 5;
                 break;
             }
-            *(void ***)&o->unkA8 = D_80015578;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 4:
-            o->tpage = 0x10;
-            *(void ***)&o->unkA8 = D_80015578;
+            obj->tpage = 0x10;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 5:
             switch ((s32)D_8009BCCA) {
             case 0:
             case 2:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_800155BC;
-                o->unk6A = 2;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_800155BC;
+                obj->unk6A = 2;
                 break;
             case 1:
             case 3:
-                o->tpage = 0xB;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xB;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             }
             break;
         case 6:
-            o->tpage = 0xF;
-            *(void ***)&o->unkA8 = D_80015578;
+            obj->tpage = 0xF;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 8:
             switch ((s32)D_8009BCCA) {
             case 0:
             case 2:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_800155BC;
-                o->unk6A = 2;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_800155BC;
+                obj->unk6A = 2;
                 break;
             case 1:
             case 3:
-                o->tpage = 0xE;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xE;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             }
             break;
         case 9:
             switch ((s32)D_8009BCCA) {
             case 0:
-                o->tpage = 0xC;
-                *(void ***)&o->unkA8 = D_80015590;
+                obj->tpage = 0xC;
+                *(void ***)&obj->unkA8 = D_80015590;
                 break;
             case 1:
-                o->tpage = 0x12;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0x12;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             case 2:
-                o->tpage = 0x11;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0x11;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             case 3:
-                o->tpage = 0xB;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xB;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             case 4:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             case 5:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             }
             break;
         case 10:
             switch ((s32)D_8009BCCA) {
             case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-                o->tpage = 7;
+                obj->tpage = 7;
                 break;
             case 8:
-                o->tpage = 0xC;
+                obj->tpage = 0xC;
                 break;
             }
-            *(void ***)&o->unkA8 = D_80015578;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 11:
-            o->tpage = 0xD;
-            *(void ***)&o->unkA8 = D_80015578;
+            obj->tpage = 0xD;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 13:
-            o->tpage = 0xD;
-            *(void ***)&o->unkA8 = D_80015578;
+            obj->tpage = 0xD;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 14:
-            o->tpage = 0xA;
-            *(void ***)&o->unkA8 = D_80015578;
+            obj->tpage = 0xA;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 16:
             switch ((s32)D_8009BCCA) {
             case 4: case 5: case 6:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             }
             break;
         case 17:
-            o->tpage = 0xB;
-            *(void ***)&o->unkA8 = D_80015578;
+            obj->tpage = 0xB;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 18:
             switch ((s32)D_8009BCCA) {
             case 1:
-                o->tpage = 0xA;
+                obj->tpage = 0xA;
                 break;
             case 2:
-                o->tpage = 9;
+                obj->tpage = 9;
                 break;
             }
-            *(void ***)&o->unkA8 = D_80015578;
+            *(void ***)&obj->unkA8 = D_80015578;
             break;
         case 19:
             switch ((s32)D_8009BCCA) {
             case 0:
-                o->tpage = 0xF;
-                *(void ***)&o->unkA8 = D_800155BC;
-                o->unk6A = 1;
+                obj->tpage = 0xF;
+                *(void ***)&obj->unkA8 = D_800155BC;
+                obj->unk6A = 1;
                 break;
             case 1:
-                o->tpage = 0xE;
-                *(void ***)&o->unkA8 = D_80015578;
+                obj->tpage = 0xE;
+                *(void ***)&obj->unkA8 = D_80015578;
                 break;
             case 2:
-                o->tpage = 0x12;
-                *(void ***)&o->unkA8 = D_800155A4;
-                o->unk6A = 2;
+                obj->tpage = 0x12;
+                *(void ***)&obj->unkA8 = D_800155A4;
+                obj->unk6A = 2;
                 break;
             }
             break;
         }
-        o->category |= 0x80;
-        o->state++;
-        f = pl->obj.unkF;
-        o->unkA = 2;
-        o->animFrame = 0;
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
-        o->hitOffsetX = 0x10;
-        o->hitWidth = 0x20;
-        o->hitOffsetY = 0x10;
-        o->hitHeight = 0x20;
-        o->unkD = 0x81;
-        o->unkF = f + 1;
-        o->clut = GetClut(0x80, 0x1F9);
-        o->spriteBank = SPR_DATA[15];
-        o->unkAC = 3;
-        o->anim = (*(void ***)&o->unkA8)[3];
-        readAnimFrameCount(o);
-        if (o->subtype == 1) {
-            o->x.p.whole = pl->obj.x.p.whole;
-            o->y.p.whole = pl->obj.y.p.whole;
-            o->z.p.whole = pl->obj.z.p.whole;
+        obj->category |= 0x80;
+        obj->state++;
+        f = pl->obj.priority;
+        obj->drawType = DRAW_SPRITE_ROTATED;
+        obj->animFrame = 0;
+        obj->unk84 = 0;
+        obj->unk88 = 0;
+        obj->unk8C = 0;
+        setHitbox(obj, 0x10, 0x10, 0x20, 0x20);
+        obj->drawFlags = 0x81;
+        obj->priority = f + 1;
+        obj->clut = GetClut(0x80, 0x1F9);
+        obj->spriteBank = SPR_DATA[15];
+        obj->unkAC = 3;
+        obj->anim = (*(void ***)&obj->unkA8)[3];
+        readAnimFrameCount(obj);
+        if (obj->id == 1) {
+            obj->x.p.whole = pl->obj.x.p.whole;
+            obj->y.p.whole = pl->obj.y.p.whole;
+            obj->z.p.whole = pl->obj.z.p.whole;
         }
         if (*(s32 *)&GAME == 0x1000D) {
-            o->state = 4;
+            obj->state = 4;
         }
         break;
     case 1:
-        func_80022E44(o);
-        if (o->subtype == 0) {
-            tickAnimation(o);
+        func_80022E44(obj);
+        if (obj->id == 0) {
+            tickAnimation(obj);
             break;
         }
-        switch (o->unk6A) {
+        switch (obj->unk6A) {
         case 0:
             switch (D_8009C361) {
             case 0:
-                func_80057C74(o);
+                func_80057C74(obj);
                 break;
             case 1:
-                func_800580BC(o);
+                func_800580BC(obj);
                 break;
             }
             break;
@@ -690,10 +673,10 @@ void func_80058E14(GameObject *o)
         case 3:
             switch (D_8009C361) {
             case 0:
-                func_80058464(o);
+                func_80058464(obj);
                 break;
             case 1:
-                func_80058960(o);
+                func_80058960(obj);
                 break;
             }
             break;
@@ -701,10 +684,10 @@ void func_80058E14(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer2(o);
+        freeObjectLayer2(obj);
         break;
     case 4:
-        func_801156E8(o);
+        func_801156E8(obj);
         break;
     }
 }
@@ -714,122 +697,122 @@ typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_593EC;
 typedef struct E_593EC { u16 a, b; } E_593EC;
 extern E_593EC D_8007EDA4[];
 
-void func_800593EC(PO_593EC *o, GameObject *e)
+void func_800593EC(PO_593EC *o, GameObject *obj)
 {
     s16 d, ad, t;
     u16 ox, oy;
     char pad[8];
-    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+    if ((u16)(o->t.d->p.whole - obj->d->p.whole + 45) > 90)
         return;
     d = o->we8 - o->t.h->p.whole;
-    ox = D_8007EDA4[e->unkC].a;
-    oy = D_8007EDA4[e->unkC].b;
+    ox = D_8007EDA4[obj->param].a;
+    oy = D_8007EDA4[obj->param].b;
     ad = d;
     if (d < 0) ad = -d;
-    d = o->we8 - (e->h->p.whole + ox);
-    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
-    else t = e->hitOffsetX + d;
-    if ((u16)t > e->hitWidth + ad)
+    d = o->we8 - (obj->h->p.whole + ox);
+    if (o->t.animFrame & 1) t = obj->hitboxX + ad + d;
+    else t = obj->hitboxX + d;
+    if ((u16)t > obj->hitboxW + ad)
         return;
-    ad = e->hitOffsetY + (o->wea - (e->y.p.whole + oy));
-    if ((u16)ad > e->hitHeight)
+    ad = obj->hitboxY + (o->wea - (obj->y.p.whole + oy));
+    if ((u16)ad > obj->hitboxH)
         return;
     o->t.unk9E = 3;
     o->t.velY = 0;
     o->t.unkB8 = ox;
     o->t.unkBA = 0;
-    e->touchFlag = 2;
+    obj->touchFlag = 2;
     D_1F80019E = 0;
-    D_1F8003C0 = e;
+    D_1F8003C0 = obj;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059514);
-s32 func_80059514(PO_593EC *o, GameObject *e)
+s32 func_80059514(PO_593EC *o, GameObject *obj)
 {
     s16 d, ad, w;
     u16 t;
 
-    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+    if ((u16)(o->t.d->p.whole - obj->d->p.whole + 45) > 90)
         return 0;
     d = o->we8 - o->t.h->p.whole;
     ad = d;
     if (d < 0) ad = -d;
-    d = o->we8 - e->h->p.whole;
-    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
-    else t = e->hitOffsetX + d;
-    w = e->hitWidth;
+    d = o->we8 - obj->h->p.whole;
+    if (o->t.animFrame & 1) t = obj->hitboxX + ad + d;
+    else t = obj->hitboxX + d;
+    w = obj->hitboxW;
     if ((u16)t > w + ad)
         return 0;
-    ad = e->hitOffsetY + (o->wea - e->y.p.whole);
-    if ((u16)ad > e->hitHeight)
+    ad = obj->hitboxY + (o->wea - obj->y.p.whole);
+    if ((u16)ad > obj->hitboxH)
         return 0;
-    if (!(o->t.animFrame & 1)) D_1F8003BC = -e->hitOffsetX;
-    else D_1F8003BC = w - e->hitOffsetX;
+    if (!(o->t.animFrame & 1)) D_1F8003BC = -obj->hitboxX;
+    else D_1F8003BC = w - obj->hitboxX;
     return 1;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059638);
-s32 func_80059638(PO_593EC *o, GameObject *e)
+s32 func_80059638(PO_593EC *o, GameObject *obj)
 {
     s16 d, ad, w;
     u16 t;
 
-    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+    if ((u16)(o->t.d->p.whole - obj->d->p.whole + 45) > 90)
         return 0;
     d = o->we8 - o->t.h->p.whole;
     ad = d;
     if (d < 0) ad = -d;
-    d = o->we8 - e->h->p.whole;
-    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
-    else t = e->hitOffsetX + d;
-    w = e->hitWidth;
+    d = o->we8 - obj->h->p.whole;
+    if (o->t.animFrame & 1) t = obj->hitboxX + ad + d;
+    else t = obj->hitboxX + d;
+    w = obj->hitboxW;
     if ((u16)t > w + ad)
         return 0;
-    ad = e->hitOffsetY + (o->wea - e->y.p.whole);
-    if ((u16)ad > e->hitHeight)
+    ad = obj->hitboxY + (o->wea - obj->y.p.whole);
+    if ((u16)ad > obj->hitboxH)
         return 0;
-    if (!(o->t.animFrame & 1)) D_1F8003BC = -e->hitOffsetX;
-    else D_1F8003BC = w - e->hitOffsetX;
+    if (!(o->t.animFrame & 1)) D_1F8003BC = -obj->hitboxX;
+    else D_1F8003BC = w - obj->hitboxX;
     return 1;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005975C);
 typedef struct { GameObject t; char c0[0x28]; s16 we8; s16 wea; } PO_5975C;
 
-s32 func_8005975C(PO_5975C *o, GameObject *e)
+s32 func_8005975C(PO_5975C *o, GameObject *obj)
 {
     s16 d, ad, dy, t;
-    if ((u16)(o->t.d->p.whole - e->d->p.whole + 45) > 90)
+    if ((u16)(o->t.d->p.whole - obj->d->p.whole + 45) > 90)
         return 0;
     d = o->we8 - o->t.h->p.whole;
     ad = d;
     if (d < 0) ad = -d;
-    d = o->we8 - e->h->p.whole;
-    if (o->t.animFrame & 1) t = e->hitOffsetX + ad + d;
-    else t = e->hitOffsetX + d;
-    if ((u16)t > e->hitWidth + ad)
+    d = o->we8 - obj->h->p.whole;
+    if (o->t.animFrame & 1) t = obj->hitboxX + ad + d;
+    else t = obj->hitboxX + d;
+    if ((u16)t > obj->hitboxW + ad)
         return 0;
-    dy = o->wea - e->y.p.whole;
-    ad = e->hitOffsetY + dy;
-    if (e->hitHeight < (u16)ad)
+    dy = o->wea - obj->y.p.whole;
+    ad = obj->hitboxY + dy;
+    if (obj->hitboxH < (u16)ad)
         return 0;
-    switch (e->type) {
+    switch (obj->type) {
     case 0x19:
     case 0x37:
     case 0x3d:
-        if (e->subtype == 0 && ad < 8) {
+        if (obj->id == 0 && ad < 8) {
             o->t.unk9E = 0xb;
-            if (e->type == 0x3d && (e->animFrame & 2)) o->t.animFrame = 0;
+            if (obj->type == 0x3d && (obj->animFrame & 2)) o->t.animFrame = 0;
             else o->t.animFrame = 1;
         } else {
             o->t.unk9E = 0xa;
         }
         if (o->t.animFrame & 1) {
             o->t.unkB8 = 8;
-            o->t.h->p.whole = e->h->p.whole + 8;
+            o->t.h->p.whole = obj->h->p.whole + 8;
         } else {
             o->t.unkB8 = -5;
-            o->t.h->p.whole = e->h->p.whole - 5;
+            o->t.h->p.whole = obj->h->p.whole - 5;
         }
         break;
     case 0x11:
@@ -837,37 +820,37 @@ s32 func_8005975C(PO_5975C *o, GameObject *e)
         else o->t.unk9E = 0xa;
         o->t.animFrame = 0;
         o->t.unkB8 = -8;
-        o->t.h->p.whole = e->h->p.whole - 8;
+        o->t.h->p.whole = obj->h->p.whole - 8;
         break;
     case 0x10:
     case 0x3e:
-        if (e->subtype == 0 && ad < 8) o->t.unk9E = 0xc;
+        if (obj->id == 0 && ad < 8) o->t.unk9E = 0xc;
         else o->t.unk9E = 0xa;
         if (o->t.animFrame & 1) {
             o->t.unkB8 = 8;
-            o->t.h->p.whole = e->h->p.whole + 8;
+            o->t.h->p.whole = obj->h->p.whole + 8;
         } else {
             o->t.unkB8 = -8;
-            o->t.h->p.whole = e->h->p.whole - 8;
+            o->t.h->p.whole = obj->h->p.whole - 8;
         }
         break;
     case 0x35:
-        if (e->subtype != 0) return 0;
+        if (obj->id != 0) return 0;
         if (o->t.animFrame & 1) {
             o->t.unkB8 = 8;
-            o->t.h->p.whole = e->h->p.whole + 8;
+            o->t.h->p.whole = obj->h->p.whole + 8;
         } else {
             o->t.unkB8 = -8;
-            o->t.h->p.whole = e->h->p.whole - 8;
+            o->t.h->p.whole = obj->h->p.whole - 8;
         }
         o->t.unk9E = 0xa;
-        e->touchFlag = 1;
+        obj->touchFlag = 1;
         break;
     }
     o->t.unkBA = dy;
     o->t.velY = 0;
     D_1F80019E = 0;
-    D_1F8003C0 = e;
+    D_1F8003C0 = obj;
     return 1;
 }
 
@@ -1328,7 +1311,7 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
             return;
         idx = e->be;
         if (idx == 0xff) {
-            p->unkA0 = 0;
+            p->model = 0;
             break;
         }
         if (e->bc & 0x10) {
@@ -1338,8 +1321,8 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
             q = (volatile s32 *)*q;
             tt = *(s32 *)(tt + s + 4);
             q = (volatile s32 *)((s32)q + tt);
-            p->unkA4 = 1;
-            p->unkA0 = (s32)q;
+            p->modelLit = 1;
+            p->model = (s32)q;
         }
         break;
     case 5:
@@ -1358,8 +1341,8 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
         q = (volatile s32 *)*q;
         tt = *(s32 *)(tt + s + 4);
         q = (volatile s32 *)((s32)q + tt);
-        p->unkA4 = 1;
-        p->unkA0 = (s32)q;
+        p->modelLit = 1;
+        p->model = (s32)q;
         break;
     case 7:
         if ((D_8009B100 = allocObjectLayer7()) == 0)
@@ -1374,18 +1357,18 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
     D_8009B100->active = 1;
     D_8009B100->unk1D = e->b0;
     D_8009B100->type = e->b2;
-    D_8009B100->subtype = e->b4;
-    D_8009B100->unkC = e->b3;
-    D_8009B100->unkA = e->bc;
+    D_8009B100->id = e->b4;
+    D_8009B100->param = e->b3;
+    D_8009B100->drawType = e->bc;
     D_8009B100->animFrame = e->b5;
-    D_8009B100->unkF = e->bd;
+    D_8009B100->priority = e->bd;
     D_8009B100->x.raw = e->s6 << 16;
     D_8009B100->y.raw = e->s8 << 16;
     D_8009B100->z.raw = e->sa << 16;
     if (kind == 3) {
         ty = e->b2;
         if (ty == 0x18 || ty == 0x19 || ty == 0x24 || ty == 0x33)
-            D_8009B100->hitOffsetX = e->be;
+            D_8009B100->hitboxX = e->be;
     }
     if (kind == 6 || kind == 7)
         return;
@@ -1394,48 +1377,48 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
         D_8009B100->x.raw = e->s6 << 16;
         D_8009B100->y.raw = e->s8 << 16;
         D_8009B100->z.raw = e->sa << 16;
-        D_8009B100->unk90 = 0;
-        D_8009B100->unk94 = 0;
+        D_8009B100->parent = 0;
+        D_8009B100->child = 0;
         break;
     case 1:
         D_8009B100->x.raw = e->s6 << 16;
         D_8009B100->y.raw = e->s8 << 16;
         D_8009B100->z.raw = e->sa << 16;
         D_8009B104 = D_8009B100;
-        D_8009B100->unk90 = 0;
+        D_8009B100->parent = 0;
         break;
     case 2:
         D_8009B100->x.raw = D_8009B104->x.raw + (e->s6 << 16);
         D_8009B100->y.raw = D_8009B104->y.raw + (e->s8 << 16);
         D_8009B100->z.raw = D_8009B104->z.raw + (e->sa << 16);
-        D_8009B100->unk30 = e->s6 << 16;
-        D_8009B100->unk34 = e->s8 << 16;
-        D_8009B100->unk38 = e->sa << 16;
+        D_8009B100->localX = e->s6 << 16;
+        D_8009B100->localY = e->s8 << 16;
+        D_8009B100->localZ = e->sa << 16;
         q2 = D_8009B104;
         D_8009B104 = D_8009B100;
-        D_8009B100->unk90 = (s32)q2;
-        q2->unk94 = (s32)D_8009B100;
+        D_8009B100->parent = (s32)q2;
+        q2->child = (s32)D_8009B100;
         break;
     case 3:
         D_8009B100->x.raw = D_8009B104->x.raw + (e->s6 << 16);
         D_8009B100->y.raw = D_8009B104->y.raw + (e->s8 << 16);
         D_8009B100->z.raw = D_8009B104->z.raw + (e->sa << 16);
-        D_8009B100->unk30 = e->s6 << 16;
-        D_8009B100->unk34 = e->s8 << 16;
-        D_8009B100->unk38 = e->sa << 16;
-        D_8009B100->unk90 = (s32)D_8009B104;
-        D_8009B104->unk94 = (s32)D_8009B100;
-        D_8009B100->unk94 = 0;
+        D_8009B100->localX = e->s6 << 16;
+        D_8009B100->localY = e->s8 << 16;
+        D_8009B100->localZ = e->sa << 16;
+        D_8009B100->parent = (s32)D_8009B104;
+        D_8009B104->child = (s32)D_8009B100;
+        D_8009B100->child = 0;
         break;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005AF70);
-void func_8005AF70(GameObject *o)
+void func_8005AF70(GameObject *obj)
 {
     u8 *p;
     s32 r, g, b;
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
         GAME.fadeScreenControl = 1;
         GAME.fadeScreenAmount = 0;
@@ -1456,7 +1439,7 @@ void func_8005AF70(GameObject *o)
         D_8009E3ED = r;
         D_8009E3EE = g;
         D_8009E3EF = b;
-        o->state++;
+        obj->state++;
         break;
     case 1:
         GAME.fadeScreenControl = 2;
@@ -1464,17 +1447,17 @@ void func_8005AF70(GameObject *o)
         if ((u8)GAME.fadeScreenAmount != 0) break;
         if (D_1F8003D1 == 1) D_1F8003D1 = 0;
         GAME.fadeScreenControl = 0;
-        o->state++;
+        obj->state++;
         break;
     case 2:
-        if (GAME.fadeScreenControl == 3) o->state++;
+        if (GAME.fadeScreenControl == 3) obj->state++;
         break;
     case 3:
         GAME.fadeScreenControl = 2;
         GAME.fadeScreenAmount -= 8;
         if ((u8)GAME.fadeScreenAmount != 0) break;
         GAME.fadeScreenControl = 1;
-        o->state++;
+        obj->state++;
         D_8009D6DD = 0;
         D_8009D6DE = 0;
         D_8009D6DF = 0;
@@ -1483,7 +1466,7 @@ void func_8005AF70(GameObject *o)
         D_8009E3EF = 0;
         break;
     case 4:
-        if (GAME.fadeScreenControl == 4) o->state = 0;
+        if (GAME.fadeScreenControl == 4) obj->state = 0;
         break;
     }
 }

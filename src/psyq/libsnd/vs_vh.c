@@ -8,24 +8,67 @@ int _spu_getInTransfer(void);
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vs_vh", SsVabOpenHead);
 
+/**
+ * @brief Open a VAB header
+ * 
+ * Analyzes the VAB header and allocates SPU memory for the waveform data.
+ * 
+ * @param arg1 Address of the VAB header (.VH)
+ * @param vabid VAB ID to use, or -1 to choose a free one
+ * @return VAB ID, or -1 on error
+ */
 s16 SsVabOpenHead(u8* arg1, s16 vabid) {
     return SsVabOpenHeadWithMode(arg1, vabid, 0, 0);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vs_vh", SsVabOpenHeadSticky);
 
+/**
+ * @brief Open a VAB header with a fixed SPU address
+ * 
+ * Like SsVabOpenHead() but the waveform data is placed at the given SPU
+ * address instead of being allocated.
+ * 
+ * @param addr Address of the VAB header (.VH)
+ * @param vabid VAB ID to use, or -1 to choose a free one
+ * @param sbaddr Start address of the waveform data in SPU RAM
+ * @return VAB ID, or -1 on error
+ */
 s16 SsVabOpenHeadSticky(u8* addr, s16 vabid, u32 sbaddr) {
     return SsVabOpenHeadWithMode(addr, vabid, 1, sbaddr);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vs_vh", SsVabFakeHead);
 
+/**
+ * @brief Open a VAB header for data already in SPU RAM
+ * 
+ * Same as SsVabOpenHeadSticky().
+ * 
+ * @param addr Address of the VAB header (.VH)
+ * @param vabid VAB ID to use, or -1 to choose a free one
+ * @param sbaddr Start address of the waveform data in SPU RAM
+ * @return VAB ID, or -1 on error
+ */
 s16 SsVabFakeHead(u8* addr, s16 vabid, u32 sbaddr) {
     return SsVabOpenHeadWithMode(addr, vabid, 1, sbaddr);
 }
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vs_vh", SsVabOpenHeadWithMode);
 
+/**
+ * @brief Internal: open a VAB header
+ * 
+ * Validates the header, picks a VAB ID, records the program/tone tables
+ * and computes the SPU address of every waveform, allocating SPU memory
+ * unless a fixed address is given.
+ * 
+ * @param addr Address of the VAB header
+ * @param vabid VAB ID to use, or -1 to choose a free one
+ * @param mode 0 = allocate SPU memory, 1 = use sbaddr
+ * @param sbaddr Start address in SPU RAM when mode is 1
+ * @return VAB ID, or -1 on error
+ */
 short SsVabOpenHeadWithMode(
     u_char* addr, short vabid, short mode, u_long sbaddr) {
     int vagLens[256];
@@ -164,4 +207,9 @@ short SsVabOpenHeadWithMode(
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/vs_vh", SpuInit);
 
+/**
+ * @brief Initialize the SPU library
+ * 
+ * Performs a cold initialization of the SPU (see _SpuInit()).
+ */
 void SpuInit(void) { _SpuInit(0); }

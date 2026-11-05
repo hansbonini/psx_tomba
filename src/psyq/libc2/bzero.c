@@ -1,6 +1,15 @@
 #include "common.h"
 
 // INCLUDE_ASM("nonmatchings/psyq/libc2/bzero", bzero);
+/**
+ * @brief Fill a block of memory with zeros
+ * 
+ * Clears arg1 bytes starting at arg0.
+ * 
+ * @param arg0 Buffer to clear
+ * @param arg1 Number of bytes to clear
+ * @return The buffer pointer, or NULL if the buffer is NULL or the size is not positive
+ */
 s8* bzero(s8* arg0, s32 arg1)
 {
     s32 var_a1;

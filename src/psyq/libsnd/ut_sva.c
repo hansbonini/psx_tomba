@@ -3,6 +3,18 @@
 
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_sva", SsUtSetVagAtr);
 
+/**
+ * @brief Set the attributes of a tone
+ * 
+ * Overwrites the tone (VAG attribute) of a program of the VAB with
+ * pVagAttr.
+ * 
+ * @param vabId VAB ID
+ * @param prog Program number
+ * @param toneNum Tone number within the program
+ * @param pVagAttr New tone attributes
+ * @return 0 on success, -1 if the VAB is not open
+ */
 short SsUtSetVagAtr(short vabId, short prog, short toneNum, VagAtr* pVagAttr) {
     s16 toneIndex;
     if (_svm_vab_used[vabId] == 1) {
