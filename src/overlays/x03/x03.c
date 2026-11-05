@@ -123,17 +123,17 @@ void func_801178B8(GameObject *o)
             break;
         case 1:
             if (--g->s2 > 0) break;
-            o->unk90 = (s32)D_80134BD8[o->subtype];
+            o->parent = (s32)D_80134BD8[o->id];
             g->s2 = 0x12;
             g->s0++;
             break;
         case 2:
-            p = (s16 *)o->unk90;
+            p = (s16 *)o->parent;
             g->s4 += p[0];
             g->s6 += p[1];
             g->s8 -= p[0];
             g->sa -= p[1];
-            o->unk90 = (s32)(p + 2);
+            o->parent = (s32)(p + 2);
             if (--g->s2 > 0) break;
             g->s2 = 0x1e;
             g->s0++;
@@ -167,13 +167,13 @@ void func_80118044(GameObject *o)
 {
     switch (o->state) {
     case 0:
-        if (D_8009C608.purifiedAreas & 2) o->subtype += 2;
+        if (D_8009C608.purifiedAreas & 2) o->id += 2;
         o->tpage = 8;
-        o->unkD = 0;
+        o->drawFlags = 0;
         o->state++;
         o->spriteBank = SCRATCHPAD.sprData[3];
 
-        o->anim = D_80138254[o->subtype];
+        o->anim = D_80138254[o->id];
         readAnimFrameCount(o);
         break;
     case 1:

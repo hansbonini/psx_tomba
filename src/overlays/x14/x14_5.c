@@ -12,7 +12,7 @@ void func_8011EEE4(GameObject *o)
 
     switch (o->unk7) {
     case 0:
-        if (o->unk38 < 0x80 && GAME.selectedSection != 7) {
+        if (o->localZ < 0x80 && GAME.selectedSection != 7) {
             q[5] = D_80125454[nextRandom() & 0xf];
             if (q[5] == 0)
                 q[4] = 2;
@@ -22,7 +22,7 @@ void func_8011EEE4(GameObject *o)
             q[5] = 0;
             q[4] = 2;
         }
-        q[3] = (u8)o->unk38;
+        q[3] = (u8)o->localZ;
         func_8011CBD0(o, 0x14);
         o->unk7++;
         func_8011EB94();
@@ -51,13 +51,13 @@ void func_8011EEE4(GameObject *o)
             if (q[4] != 0) {
                 q[4]--;
                 if (q[4] == 1)
-                    q[3] = (o->unk38 + 0x10) & 0xff;
+                    q[3] = (o->localZ + 0x10) & 0xff;
                 else
-                    q[3] = (o->unk38 - 0x10) & 0xff;
+                    q[3] = (o->localZ - 0x10) & 0xff;
                 o->unk7 = 2;
                 func_8011CBD0(o, 0x15);
             } else {
-                E8_1EEE4 *t = (E8_1EEE4 *)o->unk94;
+                E8_1EEE4 *t = (E8_1EEE4 *)o->child;
                 o->unk7++;
                 t += o->unkAE;
                 o->timer = t->c;

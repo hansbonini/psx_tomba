@@ -12,7 +12,7 @@ void func_80118944(GameObject *o)
     case 0:
         o->state = s + 1;
         o->tpage = 9;
-        o->unkA = 1;
+        o->drawType = 1;
         *(s16 *)((u8 *)o + 0x2e) = 1;
         o->spriteBank = D_1F8002D4_S32;
         *(s32 *)((u8 *)o + 0x5c) = 0x1000;
@@ -23,10 +23,10 @@ void func_80118944(GameObject *o)
         o->unkB6 = 0;
         o->unkB8 = 0;
         ((P_18944 *)o)->cc = 0x78;
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
         case 1:
-            o->unkD = 0x80;
+            o->drawFlags = 0x80;
             o->subState = 10;
             break;
         case 2:
@@ -34,14 +34,14 @@ void func_80118944(GameObject *o)
             *(s16 *)((u8 *)o + 0xc0) = 0;
             *(s16 *)((u8 *)o + 0xc2) = 0;
             *(s16 *)((u8 *)o + 0xc4) = 0;
-            o->unkD = 0x80;
+            o->drawFlags = 0x80;
             o->subState = 7;
             *(s16 *)((u8 *)o + 0xc6) = *(s16 *)((u8 *)o + 0xc0);
             *(s16 *)((u8 *)o + 0xc8) = *(s16 *)((u8 *)o + 0xc2);
             *(s16 *)((u8 *)o + 0xca) = *(s16 *)((u8 *)o + 0xc4);
             break;
         case 4:
-            o->unkD = 0;
+            o->drawFlags = 0;
             break;
         case 5:
             break;
@@ -51,7 +51,7 @@ void func_80118944(GameObject *o)
             *(s16 *)((u8 *)o + 0xc0) = 0;
             *(s16 *)((u8 *)o + 0xc2) = 0;
             *(s16 *)((u8 *)o + 0xc4) = 0;
-            o->unkD = 0x80;
+            o->drawFlags = 0x80;
             o->subState = 5;
             *(s16 *)((u8 *)o + 0xc6) = *(s16 *)((u8 *)o + 0xc0);
             *(s16 *)((u8 *)o + 0xc8) = *(s16 *)((u8 *)o + 0xc2);
@@ -61,25 +61,25 @@ void func_80118944(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (o->subtype != 4) {
+        if (o->id != 4) {
             func_80118CD8(o);
-            if (o->subtype == 1)
-                o->unkF = D_800A53A7_U8 + 10;
+            if (o->id == 1)
+                o->priority = D_800A53A7_U8 + 10;
             else
-                o->unkF = D_800A53A7_U8 - 2;
+                o->priority = D_800A53A7_U8 - 2;
         } else {
             func_80118BB4(o);
-            o->unkF = D_800A53A7_U8;
+            o->priority = D_800A53A7_U8;
         }
         tickAnimation(o);
-        if (((GameObject *)o->unk90)->subState != 5)
+        if (((GameObject *)o->parent)->subState != 5)
             cullAndQueueDraw(o);
         if (D_8009BC98.unk00 != 0)
             break;
         o->state++;
         break;
     case 2:
-        if (o->subtype == 0 || o->subtype == 6) {
+        if (o->id == 0 || o->id == 6) {
             removeItemFromInventory(ITEM_FURIOUSTORNADO, 1);
             queueSfxKeyOff(*(u16 *)((char *)o + 0xce));
         }
@@ -100,7 +100,7 @@ void func_80118BB4(GameObject *o)
     GameObject *p;
     s32 r;
 
-    p = (GameObject *)o->unk90;
+    p = (GameObject *)o->parent;
     *(struct V3_18BB4 *)&o->x = *(struct V3_18BB4 *)&p->x;
     r = fixedMulSin2(o->unkB4, *(s16 *)&o[1].active);
     o->h->raw = o->h->raw + r * 0x10000;
@@ -111,7 +111,7 @@ void func_80118BB4(GameObject *o)
     o->unkB4 = (o->unkB4 + o->unkBA) & 0xff;
     o->unkB6 = (o->unkB6 + o->unkBC) & 0xff;
     o->unkB8 = (o->unkB8 + *(s16 *)&o->unkBE) & 0xff;
-    o->buffSize = p->buffSize;
+    o->scale = p->scale;
     if (p->state > 1)
         o->state = o->state + 1;
 }
@@ -259,18 +259,18 @@ void func_8011998C(GameObject *o)
     case 0:
         o->unk98 = 10;
         o->tpage = 0xc;
-        *(s8 *)&o->unkF = -5;
+        *(s8 *)&o->priority = -5;
         o->unk9A = 0;
-        o->unkD = 0;
-        o->unkA = 0;
+        o->drawFlags = 0;
+        o->drawType = 0;
         o->animFrame = 0;
         o->state = o->state + 1;
-        o->anim = D_8013A55C[o->subtype];
+        o->anim = D_8013A55C[o->id];
         o->spriteBank = D_1F8002D4_S32Arr[0];
         readAnimFrameCount(o);
         break;
     case 1:
-        if (cullAndQueueDraw(o) != 0 && o->subtype == 0)
+        if (cullAndQueueDraw(o) != 0 && o->id == 0)
             func_80119768(o);
         break;
     case 2:
@@ -290,38 +290,38 @@ void func_80119A94(GameObject *o)
         if (o->timer == 0) {
         o->state++;
         o->tpage = 9;
-        o->unkA = 3;
-        o->buffSize = 0xac8;
-        o->unkD = 0;
-        *(s8 *)&o->unkF = -10;
-        o->anim = D_8013A58C[o->unkC];
+        o->drawType = 3;
+        o->scale = 0xac8;
+        o->drawFlags = 0;
+        *(s8 *)&o->priority = -10;
+        o->anim = D_8013A58C[o->param];
         o->spriteBank = D_1F8002D4_S32Arr[0];
         o->animFrame = nextRandom() & 1;
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
-            o->unk8C = 0x40;
-            o->unk84 = -2;
+            o->rotZ = 0x40;
+            o->rotX = -2;
             o->velH = 0x100;
             o->velX = -8;
             o->velV = 0x100;
             break;
         case 1:
-            o->unk8C = -0x40;
-            o->unk84 = 2;
+            o->rotZ = -0x40;
+            o->rotX = 2;
             o->velH = -0x100;
             o->velX = 8;
             o->velV = 0xc0;
             break;
         case 2:
-            o->unk8C = -0x60;
-            o->unk84 = 2;
+            o->rotZ = -0x60;
+            o->rotX = 2;
             o->velH = 0x100;
             o->velX = -8;
             o->velV = 0x80;
             break;
         case 3:
-            o->unk8C = 0x60;
-            o->unk84 = -2;
+            o->rotZ = 0x60;
+            o->rotX = -2;
             o->velH = -0x100;
             o->velX = 8;
             o->velV = 0x80;
@@ -350,16 +350,16 @@ void func_80119A94(GameObject *o)
                     o->velX = -w;
             }
         }
-        o->unk8C += o->unk84;
-        switch (o->subtype) {
+        o->rotZ += o->rotX;
+        switch (o->id) {
         case 0 ... 1:
-            f = (u32)(o->unk8C + 0x3f) < 0x7f;
+            f = (u32)(o->rotZ + 0x3f) < 0x7f;
             goto tail;
         case 2 ... 3:
-            f = (u32)(o->unk8C + 0x5f) < 0xbf;
+            f = (u32)(o->rotZ + 0x5f) < 0xbf;
         tail:
             if (!f)
-                o->unk84 = -o->unk84;
+                o->rotX = -o->rotX;
             break;
         }
         if (++o->timer >= 0x78)

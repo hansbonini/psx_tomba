@@ -151,7 +151,7 @@ void func_80119268(s32 k, s32 x, s32 y, s32 z)
     if (o != 0) {
         o->active = 1;
         o->type = 0x31;
-        o->subtype = 1;
+        o->id = 1;
         p = t.v[k & 1][D_1F8001F8 & 7];
         o->x.p.whole = x;
         o->y.p.whole = y;

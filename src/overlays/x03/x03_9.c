@@ -86,16 +86,16 @@ void func_8012CA90(GameObject *o)
         break;
     case 1:
         if (--o->timer == -1) {
-            if ((o->subtype = nextRandom() & 1) == 0) {
-                o->hitOffsetX = 8;
-                o->hitWidth = 0x10;
-                o->hitOffsetY = 8;
-                o->hitHeight = 0x10;
+            if ((o->id = nextRandom() & 1) == 0) {
+                o->hitboxX = 8;
+                o->hitboxW = 0x10;
+                o->hitboxY = 8;
+                o->hitboxH = 0x10;
             } else {
-                o->hitOffsetX = 0xc;
-                o->hitWidth = 0x1c;
-                o->hitOffsetY = 0xc;
-                o->hitHeight = 0x18;
+                o->hitboxX = 0xc;
+                o->hitboxW = 0x1c;
+                o->hitboxY = 0xc;
+                o->hitboxH = 0x18;
             }
             o->timer = 0x1c;
             o->state++;
@@ -200,13 +200,13 @@ void func_8012CDB8(GameObject *o)
                 e->z.p.whole = o->z.p.whole;
             }
         }
-        o->subtype = 1;
+        o->id = 1;
         o->timer = 0x1c;
-        o->hitOffsetX = 0xc;
-        o->hitWidth = 0x1c;
-        o->hitOffsetY = 0xc;
+        o->hitboxX = 0xc;
+        o->hitboxW = 0x1c;
+        o->hitboxY = 0xc;
         o->anim = 0;
-        o->hitHeight = 0x18;
+        o->hitboxH = 0x18;
         o->subState = 0;
         o->step = 0;
         o->unk7 = 0;

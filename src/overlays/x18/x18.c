@@ -17,20 +17,20 @@ void func_801158F8(GameObject *o)
     case 0:
         o->state++;
         o->animFrame = 1;
-        o->unkA = 7;
-        o->unkD = 1;
-        o->unk30 = o->x.p.whole;
-        o->unk34 = o->y.p.whole;
+        o->drawType = 7;
+        o->drawFlags = 1;
+        o->localX = o->x.p.whole;
+        o->localY = o->y.p.whole;
         o->clut = GetClut(0x80, 0x1ff);
         o->tpage = 4;
-        o->anim = D_8011BE40[o->unkC];
+        o->anim = D_8011BE40[o->param];
         o->spriteBank = SCRATCHPAD.sprData[3];
         readAnimFrameCount(o);
         break;
     case 1:
-        o->x.p.whole = o->unk30 - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
+        o->x.p.whole = o->localX - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
         {
-            s32 y = o->unk34;
+            s32 y = o->localY;
             o->y.p.whole = y - (u16)SCRATCHPAD.unk168[7].p.whole;
         }
         o->visible = 1;
@@ -60,12 +60,12 @@ void func_80115A40(GameObject *o)
     switch (t) {
     case 0:
         o->state = t + 1;
-        o->unkF = 0x40;
-        o->unkD = 0x81;
+        o->priority = 0x40;
+        o->drawFlags = 0x81;
         o->tpage = 0xb;
         o->clut = 0x7c0c;
         o->spriteBank = SCRATCHPAD.sprData[2];
-        o->anim = D_8011BDFC[o->unkC];
+        o->anim = D_8011BDFC[o->param];
         break;
     case 1:
         o->visible = 1;

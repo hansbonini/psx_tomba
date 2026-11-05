@@ -175,7 +175,7 @@ void func_8011687C(GameObject *o)
         if (--o->timer != 0) break;
         o->timer = 10;
         o->cooldownTimer++;
-        p = (char *)o->unkA0;
+        p = (char *)o->model;
         n = *(s32 *)p;
         p += 4;
         while (n) {
@@ -259,11 +259,11 @@ void func_80117404(GameObject *o)
     case 0:
         o->state++;
         o->tpage = 0xc;
-        o->unkD = 0x80;
+        o->drawFlags = 0x80;
         o->spriteBank = SCRATCHPAD.sprData[3];
         o->anim = D_80130FE4;
         readAnimFrameCount(o);
-        *(s8 *)&o->unkF = 4;
+        *(s8 *)&o->priority = 4;
         break;
     case 1:
         if (cullAndQueueDraw(o))
@@ -302,14 +302,14 @@ void func_80117DC8(GameObject *o)
     switch (o->state) {
     case 0:
         o->state++;
-        o->hitOffsetX = 0x10;
-        o->hitWidth = 0x20;
-        o->hitHeight = 0x20;
-        o->hitOffsetY = 0x10;
+        o->hitboxX = 0x10;
+        o->hitboxW = 0x20;
+        o->hitboxH = 0x20;
+        o->hitboxY = 0x10;
         o->touchFlag = 0;
         o->unk6A = 0;
-        o->unk30 = o->h->raw;
-        o->unk34 = o->y.raw;
+        o->localX = o->h->raw;
+        o->localY = o->y.raw;
         break;
     case 1:
         cullAndQueueDraw(o);
@@ -344,7 +344,7 @@ void func_80118024(GameObject *o)
         if (SCRATCHPAD.unk168[1].p.whole < -0x54) break;
         p = &D_8009BC98.unk0F;
         if (*p) break;
-        if (o->subtype == 0) x = (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) - 0x68b;
+        if (o->id == 0) x = (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) - 0x68b;
         else x = (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) - 0xab3;
         if (x >= 0x45) break;
         o->step = st + 1;
@@ -377,16 +377,16 @@ void func_8011817C(GameObject *o)
     switch (t) {
     case 0:
         o->state = t + 1;
-        o->unk88 = 0x400;
-        o->unk84 = 0;
-        o->unk8C = 0;
+        o->rotY = 0x400;
+        o->rotX = 0;
+        o->rotZ = 0;
         o->active = 2;
         break;
     case 1:
         func_80022C08(o, 0x80);
         if (D_8009C608.purifiedAreas & 0x20) break;
-        if (o->unkC == 0) break;
-        switch (o->subtype) {
+        if (o->param == 0) break;
+        switch (o->id) {
         case 0:
             func_80118024(o);
             break;
@@ -427,20 +427,20 @@ void func_80118334(GameObject *o)
     switch (o->state) {
     case 0:
         o->state++;
-        if (o->unkC == 0) {
-            o->hitOffsetX = 0x10;
-            o->hitWidth = 0x20;
-            o->hitOffsetY = 0x1b0;
-            o->hitHeight = 0x1b0;
-            o->unk38 = 0x190;
+        if (o->param == 0) {
+            o->hitboxX = 0x10;
+            o->hitboxW = 0x20;
+            o->hitboxY = 0x1b0;
+            o->hitboxH = 0x1b0;
+            o->localZ = 0x190;
             o->unk68 = 0;
-            o->unk34 = o->y.p.whole - 0x18;
+            o->localY = o->y.p.whole - 0x18;
         } else {
             o->active = 2;
         }
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
         break;
     case 1:
         func_80022D3C(o, 0x40);
@@ -493,8 +493,8 @@ void func_801186C4(GameObject *o)
         }
         break;
     }
-    o->unk38 += o->velH;
-    o->unk8C = (o->unk38 >> 8) & 0xfff;
+    o->localZ += o->velH;
+    o->rotZ = (o->localZ >> 8) & 0xfff;
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80118830);
@@ -506,18 +506,18 @@ void func_80118830(GameObject *o)
     switch (o->state) {
     case 0:
         o->state++;
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
         o->velH = 0;
-        o->unk38 = 0;
+        o->localZ = 0;
         o->velX = 0;
-        p = &D_8012E5A4[o->subtype * 2];
-        o->hitOffsetX = *p;
-        o->hitOffsetY = *p;
+        p = &D_8012E5A4[o->id * 2];
+        o->hitboxX = *p;
+        o->hitboxY = *p;
         p++;
-        o->hitWidth = *p;
-        o->hitHeight = *p;
+        o->hitboxW = *p;
+        o->hitboxH = *p;
         if (GAME.selectedSection == 7) {
             GAME.purifiedAreas |= 0x40;
         }
@@ -526,8 +526,8 @@ void func_80118830(GameObject *o)
         func_80022C08(o, 0x88);
         if (GAME.purifiedAreas & 0x40) {
             func_801186C4(o);
-        } else if (o->subtype < 2) {
-            o->unk8C = (o->unk8C - 2) & 0xfff;
+        } else if (o->id < 2) {
+            o->rotZ = (o->rotZ - 2) & 0xfff;
         }
         break;
     case 2:
@@ -547,51 +547,51 @@ static __inline__ void mv_18998(GameObject *o)
 
     v = o->velH;
     if (v > 0) {
-        x = o->unk38 + v;
+        x = o->localZ + v;
         l = (*(s32*)&o->unkB4);
-        o->unk38 = x;
+        o->localZ = x;
         if (l < x) goto set;
-        if (o->unkC) return;
-        l = o->unk34;
+        if (o->param) return;
+        l = o->localY;
         f = l < x;
     } else {
-        x = o->unk38 + v;
+        x = o->localZ + v;
         l = (*(s32*)&o->unkB8);
-        o->unk38 = x;
+        o->localZ = x;
         if (x < l) goto set;
-        if (o->unkC) return;
-        l = o->unk34;
+        if (o->param) return;
+        l = o->localY;
         f = x < l;
     }
     if (f) {
     set:
-        o->unk38 = l;
+        o->localZ = l;
         o->velH = 0;
     }
 }
 
 void func_80118998(GameObject *o)
 {
-    switch (o->subtype) {
+    switch (o->id) {
     case 0:
         mv_18998(o);
-        o->unk30 = (o->unk38 >> 8) & 0xfff;
-        o->unk8C = (0x1000 - o->unk30) & 0xfff;
+        o->localX = (o->localZ >> 8) & 0xfff;
+        o->rotZ = (0x1000 - o->localX) & 0xfff;
         break;
     case 1:
         mv_18998(o);
-        o->unk30 = (o->unk38 >> 8) & 0xfff;
-        o->unk8C = (0x1800 - o->unk30) & 0xfff;
+        o->localX = (o->localZ >> 8) & 0xfff;
+        o->rotZ = (0x1800 - o->localX) & 0xfff;
         break;
     case 2:
         mv_18998(o);
-        o->unk30 = (o->unk38 >> 8) & 0xfff;
-        o->unk8C = (0x1800 - o->unk30) & 0xfff;
+        o->localX = (o->localZ >> 8) & 0xfff;
+        o->rotZ = (0x1800 - o->localX) & 0xfff;
         break;
     case 3:
         mv_18998(o);
-        o->unk30 = (o->unk38 >> 8) & 0xfff;
-        o->unk8C = (0x1400 - o->unk30) & 0xfff;
+        o->localX = (o->localZ >> 8) & 0xfff;
+        o->rotZ = (0x1400 - o->localX) & 0xfff;
         break;
     }
 }
@@ -655,9 +655,9 @@ void func_80119528(void) {
 void func_80119530(GameObject *o)
 {
     o->active = 2;
-    o->visible = ((GameObject *)o->unk90)->visible;
-    o->x.raw = ((GameObject *)o->unk90)->x.raw + o->unk30;
-    o->y.raw = ((GameObject *)o->unk90)->y.raw + o->unk34;
+    o->visible = ((GameObject *)o->parent)->visible;
+    o->x.raw = ((GameObject *)o->parent)->x.raw + o->localX;
+    o->y.raw = ((GameObject *)o->parent)->y.raw + o->localY;
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80119574);
@@ -668,11 +668,11 @@ s32 func_80119574(GameObject *o)
     if (D_8009BC98.unk0F | D_8009BC98.unk10) return 0;
     if ((*(GameObject *)&PLAYER).active == 2) return 0;
     if ((u16)((*(GameObject *)&PLAYER).d->p.whole - o->d->p.whole + 0x2d) >= 0x5b) return 0;
-    if ((u16)((*(GameObject *)&PLAYER).h->p.whole - o->h->p.whole + (o->hitOffsetX + (*(GameObject *)&PLAYER).hitOffsetX)) > o->hitWidth + (*(GameObject *)&PLAYER).hitWidth) {
+    if ((u16)((*(GameObject *)&PLAYER).h->p.whole - o->h->p.whole + (o->hitboxX + (*(GameObject *)&PLAYER).hitboxX)) > o->hitboxW + (*(GameObject *)&PLAYER).hitboxW) {
     ret0:
         return 0;
     }
-    return (u16)((*(GameObject *)&PLAYER).y.p.whole - o->y.p.whole + ((*(GameObject *)&PLAYER).hitOffsetY + o->hitOffsetY)) <= (*(GameObject *)&PLAYER).hitHeight + o->hitHeight;
+    return (u16)((*(GameObject *)&PLAYER).y.p.whole - o->y.p.whole + ((*(GameObject *)&PLAYER).hitboxY + o->hitboxY)) <= (*(GameObject *)&PLAYER).hitboxH + o->hitboxH;
 }
 
 INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80119688);
@@ -727,21 +727,21 @@ void func_80119818(GameObject *o)
         } else {
             o->timer = t - 1;
         }
-        o->unk74 += 0x80;
-        if (o->unk74 > 0x4000) {
-            o->unk74 = 0x4000;
+        o->scaleX += 0x80;
+        if (o->scaleX > 0x4000) {
+            o->scaleX = 0x4000;
             o->step++;
         }
-        o->unk76 = o->unk74;
-        o->unk78 = o->unk74;
+        o->scaleY = o->scaleX;
+        o->scaleZ = o->scaleX;
         break;
     case 3:
-        o->unk74 += 0x80;
-        if (o->unk74 > 0x4000) {
-            o->unk74 = 0x4000;
+        o->scaleX += 0x80;
+        if (o->scaleX > 0x4000) {
+            o->scaleX = 0x4000;
         }
-        o->unk76 = o->unk74;
-        o->unk78 = o->unk74;
+        o->scaleY = o->scaleX;
+        o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
             (*(GameTask **)&D_1F8001D4)->mode = 7;
             (*(GameTask **)&D_1F8001D4)->step = 0;
@@ -782,56 +782,56 @@ void func_80119AC8(GameObject *o)
             break;
         }
         o->state++;
-        o->unkA = 0x13;
+        o->drawType = 0x13;
         o->unk6A = 0;
         o->active = 2;
-        if (o->unkC == 0) {
+        if (o->param == 0) {
             r.x = 0x80;
             r.y = 0x1fe;
             r.w = 0x10;
             r.h = 2;
             LoadImage(&r, D_8012E5C8);
-            o->hitOffsetX = 0x18;
-            o->hitWidth = 0x30;
-            o->hitOffsetY = 0x18;
-            o->hitHeight = 0x32;
+            o->hitboxX = 0x18;
+            o->hitboxW = 0x30;
+            o->hitboxY = 0x18;
+            o->hitboxH = 0x32;
         } else {
-            o->hitOffsetX = 0xa;
-            o->hitWidth = 0x14;
-            o->hitOffsetY = 0xe;
-            o->hitHeight = 0x36;
+            o->hitboxX = 0xa;
+            o->hitboxW = 0x14;
+            o->hitboxY = 0xe;
+            o->hitboxH = 0x36;
         }
-        o->unk84 = 0;
-        o->unk88 = D_8012E608[o->unkC];
-        o->unk8C = 0;
+        o->rotX = 0;
+        o->rotY = D_8012E608[o->param];
+        o->rotZ = 0;
         if (D_8009C068.unk5ac == 0) {
             o->subState = 0;
-            o->unk74 = 0x800;
-            o->unk76 = 0x800;
-            o->unk78 = 0x800;
+            o->scaleX = 0x800;
+            o->scaleY = 0x800;
+            o->scaleZ = 0x800;
         } else {
-            if (o->unkC == 0) {
+            if (o->param == 0) {
                 o->subState = 2;
                 o->active = 1;
             } else {
                 o->subState = 1;
                 o->active = 2;
             }
-            o->unk74 = 0x1000;
-            o->unk76 = 0x1000;
-            o->unk78 = 0x1000;
+            o->scaleX = 0x1000;
+            o->scaleY = 0x1000;
+            o->scaleZ = 0x1000;
         }
         break;
     case 1:
-        if (o->unkC != 0) {
-            p = (GameObject *)o->unk90;
+        if (o->param != 0) {
+            p = (GameObject *)o->parent;
             if (p->visible == 0)
                 break;
-            o->unk74 = p->unk74;
-            o->unk76 = p->unk76;
-            o->unk78 = p->unk78;
-            dx = ((Fix16 *)&o->unk30)->p.whole * o->unk74;
-            dy = ((Fix16 *)&o->unk34)->p.whole * o->unk74;
+            o->scaleX = p->scaleX;
+            o->scaleY = p->scaleY;
+            o->scaleZ = p->scaleZ;
+            dx = ((Fix16 *)&o->localX)->p.whole * o->scaleX;
+            dy = ((Fix16 *)&o->localY)->p.whole * o->scaleX;
             o->h->raw = p->h->raw + (dx << 4);
             o->y.raw = p->y.raw + (dy << 4);
             o->visible = 1;
@@ -842,16 +842,16 @@ void func_80119AC8(GameObject *o)
                     o->subState++;
                 break;
             case 1:
-                if (o->unkC == 2) {
-                    o->unk88 -= 0x20;
-                    if (o->unk88 < -0x638) {
-                        o->unk88 = -0x638;
+                if (o->param == 2) {
+                    o->rotY -= 0x20;
+                    if (o->rotY < -0x638) {
+                        o->rotY = -0x638;
                         o->subState++;
                     }
                 } else {
-                    o->unk88 += 0x20;
-                    if (o->unk88 > 0x638) {
-                        o->unk88 = 0x638;
+                    o->rotY += 0x20;
+                    if (o->rotY > 0x638) {
+                        o->rotY = 0x638;
                         o->subState++;
                     }
                 }
@@ -900,22 +900,22 @@ void func_8011A0A4(GameObject *o)
         o->touchFlag = 0;
         o->objectIndex = 0;
         o->unk98 = 0;
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk34 = o->y.p.whole;
-        o->unk8C = o->animFrame << 5;
-        if (o->subtype == 0) {
+        o->rotX = 0;
+        o->rotY = 0;
+        o->localY = o->y.p.whole;
+        o->rotZ = o->animFrame << 5;
+        if (o->id == 0) {
             o->active = 2;
-        } else if (o->subtype == 1) {
-            o->hitOffsetX = 0xe;
-            o->hitWidth = 0x16;
-            o->hitOffsetY = 4;
-            o->hitHeight = 8;
+        } else if (o->id == 1) {
+            o->hitboxX = 0xe;
+            o->hitboxW = 0x16;
+            o->hitboxY = 4;
+            o->hitboxH = 8;
         } else {
-            o->hitOffsetX = 8;
-            o->hitWidth = 0x10;
-            o->hitOffsetY = 4;
-            o->hitHeight = 8;
+            o->hitboxX = 8;
+            o->hitboxW = 0x10;
+            o->hitboxY = 4;
+            o->hitboxH = 8;
         }
         break;
     case 1:
@@ -927,7 +927,7 @@ void func_8011A0A4(GameObject *o)
         o->touchFlag = 0;
         if (o->unk98 != 0)
             func_80119EC0(o);
-        if (o->subtype == 1 && o->unk98 == 0 && SCRATCHPAD.unk168[0].p.whole >= 0xc81 && SCRATCHPAD.unk168[1].p.whole >= -0x27) {
+        if (o->id == 1 && o->unk98 == 0 && SCRATCHPAD.unk168[0].p.whole >= 0xc81 && SCRATCHPAD.unk168[1].p.whole >= -0x27) {
             o->unk98 = 1;
             o->objectIndex = 1;
             func_80119EC0(o);
@@ -947,9 +947,9 @@ void func_8011A270(GameObject *o)
     switch (o->state) {
     case 0:
         if (D_8009C608.purifiedAreas & 0x40) o->y.p.whole += 0xa0;
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
         o->state++;
         break;
     case 1:
@@ -993,11 +993,11 @@ void func_8011AAF4(GameObject *o)
         o->unk9E = 0;
         o->touchFlag = 0;
         o->unk9C = 1;
-        (*(u8*)&o->unkA0) = 0;
+        (*(u8*)&o->model) = 0;
         U8(o, 0xc8) = 0;
         U8(o, 0xc3) = 0;
         (*(u8*)&o->unkAC) = 0;
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->unkB0 = 0;
         o->unkB6 = 0;
         D_8009B698->w20 = 0;
@@ -1047,11 +1047,11 @@ void func_8011AAF4(GameObject *o)
             func_800EDEBC(o, 4);
             o->unk9D = 0;
             o->timer = 0;
-            o->unk84 = 0;
+            o->rotX = 0;
             v = 0x10;
             if (o->animFrame & 1) v = 0xf0;
-            o->unk88 = v;
-            o->unk8C = 0;
+            o->rotY = v;
+            o->rotZ = 0;
             o->subState = 2;
         } else if (U8(o, 0xc8)) {
             g->b8 = 0;
@@ -1078,8 +1078,8 @@ void func_8011ADC0(GameObject *o)
         func_800ED788(o);
         o->unk9D = 1;
         U8(o, 0xc8) = 0;
-        (*(u8*)&o->unkA0) = 0;
-        (*(u8*)((char*)&o->unkA0 + 1)) = 0;
+        (*(u8*)&o->model) = 0;
+        (*(u8*)((char*)&o->model + 1)) = 0;
         o->unkB0 = 0;
         o->unkB6 = 0;
         D_8009B698_GameObjectPtr->active = 2;
@@ -1117,13 +1117,13 @@ void func_8011ADC0(GameObject *o)
                 func_800EDEBC(o, 4);
                 o->unk9D = 0;
                 o->unk9C = 1;
-                o->unk84 = 0;
+                o->rotX = 0;
                 if (o->animFrame & 1)
                     v = 0xf0;
                 else
                     v = 0x10;
-                o->unk88 = v;
-                o->unk8C = 0;
+                o->rotY = v;
+                o->rotZ = 0;
                 o->subState = 2;
                 o->step = 2;
             }
@@ -1143,10 +1143,10 @@ void func_8011ADC0(GameObject *o)
 
 void func_8011AFCC(GameObject *o)
 {
-    s32 a = (D_8009E454_GameObjectPtr->unk8C + 0x400) & 0xfff;
+    s32 a = (D_8009E454_GameObjectPtr->rotZ + 0x400) & 0xfff;
     s32 x = rcos(a) * o->unkBA >> 12;
     s32 y = rsin(a) * o->unkBA;
-    o->h->p.whole = o->unkB8 + (D_8009E454_GameObjectPtr->h->p.whole + x) + D_8009E454_GameObjectPtr->unk30;
+    o->h->p.whole = o->unkB8 + (D_8009E454_GameObjectPtr->h->p.whole + x) + D_8009E454_GameObjectPtr->localX;
     o->y.p.whole = D_8009E454_GameObjectPtr->y.p.whole + (y >> 12);
 }
 
@@ -1167,15 +1167,15 @@ void func_8011B07C(GameObject *o)
         o->velV = 0;
         o->velX = 0;
         o->velY = 0;
-        if ((*(GameObject **)&D_8009E454)->unk94) {
-            e = (*(GameObject **)&D_8009E454)->unk94;
-            if (!((GameObject *)e)->unk94) {
+        if ((*(GameObject **)&D_8009E454)->child) {
+            e = (*(GameObject **)&D_8009E454)->child;
+            if (!((GameObject *)e)->child) {
                 ((GameObject *)e)->active = 1;
             } else {
             loop:
                 ((GameObject *)e)->active = 3;
-                e = ((GameObject *)e)->unk94;
-                if (((GameObject *)e)->unk94) goto loop;
+                e = ((GameObject *)e)->child;
+                if (((GameObject *)e)->child) goto loop;
                 ((GameObject *)e)->active = 1;
             }
         }
@@ -1269,13 +1269,13 @@ void func_8011BA78(O_1BA78 *o)
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8011BD20);
 
 #define SETW(o, a)                                                   \
-    o->unkB8 = rcos(a) * (D_8009E454_GameObjectPtr->hitOffsetX - 12) >> 12;               \
-    o->unkBA = -(rsin(a) * (D_8009E454_GameObjectPtr->hitOffsetX - 12)) >> 12
+    o->unkB8 = rcos(a) * (D_8009E454_GameObjectPtr->hitboxX - 12) >> 12;               \
+    o->unkBA = -(rsin(a) * (D_8009E454_GameObjectPtr->hitboxX - 12)) >> 12
 
 s16 func_8011BD20(GameObject *o)
 {
     GameObject *p = D_8009E454_GameObjectPtr;
-    s16 a = p->unk30;
+    s16 a = p->localX;
     s16 b = (a + 0x800) & 0xfff;
     s16 c = b;
     s16 r = 0;
@@ -1304,12 +1304,12 @@ s16 func_8011BD20(GameObject *o)
         SETW(o, a);
         break;
     case 2:
-        if (p->subtype == 3)
+        if (p->id == 3)
             a = a & 0xfff;
         else
             a = (a + 0x400) & 0xfff;
         SETW(o, a);
-        if (D_8009E454_GameObjectPtr->subtype == 3) f = c < 0xa01;
+        if (D_8009E454_GameObjectPtr->id == 3) f = c < 0xa01;
         else f = c < 0xe01;
         if (!f) {
             o->touchFlag = 1;
@@ -1405,15 +1405,15 @@ INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8011DE38);
 s32 func_8011E2B8(GameObject *a, GameObject *b)
 {
     if (!(D_8009C608.purifiedAreas & 0x40)) return 0;
-    switch (b->subtype) {
+    switch (b->id) {
     case 0:
-        return func_8011DCB0(a, b, 0, b->unk30);
+        return func_8011DCB0(a, b, 0, b->localX);
     case 1:
     case 2:
-        if (func_8011DCB0(a, b, 1, b->unk30)) return 1;
-        return func_8011DCB0(a, b, 2, (b->unk30 + 0x400) & 0xfff);
+        if (func_8011DCB0(a, b, 1, b->localX)) return 1;
+        return func_8011DCB0(a, b, 2, (b->localX + 0x400) & 0xfff);
     default:
-        return func_8011DCB0(a, b, 2, b->unk30);
+        return func_8011DCB0(a, b, 2, b->localX);
     }
 }
 
@@ -1437,11 +1437,11 @@ s32 func_8011E37C(GameObject *a, GameObject *b, u8 k, s32 ang)
 
     if ((u16)(a->d->p.whole - b->d->p.whole + 0x2d) >= 0x5b) return 0;
     dx = a->h->p.whole - b->h->p.whole;
-    ac = b->hitOffsetX + dx;
-    if (b->hitWidth < (u16)ac) return 0;
+    ac = b->hitboxX + dx;
+    if (b->hitboxW < (u16)ac) return 0;
     dy = a->y.p.whole - b->y.p.whole;
-    as = b->hitOffsetX + dy;
-    if (b->hitWidth < (u16)as) return 0;
+    as = b->hitboxX + dy;
+    if (b->hitboxW < (u16)as) return 0;
     switch (k) {
     case 1:
     case 2:
@@ -1453,8 +1453,8 @@ s32 func_8011E37C(GameObject *a, GameObject *b, u8 k, s32 ang)
         }
         if ((u32)(((s16)(ang - ac) & 0xfff) - 0x600) > 0x700) return 0;
     case 0:
-        c = ((u32)(rcos(ang) * b->hitOffsetX)) >> 12;
-        s = ((u32)(rsin(ang) * b->hitOffsetX)) >> 12;
+        c = ((u32)(rcos(ang) * b->hitboxX)) >> 12;
+        s = ((u32)(rsin(ang) * b->hitboxX)) >> 12;
         break;
     }
     ac = c;
@@ -1467,21 +1467,21 @@ s32 func_8011E37C(GameObject *a, GameObject *b, u8 k, s32 ang)
     switch (kind) {
     case 0:
         if (ac < sabs_1E37C(dx)) return 0;
-        as = (a->y.p.whole - (b->y.p.whole - dx * s / c)) + 6; as = a->hitOffsetY + as;
-        if ((u16)as > a->hitHeight + 0xc) return 0;
+        as = (a->y.p.whole - (b->y.p.whole - dx * s / c)) + 6; as = a->hitboxY + as;
+        if ((u16)as > a->hitboxH + 0xc) return 0;
         break;
     case 1:
         if (as < sabs_1E37C(dy)) return 0;
-        ac = (a->h->p.whole - (b->h->p.whole - dy * c / s)) + 6; ac = a->hitOffsetX + ac;
-        if ((u16)ac > a->hitWidth + 0xc) return 0;
+        ac = (a->h->p.whole - (b->h->p.whole - dy * c / s)) + 6; ac = a->hitboxX + ac;
+        if ((u16)ac > a->hitboxW + 0xc) return 0;
         break;
     case 2:
-        as = (a->y.p.whole - b->y.p.whole) + 6; as = a->hitOffsetY + as;
-        if ((u16)as > a->hitHeight + 0xc) return 0;
+        as = (a->y.p.whole - b->y.p.whole) + 6; as = a->hitboxY + as;
+        if ((u16)as > a->hitboxH + 0xc) return 0;
         break;
     case 3:
-        ac = (a->h->p.whole - b->h->p.whole) + 6; ac = a->hitOffsetX + ac;
-        if ((u16)ac > a->hitWidth + 0xc) return 0;
+        ac = (a->h->p.whole - b->h->p.whole) + 6; ac = a->hitboxX + ac;
+        if ((u16)ac > a->hitboxW + 0xc) return 0;
         break;
     }
     { register s32 t asm("$2") = ang >> 4; d0 = t & 0xff; }
@@ -1552,7 +1552,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
     s32 dy, dd;
     u16 u;
 
-    if (p->subtype == 0) {
+    if (p->id == 0) {
         if (!pushOutOfBoxX(o, p)) return;
         if (o->active & 2) return;
         if (SCRATCHPAD.unk1A4) return;
@@ -1560,16 +1560,16 @@ void func_8011FC7C(GameObject *o, GameObject *p)
     }
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
         return;
-    w = p->hitOffsetX + o->hitOffsetX;
+    w = p->hitboxX + o->hitboxX;
     t = w;
     d = o->h->p.whole - p->h->p.whole;
-    e0 = p->hitWidth; e1 = o->hitWidth;
+    e0 = p->hitboxW; e1 = o->hitboxW;
     if ((u16)(d + w) > e0 + e1)
         return;
     dd = (u16)o->y.p.whole - (u16)p->y.p.whole;
-    u = dd + (p->hitOffsetY + o->hitOffsetY);
+    u = dd + (p->hitboxY + o->hitboxY);
     dy = dd;
-    if (u > o->hitHeight + p->hitHeight)
+    if (u > o->hitboxH + p->hitboxH)
         return;
     sx = d;
     c = t;
@@ -1577,7 +1577,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
         d = -d;
         t = -t;
     } else {
-        t = (e0 - p->hitOffsetX) + (e1 - o->hitOffsetX);
+        t = (e0 - p->hitboxX) + (e1 - o->hitboxX);
         c = t;
     }
     if ((u16)(c - d) < 5) {
@@ -1588,15 +1588,15 @@ void func_8011FC7C(GameObject *o, GameObject *p)
     }
     if ((s16)dy <= 0) {
         if (*(u8 *)&o->unkAC == 2) {
-            s16 a = p->hitOffsetY, b = p->y.p.whole, c = o->hitOffsetY;
+            s16 a = p->hitboxY, b = p->y.p.whole, c = o->hitboxY;
             o->y.p.frac = 0;
             o->touchFlag = 1;
             o->y.p.whole = b - (a + c);
         } else if (!(o->active & 2)) {
             if (p->unk6A == 0) goto kill;
             if (SCRATCHPAD.unk1A4 == 0) {
-                GameObject *a = (GameObject *)p->unk90;
-                GameObject *b = (GameObject *)p->unk94;
+                GameObject *a = (GameObject *)p->parent;
+                GameObject *b = (GameObject *)p->child;
                 p->unk6A = 0;
                 p->touchFlag = 1;
                 a->touchFlag = 1;
@@ -1611,7 +1611,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
                 decreaseObjectTimer(o, 4);
             }
         } else {
-            s16 a = p->hitOffsetY, b = p->y.p.whole, c = o->hitOffsetY;
+            s16 a = p->hitboxY, b = p->y.p.whole, c = o->hitboxY;
             u8 t;
             o->touchFlag = 1;
             t = o->unkA6;
@@ -1629,7 +1629,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
         }
         return;
     }
-    o->y.p.whole = p->y.p.whole + ((p->hitHeight - p->hitOffsetY) + (o->hitHeight - o->hitOffsetY));
+    o->y.p.whole = p->y.p.whole + ((p->hitboxH - p->hitboxY) + (o->hitboxH - o->hitboxY));
     if (o->velY < 0)
         o->velY = 0;
     if (o->active & 2) return;
@@ -1666,18 +1666,18 @@ void func_8011FFA8(GameObject *o, GameObject *e)
 
     if ((u16)(o->d->p.whole - e->d->p.whole + 0x2d) >= 0x5b) return;
     { u16 t1 = o->h->p.whole, t2 = e->h->p.whole; asm("" ::: "$2"); dx = t1 - t2; }
-    if ((u16)(e->hitOffsetX + dx) >= e->hitWidth) return;
+    if ((u16)(e->hitboxX + dx) >= e->hitboxW) return;
     { u16 t1 = o->y.p.whole, t2 = e->y.p.whole; asm("" ::: "$2"); dy = t1 - t2; }
-    if ((u16)(e->hitOffsetY + dy) >= e->hitHeight) return;
+    if ((u16)(e->hitboxY + dy) >= e->hitboxH) return;
     x = dx;
     y = dy;
     r = SquareRoot0(x * x + y * y);
 
     if (y >= -7) r += 2;
-    if (r >= e->hitOffsetX) return;
+    if (r >= e->hitboxX) return;
     a = ratan2(y, x);
-    o->y.raw = e->y.raw + ((rsin((s16)a) * e->hitOffsetX) << 4);
-    o->h->raw = e->h->raw + ((rcos((s16)a) * e->hitOffsetX) << 4);
+    o->y.raw = e->y.raw + ((rsin((s16)a) * e->hitboxX) << 4);
+    o->h->raw = e->h->raw + ((rcos((s16)a) * e->hitboxX) << 4);
                     e->touchFlag = 1;
                     e->velX = dx;
                     e->velY = dy;
@@ -1819,11 +1819,11 @@ void func_80122650(GameObject *o)
 {
     switch (o->step) {
     case 0:
-        *(s8 *)&o->unkF = -7;
+        *(s8 *)&o->priority = -7;
         o->anim = D_80131144;
         readAnimFrameCount(o);
         o->step++;
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->category |= 0x80;
         break;
     case 1:
@@ -1833,7 +1833,7 @@ void func_80122650(GameObject *o)
             D_8009BC98.unk0E = 1;
             o->animFrame = PLAYER_GameObject.animFrame & 1;
             func_800EDDDC(&PLAYER_GameObject, 0xd, 0);
-            PLAYER_GameObject.unk8C = 0;
+            PLAYER_GameObject.rotZ = 0;
             PLAYER_GameObject.h->p.whole = o->h->p.whole;
             o->y.p.whole = PLAYER_GameObject.y.p.whole + 8;
             setEventStarted(EVENT_LEAFBUTTERFLIES, 0, 0);
@@ -1857,7 +1857,7 @@ void func_80122650(GameObject *o)
 
 void func_801227E8(GameObject *o)
 {
-    GameObject *p = (GameObject *)o->unk90;
+    GameObject *p = (GameObject *)o->parent;
     s16 t;
     s16 r;
     s32 u;
@@ -1865,12 +1865,12 @@ void func_801227E8(GameObject *o)
     switch (o->step) {
     case 0:
         o->animFrame = PLAYER.obj.animFrame & 1;
-        t = p->h->p.whole - p->hitOffsetX;
+        t = p->h->p.whole - p->hitboxX;
         if (o->h->p.whole < t) {
             o->h->p.whole = t;
             o->animFrame = 0;
         }
-        t = p->h->p.whole + p->hitOffsetX;
+        t = p->h->p.whole + p->hitboxX;
         if (t < o->h->p.whole) {
             o->h->p.whole = t;
             o->animFrame = 1;
@@ -1885,26 +1885,26 @@ void func_801227E8(GameObject *o)
         o->step++;
     case 1:
         tickAnimation(o);
-        t = o->h->p.whole - (p->h->p.whole - p->hitOffsetX);
-        if (p->hitWidth < (u16)t)
+        t = o->h->p.whole - (p->h->p.whole - p->hitboxX);
+        if (p->hitboxW < (u16)t)
             o->velH = -o->velH;
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         o->velX += o->velH;
         o->velY -= 0x10;
-        o->unk84 = (o->unk84 + 2) & 0xff;
-        t = p->y.p.whole - p->hitOffsetY;
+        o->rotX = (o->rotX + 2) & 0xff;
+        t = p->y.p.whole - p->hitboxY;
         if (o->y.p.whole < t) {
             D_8009C608.playerEquips = 0;
             *(volatile u8 *)&D_8009BC98.unk12 = 0;
             ((u8*)&D_8009BC98.unk0F)[0] = 0;
             *(volatile u8 *)&D_8009BC98.unk12 = 0;
             o->y.p.whole = t;
-            o->unk30 = o->h->raw - p->h->raw;
+            o->localX = o->h->raw - p->h->raw;
             u = o->y.raw - p->y.raw;
             o->subState = 4;
             o->step = 0;
-            o->unk34 = u;
+            o->localY = u;
         }
         break;
     }
@@ -1940,7 +1940,7 @@ s32 func_801233D8(GameObject *o)
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_801234AC);
 void func_801234AC(GameObject *o)
 {
-    switch (o->subtype) {
+    switch (o->id) {
     case 0:
         switch (o->velX & 3) {
         case 0:
@@ -1995,7 +1995,7 @@ static __inline__ s32 turn_23D20(GameObject *o)
     u8 d;
 
     a = angleFromDelta(D_1F80016A[0] - o->h->p.whole, SCRATCHPAD.unk168[1].p.whole - o->y.p.whole);
-    c = o->unk38;
+    c = o->localZ;
     a -= c;
     d = a;
 
@@ -2005,8 +2005,8 @@ static __inline__ s32 turn_23D20(GameObject *o)
     } else if (d < 0xff) {
         a = 0xfe;
     }
-    o->unk38 = c + (a & 0xff);
-    o->unk38 = *(u8 *)&o->unk38;
+    o->localZ = c + (a & 0xff);
+    o->localZ = *(u8 *)&o->localZ;
     return 1;
 }
 
@@ -2032,13 +2032,13 @@ void func_80123D20(GameObject *o)
         tickAnimation(o);
         {
             s16 sp = o->velH;
-            s32 c = sp * COS_TABLE[o->unk38];
-            s32 s = sp * NEG_SIN_TABLE[o->unk38];
+            s32 c = sp * COS_TABLE[o->localZ];
+            s32 s = sp * NEG_SIN_TABLE[o->localZ];
             o->h->raw += (s16)(c >> 12) << 8;
             o->y.raw += (s16)(s >> 12) << 8;
         }
         turn_23D20(o);
-        if (func_801231EC(o, o->unk38)) {
+        if (func_801231EC(o, o->localZ)) {
             o->unkAC = 2;
             o->anim = (*(void ***)&o->unkA8)[2];
             readAnimFrameCount(o);
@@ -2076,7 +2076,7 @@ void func_80123D20(GameObject *o)
             o->timer = 0x10;
             o->unkAC = 1;
             o->step++;
-            o->unk38 = (o->unk38 + 0x80) & 0xff;
+            o->localZ = (o->localZ + 0x80) & 0xff;
             o->anim = (*(void ***)&o->unkA8)[1];
             readAnimFrameCount(o);
         }
@@ -2089,12 +2089,12 @@ void func_80123D20(GameObject *o)
         }
         {
             s16 sp = o->velH;
-            s32 c = sp * COS_TABLE[o->unk38];
-            s32 s = sp * NEG_SIN_TABLE[o->unk38];
+            s32 c = sp * COS_TABLE[o->localZ];
+            s32 s = sp * NEG_SIN_TABLE[o->localZ];
             o->h->raw += (s16)(c >> 12) << 8;
             o->y.raw += (s16)(s >> 12) << 8;
         }
-        func_801231EC(o, o->unk38);
+        func_801231EC(o, o->localZ);
         break;
     }
 }
@@ -2108,12 +2108,12 @@ void func_8012422C(GameObject *o)
     switch (o->step) {
     case 0:
         o->active = 2;
-        o->unkB = 1;
-        o->unkF = 4;
+        o->otMode = 1;
+        o->priority = 4;
         o->velV = -0x400;
         o->movetab = ((char *)&D_8007722C);
         o->unkAC = 4;
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->animFrame &= 1;
         o->step++;
         o->anim = DA8(o)[4];
@@ -2126,8 +2126,8 @@ void func_8012422C(GameObject *o)
         o->y.raw += o->velV << 8;
         break;
     }
-    if (o->animFrame & 1) o->unk8C = (o->unk8C + 0x14) & 0xff;
-    else o->unk8C = (o->unk8C - 0x14) & 0xff;
+    if (o->animFrame & 1) o->rotZ = (o->rotZ + 0x14) & 0xff;
+    else o->rotZ = (o->rotZ - 0x14) & 0xff;
 }
 #undef DA8
 
@@ -2142,21 +2142,21 @@ extern void advanceAnimFrame(GameObject *, s32);
 
 void func_80124E00(GameObject *o)
 {
-    o->hitOffsetX = D_8012E6D0[o->subtype].b0;
-    o->hitWidth = D_8012E6D0[o->subtype].b1;
-    o->hitOffsetY = D_8012E6D0[o->subtype].b2;
-    o->hitHeight = D_8012E6D0[o->subtype].b3;
-    o->tpage = D_8012E6D0[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_8012E6D0[o->subtype].w6];
+    o->hitboxX = D_8012E6D0[o->id].b0;
+    o->hitboxW = D_8012E6D0[o->id].b1;
+    o->hitboxY = D_8012E6D0[o->id].b2;
+    o->hitboxH = D_8012E6D0[o->id].b3;
+    o->tpage = D_8012E6D0[o->id].w4;
+    o->spriteBank = SPR_DATA[D_8012E6D0[o->id].w6];
     readAnimFrameCount(o);
-    o->anim = D_8012E6D0[o->subtype].anim[0];
+    o->anim = D_8012E6D0[o->id].anim[0];
     advanceAnimFrame(o, 0);
-    o->unkA = 2;
-    o->unk8C = 0;
-    o->unkD = 0;
+    o->drawType = 2;
+    o->rotZ = 0;
+    o->drawFlags = 0;
     o->unk68 = 0;
     o->category |= 0x80;
-    o->unkF = PLAYER.obj.unkF + 1;
+    o->priority = PLAYER.obj.priority + 1;
     o->state++;
 }
 
@@ -2176,7 +2176,7 @@ void func_80124F70(GameObject *o)
         break;
     case 1:
         cullAndQueueDraw(o);
-        if (o->unkC == 0x28) {
+        if (o->param == 0x28) {
             switch (o->subState) {
             case 0:
                 if (o->unk68 || chk_24F70()) o->subState++;
@@ -2203,7 +2203,7 @@ extern AT_250CC D_8012E6E4[];
 
 void func_801250CC(GameObject *o, s16 n, s16 k)
 {
-    o->anim = D_8012E6E4[o->subtype].anims[n];
+    o->anim = D_8012E6E4[o->id].anims[n];
     advanceAnimFrame(o, k);
 }
 
@@ -2295,20 +2295,20 @@ extern ObjSetupHitbox D_8012E6DC[];
 
 void func_80126268(GameObject *o)
 {
-    o->hitOffsetX = D_8012E6DC[o->subtype].b0;
-    o->hitWidth = D_8012E6DC[o->subtype].b1;
-    o->hitOffsetY = D_8012E6DC[o->subtype].b2;
-    o->hitHeight = D_8012E6DC[o->subtype].b3;
-    o->tpage = D_8012E6DC[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_8012E6DC[o->subtype].w6];
-    o->anim = D_8012E6DC[o->subtype].anim[0];
+    o->hitboxX = D_8012E6DC[o->id].b0;
+    o->hitboxW = D_8012E6DC[o->id].b1;
+    o->hitboxY = D_8012E6DC[o->id].b2;
+    o->hitboxH = D_8012E6DC[o->id].b3;
+    o->tpage = D_8012E6DC[o->id].w4;
+    o->spriteBank = SPR_DATA[D_8012E6DC[o->id].w6];
+    o->anim = D_8012E6DC[o->id].anim[0];
     readAnimFrameCount(o);
-    o->unkA = 2;
-    o->unk8C = 0;
-    o->unkD = 0;
+    o->drawType = 2;
+    o->rotZ = 0;
+    o->drawFlags = 0;
     o->unk68 = 0;
     o->category |= 0x80;
-    o->unkF = PLAYER.obj.unkF + 10;
+    o->priority = PLAYER.obj.priority + 10;
     o->state++;
 }
 
@@ -2358,23 +2358,23 @@ void func_801264F8(GameObject *o, s32 n)
     if (n >= 2) {
         o->unkA7 += 2;
         s = NEG_SIN_TABLE[o->unkA7] << 6;
-        PLAYER.obj.y.raw = o->unk34 + s;
+        PLAYER.obj.y.raw = o->localY + s;
         if (n == 3) {
             D_800A6078->raw += 0x8000;
-            if (o->unk30 + 0x40 < D_800A6078->p.whole) D_800A6078->p.whole = o->unk30 + 0x40;
+            if (o->localX + 0x40 < D_800A6078->p.whole) D_800A6078->p.whole = o->localX + 0x40;
         } else if (n == 4) {
             D_800A6078->raw += -0x10000;
-            if (D_800A6078->p.whole < o->unk30 - 0x20) D_800A6078->p.whole = o->unk30 - 0x20;
+            if (D_800A6078->p.whole < o->localX - 0x20) D_800A6078->p.whole = o->localX - 0x20;
         } else {
-            if (D_800A6078->p.whole != o->unk30) {
-                if (o->unk30 < D_800A6078->p.whole) D_800A6078->raw -= 0x8000;
+            if (D_800A6078->p.whole != o->localX) {
+                if (o->localX < D_800A6078->p.whole) D_800A6078->raw -= 0x8000;
                 else D_800A6078->raw += 0x8000;
             }
         }
     } else {
         o->unkA7 += 8;
         s = NEG_SIN_TABLE[o->unkA7] << 7;
-        PLAYER.obj.y.raw = o->unk34 + s;
+        PLAYER.obj.y.raw = o->localY + s;
         if (n && !(SCRATCHPAD.unk1F8 & 0x1f)) playSFX(0xe);
     }
 }
@@ -2415,7 +2415,7 @@ void func_80126E98(GameObject *o)
             D_800A539C = 5;
             D_800A539D = 0;
             D_800A539E = 0;
-            o->unk90 = showMessageBoxDirect(2, 0x14, &o->x);
+            o->parent = showMessageBoxDirect(2, 0x14, &o->x);
             o->animFrame = o->unk68 & 1;
             setAnim_26E98(o, ANIMS(o)[5]);
             break;
@@ -2432,7 +2432,7 @@ void func_80126E98(GameObject *o)
             D_800A539D = 0;
             D_800A539E = 0;
             (*(s16*)&PLAYER.obj.animFrame) = 1 - o->animFrame;
-            o->unk90 = showMessageBoxDirect(2, 0x16, &o->x);
+            o->parent = showMessageBoxDirect(2, 0x16, &o->x);
             setAnim_26E98(o, ANIMS(o)[5]);
         } else if (D_8009BC98.unk11 == 0x8b) {
             *k = 0;
@@ -2446,7 +2446,7 @@ void func_80126E98(GameObject *o)
         break;
     case 2:
         tickAnimation(o);
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2) break;
         p->state = 3;
         D_8009BC98.unk0F = 0;
@@ -2561,17 +2561,17 @@ void func_80128098(GameObject *o)
         o->step++;
         if (*(u16 *)&o->unkB4) {
             o->unkAC = 0x1d;
-            o->hitOffsetX = D_8012E768;
-            o->hitWidth = D_8012E769;
-            o->hitOffsetY = D_8012E76A;
-            o->hitHeight = D_8012E76B;
+            o->hitboxX = D_8012E768;
+            o->hitboxW = D_8012E769;
+            o->hitboxY = D_8012E76A;
+            o->hitboxH = D_8012E76B;
             setanim_28098(o, D_80131708[0]);
         } else {
             o->unkAC = 0x13;
-            o->hitOffsetX = D_8012E740;
-            o->hitWidth = D_8012E741;
-            o->hitOffsetY = D_8012E742;
-            o->hitHeight = D_8012E743;
+            o->hitboxX = D_8012E740;
+            o->hitboxW = D_8012E741;
+            o->hitboxY = D_8012E742;
+            o->hitboxH = D_8012E743;
             setanim_28098(o, D_801316E0[0]);
         }
         break;
@@ -2599,17 +2599,17 @@ void func_80128098(GameObject *o)
         o->step = 2;
         if (*(u16 *)&o->unkB4) {
             o->unkAC = 0x1d;
-            o->hitOffsetX = D_8012E768;
-            o->hitWidth = D_8012E769;
-            o->hitOffsetY = D_8012E76A;
-            o->hitHeight = D_8012E76B;
+            o->hitboxX = D_8012E768;
+            o->hitboxW = D_8012E769;
+            o->hitboxY = D_8012E76A;
+            o->hitboxH = D_8012E76B;
             setanim_28098(o, D_80131708[0]);
         } else {
             o->unkAC = 0x13;
-            o->hitOffsetX = D_8012E740;
-            o->hitWidth = D_8012E741;
-            o->hitOffsetY = D_8012E742;
-            o->hitHeight = D_8012E743;
+            o->hitboxX = D_8012E740;
+            o->hitboxW = D_8012E741;
+            o->hitboxY = D_8012E742;
+            o->hitboxH = D_8012E743;
             setanim_28098(o, D_801316E0[0]);
         }
         break;
@@ -2632,10 +2632,10 @@ void func_80128368(GameObject *o)
             b2 = ((u8 *)&D_8012E768)[2];
             b3 = ((u8 *)&D_8012E768)[3];
             o->unkAC = 0x1d;
-            o->hitOffsetX = b0;
-            o->hitWidth = b1;
-            o->hitOffsetY = b2;
-            o->hitHeight = b3;
+            o->hitboxX = b0;
+            o->hitboxW = b1;
+            o->hitboxY = b2;
+            o->hitboxH = b3;
             o->anim = D_80131708[0];
             readAnimFrameCount(o);
         } else {
@@ -2644,10 +2644,10 @@ void func_80128368(GameObject *o)
             b2 = ((u8 *)&D_8012E740)[2];
             b3 = ((u8 *)&D_8012E740)[3];
             o->unkAC = 0x13;
-            o->hitOffsetX = b0;
-            o->hitWidth = b1;
-            o->hitOffsetY = b2;
-            o->hitHeight = b3;
+            o->hitboxX = b0;
+            o->hitboxW = b1;
+            o->hitboxY = b2;
+            o->hitboxH = b3;
             o->anim = D_801316E0[0];
             readAnimFrameCount(o);
         }
@@ -2680,18 +2680,18 @@ void func_80129E04(GameObject *o)
     switch (o->step) {
     case 0:
         o->active = 2;
-        o->unkB = 1;
-        o->unkF = 4;
+        o->otMode = 1;
+        o->priority = 4;
         o->velV = -0x400;
         o->movetab = ((char *)&D_8007722C);
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->unkAC = 4;
         o->step++;
         o->animFrame &= 1;
-        o->hitOffsetX = D_8012E704;
-        o->hitWidth = D_8012E705;
-        o->hitOffsetY = D_8012E706;
-        o->hitHeight = D_8012E707;
+        o->hitboxX = D_8012E704;
+        o->hitboxW = D_8012E705;
+        o->hitboxY = D_8012E706;
+        o->hitboxH = D_8012E707;
         o->anim = D_801316A4[0];
         readAnimFrameCount(o);
         break;
@@ -2702,8 +2702,8 @@ void func_80129E04(GameObject *o)
         o->y.raw += o->velV << 8;
         break;
     }
-    if (o->animFrame & 1) o->unk8C = (o->unk8C + 0x14) & 0xff;
-    else o->unk8C = (o->unk8C - 0x14) & 0xff;
+    if (o->animFrame & 1) o->rotZ = (o->rotZ + 0x14) & 0xff;
+    else o->rotZ = (o->rotZ - 0x14) & 0xff;
 }
 
 INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_80129F68);
@@ -2716,15 +2716,15 @@ void func_8012AA08(GameObject *o)
     case 0:
         o->state++;
         o->tpage = 1;
-        o->unkD = 0;
-        o->unkA = 2;
+        o->drawFlags = 0;
+        o->drawType = 2;
         *(s32 *)((char *)o + 0x8c) = 0;
         o->unkAC = 0x23;
         o->spriteBank = D_1F8002D0_S32;
-        o->hitOffsetX = D_8012E780;
-        o->hitWidth = D_8012E781;
-        o->hitOffsetY = D_8012E782;
-        o->hitHeight = D_8012E783;
+        o->hitboxX = D_8012E780;
+        o->hitboxW = D_8012E781;
+        o->hitboxY = D_8012E782;
+        o->hitboxH = D_8012E783;
         o->anim = D_80131720[0];
         readAnimFrameCount(o);
         break;
@@ -2732,8 +2732,8 @@ void func_8012AA08(GameObject *o)
         if (cullAndQueueDraw(o)) {
             switch (o->subState) {
             case 0:
-                o->unkB = 1;
-                o->unkF = 4;
+                o->otMode = 1;
+                o->priority = 4;
                 o->velV = -0x400;
                 o->movetab = ((char *)&D_8007722C);
                 o->subState++;
@@ -2745,8 +2745,8 @@ void func_8012AA08(GameObject *o)
                 o->y.raw += o->velV << 8;
                 break;
             }
-            if (o->animFrame & 1) o->unk8C = (o->unk8C + 0x14) & 0xff;
-            else o->unk8C = (o->unk8C - 0x14) & 0xff;
+            if (o->animFrame & 1) o->rotZ = (o->rotZ + 0x14) & 0xff;
+            else o->rotZ = (o->rotZ - 0x14) & 0xff;
         } else {
             o->state = 3;
         }
@@ -2836,13 +2836,13 @@ void func_8012C1A0(GameObject *o)
         o->state++;
         o->objectIndex = nextRandom() & 1;
         o->active = 3;
-        o->hitOffsetX = 0xa;
-        o->hitWidth = 0x14;
-        o->hitOffsetY = 0x20;
-        o->hitHeight = 0x3a;
+        o->hitboxX = 0xa;
+        o->hitboxW = 0x14;
+        o->hitboxY = 0x20;
+        o->hitboxH = 0x3a;
         o->tpage = 1;
         o->unkAC = 0x1e;
-        o->unkD = 0;
+        o->drawFlags = 0;
         o->spriteBank = SCRATCHPAD.sprData[2];
         o->anim = D_80131694[o->unkAC];
         readAnimFrameCount(o);
@@ -2896,14 +2896,14 @@ void func_8012C2EC(GameObject *o)
                 if (e) {
                     e->type = 0x3a;
                     e->active = 2;
-                    e->unkC = i;
-                    e->subtype = 3;
-                    e->unkA = 2;
-                    e->unk8C = 0;
+                    e->param = i;
+                    e->id = 3;
+                    e->drawType = 2;
+                    e->rotZ = 0;
                     e->x.p.whole = D_1F80016A[0] + p->x;
                     e->y.p.whole = ((s16*)((char*)&SCRATCHPAD.unk168[1].raw + 2))[0] + p->y;
                     e->z.p.whole = D_1F800172[0] + p->z;
-                    e->unk74 = D_1F80016A_S16 + p->x / 2;
+                    e->scaleX = D_1F80016A_S16 + p->x / 2;
                     p++;
                 }
             }
@@ -2923,7 +2923,7 @@ void func_8012C2EC(GameObject *o)
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012C4DC);
 void func_8012C4DC(GameObject *o)
 {
-    if (o->subtype == 0 && GAME.selectedSection == 0) func_8012C2EC(o);
+    if (o->id == 0 && GAME.selectedSection == 0) func_8012C2EC(o);
 }
 
 // INCLUDE_ASM("overlays/x10/nonmatchings/x10/x10", func_8012C520);
@@ -3001,12 +3001,12 @@ void func_8012C998(GameObject *o)
     switch (o->step) {
     case 0:
         if (PLAYER_GameObject.y.p.whole >= -0xff && PLAYER_GameObject.h->p.whole < 0xcb) {
-            *(s8 *)&PLAYER_GameObject.unkF = 8;
+            *(s8 *)&PLAYER_GameObject.priority = 8;
             D_8009BC98.unk0F = 1;
             PLAYER_GameObject.y.p.whole = -0xe8;
             func_800EDDDC(&PLAYER_GameObject, 0x1e, 0);
             PLAYER_GameObject.state = 5;
-            PLAYER_GameObject.unk8C = 0;
+            PLAYER_GameObject.rotZ = 0;
             PLAYER_GameObject.subState = 0x65;
             PLAYER_GameObject.step = 0;
             o->step++;
@@ -3023,7 +3023,7 @@ void func_8012C998(GameObject *o)
         PLAYER_GameObject.h->raw += -0x20000;
         PLAYER_GameObject.y.raw += PLAYER_GameObject.velY << 8;
         PLAYER_GameObject.velY += 0x40;
-        PLAYER_GameObject.unk8C++;
+        PLAYER_GameObject.rotZ++;
         if (PLAYER_GameObject.y.p.whole >= -0x63) o->step = 9;
         break;
     case 9:
@@ -3080,20 +3080,20 @@ extern s32 SPR_DATA[];
 
 void func_8012D1C0(GameObject *o)
 {
-    o->hitOffsetX = D_8012E850[o->subtype].b0;
-    o->hitWidth = D_8012E850[o->subtype].b1;
-    o->hitOffsetY = D_8012E850[o->subtype].b2;
-    o->hitHeight = D_8012E850[o->subtype].b3;
-    o->tpage = D_8012E850[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_8012E850[o->subtype].w6];
-    o->anim = D_8012E850[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_8012E850[o->id].b0;
+    o->hitboxW = D_8012E850[o->id].b1;
+    o->hitboxY = D_8012E850[o->id].b2;
+    o->hitboxH = D_8012E850[o->id].b3;
+    o->tpage = D_8012E850[o->id].w4;
+    o->spriteBank = SPR_DATA[D_8012E850[o->id].w6];
+    o->anim = D_8012E850[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unkD = 1;
+    o->drawFlags = 1;
     o->clut = 0x780a;
     o->active = 3;
-    o->unk8C = 0;
-    o->unkF = 0;
-    o->unkA = 0;
+    o->rotZ = 0;
+    o->priority = 0;
+    o->drawType = 0;
     o->subState = 0;
     o->category |= 0x80;
     o->state++;
@@ -3158,10 +3158,10 @@ void func_8012D434(GameObject *o)
             if (p) {
                 p->active = 1;
                 p->type = 0x32;
-                p->unkA = 0x10;
+                p->drawType = 0x10;
                 p->animFrame = e->frame;
-                p->subtype = e->subtype;
-                p->unkC = e->b0c;
+                p->id = e->subtype;
+                p->param = e->b0c;
                 p->x.p.whole = e->x;
                 p->y.p.whole = e->y;
                 p->z.p.whole = e->z;
@@ -3171,21 +3171,21 @@ void func_8012D434(GameObject *o)
             if (p) {
                 p->active = 3;
                 p->type = 0x32;
-                p->unkA = 0;
+                p->drawType = 0;
                 p->animFrame = e->frame;
-                p->subtype = e->subtype;
-                p->unkC = e->b0c;
+                p->id = e->subtype;
+                p->param = e->b0c;
                 p->x.p.whole = e->x;
                 p->y.p.whole = e->y;
                 p->z.p.whole = e->z;
                 p->unkB4 = e->wb4;
                 p->unkB8 = e->wb8;
                 p->unkBA = e->wba;
-                p->unk74 = e->w74;
-                p->unk76 = e->w76;
-                p->unk78 = e->w78;
+                p->scaleX = e->w74;
+                p->scaleY = e->w76;
+                p->scaleZ = e->w78;
                 p->unk7A = e->w7a;
-                p->unk90 = (s32)o;
+                p->parent = (s32)o;
             }
         }
     }
@@ -3289,10 +3289,10 @@ void func_8012D870(GameObject *o)
             if (p) {
                 p->active = 1;
                 p->type = 0x32;
-                p->unkA = 0x10;
+                p->drawType = 0x10;
                 p->animFrame = e->frame;
-                p->subtype = e->subtype;
-                p->unkC = e->b0c;
+                p->id = e->subtype;
+                p->param = e->b0c;
                 p->x.p.whole = e->x;
                 p->y.p.whole = e->y;
                 p->z.p.whole = e->z;
@@ -3302,21 +3302,21 @@ void func_8012D870(GameObject *o)
             if (p) {
                 p->active = 3;
                 p->type = 0x32;
-                p->unkA = 0;
+                p->drawType = 0;
                 p->animFrame = e->frame;
-                p->subtype = e->subtype;
-                p->unkC = e->b0c;
+                p->id = e->subtype;
+                p->param = e->b0c;
                 p->x.p.whole = e->x;
                 p->y.p.whole = e->y;
                 p->z.p.whole = e->z;
                 p->unkB4 = e->wb4;
                 p->unkB8 = e->wb8;
                 p->unkBA = e->wba;
-                p->unk74 = e->w74;
-                p->unk76 = e->w76;
-                p->unk78 = e->w78;
+                p->scaleX = e->w74;
+                p->scaleY = e->w76;
+                p->scaleZ = e->w78;
                 p->unk7A = e->w7a;
-                p->unk90 = (s32)o;
+                p->parent = (s32)o;
             }
         }
     }
@@ -3407,7 +3407,7 @@ void func_8012DC38(GameObject *o)
     case 0xd:
         if (o->y.raw < p->y.p.whole) {
             p->y.p.whole = o->y.raw;
-            p->unk78 = o->y.raw;
+            p->scaleZ = o->y.raw;
             p->subState = 0x3d;
             p->step = 0;
         }
@@ -3443,7 +3443,7 @@ void func_8012DD00(GameObject *o)
                 { s32 y = o->y.raw;
                 (*(GameObject *)&PLAYER).subState = 0x3d;
                 (*(GameObject *)&PLAYER).step = 0;
-                (*(GameObject *)&PLAYER).unk78 = y; }
+                (*(GameObject *)&PLAYER).scaleZ = y; }
             }
             break;
         case 2:
@@ -3453,7 +3453,7 @@ void func_8012DD00(GameObject *o)
                 { s32 y = o->y.raw;
                 p->subState = 0x3d;
                 p->step = 0;
-                p->unk78 = y; }
+                p->scaleZ = y; }
             }
             break;
         }
@@ -3521,8 +3521,8 @@ void func_8012E138(GameObject *o)
         n->active = 3;
         n->type = 0x32;
         n->animFrame = D_8012E8B8.f;
-        n->subtype = D_8012E8B8.sub;
-        n->unkC = D_8012E8B8.c;
+        n->id = D_8012E8B8.sub;
+        n->param = D_8012E8B8.c;
         n->x.p.whole = D_8012E8B8.x;
         n->y.p.whole = D_8012E8B8.y;
         n->z.p.whole = D_8012E8B8.z;
@@ -3551,8 +3551,8 @@ void func_8012E200(GameObject *o)
             e->active = 3;
             e->type = 0x32;
             e->animFrame = (*(SP_2E200 *)&D_8012E8B8).af;
-            e->subtype = (*(SP_2E200 *)&D_8012E8B8).st;
-            e->unkC = (*(SP_2E200 *)&D_8012E8B8).c;
+            e->id = (*(SP_2E200 *)&D_8012E8B8).st;
+            e->param = (*(SP_2E200 *)&D_8012E8B8).c;
             e->x.p.whole = (*(SP_2E200 *)&D_8012E8B8).x;
             e->y.p.whole = (*(SP_2E200 *)&D_8012E8B8).y;
             e->z.p.whole = (*(SP_2E200 *)&D_8012E8B8).z;

@@ -34,7 +34,7 @@ void func_8011EC04(GameObject *o)
         break;
     case 3:
         if (tickAnimation(o)) {
-            E8_1EC04 *t = (E8_1EC04 *)o->unk94;
+            E8_1EC04 *t = (E8_1EC04 *)o->child;
             o->unk7++;
             t += o->unkAE;
             o->timer = t->c;

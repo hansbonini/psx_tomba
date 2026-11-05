@@ -72,7 +72,7 @@ void func_801387A4(GameObject *o)
         if (D_8009C068.unk721 >= 5) o->subState++;
         break;
     case 6:
-        switch (o->unkC) {
+        switch (o->param) {
         case 0:
             o->step = 0;
             o->subState++;
@@ -86,7 +86,7 @@ void func_801387A4(GameObject *o)
         }
         break;
     case 7:
-        if (o->unkC == 2) {
+        if (o->param == 2) {
             D_8009C068.unk721 = 6;
             D_8009BC98.unk10 = 0;
             D_8009BC98.unk0F = 0;
@@ -96,7 +96,7 @@ void func_801387A4(GameObject *o)
         o->subState++;
         break;
     case 8:
-        if (o->unkC) o->state = 3;
+        if (o->param) o->state = 3;
         else o->objectIndex = 1;
         break;
     }
@@ -109,10 +109,10 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_9", func_80138AA8);
 
 static __inline__ void setbox_38C4C(GameObject *o, s16 a, s16 b, s16 c, s16 d)
 {
-    o->hitOffsetX = a;
-    o->hitWidth = b;
-    o->hitOffsetY = c;
-    o->hitHeight = d;
+    o->hitboxX = a;
+    o->hitboxW = b;
+    o->hitboxY = c;
+    o->hitboxH = d;
 }
 
 void func_80138C4C(GameObject *o)
@@ -121,16 +121,16 @@ void func_80138C4C(GameObject *o)
     case 0:
         o->state++;
         o->active = 2;
-        *(s8 *)&o->unkF = -6;
+        *(s8 *)&o->priority = -6;
         setbox_38C4C(o, 8, 0x10, 8, 0x10);
         o->tpage = 5;
         o->unk98 = o->animFrame;
-        o->unkD = 0;
+        o->drawFlags = 0;
         o->spriteBank = SCRATCHPAD.sprData[10];
-        o->anim = D_8013EE08[o->unkAC = o->unkC];
+        o->anim = D_8013EE08[o->unkAC = o->param];
         o->objectIndex = 0;
         if (D_8009C068.event_1B != 0xff) break;
-        if (o->unkC) {
+        if (o->param) {
             o->state = 3;
             break;
         }
@@ -168,12 +168,12 @@ void func_80138DB8(GameObject *o)
             if (n) {
                 n->active = 1;
                 n->type = 0x16;
-                n->unkA = 2;
+                n->drawType = 2;
                 n->x.p.whole = 0x105b;
                 n->y.p.whole = -0x506;
                 n->animFrame = 0;
-                n->subtype = 0;
-                n->unkC = 0;
+                n->id = 0;
+                n->param = 0;
                 n->z.p.whole = 0x47a;
                 *(GameObject **)&o->category = n;
             }
@@ -287,7 +287,7 @@ void func_80138F88(GameObject *o)
         switch (o->step) {
         case 0:
             o->clut = 0x20;
-            e->unk8C = 0;
+            e->rotZ = 0;
             e->touchFlag = 0;
             e->velY = -0x300;
             e->velV = 0;
@@ -373,11 +373,11 @@ void func_80139410(GameObject *o)
             if (n) {
                 n->active = 1;
                 n->type = 0x16;
-                n->unkA = 2;
+                n->drawType = 2;
                 n->x.p.whole = 0xacd;
                 n->animFrame = 0;
-                n->subtype = 0;
-                n->unkC = 0;
+                n->id = 0;
+                n->param = 0;
                 n->y.p.whole = -0x10a;
                 n->z.p.whole = 0;
                 *(GameObject **)&o->category = n;
@@ -386,15 +386,15 @@ void func_80139410(GameObject *o)
             if (m) {
                 m->active = 1;
                 m->type = 0x17;
-                m->unkA = 2;
+                m->drawType = 2;
                 m->x.p.whole = 0x9a8;
                 m->animFrame = 0;
-                m->subtype = 0;
-                m->unkC = 0;
+                m->id = 0;
+                m->param = 0;
                 m->y.p.whole = -0x200;
                 m->z.p.whole = 0;
                 *(GameObject **)&o->timer = m;
-                m->unk90 = (s32)n;
+                m->parent = (s32)n;
             }
             o->state = 1;
         } else {
@@ -504,12 +504,12 @@ void func_801397E8(GameObject *o)
                 e->active = 1;
             e->type = 0xd;
                 e->animFrame = 1;
-                e->unkA = 2;
+                e->drawType = 2;
                 e->x.p.whole = 0x105b;
                 e->y.p.whole = -0x178;
                 e->z.p.whole = 0x26a;
-                e->subtype = 0;
-                e->unkC = 0;
+                e->id = 0;
+                e->param = 0;
                 *p = e;
                 D_8009C068.event_B5 = 3;
                 *q = 0;
@@ -523,11 +523,11 @@ void func_801397E8(GameObject *o)
                 e->active = 1;
             e->type = 0xd;
                 e->animFrame = 1;
-                e->unkA = 2;
+                e->drawType = 2;
                 e->x.p.whole = 0x105b;
                 e->y.p.whole = -0x178;
-                e->subtype = 0;
-                e->unkC = 0;
+                e->id = 0;
+                e->param = 0;
                 e->z.p.whole = 0x26a;
                 *p = e;
                 o->state = 1;
@@ -540,11 +540,11 @@ void func_801397E8(GameObject *o)
             e->active = 1;
             e->type = 0xd;
             e->animFrame = 1;
-            e->unkA = 2;
+            e->drawType = 2;
             e->x.p.whole = 0x105b;
             e->y.p.whole = -0x6d4;
-            e->subtype = 0;
-            e->unkC = 0;
+            e->id = 0;
+            e->param = 0;
             e->z.p.whole = 0x53c;
             *(GameObject **)&o->category = e;
             o->state = 1;
@@ -667,7 +667,7 @@ void func_80139C04(GameObject *o)
             D_800A539C = 1;
             D_800A539D = 0;
             D_800A539E = 0;
-            e->subtype = 1;
+            e->id = 1;
             o->subState = 0;
             o->step = 0;
         }

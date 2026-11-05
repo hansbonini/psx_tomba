@@ -45,17 +45,17 @@ void func_801168B0(GameObject *o)
         D_800A539E_U8Arr[0] = 0;
         o->unkBC = o->animFrame;
         o->animFrame = o->unk68 & 1;
-        o->anim = D_80118F14[o->subtype].p[2];
+        o->anim = D_80118F14[o->id].p[2];
         readAnimFrameCount(o);
-        o->unk90 = (s32)showMessageBoxDirect(2, 0xa, &v);
+        o->parent = (s32)showMessageBoxDirect(2, 0xa, &v);
         o->step++;
         break;
     case 1:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2)
             break;
         p->state = 3;
-        o->anim = D_80118F14[o->subtype].p[0];
+        o->anim = D_80118F14[o->id].p[0];
         readAnimFrameCount(o);
         o->step++;
         break;
@@ -128,17 +128,17 @@ extern ObjSetupHitbox D_80118F0C[];
 
 void func_80118A48(GameObject *o)
 {
-    o->hitOffsetX = D_80118F0C[o->subtype].b0;
-    o->hitWidth = D_80118F0C[o->subtype].b1;
-    o->hitOffsetY = D_80118F0C[o->subtype].b2;
-    o->hitHeight = D_80118F0C[o->subtype].b3;
-    o->tpage = D_80118F0C[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80118F0C[o->subtype].w6];
-    o->anim = D_80118F0C[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_80118F0C[o->id].b0;
+    o->hitboxW = D_80118F0C[o->id].b1;
+    o->hitboxY = D_80118F0C[o->id].b2;
+    o->hitboxH = D_80118F0C[o->id].b3;
+    o->tpage = D_80118F0C[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80118F0C[o->id].w6];
+    o->anim = D_80118F0C[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unkD = 1;
-    o->unk8C = 0;
-    switch (o->subtype) {
+    o->drawFlags = 1;
+    o->rotZ = 0;
+    switch (o->id) {
     case 1:
         o->clut = GetClut(0xc0, 0x1e2);
         break;
@@ -150,8 +150,8 @@ void func_80118A48(GameObject *o)
         o->clut = GetClut(0xc0, 0x1e0);
         break;
     }
-    *(s8 *)&o->unkF = -10;
-    o->unkA = 0;
+    *(s8 *)&o->priority = -10;
+    o->drawType = 0;
     o->category |= 0x80;
     o->state++;
 }
@@ -180,21 +180,21 @@ void func_80118CBC(GameObject *o)
         if (p) {
             p->active = 3;
             p->type = 0x32;
-            p->unkA = 0;
+            p->drawType = 0;
             p->animFrame = e->f2;
-            p->subtype = e->f18;
-            p->unkC = e->f1a;
+            p->id = e->f18;
+            p->param = e->f1a;
             p->x.p.whole = e->f12;
             p->y.p.whole = e->f14;
             p->z.p.whole = e->f16;
             p->unkB4 = e->f4;
             p->unkB8 = e->f10;
             p->unkBA = e->fe;
-            p->unk74 = e->f6;
-            p->unk76 = e->f8;
-            p->unk78 = e->fa;
+            p->scaleX = e->f6;
+            p->scaleY = e->f8;
+            p->scaleZ = e->fa;
             p->unk7A = e->fc;
-            p->unk90 = (s32)o;
+            p->parent = (s32)o;
             if (i == 3) {
                 if (D_8009C068.event_9D != 1) p->state = 2;
                 if (((u8 *)&D_8009C068.event_9D)[0x19e] != 0) p->state = 2;

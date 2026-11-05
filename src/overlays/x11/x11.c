@@ -35,27 +35,27 @@ void func_80115EA8(GameObject *o)
         initItemObject(o);
         o->velH = -0x80;
         o->velV = 0xd5;
-        o->unk30 = 0x3c0000;
-        o->unk34 = -0x500000;
-        o->unk38 = 0;
-        o->h->raw = o->unk30;
-        o->y.raw = o->unk34;
-        o->d->raw = o->unk38;
+        o->localX = 0x3c0000;
+        o->localY = -0x500000;
+        o->localZ = 0;
+        o->h->raw = o->localX;
+        o->y.raw = o->localY;
+        o->d->raw = o->localZ;
         o->velY = -0x500;
         o->timer = 0x3c;
-        o->unkA = 0;
-        o->unkF = 0;
+        o->drawType = 0;
+        o->priority = 0;
         o->active = 4;
         o->state++;
         break;
     case 1:
         if (cullAndQueueDraw(o)) {
-            o->unk30 += o->velH << 8;
-            o->unk34 += o->velV << 8;
-            o->unk34 += o->velY << 8;
-            o->h->raw = o->unk30;
-            o->y.raw = o->unk34;
-            o->d->raw = o->unk38;
+            o->localX += o->velH << 8;
+            o->localY += o->velV << 8;
+            o->localY += o->velY << 8;
+            o->h->raw = o->localX;
+            o->y.raw = o->localY;
+            o->d->raw = o->localZ;
             if (o->velY < 0x800) o->velY += 0x28;
             if (o->velY > 0) o->active = 1;
             if (--o->timer == 0) o->state++;
@@ -89,7 +89,7 @@ void func_801161A4(GameObject *o)
     case 0:
         o->step++;
         o->movetab = D_800771F0;
-        o->unk88 = 0;
+        o->rotY = 0;
         o->velV = 0x60;
         o->unkAC = 0;
         SetAnim_161A4(o, D_8011B750[0]);
@@ -97,16 +97,16 @@ void func_801161A4(GameObject *o)
     case 1:
         tickAnimation(o);
         applyAnimVelocityX(o, o->animFrame);
-        o->y.raw -= (COS_TABLE[*(u8 *)&o->unk88] * o->velV) >> 4;
-        o->unk88 = (o->unk88 + 1) & 0xff;
-        if (o->unk88 == 0)
+        o->y.raw -= (COS_TABLE[*(u8 *)&o->rotY] * o->velV) >> 4;
+        o->rotY = (o->rotY + 1) & 0xff;
+        if (o->rotY == 0)
             o->step++;
         break;
     case 2:
         tickAnimation(o);
-        o->y.raw -= (COS_TABLE[*(u8 *)&o->unk88] * o->velV) >> 4;
-        o->unk88 = (o->unk88 + 1) & 0xff;
-        if (o->unk88 == 0)
+        o->y.raw -= (COS_TABLE[*(u8 *)&o->rotY] * o->velV) >> 4;
+        o->rotY = (o->rotY + 1) & 0xff;
+        if (o->rotY == 0)
             o->step++;
         break;
     case 3:
@@ -127,10 +127,10 @@ static __inline__ void setanim_162F8(GameObject *p)
 }
 static __inline__ void setbox_162F8(GameObject *p, s16 a, s16 b, s16 c, s16 d)
 {
-    p->hitOffsetX = a;
-    p->hitWidth = b;
-    p->hitOffsetY = c;
-    p->hitHeight = d;
+    p->hitboxX = a;
+    p->hitboxW = b;
+    p->hitboxY = c;
+    p->hitboxH = d;
 }
 
 void func_801162F8(GameObject *o)
@@ -139,7 +139,7 @@ void func_801162F8(GameObject *o)
     case 0:
         o->state++;
         setbox_162F8(o, 0x10, 0x20, 0x10, 0x20);
-        o->unkD = 1;
+        o->drawFlags = 1;
         o->clut = 0x7952;
         o->tpage = 9;
         setanim_162F8(o);

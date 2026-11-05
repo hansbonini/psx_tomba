@@ -41,7 +41,7 @@ void func_8011F4A4(GameObject *o)
                 o->unk7 = 2;
                 func_8011CBD0(o, 0x15);
             } else {
-                E8_1F4A4 *t = (E8_1F4A4 *)o->unk94;
+                E8_1F4A4 *t = (E8_1F4A4 *)o->child;
                 o->unk7++;
                 t += o->unkAE;
                 o->timer = t->c;

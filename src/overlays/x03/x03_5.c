@@ -12,21 +12,21 @@ void func_80128590(GameObject *o)
     switch (o->step) {
     case 0:
         o->animFrame = 0;
-        o->unk30 = o->h->p.whole;
+        o->localX = o->h->p.whole;
         o->velX = -0x180;
         o->velY = 0x20;
         o->tpage = 1;
-        o->unk34 = o->y.p.whole;
-        o->unk84 = 0;
-        o->subtype = 1;
+        o->localY = o->y.p.whole;
+        o->rotX = 0;
+        o->id = 1;
         o->spriteBank = SPR_DATA[D_801350DE[0]];
         o->step++;
         break;
     case 1:
         tickAnimation(o);
         o->h->raw += o->velX << 8;
-        o->unk84 = (o->unk84 + 4) & 0xfff;
-        o->y.p.whole = fixedMulSin(*(s16 *)&o->unk8C, 0x40) + o->unk34;
+        o->rotX = (o->rotX + 4) & 0xfff;
+        o->y.p.whole = fixedMulSin(*(s16 *)&o->rotZ, 0x40) + o->localY;
         if (o->h->p.whole < 0x12fc) {
             o->h->p.whole = 0x12fc;
             o->velY = 0x40;
@@ -73,17 +73,17 @@ void func_80128780(GameObject *o)
         o->animFrame = 0;
         o->velX = 0x80;
         o->velY = -0x10;
-        o->unk34 = o->y.raw;
+        o->localY = o->y.raw;
         ((u8*)&D_8009BC98.unk09)[0] = 1;
-        o->anim = (void *)D_801350D4[o->subtype].p[5];
+        o->anim = (void *)D_801350D4[o->id].p[5];
         readAnimFrameCount(o);
         o->step++;
     case 1:
         tickAnimation(o);
         o->h->raw += o->velX << 8;
-        o->unk84 = (o->unk84 + 4) & 0xfff;
-        o->y.raw = o->unk34 + (fixedMulSin(*(s16 *)&o->unk8C, 0x40) << 16);
-        o->unk34 += o->velY << 8;
+        o->rotX = (o->rotX + 4) & 0xfff;
+        o->y.raw = o->localY + (fixedMulSin(*(s16 *)&o->rotZ, 0x40) << 16);
+        o->localY += o->velY << 8;
         o->velY -= 0x10;
         if (o->velY < -0x180) {
             o->velY = -0x180;
@@ -119,8 +119,8 @@ void func_8012897C(GameObject *o)
             D_8009BC98.unk0F = 1;
             D_8009BC98.unk12 = 1;
             b = *(V12_2897C *)&o->x;
-            o->unk90 = showMessageBoxDirect(2, 0xf, &b);
-            o->anim = ((AT_2897C *)&D_801350D4)[o->subtype].anims[9];
+            o->parent = showMessageBoxDirect(2, 0xf, &b);
+            o->anim = ((AT_2897C *)&D_801350D4)[o->id].anims[9];
             advanceAnimFrame(o, 0);
 #if REGION == REGION_JP
             PLAYER.obj.animFrame = 0;
@@ -140,13 +140,13 @@ void func_8012897C(GameObject *o)
         break;
     case 1:
         tickAnimation(o);
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state == 2) {
             p->state = 3;
 #if REGION != REGION_JP
             o->animFrame = 1;
 #endif
-            o->anim = ((AT_2897C *)&D_801350D4)[o->subtype].anims[0];
+            o->anim = ((AT_2897C *)&D_801350D4)[o->id].anims[0];
             advanceAnimFrame(o, 0);
             D_8009BC98.unk0F = 0;
             D_8009BC98.unk12 = 0;
@@ -244,26 +244,26 @@ extern ObjSetupHitbox D_801350CC[];
 
 void func_80128D7C(GameObject *o)
 {
-    o->hitOffsetX = D_801350CC[o->subtype].b0;
-    o->hitWidth = D_801350CC[o->subtype].b1;
-    o->hitOffsetY = D_801350CC[o->subtype].b2;
-    o->hitHeight = D_801350CC[o->subtype].b3;
-    o->tpage = D_801350CC[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_801350CC[o->subtype].w6];
-    o->anim = D_801350CC[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_801350CC[o->id].b0;
+    o->hitboxW = D_801350CC[o->id].b1;
+    o->hitboxY = D_801350CC[o->id].b2;
+    o->hitboxH = D_801350CC[o->id].b3;
+    o->tpage = D_801350CC[o->id].w4;
+    o->spriteBank = SPR_DATA[D_801350CC[o->id].w6];
+    o->anim = D_801350CC[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unk8C = 0;
-    o->unkD = 0;
-    o->unkA = 0;
+    o->rotZ = 0;
+    o->drawFlags = 0;
+    o->drawType = 0;
     if (GAME.selectedSection == 2) {
-        o->anim = D_801350CC[o->subtype].anim[0];
+        o->anim = D_801350CC[o->id].anim[0];
         readAnimFrameCount(o);
         o->active = 10;
-        o->unkD = 1;
+        o->drawFlags = 1;
         o->clut = 0x784e;
     }
     o->unk68 = 0;
-    o->unkF = 0;
+    o->priority = 0;
     o->category |= 0x80;
     o->state++;
 }

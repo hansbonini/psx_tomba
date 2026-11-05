@@ -32,7 +32,7 @@ void func_8011F674(GameObject *o)
         break;
     case 3:
         if (tickAnimation(o)) {
-            E8_1F674 *e = (E8_1F674 *)o->unk94;
+            E8_1F674 *e = (E8_1F674 *)o->child;
             o->unk7++;
             e += o->unkAE;
             o->timer = e->t;

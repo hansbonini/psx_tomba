@@ -156,10 +156,10 @@ void func_80117CEC(GameObject *o)
             break;
         }
         o->unkE = 1;
-        o->unkB = 1;
-        o->unkF = 100;
-        o->unk30 = o->h->raw;
-        o->unk34 = o->y.raw;
+        o->otMode = 1;
+        o->priority = 100;
+        o->localX = o->h->raw;
+        o->localY = o->y.raw;
         o->subState++;
     case 1:
         switch (D_8009BCCE) {
@@ -194,10 +194,10 @@ void func_80117CEC(GameObject *o)
         }
         break;
     case 3:
-        if (o->h->raw >= o->unk30) {
-            o->h->raw = o->unk30;
+        if (o->h->raw >= o->localX) {
+            o->h->raw = o->localX;
             o->subState = 0;
-            o->y.raw = o->unk34;
+            o->y.raw = o->localY;
             break;
         }
         switch (D_8009BCCE) {
@@ -357,9 +357,9 @@ void func_801182E0(GameObject *o)
         o->tpage = (GetGraphType() == 1 || GetGraphType() == 2) ? 0x8a : 0x2a;
 #endif
         o->clut = GetClut(0xe0, 0x1e0);
-        o->unkD = 0x80;
+        o->drawFlags = 0x80;
         o->spriteBank = D_1F8002D4[0];
-        o->anim = D_8013A450[o->subtype];
+        o->anim = D_8013A450[o->id];
         readAnimFrameCount(o);
         o->timer = 0x38;
         o->cooldownTimer = 0;
@@ -381,7 +381,7 @@ void func_801182E0(GameObject *o)
                 o->unkBA++;
             }
         }
-        if (o->subtype == 1 && o->unkC == 1) func_801181C0(o);
+        if (o->id == 1 && o->param == 1) func_801181C0(o);
         if (tickAnimation(o)) o->state++;
         break;
     case 2:

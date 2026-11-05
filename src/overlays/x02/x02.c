@@ -14,34 +14,34 @@ void func_8011592C(GameObject *o)
     switch (o->state) {
     case 0:
         o->state++;
-        o->unkD = 1;
+        o->drawFlags = 1;
         o->animFrame = 1;
-        o->unkA = 0;
-        switch (o->subtype) {
+        o->drawType = 0;
+        switch (o->id) {
         case 0:
             o->tpage = 4;
             o->clut = GetClut(0x80, 0x1ff);
-            o->anim = D_8011E5EC[o->subtype];
-            *(s8 *)&o->unkF = -10;
+            o->anim = D_8011E5EC[o->id];
+            *(s8 *)&o->priority = -10;
             break;
         case 1:
             o->tpage = 4;
             o->clut = GetClut(0x80, 0x1ff);
-            o->anim = D_8011E5EC[o->subtype];
-            o->unkF = 0;
-            o->unkD = 0x81;
+            o->anim = D_8011E5EC[o->id];
+            o->priority = 0;
+            o->drawFlags = 0x81;
             break;
         case 2:
         case 3:
             o->tpage = 4;
             o->clut = GetClut(0x80, 0x1ff);
-            o->anim = D_8011E5EC[o->subtype];
-            o->unkF = 0;
+            o->anim = D_8011E5EC[o->id];
+            o->priority = 0;
             break;
         case 4:
             o->tpage = 10;
             o->clut = GetClut(0x80, 0x1fe);
-            o->unkF = 0;
+            o->priority = 0;
             o->anim = D_8011E510;
             break;
         }
@@ -49,7 +49,7 @@ void func_8011592C(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (o->subtype != 4 && cullAndQueueDraw(o))
+        if (o->id != 4 && cullAndQueueDraw(o))
             tickAnimation(o);
         break;
     case 2:

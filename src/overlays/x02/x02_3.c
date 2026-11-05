@@ -15,7 +15,7 @@ void func_80118340(GameObject *o)
 {
     switch (o->step) {
     case 0:
-        o->anim = D_8011EEEC[o->subtype];
+        o->anim = D_8011EEEC[o->id];
         readAnimFrameCount(o);
         o->step++;
         break;
@@ -32,7 +32,7 @@ void func_80118340(GameObject *o)
 
 void func_801183D8(GameObject *o)
 {
-    void *e = D_8009E694[o->subtype];
+    void *e = D_8009E694[o->id];
 
     switch (o->step) {
     case 0:
@@ -72,7 +72,7 @@ void func_801184C8(GameObject *o)
     case 1:
         switch (o->step) {
         case 0:
-            o->anim = D_8011EEEC[o->subtype];
+            o->anim = D_8011EEEC[o->id];
             readAnimFrameCount(o);
             o->step++;
             break;
@@ -85,7 +85,7 @@ void func_801184C8(GameObject *o)
         }
         break;
     case 2:
-        e = D_8009E694[o->subtype];
+        e = D_8009E694[o->id];
         switch (o->step) {
         case 0:
             if (--o->timer > 0) break;
@@ -115,13 +115,13 @@ void func_80118680(GameObject *o)
             break;
         }
         o->tpage = 7;
-        o->unkD = 0;
+        o->drawFlags = 0;
         o->spriteBank = D_1F8002D0[0];
-        o->anim = D_8011EF08[o->subtype];
+        o->anim = D_8011EF08[o->id];
         readAnimFrameCount(o);
-        if (o->subtype >= 4)
+        if (o->id >= 4)
             o->animFrame = 1;
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
             o->timer = 120;
             break;

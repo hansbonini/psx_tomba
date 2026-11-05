@@ -12,27 +12,27 @@ extern void advanceAnimFrame(GameObject *, s32);
 
 void func_8012B9DC(GameObject *o)
 {
-    o->hitOffsetX = D_80135138[o->subtype].b0;
-    o->hitWidth = D_80135138[o->subtype].b1;
-    o->hitOffsetY = D_80135138[o->subtype].b2;
-    o->hitHeight = D_80135138[o->subtype].b3;
-    o->tpage = D_80135138[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80135138[o->subtype].w6];
+    o->hitboxX = D_80135138[o->id].b0;
+    o->hitboxW = D_80135138[o->id].b1;
+    o->hitboxY = D_80135138[o->id].b2;
+    o->hitboxH = D_80135138[o->id].b3;
+    o->tpage = D_80135138[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80135138[o->id].w6];
     if (D_8009C068.event_21 != 0xff) {
-        o->anim = D_80135138[o->subtype].anim[5];
+        o->anim = D_80135138[o->id].anim[5];
         advanceAnimFrame(o, 0);
     } else {
-        o->anim = D_80135138[o->subtype].anim[4];
+        o->anim = D_80135138[o->id].anim[4];
         advanceAnimFrame(o, 0);
         o->h->p.whole = 0xc4d;
     }
     o->animFrame = 1;
-    o->unkA = 2;
-    o->unk8C = 0;
-    o->unkD = 0;
+    o->drawType = 2;
+    o->rotZ = 0;
+    o->drawFlags = 0;
     o->unk68 = 0;
     o->category |= 0x80;
-    o->unkF = PLAYER.obj.unkF + 1;
+    o->priority = PLAYER.obj.priority + 1;
     o->state++;
 }
 
@@ -46,7 +46,7 @@ void func_8012BBA8(GameObject *o)
         break;
     case 1:
         cullAndQueueDraw(o);
-        if (o->unkC == 0x29) {
+        if (o->param == 0x29) {
             switch (o->subState) {
             case 0:
                 if (o->unk68) {
@@ -175,11 +175,11 @@ void func_8012BF60(GameObject *o)
         o->anim = D_80138D70[0];
         readAnimFrameCount(o);
         D_8009C068.unk5a3 = 2;
-        o->unk90 = (s32)showMessageBoxDirect(6, 5, &v);
+        o->parent = (s32)showMessageBoxDirect(6, 5, &v);
         break;
     case 2:
         tickAnimation(o);
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2)
             break;
         p->state = 3;
@@ -232,7 +232,7 @@ void func_8012C110(GameObject *o)
         PLAYER.obj.step = 0;
         D_8009BC98.unk0F = 1;
         D_8009BC98.unk12 = 1;
-        o->unk90 = showMessageBoxDirect(6, 6, &v);
+        o->parent = showMessageBoxDirect(6, 6, &v);
         o->unkAC = 5;
         o->step++;
         o->animFrame = o->unk68 & 1;
@@ -240,7 +240,7 @@ void func_8012C110(GameObject *o)
         break;
     case 2:
         tickAnimation(o);
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2) break;
         p->state = 3;
         o->unk68 = 0;

@@ -15,8 +15,8 @@ extern s16 fixedMulSin(s32, s32);
 extern void setEventStarted(s32, s32, s32);
 
 #define BOB() \
-    o->unk88 += 4; \
-    o->y.p.whole = o->velX + fixedMulSin(o->unk88 & 0xff, 4);
+    o->rotY += 4; \
+    o->y.p.whole = o->velX + fixedMulSin(o->rotY & 0xff, 4);
 
 void func_8011ED30(GameObject *o)
 {
@@ -27,7 +27,7 @@ void func_8011ED30(GameObject *o)
 
     switch (o->step) {
     case 0:
-        o->unk88 = 0;
+        o->rotY = 0;
         o->anim = D_8013A494;
         o->velH = o->h->p.whole - D_800A6078->p.whole;
         o->velV = 0;
@@ -36,7 +36,7 @@ void func_8011ED30(GameObject *o)
     case 1:
         o->h->p.whole++;
         D_800A6078->p.whole = o->h->p.whole;
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         p->h->p.whole = D_800A6078->p.whole - 6;
         BOB();
         tickAnimation(o);
@@ -44,7 +44,7 @@ void func_8011ED30(GameObject *o)
         if (o->h->p.whole >= 0x237) {
             k = &D_800A603D;
             if (*k != 4) {
-                p = (GameObject *)o->unk90;
+                p = (GameObject *)o->parent;
                 p->anim = D_8013A498;
                 readAnimFrameCount(p);
                 o->h->p.whole = 0x236;
@@ -68,7 +68,7 @@ void func_8011ED30(GameObject *o)
         }
         break;
     case 2:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         tickAnimation(o);
         tickAnimation(p);
         BOB();
@@ -82,24 +82,24 @@ void func_8011ED30(GameObject *o)
         }
         break;
     case 3:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         tickAnimation(o);
         tickAnimation(p);
         BOB();
         o->velX++;
         if (--o->timer > 0) {
             if (o->timer == 0x14) {
-                p = (GameObject *)o->unk90;
+                p = (GameObject *)o->parent;
                 p->anim = D_8013A49C;
                 readAnimFrameCount(p);
             }
         } else {
-            p = (GameObject *)o->unk90;
-            p->unkF = 0x1e;
+            p = (GameObject *)o->parent;
+            p->priority = 0x1e;
             o->step++;
         }
     case 4:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         tickAnimation(o);
         tickAnimation(p);
         BOB();
@@ -110,14 +110,14 @@ void func_8011ED30(GameObject *o)
         break;
     case 5:
         if (--o->timer == 0) {
-            p = (GameObject *)o->unk90;
+            p = (GameObject *)o->parent;
             p->y.p.whole += 4;
             o->timer = 0x3a;
             o->step++;
         }
         break;
     case 6:
-        tickAnimation((GameObject *)o->unk90);
+        tickAnimation((GameObject *)o->parent);
         tickAnimation(o);
         BOB();
         o->velX--;
@@ -129,10 +129,10 @@ void func_8011ED30(GameObject *o)
                 D_800A603E = 0;
             }
             if (o->timer == 0x14) {
-                p = (GameObject *)o->unk90;
+                p = (GameObject *)o->parent;
                 p->anim = D_8013A498;
                 readAnimFrameCount(p);
-                *(s8 *)&p->unkF = -10;
+                *(s8 *)&p->priority = -10;
             }
         } else {
             D_800A547C->state = 3;
@@ -140,7 +140,7 @@ void func_8011ED30(GameObject *o)
         }
         break;
     case 7:
-        tickAnimation((GameObject *)o->unk90);
+        tickAnimation((GameObject *)o->parent);
         tickAnimation(o);
         BOB();
         if (D_8009C227 == 3) {
@@ -149,22 +149,22 @@ void func_8011ED30(GameObject *o)
         }
         break;
     case 8:
-        tickAnimation((GameObject *)o->unk90);
+        tickAnimation((GameObject *)o->parent);
         tickAnimation(o);
         BOB();
         if (--o->timer == 0) {
             *(volatile u16 *)&D_800A53C6 ^= 1;
-            p = (GameObject *)o->unk90;
+            p = (GameObject *)o->parent;
             p->animFrame ^= 1;
             o->step++;
         }
         break;
     case 9:
-        tickAnimation((GameObject *)o->unk90);
+        tickAnimation((GameObject *)o->parent);
         tickAnimation(o);
         o->h->p.whole--;
         D_800A6078->p.whole = o->h->p.whole;
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         p->h->p.whole = D_800A6078->p.whole + 6;
         BOB();
         if (o->h->p.whole < 0x129) {
@@ -182,19 +182,19 @@ void func_8011ED30(GameObject *o)
         }
         break;
     case 10:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         tickAnimation(o);
         tickAnimation(p);
         BOB();
         o->velX++;
         if (--o->timer > 0) {
             if (o->timer == 0x14) {
-                p = (GameObject *)o->unk90;
+                p = (GameObject *)o->parent;
                 p->anim = D_8013A49C;
                 readAnimFrameCount(p);
             }
         } else {
-            p = (GameObject *)o->unk90;
+            p = (GameObject *)o->parent;
             p->state = 2;
             o->state = 2;
             D_800A603C = 1;

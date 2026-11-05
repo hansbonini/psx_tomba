@@ -9,20 +9,20 @@ void func_800ED2F4(GameObject *o)
 {
     switch (o->state) {
     case 0:
-        switch (o->unkC) {
+        switch (o->param) {
         case 1:
-            o->unkA = 0x11;
-            o->hitOffsetX = 0;
-            o->hitWidth = 0;
-            o->hitOffsetY = 0;
-            o->hitHeight = 0;
+            o->drawType = 0x11;
+            o->hitboxX = 0;
+            o->hitboxW = 0;
+            o->hitboxY = 0;
+            o->hitboxH = 0;
             o->active = 2;
-            o->unk84 = 0;
-            o->unk88 = 0;
-            o->unk8C = 0;
+            o->rotX = 0;
+            o->rotY = 0;
+            o->rotZ = 0;
             break;
         case 2:
-            if ((*(u16 *)&GAME) == 0) o->unkA0 = 0;
+            if ((*(u16 *)&GAME) == 0) o->model = 0;
         case 0:
         case 3:
         case 4:
@@ -31,21 +31,21 @@ void func_800ED2F4(GameObject *o)
         case 7:
         case 8:
         default:
-            o->hitOffsetX = 8;
-            o->hitWidth = 0x10;
-            o->hitOffsetY = 8;
-            o->hitHeight = 0x10;
-            o->unkA = 0x11;
-            o->unk84 = 0;
-            o->unk88 = 0;
-            o->unk8C = 0;
+            o->hitboxX = 8;
+            o->hitboxW = 0x10;
+            o->hitboxY = 8;
+            o->hitboxH = 0x10;
+            o->drawType = 0x11;
+            o->rotX = 0;
+            o->rotY = 0;
+            o->rotZ = 0;
             break;
         }
         o->state++;
         break;
     case 1:
         cullAndQueueDraw(o);
-        switch (o->unkC) {
+        switch (o->param) {
         case 1:
             func_800ED15C(o);
             break;
@@ -128,27 +128,27 @@ void func_800ED604(GameObject *o)
     switch (o->state) {
     case 0:
         o->state++;
-        if (o->unkC == 0) {
-            o->hitOffsetX = 4;
-            o->hitWidth = 8;
-            o->hitOffsetY = 0xaa;
-            o->hitHeight = 0x154;
-            o->subtype = 1;
-        } else if (o->unkC == 1) {
-            o->hitOffsetX = 6;
-            o->hitWidth = 8;
-            o->hitOffsetY = 0xaa;
-            o->hitHeight = 0x154;
-        } else if (o->unkC == 2) {
-            o->hitOffsetX = 6;
-            o->hitWidth = 8;
-            o->hitOffsetY = 0x28;
-            o->hitHeight = 0xb4;
-        } else if (o->unkC == 3) {
-            o->hitOffsetX = 6;
-            o->hitWidth = 8;
-            o->hitOffsetY = 0x64;
-            o->hitHeight = 0xc8;
+        if (o->param == 0) {
+            o->hitboxX = 4;
+            o->hitboxW = 8;
+            o->hitboxY = 0xaa;
+            o->hitboxH = 0x154;
+            o->id = 1;
+        } else if (o->param == 1) {
+            o->hitboxX = 6;
+            o->hitboxW = 8;
+            o->hitboxY = 0xaa;
+            o->hitboxH = 0x154;
+        } else if (o->param == 2) {
+            o->hitboxX = 6;
+            o->hitboxW = 8;
+            o->hitboxY = 0x28;
+            o->hitboxH = 0xb4;
+        } else if (o->param == 3) {
+            o->hitboxX = 6;
+            o->hitboxW = 8;
+            o->hitboxY = 0x64;
+            o->hitboxH = 0xc8;
         }
         *(s32 *)((char *)o + 0xa0) = 0;
         break;
@@ -185,7 +185,7 @@ INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED788);
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED7B4);
 void func_800ED7B4(GameObject *o)
 {
-    u32 c = (u8)(D_80114638[o->unkB0] - o->unk8C);
+    u32 c = (u8)(D_80114638[o->unkB0] - o->rotZ);
     s16 d;
     u16 u;
     s32 v;
@@ -193,16 +193,16 @@ void func_800ED7B4(GameObject *o)
     if (d == 0) return;
     u = c;
     if (u < 0x80) {
-        if (d >= 4) v = o->unk8C + 4;
-        else if (d >= 2) v = o->unk8C + 2;
-        else v = o->unk8C + 1;
+        if (d >= 4) v = o->rotZ + 4;
+        else if (d >= 2) v = o->rotZ + 2;
+        else v = o->rotZ + 1;
     } else {
-        if (d < 0xfd) v = o->unk8C - 4;
-        else if (d < 0xff) v = o->unk8C - 2;
-        else v = o->unk8C - 1;
+        if (d < 0xfd) v = o->rotZ - 4;
+        else if (d < 0xff) v = o->rotZ - 2;
+        else v = o->rotZ - 1;
     }
-    o->unk8C = v;
-    o->unk8C = *(u8 *)&o->unk8C;
+    o->rotZ = v;
+    o->rotZ = *(u8 *)&o->rotZ;
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED840);
@@ -479,25 +479,25 @@ void func_800EDFA0(GameObject *o)
     case 0xfb:
     case 0xfc:
         if (o->animFrame & 1) {
-            if (o->unk8C > 0)
-                o->unk8C = -o->unk8C;
-            o->unk8C -= 4;
-            if (o->unk8C < -0x20)
-                o->unk8C = -0x20;
+            if (o->rotZ > 0)
+                o->rotZ = -o->rotZ;
+            o->rotZ -= 4;
+            if (o->rotZ < -0x20)
+                o->rotZ = -0x20;
         } else {
-            if (o->unk8C < 0)
-                o->unk8C = -o->unk8C;
-            o->unk8C += 4;
-            if (o->unk8C > 0x20)
-                o->unk8C = 0x20;
+            if (o->rotZ < 0)
+                o->rotZ = -o->rotZ;
+            o->rotZ += 4;
+            if (o->rotZ > 0x20)
+                o->rotZ = 0x20;
         }
         return;
     default:
         if (o->animFrame & 1) {
-            if (o->unk8C > 0x80)
-                o->unk8C = (0x100 - o->unk8C) & 0xff;
-            o->unk8C = (o->unk8C + 4) & 0xff;
-            if (o->unk8C <= 0x40)
+            if (o->rotZ > 0x80)
+                o->rotZ = (0x100 - o->rotZ) & 0xff;
+            o->rotZ = (o->rotZ + 4) & 0xff;
+            if (o->rotZ <= 0x40)
                 return;
             if ((*(u16 *)&GAME) == 3 && D_8009BCAC != 0) {
                 o->anim = D_80011440;
@@ -507,10 +507,10 @@ void func_800EDFA0(GameObject *o)
                 advanceAnimFrame(o, 3);
             }
         } else {
-            if (o->unk8C < 0x80)
-                o->unk8C = (0x100 - o->unk8C) & 0xff;
-            o->unk8C = (o->unk8C - 4) & 0xff;
-            if (o->unk8C >= 0xc0)
+            if (o->rotZ < 0x80)
+                o->rotZ = (0x100 - o->rotZ) & 0xff;
+            o->rotZ = (o->rotZ - 4) & 0xff;
+            if (o->rotZ >= 0xc0)
                 return;
             if ((*(u16 *)&GAME) == 3 && D_8009BCAC != 0) {
                 o->anim = D_80011440;
@@ -522,7 +522,7 @@ void func_800EDFA0(GameObject *o)
         }
         break;
     }
-    o->unk8C = 0;
+    o->rotZ = 0;
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EE1A0);
@@ -587,8 +587,8 @@ s16 func_800EE26C(void)
             Fix16 *h = o->h;
             o->active = 1;
             o->type = 0x4e;
-            o->subtype = D_8009BCF8 - 1;
-            o->unkC = s;
+            o->id = D_8009BCF8 - 1;
+            o->param = s;
             o->x.p.whole = ((u16 *)&D_800A53AA)[0];
             o->y.p.whole = ((u16 *)&D_800A53AA)[2];
             o->z.p.whole = ((u16 *)&D_800A53AA)[4];
@@ -610,7 +610,7 @@ void func_800EE3BC(u32 a, s16 x, s16 y, s16 z)
     if (func_800EE26C() == 0 && (*(s16 *)&D_1F800238) > 5 && (p = allocObjectLayer3()) != 0) {
         p->active = 1;
         p->type = 0x31;
-        p->subtype = 1;
+        p->id = 1;
         p->x.p.whole = x;
         p->y.p.whole = y;
         p->z.p.whole = z;
@@ -657,7 +657,7 @@ void func_800EE50C(GameObject *o)
         o->unkA7 = 0;
         *(u8 *)((u8 *)o + 0xac) = 0;
         o->unk9C = 0;
-        o->unk8C = D_80114638[o->unkB0];
+        o->rotZ = D_80114638[o->unkB0];
         if (o->unkBE & 8) {
             *(u8 *)((u8 *)(*(GameObject **)&D_8009B698) + 8) = *(u8 *)((u8 *)o + 0x2e) & 1;
             if ((o->unkBE & 1) != o->animFrame) {

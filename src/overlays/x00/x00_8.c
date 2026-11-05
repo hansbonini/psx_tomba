@@ -72,7 +72,7 @@ void func_801341A0(GameObject *o)
         o->active = 2;
         o->tpage = 1;
         o->unkB6 = 0;
-        o->unkD = 1;
+        o->drawFlags = 1;
         o->clut = GetClut(0xc0, 0x1e0);
         {
             s32 d = (s32)D_1F8002D4_VoidPtr;
@@ -81,8 +81,8 @@ void func_801341A0(GameObject *o)
             o->anim = a;
         }
         readAnimFrameCount(o);
-        o->unkA = 0;
-        o->unkF = 0;
+        o->drawType = 0;
+        o->priority = 0;
         o->animFrame = 0;
         o->movetab = ((char *)&D_800771FC);
         o->timer = 0;
@@ -205,14 +205,14 @@ void func_801341A0(GameObject *o)
             o->anim = D_8013A61C[0];
             readAnimFrameCount(o);
         case 7:
-            o->unk90 = showMessageBox(1, e[1], 120, 156);
+            o->parent = showMessageBox(1, e[1], 120, 156);
             o->unkB6++;
             break;
         case 8:
-            if (((u8 *)o->unk90)[4] < 2) break;
+            if (((u8 *)o->parent)[4] < 2) break;
             o->anim = D_8013A614[0];
             readAnimFrameCount(o);
-            ((u8 *)o->unk90)[4]++;
+            ((u8 *)o->parent)[4]++;
             o->unkB6++;
             break;
         case 9:
@@ -287,7 +287,7 @@ void func_801341A0(GameObject *o)
             break;
         case 21:
             {
-                u8 *q = (u8 *)o->unk94;
+                u8 *q = (u8 *)o->child;
                 q[5] = 1;
                 q[6] = 0;
             }
@@ -295,7 +295,7 @@ void func_801341A0(GameObject *o)
             break;
         case 22:
             {
-                u8 *q = (u8 *)o->unk94;
+                u8 *q = (u8 *)o->child;
                 q[5] = 6;
                 q[6] = 0;
             }
@@ -426,11 +426,11 @@ void func_80134E50(GameObject *o)
     u32 d;
     switch (o->subState) {
     case 0:
-        o->unk84 = 0x80;
-        o->unkA = 2;
+        o->rotX = 0x80;
+        o->drawType = 2;
         o->velH = 0x80;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
         o->animFrame = 1;
         o->subState++;
         break;
@@ -439,25 +439,25 @@ void func_80134E50(GameObject *o)
         a.y = o->y.p.whole;
         b.x = (*(u16 *)&D_1F80016A);
         b.y = D_1F80016E;
-        o->unk88 = angleBetweenPoints(a, b);
+        o->rotY = angleBetweenPoints(a, b);
         o->timer = 0x78;
         o->subState++;
         break;
     case 2:
-        d = (o->unk84 - o->unk88) & 0xff;
+        d = (o->rotX - o->rotY) & 0xff;
         if (d != 0) {
-            if (d < 0x80) o->unk84 = (o->unk84 - 1) & 0xff;
-            else o->unk84 = (o->unk84 + 1) & 0xff;
+            if (d < 0x80) o->rotX = (o->rotX - 1) & 0xff;
+            else o->rotX = (o->rotX + 1) & 0xff;
         }
-        if ((u32)((o->unk84 - 0x40) & 0xff) < 0x80) {
+        if ((u32)((o->rotX - 0x40) & 0xff) < 0x80) {
             o->animFrame = 0;
-            o->unk8C = (o->unk84 + 0x80) & 0xff;
+            o->rotZ = (o->rotX + 0x80) & 0xff;
         } else {
             o->animFrame = 1;
-            o->unk8C = o->unk84;
+            o->rotZ = o->rotX;
         }
-        o->h->raw += (COS_TABLE[(u8)o->unk84] * o->velH) >> 4;
-        o->y.raw += (NEG_SIN_TABLE[(u8)o->unk84] * o->velH) >> 4;
+        o->h->raw += (COS_TABLE[(u8)o->rotX] * o->velH) >> 4;
+        o->y.raw += (NEG_SIN_TABLE[(u8)o->rotX] * o->velH) >> 4;
         if (--o->timer == -1) o->subState = 1;
         if ((u32)((u16)o->h->p.whole - 0x14d) >= 0x10c) o->subState++;
         else if ((u16)(o->y.p.whole + 0xc8) >= 0x74) o->subState++;
@@ -467,7 +467,7 @@ void func_80134E50(GameObject *o)
         a.y = o->y.p.whole;
         b.x = 0x1ec;
         b.y = -0x87;
-        o->unk88 = angleBetweenPoints(a, b);
+        o->rotY = angleBetweenPoints(a, b);
         o->timer = 0x78;
         o->subState--;
         break;

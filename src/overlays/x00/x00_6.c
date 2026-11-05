@@ -36,13 +36,13 @@ void func_8012E0A4(GameObject *o)
     switch (o->state) {
     case 0:
         o->tpage = 12;
-        if (o->unkC == 1) {
+        if (o->param == 1) {
             if (D_8009C3E3 == 2) {
                 o->state = 3;
                 break;
             }
             if (D_8009C3E3 == 1) {
-                if (o->subtype != 0) {
+                if (o->id != 0) {
                     o->state = 3;
                     break;
                 }
@@ -55,27 +55,27 @@ void func_8012E0A4(GameObject *o)
             }
         }
         o->animFrame = 1;
-        o->unkD = 0;
-        o->unkA = 2;
-        o->anim = D_8013A56C[o->subtype];
-        b = &D_8013854C[o->subtype * 4];
+        o->drawFlags = 0;
+        o->drawType = 2;
+        o->anim = D_8013A56C[o->id];
+        b = &D_8013854C[o->id * 4];
         o->spriteBank = ((struct { char pad[0x2d4]; s32 v; } *)0x1F800000)->v;
-        o->hitOffsetX = *b++;
-        o->hitWidth = *b++;
-        o->hitOffsetY = b[0];
-        o->hitHeight = b[1];
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->hitboxX = *b++;
+        o->hitboxW = *b++;
+        o->hitboxY = b[0];
+        o->hitboxH = b[1];
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
         o->objectIndex = 0;
         o->unk6A = 0;
         o->touchFlag = 0;
         o->unk68 = 0;
         o->subState = 0;
         o->step = 0;
-        o->unk34 = o->y.p.whole;
+        o->localY = o->y.p.whole;
         o->state++;
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
             o->unk7A = 2;
             break;
@@ -89,10 +89,10 @@ void func_8012E0A4(GameObject *o)
         }
         break;
     case 1:
-        o->unkF = D_800A53A7_U8 + *(u8 *)&o->unk7A;
+        o->priority = D_800A53A7_U8 + *(u8 *)&o->unk7A;
         if (cullAndQueueDraw(o)) {
             if (o->subState == 0) {
-                if (o->unkC == 1 && nearObj_2E0A4(o, D_8009BCB0)) {
+                if (o->param == 1 && nearObj_2E0A4(o, D_8009BCB0)) {
                     o->subState = 1;
                     o->step = 0;
                     goto sw;
@@ -235,7 +235,7 @@ void func_8012E738(GameObject *o)
     case 0:
         o->velV = -0x800;
         o->velY = 0x80;
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->touchFlag = 0;
         o->timer = 0;
         o->cooldownTimer = 0;
@@ -251,7 +251,7 @@ void func_8012E738(GameObject *o)
         d->x = 4;
         d->y = 0x20;
         d->z = 0;
-        o->unkA = 4;
+        o->drawType = 4;
         o->step++;
         break;
     case 1:
@@ -278,12 +278,12 @@ void func_8012E738(GameObject *o)
             }
             switch (o->animFrame) {
             case 1:
-                o->unk8C = (o->unk8C + 6) & 0xff;
+                o->rotZ = (o->rotZ + 6) & 0xff;
                 if (++o->cooldownTimer >= 4)
                     o->animFrame = 3;
                 break;
             case 3:
-                o->unk8C = (o->unk8C - 6) & 0xff;
+                o->rotZ = (o->rotZ - 6) & 0xff;
                 if (--o->cooldownTimer < -3)
                     o->animFrame = 1;
                 break;
@@ -305,8 +305,8 @@ void func_8012E738(GameObject *o)
             c->y -= o->velV >> 10;
             d->y -= o->velV >> 10;
             if (o->velV >= 0x200)
-                o->anim = D_8013A56C[o->subtype];
-            if (o->unk34 - o->y.p.whole < 25)
+                o->anim = D_8013A56C[o->id];
+            if (o->localY - o->y.p.whole < 25)
                 o->step = 3;
         }
         break;
@@ -339,11 +339,11 @@ void func_8012E738(GameObject *o)
                 d->y = 0x20;
                 d->z = 0;
             }
-            if (o->y.p.whole >= o->unk34) {
+            if (o->y.p.whole >= o->localY) {
                 o->step++;
-                p = (GameObject *)o->unk94;
+                p = (GameObject *)o->child;
                 p->unk6A = 0;
-                p = (GameObject *)p->unk94;
+                p = (GameObject *)p->child;
                 p->unk6A = 0;
             }
         }
@@ -351,8 +351,8 @@ void func_8012E738(GameObject *o)
     case 4:
         o->subState = 0;
         o->step = 0;
-        o->unkA = 2;
-        o->y.raw = o->unk34 << 16;
+        o->drawType = 2;
+        o->y.raw = o->localY << 16;
         break;
     }
 }
@@ -362,58 +362,58 @@ void func_8012EBA8(GameObject *o)
 {
     s32 v;
     s16 w;
-    o->y.raw = ((GameObject *)o->unk90)->y.raw;
+    o->y.raw = ((GameObject *)o->parent)->y.raw;
     switch (o->step) {
     case 0:
-        o->unk8C = *(u8 *)(o->unk90 + 0x8c);
-        o->timer = ((GameObject *)o->unk90)->timer;
-        w = ((GameObject *)o->unk90)->cooldownTimer;
+        o->rotZ = *(u8 *)(o->parent + 0x8c);
+        o->timer = ((GameObject *)o->parent)->timer;
+        w = ((GameObject *)o->parent)->cooldownTimer;
         o->unk6A = 1;
-        o->hitOffsetY = 10;
-        o->hitHeight = 10;
+        o->hitboxY = 10;
+        o->hitboxH = 10;
         o->cooldownTimer = w;
         break;
     case 1:
         o->unk6A = 1;
-        o->hitOffsetY = 10;
-        o->hitHeight = 10;
-        o->timer = ((GameObject *)o->unk90)->timer;
-        o->cooldownTimer = ((GameObject *)o->unk90)->cooldownTimer;
-        o->animFrame = ((GameObject *)o->unk90)->animFrame;
+        o->hitboxY = 10;
+        o->hitboxH = 10;
+        o->timer = ((GameObject *)o->parent)->timer;
+        o->cooldownTimer = ((GameObject *)o->parent)->cooldownTimer;
+        o->animFrame = ((GameObject *)o->parent)->animFrame;
         if (o->timer < 10)
-            o->unk8C = (o->unk8C + 6) & 0xff;
+            o->rotZ = (o->rotZ + 6) & 0xff;
         switch (o->animFrame) {
         case 1:
-            o->unk8C = (o->unk8C + 8) & 0xff;
+            o->rotZ = (o->rotZ + 8) & 0xff;
             break;
         case 3:
-            o->unk8C = (o->unk8C - 8) & 0xff;
+            o->rotZ = (o->rotZ - 8) & 0xff;
             break;
         }
         break;
     case 2:
-        if (o->unk8C != 0) {
-            v = o->unk8C - 6;
+        if (o->rotZ != 0) {
+            v = o->rotZ - 6;
             if ((u32)v >= 0xf5)
-                o->unk8C = 0;
+                o->rotZ = 0;
             else
-                o->unk8C = v & 0xff;
+                o->rotZ = v & 0xff;
         }
         break;
     case 3:
-        if (((GameObject *)o->unk90)->step == 4)
+        if (((GameObject *)o->parent)->step == 4)
             o->unk6A = 0;
         break;
     case 4:
-        o->unk8C = 0;
-        o->hitOffsetY = 0x20;
-        o->hitHeight = 0x20;
+        o->rotZ = 0;
+        o->hitboxY = 0x20;
+        o->hitboxH = 0x20;
         break;
     }
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_6", func_8012ED24);
-#define Vec2s ((GameObject *)o->unk90)
+#define Vec2s ((GameObject *)o->parent)
 void func_8012ED24(GameObject *o)
 {
     u32 u;
@@ -421,7 +421,7 @@ void func_8012ED24(GameObject *o)
     o->y = Vec2s->y;
     switch (o->step) {
     case 0:
-        o->unk8C = Vec2s->unk8C & 0xff;
+        o->rotZ = Vec2s->rotZ & 0xff;
         o->timer = Vec2s->timer;
         o->cooldownTimer = Vec2s->timer;
         break;
@@ -429,26 +429,26 @@ void func_8012ED24(GameObject *o)
         o->timer = Vec2s->timer;
         o->cooldownTimer = Vec2s->timer;
         o->animFrame = Vec2s->animFrame;
-        if (o->timer < 10) o->unk8C = (o->unk8C - 6) & 0xff;
+        if (o->timer < 10) o->rotZ = (o->rotZ - 6) & 0xff;
         switch (o->animFrame) {
-        case 1: u = o->unk8C + 8; break;
-        case 3: u = o->unk8C - 8; break;
+        case 1: u = o->rotZ + 8; break;
+        case 3: u = o->rotZ - 8; break;
         default: return;
         }
-        o->unk8C = u & 0xff;
+        o->rotZ = u & 0xff;
         break;
     case 2:
-        i = o->unk8C;
+        i = o->rotZ;
         if (i != 0) {
-            if ((u32)(i - 6) >= 0xf5) o->unk8C = 0;
-            else o->unk8C = (i + 6) & 0xff;
-            if (o->unk8C == 0) playSFX(0x2c);
+            if ((u32)(i - 6) >= 0xf5) o->rotZ = 0;
+            else o->rotZ = (i + 6) & 0xff;
+            if (o->rotZ == 0) playSFX(0x2c);
         }
         break;
     case 3:
         break;
     case 4:
-        o->unk8C = 0;
+        o->rotZ = 0;
     }
 }
 #undef Vec2s
@@ -463,7 +463,7 @@ void func_8012EEF4(GameObject *o)
 
     switch (o->step) {
     case 0:
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->timer = 2;
         t = o->unk68 & 1;
         o->objectIndex = t;
@@ -481,13 +481,13 @@ void func_8012EEF4(GameObject *o)
     case 1:
         if (o->unk68) o->step = 0;
         if (o->timer < 8) {
-            o->unk8C = (o->unk8C + (o->velH >> 4)) & 0xff;
+            o->rotZ = (o->rotZ + (o->velH >> 4)) & 0xff;
             o->velH += o->velX;
             if (o->velH < 0) {
                 if (o->objectIndex) o->timer++;
                 a = -0xa0 / (o->timer >> 1);
                 b = 0x20 / (*(volatile s16 *)&o->timer >> 1);
-                o->unk8C = 0;
+                o->rotZ = 0;
                 o->step = 2;
                 o->velH = a;
                 o->velX = b;
@@ -498,13 +498,13 @@ void func_8012EEF4(GameObject *o)
     case 2:
         if (o->unk68) o->step = 0;
         if (o->timer < 8) {
-            o->unk8C = (o->unk8C + (o->velH >> 4)) & 0xff;
+            o->rotZ = (o->rotZ + (o->velH >> 4)) & 0xff;
             o->velH += o->velX;
             if (o->velH > 0) {
                 if (!o->objectIndex) o->timer++;
                 a = 0xa0 / (o->timer >> 1);
                 b = -0x20 / (*(volatile s16 *)&o->timer >> 1);
-                o->unk8C = 0;
+                o->rotZ = 0;
                 o->step = 1;
                 o->velH = a;
                 o->velX = b;
@@ -540,17 +540,17 @@ void func_8012F658(GameObject *o)
     s16 d;
     switch (o->step) {
     case 0:
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
-            o->unk88 = 0;
+            o->rotY = 0;
             D_8009C3E3 = 1;
             break;
         case 1:
-            o->unk88 = 0;
+            o->rotY = 0;
             D_8009BCB0[0]->b4 = 3;
             break;
         case 2:
-            o->unk88 = 0;
+            o->rotY = 0;
             break;
         }
         o->velH = 0x400;
@@ -570,7 +570,7 @@ void func_8012F658(GameObject *o)
         } else {
             o->velY += d;
         }
-        o->unk8C = ((o->velY >> 8) + o->unk88) & 0xff;
+        o->rotZ = ((o->velY >> 8) + o->rotY) & 0xff;
         if (o->velH <= 0) {
             o->velH = 0;
             o->step++;
@@ -585,7 +585,7 @@ void func_8012F658(GameObject *o)
         } else {
             o->velY -= d;
         }
-        o->unk8C = ((o->velY >> 8) + o->unk88) & 0xff;
+        o->rotZ = ((o->velY >> 8) + o->rotY) & 0xff;
         if (o->velH >= 0x400) {
             o->velH = 0x400;
             o->step--;
@@ -595,31 +595,31 @@ void func_8012F658(GameObject *o)
         if (o->cooldownTimer >= 3) o->step = 3;
         break;
     case 3:
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
             o->anim = D_8013A56C;
-            o->unk8C = 0;
-            o->unkA = 2;
+            o->rotZ = 0;
+            o->drawType = 2;
             break;
         case 1:
-            o->unk8C = 0;
+            o->rotZ = 0;
             o->unk6A = 0;
-            o->hitOffsetY = 0x20;
-            o->hitHeight = 0x20;
+            o->hitboxY = 0x20;
+            o->hitboxH = 0x20;
             break;
         case 2:
-            o->unk8C = 0;
+            o->rotZ = 0;
             break;
         }
         o->step++;
         break;
     case 4:
         o->y.p.whole += 2;
-        if (o->y.p.whole < o->unk34 - 8) break;
-        o->y.raw = (o->unk34 - 8) << 16;
+        if (o->y.p.whole < o->localY - 8) break;
+        o->y.raw = (o->localY - 8) << 16;
         o->timer = 0x14;
         o->step++;
-        if (o->subtype == 1) {
+        if (o->id == 1) {
             v[0].p.whole = o->h->p.whole;
             v[1].p.whole = o->y.p.whole - 0x10;
             v[2].p.whole = o->d->p.whole;
@@ -627,16 +627,16 @@ void func_8012F658(GameObject *o)
         }
         break;
     case 5:
-        switch (o->subtype) {
+        switch (o->id) {
         case 0:
             if (--o->timer == -1) o->state = 3;
             break;
         case 1:
-            o->unk8C = (o->unk8C + 4) & 0xff;
+            o->rotZ = (o->rotZ + 4) & 0xff;
             if (--o->timer == -1) o->state = 3;
             break;
         case 2:
-            o->unk8C = (o->unk8C - 4) & 0xff;
+            o->rotZ = (o->rotZ - 4) & 0xff;
             if (--o->timer == -1) o->state = 3;
             break;
         }
@@ -893,7 +893,7 @@ void func_8012FEF4(GameObject *o)
                 o->unk7 = 0;
                 break;
             }
-            *(V3_2FEF4 *)&o->unk30 = *(V3_2FEF4 *)&o->x;
+            *(V3_2FEF4 *)&o->localX = *(V3_2FEF4 *)&o->x;
             switch (D_801385A4[((s32 (*)(void))nextRandom)() & 0xf]) {
             case 0:
                 o->animFrame = 1;
@@ -920,7 +920,7 @@ void func_8012FEF4(GameObject *o)
         dx = 0x20;
         if (o->animFrame)
             dx = -0x20;
-        s = o->unkBA + ((o->h->raw - o->unk30) >> 16);
+        s = o->unkBA + ((o->h->raw - o->localX) >> 16);
         if (--o->cooldownTimer == 0
             || (u16)o->unkBA * 2 < s
             || probeCollisionAtDepthB(o, o->h->p.whole + dx, o->y.p.whole + 0x18)) {
@@ -930,7 +930,7 @@ void func_8012FEF4(GameObject *o)
             readAnimFrameCount(o);
             o->unk7++;
         } else {
-            t = D_80138578[o->subtype];
+            t = D_80138578[o->id];
             if (o->h->p.whole < t[0] || t[1] < o->h->p.whole) {
                 o->unkAC = 2;
                 o->anim = D_8013A080[0];
@@ -985,7 +985,7 @@ void func_8012FEF4(GameObject *o)
         dx = 0x20;
         if (o->animFrame)
             dx = -0x20;
-        s = ((o->x.raw - o->unk30) >> 16) + 4;
+        s = ((o->x.raw - o->localX) >> 16) + 4;
         if (s < 8
             || probeCollisionAtDepthB(o, o->h->p.whole + dx, o->y.p.whole + 0x18)) {
             o->cooldownTimer = 0x3c;
@@ -1210,7 +1210,7 @@ void func_80130D14(GameObject *o)
             o->timer = 0x1e;
             o->unk7 = 0xb;
         } else {
-            t = D_80138578[o->subtype];
+            t = D_80138578[o->id];
             if (o->h->p.whole < t[0] || t[1] < o->h->p.whole) {
                 o->unk6A = 0;
                 o->unkAC = 2;
@@ -1305,10 +1305,10 @@ void func_80130D14(GameObject *o)
 
 static __inline__ void set_box_313EC(GameObject *o, s16 a, s16 b, s16 c, s16 d)
 {
-    o->hitOffsetX = a;
-    o->hitWidth = b;
-    o->hitOffsetY = c;
-    o->hitHeight = d;
+    o->hitboxX = a;
+    o->hitboxW = b;
+    o->hitboxY = c;
+    o->hitboxH = d;
 }
 
 void func_801313EC(GameObject *o)
@@ -1316,9 +1316,9 @@ void func_801313EC(GameObject *o)
     switch (o->step) {
     case 0: {
         set_box_313EC(o, 0x14, 0x28, 0, 0x14);
-        *(s8 *)&o->unkF = -7;
+        *(s8 *)&o->priority = -7;
         o->unk68 = 0;
-        o->unk8C = 0;
+        o->rotZ = 0;
         spawnItemNotification(0, 6);
         o->step++;
         break; }
@@ -1359,25 +1359,25 @@ void func_801314B8(GameObject *o)
 
     switch (o->state) {
     case 0:
-        o->hitOffsetX = 0x14;
-        o->hitWidth = 0x28;
-        o->hitOffsetY = 10;
-        o->hitHeight = 0x1e;
+        o->hitboxX = 0x14;
+        o->hitboxW = 0x28;
+        o->hitboxY = 10;
+        o->hitboxH = 0x1e;
         o->active = 1;
         o->tpage = 7;
-        o->unkD = 1;
+        o->drawFlags = 1;
         o->clut = GetClut(0xe0, 0x1f0);
-        o->unkA = 6;
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->drawType = 6;
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
         o->unkAC = 2;
         o->anim = D_8013A080[0];
         readAnimFrameCount(o);
         o->spriteBank = D_1F8002DC_S32;
         o->movetab = ((char *)&D_800771FC);
         o->timer = 1;
-        *(s8 *)&o->unkF = -9;
+        *(s8 *)&o->priority = -9;
         ((E_314B8 *)o)->c4 = 0xffff;
         o->state++;
         o->unk6A = 0;
@@ -1390,7 +1390,7 @@ void func_801314B8(GameObject *o)
         *(s16 *)&o->unkBE = o->h->p.whole;
         ((E_314B8 *)o)->c0 = o->y.p.whole;
         ((E_314B8 *)o)->c2 = o->d->p.whole;
-        o->buffSize = 0x1000;
+        o->scale = 0x1000;
         break;
     case 1:
         if (D_8009BCAA != 0) {
@@ -1512,8 +1512,8 @@ void func_801314B8(GameObject *o)
         case 2:
             switch (o->step) {
             case 0:
-                o->unkB = 1;
-                o->unkF = 4;
+                o->otMode = 1;
+                o->priority = 4;
                 o->velV = -0x400;
                 o->movetab = ((char *)&D_800771FC);
                 o->unkAC = 5;
@@ -1529,9 +1529,9 @@ void func_801314B8(GameObject *o)
                 break;
             }
             if (o->animFrame & 1)
-                o->unk8C = (o->unk8C + 0x14) & 0xff;
+                o->rotZ = (o->rotZ + 0x14) & 0xff;
             else
-                o->unk8C = (o->unk8C - 0x14) & 0xff;
+                o->rotZ = (o->rotZ - 0x14) & 0xff;
             if (cullAndQueueDraw(o) == 0)
                 o->state = 3;
             tickAnimation(o);
@@ -1556,10 +1556,10 @@ extern V801328B4_31BF8 D_80138630[][4];
 extern void (*D_80138624[])(GameObject *);
 
 #define COPY() \
-    ((V801328B4_31BF8 *)&o->unkB4)[0] = D_80138630[o->unkC][0]; \
-    ((V801328B4_31BF8 *)&o->unkB4)[1] = D_80138630[o->unkC][1]; \
-    ((V801328B4_31BF8 *)&o->unkB4)[2] = D_80138630[o->unkC][2]; \
-    ((V801328B4_31BF8 *)&o->unkB4)[3] = D_80138630[o->unkC][3];
+    ((V801328B4_31BF8 *)&o->unkB4)[0] = D_80138630[o->param][0]; \
+    ((V801328B4_31BF8 *)&o->unkB4)[1] = D_80138630[o->param][1]; \
+    ((V801328B4_31BF8 *)&o->unkB4)[2] = D_80138630[o->param][2]; \
+    ((V801328B4_31BF8 *)&o->unkB4)[3] = D_80138630[o->param][3];
 
 void func_80131BF8(GameObject *o)
 {
@@ -1567,32 +1567,32 @@ void func_80131BF8(GameObject *o)
 
     switch (o->state) {
     case 0:
-        o->hitOffsetX = 0x20;
-        o->hitWidth = 0x40;
-        o->hitOffsetY = 8;
-        o->hitHeight = 0x10;
+        o->hitboxX = 0x20;
+        o->hitboxW = 0x40;
+        o->hitboxY = 8;
+        o->hitboxH = 0x10;
         o->active = 1;
-        if (o->unkC == 0)
+        if (o->param == 0)
             o->active = 2;
         o->tpage = 0xf;
-        o->unkD = 1;
+        o->drawFlags = 1;
         o->clut = GetClut(0x90, 0x1e6);
-        o->anim = D_8013A594[o->unkC];
+        o->anim = D_8013A594[o->param];
         o->spriteBank = D_1F8002D4[0];
-        t = D_80138630[o->unkC];
+        t = D_80138630[o->param];
         o->state++;
         o->touchFlag = 0;
         o->objectIndex = 0;
         o->subState = 0;
         ((V801328B4_31BF8 *)&o->unkB4)[0] = t[0];
-        ((V801328B4_31BF8 *)&o->unkB4)[1] = D_80138630[o->unkC][1];
-        ((V801328B4_31BF8 *)&o->unkB4)[2] = D_80138630[o->unkC][2];
-        ((V801328B4_31BF8 *)&o->unkB4)[3] = D_80138630[o->unkC][3];
+        ((V801328B4_31BF8 *)&o->unkB4)[1] = D_80138630[o->param][1];
+        ((V801328B4_31BF8 *)&o->unkB4)[2] = D_80138630[o->param][2];
+        ((V801328B4_31BF8 *)&o->unkB4)[3] = D_80138630[o->param][3];
         readAnimFrameCount(o);
         break;
     case 1:
         if (cullAndQueueDraw(o)) {
-            D_80138624[o->subtype](o);
+            D_80138624[o->id](o);
         } else if (o->subState) {
             COPY();
             o->subState = 0;

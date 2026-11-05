@@ -20,7 +20,7 @@ void func_80115304(GameObject *o)
             if (stepScrollReturnY(o) & stepScrollClearX(o)) ((u8*)&GAME.disableSelectMenu)[0] = 0;
             break;
         }
-        o->subtype = 0;
+        o->id = 0;
         o->subState++;
         break;
     case 1:
@@ -32,8 +32,8 @@ void func_80115304(GameObject *o)
         GAME.selectedSpawnPoint = 0;
         break;
     case 2:
-        D_8007C59C[o->subtype](o);
-        if ((*(u8*)((char*)&PLAYER.obj.unkA0 + 2)) == 2) {
+        D_8007C59C[o->id](o);
+        if ((*(u8*)((char*)&PLAYER.obj.model + 2)) == 2) {
             stepPlayerXToward(0xa0);
             if (SCRATCHPAD.unk168[2].p.whole >= 0x50) {
                 PLAYER.obj.state = PLAYER_SCRIPTED;

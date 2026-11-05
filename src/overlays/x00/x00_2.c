@@ -13,7 +13,7 @@ void func_80119FA8(GameObject *o)
             o->timer = 0xf0;
             o->step++;
         case 1:
-            o->unk34++;
+            o->localY++;
             if (--o->timer == 0) {
                 o->subState = 2;
                 o->step = 0;
@@ -36,7 +36,7 @@ void func_80119FA8(GameObject *o)
     case 0: case 2: case 3: case 4:
         break;
     case 6:
-        o->unk34 = 0x54;
+        o->localY = 0x54;
         break;
     }
 }
@@ -50,29 +50,29 @@ void func_8011A0E8(GameObject *o)
     switch (o->state) {
     case 0:
         o->state++;
-        o->unkD = 0x80;
+        o->drawFlags = 0x80;
         o->animFrame = 1;
         o->tpage = 0xb;
-        o->unkA = 7;
+        o->drawType = 7;
         o->z.p.whole = 200;
-        o->unkF = 0;
-        o->unk30 = o->x.p.whole;
-        o->unk34 = o->y.p.whole;
-        switch (o->subtype) {
+        o->priority = 0;
+        o->localX = o->x.p.whole;
+        o->localY = o->y.p.whole;
+        switch (o->id) {
         case 0:
             o->anim = D_8013A5EC;
             break;
         case 1:
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->anim = D_8013A5F0;
             o->timer = 10;
             o->cooldownTimer = 0;
             break;
         case 2:
-            o->anim = D_8013A5F4[o->unkC];
+            o->anim = D_8013A5F4[o->param];
             break;
         case 3:
-            o->unkD = 0x81;
+            o->drawFlags = 0x81;
             o->anim = D_8013A600;
             o->timer = 10;
             o->cooldownTimer = 0;
@@ -81,7 +81,7 @@ void func_8011A0E8(GameObject *o)
             o->anim = D_8013A604;
             o->tpage = 9;
             o->timer = 10;
-            o->unkD = 0;
+            o->drawFlags = 0;
             o->cooldownTimer = 0;
             o->animFrame = 1;
             o->step = 0;
@@ -89,24 +89,24 @@ void func_8011A0E8(GameObject *o)
         case 5:
             o->z.p.whole = 0;
             o->anim = D_8013A608;
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->clut = GetClut(0x80, 0x1ff);
             o->animFrame = 1;
             o->tpage = 7;
-            o->unkF = 10;
+            o->priority = 10;
             break;
         case 6:
             o->z.p.whole = 0;
             o->anim = D_8013A60C[0];
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->clut = GetClut(0x80, 0x1ff);
             o->animFrame = 1;
             o->tpage = 7;
-            o->unkF = 10;
+            o->priority = 10;
             break;
         case 7:
             o->anim = D_8013A610;
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->clut = GetClut(0x80, 0x1ff);
             o->animFrame = 1;
             o->tpage = 7;
@@ -117,10 +117,10 @@ void func_8011A0E8(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        o->x.p.whole = o->unk30 - ((struct { char pad[0x176]; u16 v; } *)0x1F800000)->v;
-        o->y.p.whole = o->unk34 - ((struct { char pad[0x186]; u16 v; } *)0x1F800000)->v;
+        o->x.p.whole = o->localX - ((struct { char pad[0x176]; u16 v; } *)0x1F800000)->v;
+        o->y.p.whole = o->localY - ((struct { char pad[0x186]; u16 v; } *)0x1F800000)->v;
         pushDrawListCapped(o);
-        switch (o->subtype) {
+        switch (o->id) {
         case 1:
             if (--o->timer == 0) {
                 x = 0xd0;
@@ -169,10 +169,10 @@ void func_8011A530(GameObject *o)
             v = D_1F8002E8;
             p = D_8013A478;
             o->tpage = 1;
-            o->unkA = 2;
-            o->unkD = 0;
+            o->drawType = 2;
+            o->drawFlags = 0;
             *((u8 *)o + 0x68) = 0;
-            o->unkF = 5;
+            o->priority = 5;
             o->animFrame = 0;
             o->spriteBank = v;
             o->anim = p;
@@ -257,11 +257,11 @@ void func_8011A92C(GameObject *o)
             o->y.p.whole = 0xd8;
         else
             o->y.p.whole = 0x78;
-        o->unk90 = showMessageBox(9, D_801379EC[(*(s16 *)&BUTTON_CONFIG_INDEX)], o->x.p.whole, o->y.p.whole);
+        o->parent = showMessageBox(9, D_801379EC[(*(s16 *)&BUTTON_CONFIG_INDEX)], o->x.p.whole, o->y.p.whole);
         break;
     case 1:
-        if (((char *)o->unk90)[4] == 2) {
-            ((char *)o->unk90)[4] = 3;
+        if (((char *)o->parent)[4] == 2) {
+            ((char *)o->parent)[4] = 3;
             D_8009BCA7 = 0;
             D_8009BCA6 = 0;
             freeObjectLayer3(o);
@@ -287,8 +287,8 @@ void func_8011AB40(GameObject *o)
             o->state = s + 1;
             o->tpage = 8;
             o->spriteBank = D_1F8002D4[0];
-            o->unkD = 0;
-            o->anim = D_8013A4B0[o->unkC];
+            o->drawFlags = 0;
+            o->anim = D_8013A4B0[o->param];
         }
         break;
     case 1:
@@ -670,7 +670,7 @@ void func_8011E520(GameObject *o)
         if (D_8009C114 == 0xff) {
             s32 *pp = &D_1F800334;
             pp = (s32 *)(*pp + ((s32 *)*(s32 *volatile *)pp)[12]);
-            o->unkA0 = (s32)pp;
+            o->model = (s32)pp;
         }
         break;
     case 1:
@@ -696,16 +696,16 @@ void func_8011E958(GameObject *o)
 {
     switch (o->state) {
     case 0:
-        if (o->subtype == 0) {
-            o->hitOffsetX = 0x58;
-            o->hitWidth = 0x60;
-            o->hitOffsetY = 4;
-            o->hitHeight = 8;
-            o->unkA = 0x11;
-            o->unkF = D_800A53A7[0] + 1;
-            o->unk84 = 0;
-            o->unk88 = 0;
-            o->unk8C = 0;
+        if (o->id == 0) {
+            o->hitboxX = 0x58;
+            o->hitboxW = 0x60;
+            o->hitboxY = 4;
+            o->hitboxH = 8;
+            o->drawType = 0x11;
+            o->priority = D_800A53A7[0] + 1;
+            o->rotX = 0;
+            o->rotY = 0;
+            o->rotZ = 0;
             o->d->p.whole = D_800A53DC_S16PtrArr[0][1];
             o->state++;
         }
@@ -720,7 +720,7 @@ void func_8011E958(GameObject *o)
             }
             break;
         case 1:
-            o->unk8C += 0x20;
+            o->rotZ += 0x20;
             o->y.p.whole += 2;
             if (--o->timer == 0) {
                 o->state = 2;
@@ -752,16 +752,16 @@ void func_8011EAEC(GameObject *o)
         o->touchFlag = 0;
         o->anim = D_8013A494;
         readAnimFrameCount(o);
-        p = (GameObject *)o->unk90;
-        o->unk88 = 0x100;
+        p = (GameObject *)o->parent;
+        o->rotY = 0x100;
         o->velX = o->y.p.whole;
         o->velY = o->y.p.whole;
         p->h->p.whole = o->h->p.whole - 6;
         o->step++;
     case 1:
-        o->unk88 += 4;
-        o->y.p.whole = o->velX + fixedMulSin((u8)o->unk88, 4);
-        tickAnimation((GameObject *)o->unk90);
+        o->rotY += 4;
+        o->y.p.whole = o->velX + fixedMulSin((u8)o->rotY, 4);
+        tickAnimation((GameObject *)o->parent);
         tickAnimation(o);
         if ((*(u16 *)&D_800A539C) == 5 && D_800A5401 && D_800A5403) {
             o->step = 2;
@@ -769,12 +769,12 @@ void func_8011EAEC(GameObject *o)
         }
         break;
     case 2:
-        o->unk88 += 4;
-        o->y.p.whole = o->velX + fixedMulSin((u8)o->unk88, 4);
+        o->rotY += 4;
+        o->y.p.whole = o->velX + fixedMulSin((u8)o->rotY, 4);
         tickAnimation(o);
-        tickAnimation((GameObject *)o->unk90);
+        tickAnimation((GameObject *)o->parent);
         if (o->touchFlag) {
-            p = (GameObject *)o->unk90;
+            p = (GameObject *)o->parent;
             p->anim = D_8013A498;
             readAnimFrameCount(p);
             D_800A5403 = 0;
@@ -784,10 +784,10 @@ void func_8011EAEC(GameObject *o)
         break;
     case 3:
         tickAnimation(o);
-        o->unk88 += 4;
-        if (o->unk88 > 0x200)
-            o->unk88 = 0x200;
-        t = fixedMulSin((u8)o->unk88, 4);
+        o->rotY += 4;
+        if (o->rotY > 0x200)
+            o->rotY = 0x200;
+        t = fixedMulSin((u8)o->rotY, 4);
         if ((s16)t < 0)
             t = -t;
         o->y.p.whole = o->velX + t;

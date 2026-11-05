@@ -13,7 +13,7 @@ void func_801350F4(GameObject *o)
         o->movetab = D_80077208;
         o->subState++;
         o->velV = 0x80;
-        o->unk88 = 0;
+        o->rotY = 0;
         o->anim = D_8013A4E4;
         readAnimFrameCount(o);
         break;
@@ -29,9 +29,9 @@ void func_801350F4(GameObject *o)
             tickAnimation(o);
         }
         applyAnimVelocityX(o, o->animFrame);
-        o->unk88 = (o->unk88 + 1) & 0xff;
-        o->y.raw -= (COS_TABLE[o->unk88] * o->velV) >> 4;
-        if (o->unk88 > 0x20) {
+        o->rotY = (o->rotY + 1) & 0xff;
+        o->y.raw -= (COS_TABLE[o->rotY] * o->velV) >> 4;
+        if (o->rotY > 0x20) {
             o->timer = 0;
             o->cooldownTimer = 0;
             o->subState++;
@@ -42,12 +42,12 @@ void func_801350F4(GameObject *o)
         tickAnimation(o);
         applyAnimVelocityX(o, o->animFrame);
         if (SPAD->unk1F8 & 1) {
-            o->unk88--;
+            o->rotY--;
         } else {
-            o->unk88++;
+            o->rotY++;
         }
-        o->unk88 = *(u8 *)&o->unk88;
-        o->y.raw -= (COS_TABLE[o->unk88] * o->velV) >> 4;
+        o->rotY = *(u8 *)&o->rotY;
+        o->y.raw -= (COS_TABLE[o->rotY] * o->velV) >> 4;
         if (++o->timer >= 0x18) {
             o->subState++;
         }
@@ -56,12 +56,12 @@ void func_801350F4(GameObject *o)
     case 6:
         tickAnimation(o);
         applyAnimVelocityX(o, o->animFrame);
-        o->unk88 = (o->unk88 + 1) & 0xff;
-        o->y.raw -= (COS_TABLE[o->unk88] * o->velV) >> 4;
-        if (o->unk88 >= 0x80) {
+        o->rotY = (o->rotY + 1) & 0xff;
+        o->y.raw -= (COS_TABLE[o->rotY] * o->velV) >> 4;
+        if (o->rotY >= 0x80) {
             *(s32 *)((char *)o + 0x88) = 0;
             *(s16 *)((char *)o + 0x20) = 0x10;
-            *(s16 *)((char *)o + 0x16) = o->unk34;
+            *(s16 *)((char *)o + 0x16) = o->localY;
             o->anim = D_8013A4E8;
             readAnimFrameCount(o);
             o->subState++;

@@ -124,7 +124,7 @@ s32 func_8011F7E4(S_1F7E4 *o)
 
 void func_8011FA84(GameObject *o)
 {
-    if (o->unkC == 1) {
+    if (o->param == 1) {
         switch (o->step) {
         case 0:
             if (D_8009BCA8 == 0)
@@ -150,11 +150,11 @@ void func_8011FA84(GameObject *o)
         case 3:
             D_8009BCA8 = 0;
             o->subState++;
-            ((GameObject *)o->unk90)->subState++;
+            ((GameObject *)o->parent)->subState++;
             break;
         }
-    } else if (o->unkC != 0) {
-        o->subState = ((GameObject *)o->unk90)->subState;
+    } else if (o->param != 0) {
+        o->subState = ((GameObject *)o->parent)->subState;
     }
 }
 
@@ -164,7 +164,7 @@ void func_8011FBE0(GameObject *o)
 {
     GameObject *g;
     s16 d;
-    if (o->unkC == 0) {
+    if (o->param == 0) {
         g = &PLAYER;
         switch (o->step) {
         case 0:
@@ -198,7 +198,7 @@ void func_8011FBE0(GameObject *o)
             g->active = 6;
             g->state = 5;
             g->subState = 0x65;
-            *(s8 *)&g->unkF = -16;
+            *(s8 *)&g->priority = -16;
             g->step = 0;
             g->animFrame = 0;
             o->timer = 0x30;
@@ -206,13 +206,13 @@ void func_8011FBE0(GameObject *o)
             o->velH = 0xaa;
             o->velX = 0;
             o->velY = 0;
-            o->unk88 = 0;
+            o->rotY = 0;
             break;
         case 3:
-            g->unk8C--;
+            g->rotZ--;
             g->h->raw += o->velH << 8;
-            g->y.raw -= (COS_TABLE[*(u8 *)&o->unk88] * o->velV) >> 4;
-            o->unk88 += 2;
+            g->y.raw -= (COS_TABLE[*(u8 *)&o->rotY] * o->velV) >> 4;
+            o->rotY += 2;
             if (--o->timer == -1)
                 o->step++;
             break;
@@ -222,7 +222,7 @@ void func_8011FBE0(GameObject *o)
             g->h->p.whole = o->h->p.whole;
             g->y.p.whole = o->y.p.whole - 8;
             g->d->p.whole = o->d->p.whole;
-            g->unk8C = 0;
+            g->rotZ = 0;
             o->timer = 0x20;
             break;
         case 5:
@@ -237,9 +237,9 @@ void func_8011FBE0(GameObject *o)
             break;
         }
     } else {
-        o->subState = ((GameObject *)o->unk90)->subState;
-        o->step = ((GameObject *)o->unk90)->step;
-        o->unk7 = ((GameObject *)o->unk90)->unk7;
+        o->subState = ((GameObject *)o->parent)->subState;
+        o->step = ((GameObject *)o->parent)->step;
+        o->unk7 = ((GameObject *)o->parent)->unk7;
     }
 }
 
@@ -266,11 +266,11 @@ void func_8011FF1C(GameObject *o)
         y = o->y.p.whole;
         o->y.p.whole = y + 2;
         probeCollisionAtDepthA(o, o->h->p.whole, (s16)(y + 0x12));
-        o->unk84 = (-(s32)D_1F80027E << 6) & 0xfff;
+        o->rotX = (-(s32)D_1F80027E << 6) & 0xfff;
         (*(Fix16 **)&D_800A53D8)->p.whole = o->h->p.whole;
         (*(G_1FF1C *)&PLAYER).y = o->y.p.whole - 8;
         (*(Fix16 **)&D_800A53DC)->p.whole = o->d->p.whole;
-        D_800A5424_S32 = o->unk84 >> 4;
+        D_800A5424_S32 = o->rotX >> 4;
 
     }
     o->velH = o->velH - o->velX;
@@ -328,16 +328,16 @@ void func_8012095C(GameObject *o)
     o->timer = u;
     if ((u & 7) == 0)
         func_801205CC(o);
-    o->unk88 = (o->unk88 + 0x18) & 0xfff;
+    o->rotY = (o->rotY + 0x18) & 0xfff;
     u = o->cooldownTimer + 1;
     o->cooldownTimer = u;
     if ((u & 7) == 0 && (n = allocObjectLayer3()) != 0) {
         n->active = 1;
         n->type = 0x31;
-        n->subtype = 1;
+        n->id = 1;
         hp = n->h;
-        n->unkC = (D_1F8001F8 + (char)D_1F800198) & 3;
-        i = ((u32)o->unk88 >> 8) & 0x1fe;
+        n->param = (D_1F8001F8 + (char)D_1F800198) & 3;
+        i = ((u32)o->rotY >> 8) & 0x1fe;
         hp->raw = o->h->raw + D_80138238[i] * 0x10000;
         n->y.raw = o->y.raw + D_80138238[i + 1] * 0x10000;
         n->d->raw = o->d->raw + -0x100000;
@@ -358,28 +358,28 @@ void func_80120BC0(GameObject *o)
     switch (s) {
     case 0:
         o->state = s + 1;
-        o->unkA = 0x13;
+        o->drawType = 0x13;
         *(s32 *)((char *)o + 0x84) = 0;
         *(s32 *)((char *)o + 0x88) = 0;
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->timer = 0;
         o->cooldownTimer = 0;
         *(s16 *)((char *)o + 0x74) = 0xa00;
         *(s16 *)((char *)o + 0x76) = 0xa00;
         *(s16 *)((char *)o + 0x78) = 0xa00;
         o->touchFlag = 0;
-        if (o->unkC == 0) {
-            o->hitOffsetX = 12;
-            o->hitWidth = 24;
-            o->hitOffsetY = 12;
-            o->hitHeight = 24;
+        if (o->param == 0) {
+            o->hitboxX = 12;
+            o->hitboxW = 24;
+            o->hitboxY = 12;
+            o->hitboxH = 24;
         } else {
             o->active = 2;
         }
         break;
     case 1:
         cullAndQueueDraw(o);
-        if (o->unkC == 0) {
+        if (o->param == 0) {
             func_80120474(o);
             switch (o->subState) {
             case 0:
@@ -394,7 +394,7 @@ void func_80120BC0(GameObject *o)
                     setEventComplete(0x10, 0);
                     o->state = 2;
                     o->subState = 0;
-                    if (o->unkC == 0)
+                    if (o->param == 0)
                         func_80120E30(o);
                 }
                 break;
@@ -402,12 +402,12 @@ void func_80120BC0(GameObject *o)
             o->touchFlag = 0;
         } else {
             func_8012095C(o);
-            o->state = ((GameObject *)o->unk90)->state;
+            o->state = ((GameObject *)o->parent)->state;
         }
         break;
     case 2:
         cullAndQueueDraw(o);
-        if (o->unkC != 0)
+        if (o->param != 0)
             func_8012095C(o);
         func_80120A6C(o);
         break;
@@ -423,7 +423,7 @@ GameObject *func_80120DAC(u8 a, s32 x, s32 y, s32 z)
     GameObject *p = allocObjectLayer3();
 
     if (p) {
-        p->unkC = a;
+        p->param = a;
         p->active = 1;
         p->type = 0x44;
         p->x.raw = x << 16;

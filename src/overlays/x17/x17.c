@@ -225,10 +225,10 @@ void func_80117FBC(GameObject *o)
             if (n == 0) continue;
             n->active = 1;
             n->type = 0x1a;
-            n->unkA = 0x10;
+            n->drawType = 0x10;
             n->animFrame = p->f2;
-            n->subtype = p->f18;
-            n->unkC = p->f1a;
+            n->id = p->f18;
+            n->param = p->f1a;
             n->x.p.whole = p->f12;
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
@@ -237,24 +237,24 @@ void func_80117FBC(GameObject *o)
             if (n == 0) continue;
             n->active = 3;
             n->type = 0x32;
-            n->unkA = 0;
+            n->drawType = 0;
             n->animFrame = p->f2;
-            n->subtype = p->f18;
-            n->unkC = p->f1a;
+            n->id = p->f18;
+            n->param = p->f1a;
             n->x.p.whole = p->f12;
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
             n->unkB4 = p->f4;
             n->unkB8 = p->f10;
             n->unkBA = p->fe;
-            n->unk74 = p->f6;
-            n->unk76 = p->f8;
-            n->unk78 = p->fa;
+            n->scaleX = p->f6;
+            n->scaleY = p->f8;
+            n->scaleZ = p->fa;
             n->unk7A = p->fc;
             SCRIPT_OBJECTS[i] = n;
-            n->unk90 = (s32)o;
+            n->parent = (s32)o;
             if (D_8009C068.event_96) {
-                switch (n->subtype) {
+                switch (n->id) {
                 case 0:
                     n->x.p.whole = 100;
                     n->animFrame = 0;

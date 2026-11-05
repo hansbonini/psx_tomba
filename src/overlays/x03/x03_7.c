@@ -11,21 +11,21 @@ extern void advanceAnimFrame(GameObject *, s32);
 
 void func_8012A634(GameObject *o)
 {
-    o->hitOffsetX = D_80135114[o->subtype].b0;
-    o->hitWidth = D_80135114[o->subtype].b1;
-    o->hitOffsetY = D_80135114[o->subtype].b2;
-    o->hitHeight = D_80135114[o->subtype].b3;
-    o->tpage = D_80135114[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80135114[o->subtype].w6];
+    o->hitboxX = D_80135114[o->id].b0;
+    o->hitboxW = D_80135114[o->id].b1;
+    o->hitboxY = D_80135114[o->id].b2;
+    o->hitboxH = D_80135114[o->id].b3;
+    o->tpage = D_80135114[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80135114[o->id].w6];
     readAnimFrameCount(o);
-    o->anim = D_80135114[o->subtype].anim[4];
+    o->anim = D_80135114[o->id].anim[4];
     advanceAnimFrame(o, 0);
-    o->unkA = 2;
-    o->unk8C = 0;
-    o->unkD = 0;
+    o->drawType = 2;
+    o->rotZ = 0;
+    o->drawFlags = 0;
     o->unk68 = 0;
     o->category |= 0x80;
-    o->unkF = PLAYER.obj.unkF + 1;
+    o->priority = PLAYER.obj.priority + 1;
     o->state++;
 }
 
@@ -45,7 +45,7 @@ void func_8012A7A4(GameObject *o)
         break;
     case 1:
         cullAndQueueDraw(o);
-        if (o->unkC == 0x28) {
+        if (o->param == 0x28) {
             switch (o->subState) {
             case 0:
                 if (o->unk68) {
@@ -78,7 +78,7 @@ void func_8012A92C(GameObject *o)
 {
     if (o->unk68 != 0) o->subState++;
     if (D_8009C068.event_B9 == 0xff && o->subState == 0) {
-        o->unk88 = 1;
+        o->rotY = 1;
         o->subState = 1;
         o->step = 0x46;
     }
@@ -106,7 +106,7 @@ extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 
 static __inline__ void setanim_2A9BC(GameObject *o, s32 n)
 {
-    o->anim = D_80135128[o->subtype].anims[n];
+    o->anim = D_80135128[o->id].anims[n];
     advanceAnimFrame(o, 0);
 }
 
@@ -149,17 +149,17 @@ void func_8012A9BC(GameObject *o)
         }
         if (chk_2A9BC()) {
             v = *(V6_2A9BC *)&o->x;
-            o->unk90 = showMessageBoxDirect(4, 1, &v);
+            o->parent = showMessageBoxDirect(4, 1, &v);
             o->step = 0x5a;
             WC2(o) = 0x46;
         } else if (k == 0) {
             v = *(V6_2A9BC *)&o->x;
-            o->unk90 = showMessageBoxDirect(4, 0, &v);
+            o->parent = showMessageBoxDirect(4, 0, &v);
             o->step = 0x5a;
             WC2(o) = 0x32;
         } else {
             v = *(V6_2A9BC *)&o->x;
-            o->unk90 = showMessageBoxDirect(4, 0, &v);
+            o->parent = showMessageBoxDirect(4, 0, &v);
             o->step = 0x5a;
             WC2(o) = 0x7a;
         }
@@ -204,7 +204,7 @@ void func_8012A9BC(GameObject *o)
         o->step = 0x5b;
         break;
     case 0x5b:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2) break;
         p->state = 3;
         setanim_2A9BC(o, 0);
@@ -232,7 +232,7 @@ void func_8012A9BC(GameObject *o)
         ((u8*)&D_8009BC98.unk0F)[0] = 0;
         ((u8*)&D_8009BC98.unk12)[0] = 0;
         ((u8*)&D_8009BC98.unk0E)[0] = 0;
-        if (o->unk88 == 0) {
+        if (o->rotY == 0) {
             PLAYER.obj.unkB2 = 0;
             PLAYER.obj.state = PLAYER_ACTIVE;
             PLAYER.obj.subState = PLAYER_IDLE;
@@ -262,13 +262,13 @@ void func_8012A9BC(GameObject *o)
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_7", func_8012B008);
 void func_8012B008(GameObject *o)
 {
-    if (o->unkC != 0x28) return;
+    if (o->param != 0x28) return;
     switch (o->subState) {
     case 0:
         if (o->unk68) o->subState++;
         if (D_8009C068.event_B9 != 0xff) break;
         if (o->subState != 0) break;
-        o->unk88 = 1;
+        o->rotY = 1;
         o->subState = 1;
         o->step = 0x46;
         break;
@@ -284,20 +284,20 @@ extern ObjSetupHitbox D_80135120[];
 
 void func_8012B0AC(GameObject *o)
 {
-    o->hitOffsetX = D_80135120[o->subtype].b0;
-    o->hitWidth = D_80135120[o->subtype].b1;
-    o->hitOffsetY = D_80135120[o->subtype].b2;
-    o->hitHeight = D_80135120[o->subtype].b3;
-    o->tpage = D_80135120[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80135120[o->subtype].w6];
-    o->anim = D_80135120[o->subtype].anim[0];
+    o->hitboxX = D_80135120[o->id].b0;
+    o->hitboxW = D_80135120[o->id].b1;
+    o->hitboxY = D_80135120[o->id].b2;
+    o->hitboxH = D_80135120[o->id].b3;
+    o->tpage = D_80135120[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80135120[o->id].w6];
+    o->anim = D_80135120[o->id].anim[0];
     readAnimFrameCount(o);
-    o->unkA = 2;
-    o->unk8C = 0;
-    o->unkD = 0;
+    o->drawType = 2;
+    o->rotZ = 0;
+    o->drawFlags = 0;
     o->unk68 = 0;
     o->category |= 0x80;
-    o->unkF = PLAYER.obj.unkF + 1;
+    o->priority = PLAYER.obj.priority + 1;
     o->state++;
     *(s32 *)((char *)o + 0x88) = 0;
     if (D_8009C068.event_B9 == 0xff) o->state = 3;
@@ -312,7 +312,7 @@ void func_8012B22C(GameObject *o)
         break;
     case 1:
         cullAndQueueDraw(o);
-        if (o->unkC == 0x28) {
+        if (o->param == 0x28) {
             switch (o->subState) {
             case 0:
                 if (o->unk68 != 0) {
@@ -320,7 +320,7 @@ void func_8012B22C(GameObject *o)
                 }
                 if (D_8009C068.event_B9 == 0xff && o->subState == 0) {
                     o->subState = 1;
-                    o->unk88 = 1;
+                    o->rotY = 1;
                     o->step = 0x46;
                 }
                 break;

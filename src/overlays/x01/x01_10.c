@@ -91,7 +91,7 @@ void func_8013A42C(GameObject *o)
             D_800A539C = 1;
             D_800A539D = 0;
             D_800A539E = 0;
-            e->subtype = 1;
+            e->id = 1;
             e->subState = 1;
             e->step = 0;
             e->animFrame = 0;
@@ -151,16 +151,16 @@ void func_8013A67C(GameObject *o)
         e->active = 1;
         e->type = 6;
         e->animFrame = 0;
-        e->unkA = 0x10;
-        e->subtype = 0;
-        e->unkC = 0;
-        e->unkF = 0;
+        e->drawType = 0x10;
+        e->id = 0;
+        e->param = 0;
+        e->priority = 0;
         t = (s32)*g + b[1];
         e->x.p.whole = 0xdc2;
         e->y.p.whole = -0x3a5;
-        e->unkA4 = 1;
+        e->modelLit = 1;
         e->z.p.whole = 0x880;
-        e->unkA0 = t;
+        e->model = t;
         *(GameObject **)&o->category = e;
         o->state = 1;
         o->subState = 0;
@@ -176,22 +176,22 @@ void func_8013A67C(GameObject *o)
         f->active = 1;
         f->type = 6;
         f->animFrame = 0;
-        f->unkA = 0x10;
-        f->subtype = 1;
-        f->unkC = 0;
-        f->unkF = 0;
+        f->drawType = 0x10;
+        f->id = 1;
+        f->param = 0;
+        f->priority = 0;
         t = (s32)*g + b[2];
         f->x.p.whole = 0xdc2;
         f->y.p.whole = -0x3a5;
-        f->unkA4 = 1;
+        f->modelLit = 1;
         f->z.p.whole = 0x880;
-        f->unkA0 = t;
+        f->model = t;
         o->state = 1;
         o->subState = 0;
         o->step = 0;
     }
-    e->unk94 = (s32)f;
-    f->unk90 = (s32)e;
+    e->child = (s32)f;
+    f->parent = (s32)e;
     n = D_8009C068.unk54f;
     if (n > 30) n = 30;
     for (i = 0; i < n; i++) func_80113C20(e, 2, e->x.p.whole, e->y.p.whole, 0x87c);
@@ -256,29 +256,29 @@ void func_8013A854(GameObject *o)
         e->y.raw = o->y.raw;
         o->y.raw = 0;
         p = D_8009E654[0];
-        (*(s16*)&o->unk34) = D_800A53D8_Fix16PtrArr[0]->p.whole - e->h->p.whole;
-        (*(s16*)((char*)&o->unk34 + 2)) = D_800A53AE[0] - e->y.p.whole;
-        (*(s16*)&o->unk38) = p->h->p.whole - e->h->p.whole;
-        (*(s16*)((char*)&o->unk38 + 2)) = p->y.p.whole - e->y.p.whole;
-        (*(s16*)&o->unkA) = 0;
+        (*(s16*)&o->localY) = D_800A53D8_Fix16PtrArr[0]->p.whole - e->h->p.whole;
+        (*(s16*)((char*)&o->localY + 2)) = D_800A53AE[0] - e->y.p.whole;
+        (*(s16*)&o->localZ) = p->h->p.whole - e->h->p.whole;
+        (*(s16*)((char*)&o->localZ + 2)) = p->y.p.whole - e->y.p.whole;
+        (*(s16*)&o->drawType) = 0;
         o->subState++;
         break;
     case 3:
-        if (--(*(s16*)&o->unkA) > 0) break;
-        (*(s16*)&o->unkA) = 0x3c;
+        if (--(*(s16*)&o->drawType) > 0) break;
+        (*(s16*)&o->drawType) = 0x3c;
         o->subState++;
         break;
     case 4:
         o->clut = (o->clut + 2) & 0xff;
         e->h->raw = o->x.raw + ((fixedMulSin(o->clut, 0x40) << 16) >> 8);
         e->y.raw += o->y.raw << 8;
-        D_800A53D8_Fix16PtrArr[0]->p.whole = e->h->p.whole + (*(s16*)&o->unk34);
+        D_800A53D8_Fix16PtrArr[0]->p.whole = e->h->p.whole + (*(s16*)&o->localY);
         p = D_8009E654[0];
-        D_800A53AE[0] = e->y.p.whole + (*(s16*)((char*)&o->unk34 + 2));
-        p->h->p.whole = e->h->p.whole + (*(s16*)&o->unk38);
-        p->y.p.whole = e->y.p.whole + (*(s16*)((char*)&o->unk38 + 2));
+        D_800A53AE[0] = e->y.p.whole + (*(s16*)((char*)&o->localY + 2));
+        p->h->p.whole = e->h->p.whole + (*(s16*)&o->localZ);
+        p->y.p.whole = e->y.p.whole + (*(s16*)((char*)&o->localZ + 2));
         o->y.raw -= 8;
-        if (--(*(s16*)&o->unkA) > 0) break;
+        if (--(*(s16*)&o->drawType) > 0) break;
         D_8009C068.unk66f = 1;
         GAME.fadeScreenControl = 3;
         o->subState++;
@@ -317,12 +317,12 @@ void func_8013ACBC(GameObject *o)
         if (e) {
             e->active = 1;
             e->type = 0x16;
-            e->unkA = 2;
+            e->drawType = 2;
             e->x.p.whole = 0x105b;
             e->y.p.whole = -0x506;
             e->animFrame = 0;
-            e->subtype = 0;
-            e->unkC = 0;
+            e->id = 0;
+            e->param = 0;
             e->z.p.whole = 0x47a;
             *(GameObject **)&o->category = e;
         }
@@ -487,13 +487,13 @@ void func_8013B180(O_3B180 *o)
                 e->active = 2;
                 e->type = 2;
                 e->animFrame = 0;
-                e->subtype = 8;
-                e->unkC = 0;
+                e->id = 8;
+                e->param = 0;
                 e->x.p.whole = 0;
                 e->y.p.whole = D_1F80016E_S16Arr[0];
                 e->z.p.whole = 0;
                 o->w1c++;
-                e->unk94 = (s32)p;
+                e->child = (s32)p;
             }
         }
         break;
@@ -532,8 +532,8 @@ void func_8013B360(GameObject *o)
                 if (e) {
                     e->active = 2;
                     e->type = 0x13;
-                    e->subtype = ((*(u8*)&SCRATCHPAD.unk1F8) + SCRATCHPAD.unk198) & 1;
-                    e->unkC = 0;
+                    e->id = ((*(u8*)&SCRATCHPAD.unk1F8) + SCRATCHPAD.unk198) & 1;
+                    e->param = 0;
                     r = nextRandom() & 3;
                     e->x.raw = SCRATCHPAD.vpx.raw;
                     e->y.raw = D_8013BD48[r].y << 16;

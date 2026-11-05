@@ -10,10 +10,10 @@ void func_80132598(GameObject *o)
     s16 f;
     switch (o->step) {
     case 0:
-        o->hitOffsetX = 8;
-        o->hitWidth = 0x10;
-        o->hitOffsetY = 8;
-        o->hitHeight = 0x10;
+        o->hitboxX = 8;
+        o->hitboxW = 0x10;
+        o->hitboxY = 8;
+        o->hitboxH = 0x10;
         o->active = 2;
         {
             s16 x = o->h->p.whole;
@@ -25,7 +25,7 @@ void func_80132598(GameObject *o)
         {
             u16 c = D_8009BCCA;
             u8 s = o->step;
-            o->unk78 = 1;
+            o->scaleZ = 1;
             o->unk68 = c;
             o->step = s + 1;
         }
@@ -96,16 +96,16 @@ void updateFrog(GameObject *o)
                 o->state = 3;
                 break;
             }
-            o->hitOffsetX = 8;
-            o->hitWidth = 0x10;
-            o->hitOffsetY = 0x18;
-            o->hitHeight = 0x20;
-            o->unk8C = 0;
+            o->hitboxX = 8;
+            o->hitboxW = 0x10;
+            o->hitboxY = 0x18;
+            o->hitboxH = 0x20;
+            o->rotZ = 0;
             o->tpage = 0xb;
-            o->unkD = 0;
+            o->drawFlags = 0;
             o->spriteBank = D_1F8002D4[0];
             o->anim = D_8013A4CC[0];
-            o->unkA = 2;
+            o->drawType = 2;
             readAnimFrameCount(o);
             o->subState++;
             break;
@@ -134,14 +134,14 @@ void updateFrog(GameObject *o)
             switch (o->step) {
             case 0:
                 PLAYER_GameObject.visible = 1;
-                PLAYER_GameObject.unk8C = 0;
+                PLAYER_GameObject.rotZ = 0;
                 D_8009C984 |= 2;
                 func_800EDDDC(&PLAYER_GameObject, 0xd, 0);
                 o->timer = 2;
                 if (D_8009C10F[0] == 0) {
-                    o->unk78 = 1;
+                    o->scaleZ = 1;
                     o->h->p.whole = PLAYER_GameObject.h->p.whole;
-                    PLAYER_GameObject.y.p.whole = o->y.p.whole - o->hitOffsetY;
+                    PLAYER_GameObject.y.p.whole = o->y.p.whole - o->hitboxY;
                     setEventStarted(EVENT_TAKEMEHOME, 0, 0);
                     o->timer = 300;
                     D_8009BCAA = 1;
@@ -162,7 +162,7 @@ void updateFrog(GameObject *o)
             tickAnimation(o);
             break;
         case 2:
-            if (o->unk78 != 0) {
+            if (o->scaleZ != 0) {
                 D_8009BCAA = 0;
                 D_8009BCA7 = 0;
             }
@@ -192,8 +192,8 @@ void updateFrog(GameObject *o)
             o->h->p.whole = D_800A53D8_Fix16Ptr->p.whole + fixedMulCos(ang, e->rad);
             o->y.p.whole = PLAYER_GameObject.y.p.whole + fixedMulSin(ang, e->rad);
             o->d->p.whole = D_800A53DC_Fix16PtrArr[0]->p.whole;
-            o->unk8C = D_800A5424[0];
-            o->unkF = D_800A53A7_U8 + (u8)e->z;
+            o->rotZ = D_800A5424[0];
+            o->priority = D_800A53A7_U8 + (u8)e->z;
             if (D_800A539C == 2) {
                 D_8009C984 &= ~2;
                 o->state = 2;
@@ -237,7 +237,7 @@ void updateFrog(GameObject *o)
             case 0:
                 o->active = 2;
                 o->animFrame = 0;
-                o->unk8C = 0;
+                o->rotZ = 0;
                 removeItemFromInventory(ITEM_FROG, 1);
                 o->anim = D_8013A4D4[0];
                 readAnimFrameCount(o);
@@ -277,7 +277,7 @@ void updateFrog(GameObject *o)
             if (o->visible == 0) o->state = 3;
             switch (o->step) {
             case 0:
-                o->unk8C = 0;
+                o->rotZ = 0;
                 o->active = 2;
                 o->anim = D_8013A4D4[0];
                 readAnimFrameCount(o);
@@ -400,11 +400,11 @@ void func_80133408(s32 x, s32 y, s32 z)
         o->y.raw = y << 16;
         o->z.raw = z << 16;
         o->tpage = 0xb;
-        o->unkD = 0;
+        o->drawFlags = 0;
         o->animFrame = u & 1;
         o->spriteBank = D_1F8002D4[0];
         o->anim = D_8013A4CC[0];
-        o->unkA = 2;
+        o->drawType = 2;
         readAnimFrameCount(o);
         o->state = 2;
         o->subState = 3;
@@ -518,10 +518,10 @@ void func_80133748(GameObject *o)
     void *a;
     switch (o->state) {
     case 0:
-        o->hitOffsetX = 10;
-        o->hitWidth = 0x14;
-        o->hitOffsetY = 0x10;
-        o->hitHeight = 0x20;
+        o->hitboxX = 10;
+        o->hitboxW = 0x14;
+        o->hitboxY = 0x10;
+        o->hitboxH = 0x20;
         o->tpage = 8;
         o->animFrame = 1;
         t = D_1F8002D4[0];
@@ -529,14 +529,14 @@ void func_80133748(GameObject *o)
         o->spriteBank = t;
         o->anim = a;
         readAnimFrameCount(o);
-        o->unkD = 1;
-        o->unkA = 0;
-        o->clut = GetClut(0x100, 0x1f1 - o->subtype);
+        o->drawFlags = 1;
+        o->drawType = 0;
+        o->clut = GetClut(0x100, 0x1f1 - o->id);
         readAnimFrameCount(o);
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->category |= 0x80;
         o->state++;
-        o->subState = o->subtype;
+        o->subState = o->id;
         if (D_8009C111 == 0xff) o->state = 3;
         break;
     case 1:
@@ -616,7 +616,7 @@ void func_80133A04(GameObject *o)
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         o->velY += 0x20;
-        r = ((s32 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + (o->hitHeight - o->hitOffsetY));
+        r = ((s32 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + (o->hitboxH - o->hitboxY));
         if (o->touchFlag | r) {
             o->active = 4;
             o->anim = D_80139F78;
@@ -649,7 +649,7 @@ void func_80133A04(GameObject *o)
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         o->velY += 0x20;
-        r = ((s32 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + (o->hitHeight - o->hitOffsetY));
+        r = ((s32 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + (o->hitboxH - o->hitboxY));
         if (r)
             o->step = 3;
         break;
@@ -710,7 +710,7 @@ void func_80133CC4(GameObject *o)
         o->anim = D_80139F5C;
         readAnimFrameCount(o);
         o->animFrame = 0;
-        o->subtype = 0;
+        o->id = 0;
         o->h->p.whole = 0x138;
         o->y.p.whole = -0x11c;
         D_8009C376[0] = 1;
@@ -731,25 +731,25 @@ void updateNpcCharles(GameObject *o)
 
     switch (o->state) {
     case 0:
-        o->hitOffsetX = 10;
-        o->hitWidth = 0x14;
-        o->hitOffsetY = 0x10;
-        o->hitHeight = 0x20;
+        o->hitboxX = 10;
+        o->hitboxW = 0x14;
+        o->hitboxY = 0x10;
+        o->hitboxH = 0x20;
         o->tpage = 1;
-        o->unkA = 2;
-        *(s8 *)&o->unkF = -8;
-        o->unkD = 0;
+        o->drawType = 2;
+        *(s8 *)&o->priority = -8;
+        o->drawFlags = 0;
         o->spriteBank = D_1F8002D0[0];
         o->anim = D_80139F60[0];
         readAnimFrameCount(o);
-        o->unk8C = 0;
+        o->rotZ = 0;
         o->category |= 0x80;
         o->state++;
         if (D_8009C1B2 == 0xff)
             o->state = 3;
         break;
     case 1:
-        if (o->subtype == 0x63) {
+        if (o->id == 0x63) {
             cullAndQueueDraw(o);
             func_80133CC4(o);
             break;

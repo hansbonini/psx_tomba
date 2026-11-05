@@ -14,30 +14,30 @@ void func_80115330(GameObject *o)
         o->state++;
         o->animFrame = 1;
         o->clut = GetClut(0x80, 0x1ff);
-        o->unkA = 7;
-        o->unk30 = o->x.p.whole;
-        o->unk34 = o->y.p.whole;
-        switch (o->subtype) {
+        o->drawType = 7;
+        o->localX = o->x.p.whole;
+        o->localY = o->y.p.whole;
+        switch (o->id) {
         case 0:
-            o->unkD = 0x81;
+            o->drawFlags = 0x81;
             o->z.p.whole = 0x82;
-            o->unkF = 0;
+            o->priority = 0;
             o->tpage = 4;
-            o->anim = D_801193B8[o->subtype];
+            o->anim = D_801193B8[o->id];
             break;
         case 1:
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->z.p.whole = 0x82;
-            o->unkF = 0;
+            o->priority = 0;
             o->tpage = 4;
-            o->anim = D_801193B8[o->subtype];
+            o->anim = D_801193B8[o->id];
             break;
         case 2:
-            o->unkD = 1;
-            o->unkF = 1;
+            o->drawFlags = 1;
+            o->priority = 1;
             o->z.p.whole = 0;
             o->tpage = 4;
-            o->anim = D_801193B8[o->subtype];
+            o->anim = D_801193B8[o->id];
             break;
         }
         o->spriteBank = SCRATCHPAD.sprData[3];
@@ -45,8 +45,8 @@ void func_80115330(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        o->x.p.whole = o->unk30 - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
-        o->y.p.whole = o->unk34 - (u16)SCRATCHPAD.unk168[7].p.whole;
+        o->x.p.whole = o->localX - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
+        o->y.p.whole = o->localY - (u16)SCRATCHPAD.unk168[7].p.whole;
         pushDrawListCapped(o);
         tickAnimation(o);
         break;
@@ -85,7 +85,7 @@ void func_801159E0(GameObject *o)
     case 0:
         if (o->unk68 == 0) break;
         v = *(V6_159E0 *)&o->x;
-        o->unk90 = showMessageBoxDirect(2, 0x33, &v);
+        o->parent = showMessageBoxDirect(2, 0x33, &v);
         ((u8*)&D_8009BC98.unk12)[0] = 1;
         D_8009C608.playerEquips = 2;
         ((u8*)&PLAYER.obj.state)[0] = 5;
@@ -96,7 +96,7 @@ void func_801159E0(GameObject *o)
         o->step++;
         break;
     case 1:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2) break;
         p->state = 3;
         SCRATCHPAD.unk1C6 = 0;
@@ -141,9 +141,9 @@ void func_80115E94(GameObject *o)
         if (o->unk68 == 0) break;
         v = *(V6_15E94 *)&o->x;
         if (D_8009C068.unk6a8) {
-            o->unk90 = showMessageBoxDirect(2, 0x66, &v);
+            o->parent = showMessageBoxDirect(2, 0x66, &v);
         } else {
-            o->unk90 = showMessageBoxDirect(2, 0x65, &v);
+            o->parent = showMessageBoxDirect(2, 0x65, &v);
         }
         ((u8*)&D_8009BC98.unk12)[0] = 1;
         D_8009C608.playerEquips = 2;
@@ -155,7 +155,7 @@ void func_80115E94(GameObject *o)
         o->step++;
         break;
     case 1:
-        p = (GameObject *)o->unk90;
+        p = (GameObject *)o->parent;
         if (p->state != 2) break;
         p->state = 3;
         f = &D_8009C068.unk6a8;
@@ -195,17 +195,17 @@ extern s32 SPR_DATA[];
 
 void func_801163A0(GameObject *o)
 {
-    o->hitOffsetX = D_80116A14[o->subtype].b0;
-    o->hitWidth = D_80116A14[o->subtype].b1;
-    o->hitOffsetY = D_80116A14[o->subtype].b2;
-    o->hitHeight = D_80116A14[o->subtype].b3;
-    o->tpage = D_80116A14[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80116A14[o->subtype].w6];
-    o->anim = D_80116A14[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_80116A14[o->id].b0;
+    o->hitboxW = D_80116A14[o->id].b1;
+    o->hitboxY = D_80116A14[o->id].b2;
+    o->hitboxH = D_80116A14[o->id].b3;
+    o->tpage = D_80116A14[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80116A14[o->id].w6];
+    o->anim = D_80116A14[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unk8C = 0;
-    o->unkD = 0;
-    o->unkF = 0;
+    o->rotZ = 0;
+    o->drawFlags = 0;
+    o->priority = 0;
     o->category |= 0x80;
     o->state++;
 }

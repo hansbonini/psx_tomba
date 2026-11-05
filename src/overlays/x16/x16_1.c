@@ -158,18 +158,18 @@ extern s32 SPR_DATA[];
 
 void func_80117154(GameObject *o)
 {
-    o->hitOffsetX = D_80118064[o->subtype].b0;
-    o->hitWidth = D_80118064[o->subtype].b1;
-    o->hitOffsetY = D_80118064[o->subtype].b2;
-    o->hitHeight = D_80118064[o->subtype].b3;
-    o->tpage = D_80118064[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80118064[o->subtype].w6];
-    o->anim = D_80118064[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_80118064[o->id].b0;
+    o->hitboxW = D_80118064[o->id].b1;
+    o->hitboxY = D_80118064[o->id].b2;
+    o->hitboxH = D_80118064[o->id].b3;
+    o->tpage = D_80118064[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80118064[o->id].w6];
+    o->anim = D_80118064[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unk8C = 0;
-    o->unkD = 0;
-    o->unkA = 0;
-    o->unkF = 0;
+    o->rotZ = 0;
+    o->drawFlags = 0;
+    o->drawType = 0;
+    o->priority = 0;
     o->subState = 0;
     o->category |= 0x80;
     o->state++;
@@ -226,18 +226,18 @@ extern ObjSetupHitbox D_8011807C[];
 
 void func_80117CC4(GameObject *o)
 {
-    o->hitOffsetX = D_8011807C[o->subtype].b0;
-    o->hitWidth = D_8011807C[o->subtype].b1;
-    o->hitOffsetY = D_8011807C[o->subtype].b2;
-    o->hitHeight = D_8011807C[o->subtype].b3;
-    o->tpage = D_8011807C[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_8011807C[o->subtype].w6];
-    o->anim = D_8011807C[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_8011807C[o->id].b0;
+    o->hitboxW = D_8011807C[o->id].b1;
+    o->hitboxY = D_8011807C[o->id].b2;
+    o->hitboxH = D_8011807C[o->id].b3;
+    o->tpage = D_8011807C[o->id].w4;
+    o->spriteBank = SPR_DATA[D_8011807C[o->id].w6];
+    o->anim = D_8011807C[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unk8C = 0;
-    o->unkD = 0;
-    o->unkA = 0;
-    o->unkF = 0;
+    o->rotZ = 0;
+    o->drawFlags = 0;
+    o->drawType = 0;
+    o->priority = 0;
     o->subState = 0;
     o->category |= 0x80;
     o->state++;

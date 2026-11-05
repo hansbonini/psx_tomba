@@ -24,7 +24,7 @@ void func_80135DDC(GameObject *o)
             n->x.p.whole = 0xa38;
             n->y.p.whole = -0x124;
             n->animFrame = 0;
-            n->subtype = 0;
+            n->id = 0;
             n->z.p.whole = -0x28;
             *(GameObject **)&o->timer = n;
         }
@@ -41,7 +41,7 @@ void func_80135DDC(GameObject *o)
             n->x.p.whole = 0xa38;
             n->y.p.whole = -0x124;
             n->animFrame = 0;
-            n->subtype = 0;
+            n->id = 0;
             n->z.p.whole = -0x28;
             f = D_8009BCEC_U32Arr[0];
             if (f & 8) if (f & 0x10) {
@@ -50,7 +50,7 @@ void func_80135DDC(GameObject *o)
                 n->active = 1;
                 n->type = 0x14;
                 n->animFrame = 0;
-                n->subtype = 1;
+                n->id = 1;
                 n->z.p.whole = 0x5a;
             }
             p[1] = n;
@@ -415,7 +415,7 @@ void updateCharlesTalkScene(GameObject *o)
             X.subState = 0;
             X.step = 0;
             (*(u8 *)&D_8009C618) = 0;
-            X.unk90 = showMessageBox(4, 2, 0x80, 0x6c);
+            X.parent = showMessageBox(4, 2, 0x80, 0x6c);
             p->anim = D_80139F68;
             readAnimFrameCount(p);
             p->state = 2;
@@ -423,17 +423,17 @@ void updateCharlesTalkScene(GameObject *o)
             p->step = 0;
         } else {
             D_8009C225 = 0;
-            X.unk90 = showMessageBox(4, 0, 0x80, 0x6c);
+            X.parent = showMessageBox(4, 0, 0x80, 0x6c);
         }
         o->subState++;
         break;
     case 1:
         tickAnimation(p);
-        if (((GameObject *)X.unk90)->state != 2)
+        if (((GameObject *)X.parent)->state != 2)
             break;
         switch (D_8009C225) {
         case 0:
-            ((GameObject *)X.unk90)->state = 3;
+            ((GameObject *)X.parent)->state = 3;
             p->state = 2;
             p->subState = 1;
             p->step = 0;
@@ -451,7 +451,7 @@ void updateCharlesTalkScene(GameObject *o)
             o->subState = 3;
             break;
         case 1:
-            ((GameObject *)X.unk90)->state = 3;
+            ((GameObject *)X.parent)->state = 3;
             p->anim = D_80139F60;
             readAnimFrameCount(p);
             p->active = 1;
@@ -479,7 +479,7 @@ void updateCharlesTalkScene(GameObject *o)
             o->step = 0;
             goto clear;
         case 2:
-            ((GameObject *)X.unk90)->state = 3;
+            ((GameObject *)X.parent)->state = 3;
             buf[1] = p->h->p.whole + 0x10;
             buf[3] = p->y.p.whole;
             buf[5] = p->d->p.whole;
@@ -496,7 +496,7 @@ void updateCharlesTalkScene(GameObject *o)
                 o->subState = 7;
             break;
         case 3:
-            ((GameObject *)X.unk90)->state = 3;
+            ((GameObject *)X.parent)->state = 3;
             CEBD = 4;
             CEBD = BUTTON_CONFIG_INDEX + 4;
             p->anim = D_80139F74;
@@ -504,7 +504,7 @@ void updateCharlesTalkScene(GameObject *o)
             o->subState = 4;
             break;
         case 4: case 5: case 6: case 7: case 8: case 9:
-            ((GameObject *)X.unk90)->state = 3;
+            ((GameObject *)X.parent)->state = 3;
             p->anim = D_80139F5C;
             readAnimFrameCount(p);
             CEBD = 10;
@@ -512,7 +512,7 @@ void updateCharlesTalkScene(GameObject *o)
             o->subState = 4;
             break;
         case 10: case 11: case 12: case 13: case 14: case 15:
-            ((GameObject *)X.unk90)->state = 3;
+            ((GameObject *)X.parent)->state = 3;
             setEventComplete(0xa6, 0);
             o->subState = 5;
             if (D_8009C375 == 0)
@@ -541,7 +541,7 @@ void updateCharlesTalkScene(GameObject *o)
             X.anim = D_800108A8;
             readAnimFrameCount(&X);
             D_8009C225 = 1;
-            X.unk90 = showMessageBox(4, 1, 0x80, 0x6c);
+            X.parent = showMessageBox(4, 1, 0x80, 0x6c);
             o->subState = 1;
         }
         break;
@@ -550,7 +550,7 @@ void updateCharlesTalkScene(GameObject *o)
             playSFX(9);
         if (--o->clut > 0)
             break;
-        X.unk90 = showMessageBox(4, D_8009C225, 0x80, 0x6c);
+        X.parent = showMessageBox(4, D_8009C225, 0x80, 0x6c);
         o->subState = 1;
         break;
     case 5:
@@ -594,7 +594,7 @@ void updateCharlesTalkScene(GameObject *o)
             playSFX(9);
         if (--o->clut > 0)
             break;
-        X.unk90 = showMessageBox(4, 3, 0x80, 0x6c);
+        X.parent = showMessageBox(4, 3, 0x80, 0x6c);
         o->subState = 1;
         break;
     }

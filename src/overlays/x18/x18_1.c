@@ -20,18 +20,18 @@ extern s32 SPR_DATA[];
 
 void func_801162CC(GameObject *o)
 {
-    o->hitOffsetX = D_80119800[o->subtype].b0;
-    o->hitWidth = D_80119800[o->subtype].b1;
-    o->hitOffsetY = D_80119800[o->subtype].b2;
-    o->hitHeight = D_80119800[o->subtype].b3;
-    o->tpage = D_80119800[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_80119800[o->subtype].w6];
-    o->anim = D_80119800[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_80119800[o->id].b0;
+    o->hitboxW = D_80119800[o->id].b1;
+    o->hitboxY = D_80119800[o->id].b2;
+    o->hitboxH = D_80119800[o->id].b3;
+    o->tpage = D_80119800[o->id].w4;
+    o->spriteBank = SPR_DATA[D_80119800[o->id].w6];
+    o->anim = D_80119800[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    *(s8 *)&o->unkF = -4;
-    o->unk8C = 0;
-    o->unkD = 0;
-    o->unkA = 0;
+    *(s8 *)&o->priority = -4;
+    o->rotZ = 0;
+    o->drawFlags = 0;
+    o->drawType = 0;
     o->subState = 0;
     o->category |= 0x80;
     o->state++;
@@ -82,10 +82,10 @@ void func_801164FC(GameObject *o)
             if (n == 0) continue;
             n->active = 1;
             n->type = 0x1a;
-            n->unkA = 0x10;
+            n->drawType = 0x10;
             n->animFrame = p->f2;
-            n->subtype = p->f18;
-            n->unkC = p->f1a;
+            n->id = p->f18;
+            n->param = p->f1a;
             n->x.p.whole = p->f12;
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
@@ -94,21 +94,21 @@ void func_801164FC(GameObject *o)
             if (n) {
                 n->active = 3;
                 n->type = 0x32;
-                n->unkA = 0;
+                n->drawType = 0;
                 n->animFrame = p->f2;
-                n->subtype = p->f18;
-                n->unkC = p->f1a;
+                n->id = p->f18;
+                n->param = p->f1a;
                 n->x.p.whole = p->f12;
                 n->y.p.whole = p->f14;
                 n->z.p.whole = p->f16;
                 n->unkB4 = p->f4;
                 n->unkB8 = p->f10;
                 n->unkBA = p->fe;
-                n->unk74 = p->f6;
-                n->unk76 = p->f8;
-                n->unk78 = p->fa;
+                n->scaleX = p->f6;
+                n->scaleY = p->f8;
+                n->scaleZ = p->fa;
                 n->unk7A = p->fc;
-                n->unk90 = (s32)o;
+                n->parent = (s32)o;
             }
             if ((n->unkBA & 0xffff) == 1) {
                 if (D_8009C068.event_9D != 1) n->state = 2;
@@ -232,21 +232,21 @@ extern ObjSetupHitbox D_801198AC[];
 
 void func_80119504(GameObject *o)
 {
-    o->hitOffsetX = D_801198AC[o->subtype].b0;
-    o->hitWidth = D_801198AC[o->subtype].b1;
-    o->hitOffsetY = D_801198AC[o->subtype].b2;
-    o->hitHeight = D_801198AC[o->subtype].b3;
-    o->tpage = D_801198AC[o->subtype].w4;
-    o->spriteBank = SPR_DATA[D_801198AC[o->subtype].w6];
-    o->anim = D_801198AC[o->subtype].anim[(u16)o->unkB4];
+    o->hitboxX = D_801198AC[o->id].b0;
+    o->hitboxW = D_801198AC[o->id].b1;
+    o->hitboxY = D_801198AC[o->id].b2;
+    o->hitboxH = D_801198AC[o->id].b3;
+    o->tpage = D_801198AC[o->id].w4;
+    o->spriteBank = SPR_DATA[D_801198AC[o->id].w6];
+    o->anim = D_801198AC[o->id].anim[(u16)o->unkB4];
     readAnimFrameCount(o);
-    o->unkD = 1;
+    o->drawFlags = 1;
     o->clut = 0x780c;
-    o->unkA = 2;
-    o->unk8C = 0;
+    o->drawType = 2;
+    o->rotZ = 0;
     o->unk68 = 0;
     o->category |= 0x80;
-    o->unkF = PLAYER.obj.unkF + 1;
+    o->priority = PLAYER.obj.priority + 1;
     o->state++;
 }
 

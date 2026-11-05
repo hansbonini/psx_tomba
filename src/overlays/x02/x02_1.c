@@ -15,11 +15,11 @@ s32 func_801166F0(GameObject *o)
     if (D_8009BC98.unk0F | D_8009BC98.unk10) return 0;
     if ((*(GameObject *)&PLAYER).active == 2) return 0;
     if ((u16)((*(GameObject *)&PLAYER).d->p.whole - o->d->p.whole + 0x2d) >= 0x5b) return 0;
-    if ((u16)((*(GameObject *)&PLAYER).h->p.whole - o->h->p.whole + (o->hitOffsetX + (*(GameObject *)&PLAYER).hitOffsetX)) > o->hitWidth + (*(GameObject *)&PLAYER).hitWidth) {
+    if ((u16)((*(GameObject *)&PLAYER).h->p.whole - o->h->p.whole + (o->hitboxX + (*(GameObject *)&PLAYER).hitboxX)) > o->hitboxW + (*(GameObject *)&PLAYER).hitboxW) {
     ret0:
         return 0;
     }
-    return (u16)((*(GameObject *)&PLAYER).y.p.whole - o->y.p.whole + ((*(GameObject *)&PLAYER).hitOffsetY + o->hitOffsetY)) <= (*(GameObject *)&PLAYER).hitHeight + o->hitHeight;
+    return (u16)((*(GameObject *)&PLAYER).y.p.whole - o->y.p.whole + ((*(GameObject *)&PLAYER).hitboxY + o->hitboxY)) <= (*(GameObject *)&PLAYER).hitboxH + o->hitboxH;
 }
 
 INCLUDE_ASM("overlays/x02/nonmatchings/x02/x02_1", func_80116804);
@@ -74,21 +74,21 @@ void func_80116994(GameObject *o)
         } else {
             o->timer = t - 1;
         }
-        o->unk74 += 0x80;
-        if (o->unk74 > 0x4000) {
-            o->unk74 = 0x4000;
+        o->scaleX += 0x80;
+        if (o->scaleX > 0x4000) {
+            o->scaleX = 0x4000;
             o->step++;
         }
-        o->unk76 = o->unk74;
-        o->unk78 = o->unk74;
+        o->scaleY = o->scaleX;
+        o->scaleZ = o->scaleX;
         break;
     case 3:
-        o->unk74 += 0x80;
-        if (o->unk74 > 0x4000) {
-            o->unk74 = 0x4000;
+        o->scaleX += 0x80;
+        if (o->scaleX > 0x4000) {
+            o->scaleX = 0x4000;
         }
-        o->unk76 = o->unk74;
-        o->unk78 = o->unk74;
+        o->scaleY = o->scaleX;
+        o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
             (*(GameTask **)&D_1F8001D4)->mode = 7;
             (*(GameTask **)&D_1F8001D4)->step = 0;
@@ -120,7 +120,7 @@ extern void advanceAnimFrame(GameObject *, s16);
 void func_8011703C(GameObject *o, s16 n, s16 k)
 {
     if (n != ((TX_1703C *)o)->wd2) {
-        o->anim = D_8011BAA0[o->subtype].anims[n];
+        o->anim = D_8011BAA0[o->id].anims[n];
         advanceAnimFrame(o, k);
         ((TX_1703C *)o)->wd2 = n;
     }

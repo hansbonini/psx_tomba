@@ -27,45 +27,45 @@ void func_80115620(GameObject *o)
         o->state++;
         o->animFrame = 1;
         o->clut = GetClut(0x80, 0x1ff);
-        o->unkA = 7;
-        o->unk30 = o->x.p.whole;
-        o->unk34 = o->y.p.whole;
-        switch (o->subtype) {
+        o->drawType = 7;
+        o->localX = o->x.p.whole;
+        o->localY = o->y.p.whole;
+        switch (o->id) {
         case 0:
         case 1:
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->tpage = 4;
-            o->unkF = 2;
-            o->anim = D_8011A7A8[o->unkC];
+            o->priority = 2;
+            o->anim = D_8011A7A8[o->param];
             break;
         case 2:
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->tpage = 4;
-            o->unkF = 2;
+            o->priority = 2;
             o->z.p.whole = 200;
-            o->anim = D_8011A7A8[o->unkC];
+            o->anim = D_8011A7A8[o->param];
             break;
         case 3:
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->tpage = 4;
-            o->unkF = 2;
-            o->anim = D_8011A7B8[o->unkC];
+            o->priority = 2;
+            o->anim = D_8011A7B8[o->param];
             break;
         case 4:
-            o->unkD = 1;
+            o->drawFlags = 1;
             o->tpage = 4;
-            o->unkF = 2;
-            o->anim = D_8011A7C4[o->unkC];
+            o->priority = 2;
+            o->anim = D_8011A7C4[o->param];
             break;
         }
         o->spriteBank = D_1F8002D4_S32;
         readAnimFrameCount(o);
         break;
     case 1:
-        if (o->subtype != 2 || D_8009C068.event_61 == 0xff) {
+        if (o->id != 2 || D_8009C068.event_61 == 0xff) {
             o->visible = 1;
-            o->x.p.whole = o->unk30 - ((u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))[0];
-            o->y.p.whole = o->unk34 - (u16)SCRATCHPAD.unk168[7].p.whole;
+            o->x.p.whole = o->localX - ((u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))[0];
+            o->y.p.whole = o->localY - (u16)SCRATCHPAD.unk168[7].p.whole;
             pushDrawListCapped(o);
             tickAnimation(o);
         }
@@ -108,19 +108,19 @@ void func_80115970(GameObject *o)
         }
         break;
     case 2:
-        o->unk74 += 0x80;
-        if (o->unk74 > 0x1000) {
-            GameObject *p = (GameObject *)o->unk94;
-            o->unk74 = 0x1000;
+        o->scaleX += 0x80;
+        if (o->scaleX > 0x1000) {
+            GameObject *p = (GameObject *)o->child;
+            o->scaleX = 0x1000;
             o->timer = 30;
             o->active = 1;
             o->step++;
             p->unk6A = 1;
-            p = (GameObject *)p->unk94;
+            p = (GameObject *)p->child;
             p->unk6A = 1;
         }
-        o->unk76 = o->unk74;
-        o->unk78 = o->unk74;
+        o->scaleY = o->scaleX;
+        o->scaleZ = o->scaleX;
         break;
     case 3:
         if (--o->timer == -1) {
@@ -214,10 +214,10 @@ void func_801162D8(GameObject *o)
             if (n == 0) continue;
             n->active = 1;
             n->type = 0x1a;
-            n->unkA = 0x10;
+            n->drawType = 0x10;
             n->animFrame = p->f2;
-            n->subtype = p->f18;
-            n->unkC = p->f1a;
+            n->id = p->f18;
+            n->param = p->f1a;
             n->x.p.whole = p->f12;
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
@@ -226,21 +226,21 @@ void func_801162D8(GameObject *o)
             if (n == 0) continue;
             n->active = 3;
             n->type = 0x32;
-            n->unkA = 0;
+            n->drawType = 0;
             n->animFrame = p->f2;
-            n->subtype = p->f18;
-            n->unkC = p->f1a;
+            n->id = p->f18;
+            n->param = p->f1a;
             n->x.p.whole = p->f12;
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
             n->unkB4 = p->f4;
             n->unkB8 = p->f10;
             n->unkBA = p->fe;
-            n->unk74 = p->f6;
-            n->unk76 = p->f8;
-            n->unk78 = p->fa;
+            n->scaleX = p->f6;
+            n->scaleY = p->f8;
+            n->scaleZ = p->fa;
             n->unk7A = p->fc;
-            n->unk90 = (s32)o;
+            n->parent = (s32)o;
         }
     }
 }
@@ -278,10 +278,10 @@ void func_80116578(GameObject *o)
             if (p) {
                 p->active = 1;
                 p->type = 0x1a;
-                p->unkA = 0x10;
+                p->drawType = 0x10;
                 p->animFrame = e->frame;
-                p->subtype = e->subtype;
-                p->unkC = e->b0c;
+                p->id = e->subtype;
+                p->param = e->b0c;
                 p->x.p.whole = e->x;
                 p->y.p.whole = e->y;
                 p->z.p.whole = e->z;
@@ -291,21 +291,21 @@ void func_80116578(GameObject *o)
             if (p) {
                 p->active = 3;
                 p->type = 0x32;
-                p->unkA = 0;
+                p->drawType = 0;
                 p->animFrame = e->frame;
-                p->subtype = e->subtype;
-                p->unkC = e->b0c;
+                p->id = e->subtype;
+                p->param = e->b0c;
                 p->x.p.whole = e->x;
                 p->y.p.whole = e->y;
                 p->z.p.whole = e->z;
                 p->unkB4 = e->wb4;
                 p->unkB8 = e->wb8;
                 p->unkBA = e->wba;
-                p->unk74 = e->w74;
-                p->unk76 = e->w76;
-                p->unk78 = e->w78;
+                p->scaleX = e->w74;
+                p->scaleY = e->w76;
+                p->scaleZ = e->w78;
                 p->unk7A = e->w7a;
-                p->unk90 = (s32)o;
+                p->parent = (s32)o;
             }
         }
     }
