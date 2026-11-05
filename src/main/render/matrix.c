@@ -84,14 +84,14 @@ void func_8004D2A8(GameObject *obj)
     getBaseMatrix(&D_1F800020);
     switch (D_1F8001C8 & 1) {
     case 0:
-        D_1F800060.vx = obj->unk84;
-        D_1F800060.vy = obj->unk88;
-        D_1F800060.vz = obj->unk8C;
+        D_1F800060.vx = obj->rotX;
+        D_1F800060.vy = obj->rotY;
+        D_1F800060.vz = obj->rotZ;
         break;
     case 1:
-        D_1F800060.vx = obj->unk8C;
-        D_1F800060.vy = obj->unk88;
-        D_1F800060.vz = obj->unk84;
+        D_1F800060.vx = obj->rotZ;
+        D_1F800060.vy = obj->rotY;
+        D_1F800060.vz = obj->rotX;
         break;
     }
     RotMatrix(&D_1F800060, &D_1F800020);
@@ -150,22 +150,22 @@ void func_8004D5F0(GameObject *obj)
     getBaseMatrix(&D_1F800020);
     switch (D_1F8001C8 & 1) {
     case 0:
-        D_1F800060.vx = obj->unk84;
-        D_1F800060.vy = obj->unk88;
-        D_1F800060.vz = obj->unk8C;
+        D_1F800060.vx = obj->rotX;
+        D_1F800060.vy = obj->rotY;
+        D_1F800060.vz = obj->rotZ;
         break;
     case 1:
-        D_1F800060.vx = obj->unk8C;
-        D_1F800060.vy = obj->unk88;
-        D_1F800060.vz = obj->unk84;
+        D_1F800060.vx = obj->rotZ;
+        D_1F800060.vy = obj->rotY;
+        D_1F800060.vz = obj->rotX;
         break;
     }
-    D_1F800040.vx = obj->unk74;
-    D_1F800040.vy = obj->unk76;
-    D_1F800040.vz = obj->unk78;
-    RotMatrixZ(obj->unk8C, &D_1F800020);
-    RotMatrixX(obj->unk84, &D_1F800020);
-    RotMatrixY(obj->unk88, &D_1F800020);
+    D_1F800040.vx = obj->scaleX;
+    D_1F800040.vy = obj->scaleY;
+    D_1F800040.vz = obj->scaleZ;
+    RotMatrixZ(obj->rotZ, &D_1F800020);
+    RotMatrixX(obj->rotX, &D_1F800020);
+    RotMatrixY(obj->rotY, &D_1F800020);
     D_1F800068.vx = obj->x.p.whole;
     D_1F800068.vy = obj->y.p.whole;
     D_1F800068.vz = obj->z.p.whole;

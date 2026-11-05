@@ -804,9 +804,9 @@ s32 func_80036A8C(GameObject *obj)
     u16 u;
     s32 m;
     r = 0;
-    obj->unk84 = 0x200;
+    obj->rotX = 0x200;
     t = obj->unkA8 - 0x200;
-    obj->unk88 = obj->unk88 + 0x100 & 0xfff;
+    obj->rotY = obj->rotY + 0x100 & 0xfff;
     obj->unkA8 = t;
     obj->velH = fixedMulCos((u8)obj->unkAA, t);
     obj->velV = fixedMulSin((u8)obj->unkAA, obj->unkA8);
@@ -1033,7 +1033,7 @@ static __inline__ s16 near_36F98(GameObject *obj, s32 d, s32 w)
 }
 
 #define SPIN(o) \
-    { if ((o)->animFrame & 1) (o)->unk88 = ((o)->unk88 + 0x300) & 0xfff; else (o)->unk88 = ((o)->unk88 - 0x300) & 0xfff; }
+    { if ((o)->animFrame & 1) (o)->rotY = ((o)->rotY + 0x300) & 0xfff; else (o)->rotY = ((o)->rotY - 0x300) & 0xfff; }
 
 #define IDX(o, idx) \
     idx = (o)->subState * 6; \
@@ -1069,7 +1069,7 @@ void func_80036F98(GameObject *obj)
         *(u16 *)((char *)D_8009B698_P_36F98Ptr + 0x22) = 0;
         D_8009C968.w2 = 0;
         obj->unkA8 = 0;
-        obj->unk74 = 0;
+        obj->scaleX = 0;
         obj->objectIndex = 0;
         c = D_800A5436[0];
         obj->objectIndex = c;
@@ -1077,12 +1077,12 @@ void func_80036F98(GameObject *obj)
         case 4:
             q = D_8009E454;
             k = *q;
-            obj->unk74 = k;
+            obj->scaleX = k;
             *q = 2;
             goto set94;
         case 7:
             p = (P_36F98 *)D_8009E454;
-            obj->unk74 = p->b0;
+            obj->scaleX = p->b0;
             p->b0 = 5;
         set94:
             obj->child = (s32)D_8009E454;
@@ -1129,8 +1129,8 @@ void func_80036F98(GameObject *obj)
         break;
     case 1:
         SPIN(obj);
-        obj->unk84 = 0x100;
-        obj->unk8C = 0;
+        obj->rotX = 0x100;
+        obj->rotZ = 0;
         tickAnimation(&PLAYER.obj);
         IDX(obj, idx);
         if (obj->animFrame & 1) a = 0xa0 - D_8007D5E4_U16Arr[idx]; else a = D_8007D5E4_U16Arr[idx] - 0x20;
@@ -1152,7 +1152,7 @@ void func_80036F98(GameObject *obj)
     case 2:
         if (obj->unk7A > 0 && --obj->unk7A <= 0) obj->active = 1;
         SPIN(obj);
-        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
+        obj->rotX = (obj->rotX - 0x80) & 0xfff;
         {
             s32 w, cc, g;
             if (obj->animFrame & 1) {
@@ -1196,7 +1196,7 @@ void func_80036F98(GameObject *obj)
     case 3:
         if (obj->unk7A > 0 && --obj->unk7A <= 0) obj->active = 1;
         SPIN(obj);
-        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
+        obj->rotX = (obj->rotX - 0x80) & 0xfff;
         {
             s32 w, cc, g;
             if (obj->animFrame & 1) {
@@ -1239,7 +1239,7 @@ void func_80036F98(GameObject *obj)
         break;
     case 4:
         SPIN(obj);
-        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
+        obj->rotX = (obj->rotX - 0x80) & 0xfff;
         if (--obj->timer <= 0) {
             s = DIR(obj);
             obj->timer = 2;
@@ -1262,7 +1262,7 @@ void func_80036F98(GameObject *obj)
     case 6:
         obj->unkAA = DIR(obj);
         SPIN(obj);
-        obj->unk84 = (obj->unk84 - 0x80) & 0xfff;
+        obj->rotX = (obj->rotX - 0x80) & 0xfff;
         obj->velH = fixedMulCos((u8)obj->unkAA, obj->unkA8);
         obj->velV = fixedMulSin((u8)obj->unkAA, obj->unkA8);
         applyObjectSpeedXY(obj);
@@ -1274,11 +1274,11 @@ void func_80036F98(GameObject *obj)
             obj->step++;
             m = D_8009C61A[0] - 5;
             if (obj->objectIndex == 7) {
-                *(u8 *)obj->child = obj->unk74;
+                *(u8 *)obj->child = obj->scaleX;
                 obj->objectIndex = 0;
             }
             if (obj->objectIndex == 4 && ((u8 *)obj->child)[2] == 0x1d) {
-                *(u8 *)obj->child = obj->unk74;
+                *(u8 *)obj->child = obj->scaleX;
                 obj->objectIndex = 0;
             }
             if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
@@ -1292,8 +1292,8 @@ void func_80036F98(GameObject *obj)
         break;
     case 7:
         SPIN(obj);
-        obj->unk8C = 0;
-        obj->unk84 = 0x200;
+        obj->rotZ = 0;
+        obj->rotX = 0x200;
         obj->animFrame = PLAYER.obj.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
@@ -1332,8 +1332,8 @@ void func_80036F98(GameObject *obj)
         break;
     case 8:
         SPIN(obj);
-        obj->unk8C = 0;
-        obj->unk84 = 0x200;
+        obj->rotZ = 0;
+        obj->rotX = 0x200;
         obj->animFrame = PLAYER.obj.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
@@ -1457,8 +1457,8 @@ void func_800384F0(GameObject *obj, s32 n)
     obj->x.p.whole = D_800A53AA;
     obj->y.p.whole = D_800A53AE[0];
     s = D_800A53B2[0];
-    obj->unk84 = 0;
-    obj->unk88 = 0;
-    obj->unk8C = 0;
+    obj->rotX = 0;
+    obj->rotY = 0;
+    obj->rotZ = 0;
     obj->z.p.whole = s;
 }

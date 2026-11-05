@@ -46,11 +46,11 @@ void updateItemPickupAnim(GameObject* obj)
             break;
     }
     if (obj->animFrame & 1) {
-        var_v0 = obj->unk8C + 24;
+        var_v0 = obj->rotZ + 24;
     } else {
-        var_v0 = obj->unk8C - 24;
+        var_v0 = obj->rotZ - 24;
     }
-    obj->unk8C = (int) (var_v0 & 0xFF);
+    obj->rotZ = (int) (var_v0 & 0xFF);
 }
 
 extern int D_80077274;
@@ -926,10 +926,10 @@ void initItemObject(GameObject* obj)
     obj->animFrame = 1;
     if (obj->id == ITEM_LOSTDWARF) {
         if ((u_long) (obj->param & 0x7F) >= 4U) {
-            obj->buffSize = 0x2000;
+            obj->scale = 0x2000;
             setHitbox(obj, (short) (init->hitboxX * 2), (short) (init->hitboxY * 2), (short) (init->hitboxW * 2), (short) (init->hitboxH * 2));
         } else {
-            obj->buffSize = 0x1000;
+            obj->scale = 0x1000;
         }
     }
 

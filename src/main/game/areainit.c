@@ -17,12 +17,12 @@ void func_80032DB4(GameObject *obj)
         readAnimFrameCount(obj);
         obj->step++;
         switch (obj->param) {
-        case 0: obj->unk84 = 0; break;
-        case 1: obj->unk84 = 0x56; break;
-        case 2: obj->unk84 = 0xab; break;
+        case 0: obj->rotX = 0; break;
+        case 1: obj->rotX = 0x56; break;
+        case 2: obj->rotX = 0xab; break;
         }
         obj->timer = 0x31;
-        obj->unk88 = 0;
+        obj->rotY = 0;
         break;
     case 1:
 #if REGION != REGION_JP
@@ -31,20 +31,20 @@ void func_80032DB4(GameObject *obj)
 #endif
         tickAnimation(obj);
         obj->visible = D_800A5399;
-        obj->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos((s16)obj->unk84, (s16)obj->unk88);
+        obj->h->p.whole = PLAYER.obj.h->p.whole + fixedMulCos((s16)obj->rotX, (s16)obj->rotY);
         if (obj->param)
         {
-            t = fixedMulSin((s16)obj->unk84, 8) + 8;
+            t = fixedMulSin((s16)obj->rotX, 8) + 8;
             obj->y.p.whole = PLAYER.obj.y.p.whole + t;
         }
         else
         {
-            t = fixedMulSin((s16)obj->unk84, 8) + 0x18;
+            t = fixedMulSin((s16)obj->rotX, 8) + 0x18;
             obj->y.p.whole = PLAYER.obj.y.p.whole + t;
         }
-        obj->d->p.whole = PLAYER.obj.d->p.whole + fixedMulSin((s16)obj->unk84, (s16)obj->unk88);
-        obj->unk84 = (obj->unk84 + 0x10) & 0xff;
-        obj->unk88 += obj->unk88 < 0xc;
+        obj->d->p.whole = PLAYER.obj.d->p.whole + fixedMulSin((s16)obj->rotX, (s16)obj->rotY);
+        obj->rotX = (obj->rotX + 0x10) & 0xff;
+        obj->rotY += obj->rotY < 0xc;
         obj->priority = D_800A53A7[0];
         if (((u8 *)&PLAYER.obj.touchFlag)[0])
             obj->timer = 0;

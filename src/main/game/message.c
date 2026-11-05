@@ -98,32 +98,32 @@ void func_8002EBC4(GameObject *obj)
     p = (u8 *)obj->parent;
     switch ((s16)(obj->animFrame = *(u16 *)(p + 0x2e) & 7)) {
     case 0: case 2:
-        obj->unk88 = 0x40;
-        obj->unk8C = 0xe0;
+        obj->rotY = 0x40;
+        obj->rotZ = 0xe0;
         break;
     case 1: case 3:
-        obj->unk88 = 0x40;
-        obj->unk8C = 0x20;
+        obj->rotY = 0x40;
+        obj->rotZ = 0x20;
         break;
     case 4:
-        obj->unk88 = 0x60;
-        obj->unk8C = 0;
+        obj->rotY = 0x60;
+        obj->rotZ = 0;
         break;
     case 5:
-        obj->unk88 = 0x20;
-        obj->unk8C = 0;
+        obj->rotY = 0x20;
+        obj->rotZ = 0;
         break;
     case 6:
-        obj->unk88 = 0x80;
-        obj->unk8C = 0x20;
+        obj->rotY = 0x80;
+        obj->rotZ = 0x20;
         break;
     case 7:
-        obj->unk88 = 0;
-        obj->unk8C = 0xe0;
+        obj->rotY = 0;
+        obj->rotZ = 0xe0;
         break;
     }
-    obj->x.p.whole = *(s16 *)(p + 0x12) + fixedMulCos((s16)obj->unk88, 8);
-    v = obj->unk88;
+    obj->x.p.whole = *(s16 *)(p + 0x12) + fixedMulCos((s16)obj->rotY, 8);
+    v = obj->rotY;
     obj->y.p.whole = *(s16 *)(p + 0x16) + fixedMulSin((s16)v, 8);
     obj->z.p.whole = *(s16 *)(p + 0x1a);
     if (tickAnimation(obj)) {
@@ -137,23 +137,23 @@ void func_8002EBC4(GameObject *obj)
 void func_8002ED1C(GameObject *obj)
 {
     s32 d;
-    obj->unk8C = 0;
+    obj->rotZ = 0;
     obj->visible = D_800A5399;
     if (D_800A539D == 2 && D_800A5416 >= -0xc7 && D_800A5434 != 0) {
         obj->anim = (*(void **)&D_80014C8C);
         readAnimFrameCount(obj);
         if (D_800A5416 > 0 && *D_800A53BC[0] == 0x47)
-            obj->unk8C = D_800A5424_S32;
+            obj->rotZ = D_800A5424_S32;
     } else if (D_800A539D == 4 && D_800A5416 >= -0xc7) {
         obj->anim = (*(void **)&D_80014C8C);
         readAnimFrameCount(obj);
         if (D_800A5416 > 0)
-            obj->unk8C = D_800A5424_S32;
+            obj->rotZ = D_800A5424_S32;
     } else {
         obj->anim = D_80014C90;
         readAnimFrameCount(obj);
         d = D_800A5424_S32;
-        obj->unk8C = (u8)((PLAYER.obj.animFrame & 1) ? d - 0x20 : d + 0x20);
+        obj->rotZ = (u8)((PLAYER.obj.animFrame & 1) ? d - 0x20 : d + 0x20);
     }
     obj->h->p.whole = ((Fix16 **)&D_800A53D8)[0]->p.whole;
     obj->y.p.whole = D_800A53AE[0] + 4;
@@ -376,19 +376,19 @@ void func_8002F56C(GameObject *obj)
         switch (obj->subState) {
         case 0:
             obj->timer = 200;
-            obj->unk84 = 0;
+            obj->rotX = 0;
             switch (obj->param) {
-            case 0: obj->velX = 0x10; obj->velY = -0x100; obj->unk88 = 1; break;
-            case 1: obj->velX = 0xe; obj->velY = -0x140; obj->unk88 = 2; break;
-            case 2: obj->velX = 0x12; obj->velY = -0x180; obj->unk88 = 1; break;
-            case 3: obj->velX = 0x11; obj->velY = -0x200; obj->unk88 = 1; break;
-            case 4: obj->velX = 0xf; obj->velY = -0x220; obj->unk88 = 2; break;
-            case 5: obj->velX = 0x10; obj->velY = -0x240; obj->unk88 = 1; break;
+            case 0: obj->velX = 0x10; obj->velY = -0x100; obj->rotY = 1; break;
+            case 1: obj->velX = 0xe; obj->velY = -0x140; obj->rotY = 2; break;
+            case 2: obj->velX = 0x12; obj->velY = -0x180; obj->rotY = 1; break;
+            case 3: obj->velX = 0x11; obj->velY = -0x200; obj->rotY = 1; break;
+            case 4: obj->velX = 0xf; obj->velY = -0x220; obj->rotY = 2; break;
+            case 5: obj->velX = 0x10; obj->velY = -0x240; obj->rotY = 1; break;
             }
             obj->subState++;
         case 1:
-            obj->unk84 = (obj->unk84 + obj->unk88) & 0xff;
-            obj->h->p.whole = fixedMulCos(obj->unk84, obj->velX);
+            obj->rotX = (obj->rotX + obj->rotY) & 0xff;
+            obj->h->p.whole = fixedMulCos(obj->rotX, obj->velX);
             obj->y.raw -= 0x10000;
             if (--obj->timer == 0)
                 obj->state = 2;

@@ -223,7 +223,7 @@ GameObject *obj;
         }
         uploadSpriteFrame(obj);
     }
-    ang = obj->unk8C;
+    ang = obj->rotZ;
     D_8009B698->w18 = x;
     D_8009B698->w1a = y;
     do {
@@ -426,8 +426,8 @@ void func_80046EC0(GameObject *o)
     y = (unsigned long)LZ_FILE_CTRL_Long >> 16;
     D_8009B6A0->x = x;
     D_8009B6A0->y = y;
-    a0 = o->unk8C & 0xff;
-    a1 = (o->unk8C + 0x80) & 0xff;
+    a0 = o->rotZ & 0xff;
+    a1 = (o->rotZ + 0x80) & 0xff;
     if (D_800A5435)
         k = D_8009B698->b7;
     else
@@ -590,7 +590,7 @@ void func_80047FC8(GameObject *obj)
     n = e[0];
     x = xy;
     y = (u32)xy >> 16;
-    ang = obj->unk8C;
+    ang = obj->rotZ;
     do {
         A = f->dx;
         B = f->dy;
@@ -741,11 +741,11 @@ void func_80048BF0(GameObject *obj)
         switch (SPAD->unk1C8 & 1) {
         case 0:
             d = VIEW_CAMERA.pos[2].p.whole - obj->z.p.whole;
-            k = obj->buffSize * (d * 7 + 0x1000) >> 12;
+            k = obj->scale * (d * 7 + 0x1000) >> 12;
             break;
         case 1:
             d = obj->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
-            k = obj->buffSize * (d * 7 + 0x1000) >> 12;
+            k = obj->scale * (d * 7 + 0x1000) >> 12;
             break;
         }
     } else {
@@ -817,7 +817,7 @@ void func_80049134(GameObject *obj)
     e = (s16 *)d;
     D_1F800078 = e[0];
     f = (SprFrag *)(obj->spriteBank + e[1]);
-    ang = obj->unk8C;
+    ang = obj->rotZ;
     do {
         A = f->dx;
         B = f->dy;
@@ -907,17 +907,17 @@ void func_80049994(GameObject *obj)
         switch (SPAD->unk1C8 & 1) {
         case 0:
             d = VIEW_CAMERA.pos[2].p.whole - obj->z.p.whole;
-            s = obj->buffSize * (d * 7 + 0x1000) >> 12;
+            s = obj->scale * (d * 7 + 0x1000) >> 12;
             break;
         case 1:
             d = obj->x.p.whole - VIEW_CAMERA.pos[0].p.whole;
-            s = obj->buffSize * (d * 7 + 0x1000) >> 12;
+            s = obj->scale * (d * 7 + 0x1000) >> 12;
             break;
         }
     } else {
         s = SPAD->loadSlots[4];
     }
-    ang = obj->unk8C;
+    ang = obj->rotZ;
     do {
         A = (f->dx * s - 0x1800) >> 12;
         B = (f->dy * s - 0x1800) >> 12;

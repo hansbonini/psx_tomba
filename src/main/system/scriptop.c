@@ -108,8 +108,8 @@ void func_8003CE18(void)
         obj->unk9C = 0;
         obj->unkE = 0;
         obj->priority = 0;
-        obj->unk74 = 0;
-        obj->unk76 = 0;
+        obj->scaleX = 0;
+        obj->scaleY = 0;
         obj->child = 0;
         switch (k) {
         case 9:
@@ -145,8 +145,8 @@ void func_8003CE18(void)
         obj->unk68 = 0;
         obj->priority = 0;
         obj->unkE = 0;
-        obj->unk74 = 0;
-        obj->unk76 = 0;
+        obj->scaleX = 0;
+        obj->scaleY = 0;
         obj->child = 0;
         setObjState(obj, 0, 0, 0);
         SCRIPT_OBJECTS[idx] = obj;
@@ -193,8 +193,8 @@ void func_8003D0E4(void)
     a = g->d1194;
     b = g->d1198;
     if (obj != 0) {
-        obj->unk74 = a;
-        obj->unk76 = b;
+        obj->scaleX = a;
+        obj->scaleY = b;
         switch (obj->type & 0x7f) {
         case 0x18:
             func_80112AA4(obj);
@@ -303,8 +303,8 @@ void scriptOpShowMessageBox(void)
             obj->parent = showMessageBoxDirect(s->a[0], s->a[1], &tmp);
             switch (obj->type & 0x7f) {
             case 0x18:
-                obj->unk74 = s->a[2];
-                obj->unk76 = 0;
+                obj->scaleX = s->a[2];
+                obj->scaleY = 0;
                 func_80112AA4(obj);
                 (*(u8 *)&D_8009C618) = 2;
                 D_8009BCA7 = 1;
@@ -318,12 +318,12 @@ void scriptOpShowMessageBox(void)
                 D_8009C618[0] = 2;
                 D_8009BCA7_U8Arr[0] = 1;
                 if (s->a[2] & 0x80) {
-                    obj->unk74 = obj->animFrame + (s->a[2] & 0x7f);
+                    obj->scaleX = obj->animFrame + (s->a[2] & 0x7f);
                 } else {
                     obj->animFrame = obj->touchFlag - 1;
-                    obj->unk74 = obj->animFrame + s->a[2];
+                    obj->scaleX = obj->animFrame + s->a[2];
                 }
-                obj->unk76 = 0;
+                obj->scaleY = 0;
                 func_800EBDD8(obj);
                 {
                     u16 *k = &PLAYER.obj.animFrame;
@@ -366,7 +366,7 @@ void scriptOpShowMessageBox(void)
             L2:
                 obj->velX = s->a[0];
                 obj->velY = s->a[1];
-                obj->unk78 = s->a[2];
+                obj->scaleZ = s->a[2];
             }
             }
             obj->unk6A = 1;
@@ -937,8 +937,8 @@ static __inline__ s32 op81_3E408(void)
     obj = SCRIPT_OBJECTS[g->d1190];
     b = g->d1198;
     if (obj != 0) {
-        obj->unk74 = a;
-        obj->unk76 = b;
+        obj->scaleX = a;
+        obj->scaleY = b;
         switch (obj->type & 0x7f) {
         case 0x18:
             func_80112AA4(obj);

@@ -260,7 +260,7 @@ void func_80038AC0(GameObject *o)
                 advanceAnimFrame(&G, 0);
                 o->unkAA = TK(2);
                 D_8009B6A0->mode = 1;
-                G.unk8C = 0;
+                G.rotZ = 0;
                 o->touchFlag = 0;
                 o->timer = 1;
                 o->step++;
@@ -271,7 +271,7 @@ void func_80038AC0(GameObject *o)
                 advanceAnimFrame(&G, 0);
                 o->unkAA = TK(2);
                 D_8009B6A0->mode = 1;
-                G.unk8C = 0;
+                G.rotZ = 0;
                 o->touchFlag = 0;
                 o->timer = 1;
                 o->step++;
@@ -296,7 +296,7 @@ void func_80038AC0(GameObject *o)
         o->velV = fixedMulSin(o->unkAA, o->unkA8);
         applyObjectSpeedXY(o);
         if (((s16 (*)(GameObject *))func_8003887C)(o) == 0) {
-            G.unk8C = 0;
+            G.rotZ = 0;
             if (o->unkA8 < 0x500) {
                 o->unkAA = TB(2);
                 o->velX = o->h->p.whole + fixedMulCos(((u16)o->unkAA + 0x80) & 0xff, 0x18);
@@ -317,7 +317,7 @@ void func_80038AC0(GameObject *o)
         o->h->p.whole = o->velX + fixedMulCos(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 0x18);
         o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 0x18);
         D_8009B6A0->angle += TB(1) >> 1;
-        G.unk8C = 0;
+        G.rotZ = 0;
         if (o->animFrame & 1) {
             D_8009B6A0->frame = (D_8009B6A0->angle < -0x20) ? 2 : 1;
             if (D_8009B6A0->angle < -0x40) {
@@ -416,8 +416,8 @@ void func_80038AC0(GameObject *o)
         if (o->unkAA > 0xff) o->unkAA -= 0x100;
         if (o->unkAA < 0) o->unkAA += 0x100;
 #if REGION != REGION_JP
-        if (o->animFrame & 1) o->unk8C = (o->unkAA + 0x80) & 0xff;
-        else o->unk8C = (u8)o->unkAA;
+        if (o->animFrame & 1) o->rotZ = (o->unkAA + 0x80) & 0xff;
+        else o->rotZ = (u8)o->unkAA;
 #endif
         i = o->subState * 6;
         switch (o->animFrame) {
@@ -471,8 +471,8 @@ void func_80038AC0(GameObject *o)
         if (o->unkAA > 0xff) o->unkAA -= 0x100;
         if (o->unkAA < 0) o->unkAA += 0x100;
 #if REGION != REGION_JP
-        if (o->animFrame & 1) o->unk8C = (o->unkAA + 0x80) & 0xff;
-        else o->unk8C = (u8)o->unkAA;
+        if (o->animFrame & 1) o->rotZ = (o->unkAA + 0x80) & 0xff;
+        else o->rotZ = (u8)o->unkAA;
 #endif
         i = o->subState * 6;
         switch (o->animFrame) {
@@ -568,7 +568,7 @@ void func_8003A10C(GameObject *o)
             else
                 o->velY = t->y.p.whole;
         }
-        o->unk8C = D_800A5420;
+        o->rotZ = D_800A5420;
         break;
     }
     if (PLAYER.obj.subState != 0x32) {
@@ -612,11 +612,11 @@ void func_8003A384(GameObject *obj)
             break;
 #endif
         switch (obj->animFrame) {
-        case 0: case 1: case 2: case 3: obj->unk8C = 0; break;
-        case 4: obj->unk8C = 0x20; break;
-        case 5: obj->unk8C = 0xe0; break;
-        case 6: obj->unk8C = 0x40; break;
-        case 7: obj->unk8C = 0xc0; break;
+        case 0: case 1: case 2: case 3: obj->rotZ = 0; break;
+        case 4: obj->rotZ = 0x20; break;
+        case 5: obj->rotZ = 0xe0; break;
+        case 6: obj->rotZ = 0x40; break;
+        case 7: obj->rotZ = 0xc0; break;
         }
         break;
     case 1:
@@ -626,11 +626,11 @@ void func_8003A384(GameObject *obj)
             break;
 #endif
         switch (obj->animFrame) {
-        case 0: case 1: case 2: case 3: obj->unk8C = 0; break;
-        case 4: obj->unk8C = 0x20; break;
-        case 5: obj->unk8C = 0xe0; break;
-        case 6: obj->unk8C = 0x40; break;
-        case 7: obj->unk8C = 0xc0; break;
+        case 0: case 1: case 2: case 3: obj->rotZ = 0; break;
+        case 4: obj->rotZ = 0x20; break;
+        case 5: obj->rotZ = 0xe0; break;
+        case 6: obj->rotZ = 0x40; break;
+        case 7: obj->rotZ = 0xc0; break;
         }
         break;
     case 2:
@@ -640,11 +640,11 @@ void func_8003A384(GameObject *obj)
             break;
 #endif
         switch (obj->animFrame) {
-        case 0: case 1: case 2: case 3: obj->unk8C = 0; break;
-        case 4: obj->unk8C = 0x20; break;
-        case 5: obj->unk8C = 0xe0; break;
-        case 6: obj->unk8C = 0x40; break;
-        case 7: obj->unk8C = 0xc0; break;
+        case 0: case 1: case 2: case 3: obj->rotZ = 0; break;
+        case 4: obj->rotZ = 0x20; break;
+        case 5: obj->rotZ = 0xe0; break;
+        case 6: obj->rotZ = 0x40; break;
+        case 7: obj->rotZ = 0xc0; break;
         }
         break;
     case 3:

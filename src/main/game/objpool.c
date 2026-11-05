@@ -35,7 +35,7 @@ void func_80057C74(GameObject *o)
             o->step++;
             pl->visible = 1;
             setObjState(pl, 5, 0x41, 0);
-            pl->unk8C = 0;
+            pl->rotZ = 0;
             pl->animFrame = 0;
             func_800EDDDC(pl, 0, 0);
         } else {
@@ -631,9 +631,9 @@ void func_80058E14(GameObject *obj)
         f = pl->obj.priority;
         obj->drawType = DRAW_SPRITE_ROTATED;
         obj->animFrame = 0;
-        obj->unk84 = 0;
-        obj->unk88 = 0;
-        obj->unk8C = 0;
+        obj->rotX = 0;
+        obj->rotY = 0;
+        obj->rotZ = 0;
         setHitbox(obj, 0x10, 0x10, 0x20, 0x20);
         obj->drawFlags = 0x81;
         obj->priority = f + 1;

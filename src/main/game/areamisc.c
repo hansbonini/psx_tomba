@@ -108,21 +108,21 @@ void func_80033964(GameObject *o)
         o->state++;
         o->touchFlag = 0;
         o->subState = 0;
-        o->unk84 = 0;
-        o->unk88 = 0;
-        o->unk8C = 0;
+        o->rotX = 0;
+        o->rotY = 0;
+        o->rotZ = 0;
 #if REGION == REGION_JP
         if (o->animFrame == 1) {
-            o->unk88 = -0x400;
+            o->rotY = -0x400;
         }
 #else
         if (o->animFrame == 1) {
-            o->unk88 = -0x400;
+            o->rotY = -0x400;
         } else if (o->animFrame == 2) {
-            o->unk88 = 0x800;
+            o->rotY = 0x800;
             o->active = 2;
         } else if (o->animFrame == 3) {
-            o->unk88 = 0x400;
+            o->rotY = 0x400;
             o->active = 2;
         }
 #endif
