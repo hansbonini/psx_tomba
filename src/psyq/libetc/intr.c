@@ -37,6 +37,33 @@ extern volatile s32* D_800974AC;
 void HookEntryInt(jmp_buf env);
 extern volatile u16* D_800974A4;
 
+extern const char D_800161F8[];
+void* startIntr(void);
+void (*setIntr(int index, void (*fn)()))();
+u16* stopIntr(void);
+u16* restartIntr(void);
+
+struct Intr D_80096418_d asm("D_80096418") = { 0 };
+u32 D_80097480_d[8] asm("D_80097480") = {
+    (u32)D_800161F8, 0x00000000, (u32)setIntr, (u32)startIntr,
+    (u32)stopIntr, 0x00000000, (u32)restartIntr, (u32)&D_80096418_d,
+};
+u32 D_800974A0_d[1] asm("D_800974A0") = {
+    (u32)D_80097480_d,
+};
+u32 D_800974A4_d[1] asm("D_800974A4") = {
+    0x1F801070,
+};
+u32 D_800974A8_d[1] asm("D_800974A8") = {
+    0x1F801074,
+};
+u32 D_800974AC_d[1] asm("D_800974AC") = {
+    0x1F8010F0,
+};
+u32 D_800974B0_d[1] asm("D_800974B0") = {
+    0x00000000,
+};
+
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", ResetCallback);
 
 int ResetCallback(void) { return D_800974A0->start(); }
@@ -114,7 +141,7 @@ typedef struct IntrEnv {
 extern IntrEnv D_80096418_Env asm("D_80096418");
 extern s32 D_800974B0;
 
-INCLUDE_RODATA("nonmatchings/psyq/libetc/intr", D_800161F8);
+const char D_800161F8[] = "$Id: intr.c,v 1.74 1996/12/04 07:30:16 makoto Exp $";
 
 // INCLUDE_ASM("nonmatchings/psyq/libetc/intr", trapIntr);
 void trapIntr()
@@ -239,8 +266,4 @@ const PsyqStamp libapi_stamp SECTION(".text") = PSYQ_STAMP(PSYQ_LIB_API, 4, 3, 0
 #else
 const PsyqStamp libapi_stamp SECTION(".text") = PSYQ_STAMP(PSYQ_LIB_API, 4, 2, 0, 33, 6, 53, 26);
 #endif
-
-INCLUDE_RODATA("nonmatchings/psyq/libetc/intr", D_80016264);
-
-INCLUDE_RODATA("nonmatchings/psyq/libetc/intr", D_80016280);
 

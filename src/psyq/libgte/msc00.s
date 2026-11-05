@@ -41,3 +41,12 @@ glabel InitGeom
 endlabel InitGeom
     nop
     nop
+
+.section .data, "wa"
+
+dlabel D_800915C0
+    .word 0x00000000
+    .word 0x00000000
+    .word 0x00000000
+    .word 0x00000000
+enddlabel D_800915C0

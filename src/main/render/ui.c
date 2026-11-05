@@ -1962,7 +1962,7 @@ void func_80029008(void)
     }
 }
 
-INCLUDE_RODATA("nonmatchings/main/render/ui", D_80010368);
+const u8 D_80010368_ro[8] asm("D_80010368") = { 0x00, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00 };
 
 // INCLUDE_ASM("nonmatchings/main/render/ui", func_8002907C);
 

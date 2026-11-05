@@ -154,7 +154,35 @@ typedef struct Result_t {
 extern CdlCB (*CD_CBREADY)(u_char, u_char*); 
 extern CdlCB (*CD_CBSYNC)(u_char, u_char*);  
 
-INCLUDE_RODATA("nonmatchings/psyq/libcd/bios", D_80015F34);
+const char D_80015F34[] = "CdlReadS";
+const char D_80015F40[] = "CdlSeekP";
+const char D_80015F4C[] = "CdlSeekL";
+const char D_80015F58[] = "CdlGetTD";
+const char D_80015F64[] = "CdlGetTN";
+const char D_80015F70[] = "CdlGetlocP";
+const char D_80015F7C[] = "CdlGetlocL";
+const char D_80015F88[] = "?";
+const char D_80015F8C[] = "CdlSetmode";
+const char D_80015F98[] = "CdlSetfilter";
+const char D_80015FA8[] = "CdlDemute";
+const char D_80015FB4[] = "CdlMute";
+const char D_80015FBC[] = "CdlReset";
+const char D_80015FC8[] = "CdlPause";
+const char D_80015FD4[] = "CdlStop";
+const char D_80015FDC[] = "CdlStandby";
+const char D_80015FE8[] = "CdlReadN";
+const char D_80015FF4[] = "CdlBackword";
+const char D_80016000[] = "CdlForward";
+const char D_8001600C[] = "CdlPlay";
+const char D_80016014[] = "CdlSetloc";
+const char D_80016020[] = "CdlNop";
+const char D_80016028[] = "CdlSync";
+const char D_80016030[] = "DiskError";
+const char D_8001603C[] = "DataEnd";
+const char D_80016044[] = "Acknowledge";
+const char D_80016050[] = "Complete";
+const char D_8001605C[] = "DataReady";
+const char D_80016068[] = "NoIntr";
 
 extern int CD_DEBUG; // CD_DEBUG
 extern u_char CD_COM;

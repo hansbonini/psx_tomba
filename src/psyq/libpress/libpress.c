@@ -1,5 +1,73 @@
 #include "common.h"
 
+u32 mdec_iq[33] = {
+    0x40000001, 0x13101002, 0x16161310, 0x16161616,
+    0x1B1A181A, 0x1A1A1B1B, 0x1B1B1A1A, 0x1D1D1D1B,
+    0x1D222222, 0x1B1B1D1D, 0x20201D1D, 0x26252222,
+    0x22232325, 0x28262623, 0x30302828, 0x38382E2E,
+    0x5345453A, 0x13101002, 0x16161310, 0x16161616,
+    0x1B1A181A, 0x1A1A1B1B, 0x1B1B1A1A, 0x1D1D1D1B,
+    0x1D222222, 0x1B1B1D1D, 0x20201D1D, 0x26252222,
+    0x22232325, 0x28262623, 0x30302828, 0x38382E2E,
+    0x5345453A,
+};
+u32 mdec_coef[33] = {
+    0x60000000, 0x5A825A82, 0x5A825A82, 0x5A825A82,
+    0x5A825A82, 0x6A6D7D8A, 0x18F8471C, 0xB8E3E707,
+    0x82759592, 0x30FB7641, 0x89BECF04, 0xCF0489BE,
+    0x764130FB, 0xE7076A6D, 0xB8E38275, 0x7D8A471C,
+    0x959218F8, 0xA57D5A82, 0x5A82A57D, 0xA57D5A82,
+    0x5A82A57D, 0x8275471C, 0x6A6D18F8, 0xE7079592,
+    0xB8E37D8A, 0x89BE30FB, 0xCF047641, 0x7641CF04,
+    0x30FB89BE, 0xB8E318F8, 0x82756A6D, 0x95927D8A,
+    0xE707471C,
+};
+u32 d0_madr_d[1] asm("d0_madr") = {
+    0x1F801080,
+};
+u32 d0_bcr_d[1] asm("d0_bcr") = {
+    0x1F801084,
+};
+u32 d0_chcr_d[1] asm("d0_chcr") = {
+    0x1F801088,
+};
+u32 d1_madr_d[1] asm("d1_madr") = {
+    0x1F801090,
+};
+u32 d1_bcr_d[1] asm("d1_bcr") = {
+    0x1F801094,
+};
+u32 d1_chcr_d[1] asm("d1_chcr") = {
+    0x1F801098,
+};
+u32 d2_madr_d[1] asm("d2_madr") = {
+    0x1F8010A0,
+};
+u32 d2_bcr_d[1] asm("d2_bcr") = {
+    0x1F8010A4,
+};
+u32 d2_chcr_d[1] asm("d2_chcr") = {
+    0x1F8010A8,
+};
+u32 d3_madr_d[1] asm("d3_madr") = {
+    0x1F8010B0,
+};
+u32 d3_bcr_d[1] asm("d3_bcr") = {
+    0x1F8010B4,
+};
+u32 d3_chcr_d[1] asm("d3_chcr") = {
+    0x1F8010B8,
+};
+u32 mdec0_d[1] asm("mdec0") = {
+    0x1F801820,
+};
+u32 mdec1_d[1] asm("mdec1") = {
+    0x1F801824,
+};
+u32 d_pcr_d[1] asm("d_pcr") = {
+    0x1F8010F0,
+};
+
 extern u_int volatile* d1_madr;
 extern u_int volatile* d1_bcr;
 

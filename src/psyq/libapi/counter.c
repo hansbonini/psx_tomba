@@ -13,6 +13,17 @@ extern int (*_interruptReg)[2];
 extern volatile RootCounter (*_rootCounter0)[3];
 extern long _interruptMasks[4];
 
+u32 _interruptReg_d[1] asm("_interruptReg") = {
+    0x1F801070,
+};
+u32 _rootCounter0_d[1] asm("_rootCounter0") = {
+    0x1F801100,
+};
+u32 _interruptMasks_d[6] asm("_interruptMasks") = {
+    0x00000010, 0x00000020, 0x00000040, 0x00000001,
+    0x00000000, 0x00000000,
+};
+
 // INCLUDE_ASM("nonmatchings/psyq/libsnd/ut_roff", SetRCnt);
 
 long SetRCnt(u_long counter, u_short targetVal, long mode) {

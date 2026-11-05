@@ -17,8 +17,6 @@ Callback setIntrDMA(int index, Callback callback);
 void trapIntrDMA(void);
 void DMA_memclr(int* ptr, int size);
 
-extern char* D_80016264[];
-extern char* D_80016280[];
 extern volatile unsigned long* D_800974DC;
 extern Callback D_800974E0[8];
 extern unsigned long* D_80097500;
@@ -48,9 +46,9 @@ void trapIntrDMA(void) {
         }
     }
     if (((*D_800974DC & 0xFF000000) == 0x80000000) || (*D_800974DC & 0x8000)) {
-        printf(D_80016264, *D_800974DC);
+        printf("DMA bus error: code=%08x\n", *D_800974DC);
         for (i = 0; i < 7; i++) {
-            printf(D_80016280, i, D_80097500[4 * i]);
+            printf("MADR[%d]=%08x\n", i, D_80097500[4 * i]);
         }
     }
 }
