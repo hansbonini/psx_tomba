@@ -44,7 +44,7 @@ void func_8012A7A4(GameObject *o)
         func_8012A634(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC == 0x28) {
             switch (o->subState) {
             case 0:
@@ -311,7 +311,7 @@ void func_8012B22C(GameObject *o)
         func_8012B0AC(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC == 0x28) {
             switch (o->subState) {
             case 0:

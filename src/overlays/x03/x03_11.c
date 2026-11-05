@@ -174,7 +174,7 @@ void func_8012F400(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_8012EFFC(o);
         break;
     case 2:
@@ -236,7 +236,7 @@ void func_8012FB00(GameObject *o)
         break;
     case 1:
         tickAnimation(o);
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (!(D_8009C608.purifiedAreas & 0x10)) {
             if (D_8009C068.event_35 == 0) func_8012F510(o);
             else func_8012F69C(o);
@@ -2052,7 +2052,7 @@ void func_801341B0(GameObject *o)
         func_80134048(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (D_8009C068.event_07 == 1 && D_8009C068.unk66d == 0) {

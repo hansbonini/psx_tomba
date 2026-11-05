@@ -164,7 +164,7 @@ void func_80116210(GameObject *o)
             o->x.p.whole = p->x.p.whole + q[0];
             o->y.p.whole = p->y.p.whole + q[1];
             if (tickAnimation(o)) o->state++;
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
         break;
@@ -213,7 +213,7 @@ void func_80116464(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subtype) {
         case 0:
             if (tickAnimation(o)) o->state = 3;
@@ -275,7 +275,7 @@ void func_8011662C(GameObject *o)
                 o->state++;
             }
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
     case 3:
@@ -319,7 +319,7 @@ void func_801168F0(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o)) tickAnimation(o);
+        if (cullAndQueueDraw(o)) tickAnimation(o);
         if (o->subtype != 1) break;
         switch (o->subState) {
         case 0:

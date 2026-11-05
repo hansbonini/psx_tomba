@@ -138,10 +138,10 @@ void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4)
     POLY_FT4* poly;
 
     if (sprt_id == 0) {
-        int scale = D_8007D988[arg4];
+        int scale = NEG_SIN_TABLE[arg4];
         pad = (u_int)scale >> 11;
     } else {
-        int scale = D_8007D988[arg4];
+        int scale = NEG_SIN_TABLE[arg4];
         pad = ((scale << 6) >> 16) + 4;
     }
 

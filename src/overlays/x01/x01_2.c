@@ -158,7 +158,7 @@ void func_8011EE60(GameObject *o)
         o->state = 1;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->visible) {
             switch (o->subState) {
             case 0:
@@ -173,7 +173,7 @@ void func_8011EE60(GameObject *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             o->subState = 1;
@@ -217,13 +217,13 @@ void func_8011F0CC(GameObject *o)
         o->hitHeight = 0x1c;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         switch (o->subState) {
         case 0:
             o->subState++;
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             func_80117CE8(o->h->p.whole, o->y.p.whole, o->d->p.whole);
             func_800322A4(2, o->h->p.whole, o->y.p.whole, o->d->p.whole);
             v.x.p.whole = o->h->p.whole;
@@ -237,7 +237,7 @@ void func_8011F0CC(GameObject *o)
             if (--o->timer == -1) {
                 o->subState++;
             } else if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 1) {
-                func_80022E44(o);
+                cullAndQueueDraw(o);
             }
             break;
         case 2:
@@ -346,7 +346,7 @@ void func_8011F43C(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subtype) {
         case 0:
             s = o->subState;
@@ -656,7 +656,7 @@ void func_8011FD7C(GameObject *o)
                 break;
             }
         } else {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             switch (o->subState) {
             case 0:
                 if (onscreen_1FD7C(o)) o->subState++;

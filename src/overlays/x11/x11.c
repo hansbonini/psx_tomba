@@ -49,7 +49,7 @@ void func_80115EA8(GameObject *o)
         o->state++;
         break;
     case 1:
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             o->unk30 += o->velH << 8;
             o->unk34 += o->velV << 8;
             o->unk34 += o->velY << 8;
@@ -97,14 +97,14 @@ void func_801161A4(GameObject *o)
     case 1:
         tickAnimation(o);
         applyAnimVelocityX(o, o->animFrame);
-        o->y.raw -= (D_8007DB88[*(u8 *)&o->unk88] * o->velV) >> 4;
+        o->y.raw -= (COS_TABLE[*(u8 *)&o->unk88] * o->velV) >> 4;
         o->unk88 = (o->unk88 + 1) & 0xff;
         if (o->unk88 == 0)
             o->step++;
         break;
     case 2:
         tickAnimation(o);
-        o->y.raw -= (D_8007DB88[*(u8 *)&o->unk88] * o->velV) >> 4;
+        o->y.raw -= (COS_TABLE[*(u8 *)&o->unk88] * o->velV) >> 4;
         o->unk88 = (o->unk88 + 1) & 0xff;
         if (o->unk88 == 0)
             o->step++;
@@ -145,7 +145,7 @@ void func_801162F8(GameObject *o)
         setanim_162F8(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_801161A4(o);
         break;
     case 2:

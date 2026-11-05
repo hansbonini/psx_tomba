@@ -84,7 +84,7 @@ void func_80121468(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC == 0) {
             func_80120E78(o);
             func_801211A0(o);
@@ -96,7 +96,7 @@ void func_80121468(GameObject *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (o->unkC == 0) {
@@ -388,7 +388,7 @@ void func_80122688(GameObject *o)
         readAnimFrameCount(o);
         goto next;
     case 1:
-        if (func_80022E44(o) == 0) break;
+        if (cullAndQueueDraw(o) == 0) break;
         p = (GameObject *)o->unk94;
         switch (o->subtype) {
         case 0:
@@ -562,10 +562,10 @@ typedef struct {
 } PFT4_80123FD0_23314;
 
 #define setSemiTrans(p, abe) ((abe) ? ((p)->code |= 2) : ((p)->code &= ~2))
-#define SN(i) D_8007DB88[i]
+#define SN(i) COS_TABLE[i]
 #define a1 ((ang + 0x80) & 0xff)
 #define a0 (ang & 0xff)
-#define CS(i) D_8007D988[i]
+#define CS(i) NEG_SIN_TABLE[i]
 
 void func_80123314(GameObject *o)
 {
@@ -1783,7 +1783,7 @@ void updateEvilGrass(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) == 0)
+        if (cullAndQueueDraw(o) == 0)
             break;
         switch (o->subState) {
         case 0:
@@ -2001,7 +2001,7 @@ s32 func_80126928(O_26928 *o)
     if (p->w2 != 0) {
         s32 i = (p->w2 & 0xff) * 2;
         a = (u32)(p->w4 * *(s16 *)((char *)D_8007D788 + i)) >> 12;
-        b = (u32)(p->w4 * *(s16 *)((char *)D_8007DB88 + i)) >> 12;
+        b = (u32)(p->w4 * *(s16 *)((char *)COS_TABLE + i)) >> 12;
     } else {
         a = 0;
         b = p->w4;
@@ -4323,15 +4323,15 @@ void func_8012C03C(GameObject *o)
         break;
     case 1:
         if (o->subState == 1 && ((u8*)&D_8009BC98.unk12)[0]) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unk9E == 0) {
             switch (o->subState) {
             case 0:
                 if (o->step != 0 && ((u8*)&D_8009BC98.unk12)[0]) {
-                    func_80022E44(o);
+                    cullAndQueueDraw(o);
                     break;
                 }
                 if (o->unk98 == 0) {
@@ -4401,11 +4401,11 @@ void func_8012C03C(GameObject *o)
         switch (o->subState) {
         case 0:
             if (((u8*)&D_8009BC98.unk12)[0]) {
-                func_80022E44(o);
+                cullAndQueueDraw(o);
                 break;
             }
             func_8012A160(o);
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             if (o->unk98 == 0) {
                 o->active = 2;
                 o->state = 2;
@@ -4415,15 +4415,15 @@ void func_8012C03C(GameObject *o)
             break;
         case 1:
             func_80129B64(o);
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         case 2:
             func_801299E8(o);
-            if (func_80022E44(o) == 0)
+            if (cullAndQueueDraw(o) == 0)
                 o->state = 3;
             break;
         case 3:
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             switch (o->step) {
             case 0:
                 ((u8*)&D_8009BC98.unk0F)[0] = 1;
@@ -4683,7 +4683,7 @@ void updateChick(O_2D220 *o)
             o->st = o->st + 1;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->vis != 0) {
             switch (o->step) {
             case 0:
@@ -4696,7 +4696,7 @@ void updateChick(O_2D220 *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->vis != 0) {
             switch (o->step) {
             case 0:
@@ -4803,7 +4803,7 @@ void updateEgg(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->visible) {
             if (o->subState == 0) {
                 if (o->step == 0) {
@@ -4816,7 +4816,7 @@ void updateEgg(GameObject *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->visible) {
             switch (o->subState) {
             case 0:
@@ -4972,7 +4972,7 @@ void func_8012DC08(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) == 0)
+        if (cullAndQueueDraw(o) == 0)
             break;
         if (o->unk68) {
             if (o->unk68 == 1) {

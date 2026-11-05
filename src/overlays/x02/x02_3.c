@@ -147,7 +147,7 @@ void func_80118680(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_801184C8(o);
         break;
     case 2:

@@ -330,7 +330,7 @@ void func_80118960(GameObject *o)
         o->active = 2;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;

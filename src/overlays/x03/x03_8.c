@@ -45,7 +45,7 @@ void func_8012BBA8(GameObject *o)
         func_8012B9DC(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC == 0x29) {
             switch (o->subState) {
             case 0:

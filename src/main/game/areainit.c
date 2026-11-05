@@ -101,7 +101,7 @@ extern s32 *D_8007D2F0[];
 void func_800330EC(GameObject *obj)
 {
     char c;
-    func_80022E44(obj);
+    cullAndQueueDraw(obj);
     switch (obj->subState) {
     case 0:
         switch (obj->id) {

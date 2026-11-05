@@ -54,7 +54,7 @@ void func_8011828C(GameObject *o)
                 o->x.raw += 0xa0000;
                 break;
             }
-            if (!func_80022E44(o)) o->subState = 0;
+            if (!cullAndQueueDraw(o)) o->subState = 0;
             break;
         }
         break;
@@ -82,7 +82,7 @@ void func_8011845C(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -252,7 +252,7 @@ void func_80118B88(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         tickAnimation(o);
         break;
     case 2:
@@ -340,7 +340,7 @@ void func_80118C7C(GameObject *o)
             }
             break;
         case 2:
-            if (func_80022E44(o)) {
+            if (cullAndQueueDraw(o)) {
                 tickAnimation(o);
             }
             break;
@@ -481,7 +481,7 @@ void func_80119158(GameObject *o)
         if (o->unk94 == 0)
             o->unk8C = fixedMulSin2(o->velH, 0x40);
     }
-    func_80022E44(o);
+    cullAndQueueDraw(o);
 }
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_1", func_801192E0);
@@ -631,7 +631,7 @@ void func_80119BC4(GameObject *o)
         o->unk8C = 0;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subtype) {
         case 0:
             r = func_80119A14(o);
@@ -820,7 +820,7 @@ void func_8011A318(GameObject *o)
         o->hitHeight = o->hitOffsetY = D_80134DBC[o->subtype].c;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_8011A124(o);
         o->touchFlag = 0;
         break;
@@ -855,7 +855,7 @@ s32 func_8011A674(GameObject *o)
     a += 0x80;
     a &= 0xff;
     dy = (o->velH * D_8007D788[a]) >> 12;
-    dx = (o->velH * D_8007DB88[a]) >> 12;
+    dx = (o->velH * COS_TABLE[a]) >> 12;
     *(*(s32 **)&D_800A53D8) += dx << 8;
     ((s32*)&PLAYER.obj.y.raw)[0] += dy << 8;
     o->velH += 0x80;
@@ -976,7 +976,7 @@ void func_8011ABC0(GameObject *o)
 static __inline__ void move_1AD84(GameObject *o)
 {
     o->velY = (o->velV * D_8007D788[*(u8 *)&o->unk8C]) >> 12;
-    o->velX = (o->velV * D_8007DB88[*(u8 *)&o->unk8C]) >> 12;
+    o->velX = (o->velV * COS_TABLE[*(u8 *)&o->unk8C]) >> 12;
     if (o->animFrame == 0) {
         o->velX = -o->velX;
         o->velY = -o->velY;

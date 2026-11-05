@@ -634,7 +634,7 @@ void func_80036494(GameObject *obj)
         obj->state++;
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         switch (obj->subState) {
         case 0:
             func_80034C14(obj);
@@ -1412,7 +1412,7 @@ void func_800383AC(GameObject *obj)
         obj->state++;
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         switch (obj->subState) {
         case 0:
             func_80036F98(obj);

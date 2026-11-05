@@ -415,7 +415,7 @@ void func_80130630(GameObject *o)
         break;
     case 1:
         if (o->subtype) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             switch (o->subState) {
             case 0:
                 func_8012F5D0(o);
@@ -437,7 +437,7 @@ void func_80130630(GameObject *o)
                 break;
             }
         } else {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             switch (o->subState) {
             case 0:
                 if (o->step == 0) {
@@ -502,7 +502,7 @@ void func_80130914(GameObject *o)
         o->step = 0;
         break;
     case 1:
-        if (!func_80022E44(o)) break;
+        if (!cullAndQueueDraw(o)) break;
         tickAnimation(o);
         if (D_8009C068.event_B1 != 2) break;
         n = allocObjectLayer2();
@@ -533,7 +533,7 @@ void func_80130914(GameObject *o)
         o->step = 0;
         break;
     case 2:
-        if (!func_80022E44(o)) break;
+        if (!cullAndQueueDraw(o)) break;
         switch (o->subtype) {
         case 0:
             switch (o->step) {
@@ -582,7 +582,7 @@ void func_80130C3C(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -675,7 +675,7 @@ void func_80130D00(GameObject *o)
                 o->velV = 0x400;
             o->y.raw += o->velV << 8;
             if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 1))
-                func_80022E44(o);
+                cullAndQueueDraw(o);
             if (--o->timer == -1)
                 o->state++;
             break;
@@ -744,7 +744,7 @@ void func_80131A98(GameObject *o)
         if (o->cooldownTimer & 1) o->unk8C = (u8)(o->unk8C + 8);
         else o->unk8C = (u8)(o->unk8C - 8);
         if (o->cooldownTimer != 2) applyAnimVelocityX(o, o->cooldownTimer);
-        if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 1)) func_80022E44(o);
+        if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 1)) cullAndQueueDraw(o);
         if (--o->timer == -1) o->state = 2;
         break;
     case 2:
@@ -825,8 +825,8 @@ INCLUDE_RODATA("overlays/x01/nonmatchings/x01/x01_6", jtbl_80115618);
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_80131E9C);
 
 #define MOVE() \
-    o->h->raw += (D_8007DB88[*(u8 *)&o->unk88] * o->velH) >> 4; \
-    o->y.raw += (D_8007D988[*(u8 *)&o->unk88] * o->velH) >> 4; \
+    o->h->raw += (COS_TABLE[*(u8 *)&o->unk88] * o->velH) >> 4; \
+    o->y.raw += (NEG_SIN_TABLE[*(u8 *)&o->unk88] * o->velH) >> 4; \
     o->unkAC = ((o->unk88 + 8) & 0xff) >> 4; \
     o->anim = D_8013E3AC[o->unkAC];
 
@@ -1041,8 +1041,8 @@ void func_80131E9C(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_6", func_80132814);
 
 #define MOVE() \
-    o->h->raw += (D_8007DB88[*(u8 *)&o->unk88] * o->velH) >> 4; \
-    o->y.raw += (D_8007D988[*(u8 *)&o->unk88] * o->velH) >> 4; \
+    o->h->raw += (COS_TABLE[*(u8 *)&o->unk88] * o->velH) >> 4; \
+    o->y.raw += (NEG_SIN_TABLE[*(u8 *)&o->unk88] * o->velH) >> 4; \
     o->unkAC = ((o->unk88 + 8) & 0xff) >> 4; \
     o->anim = D_8013E3AC[o->unkAC];
 
@@ -1299,8 +1299,8 @@ void func_80132EDC(GameObject *o)
             break;
         }
         if (o->velH) {
-            o->h->raw += (D_8007DB88[*(u8 *)&o->unk88] * o->velH) >> 4;
-            o->y.raw += (D_8007D988[*(u8 *)&o->unk88] * o->velH) >> 4;
+            o->h->raw += (COS_TABLE[*(u8 *)&o->unk88] * o->velH) >> 4;
+            o->y.raw += (NEG_SIN_TABLE[*(u8 *)&o->unk88] * o->velH) >> 4;
             o->velH -= o->velX;
         }
         o->y.raw += o->velV << 8;
@@ -1397,8 +1397,8 @@ void func_801333A8(GameObject *o)
         e->d->p.whole = (u16)SCRATCHPAD.unk168[5].p.whole;
         if ((e->animFrame = o->animFrame) == 0) {
             e->unk84 = (p->unk84 + k) & 0xff;
-            e->h->raw += D_8007DB88[e->unk84] * 3 << 6;
-            e->y.raw += D_8007D988[(u8)e->unk84] * 3 << 6;
+            e->h->raw += COS_TABLE[e->unk84] * 3 << 6;
+            e->y.raw += NEG_SIN_TABLE[(u8)e->unk84] * 3 << 6;
             if (e->unkC == 0) {
                 e->unkAC = ((e->unk84 + 8) & 0xff) >> 4;
                 e->anim = D_8013E3AC[e->unkAC];
@@ -1408,8 +1408,8 @@ void func_801333A8(GameObject *o)
             }
         } else {
             e->unk84 = (p->unk84 - k) & 0xff;
-            e->h->raw -= D_8007DB88[e->unk84] * 3 << 6;
-            e->y.raw -= D_8007D988[(u8)e->unk84] * 3 << 6;
+            e->h->raw -= COS_TABLE[e->unk84] * 3 << 6;
+            e->y.raw -= NEG_SIN_TABLE[(u8)e->unk84] * 3 << 6;
             if (e->unkC == 0) {
                 e->unkAC = ((-e->unk84 - 8) & 0xff) >> 4;
                 e->anim = D_8013E3AC[e->unkAC];
@@ -1427,14 +1427,14 @@ void func_801333A8(GameObject *o)
         e->d->p.whole = (u16)SCRATCHPAD.unk168[5].p.whole;
         if ((e->animFrame = o->animFrame) == 0) {
             e->unk84 = (p->unk84 - k) & 0xff;
-            e->h->raw -= D_8007DB88[e->unk84] * 3 << 6;
-            e->y.raw -= D_8007D988[(u8)e->unk84] * 3 << 6;
+            e->h->raw -= COS_TABLE[e->unk84] * 3 << 6;
+            e->y.raw -= NEG_SIN_TABLE[(u8)e->unk84] * 3 << 6;
             e->unkAC = ((-e->unk84 - 8) & 0xff) >> 4;
             e->anim = D_8013E3EC[e->unkAC];
         } else {
             e->unk84 = (p->unk84 + k) & 0xff;
-            e->h->raw += D_8007DB88[e->unk84] * 3 << 6;
-            e->y.raw += D_8007D988[(u8)e->unk84] * 3 << 6;
+            e->h->raw += COS_TABLE[e->unk84] * 3 << 6;
+            e->y.raw += NEG_SIN_TABLE[(u8)e->unk84] * 3 << 6;
             e->unkAC = ((e->unk84 + 8) & 0xff) >> 4;
             e->anim = D_8013E3EC[e->unkAC];
         }
@@ -1521,8 +1521,8 @@ void func_801339AC(GameObject *o)
             o->h->raw = Q->h->raw;
             o->y.raw = Q->y.raw;
             o->d->raw = Q->d->raw;
-            o->h->raw -= D_8007DB88[(u8)o->unk84] * 192;
-            o->y.raw -= D_8007D988[(u8)o->unk84] * 192;
+            o->h->raw -= COS_TABLE[(u8)o->unk84] * 192;
+            o->y.raw -= NEG_SIN_TABLE[(u8)o->unk84] * 192;
             o->unkAC = ((o->unk84 + 8) & 0xff) >> 4;
             o->anim = D_8013E3EC[o->unkAC];
         }
@@ -1552,7 +1552,7 @@ void func_80133C7C(GameObject *o)
 
     switch (o->subState) {
     case 0:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC == 0) {
             if (o->unk98 == 0) {
                 o->state = 2;
@@ -1565,27 +1565,27 @@ void func_80133C7C(GameObject *o)
             func_80132D5C(o);
             o->d->raw = ((GameObject *)o->unk90)->d->raw;
             o->h->raw = ((GameObject *)o->unk90)->h->raw;
-            o->h->raw -= D_8007DB88[*(u8 *)&o->unk84] << 8;
+            o->h->raw -= COS_TABLE[*(u8 *)&o->unk84] << 8;
             if (o->touchFlag) {
                 o->y.raw = ((GameObject *)o->unk90)->y.raw;
-                o->y.raw -= D_8007D988[*(u8 *)&((GameObject *)*(s32 *)&o->unkA8)->unk74] << 8;
+                o->y.raw -= NEG_SIN_TABLE[*(u8 *)&((GameObject *)*(s32 *)&o->unkA8)->unk74] << 8;
             } else {
                 o->y.raw = ((GameObject *)o->unk90)->y.raw;
-                o->y.raw -= D_8007D988[*(u8 *)&o->unk84] << 8;
+                o->y.raw -= NEG_SIN_TABLE[*(u8 *)&o->unk84] << 8;
             }
             probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole);
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_801333A8(o);
         break;
     case 2:
-        if (func_80022E44(o) == 0) o->state = 3;
+        if (cullAndQueueDraw(o) == 0) o->state = 3;
         else func_80133834(o);
         break;
     case 3:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 4:
         o->state = 3;
@@ -1597,7 +1597,7 @@ void func_80133C7C(GameObject *o)
         }
         break;
     case 5:
-        if (func_80022E44(o) == 0) {
+        if (cullAndQueueDraw(o) == 0) {
             if (o->unkC == 0) {
                 o->state = 3;
                 for (e = (GameObject *)o->unk94; e; e = (GameObject *)e->unk94) e->state = 3;
@@ -1642,7 +1642,7 @@ void func_80133F38(P_33F38 *o)
         break;
     case 1:
         if (D_8009BC98.unk12) {
-            func_80022E44(&o->t);
+            cullAndQueueDraw(&o->t);
             break;
         }
         if (o->t.unkC == 0) {
@@ -1676,8 +1676,8 @@ void func_80133F38(P_33F38 *o)
             o->t.h->raw = ((GameObject *)o->t.unk90)->h->raw;
             o->t.d->raw = ((GameObject *)o->t.unk90)->d->raw;
             o->t.y.raw = ((GameObject *)o->t.unk90)->y.raw;
-            o->t.h->raw -= D_8007DB88[*(u8 *)&o->t.unk84] << 8;
-            o->t.y.raw -= D_8007D988[*(u8 *)&o->t.unk84] << 8;
+            o->t.h->raw -= COS_TABLE[*(u8 *)&o->t.unk84] << 8;
+            o->t.y.raw -= NEG_SIN_TABLE[*(u8 *)&o->t.unk84] << 8;
         }
         o->t.touchFlag = 0;
         if (!func_80022D3C(o, 0xa0)) {

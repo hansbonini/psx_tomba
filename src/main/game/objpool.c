@@ -652,7 +652,7 @@ void func_80058E14(GameObject *obj)
         }
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         if (obj->id == 0) {
             tickAnimation(obj);
             break;

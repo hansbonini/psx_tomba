@@ -128,7 +128,7 @@ void func_80033964(GameObject *o)
 #endif
         break;
     case 1:
-        func_80022E44((u8 *)o);
+        cullAndQueueDraw((u8 *)o);
         switch (o->subState) {
         case 0:
             if (o->touchFlag == 1) {

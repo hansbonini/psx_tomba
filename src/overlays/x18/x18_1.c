@@ -47,7 +47,7 @@ void func_80116444(GameObject *o)
         func_801162CC(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subState == 0) func_80115F2C(o);
         break;
     case 2:

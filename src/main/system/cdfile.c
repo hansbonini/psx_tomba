@@ -2253,19 +2253,19 @@ s32 fixedMulSin(s16 arg0, s16 arg1)
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", fixedMulCos);
 s32 fixedMulCos(s16 arg0, s16 arg1)
 {
-    return ((D_8007DB88[arg0] * arg1) << 4) >> 16;
+    return ((COS_TABLE[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", fixedMulSin2);
 s32 fixedMulSin2(s16 arg0, s16 arg1)
 {
-    return ((D_8007D988[arg0] * arg1) << 4) >> 16;
+    return ((NEG_SIN_TABLE[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", fixedMulCos2);
 s32 fixedMulCos2(s16 arg0, s16 arg1)
 {
-    return ((D_8007DB88[arg0] * arg1) << 4) >> 16;
+    return ((COS_TABLE[arg0] * arg1) << 4) >> 16;
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", readAnimFrameCount);

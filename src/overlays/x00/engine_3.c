@@ -693,7 +693,7 @@ void func_80110C6C(u8 *o)
         break;
     case 1:
         if ((u32)((*(u8 *)&PLAYER) - 4) >= 2) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             switch (o[3]) {
             case 0:
                 func_801108E0(o);
@@ -805,7 +805,7 @@ void func_801112A8(GameObject *o)
     o->y.p.whole += p->y.p.whole - o->unkB6;
     o->unkB4 = p->h->p.whole;
     o->unkB6 = p->y.p.whole;
-    if (func_80022E44(o) == 0) return;
+    if (cullAndQueueDraw(o) == 0) return;
     switch (o->subState) {
     case 0:
         if (o->visible) o->subState++;
@@ -834,7 +834,7 @@ void func_801112A8(GameObject *o)
         }
         v = -o->velX;
         o->velV = v * D_8007D788[o->unk78] >> 12;
-        o->velH = v * D_8007DB88[o->unk78] >> 12;
+        o->velH = v * COS_TABLE[o->unk78] >> 12;
     case 3:
         func_80111118(o);
         if (o->y.p.whole >= -0xae) {
@@ -864,7 +864,7 @@ void func_80111554(GameObject *o)
     o->y.p.whole += dy;
     o->unkB4 = p->h->p.whole;
     o->unkB6 = p->y.p.whole;
-    func_80022E44(o);
+    cullAndQueueDraw(o);
     switch (o->subState) {
     case 0:
         D_800A53D8[1] += dx;
@@ -931,7 +931,7 @@ extern s16 probeCollisionAtDepthA(GameObject *o, s32 a, s32 b);
 
 void func_80111870(GameObject *o)
 {
-    ((void (*)(void))func_80022E44)();
+    ((void (*)(void))cullAndQueueDraw)();
     switch (o->subState) {
     case 0:
         o->velV = o->velV + 0x20;
@@ -956,7 +956,7 @@ extern void func_80023020(GameObject *o);
 void func_80111938(GameObject *o)
 {
     void **p;
-    func_80022E44(o);
+    cullAndQueueDraw(o);
     switch (o->subState) {
     case 0:
         o->velV += 0x20;
@@ -1065,7 +1065,7 @@ void func_80111C68(GameObject *o)
         o->unk30 = o->h->p.whole;
         o->unk34 = o->y.p.whole;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
     }
 }
 
@@ -1095,7 +1095,7 @@ void func_80111D20(GameObject *o)
             o->state = 2;
             o->subState = 0;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     }
 }
@@ -1129,7 +1129,7 @@ fail:
 
 void func_80111F74(GameObject *o)
 {
-    func_80022E44(o);
+    cullAndQueueDraw(o);
     switch (o->subState) {
     case 0:
         break;
@@ -1231,7 +1231,7 @@ static __inline__ s16 chk_12384(GameObject *o)
 
 void func_80112384(GameObject *o)
 {
-    func_80022E44(o);
+    cullAndQueueDraw(o);
     switch (o->subState) {
     case 0:
         break;
@@ -1300,7 +1300,7 @@ extern s32 *D_80114C98[];
 
 void func_80112708(GameObject *o)
 {
-    ((void (*)())func_80022E44)();
+    ((void (*)())cullAndQueueDraw)();
     if (o->subState == 0) {
         o->subState++;
         o->unkAC = 1;
@@ -1828,11 +1828,11 @@ void func_801139DC(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_80113288(o);
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subState == 0)
             func_80113610(o);
         break;

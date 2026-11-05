@@ -95,7 +95,7 @@ void func_80117988(char *p)
         *(s16 *)(p + 0x7c) = -2;
         return;
     case 1:
-        if (func_80022E44(p) == 0)
+        if (cullAndQueueDraw(p) == 0)
             return;
         t = *(u16 *)(p + 0x20) - 1;
         *(u16 *)(p + 0x20) = t;
@@ -112,7 +112,7 @@ void func_80117988(char *p)
         }
         break;
     case 2:
-        if (func_80022E44(p) == 0)
+        if (cullAndQueueDraw(p) == 0)
             return;
         t = *(u16 *)(p + 0x20) - 1;
         *(u16 *)(p + 0x20) = t;
@@ -245,7 +245,7 @@ void func_80117F10(O_17F10 *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) == 0) {
+        if (cullAndQueueDraw(o) == 0) {
             o->state = 3;
             break;
         }
@@ -366,7 +366,7 @@ void func_801182E0(GameObject *o)
         o->state++;
         break;
     case 1:
-        if (func_80022E44(o) == 0) {
+        if (cullAndQueueDraw(o) == 0) {
             o->state = 3;
             break;
         }
@@ -439,7 +439,7 @@ void func_801185BC(char *o)
         playSFX(0x30);
         break;
     case 1:
-        if (func_80022E44(o) == 0 || tickAnimation(o) != 0)
+        if (cullAndQueueDraw(o) == 0 || tickAnimation(o) != 0)
             o[4] = 3;
         break;
     case 2:
@@ -471,7 +471,7 @@ void func_801186AC(char *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) != 0)
+        if (cullAndQueueDraw(o) != 0)
             tickAnimation(o);
         break;
     case 2:
@@ -503,7 +503,7 @@ void updateBubbleDroplet(char *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) == 0)
+        if (cullAndQueueDraw(o) == 0)
             func_80023020(o);
         if (tickAnimation(o) != 0)
             o[4]++;

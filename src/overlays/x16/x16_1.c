@@ -253,7 +253,7 @@ void func_80117E38(GameObject *o)
         func_80117CC4(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (D_8009BC98.unk10 != 0) {

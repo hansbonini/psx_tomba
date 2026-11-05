@@ -418,7 +418,7 @@ void func_8012325C(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         if (D_8009C068.event_16 == 0) {
@@ -1667,7 +1667,7 @@ void func_8012791C(GameObject *o)
             a = t;
             if (o->animFrame) a = t + 0x80;
             a &= 0xff;
-            o->h->raw += (D_8007DB88[a] * s) >> 4;
+            o->h->raw += (COS_TABLE[a] * s) >> 4;
             o->y.raw += (D_8007D788[a] * s) >> 4;
             o->y.p.whole += 2;
             if (chk_2791C(o) && p->w6 == 0) {

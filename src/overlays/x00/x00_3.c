@@ -311,7 +311,7 @@ void func_8011F5F4(O_1F5F4 *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->vis != 0) func_8011F4B4(o);
         break;
     case 2:

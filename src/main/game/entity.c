@@ -65,8 +65,8 @@ s32 func_80022D3C(GameObject *obj, s32 x)
     return 1;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/entity", func_80022E44);
-s32 func_80022E44(u8 *o)
+// INCLUDE_ASM("nonmatchings/main/game/entity", cullAndQueueDraw);
+s32 cullAndQueueDraw(u8 *o)
 {
     if (o[0] == 0)
         return 0;

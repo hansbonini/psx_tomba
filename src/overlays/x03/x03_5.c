@@ -279,12 +279,12 @@ void func_80128F34(GameObject *o)
         func_80128D7C(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         func_80128BB8(o);
         break;
     case 2:
         if ((u16)o->unkBA == 3) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             tickAnimation(o);
             if (o->visible == 0)
                 o->state = 3;

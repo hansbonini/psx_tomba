@@ -259,12 +259,12 @@ void func_80136554(GameObject *o)
             }
             playSFXWithVolume(0x41, v);
         }
-        if (func_80022E44(o) && o->subtype == 0) {
+        if (cullAndQueueDraw(o) && o->subtype == 0) {
             tickAnimation(o);
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subtype) {
         case 0:
             func_80135E84(o);
@@ -387,7 +387,7 @@ void func_80136A4C(GameObject *o)
     case 1:
         tickAnimation(o);
         o->h->raw += o->velH << 8;
-        o->y.raw = o->y.raw + (D_8007D988[o->unk84] * o->velH >> 4) - 0x8000;
+        o->y.raw = o->y.raw + (NEG_SIN_TABLE[o->unk84] * o->velH >> 4) - 0x8000;
         o->unk84 = (o->unk84 + 2) & 0xff;
         func_80043AB0(o, o->h->p.whole, o->y.p.whole, o->animFrame);
         ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 8);
@@ -527,13 +527,13 @@ void func_801376D4(GameObject *o)
         func_801368D4(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subState == 0) {
             func_80136A4C(o);
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             func_80136CA0(o);

@@ -49,7 +49,7 @@ void func_8011592C(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (o->subtype != 4 && func_80022E44(o))
+        if (o->subtype != 4 && cullAndQueueDraw(o))
             tickAnimation(o);
         break;
     case 2:

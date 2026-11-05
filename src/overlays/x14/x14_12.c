@@ -87,7 +87,7 @@ void func_801230A8(GameObject *o)
 
     switch (o->subState) {
     case 0:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         o->y.p.whole -= 4;
         if (o->visible) break;
         o->timer = 0x1e;
@@ -128,12 +128,12 @@ void func_801230A8(GameObject *o)
         o->active = 1;
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         p = (GameObject *)o->unk94;
         {
             s32 i = o->unk38;
             s16 v = o->velH;
-            s32 a = v * D_8007DB88[i];
+            s32 a = v * COS_TABLE[i];
             s32 b = v * D_8007D788[i];
             o->h->raw += (a << 4 >> 16) << 8;
             o->y.raw += (b << 4 >> 16) << 8;
@@ -203,13 +203,13 @@ void func_801234A0(GameObject *o)
         switch (o->subtype) {
         case 0:
             if (D_8009BC98.unk12 == 1) goto cull;
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             tickAnimation(o);
             break;
         case 1:
             if (D_8009BC98.unk12 == 1) {
             cull:
-                func_80022E44(o);
+                cullAndQueueDraw(o);
                 break;
             }
             if (!(o->cooldownTimer & 0x3f)) {
@@ -225,7 +225,7 @@ void func_801234A0(GameObject *o)
         break;
     case 2:
         if (o->subtype == 0) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             if (D_8009BC98.unk12) break;
             tickAnimation(o);
             o->velX -= 4;
@@ -318,10 +318,10 @@ void func_80123814(GameObject *o)
         break;
     case 1:
         if (D_8009BC98.unk12 == 1) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             o->velH = 0x80;
@@ -340,8 +340,8 @@ void func_80123814(GameObject *o)
             }
             a = o->unk8C;
             v = o->velH;
-            x = v * D_8007DB88[a];
-            y = v * D_8007D988[a];
+            x = v * COS_TABLE[a];
+            y = v * NEG_SIN_TABLE[a];
             o->h->raw += ((x << 4) >> 16) << 8;
             o->y.raw += ((y << 4) >> 16) << 8;
             o->velH += o->velX;
@@ -363,7 +363,7 @@ void func_80123814(GameObject *o)
     case 2:
         func_801163EC(o, 0);
         o->state++;
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 3:
         freeObjectLayer2(o);
@@ -704,7 +704,7 @@ void func_801244F8(GameObject *o)
             goto anim;
         case 2:
             if (D_8009BC98.unk12 == 1) {
-                if (o->visible == 1) func_80022E44(o);
+                if (o->visible == 1) cullAndQueueDraw(o);
             } else {
                 func_8012426C(o);
                 if (o->visible == 1) goto anim;
@@ -715,10 +715,10 @@ void func_801244F8(GameObject *o)
     case 2:
         if (D_8009BC98.unk12 == 1) {
         anim:
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subtype == 1) {
             SPAWN(o, 0, 0);
             o->state++;

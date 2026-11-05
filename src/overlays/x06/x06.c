@@ -89,7 +89,7 @@ void func_80115D0C(GameObject *o)
         if (--o->timer == 0) o->state++;
         break;
     case 1:
-        if (func_80022E44(o) == 0) o->state++;
+        if (cullAndQueueDraw(o) == 0) o->state++;
         for (i = 0; i < 6; i++) {
             e = &((G_15D0C *)&LOAD_BUFFER)[((XC_15D0C *)o)->wc6].e[i];
             switch (e->s[0]) {
@@ -305,7 +305,7 @@ void func_80116498(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         tickAnimation(o);
         p = (GameObject *)o->unk90;
         getBaseMatrix(&SCRATCHPAD.workMatrix);
@@ -815,7 +815,7 @@ void func_80119A8C(GameObject *o)
     }
     if (D_8009BC98.unk12 == 0) {
         o->velY = (o->velY + 0x20) & 0xff;
-        o->velV = D_8007D988[o->velY];
+        o->velV = NEG_SIN_TABLE[o->velY];
         o->unk34 = (u16)o->unkB4 + (o->velV << 4);
     }
 }
@@ -878,7 +878,7 @@ INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011AAF4);
 INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011ABF4);
 
 // INCLUDE_ASM("overlays/x06/nonmatchings/x06/x06", func_8011AD80);
-extern void (*D_8007DE28[])(GameObject *);
+extern void (*ITEM_REWARD_TABLE[])(GameObject *);
 
 void func_8011AD80(GameObject *o)
 {
@@ -894,7 +894,7 @@ void func_8011AD80(GameObject *o)
         }
         break;
     case 2:
-        D_8007DE28[D_8007DD88[o->subtype]](o);
+        ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[o->subtype]](o);
         break;
     case 3:
         freeObjectLayer5(o);

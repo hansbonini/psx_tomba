@@ -200,7 +200,7 @@ s32 probeCollisionAtDepthA(u8*, s16, s16);
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_8004117C);
 typedef struct { s16 h; s16 v; } VT_4117C;
 extern VT_4117C D_8007E8F4[];
-extern void (*D_8007DE28[])(GameObject *);
+extern void (*ITEM_REWARD_TABLE[])(GameObject *);
 extern u8 D_8009C132, D_8009C163, D_8009C3EF, D_8009C175, D_8009C371;
 s16 func_80043AB0(GameObject *o, s16 x, s16 y, s32 dir);
 
@@ -342,11 +342,11 @@ void func_8004117C(GameObject *obj)
         }
         if (obj->cooldownTimer != 0)
             obj->cooldownTimer--;
-        if (func_80022E44(obj))
+        if (cullAndQueueDraw(obj))
             tickAnimation(obj);
         break;
     case 2:
-        D_8007DE28[D_8007DD88[obj->id]](obj);
+        ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[obj->id]](obj);
         break;
     case 3:
         freeObjectLayer5(obj);
@@ -492,7 +492,7 @@ void dispatchAreaItemUpdate(void)
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80041DB4);
 typedef struct { s16 h; s16 v; } VT_41DB4;
 extern VT_41DB4 D_8007E90C[];
-extern void (*D_8007DE28[])(GameObject *);
+extern void (*ITEM_REWARD_TABLE[])(GameObject *);
 
 void func_80041DB4(GameObject *obj)
 {
@@ -508,7 +508,7 @@ void func_80041DB4(GameObject *obj)
         k = 8;
         if (obj->id == 2 && obj->param >= 4)
             k = 0x1c;
-        if (func_80022E44(obj) == 0)
+        if (cullAndQueueDraw(obj) == 0)
             break;
         switch (obj->subState) {
         case 0:
@@ -561,7 +561,7 @@ void func_80041DB4(GameObject *obj)
             func_80023794(obj->objectIndex);
             obj->param &= 0x7f;
         }
-        D_8007DE28[D_8007DD88[obj->id]](obj);
+        ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[obj->id]](obj);
         break;
     case 3:
         freeObjectLayer5(obj);
@@ -593,7 +593,7 @@ void spawnItemFromEntry(u8* arg0, s16* arg1, s32 arg2, s32 arg3, u8* arg4) {
 // INCLUDE_ASM("nonmatchings/main/game/itemspawn", func_80042204);
 typedef struct { u16 a, b; } VP_42204;
 extern VP_42204 D_8007E918[];
-extern void (*D_8007DE28[])(GameObject *);
+extern void (*ITEM_REWARD_TABLE[])(GameObject *);
 
 void func_80042204(GameObject *obj)
 {
@@ -611,7 +611,7 @@ void func_80042204(GameObject *obj)
         obj->state++;
         break;
     case 1:
-        if (!func_80022E44(obj)) break;
+        if (!cullAndQueueDraw(obj)) break;
         if (obj->timer != 0 && --obj->timer == 0) {
             obj->active = 1;
         }
@@ -650,7 +650,7 @@ void func_80042204(GameObject *obj)
         tickAnimation(obj);
         break;
     case 2:
-        D_8007DE28[D_8007DD88[obj->id]](obj);
+        ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[obj->id]](obj);
         break;
     case 3:
         freeObjectLayer5(obj);

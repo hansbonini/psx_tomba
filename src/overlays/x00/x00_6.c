@@ -90,7 +90,7 @@ void func_8012E0A4(GameObject *o)
         break;
     case 1:
         o->unkF = D_800A53A7_U8 + *(u8 *)&o->unk7A;
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             if (o->subState == 0) {
                 if (o->unkC == 1 && nearObj_2E0A4(o, D_8009BCB0)) {
                     o->subState = 1;
@@ -1394,7 +1394,7 @@ void func_801314B8(GameObject *o)
         break;
     case 1:
         if (D_8009BCAA != 0) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
         if (o->unk9E == 0) {
@@ -1433,7 +1433,7 @@ void func_801314B8(GameObject *o)
                 o->h->p.whole = ((E_314B8 *)o)->d2;
             }
         }
-        if (func_80022E44(o))
+        if (cullAndQueueDraw(o))
             ((E_314B8 *)o)->ca = 1;
         else
             ((E_314B8 *)o)->ca = 0;
@@ -1444,7 +1444,7 @@ void func_801314B8(GameObject *o)
         break;
     case 2:
         if (D_8009BCAA != 0) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
         switch (o->subState) {
@@ -1495,7 +1495,7 @@ void func_801314B8(GameObject *o)
                 }
                 break;
             }
-            if (func_80022E44(o)) {
+            if (cullAndQueueDraw(o)) {
                 tickAnimation(o);
                 ((E_314B8 *)o)->ca = 1;
             } else
@@ -1503,7 +1503,7 @@ void func_801314B8(GameObject *o)
             break;
         case 1:
             func_801313EC(o);
-            if (func_80022E44(o)) {
+            if (cullAndQueueDraw(o)) {
                 tickAnimation(o);
                 ((E_314B8 *)o)->ca = 1;
             } else
@@ -1532,7 +1532,7 @@ void func_801314B8(GameObject *o)
                 o->unk8C = (o->unk8C + 0x14) & 0xff;
             else
                 o->unk8C = (o->unk8C - 0x14) & 0xff;
-            if (func_80022E44(o) == 0)
+            if (cullAndQueueDraw(o) == 0)
                 o->state = 3;
             tickAnimation(o);
             break;
@@ -1591,7 +1591,7 @@ void func_80131BF8(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             D_80138624[o->subtype](o);
         } else if (o->subState) {
             COPY();

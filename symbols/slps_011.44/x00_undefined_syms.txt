@@ -1,6 +1,6 @@
 D_1F8002D4 = 0x1F8002D4;
 D_80077208 = 0x800716D0;
-D_8007DB88 = 0x80077150;
+COS_TABLE = 0x80077150;
 D_8009B698 = 0x8009DEE0;
 D_8009BCA7 = 0x8009E4E7;
 D_8009C114 = 0x8009E954;
@@ -23,7 +23,7 @@ applyAnimVelocityX = 0x80020A00;
 fixedMulSin = 0x80020D24;
 freeObjectLayer2 = 0x80017D64;
 freeObjectLayer4 = 0x80017E0C;
-func_80022E44 = 0x8002122C;
+cullAndQueueDraw = 0x8002122C;
 readAnimFrameCount = 0x80020DE4;
 setEventStarted = 0x8001C88C;
 tickAnimation = 0x80020E38;

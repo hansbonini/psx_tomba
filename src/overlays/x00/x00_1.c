@@ -73,7 +73,7 @@ void func_80118944(GameObject *o)
         }
         tickAnimation(o);
         if (((GameObject *)o->unk90)->subState != 5)
-            func_80022E44(o);
+            cullAndQueueDraw(o);
         if (D_8009BC98.unk00 != 0)
             break;
         o->state++;
@@ -270,7 +270,7 @@ void func_8011998C(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) != 0 && o->subtype == 0)
+        if (cullAndQueueDraw(o) != 0 && o->subtype == 0)
             func_80119768(o);
         break;
     case 2:
@@ -333,7 +333,7 @@ void func_80119A94(GameObject *o)
         }
         break;
     case 1:
-        if (func_80022E44(o) == 0) {
+        if (cullAndQueueDraw(o) == 0) {
             o->state = 3;
             break;
         }
@@ -417,7 +417,7 @@ void func_80119E60(u8 *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o[5]) {
         case 0:
             if (D_8009B698[10] == o[0xc]) {

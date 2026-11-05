@@ -669,7 +669,7 @@ void func_8003A4F8(GameObject *obj)
         obj->state++;
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         func_8003A384(obj);
         break;
     case 2:

@@ -87,7 +87,7 @@ void func_801178B8(GameObject *o)
         if (--o->timer == 0) o->state++;
         break;
     case 1:
-        if (func_80022E44(o) == 0) o->state++;
+        if (cullAndQueueDraw(o) == 0) o->state++;
         for (i = 0; i < 6; i++) {
             e = &((G_178B8 *)&LOAD_BUFFER)[((XC_178B8 *)o)->wc6].e[i];
             switch (e->s[0]) {
@@ -177,7 +177,7 @@ void func_80118044(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o)) tickAnimation(o);
+        if (cullAndQueueDraw(o)) tickAnimation(o);
         break;
     case 2:
         break;

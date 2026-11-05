@@ -116,7 +116,7 @@ void updateFrog(GameObject *o)
         }
         break;
     case 1:
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             switch (o->subState) {
             case 0:
                 func_80132598(o);
@@ -128,7 +128,7 @@ void updateFrog(GameObject *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             switch (o->step) {
@@ -540,7 +540,7 @@ void func_80133748(GameObject *o)
         if (D_8009C111 == 0xff) o->state = 3;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (D_8009C111 == 0xff) {
             if (!o->visible) o->state = 3;
             func_801334D4(o);
@@ -549,7 +549,7 @@ void func_80133748(GameObject *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (o->visible) o->subState = 1;
@@ -750,21 +750,21 @@ void updateNpcCharles(GameObject *o)
         break;
     case 1:
         if (o->subtype == 0x63) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             func_80133CC4(o);
             break;
         }
         if (D_8009C1B2 == 0xff) {
             o->active = 2;
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             if (o->visible == 0)
                 o->state = 3;
         } else {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             st = o->step;

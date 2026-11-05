@@ -175,7 +175,7 @@ void updateEffectHitbox(u8* self)
         case 1:
         case 3:
         case 4:
-            func_80022E44(self);
+            cullAndQueueDraw(self);
             break;
         }
         break;

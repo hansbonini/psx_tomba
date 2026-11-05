@@ -115,7 +115,7 @@ s32 func_80118C64(GameObject *o, GameObject *t)
     o->unk38 = a;
     b = (a + 0x80) & 0xff;
     dy = (o->velH * D_8007D788[b]) >> 12;
-    dx = (o->velH * D_8007DB88[b]) >> 12;
+    dx = (o->velH * COS_TABLE[b]) >> 12;
     t->h->raw += dx << 8;
     t->y.raw += dy << 8;
     o->velH -= 0x20;
@@ -231,7 +231,7 @@ void func_8011994C(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (D_8009BC98.unk08) break;
         switch (((u16*)&GAME.selectedSection)[0]) {
         case 0:
@@ -248,7 +248,7 @@ void func_8011994C(GameObject *o)
                 {
                     s32 i = (o->unk30 + 1) & 0xff;
                     o->unk30 = i;
-                    c = D_8007DB88[i];
+                    c = COS_TABLE[i];
                     sn = D_8007D788[i];
                 }
                 o->h->raw = p->h->raw + c * 0x700;
@@ -345,7 +345,7 @@ void func_80119D30(GameObject *o)
         setup_19D30(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         o->unk8C = (o->unk8C + 2) & 0xff;
         s = o->subState;
         switch (s) {
@@ -366,8 +366,8 @@ void func_80119D30(GameObject *o)
                     a = angleFromDelta(dx, dy) & 0xff;
                     o->unk38 = a;
                     d <<= 2;
-                    ((s16*)&D_8009BC98.unk16)[0] = (d * D_8007D988[(a + 0x48) & 0xff]) >> 12;
-                    ((s16*)&D_8009BC98.unk14)[0] = (d * D_8007DB88[(o->unk38 + 0x48) & 0xff]) >> 12;
+                    ((s16*)&D_8009BC98.unk16)[0] = (d * NEG_SIN_TABLE[(a + 0x48) & 0xff]) >> 12;
+                    ((s16*)&D_8009BC98.unk14)[0] = (d * COS_TABLE[(o->unk38 + 0x48) & 0xff]) >> 12;
                     break;
                 }
             }
@@ -403,7 +403,7 @@ void func_80119FEC(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -451,7 +451,7 @@ void func_8011A0C8(GameObject *o)
         o->x.p.whole = V5C;
         o->y.p.whole = V60;
         o->z.p.whole = V64;
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -502,7 +502,7 @@ void func_8011A22C(GameObject *o)
         o->x.p.whole = V5C;
         o->y.p.whole = V60;
         o->z.p.whole = V64;
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -1020,7 +1020,7 @@ void func_8011E824(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             func_8011CFA0(o);
@@ -1040,7 +1040,7 @@ void func_8011E824(GameObject *o)
             D_8009BC98.unk12 = 0;
             WC2(o) = 0;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             func_8011DAB0(o);

@@ -675,10 +675,10 @@ void func_8012E780(GameObject *o)
         break;
     case 1:
         if (D_8009BC98.unk12) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        if (func_80022E44(o) == 0) break;
+        if (cullAndQueueDraw(o) == 0) break;
         o->unkF = PLAYER.obj.unkF + 1;
         p = *(GameObject **)&o->unkA8;
         if (p == 0) break;
@@ -693,7 +693,7 @@ void func_8012E780(GameObject *o)
         o->y.p.whole = p->y.p.whole + (t >> 12);
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             p = (GameObject *)o->unk90;
@@ -772,7 +772,7 @@ void func_8012ECC0(GameObject *o)
         o->unk8C = 0;
         break;
     case 1:
-        if (!func_80022E44(o)) break;
+        if (!cullAndQueueDraw(o)) break;
         switch (o->subState) {
         case 0:
             o->y.p.whole += 4;

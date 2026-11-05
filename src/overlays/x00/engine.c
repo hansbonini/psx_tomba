@@ -20,7 +20,7 @@ void func_800E94C8(TO_E94C8 *o)
         o->s2e = 0;
         o->b4++;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->b5 == 0) o->b5++;
         break;
     case 2:
@@ -66,7 +66,7 @@ void updateEggShellPiece(GameObject *o)
         o->state++;
         break;
     case 1:
-        if (func_80022E44(o) == 0) func_80023020(o);
+        if (cullAndQueueDraw(o) == 0) func_80023020(o);
         switch (o->subState) {
         case 0:
             o->unkB4 = D_80113DB8[o->unkB8].x;
@@ -258,7 +258,7 @@ void func_800E99DC(GameObject *o)
         }
         break;
     case 1:
-        if (func_80022E44(o) == 0)
+        if (cullAndQueueDraw(o) == 0)
             goto set3;
         switch (o->unkC) {
         case 0:
@@ -427,7 +427,7 @@ void func_800EA428(GameObject *o)
             if (tickAnimation(o) != 0)
                 o->state = 3;
         }
-        if (func_80022E44(o) == 0)
+        if (cullAndQueueDraw(o) == 0)
             o->state = 3;
         break;
     case 2:
@@ -486,7 +486,7 @@ void func_800EA6F4(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->visible) {
             switch (o->subtype) {
             case 0:
@@ -604,7 +604,7 @@ void func_800EAA0C(GameObject *o)
             o->unk8C = (o->unk8C - 8) & 0xff;
         applyAnimVelocityX(o, (u16)o->cooldownTimer);
         if (o->timer >= 0x1e || ((D_1F8001F8 + D_1F800198) & 1))
-            func_80022E44(o);
+            cullAndQueueDraw(o);
         if (--o->timer == -1)
             o->state = 2;
         break;
@@ -675,7 +675,7 @@ void func_800EAD50(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         switch (o->subState) {
@@ -685,7 +685,7 @@ void func_800EAD50(GameObject *o)
             break;
         case 1:
             if ((D_1F8001F8 >> 2) & 1)
-                func_80022E44(o);
+                cullAndQueueDraw(o);
             if (--o->timer == -1)
                 o->state = 3;
             break;
@@ -958,7 +958,7 @@ void func_800EB2C8(GameObject *o)
 
 void func_800EB6D8(GameObject *o)
 {
-    ((void (*)(void))func_80022E44)();
+    ((void (*)(void))cullAndQueueDraw)();
     switch (o->subtype) {
     case 0:
     case 1:
@@ -1007,7 +1007,7 @@ void func_800EB780(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subtype) {
         case 0:
         case 1:
@@ -1151,18 +1151,18 @@ void func_800EBD20(GameObject *o)
         case 0:
             o->animFrame = (o->animFrame + 3) & 0xff;
             o->unk88 = ((o->animFrame - 0x40) & 0xff) << 4;
-            k = (D_8007D988[(u8)o->animFrame] * 3 >> 11) - 0x10;
+            k = (NEG_SIN_TABLE[(u8)o->animFrame] * 3 >> 11) - 0x10;
             o->y.p.whole = D_1F80016E - k;
             break;
         case 1:
             o->animFrame = (o->animFrame - 3) & 0xff;
             o->unk88 = ((o->animFrame - 0x80) & 0xff) << 4;
-            k = (D_8007D988[(u8)o->animFrame] * 3 >> 11) + 0x10;
+            k = (NEG_SIN_TABLE[(u8)o->animFrame] * 3 >> 11) + 0x10;
             o->y.p.whole = D_1F80016E + k;
             break;
         }
-        o->h->p.whole = (*(u16 *)&D_1F80016A) + (D_8007DB88[(u8)o->animFrame] * *(s8 *)&o->unkA5 >> 12);
-        o->d->p.whole = (*(u16 *)&D_1F800172) + (D_8007D988[(u8)o->animFrame] * *(s8 *)&o->unkA5 >> 12);
+        o->h->p.whole = (*(u16 *)&D_1F80016A) + (COS_TABLE[(u8)o->animFrame] * *(s8 *)&o->unkA5 >> 12);
+        o->d->p.whole = (*(u16 *)&D_1F800172) + (NEG_SIN_TABLE[(u8)o->animFrame] * *(s8 *)&o->unkA5 >> 12);
         o->unkF = D_800A53A7_U8 - 1;
         t = o->timer;
         if (t >= 0x32) {
@@ -1195,7 +1195,7 @@ void func_800EBD20(GameObject *o)
             if (o->unk38 < 0)
                 o->unk38 = 0;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (--o->timer == -1)
             o->state = 3;
         break;
@@ -1327,7 +1327,7 @@ void func_800EC384(GameObject *o)
         o->unk98 = 0;
         break;
     case 1:
-        if (func_80022E44(o) && o->step == 0) {
+        if (cullAndQueueDraw(o) && o->step == 0) {
             if (o->touchFlag != 0) o->subState = 1;
             else if (o->unk68 != 0) o->subState = 2;
         }
@@ -1703,7 +1703,7 @@ void func_800ED15C(O_ED15C *o)
     switch (o->b5) {
     case 0: {
         O_ED15C *p = o->p94;
-        func_80022E44(p);
+        cullAndQueueDraw(p);
         o->b1 = p->b1;
         if (o->b6 == 0) o->b6++;
         if (o->b69 & 2) {
@@ -1717,7 +1717,7 @@ void func_800ED15C(O_ED15C *o)
     }
     case 1: {
         O_ED15C *p = o->p94;
-        func_80022E44(p);
+        cullAndQueueDraw(p);
         o->b1 = p->b1;
         switch (o->b6) {
         case 0:

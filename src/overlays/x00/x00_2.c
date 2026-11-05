@@ -186,7 +186,7 @@ void func_8011A530(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         o->state = 3;
@@ -292,7 +292,7 @@ void func_8011AB40(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -357,7 +357,7 @@ void func_8011C360(O_1C360 *o)
         o->w7e = w;
         break;
     case 1:
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             switch (o->sub) {
             case 0:
                 D_80137EC0[o->b0c](o);
@@ -648,7 +648,7 @@ void func_8011DFB8(S_1DFB8 *o)
                 q->b.raw = b;
             }
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         o->b04++;

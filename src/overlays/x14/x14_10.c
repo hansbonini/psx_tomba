@@ -137,10 +137,10 @@ void func_8011FA04(GameObject *o)
         break;
     case 1:
         if (D_8009BC98.unk12 == 1) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         tickAnimation(o);
         if (o->subState != 0)
             break;
@@ -223,10 +223,10 @@ void func_8011FA04(GameObject *o)
         break;
     case 2:
         if (D_8009BC98.unk12 == 1) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         tickAnimation(o);
         o->velX -= 4;
         if (o->velX < 0) {
@@ -301,7 +301,7 @@ void func_80120738(GameObject *o)
         if (--o->timer == -1) o->state++;
         break;
     }
-    if (o->visible) func_80022E44(o);
+    if (o->visible) cullAndQueueDraw(o);
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_801208F4);
@@ -344,9 +344,9 @@ void func_801208F4(GameObject *o)
         break;
     case 1:
         if (D_8009BC98.unk12 == 1) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
         } else if (o->subtype == 0) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             func_80120534(o);
         } else {
             func_80120738(o);

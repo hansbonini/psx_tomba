@@ -40,7 +40,7 @@ void updateImpactEffect(GameObject *obj)
             if (tickAnimation(obj)) {
                 obj->state++;
             }
-        } else if (func_80022E44(obj)) {
+        } else if (cullAndQueueDraw(obj)) {
             if (tickAnimation(obj)) {
                 obj->state++;
             }
@@ -184,7 +184,7 @@ void updateStrikeBurst(GameObject *obj)
         }
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         switch (obj->id) {
         case 0:
             func_8002EBC4(obj);
@@ -280,7 +280,7 @@ void func_8002F220(GameObject *obj)
         obj->z.p.whole = t;
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         switch (obj->subState) {
         case 0:
             obj->subState++;
@@ -330,7 +330,7 @@ void func_8002F404(GameObject *obj)
         }
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         if (obj->visible != 0) {
             switch (obj->subState) {
             case 0:
@@ -370,7 +370,7 @@ void func_8002F56C(GameObject *obj)
         }
         break;
     case 1:
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         if (obj->visible == 0)
             break;
         switch (obj->subState) {

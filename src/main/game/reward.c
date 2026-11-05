@@ -8,7 +8,6 @@ u_char D_8007D6D0_data[0x10] asm("D_8007D6D0") = {
 // INCLUDE_ASM("nonmatchings/main/game/reward", updateItemPickupAnim);
 void updateItemPickupAnim(GameObject* obj)
 {
-    int var_a1;
     int var_v0;
     u_short temp_a1;
     u_short temp_v0;
@@ -106,7 +105,7 @@ s16 D_8007D788[0x100] = {
     1097, 1031, 965, 899, 832, 764, 696, 628, 559, 490, 420, 350, 281, 210, 140, 70
 };
 
-s16 D_8007D988[0x100] = {
+s16 NEG_SIN_TABLE[0x100] = {
     0, -100, -200, -301, -401, -501, -601, -700, -799, -897, -995, -1092, -1189, -1284, -1379, -1474,
     -1567, -1659, -1751, -1841, -1930, -2018, -2105, -2191, -2275, -2358, -2439, -2519, -2598, -2675, -2750, -2824,
     -2896, -2966, -3034, -3101, -3166, -3229, -3289, -3348, -3405, -3460, -3513, -3563, -3612, -3658, -3702, -3744,
@@ -125,7 +124,7 @@ s16 D_8007D988[0x100] = {
     1567, 1474, 1379, 1284, 1189, 1092, 995, 897, 799, 700, 601, 501, 401, 301, 200, 100
 };
 
-s16 D_8007DB88[0x100] = {
+s16 COS_TABLE[0x100] = {
     4096, 4094, 4091, 4084, 4076, 4065, 4051, 4035, 4017, 3996, 3973, 3947, 3919, 3889, 3856, 3821,
     3784, 3744, 3702, 3658, 3612, 3563, 3513, 3460, 3405, 3348, 3289, 3229, 3166, 3101, 3034, 2966,
     2896, 2824, 2750, 2675, 2598, 2519, 2439, 2358, 2275, 2191, 2105, 2018, 1930, 1841, 1751, 1659,
@@ -144,7 +143,7 @@ s16 D_8007DB88[0x100] = {
     3784, 3821, 3856, 3889, 3919, 3947, 3973, 3996, 4017, 4035, 4051, 4065, 4076, 4084, 4091, 4094
 };
 
-u8 D_8007DD88[0xA0] = {
+u8 ITEM_REWARD_INDEX[0xA0] = {
     2, 2, 3, 0x13, 0, 1, 1, 1, 0xC, 1, 0, 0, 1, 1, 0xB, 4,
     0xA, 0, 0x16, 5, 1, 7, 8, 9, 0, 0, 0, 0, 1, 0x17, 1, 1,
     0, 0xD, 0, 0, 0, 0x12, 0x12, 0x12, 0x12, 0x12, 0x12, 0x12, 0, 0, 1, 1,
@@ -158,7 +157,7 @@ u8 D_8007DD88[0xA0] = {
 };
 
 
-void (*D_8007DE28[])(GameObject *) = {
+void (*ITEM_REWARD_TABLE[])(GameObject *) = {
     rewardNone,
     rewardItem,
     rewardHeart,
@@ -720,13 +719,13 @@ void func_8003F3D4(u8* self)
             self[5] = 0;
             self[6] = 0;
         }
-        if (func_80022E44(self) == 0) {
+        if (cullAndQueueDraw(self) == 0) {
             self[4] = 3;
         }
         break;
     case 2:
         updateItemPickupAnim((GameObject*)self);
-        if (func_80022E44(self) == 0) {
+        if (cullAndQueueDraw(self) == 0) {
             self[4] = 3;
         }
         break;
@@ -736,8 +735,8 @@ void func_8003F3D4(u8* self)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/reward", func_8003F78C);
-void func_8003F78C(u8* self)
+// INCLUDE_ASM("nonmatchings/main/game/reward", updateHopFall);
+void updateHopFall(u8* self)
 {
     switch (self[5]) {
     case 0:
@@ -814,15 +813,15 @@ void func_8003F9A4(u8* self)
             *(int*)(self + 0x24) = D_80134018;
         }
         readAnimFrameCount(self);
-        func_80022E44(self);
+        cullAndQueueDraw(self);
         break;
     case 1:
-        if (func_80022E44(self) != 0) {
-            func_8003F78C(self);
+        if (cullAndQueueDraw(self) != 0) {
+            updateHopFall(self);
         }
         break;
     case 2:
-        if (func_80022E44(self) != 0) {
+        if (cullAndQueueDraw(self) != 0) {
             if (GAME.selectedArea == AREA04_HAUNTEDMANSION) {
                 D_8009C263++;
                 func_80126760(self[3]);
@@ -990,9 +989,6 @@ void rewardNone(GameObject* obj)
 // INCLUDE_ASM("nonmatchings/main/game/reward", rewardItem);
 void rewardItem(GameObject* obj)
 {
-    int var_a0;
-    int var_a1;
-    int var_a2;
     u_char current_item;
 
     addItemToInventory(obj->id, 1, true);
@@ -1373,10 +1369,7 @@ void rewardConditionalItem(GameObject* obj)
 // INCLUDE_ASM("nonmatchings/main/game/reward", rewardJewel);
 void rewardJewel(GameObject* obj)
 {
-    int var_a0;
-    int var_a2;
     u_char current_item;
-    u_char var_v0;
     
     current_item = obj->id;
     switch (current_item) {

@@ -41,7 +41,7 @@ void func_80122F64(void);
 void func_8011D844(void);
 void func_8011CD70(void);
 void func_8011602C(void);
-int func_80022E44(u8* self);
+int cullAndQueueDraw(u8* self);
 char *getCollisionPlaneAt();
 s16 func_8004339C(u8* self, s16 a, s16 b);
 s32 func_800443CC();

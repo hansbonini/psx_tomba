@@ -573,7 +573,7 @@ s32 func_8011FB5C(O_1FB5C *o)
     if (p->w2 != 0) {
         s32 i = (p->w2 & 0xff) * 2;
         a = (u32)(p->w4 * *(s16 *)((char *)D_8007D788 + i)) >> 12;
-        b = (u32)(p->w4 * *(s16 *)((char *)D_8007DB88 + i)) >> 12;
+        b = (u32)(p->w4 * *(s16 *)((char *)COS_TABLE + i)) >> 12;
     } else {
         a = 0;
         b = p->w4;
@@ -945,7 +945,7 @@ void func_8012434C(GameObject *o)
         o->anim = 0;
         break;
     case 1:
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             switch (o->subState) {
             case 0:
                 if (o->touchFlag) {
@@ -997,7 +997,7 @@ void func_80124514(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
         break;
@@ -1135,7 +1135,7 @@ void func_8012487C(GameObject *o)
         o->unk34 = o->y.p.whole;
         break;
     case 1:
-        if (func_80022E44(o)) {
+        if (cullAndQueueDraw(o)) {
             switch (o->subState) {
             case 0:
                 if (near_2487C(o)) {
@@ -1182,7 +1182,7 @@ s32 func_80124A44(O_24A44 *o, s16 k)
         v = 0x18;
     if (o->d8c != 0) {
         a = (u32)(v * D_8007D788[o->d8c & 0xff]) >> 12;
-        b = (u32)(v * D_8007DB88[o->d8c & 0xff]) >> 12;
+        b = (u32)(v * COS_TABLE[o->d8c & 0xff]) >> 12;
     } else {
         a = 0;
         b = v;

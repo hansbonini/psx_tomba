@@ -98,7 +98,7 @@ void func_8012175C(GameObject *o)
         break;
     case 1:
         if (D_8009BC98.unk12 == 1) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
         switch (o->subtype) {
@@ -106,7 +106,7 @@ void func_8012175C(GameObject *o)
         case 1:
         case 2:
             func_80120E90(o);
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         case 3:
         case 4: {

@@ -939,10 +939,10 @@ void func_8012754C(GameObject *o)
         break;
     case 1:
         if (D_8009BC98.unk12) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (!(o->unk68 | o->unk9E)) {
             switch (o->subState) {
             case 0:
@@ -1020,7 +1020,7 @@ void func_8012754C(GameObject *o)
         o->unk9D = 0;
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             func_801267DC(o);
@@ -1082,7 +1082,7 @@ void func_80127B48(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        if (func_80022E44(o) != 0) {
+        if (cullAndQueueDraw(o) != 0) {
             switch (o->subState) {
             case 0:
                 o->unkB = 1;

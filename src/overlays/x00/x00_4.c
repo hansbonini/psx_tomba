@@ -211,7 +211,7 @@ void func_8011FBE0(GameObject *o)
         case 3:
             g->unk8C--;
             g->h->raw += o->velH << 8;
-            g->y.raw -= (D_8007DB88[*(u8 *)&o->unk88] * o->velV) >> 4;
+            g->y.raw -= (COS_TABLE[*(u8 *)&o->unk88] * o->velV) >> 4;
             o->unk88 += 2;
             if (--o->timer == -1)
                 o->step++;
@@ -378,7 +378,7 @@ void func_80120BC0(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC == 0) {
             func_80120474(o);
             switch (o->subState) {
@@ -406,7 +406,7 @@ void func_80120BC0(GameObject *o)
         }
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkC != 0)
             func_8012095C(o);
         func_80120A6C(o);

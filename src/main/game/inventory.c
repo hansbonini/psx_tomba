@@ -2261,7 +2261,7 @@ void updateCameraScroll(S_2D784 *o)
 s16 getScrollOffsetX(void)
 {
     s32 x = D_800A38DC;
-    s32 v = D_8007D988[(x >> 8) / 360];
+    s32 v = NEG_SIN_TABLE[(x >> 8) / 360];
     s32 r = (v * 567) >> 12;
 
     if (x > 0) {
@@ -2275,7 +2275,7 @@ s16 getScrollOffsetX(void)
 // INCLUDE_ASM("nonmatchings/main/game/inventory", getScrollOffsetY);
 s32 getScrollOffsetY(void)
 {
-    s16 v = D_8007D988[(D_800A38DC >> 8) / 360];
+    s16 v = NEG_SIN_TABLE[(D_800A38DC >> 8) / 360];
 
     return (v * 1027) >> 12;
 }
@@ -2839,7 +2839,7 @@ void updateItemGetIcon(GameObject *o)
                     tickAnimation(o);
                 }
                 if (o->state == 1) {
-                    func_80022E44(o);
+                    cullAndQueueDraw(o);
                 }
             } else {
                 o->state = 3;

@@ -172,8 +172,8 @@ static __inline__ s32 otadd_46EC0(unsigned long *a, char *b, s32 c, s16 d, unsig
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046428);
 #define A0_46428 (ang & 0xff)
 #define A1_46428 ((ang + 0x80) & 0xff)
-#define SN_46428(i) D_8007DB88[i]
-#define CS_46428(i) D_8007D988[i]
+#define SN_46428(i) COS_TABLE[i]
+#define CS_46428(i) NEG_SIN_TABLE[i]
 #define C_46428 fr->w
 #define D_46428 fr->h
 
@@ -330,8 +330,8 @@ void func_80046CDC(void)
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046EC0);
 
 
-#define COS(i) D_8007DB88[i]
-#define SIN(i) D_8007D988[i]
+#define COS(i) COS_TABLE[i]
+#define SIN(i) NEG_SIN_TABLE[i]
 
 #define SHADOW(q) { \
     p = (POLY_FT4 *)D_1F800164; \
@@ -559,8 +559,8 @@ void func_80046EC0(GameObject *o)
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80047FC8);
 #define A0_47FC8 (ang & 0xff)
 #define A1_47FC8 ((ang + 0x80) & 0xff)
-#define SN_47FC8(i) D_8007DB88[i]
-#define CS_47FC8(i) D_8007D988[i]
+#define SN_47FC8(i) COS_TABLE[i]
+#define CS_47FC8(i) NEG_SIN_TABLE[i]
 
 void func_80047FC8(GameObject *obj)
 {
@@ -783,8 +783,8 @@ void func_80048BF0(GameObject *obj)
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80049134);
 #define A0_49134 (ang & 0xff)
-#define SN_49134(i) D_8007DB88[i]
-#define CS_49134(i) D_8007D988[i]
+#define SN_49134(i) COS_TABLE[i]
+#define CS_49134(i) NEG_SIN_TABLE[i]
 #define A1_49134 ((ang + 0x80) & 0xff)
 
 void func_80049134(GameObject *obj)
@@ -868,8 +868,8 @@ void func_80049134(GameObject *obj)
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80049994);
 #define A0_49994 (ang & 0xff)
-#define SN_49994(i) D_8007DB88[i]
-#define CS_49994(i) D_8007D988[i]
+#define SN_49994(i) COS_TABLE[i]
+#define CS_49994(i) NEG_SIN_TABLE[i]
 #define A1_49994 ((ang + 0x80) & 0xff)
 
 void func_80049994(GameObject *obj)

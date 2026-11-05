@@ -44,7 +44,7 @@ void func_800ED2F4(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->unkC) {
         case 1:
             func_800ED15C(o);
@@ -98,7 +98,7 @@ void func_800ED4EC(char *o)
             *(u8 *)((u8 *)o + 1) = 1;
             pushDrawListLayer4();
         } else {
-            ((void (*)())func_80022E44)();
+            ((void (*)())cullAndQueueDraw)();
         }
         break;
     case 2:

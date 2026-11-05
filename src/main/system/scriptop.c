@@ -473,7 +473,7 @@ void scriptOpGetObjVisible(void)
     u8* obj = SCRIPT_OBJECTS[*(s32*)((u8*)p + 0x1190)];
 
     if (obj != NULL) {
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         *(s32*)((u8*)p + 0x1190) = obj[1];
     }
     p->pc++;
@@ -1067,7 +1067,7 @@ static __inline__ s32 op8d_3E408(void)
     G_3E408 *g = SCRIPT_CTX;
     GameObject *obj = SCRIPT_OBJECTS[g->d1190];
     if (obj != 0) {
-        func_80022E44(obj);
+        cullAndQueueDraw(obj);
         g->d1190 = obj->visible;
     }
     (*(s16 *)((char *)g + 0x8a))++;

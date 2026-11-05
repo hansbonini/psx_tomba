@@ -270,7 +270,7 @@ void func_8011C174(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         { s32 k = o->subtype & 4;
         switch (k != 0) {
         case 0:
@@ -338,7 +338,7 @@ void func_8011C3CC(GameObject *o)
         if (p->unkAC != 2) {
             v = D_8007D788[(a + 0x40) & 0xff];
             o->velY = v << 2;
-            x = D_8007DB88[(o->unk8C + 0x40) & 0xff];
+            x = COS_TABLE[(o->unk8C + 0x40) & 0xff];
             x <<= 2;
             o->velX = x;
             p->h->raw = o->unk30 + ((s16)x << 8);

@@ -1063,7 +1063,7 @@ void func_80119EF0(GameObject *o)
         }
         break;
     case 1:
-        if (func_80022E44(o)) tickAnimation(o);
+        if (cullAndQueueDraw(o)) tickAnimation(o);
         break;
     case 2:
         break;
@@ -1108,7 +1108,7 @@ void func_8011A074(GameObject *o)
             o->buffSize -= 0x18;
             if (--o->cooldownTimer == -1) o->state = 3;
         }
-        if (func_80022E44(o)) tickAnimationFixedRate(o);
+        if (cullAndQueueDraw(o)) tickAnimationFixedRate(o);
         break;
     case 2:
         o->state++;
@@ -1137,7 +1137,7 @@ void func_8011A1EC(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subtype != 0) {
             switch (o->subState) {
             case 0:
@@ -1206,7 +1206,7 @@ void func_8011B260(GameObject *o)
         o->unkA0 = 0;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subtype == 1) {
             switch (o->subState) {
             case 0:
@@ -1291,7 +1291,7 @@ void func_8011B508(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (o->touchFlag) {
@@ -1575,7 +1575,7 @@ void func_8011C210(GameObject *o)
                 break;
             }
         } else {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             switch (o->subState) {
             case 0:
                 if (inview_1C210(o)) o->subState++;
@@ -2188,7 +2188,7 @@ s32 func_8011F1A0(O_1F1A0 *o)
     if (p->w2 != 0) {
         s32 i = (p->w2 & 0xff) * 2;
         a = (u32)(p->w4 * *(s16 *)((char *)D_8007D788 + i)) >> 12;
-        b = (u32)(p->w4 * *(s16 *)((char *)D_8007DB88 + i)) >> 12;
+        b = (u32)(p->w4 * *(s16 *)((char *)COS_TABLE + i)) >> 12;
     } else {
         a = 0;
         b = p->w4;
@@ -2548,10 +2548,10 @@ void func_801244F8(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         break;
     case 2:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->visible == 0)
             break;
         switch (o->subState) {
@@ -2982,8 +2982,8 @@ void func_80126DC4(GameObject *o)
         o->velH = 0x80;
     case 1:
         tickAnimation(o);
-        o->h->raw += (D_8007DB88[(*(u8*)&o->unk88)] * o->velH) >> 4;
-        o->y.raw += (D_8007D988[(*(u8*)&o->unk88)] * o->velH) >> 4;
+        o->h->raw += (COS_TABLE[(*(u8*)&o->unk88)] * o->velH) >> 4;
+        o->y.raw += (NEG_SIN_TABLE[(*(u8*)&o->unk88)] * o->velH) >> 4;
         if (near_26DC4(o)) {
             o->step++;
             o->anim = D_80134094;
@@ -3061,7 +3061,7 @@ void func_80127174(GameObject *o)
         o->unk38 = o->d->p.whole;
         break;
     case 1:
-        if (func_80022E44(o) == 0)
+        if (cullAndQueueDraw(o) == 0)
             break;
         switch (o->subState) {
         case 0:
@@ -3286,7 +3286,7 @@ void func_80128D4C(GameObject *o)
         func_80128BC4(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->subState == 0) goto run;
         if (o->subState == 1) {
         run:
@@ -3409,7 +3409,7 @@ void func_801293D4(GameObject *o)
         func_80129278(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subtype) {
         case 0:
             switch (o->subState) {
@@ -3515,7 +3515,7 @@ void func_80129B68(GameObject *o)
         func_801299F0(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         tickAnimation(o);
         switch (o->subState) {
         case 0:
@@ -3713,7 +3713,7 @@ void func_8012B208(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         tickAnimation(o);
         break;
     case 2:
@@ -4434,7 +4434,7 @@ void func_8012F5D0(GameObject *o)
         func_8012F460(o);
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (D_8009C068.event_07 == 1 && D_8009C068.unk66b == 0) {

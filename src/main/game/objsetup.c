@@ -134,8 +134,8 @@ void func_80031C90(GameObject *o)
                     p->h->raw = o->h->raw;
                     p->y.raw = o->y.raw;
                     p->d->raw = o->d->raw;
-                    p->h->raw += (D_8007DB88[r & 0xF0] * s) >> 4;
-                    p->y.raw += (D_8007D988[r & 0xF0] * s) >> 4;
+                    p->h->raw += (COS_TABLE[r & 0xF0] * s) >> 4;
+                    p->y.raw += (NEG_SIN_TABLE[r & 0xF0] * s) >> 4;
                     setupPoolType31(p);
                 }
             }
@@ -146,7 +146,7 @@ void func_80031C90(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (tickAnimation(o) != 0) {
             o->state = 3;
         }
@@ -224,8 +224,8 @@ void func_80031F88(GameObject *o)
                 n->y.raw = o->y.raw;
                 n->d->raw = o->d->raw;
                 i = r & 0xf0;
-                n->h->raw += (D_8007DB88[i] * s) >> 4;
-                n->y.raw += (D_8007D988[i] * s) >> 4;
+                n->h->raw += (COS_TABLE[i] * s) >> 4;
+                n->y.raw += (NEG_SIN_TABLE[i] * s) >> 4;
                 n->state = 1;
                 func_80032230(n);
             }
@@ -237,7 +237,7 @@ void func_80031F88(GameObject *o)
         }
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unkAC == 1) o->buffSize += 0x200;
         if (tickAnimation(o)) o->state = 3;
         break;

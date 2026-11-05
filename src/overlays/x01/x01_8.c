@@ -42,7 +42,7 @@ void func_80137888(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             if (--o->timer == 0) {
@@ -112,11 +112,11 @@ void func_80137888(GameObject *o)
                     s1 &= 0xff;
                     s2 = -(s16)fixedMulSin((o->unk8C << 1) & 0x7e, 0x300);
                     b = (s16)fixedMulSin(o->unk8C & 0x7f, 0x400);
-                    o->h->raw += (D_8007DB88[s1] * s2) >> 4;
+                    o->h->raw += (COS_TABLE[s1] * s2) >> 4;
                     o->y.raw += (D_8007D788[s1] * -b) >> 4;
                     if (o->unk6A) {
                         if ((u8)(PLAYER.obj.unk9E - 5) >= 2) {
-                            (*(Fix16 **)&PLAYER.obj.h)->raw += (D_8007DB88[s1] * s2) >> 4;
+                            (*(Fix16 **)&PLAYER.obj.h)->raw += (COS_TABLE[s1] * s2) >> 4;
                             PLAYER.obj.y.raw += (D_8007D788[s1] * -b) >> 4;
                         }
                         if (tickAnimation(o)) {
@@ -197,7 +197,7 @@ void func_80137F84(GameObject *o)
         o->state++;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (tickAnimation(o)) o->state++;
         break;
     case 2:
@@ -233,7 +233,7 @@ void func_80138084(GameObject *o)
             o->state++;
             break;
         case 1:
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             if (tickAnimation(o) != 0) {
                 o->state++;
             }

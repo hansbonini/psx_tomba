@@ -140,7 +140,7 @@ void func_80138C4C(GameObject *o)
         o->objectIndex = 1;
         break;
     case 1:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->objectIndex == 0)
             func_801387A4(o);
         else

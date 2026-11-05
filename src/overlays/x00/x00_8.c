@@ -386,7 +386,7 @@ void func_801341A0(GameObject *o)
             o->unkB6 = o->unkB8;
             break;
         }
-        if (func_80022E44(o)) tickAnimation(o);
+        if (cullAndQueueDraw(o)) tickAnimation(o);
         break;
     case 2:
         o->state++;
@@ -456,8 +456,8 @@ void func_80134E50(GameObject *o)
             o->animFrame = 1;
             o->unk8C = o->unk84;
         }
-        o->h->raw += (D_8007DB88[(u8)o->unk84] * o->velH) >> 4;
-        o->y.raw += (D_8007D988[(u8)o->unk84] * o->velH) >> 4;
+        o->h->raw += (COS_TABLE[(u8)o->unk84] * o->velH) >> 4;
+        o->y.raw += (NEG_SIN_TABLE[(u8)o->unk84] * o->velH) >> 4;
         if (--o->timer == -1) o->subState = 1;
         if ((u32)((u16)o->h->p.whole - 0x14d) >= 0x10c) o->subState++;
         else if ((u16)(o->y.p.whole + 0xc8) >= 0x74) o->subState++;

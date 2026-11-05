@@ -917,7 +917,7 @@ static __inline__ s16 wall_29ACC(GameObject *o)
 static __inline__ void mv_29ACC(GameObject *o, s32 a, s16 sp)
 {
     a &= 0xff;
-    o->h->raw += (D_8007DB88[a] * sp) >> 4;
+    o->h->raw += (COS_TABLE[a] * sp) >> 4;
     o->y.raw += (D_8007D788[a] * sp) >> 4;
 }
 
@@ -1276,10 +1276,10 @@ void func_8012A60C(BX *b)
             break;
         }
         if (D_8009BC98.unk12) {
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         }
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         if (o->unk9E == 0) {
             switch (o->subState) {
             case 0: func_80127608(o); break;
@@ -1317,7 +1317,7 @@ void func_8012A60C(BX *b)
         switch (o->subState) {
         case 0:
             func_80129E9C(o);
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         case 1:
             switch (o->step) {
@@ -1340,11 +1340,11 @@ void func_8012A60C(BX *b)
                 readAnimFrameCount(o);
                 break;
             }
-            func_80022E44(o);
+            cullAndQueueDraw(o);
             break;
         case 2:
             func_8012A4BC(o);
-            if (!func_80022E44(o)) o->state = 3;
+            if (!cullAndQueueDraw(o)) o->state = 3;
             break;
         }
         break;
@@ -1374,7 +1374,7 @@ void func_8012A60C(BX *b)
         }
         break;
     case 5:
-        func_80022E44(o);
+        cullAndQueueDraw(o);
         switch (o->subState) {
         case 0:
             o->h->p.whole = 0x304;
@@ -1523,7 +1523,7 @@ s32 func_8012AFBC(O_2AFBC *o)
     if (c != 0) {
         s32 i = c * 2;
         a = (u32)(p->w4 * *(s16 *)((char *)D_8007D788 + i)) >> 12;
-        b = (u32)(p->w4 * *(s16 *)((char *)D_8007DB88 + i)) >> 12;
+        b = (u32)(p->w4 * *(s16 *)((char *)COS_TABLE + i)) >> 12;
     } else {
         a = 0;
         b = p->w4;

@@ -133,7 +133,7 @@ void func_8012CC64(GameObject *o)
         break;
     case 1:
         o->unkA7 += 2;
-        o->y.raw += (s16)(D_8007D988[o->unkA7] << 2);
+        o->y.raw += (s16)(NEG_SIN_TABLE[o->unkA7] << 2);
         tickAnimation(o);
         if (--o->timer != -1)
             return;
@@ -185,7 +185,7 @@ void func_8012CDB8(GameObject *o)
         if (o->animFrame) o->x.p.whole -= 2;
         else o->x.p.whole += 2;
         o->unkA7 += 2;
-        o->y.raw += (s16)(D_8007D988[o->unkA7] << 2);
+        o->y.raw += (s16)(NEG_SIN_TABLE[o->unkA7] << 2);
         tickAnimation(o);
         if (func_8012C9BC(o) || past_2CDB8(o)) o->animFrame = 1 - o->animFrame;
         break;
@@ -232,7 +232,7 @@ void func_8012CFFC(GameObject *o)
         break;
     case 1:
         o->unkA7 += 2;
-        o->y.raw += (s16)(D_8007D988[o->unkA7] << 2);
+        o->y.raw += (s16)(NEG_SIN_TABLE[o->unkA7] << 2);
         tickAnimation(o);
         if (--o->timer == -1) {
             o->active = 1;
