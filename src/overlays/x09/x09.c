@@ -897,7 +897,7 @@ void func_80118EFC(GameObject *o)
     case 1:
         o->visible = 1;
         o->x.p.whole = o->localX - ((s16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2))[0];
-        o->y.p.whole = o->localY - D_1F800186_S16Arr[0];
+        o->y.p.whole = o->localY - SCRATCHPAD.screenOrigin.y.p.whole;
         pushEffectDrawList(o);
         tickAnimation(o);
         break;
@@ -2064,7 +2064,7 @@ long *func_8011ECB0(long *f, unsigned long *ot)
                         p->uv1 = ((Face_1ECB0 *)f)->uv1;
                         *(u16 *)((char *)p + 0x1c) = ((Face_1ECB0 *)f)->uv2;
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -2146,9 +2146,9 @@ long *func_8011EE90(long *f, unsigned long *ot)
                             p->uv2 = ((Face_1EE90 *)f)->uv2;
                             *(u16 *)((char *)p + 0x24) = ((Face_1EE90 *)f)->uv3;
                             otz = (otz << 2) + (long)ot;
-                            if ((unsigned long)(otz - (long)D_1F8001E0) < 4)
-                                otz = (long)D_1F8001E0 + 16;
-                            else if ((unsigned long)(otz - (long)D_1F8001E0) >= 0xca0)
+                            if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 4)
+                                otz = (long)SCRATCHPAD.ot + 16;
+                            else if ((unsigned long)(otz - (long)SCRATCHPAD.ot) >= 0xca0)
                                 goto next;
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
@@ -2227,9 +2227,9 @@ long *func_8011F108(long *f, unsigned long *ot)
                         *(u16 *)((char *)p + 0x24) = ((Face_1F108 *)f)->uv2;
                         *((u8 *)p + 7) = 0x34;
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 4)
-                            otz = (long)D_1F8001E0 + 16;
-                        else if ((unsigned long)(otz - (long)D_1F8001E0) >= 0xca0)
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 4)
+                            otz = (long)SCRATCHPAD.ot + 16;
+                        else if ((unsigned long)(otz - (long)SCRATCHPAD.ot) >= 0xca0)
                             goto next;
                         t = *(unsigned long *)otz;
                         *(unsigned long *)otz = (unsigned long)p;
@@ -2319,9 +2319,9 @@ long *func_8011F324(long *f, unsigned long *ot)
                             *(u16 *)((char *)p + 0x30) = ((Face_1F324 *)f)->uv3;
                             *((u8 *)p + 7) = 0x3c;
                             otz = (otz << 2) + (long)ot;
-                            if ((unsigned long)(otz - (long)D_1F8001E0) < 4)
-                                otz = (long)D_1F8001E0 + 16;
-                            else if ((unsigned long)(otz - (long)D_1F8001E0) >= 0xca0)
+                            if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 4)
+                                otz = (long)SCRATCHPAD.ot + 16;
+                            else if ((unsigned long)(otz - (long)SCRATCHPAD.ot) >= 0xca0)
                                 goto next;
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;

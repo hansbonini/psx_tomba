@@ -30,8 +30,8 @@ s32 func_80022C08(GameObject *obj, s32 x)
 {
     if (obj->active == 0) return 0;
     obj->visible = 0;
-    if ((u16)(obj->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
-    if ((u16)(D_1F800186 - obj->y.p.whole + x) > (s16)x * 2 + 0xf0) return 0;
+    if ((u16)(obj->h->p.whole - SCRATCHPAD.cameraPos.x.p.whole + x) > (s16)x * 2 + 0x140) return 0;
+    if ((u16)(SCRATCHPAD.screenOrigin.y.p.whole - obj->y.p.whole + x) > (s16)x * 2 + 0xf0) return 0;
     obj->visible = 1;
     switch (obj->category & 0x7f) {
     case OBJ_CAT_WEAPON: pushWeaponDrawList(obj); return 1;
@@ -51,7 +51,7 @@ s32 func_80022D3C(GameObject *obj, s32 x)
 {
     if (obj->active == 0) return 0;
     obj->visible = 0;
-    if ((u16)(obj->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
+    if ((u16)(obj->h->p.whole - SCRATCHPAD.cameraPos.x.p.whole + x) > (s16)x * 2 + 0x140) return 0;
     obj->visible = 1;
     switch (obj->category & 0x7f) {
     case OBJ_CAT_WEAPON: pushWeaponDrawList(obj); return 1;
@@ -71,9 +71,9 @@ s32 cullAndQueueDraw(u8 *o)
     if (o[0] == 0)
         return 0;
     o[1] = 0;
-    if ((u16)(*(u16 *)(*(s32 *)(o + 0x40) + 2) - D_1F800176 + 0x40) >= 0x1c1)
+    if ((u16)(*(u16 *)(*(s32 *)(o + 0x40) + 2) - SCRATCHPAD.cameraPos.x.p.whole + 0x40) >= 0x1c1)
         return 0;
-    if ((u16)(D_1F800186 - *(u16 *)(o + 0x16) + 0x40) >= 0x171)
+    if ((u16)(SCRATCHPAD.screenOrigin.y.p.whole - *(u16 *)(o + 0x16) + 0x40) >= 0x171)
         return 0;
     o[1] = 1;
     switch (o[0x1c] & 0x7f) {
@@ -106,8 +106,8 @@ s32 func_80022F6C(S_22F6C *o)
 // INCLUDE_ASM("nonmatchings/main/game/entity", isOnScreen);
 s32 isOnScreen(s16 x, s16 y)
 {
-    if ((u16)(x - D_1F800176 + 0x40) < 0x1C1) {
-        return (u16)(D_1F800186 - y + 0x40) < 0x171;
+    if ((u16)(x - SCRATCHPAD.cameraPos.x.p.whole + 0x40) < 0x1C1) {
+        return (u16)(SCRATCHPAD.screenOrigin.y.p.whole - y + 0x40) < 0x171;
     }
     return 0;
 }
@@ -121,8 +121,8 @@ void func_80023020(O_23020 *o)
     if (o->active != 0) {
         y = o->y;
         if (D_800A38EA + NTSC_PAL(0x98, 0xA0) <= y
-            || (u16)(o->h[1] - D_1F800176 + 0xa0) > 0x27f
-            || (u16)(D_1F800186 - y + 0xa0) > 0x22f) {
+            || (u16)(o->h[1] - SCRATCHPAD.cameraPos.x.p.whole + 0xa0) > 0x27f
+            || (u16)(SCRATCHPAD.screenOrigin.y.p.whole - y + 0xa0) > 0x22f) {
             o->b04 = 3;
             o->active = 2;
             o->visible = 0;
@@ -138,8 +138,8 @@ void func_800230BC(GameObject *obj, s32 a)
     if (obj->active == 0) return;
     y = obj->y.p.whole;
     if (D_800A38EA + NTSC_PAL(0x98, 0xA0) > y) {
-        if ((u16)(obj->h->p.whole - D_1F800176 + a) < (s16)a * 2 + 0x140 &&
-            (u16)(D_1F800186 - y + a) < (s16)a * 2 + 0xf0) return;
+        if ((u16)(obj->h->p.whole - SCRATCHPAD.cameraPos.x.p.whole + a) < (s16)a * 2 + 0x140 &&
+            (u16)(SCRATCHPAD.screenOrigin.y.p.whole - y + a) < (s16)a * 2 + 0xf0) return;
     }
     obj->state = 3;
     obj->active = 2;
@@ -392,8 +392,8 @@ void loadButtonConfig(void)
 {
     s32 i = (s16)BUTTON_CONFIG_INDEX * 4;
 
-    D_1F8003C4 = BUTTON_CONFIGS[i];
-    D_1F8003C6 = D_8007B2C6[i];
-    D_1F8003C8 = D_8007B2C8[i];
-    D_1F8003CA = D_8007B2CA[i];
+    (*(s16 *)&SCRATCHPAD.buttonAction) = BUTTON_CONFIGS[i];
+    (*(s16 *)&SCRATCHPAD.buttonJump) = D_8007B2C6[i];
+    (*(s16 *)&SCRATCHPAD.buttonAttack) = D_8007B2C8[i];
+    SCRATCHPAD.buttonMenu = D_8007B2CA[i];
 }

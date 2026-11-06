@@ -276,7 +276,7 @@ void func_8012FCE0(GameObject *o)
         D_8009BC98.unk14 = 0;
         break;
     case 1:
-        if (SCRATCHPAD.unk1A4) goto clr;
+        if (SCRATCHPAD.debugInvincible) goto clr;
         switch (o->subState) {
         case 0:
             if (D_8009BC98.unk0A) {
@@ -1944,7 +1944,7 @@ void func_80133A18(GameObject *o)
         D_800A544A_S16Arr[0] = 0;
         o->animFrame = o->unkBC;
         { u8 *c = &D_8009C068.unk66a; *c = *c + 1; }
-        D_1F8001C6 = 0;
+        SCRATCHPAD.drawFrozen = 0;
         o->unk68 = 0;
         o->subState = 0;
         o->step = 0;

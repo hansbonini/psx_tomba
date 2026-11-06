@@ -538,11 +538,11 @@ static inline void restoreTalkPose(void)
 
 void updateMessageBox(MessageBox *o)
 {
-    MATRIX *m = (MATRIX *)0x1F800020;
+    MATRIX *m = &SPAD->objectMatrix;
     SVECTOR *pos = (SVECTOR *)0x1F800040;
     SVECTOR *zero = (SVECTOR *)0x1F800048;
-    DVECTOR *sxy = (DVECTOR *)0x1F800050;
-    MATRIX *w = (MATRIX *)0x1F800000;
+    DVECTOR *sxy = &SPAD->screenXY;
+    MATRIX *w = &SPAD->workMatrix;
     s16 n;
     s32 r;
     s32 xy;
@@ -722,7 +722,7 @@ void updateMessageBox(MessageBox *o)
                     break;
                 }
             } else {
-                if (SPAD->pad1B9[1] == 0 && (SPAD->joypad_state & 0x4000)) {
+                if (SPAD->debugNoMessageMenu == 0 && (SPAD->joypad_state & 0x4000)) {
                     playSFXWithNote(0xA, 0xA);
                     openMenuScreen(4);
                     o->mode = 0;
@@ -984,7 +984,7 @@ s16 loadMessageGlyph(s32 p, s32 id, s32 bank)
         for (j = 0; j < w * h; j++) {
             *dst++ = *src++;
         }
-        addPrim(D_1F8001E0 + 4, load);
+        addPrim((*(u_long *)&SCRATCHPAD.ot) + 4, load);
         D_1F800164 += sizeof(DR_LOAD);
     } else {
         load = (DR_LOAD *)D_1F800164;
@@ -994,7 +994,7 @@ s16 loadMessageGlyph(s32 p, s32 id, s32 bank)
         for (j = 0; j < w * (u16)(h >> 1); j++) {
             *dst++ = *src++;
         }
-        addPrim(D_1F8001E0 + 4, load);
+        addPrim((*(u_long *)&SCRATCHPAD.ot) + 4, load);
         D_1F800164 += sizeof(DR_LOAD);
         load = (DR_LOAD *)D_1F800164;
         setRECT(&rect, GLYPH_CACHE[(s16)freeSlot].u, GLYPH_CACHE[(s16)freeSlot].v + (h >> 1), w, h >> 1);
@@ -1003,7 +1003,7 @@ s16 loadMessageGlyph(s32 p, s32 id, s32 bank)
         for (j = 0; j < w * (u16)(h >> 1); j++) {
             *dst++ = *src++;
         }
-        addPrim(D_1F8001E0 + 4, load);
+        addPrim((*(u_long *)&SCRATCHPAD.ot) + 4, load);
         D_1F800164 += sizeof(DR_LOAD);
     }
     return freeSlot;

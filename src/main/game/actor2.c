@@ -525,13 +525,13 @@ void func_80057044(void)
     u8 **pp, **qq;
     u8 *o, *e;
     if ((*(s32 *)&GAME) == 0x10000) {
-        n = D_1F800246;
-        pp = D_1F80021C;
+        n = SCRATCHPAD.actorDrawCount;
+        pp = SCRATCHPAD.actorDrawList;
         while (n != 0) {
             o = *pp++;
             n--;
             if ((o[0] & 3) && o[2] == 7 && o[3] != 0 && o[0xc] == 1 && o[0x69] == 0) {
-                qq = D_1F800228;
+                qq = SCRATCHPAD.itemDrawList;
                 for (D_1F80019E = D_1F800248; D_1F80019E != 0; ) {
                     e = *qq++;
                     D_1F80019E--;
@@ -642,16 +642,16 @@ void func_800574BC(void)
     GameObject *obj, *other;
 
     n = D_1F800248;
-    pp = D_1F800228;
-    if ((*(s16 *)&D_1F80024C) == 0)
+    pp = SCRATCHPAD.itemDrawList;
+    if ((*(s16 *)&SCRATCHPAD.areaDrawCount) == 0)
         return;
     while (n != 0) {
         obj = *pp++;
         n--;
         if (!(obj->active & 1))
             continue;
-        qq = D_1F800224;
-        for (D_1F80019E = (*(s16 *)&D_1F80024C); D_1F80019E != 0; ) {
+        qq = SCRATCHPAD.areaDrawList;
+        for (D_1F80019E = (*(s16 *)&SCRATCHPAD.areaDrawCount); D_1F80019E != 0; ) {
             other = *qq++;
             D_1F80019E--;
             if (!(other->active & 1))

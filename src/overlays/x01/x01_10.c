@@ -351,7 +351,7 @@ static __inline__ s16 check_3ADE8(GameObject *o)
         && (u16)((*(Fix16 **)&PLAYER.obj.h)->p.whole - 0xaad) < 0x40 && PLAYER.obj.y.p.whole >= -0x10f) {
         if (o->animTimer != 0) {
             r = 1;
-        } else if ((*(s8 *)&D_8009C618) == 1 && (D_1F8001FC & (*(u16 *)&D_1F8003C4))) {
+        } else if ((*(s8 *)&D_8009C618) == 1 && (SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) {
             r = 1;
             D_8009BC98.unk12 = 1;
             D_800A5458 = 1;
@@ -490,7 +490,7 @@ void func_8013B180(O_3B180 *o)
                 e->id = 8;
                 e->param = 0;
                 e->x.p.whole = 0;
-                e->y.p.whole = D_1F80016E_S16Arr[0];
+                e->y.p.whole = SCRATCHPAD.cameraTarget.y.p.whole;
                 e->z.p.whole = 0;
                 o->w1c++;
                 e->child = (s32)p;

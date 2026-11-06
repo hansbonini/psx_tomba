@@ -421,7 +421,7 @@ void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
     obj->velV = vy;
     switch (type) {
     case 5:
-        if (!(D_1F8001C8 & 1)) {
+        if (!(SCRATCHPAD.axisSwap & 1)) {
             d = (PLAYER.obj.h->p.whole - pos[0].p.whole) << 8;
             d /= 60;
             obj->velH = d;
@@ -444,7 +444,7 @@ void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
         }
         break;
     case 8:
-        if (!(D_1F8001C8 & 1)) {
+        if (!(SCRATCHPAD.axisSwap & 1)) {
             d = (pos[0].p.whole - PLAYER.obj.h->p.whole) << 8;
             d /= 60;
             obj->velH = d;

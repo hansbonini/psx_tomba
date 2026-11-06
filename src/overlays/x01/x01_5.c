@@ -281,13 +281,13 @@ static __inline__ s32 land_2C7E4(GameObject *o)
         return 1;
     }
     if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-        t = D_1F80027E;
+        t = SCRATCHPAD.hitSlope;
         if (t < 0) t = -t;
         if (t >= 9) t = 8;
-        if (D_1F80027E < 0) t = -t;
+        if (SCRATCHPAD.hitSlope < 0) t = -t;
         o->rotZ = -t & 0xff;
         o->unkB2 = t;
-        w = D_1F800284;
+        w = SCRATCHPAD.hitSurface;
         o->unkB6 = (-t << 2) & 0xff;
         o->unk9C = 0;
         o->unkAE = w;
@@ -387,7 +387,7 @@ void func_8012C7E4(GameObject *o)
             o->unkB2 = v;
             o->rotZ = -v & 0xff;
             o->unkB6 = (-v << 2) & 0xff;
-            o->unkAE = D_1F800284;
+            o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
             o->unk9C = 0;
             if (o->animFrame) {
                 if (o->unkB2 < 0) {

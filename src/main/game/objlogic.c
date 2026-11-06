@@ -351,7 +351,7 @@ void func_80034C14(GameObject *obj)
             u16 u;
             s32 m;
             func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
-            u = D_1F800282;
+            u = SCRATCHPAD.hitFlags;
             m = u >> 5 & 0xf;
             if ((u & 0x3000) == 0 && m < 4 && m != 0)
                 func_800EA35C(obj->h->p.whole, obj->y.p.whole, obj->d->p.whole, (u8)obj->animFrame);
@@ -509,7 +509,7 @@ void func_80034C14(GameObject *obj)
         obj->animFrame = PLAYER_P38_34C14.animFrame;
         func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
-        if ((D_1F8001F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xc0, 2);
             playSFX(3);
         }
@@ -546,7 +546,7 @@ void func_80034C14(GameObject *obj)
         obj->animFrame = PLAYER_P38_34C14.animFrame;
         func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
-        if ((D_1F8001F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xff, 2);
             playSFXWithNote(3, 6);
         }
@@ -684,7 +684,7 @@ s16 func_80036618(u8 *self)
     short x;
 
     p = (*(GameObject ***)&SPAD->actorHeldList);
-    D_1F80019E = D_1F800250;
+    D_1F80019E = SCRATCHPAD.actorHeldCount;
     for (i = 0; i < 0x40; i++)
         list[i] = 0;
     n = 0;
@@ -813,7 +813,7 @@ s32 func_80036A8C(GameObject *obj)
     applyObjectSpeedXY(obj);
     if (obj->active == 1 && probeCollisionAtDepthB(obj, obj->h->p.whole, obj->y.p.whole) != 0) {
         func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
-        u = D_1F800282;
+        u = SCRATCHPAD.hitFlags;
         m = u >> 5 & 0xf;
         if ((u & 0x3000) == 0 && m < 4 && m != 0)
             func_800EA35C(obj->h->p.whole, obj->y.p.whole, obj->d->p.whole, (u8)obj->animFrame);
@@ -1281,7 +1281,7 @@ void func_80036F98(GameObject *obj)
                 *(u8 *)obj->child = obj->scaleX;
                 obj->objectIndex = 0;
             }
-            if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
+            if ((PAD_PRESSED[0] & (*(u16 *)&SCRATCHPAD.buttonAttack)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
                 D_800A5444_U8 >= 2 || D_800A545E != 0 || D_8009BCA7 != 0 || m >= 4 ||
                 (u8)(D_8009BCF8 - 1) < 2 || D_800A545F != 0) {
                 setObjState(obj, 2, 0, 0);
@@ -1297,7 +1297,7 @@ void func_80036F98(GameObject *obj)
         obj->animFrame = PLAYER.obj.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
-        if ((D_1F8001F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xc0, 2);
             playSFX(3);
         }
@@ -1317,7 +1317,7 @@ void func_80036F98(GameObject *obj)
         func_800349DC(&D_8009C968, obj->unkAA, &a, &r);
         obj->h->p.whole = obj->velX + a;
         obj->y.p.whole = obj->velY + r;
-        if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
+        if ((PAD_PRESSED[0] & (*(u16 *)&SCRATCHPAD.buttonAttack)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
             D_800A545E = 0;
             D_8009B698_P_36F98Ptr->b0 = 2;
             D_8009B698_P_36F98Ptr->w22 = 0;
@@ -1337,7 +1337,7 @@ void func_80036F98(GameObject *obj)
         obj->animFrame = PLAYER.obj.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
-        if ((D_1F8001F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xff, 2);
             playSFXWithNote(3, 6);
         }
@@ -1358,7 +1358,7 @@ void func_80036F98(GameObject *obj)
         func_800349DC(&D_8009C968, obj->unkAA, &a, &r);
         obj->h->p.whole = obj->velX + a;
         obj->y.p.whole = obj->velY + r;
-        if ((PAD_PRESSED[0] & (*(u16 *)&D_1F8003C8)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
+        if ((PAD_PRESSED[0] & (*(u16 *)&SCRATCHPAD.buttonAttack)) == 0 || D_800A539C != 1 || D_800A543C != 0 || D_8009BCA7 != 0) {
             D_800A545E = 0;
             D_8009B698_P_36F98Ptr->b0 = 1;
             D_8009B698_P_36F98Ptr->w22 = 0;

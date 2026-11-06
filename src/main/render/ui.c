@@ -44,7 +44,7 @@ char *func_80024CFC(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -125,7 +125,7 @@ char *func_80024EEC(GameObject *obj, long *f, char *vtx, unsigned long *ot)
                                 otz = (long)D_1F8001E0_UnsignedLongPtrArr[0] + 0xc;
                             } else {
                                 otz = (otz << 2) + (long)ot;
-                                if ((unsigned long)(otz - (long)D_1F8001E0) >= 0xca0) goto next;
+                                if ((unsigned long)(otz - (long)SCRATCHPAD.ot) >= 0xca0) goto next;
                                 (*(u16 *)&poly->u0) = ((Face_24EEC *)f)->uv0;
                                 (*(u16 *)&poly->u1) = ((Face_24EEC *)f)->uv1;
                                 (*(u16 *)&poly->u2) = ((Face_24EEC *)f)->uv2;
@@ -190,7 +190,7 @@ char *func_800251C0(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -264,7 +264,7 @@ char *func_800253C8(long *f, char *vtx, unsigned long *ot)
                             gte_avsz4();
                             gte_stotz(&otz);
                             otz = (otz << 2) + (long)ot;
-                            if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                            if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                                 t = *(unsigned long *)otz;
                                 *(unsigned long *)otz = (unsigned long)poly;
                                 poly->tag = t | len;
@@ -321,7 +321,7 @@ char *func_8002564C(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -376,7 +376,7 @@ char *func_80025810(long *f, char *vtx, unsigned long *ot)
                         gte_avsz4();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -427,7 +427,7 @@ char *func_80025A38(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -482,7 +482,7 @@ char *func_80025C14(long *f, char *vtx, unsigned long *ot)
                             gte_avsz4();
                             gte_stotz(&otz);
                             otz = (otz << 2) + (long)ot;
-                            if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                            if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                                 t = *(unsigned long *)otz;
                                 *(unsigned long *)otz = (unsigned long)poly;
                                 poly->tag = t | len;
@@ -536,7 +536,7 @@ char *func_80025E74(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -588,7 +588,7 @@ char *func_8002601C(long *f, char *vtx, unsigned long *ot)
                         gte_avsz4();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -637,7 +637,7 @@ char *func_80026228(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)poly;
                             poly->tag = t | len;
@@ -697,7 +697,7 @@ char *func_800263F0(O *o, long *f, char *vtx, unsigned long *ot)
                             gte_avsz4();
                             gte_stotz(&otz);
                             otz = (otz << 2) + (long)ot;
-                            if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                            if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                                 t = *(unsigned long *)otz;
                                 *(unsigned long *)otz = (unsigned long)poly;
                                 poly->tag = t | len;
@@ -772,7 +772,7 @@ static __inline__ char *drawF3_26694(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -816,7 +816,7 @@ static __inline__ char *drawFT3_26694(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -848,7 +848,7 @@ static __inline__ char *drawF3L_26694(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x4000000;
         do {
-            p = (void *)D_1F800164_CharPtrArr[0];
+            p = (void *)SCRATCHPAD.nextprim;
             gte_ldv3c(vtx + 4);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -862,7 +862,7 @@ static __inline__ char *drawF3L_26694(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -870,7 +870,7 @@ static __inline__ char *drawF3L_26694(long *f, char *vtx, unsigned long *ot)
                             gte_ldv0((char *)f + 0x1c);
                             gte_nccs();
                             gte_strgb(&p->c0);
-                            D_1F800164_CharPtrArr[0] = D_1F800164_CharPtrArr[0] + sizeof(PolyF3_26694);
+                            SCRATCHPAD.nextprim = SCRATCHPAD.nextprim + sizeof(PolyF3_26694);
                         }
                     }
                 }
@@ -902,14 +902,14 @@ static __inline__ char *drawG3L_26694(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (void *)D_1F800164_CharPtrArr[0];
+                    p = (void *)SCRATCHPAD.nextprim;
                     gte_stsxy3_ft3(p);
                     if ((p->y0 < SCREEN_HEIGHT || p->y1 < SCREEN_HEIGHT || p->y2 < SCREEN_HEIGHT) &&
                         (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -917,7 +917,7 @@ static __inline__ char *drawG3L_26694(long *f, char *vtx, unsigned long *ot)
                             gte_ldv3c((char *)f + 0x24);
                             gte_ncct();
                             gte_strgb3_g3(p);
-                            D_1F800164_CharPtrArr[0] = D_1F800164_CharPtrArr[0] + 0x1c;
+                            SCRATCHPAD.nextprim = SCRATCHPAD.nextprim + 0x1c;
                         }
                     }
                 }
@@ -995,7 +995,7 @@ static __inline__ char *drawF3_26E48(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -1039,7 +1039,7 @@ static __inline__ char *drawFT3_26E48(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -1071,7 +1071,7 @@ static __inline__ char *litF3_26E48(long *f, char *vtx, unsigned long *ot)
     if (n != 0) {
         len = 0x4000000;
         do {
-            p = (void *)D_1F800164_CharPtrArr[0];
+            p = (void *)SCRATCHPAD.nextprim;
             gte_ldv3c(vtx + 4);
             gte_rtpt();
             gte_stflg(&LZ_FILE_CTRL_Long);
@@ -1085,7 +1085,7 @@ static __inline__ char *litF3_26E48(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -1093,7 +1093,7 @@ static __inline__ char *litF3_26E48(long *f, char *vtx, unsigned long *ot)
                             gte_ldv0((char *)f + 0x1c);
                             gte_nccs();
                             gte_strgb(&p->c0);
-                            D_1F800164_CharPtrArr[0] = D_1F800164_CharPtrArr[0] + sizeof(PolyF3_26E48);
+                            SCRATCHPAD.nextprim = SCRATCHPAD.nextprim + sizeof(PolyF3_26E48);
                         }
                     }
                 }
@@ -1125,14 +1125,14 @@ static __inline__ char *litG3_26E48(long *f, char *vtx, unsigned long *ot)
                 gte_nclip();
                 gte_stopz(&LZ_FILE_CTRL_Long);
                 if (LZ_FILE_CTRL_Long > 0) {
-                    p = (void *)D_1F800164_CharPtrArr[0];
+                    p = (void *)SCRATCHPAD.nextprim;
                     gte_stsxy3_g3(p);
                     if ((p->y0 < SCREEN_HEIGHT || p->y1 < SCREEN_HEIGHT || p->y2 < SCREEN_HEIGHT) &&
                         (p->x0 < 0x140 || p->x1 < 0x140 || p->x2 < 0x140)) {
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -1140,7 +1140,7 @@ static __inline__ char *litG3_26E48(long *f, char *vtx, unsigned long *ot)
                             gte_ldv3c((char *)f + 0x24);
                             gte_ncct();
                             gte_strgb3_g3(p);
-                            D_1F800164_CharPtrArr[0] = D_1F800164_CharPtrArr[0] + 0x1c;
+                            SCRATCHPAD.nextprim = SCRATCHPAD.nextprim + 0x1c;
                         }
                     }
                 }
@@ -1223,7 +1223,7 @@ static __inline__ char *drawF3_27600(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -1267,7 +1267,7 @@ static __inline__ char *drawFT3_27600(long *f, char *vtx, unsigned long *ot)
                         gte_avsz3();
                         gte_stotz(&otz);
                         otz = (otz << 2) + (long)ot;
-                        if ((unsigned long)(otz - (long)D_1F8001E0) < 0xca0) {
+                        if ((unsigned long)(otz - (long)SCRATCHPAD.ot) < 0xca0) {
                             t = *(unsigned long *)otz;
                             *(unsigned long *)otz = (unsigned long)p;
                             p->tag = t | len;
@@ -1714,8 +1714,8 @@ void func_800288C4(void)
     m |= AXIS(g->b9, c2, a2, 0x10, 0x40);
     pad = &PAD_PRESSED;
     *pad = m;
-    D_1F8001FC = *pad & ~D_8009C9DC;
-    D_1F8001FE = D_8009C9DC & ~*pad;
+    SCRATCHPAD.joypad_state = *pad & ~D_8009C9DC;
+    SCRATCHPAD.unk1FE = D_8009C9DC & ~*pad;
     D_800A5474 = *pad;
 }
 #undef AXIS

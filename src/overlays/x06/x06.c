@@ -331,7 +331,7 @@ void func_80116498(GameObject *o)
         D_800A53B0_S32Arr[0] = o->z.raw;
         D_1F800168_S32Arr[0] = o->x.raw;
         D_1F80016C_S32Arr[0] = o->y.raw;
-        D_1F800170[0] = o->z.raw;
+        SCRATCHPAD.cameraTarget.z.raw = o->z.raw;
         GAME.selectedPlane = 0;
         break;
     case 2:

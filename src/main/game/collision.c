@@ -95,7 +95,7 @@ s16 func_8004339C(u8 *o_, s16 x_, s16 y)
             hit:
                 o->y.p.frac = 0;
                 o->y.p.whole += d;
-                D_1F80027E = D_8009B0E0;
+                SCRATCHPAD.hitSlope = D_8009B0E0;
                 D_1F800280 = D_8009B0DC;
                 D_1F800282 = D_8009B0E4;
                 D_1F800284 = (D_8009B0E4 & 0xE00) >> 9;
@@ -144,7 +144,7 @@ s32 func_80043740(GameObject *obj, s32 x_, s32 y_, s32 fl_)
         return 0;
     if (0) {
     hit:
-        D_1F800284 = (f & 0xE00) >> 9;
+        (*(u16 *)&SCRATCHPAD.hitSurface) = (f & 0xE00) >> 9;
         D_1F800282 = f;
         obj->h->p.whole -= r;
         return k;
@@ -224,7 +224,7 @@ s32 func_80043740(GameObject *obj, s32 x_, s32 y_, s32 fl_)
                 h = obj->h;
                 h->p.whole = h->p.whole + 8 - xm;
             }
-            D_1F800284 = (f & 0xE00) >> 9;
+            (*(u16 *)&SCRATCHPAD.hitSurface) = (f & 0xE00) >> 9;
             cnt++;
             if (cnt >= 8)
                 return ret;
@@ -342,7 +342,7 @@ s32 func_80043B3C(obj, x, y)
             obj->y.p.frac = 0;
             D_1F80027E = b;
             D_1F800280 = a;
-            D_1F800282_S16 = fl;
+            (*(s16 *)&SCRATCHPAD.hitFlags) = fl;
             obj->y.p.whole += d;
             return 1;
             do {
@@ -543,7 +543,7 @@ s32 func_800443CC(void *o, s32 x, s32 y)
         }
         r = 0;
         if (w & 0x10) {
-            D_1F800284 = (w & 0xe00) >> 9;
+            (*(u16 *)&SCRATCHPAD.hitSurface) = (w & 0xe00) >> 9;
             a = *D_1F800278++;
             r = *D_1F800278++;
             c = *D_1F800278++;
@@ -555,7 +555,7 @@ s32 func_800443CC(void *o, s32 x, s32 y)
             else
                 r = 0;
         } else {
-            D_1F800284 = (w & 0xe00) >> 9;
+            (*(u16 *)&SCRATCHPAD.hitSurface) = (w & 0xe00) >> 9;
             switch (w & 0xf) {
             case 1: r = func_80043DA0((s16)x, (s16)y); break;
             case 2: r = func_80044184((s16)x, (s16)y); break;
@@ -564,7 +564,7 @@ s32 func_800443CC(void *o, s32 x, s32 y)
             }
         }
         if (r) {
-            D_1F800282 = w;
+            SCRATCHPAD.hitFlags = w;
             return 1;
         }
     } while (n);
@@ -1017,9 +1017,9 @@ s32 func_80045310(O_45310 *o, s16 a, s16 b)
             x = h + k * ((a - lo) % nn) / nn;
         }
         if ((s16)(x - b) <= 0) {
-            D_1F80027E = k;
-            D_1F800280 = h;
-            D_1F800282_S16 = flags;
+            SCRATCHPAD.hitSlope = k;
+            SCRATCHPAD.hitFloorHeight = h;
+            SCRATCHPAD.hitFlags = flags;
             D_1F800284 = (flags & 0xe00) >> 9;
             return 1;
         }

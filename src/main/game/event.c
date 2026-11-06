@@ -988,7 +988,7 @@ short acquireSpriteSlot(int id)
         for (j = 0; j < w * (u16)(h >> 2); j++) {
             *dst++ = *src++;
         }
-        addPrim(D_1F8001E0 + 4, load);
+        addPrim((*(u_long *)&SCRATCHPAD.ot) + 4, load);
         D_1F800164 += sizeof(DR_LOAD);
     }
     return freeSlot;

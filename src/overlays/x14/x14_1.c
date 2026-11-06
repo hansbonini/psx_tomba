@@ -192,7 +192,7 @@ void func_8011812C(GameObject *o)
     SCRATCHPAD.workMatrix.t[2] += (*(MATRIX *)&D_1F8000C0).t[2];
     SetRotMatrix(&(*&SCRATCHPAD.workMatrix));
     SetTransMatrix(&(*&SCRATCHPAD.workMatrix));
-    p = (u8 *)D_1F800164;
+    p = (u8 *)SCRATCHPAD.nextprim;
     p[7] = 0x3b;
     {
         u16 c = o->scaleX;
@@ -227,14 +227,14 @@ void func_8011812C(GameObject *o)
     gte_stotz(&LZ_FILE_CTRL_Long);
     gte_stsxy(p + 0x20);
     insertPrimWithBias(p, SCRATCHPAD.ot + 0x10, LZ_FILE_CTRL_Long, (s8)o->priority, 0x8000000);
-    D_1F800164 += 0x24;
-    q = (u8 *)D_1F800164;
+    SCRATCHPAD.nextprim += 0x24;
+    q = (u8 *)SCRATCHPAD.nextprim;
     if (GetGraphType() == 1) m = 0x80;
     else if (GetGraphType() == 2) m = 0x80;
     else m = 0x20;
     SetDrawMode(q, 0, 0, m, 0);
     AddPrim((s32 *)SCRATCHPAD.ot + (LZ_FILE_CTRL_Long + 4) + (s8)o->priority, q);
-    D_1F800164 += 0xc;
+    SCRATCHPAD.nextprim += 0xc;
 }
 
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80118420);

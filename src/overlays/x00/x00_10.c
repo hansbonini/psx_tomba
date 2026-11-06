@@ -309,7 +309,7 @@ s16 func_8013679C(GameObject *o)
     if (D_8009BCCA == 0) {
         if (D_8009C1B2 != 0xff) {
             if ((*(s16 *)&D_800A53AE) < -0x122 && D_800A5401 != 0 && (u16)(D_800A53D8[1] - 0x148) < 0x10 &&
-                (*(s8 *)&D_8009C618) == 1 && (D_1F8001FC & (*(u16 *)&D_1F8003C4)) != 0 && D_8009BCA8 == 0) {
+                (*(s8 *)&D_8009C618) == 1 && (SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction)) != 0 && D_8009BCA8 == 0) {
                 D_800A5458 = 1;
                 ((u8 *)&D_8009BCAA)[0] = 0;
                 *(s16 *)&o->anim = 1;

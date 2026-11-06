@@ -134,11 +134,13 @@ typedef struct scratchpad {
     /* 0x000 */ MATRIX workMatrix;
     /* 0x020 */ MATRIX objectMatrix;
     /* 0x040 */ VECTOR objectScale;
-    /* 0x050 */ u8 pad050[0x10];
+    /* 0x050 */ DVECTOR screenXY;
+    /* 0x054 */ u8 pad054[0xC];
     /* 0x060 */ SVECTOR workVecA;
     /* 0x068 */ SVECTOR workVecB;
     /* 0x070 */ lz_t lz;
-    /* 0x078 */ u8 pad078[0x14];
+    /* 0x078 */ s32 spriteFragCount;
+    /* 0x07C */ u8 pad07C[0x10];
     /* 0x08C */ union {
         s32 gteFlag;
         char* vertexCursor;
@@ -165,7 +167,7 @@ typedef struct scratchpad {
     /* 0x19C */ s16 swapIndex;
     /* 0x19E */ s16 listCounter;
     /* 0x1A0 */ u8 unk1A0[4];
-    /* 0x1A4 */ u8 unk1A4;
+    /* 0x1A4 */ u8 debugInvincible;
     /* 0x1A5 */ u8 debugNoAreaUpdate;
     /* 0x1A6 */ u8 pad1A6[0x5];
     /* 0x1AB */ u8 debugGiveItems;
@@ -174,7 +176,8 @@ typedef struct scratchpad {
     /* 0x1B4 */ u_char debug_mode_enabled;
     /* 0x1B5 */ u8 pad1B5[0x3];
     /* 0x1B8 */ u8 debugNoMenu;
-    /* 0x1B9 */ u8 pad1B9[0x2];
+    /* 0x1B9 */ u8 pad1B9;
+    /* 0x1BA */ u8 debugNoMessageMenu;
     /* 0x1BB */ u_char debugInfiniteLives;
     /* 0x1BC */ u8 pad1BC[0x1];
     /* 0x1BD */ u8 debugMoveDisplay;
@@ -261,7 +264,9 @@ typedef struct scratchpad {
     /* 0x282 */ u16 hitFlags;
     /* 0x284 */ s16 hitSurface;
     /* 0x286 */ s16 unk286;
-    /* 0x288 */ u8 pad288[0xC];
+    /* 0x288 */ u8* cdRequest;
+    /* 0x28C */ s16* cdHeader;
+    /* 0x290 */ u8* cdDest;
     /* 0x294 */ s32 cdSectorCount;
     /* 0x298 */ s32 loadNextAddr;
     /* 0x29C */ s32 cdQueueHead;

@@ -26,7 +26,7 @@ void func_80032DB4(GameObject *obj)
         break;
     case 1:
 #if REGION != REGION_JP
-        if (obj->param == 0 && !(D_1F8001F8 & 3))
+        if (obj->param == 0 && !(SCRATCHPAD.unk1F8 & 3))
             func_80028A74(0, 0, 0xff, 2);
 #endif
         tickAnimation(obj);
@@ -121,9 +121,9 @@ void func_800330EC(GameObject *obj)
 #endif
         }
 #if REGION == REGION_JP
-        if ((D_1F8001F8 & 3) == 0)
+        if ((SCRATCHPAD.unk1F8 & 3) == 0)
 #else
-        if (obj->id != 9 && (D_1F8001F8 & 3) == 0)
+        if (obj->id != 9 && (SCRATCHPAD.unk1F8 & 3) == 0)
 #endif
             playSFXWithNote(3, 12);
         break;

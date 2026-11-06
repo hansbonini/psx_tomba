@@ -44,8 +44,8 @@ void func_80057C74(GameObject *obj)
         break;
     case 2:
         obj->h->p.whole++;
-        if ((*(s16 *)&D_1F800176) + 0x134 < obj->h->p.whole)
-            obj->h->p.whole = (*(s16 *)&D_1F800176) + 0x134;
+        if ((*(s16 *)&SCRATCHPAD.cameraPos.x.p.whole) + 0x134 < obj->h->p.whole)
+            obj->h->p.whole = (*(s16 *)&SCRATCHPAD.cameraPos.x.p.whole) + 0x134;
         tickAnimation(obj);
         if (--obj->timer == -1) {
             obj->timer = 40;
@@ -256,8 +256,8 @@ void func_80058464(GameObject *obj)
         break;
     case 2:
         obj->h->p.whole++;
-        if (obj->h->p.whole > (*(s16 *)&D_1F800176) + 0x136)
-            obj->h->p.whole = (*(s16 *)&D_1F800176) + 0x136;
+        if (obj->h->p.whole > (*(s16 *)&SCRATCHPAD.cameraPos.x.p.whole) + 0x136)
+            obj->h->p.whole = (*(s16 *)&SCRATCHPAD.cameraPos.x.p.whole) + 0x136;
         tickAnimation(obj);
         if (--obj->timer == -1) {
             obj->timer = 0x28;
@@ -722,8 +722,8 @@ void func_800593EC(PO_593EC *o, GameObject *obj)
     o->t.unkB8 = ox;
     o->t.unkBA = 0;
     obj->touchFlag = 2;
-    D_1F80019E = 0;
-    D_1F8003C0 = obj;
+    SCRATCHPAD.listCounter = 0;
+    SCRATCHPAD.touchedObject = obj;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", func_80059514);
@@ -849,8 +849,8 @@ s32 func_8005975C(PO_5975C *o, GameObject *obj)
     }
     o->t.unkBA = dy;
     o->t.velY = 0;
-    D_1F80019E = 0;
-    D_1F8003C0 = obj;
+    SCRATCHPAD.listCounter = 0;
+    SCRATCHPAD.touchedObject = obj;
     return 1;
 }
 
@@ -860,10 +860,10 @@ s32 func_8005975C();
 
 s32 func_80059A40(void *o)
 {
-    u8 **q = D_1F800268;
+    u8 **q = SCRATCHPAD.areaHeldList;
     u8 *p;
-    D_1F8003C0_S32 = 0;
-    D_1F80019E = D_1F800254;
+    SCRATCHPAD.touchedObject = 0;
+    D_1F80019E = SCRATCHPAD.areaHeldCount;
     while (D_1F80019E != 0) {
         p = *q;
         D_1F80019E = D_1F80019E - 1;
@@ -875,7 +875,7 @@ s32 func_80059A40(void *o)
             }
         }
     }
-    return D_1F8003C0_S32;
+    return SCRATCHPAD.touchedObject;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchAreaCtrlHandler);
@@ -900,7 +900,6 @@ typedef struct {
     char p5[0xa9 - 0x9f]; u8 ba9;
     char p6[0xe8 - 0xaa]; u16 se8; s16 sea;
 } TO_59B58;
-extern u8 **D_1F800260;
 extern void func_80125DA8(TO_59B58 *, u8 *);
 extern void func_80126064(TO_59B58 *, u8 *);
 extern void func_801261C4(TO_59B58 *, u8 *);
@@ -940,8 +939,8 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
     if (o->ba9) n = 0xc;
     d = -n;
     if (!(o->s2e & 1)) d = n;
-    q = D_1F800268;
-    D_1F80019E = D_1F800254;
+    q = SCRATCHPAD.areaHeldList;
+    D_1F80019E = SCRATCHPAD.areaHeldCount;
     o->se8 = o->h40->s2 + d;
     while (D_1F80019E != 0) {
         e = *q;
@@ -1009,8 +1008,8 @@ s32 func_80059B58(TO_59B58 *o, u8 f)
         }
     }
     if (D_1F8003C0_S32 == 0) {
-        q = D_1F800260;
-        D_1F80019E = D_1F800250;
+        q = SCRATCHPAD.actorHeldList;
+        D_1F80019E = SCRATCHPAD.actorHeldCount;
         while (D_1F80019E != 0) {
             e = *q;
             D_1F80019E--;

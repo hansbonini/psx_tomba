@@ -52,7 +52,7 @@ static __inline__ s32 land_27D64(GameObject *o)
         o->touchFlag = 0;
         o->unkBA = 0;
         o->unkB2 = D_1F80027E;
-        o->unkAE = D_1F800284;
+        o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
         o->rotZ = (-D_1F80027E << 2) & 0xff;
         return 1;
     }
@@ -595,7 +595,7 @@ void func_80128E64(GameObject *o)
             o->unkBA = 0;
             t = D_1F80027E;
             o->unkB2 = t;
-            o->unkAE = D_1F800284;
+            o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
             o->rotZ = -(t << 2) & 0xff;
         } else {
             r = 0;
@@ -874,7 +874,7 @@ void func_80129904(GameObject *o)
             o->unkBA = 0;
             t = D_1F80027E;
             o->unkB2 = t;
-            o->unkAE = D_1F800284;
+            o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
             o->rotZ = -(t << 2) & 0xff;
         } else {
             r = 0;
@@ -1042,7 +1042,7 @@ static __inline__ s32 land_29E9C(GameObject *o)
         o->touchFlag = 0;
         o->unkBA = 0;
         o->unkB2 = D_1F80027E;
-        o->unkAE = D_1F800284;
+        o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
         o->rotZ = (-D_1F80027E << 2) & 0xff;
         return 1;
     }
@@ -1206,7 +1206,7 @@ static __inline__ s32 land_2A60C(GameObject *o)
         o->touchFlag = 0;
         o->unkBA = 0;
         o->unkB2 = D_1F80027E;
-        o->unkAE = D_1F800284;
+        o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
         o->rotZ = (-D_1F80027E << 2) & 0xff;
         return 1;
     }

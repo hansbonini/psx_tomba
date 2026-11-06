@@ -86,7 +86,7 @@ void func_80046264(void)
     func_8004DB3C();
     drawModelList();
     drawFxList();
-    if (D_1F8001C6 == 1)
+    if (SCRATCHPAD.drawFrozen == 1)
         func_8004F5A4();
     switch (D_8009BCDD) {
     case 1:
@@ -292,9 +292,9 @@ void drawWeaponList(void)
     s32 n;
     O_46CDC **pp;
     O_46CDC *o;
-    if (D_1F8001C6 != 0) {
-        n = (*(s16 *)&D_1F80024E);
-        pp = D_1F80025C;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = (*(s16 *)&SCRATCHPAD.weaponHeldCount);
+        pp = SCRATCHPAD.weaponHeldList;
         if (n != 0) {
             do {
                 o = *pp++;
@@ -308,8 +308,8 @@ void drawWeaponList(void)
             } while (n != 0);
         }
     } else {
-        (*(s16 *)&D_1F80024E) = D_1F800244;
-        D_1F80025C = D_1F800218;
+        (*(s16 *)&SCRATCHPAD.weaponHeldCount) = D_1F800244;
+        SCRATCHPAD.weaponHeldList = D_1F800218;
         if (D_1F800244 != 0) {
             do {
                 o = *D_1F800218++;
@@ -1126,16 +1126,15 @@ void func_8004AA70(GameObject *obj)
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/actorrender2", drawActorList);
-extern GameObject **D_1F800260;
 
 void drawActorList(void)
 {
     s32 n;
     GameObject **p;
     GameObject *obj;
-    if (D_1F8001C6 != 0) {
-        n = D_1F800250_S16;
-        p = D_1F800260;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = (*(s16 *)&SCRATCHPAD.actorHeldCount);
+        p = SCRATCHPAD.actorHeldList;
         while (n != 0) {
             obj = *p++;
             n--;
@@ -1151,8 +1150,8 @@ void drawActorList(void)
             }
         }
     } else {
-        D_1F800250_S16 = D_1F800246;
-        D_1F800260 = D_1F80021C;
+        (*(s16 *)&SCRATCHPAD.actorHeldCount) = D_1F800246;
+        SCRATCHPAD.actorHeldList = D_1F80021C;
         if (D_1F800246 == 0)
             return;
         do {
@@ -1185,9 +1184,9 @@ void drawEffectList(void)
     GameObject **p;
     GameObject *obj;
 
-    if (D_1F8001C6 != 0) {
-        n = D_1F800252;
-        p = D_1F800264;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = SCRATCHPAD.effectHeldCount;
+        p = SCRATCHPAD.effectHeldList;
         while (n != 0) {
             obj = *p++;
             n--;
@@ -1221,8 +1220,8 @@ void drawEffectList(void)
             }
         }
     } else {
-        D_1F800252 = D_1F80024A;
-        D_1F800264 = D_1F800220;
+        SCRATCHPAD.effectHeldCount = D_1F80024A;
+        SCRATCHPAD.effectHeldList = D_1F800220;
         while (D_1F80024A != 0) {
             obj = *D_1F800220++;
             D_1F80024A--;

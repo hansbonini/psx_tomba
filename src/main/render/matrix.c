@@ -8,9 +8,9 @@ void drawItemList(void)
     s32 *p;
     s32 a;
 
-    if (D_1F8001C6 != 0) {
-        n = (*(s16 *)&D_1F800256);
-        p = (s32 *)D_1F80026C;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = (*(s16 *)&SCRATCHPAD.itemHeldCount);
+        p = (s32 *)SCRATCHPAD.itemHeldList;
         if (n != 0) {
             do {
                 a = *p++;
@@ -19,8 +19,8 @@ void drawItemList(void)
             } while (n != 0);
         }
     } else {
-        (*(s16 *)&D_1F800256) = D_1F800248;
-        D_1F80026C = (void *)D_1F800228;
+        (*(s16 *)&SCRATCHPAD.itemHeldCount) = D_1F800248;
+        SCRATCHPAD.itemHeldList = (void *)D_1F800228;
         if (D_1F800248 != 0) {
             do {
                 a = *D_1F800228++;
@@ -38,9 +38,9 @@ void drawAreaList(void)
     s32 *p;
     s32 a;
 
-    if (D_1F8001C6 != 0) {
-        n = (*(s16 *)&D_1F800254);
-        p = (s32 *)D_1F800268;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = (*(s16 *)&SCRATCHPAD.areaHeldCount);
+        p = (s32 *)SCRATCHPAD.areaHeldList;
         if (n != 0) {
             do {
                 a = *p++;
@@ -49,8 +49,8 @@ void drawAreaList(void)
             } while (n != 0);
         }
     } else {
-        (*(s16 *)&D_1F800254) = D_1F80024C;
-        D_1F800268 = (void *)D_1F800224;
+        (*(s16 *)&SCRATCHPAD.areaHeldCount) = D_1F80024C;
+        SCRATCHPAD.areaHeldList = (void *)D_1F800224;
         if (D_1F80024C != 0) {
             do {
                 a = *D_1F800224++;
@@ -74,7 +74,7 @@ void func_8004D1A0(char *o)
     SCRATCHPAD.workMatrix.t[1] += SCRATCH_VIEW_MATRIX->t[1];
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(*(s32 *)((u8 *)o + 0xa0), (s32)((*(char **)&D_1F8001E0) + ((*(s8 *)((u8 *)o + 0xf) << 2) + 0x10)), o, *(u8 *)((u8 *)o + 0xa4));
+    func_80026694(*(s32 *)((u8 *)o + 0xa0), (s32)((*(char **)&SCRATCHPAD.ot) + ((*(s8 *)((u8 *)o + 0xf) << 2) + 0x10)), o, *(u8 *)((u8 *)o + 0xa4));
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D2A8);
@@ -82,7 +82,7 @@ void func_8004D1A0(char *o)
 void func_8004D2A8(GameObject *obj)
 {
     getBaseMatrix(&D_1F800020);
-    switch (D_1F8001C8 & 1) {
+    switch (SCRATCHPAD.axisSwap & 1) {
     case 0:
         D_1F800060.vx = obj->rotX;
         D_1F800060.vy = obj->rotY;
@@ -105,7 +105,7 @@ void func_8004D2A8(GameObject *obj)
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(obj->model, (s32)&((struct { char pad[0x10]; s32 a[1]; } *)D_1F8001E0)->a[(s8)obj->priority], obj, obj->modelLit);
+    func_80026694(obj->model, (s32)&((struct { char pad[0x10]; s32 a[1]; } *)SCRATCHPAD.ot)->a[(s8)obj->priority], obj, obj->modelLit);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D448);
@@ -117,7 +117,7 @@ typedef struct {
 void func_8004D448(O_4D448 *o)
 {
     getBaseMatrix(&D_1F800020);
-    switch (D_1F8001C8 & 1) {
+    switch (SCRATCHPAD.axisSwap & 1) {
     case 0:
         D_1F800060.vx = o->a84;
         D_1F800060.vy = o->a88;
@@ -140,7 +140,7 @@ void func_8004D448(O_4D448 *o)
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026E48(o->aa0, &(*(s32 **)&D_1F8001E0)[o->f + 4], o, o->aa8, o->ba4);
+    func_80026E48(o->aa0, &(*(s32 **)&SCRATCHPAD.ot)[o->f + 4], o, o->aa8, o->ba4);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D5F0);
@@ -148,7 +148,7 @@ void func_8004D448(O_4D448 *o)
 void func_8004D5F0(GameObject *obj)
 {
     getBaseMatrix(&D_1F800020);
-    switch (D_1F8001C8 & 1) {
+    switch (SCRATCHPAD.axisSwap & 1) {
     case 0:
         D_1F800060.vx = obj->rotX;
         D_1F800060.vy = obj->rotY;
@@ -177,7 +177,7 @@ void func_8004D5F0(GameObject *obj)
     ScaleMatrix(&SCRATCHPAD.workMatrix, &D_1F800040);
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(obj->model, (*(char **)&D_1F8001E0) + ((s8)obj->priority * 4 + 0x10), obj, obj->modelLit);
+    func_80026694(obj->model, (*(char **)&SCRATCHPAD.ot) + ((s8)obj->priority * 4 + 0x10), obj, obj->modelLit);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D7E0);
@@ -199,7 +199,7 @@ void func_8004D7E0(char *o)
     SCRATCHPAD.workMatrix.t[2] += 0x220;
     SetRotMatrix(&(*&SCRATCHPAD.workMatrix));
     SetTransMatrix(&(*&SCRATCHPAD.workMatrix));
-    func_800279E8(S32(o, 0xa0), (s32)((*(char **)&D_1F8001E0) + ((S8(o, 0xf) << 2) + 0x10)), o);
+    func_800279E8(S32(o, 0xa0), (s32)((*(char **)&SCRATCHPAD.ot) + ((S8(o, 0xf) << 2) + 0x10)), o);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D91C);
@@ -216,7 +216,7 @@ void func_8004D91C(GameObject *obj)
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026694(obj->model, &(*(s32 **)&D_1F8001E0)[*(s8 *)&obj->priority + 4], obj, obj->modelLit);
+    func_80026694(obj->model, &(*(s32 **)&SCRATCHPAD.ot)[*(s8 *)&obj->priority + 4], obj, obj->modelLit);
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004DA28);
@@ -232,7 +232,7 @@ void func_8004DA28(char *o)
     SCRATCHPAD.workMatrix.t[2] += SCRATCH_VIEW_MATRIX->t[2];
     SetRotMatrix(&SCRATCHPAD.workMatrix);
     SetTransMatrix(&SCRATCHPAD.workMatrix);
-    func_80026E48(*(s32 *)((u8 *)o + 0xa0), (s32)((*(char **)&D_1F8001E0) + ((*(s8 *)((u8 *)o + 0xf) << 2) + 0x10)), o, *(s32 *)((u8 *)o + 0xa8), *(u8 *)((u8 *)o + 0xa4));
+    func_80026E48(*(s32 *)((u8 *)o + 0xa0), (s32)((*(char **)&SCRATCHPAD.ot) + ((*(s8 *)((u8 *)o + 0xf) << 2) + 0x10)), o, *(s32 *)((u8 *)o + 0xa8), *(u8 *)((u8 *)o + 0xa4));
 }
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004DB3C);
@@ -251,7 +251,7 @@ void func_8004DB3C(void)
         if (i < D_800B00F8[3]) {
             p = (s32 *)base;
             do {
-                func_8011F5C4(p[1], D_1F8001E0 + 0x10);
+                func_8011F5C4(p[1], SCRATCHPAD.ot + 0x10);
                 p++;
                 i++;
             } while (i < base[3]);
@@ -261,7 +261,7 @@ void func_8004DB3C(void)
         if (i < D_800B00F8[3]) {
             p = (s32 *)base;
             do {
-                func_80027600(p[1], D_1F8001E0 + 0x10);
+                func_80027600(p[1], SCRATCHPAD.ot + 0x10);
                 p++;
                 i++;
             } while (i < base[3]);

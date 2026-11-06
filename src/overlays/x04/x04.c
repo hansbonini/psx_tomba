@@ -1281,7 +1281,7 @@ void func_8011B508(GameObject *o)
         o->hitboxH = 0x10;
         o->touchFlag = 0;
         o->unk6A = 0;
-        if (D_1F80016A[0] > o->x.p.whole) {
+        if (SCRATCHPAD.cameraTarget.x.p.whole > o->x.p.whole) {
             o->animFrame = 1;
             o->x.raw = D_8012FF7C[1].x << 16;
             o->y.raw = D_8012FF7C[o->animFrame].y << 16;
@@ -1336,7 +1336,7 @@ void func_8011B508(GameObject *o)
                 applyObjectSpeedXY(o);
                 break;
             case 1:
-                if (o->x.p.whole + o->hitboxX + 0x10 < D_1F80016A[0]) o->subState = 0;
+                if (o->x.p.whole + o->hitboxX + 0x10 < SCRATCHPAD.cameraTarget.x.p.whole) o->subState = 0;
                 break;
             }
             break;
@@ -1360,7 +1360,7 @@ void func_8011B508(GameObject *o)
                 applyObjectSpeedXY(o);
                 break;
             case 1:
-                { s32 k = 0x10; if (D_1F80016A[0] < o->x.p.whole - k - o->hitboxX) o->subState = 0; }
+                { s32 k = 0x10; if (SCRATCHPAD.cameraTarget.x.p.whole < o->x.p.whole - k - o->hitboxX) o->subState = 0; }
                 break;
             }
             break;
@@ -1805,7 +1805,7 @@ void func_8011E254(u8 *a, u8 *b)
     case 3:
         if ((b[0] & 2) == 0) {
             b[0x69] = 8;
-            if (D_1F8001A4 == 0 && (a[0] & 2) == 0) {
+            if (SCRATCHPAD.debugInvincible == 0 && (a[0] & 2) == 0) {
                 s32 ah, bh;
                 a[0] = 2;
                 bh = S16(PTR(b, 0x40), 2);
@@ -1881,7 +1881,7 @@ void func_8011E3E4(GameObject *o, GameObject *p)
             o->touchFlag = 1;
             o->y.p.whole = b - (a + c);
         } else if (!(o->active & 2) && p->unk6A != 0) {
-            if (SCRATCHPAD.unk1A4 == 0) {
+            if (SCRATCHPAD.debugInvincible == 0) {
                 GameObject *a = (GameObject *)p->parent;
                 GameObject *b = (GameObject *)p->child;
                 p->unk6A = 0;
@@ -2148,10 +2148,10 @@ s32 func_8011F084(O_1F084 *o)
             if (v > 8) v = 8;
             if (D_1F80027E < 0) v = -v;
             o->d8c = (-v) & 0xff;
-            s = D_1F800284;
+            s = (*(u16 *)&SCRATCHPAD.hitSurface);
             o->wb2 = v;
             o->b9c = 0;
-            u = D_1F800282;
+            u = SCRATCHPAD.hitFlags;
             o->wb6 = ((-v) << 2) & 0xff;
             o->wae = s;
             if ((s16)((u >> 5) & 0xf) >= 0xd)
@@ -2206,7 +2206,7 @@ u8 func_8011F28C(s32 a)
     s32 v;
     u8 *t;
     if ((u16)(*(u16 *)(*(s32 *)(a + 0x44) + 2) - (*(u16 *)&D_1F800172) + 0x2d) >= 0x5b) return 0xff;
-    if ((u16)(*(u16 *)(a + 0x16) - D_1F80016E + 0x46) >= 0x6f) return 0xff;
+    if ((u16)(*(u16 *)(a + 0x16) - SCRATCHPAD.cameraTarget.y.p.whole + 0x46) >= 0x6f) return 0xff;
     d = *(u16 *)(*(s32 *)(a + 0x40) + 2) - (*(u16 *)&D_1F80016A);
     if ((u16)(d + 0x80) >= 0x101) return 0xff;
                 s = d;
@@ -2994,7 +2994,7 @@ void func_80126DC4(GameObject *o)
         break;
     case 2:
         o->h->p.whole = SCRATCHPAD.cameraTarget.x.p.whole;
-        o->y.p.whole = D_1F80016E_S16Arr[0];
+        o->y.p.whole = SCRATCHPAD.cameraTarget.y.p.whole;
         if (D_1F80016E__26DC5[0] < -0x82) {
             o->subState = 2;
             o->step = 0;

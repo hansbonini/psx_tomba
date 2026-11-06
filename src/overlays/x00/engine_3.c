@@ -1059,7 +1059,7 @@ void func_80111C68(GameObject *o)
         yy = o->y.p.whole;
         o->y.p.whole = yy + 4;
         if (probeCollisionAtDepthA(o, o->h->p.whole, (s16)(yy + 0x14))) {
-            o->rotZ = (-D_1F80027E << 2) & 0xff;
+            o->rotZ = (-SCRATCHPAD.hitSlope << 2) & 0xff;
             o->subState++;
         }
         o->localX = o->h->p.whole;
@@ -1177,7 +1177,7 @@ void func_80111F74(GameObject *o)
         if (--o->timer == -1) {
             o->subState++;
         }
-        o->y.p.whole = o->localY + (D_1F8001F8 & 1);
+        o->y.p.whole = o->localY + (SCRATCHPAD.unk1F8 & 1);
         o->h->p.whole = (s16)(o->localX - 2) + (((s32 (*)(void))nextRandom)() & 3);
         break;
     case 6:
@@ -1271,7 +1271,7 @@ void func_80112384(GameObject *o)
     case 5:
         if (--o->timer == -1)
             o->subState++;
-        o->y.p.whole = o->localY + (D_1F8001F8 & 1);
+        o->y.p.whole = o->localY + (SCRATCHPAD.unk1F8 & 1);
         o->h->p.whole = (s16)(o->localX - 2) + (((s32 (*)(void))nextRandom)() & 3);
         break;
     case 6:
@@ -1501,7 +1501,7 @@ void func_80112DDC(O_12DDC *o)
     if (o->d90[4] == 2) {
         o->d90[4] = 3;
         D_800A539C = 1;
-        D_1F8001C6 = 0;
+        SCRATCHPAD.drawFrozen = 0;
         D_8009BCAA = 0;
         D_800A544A = 0;
         D_800A539D = 0;

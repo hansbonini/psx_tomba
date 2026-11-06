@@ -151,7 +151,7 @@ s32 func_80121B04(GameObject *o)
         n->id = 0;
         n->param = 0;
         n->x.raw = (((s16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2))[0] + 0xa0) << 16;
-        n->y.raw = (D_1F80017A_S16Arr[0] - 0xf0) << 16;
+        n->y.raw = (SCRATCHPAD.cameraPos.y.p.whole - 0xf0) << 16;
         n->z.raw = o->z.p.whole << 16;
     }
 }

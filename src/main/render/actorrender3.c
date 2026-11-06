@@ -285,7 +285,7 @@ void drawMessageBox(O_4BDE4 *o)
     GetDrawEnv((DRAWENV *)env);
     r = D_1F800164;
     SetDrawMode(r, 0, 0, *(u16 *)(env + 0x14), 0);
-    AddPrim(D_1F8001E0 + 8, r);
+    AddPrim(SCRATCHPAD.ot + 8, r);
     D_1F800164 = (char *)D_1F800164 + 0xc;
     s = (SPRT *)0x1f800000;
     for (i = 0, j = 0; i < MESSAGE_SLOTS[o->idx].count; j++, i++) {
@@ -306,7 +306,7 @@ void drawMessageBox(O_4BDE4 *o)
             {
                 SPRT *q = D_1F800164;
                 *q = *s;
-                AddPrim(D_1F8001E0 + 8, q);
+                AddPrim(SCRATCHPAD.ot + 8, q);
             }
             D_1F800164 = (char *)D_1F800164 + 0x14;
         }
@@ -317,7 +317,7 @@ void drawMessageBox(O_4BDE4 *o)
 #endif
     r = D_1F800164;
     SetDrawMode(r, 0, 0, 0, 0);
-    AddPrim(D_1F8001E0 + 8, r);
+    AddPrim(SCRATCHPAD.ot + 8, r);
     l.m = o->m;
     l.a = o->a;
     l.b = o->b;

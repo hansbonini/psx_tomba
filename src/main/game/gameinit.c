@@ -134,7 +134,7 @@ void initAreaCtrlPool(void)
         q -= 0x3C;
         i++;
     } while (i < 10);
-    D_1F80023E = 10;
+    SCRATCHPAD.freeAreaCtrlCount = 10;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initWeaponPool);
@@ -160,11 +160,11 @@ void initWeaponPool(void)
         q -= 0xEC;
         i++;
     } while (i < 0x4);
-    D_1F800236 = 0x4;
-    D_1F800218 = (s32*)&D_800B0528;
-    D_1F80025C = (s32*)&D_800B0528;
-    D_1F80024E = 0;
-    D_1F800244 = 0;
+    SCRATCHPAD.freeWeaponCount = 0x4;
+    SCRATCHPAD.weaponDrawList = (s32*)&D_800B0528;
+    SCRATCHPAD.weaponHeldList = (s32*)&D_800B0528;
+    SCRATCHPAD.weaponHeldCount = 0;
+    SCRATCHPAD.weaponDrawCount = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initActorPool);
@@ -190,7 +190,7 @@ void initActorPool(void)
         q -= 0xD4;
         i++;
     } while (i < 0xC8);
-    D_1F800238 = 0xC8;
+    SCRATCHPAD.freeActorCount = 0xC8;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", initActorDrawList);
@@ -251,9 +251,9 @@ void initModelPool(void)
         i++;
     } while (i < 0x2D);
     D_1F80023A = 0x2D;
-    D_1F800230 = (s32*)&D_800B3184;
-    D_1F800274 = (s32*)&D_800B3184;
-    D_1F800258 = 0;
+    SCRATCHPAD.modelDrawList = (s32*)&D_800B3184;
+    SCRATCHPAD.modelHeldList = (s32*)&D_800B3184;
+    SCRATCHPAD.modelHeldCount = 0;
     D_1F800242 = 0;
     initSpriteSlots8();
 }
@@ -302,11 +302,11 @@ void initFxPool(void)
         q -= 0x6C;
         i++;
     } while (i < 0xA);
-    D_1F80023C = 0xA;
-    D_1F80022C = (s32*)&D_800A5858;
-    D_1F800270 = (s32*)&D_800A5858;
-    D_1F80025A = 0;
-    D_1F800240 = 0;
+    SCRATCHPAD.freeFxCount = 0xA;
+    SCRATCHPAD.fxDrawList = (s32*)&D_800A5858;
+    SCRATCHPAD.fxHeldList = (s32*)&D_800A5858;
+    SCRATCHPAD.fxHeldCount = 0;
+    SCRATCHPAD.fxDrawCount = 0;
 }
 
 void clearMenuState(void)
@@ -332,7 +332,7 @@ void* allocWeaponObject(void)
         D_1F800236 = n - 1;
         D_1F800204 = p + 1;
         obj = (ObjectAxisView*)*p;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -357,7 +357,7 @@ void* allocActorWithCategory(u8 arg0)
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
         obj->category = arg0;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -383,7 +383,7 @@ void* allocActorObject(void)
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
         obj->category = layer;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -432,7 +432,7 @@ void* allocAreaObject(void)
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
         obj->category = layer;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -458,7 +458,7 @@ void* allocItemObject(void)
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
         obj->category = layer;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -482,7 +482,7 @@ void* allocModelObject(void)
         D_1F80023A = n - 1;
         D_1F80020C = p + 1;
         obj = (ObjectAxisView*)*p;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -506,7 +506,7 @@ void* allocFxObject(void)
         D_1F80023C = n - 1;
         D_1F800214 = p + 1;
         obj = (ObjectAxisView*)*p;
-        if ((D_1F8001C8 & 1) == 0) {
+        if ((SCRATCHPAD.axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {

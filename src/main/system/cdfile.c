@@ -1585,8 +1585,8 @@ FILE_LINK_SIZES = FILE_LINKS + 4");
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", cdLoadTask);
 #define CD_REQ   (*(u8**)0x1F800288)
-#define CD_HDR   (*(s16**)0x1F80028C)
-#define CD_DST   (*(u8**)0x1F800290)
+#define CD_HDR   (SPAD->cdHeader)
+#define CD_DST   (SPAD->cdDest)
 #define CD_NSEC  (SPAD->cdSectorCount)
 #define CD_HEAD  (SPAD->cdQueueHead)
 #define CD_TAIL  (SPAD->cdQueueTail)
@@ -2028,7 +2028,7 @@ void func_800223E0(void)
     D_8009C9DE = D_8009C9DA;
     PAD_PRESSED[0] = func_80028D70(0);
     D_1F8001FC = ~D_8009C9DC & PAD_PRESSED[0];
-    D_1F8001FE = ~PAD_PRESSED[0] & D_8009C9DC;
+    SCRATCHPAD.unk1FE = ~PAD_PRESSED[0] & D_8009C9DC;
     func_80028B34();
 }
 

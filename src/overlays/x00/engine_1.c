@@ -580,7 +580,7 @@ s16 func_800EE26C(void)
         break;
     }
     if (s != 0) {
-        if ((*(s16 *)&D_1F800238) < 6) return 0;
+        if ((*(s16 *)&SCRATCHPAD.freeActorCount) < 6) return 0;
         o = allocEffectObject();
         if (o != 0) {
             u16 *t;
@@ -607,7 +607,7 @@ void func_800EE3BC(u32 a, s16 x, s16 y, s16 z)
 {
     GameObject *p;
     s16 *t;
-    if (func_800EE26C() == 0 && (*(s16 *)&D_1F800238) > 5 && (p = allocEffectObject()) != 0) {
+    if (func_800EE26C() == 0 && (*(s16 *)&SCRATCHPAD.freeActorCount) > 5 && (p = allocEffectObject()) != 0) {
         p->active = 1;
         p->type = 0x31;
         p->id = 1;

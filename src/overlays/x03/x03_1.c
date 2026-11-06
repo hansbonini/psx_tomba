@@ -125,7 +125,7 @@ void func_80118514(GameObject *o)
         e->cc = D_80134BEC[6];
         e->ce = D_80134BEC[7];
         e->d0 = 0;
-        o->x.raw = (D_1F800176_S16Arr[0] - 0xa0) << 16;
+        o->x.raw = (SCRATCHPAD.cameraPos.x.p.whole - 0xa0) << 16;
         { s16 r = (nextRandom() & 7) * 24 + 0x10; o->y.raw = (SCRATCHPAD.screenOrigin.y.p.whole - r) << 16; }
         o->velH = o->id << 7;
         break;
@@ -137,7 +137,7 @@ void func_80118514(GameObject *o)
             o->timer--;
             e->bc += o->velX >> 8;
         }
-        if (o->h->p.whole + e->c4 > D_1F800176_S16Arr[0] + 0x168) o->subState = 1;
+        if (o->h->p.whole + e->c4 > SCRATCHPAD.cameraPos.x.p.whole + 0x168) o->subState = 1;
         break;
     }
 }
@@ -160,7 +160,7 @@ void func_80118720(GameObject *o)
         o->velX = 0x100;
         o->timer = 0x168;
         INITV(o);
-        o->x.raw = (D_1F800176_S16Arr[0] + o->id * 52) << 16;
+        o->x.raw = (SCRATCHPAD.cameraPos.x.p.whole + o->id * 52) << 16;
         k = 0x60;
         if (GAME.selectedSection == 3)
             o->y.raw = (-0x272 - (nextRandom() & 0xf) * 42) << 16;
@@ -173,7 +173,7 @@ void func_80118720(GameObject *o)
         o->velX = 0x100;
         o->timer = 0x168;
         INITV(o);
-        o->x.raw = (D_1F800176_S16Arr[0] - 0xa0) << 16;
+        o->x.raw = (SCRATCHPAD.cameraPos.x.p.whole - 0xa0) << 16;
         k = 0x18;
         if (GAME.selectedSection == 3)
             o->y.raw = (-0x272 - (nextRandom() & 0xf) * 42) << 16;
@@ -189,7 +189,7 @@ void func_80118720(GameObject *o)
             V(o)[1].vx += o->velX >> 8;
             o->timer--;
         }
-        if (o->h->p.whole + V(o)[2].vx > D_1F800176_S16Arr[0] + 0x26c)
+        if (o->h->p.whole + V(o)[2].vx > SCRATCHPAD.cameraPos.x.p.whole + 0x26c)
             o->subState = 1;
         break;
     }

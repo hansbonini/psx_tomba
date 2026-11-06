@@ -614,7 +614,7 @@ static __inline__ void body_2A9FC(GameObject *obj)
 {
     s32 d;
     u8 neg;
-    d = D_1F80018C - (*(Fix16 **)&obj->localY)->raw;
+    d = SCRATCHPAD.prevTargetX - (*(Fix16 **)&obj->localY)->raw;
     neg = d < 0;
     if (d > 0x20000) {
         if (d < obj->y.raw) {
@@ -677,7 +677,7 @@ typedef struct {
 
 static __inline__ void inl_2ABC0(O_2ABC0 *o)
 {
-    s32 d = D_1F800190 - VF;
+    s32 d = SCRATCHPAD.prevTargetY - VF;
     if (d >= 0) {
         if (d > 0x10000) {
             if (d < o->v) {
@@ -694,7 +694,7 @@ static __inline__ void inl_2ABC0(O_2ABC0 *o)
                 o->f44 |= 8;
             }
         } else {
-            VF = D_1F800190;
+            VF = SCRATCHPAD.prevTargetY;
             if (SCRATCHPAD.vpy.p.whole > o->s32) {
                 SCRATCHPAD.vpy.raw = o->s32 << 16;
                 o->v = 0;
@@ -751,7 +751,7 @@ void func_8002AD74(u8 *o)
             *(s32 *)(o + 0x18) = 0;
             *(u16 *)(o + 0x44) |= 8;
         }
-        t = *p - D_1F800190;
+        t = *p - SCRATCHPAD.prevTargetY;
         if (t > 0x580000)
             (*(s16 *)(o + 0x5c))++;
         break;
@@ -766,7 +766,7 @@ void func_8002AD74(u8 *o)
             *(s32 *)(o + 0x18) = 0;
             *(u16 *)(o + 0x44) |= 8;
         }
-        t = *p - D_1F800190;
+        t = *p - SCRATCHPAD.prevTargetY;
         if (t <= 0)
             o[3] = 3;
         break;
@@ -1349,14 +1349,14 @@ void func_8002BB9C(S_2BB9C *o)
             c = g->a0.b[0];
             if (c & 0x12) {
                 if (PAD_PRESSED[0] & (JOY_L1 | JOY_R1)) {
-                    if ((D_1F8001FC & JOY_UP) && D_800A5438 != 4) {
+                    if ((SCRATCHPAD.joypad_state & JOY_UP) && D_800A5438 != 4) {
                         if (o->b6e != 1) {
                             o->b6c = 7;
                             o->b6e = 1;
                             o->b6d = 0;
                             o->b6f = -10;
                         }
-                    } else if ((D_1F8001FC & JOY_DOWN) && o->b6e != 2) {
+                    } else if ((SCRATCHPAD.joypad_state & JOY_DOWN) && o->b6e != 2) {
                         o->b6c = 7;
                         o->b6d = 1;
                         o->b6e = 2;
@@ -1367,7 +1367,7 @@ void func_8002BB9C(S_2BB9C *o)
                     if (handleLookScrollInput(o) == 0) break;
                     decay_2BB9C();
                 } else if (c & 0x10) {
-                    if ((D_1F8001FC & JOY_UP) && D_800A5438 != 4) {
+                    if ((SCRATCHPAD.joypad_state & JOY_UP) && D_800A5438 != 4) {
                         f = 0;
                         if (o->b6e == 0) goto t2;
                         o->b6c = 7;
@@ -1375,7 +1375,7 @@ void func_8002BB9C(S_2BB9C *o)
                         o->b6e = 0;
                         o->b6f = 0;
                     } else {
-                        if (!(D_1F8001FC & JOY_DOWN)) goto t2;
+                        if (!(SCRATCHPAD.joypad_state & JOY_DOWN)) goto t2;
                         if (o->b6e == 2) goto t2;
                         if (o->b6e == 0) {
                             o->b6c = 7;
@@ -1397,7 +1397,7 @@ void func_8002BB9C(S_2BB9C *o)
                     if (f) decay_2BB9C();
                 } else if (c & 2) {
                     if (c & 1) break;
-                    if ((D_1F8001FC & JOY_UP) && D_800A5438 != 4) {
+                    if ((SCRATCHPAD.joypad_state & JOY_UP) && D_800A5438 != 4) {
                         if (o->b6e == 1) goto t1;
                         {
                             if (o->b6e == 0) {
@@ -1415,7 +1415,7 @@ void func_8002BB9C(S_2BB9C *o)
                         }
                     } else {
                         f = 1;
-                        if (D_1F8001FC & JOY_DOWN) {
+                        if (SCRATCHPAD.joypad_state & JOY_DOWN) {
                             f = 0;
                             if (o->b6e != 0) {
                                 o->b6c = 7;
@@ -1534,7 +1534,7 @@ void func_8002BB9C(S_2BB9C *o)
         break;
     case 10:
         if (D_8009BCA7 != 0) break;
-        if ((*(s16 *)&D_1F8001C8) == 0) {
+        if ((*(s16 *)&SCRATCHPAD.axisSwap) == 0) {
             if (D_8009BCCC <= D_8009BCCD) {
                 o->b6c = 0;
                 break;
@@ -1657,7 +1657,7 @@ void func_8002C7D8(O_2C7D8 *o)
     }
     func_8002B704(o);
     func_8002BB9C(o);
-    D_1F800286 = -o->d24 >> 6;
+    SCRATCHPAD.unk286 = -o->d24 >> 6;
     Clamp_2C7D8(o);
 }
 
@@ -1771,7 +1771,7 @@ void func_8002CC20(S_2CC20 *o)
     func_8002A798(o);
     func_8002A480(o);
     if ((u16)(o->p34[1] - (*(u16 *)&D_1F80016A) + 0x8c) < 0x118 || (o->f44 & 3)) {
-        if ((u16)(SCRATCHPAD.vpy.p.whole - D_1F80016E + 0xb4) < 0x168 || (o->f44 & 0xc)) {
+        if ((u16)(SCRATCHPAD.vpy.p.whole - SCRATCHPAD.cameraTarget.y.p.whole + 0xb4) < 0x168 || (o->f44 & 0xc)) {
             o->b3 = 1;
             if (D_8009BCCE == 3 || D_8009C10E == 0xff) o->b3 = 0;
             D_8009BCA7 = 0;
@@ -1804,12 +1804,12 @@ void func_8002CD7C(S8002A258_2CD7C *o)
             if (CAMERA_TILT > 0) CAMERA_TILT = 0;
         }
     }
-    D_1F80018C = D_1F800168;
-    D_1F800190 = D_1F80016C;
+    SCRATCHPAD.prevTargetX = SCRATCHPAD.cameraTarget.x.raw;
+    SCRATCHPAD.prevTargetY = SCRATCHPAD.cameraTarget.y.raw;
     func_8002A9FC(o);
     func_8002ABC0(o);
     if ((u16)(o->p34[1] - (*(u16 *)&D_1F80016A) + 0x40) < 0x80 || (o->w44 & 3)) {
-        if ((u16)(SCRATCHPAD.vpy.p.whole - D_1F80016E + 0x5a) < 0xb4 || (o->w44 & 0xc)) {
+        if ((u16)(SCRATCHPAD.vpy.p.whole - SCRATCHPAD.cameraTarget.y.p.whole + 0x5a) < 0xb4 || (o->w44 & 0xc)) {
             o->b3 = 1;
             if (D_8009BCCE == 3 || D_8009C10E == 0xff) o->b3 = 0;
             D_8009BCA7 = 0;
@@ -2221,7 +2221,7 @@ void updateCameraScroll(S_2D784 *o)
         o->b75 = 0;
         o->b76 = 0;
         o->b77 = 0;
-        D_1F800286 = 0;
+        SCRATCHPAD.unk286 = 0;
         o->w58 = w;
         o->b4++;
         if ((*(s32 *)&GAME) == 6) {
@@ -2251,7 +2251,7 @@ void updateCameraScroll(S_2D784 *o)
         D_1F800178[0] = t;
         D_1F80017C[0] = o->d10;
         D_1F800184[0] = SCRATCHPAD.vry.raw + t;
-        D_1F800180 = o->d8;
+        SCRATCHPAD.screenOrigin.x.raw = o->d8;
         break;
     }
 }
@@ -2763,7 +2763,7 @@ void updateItemGetIcon(GameObject *o)
         o->drawType = DRAW_SPRITE;
         o->anim = *D_8007C838[o->param];
         o->spriteBank = D_1F8002D8[0];
-        o->x.p.whole = D_1F80016A[0];
+        o->x.p.whole = SCRATCHPAD.cameraTarget.x.p.whole;
         o->y.p.whole = D_1F80016E_U16Arr[0] - 0x1E;
         o->z.p.whole = D_1F800172[0];
         if (GAME.selectedArea == 2 && (D_8009BCCA == 0 || D_8009BCCA == 3)) {
@@ -2861,7 +2861,7 @@ void updateItemGetIcon(GameObject *o)
             }
             break;
         }
-        o->x.p.whole = D_1F80016A[0];
+        o->x.p.whole = SCRATCHPAD.cameraTarget.x.p.whole;
         o->y.raw = D_1F80016C_S32Arr[0] + o->localY;
         o->z.p.whole = D_1F800172[0];
         break;

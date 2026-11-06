@@ -43,8 +43,8 @@ void func_801168F4(GameObject *o)
             func_8002CEF8(o);
             break;
         case 1:
-            if (D_1F80016E_S16 < -0xdb && (*(s16 *)&D_1F80016A) >= 0x12b) tryStartItemInteraction(o, 2, 1);
-            else if ((*(s16 *)&D_1F80016A) >= 0x157 && D_1F80016E_S16 >= -0x38) tryStartItemInteraction(o, 2, 0);
+            if (SCRATCHPAD.cameraTarget.y.p.whole < -0xdb && (*(s16 *)&D_1F80016A) >= 0x12b) tryStartItemInteraction(o, 2, 1);
+            else if ((*(s16 *)&D_1F80016A) >= 0x157 && SCRATCHPAD.cameraTarget.y.p.whole >= -0x38) tryStartItemInteraction(o, 2, 0);
             func_8002CEF8(o);
             break;
         case 2:
@@ -306,7 +306,6 @@ void func_801180DC(char *o, s16 b, s16 c, s32 d)
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00", func_801181C0);
 typedef struct { u32 w; } W_181C0;
-extern u8 **D_1F800260;
 
 void func_801181C0(u8 *o)
 {
@@ -315,8 +314,8 @@ void func_801181C0(u8 *o)
 
     if ((*(u16 *)&GAME) != 0)
         return;
-    D_1F80019C = D_1F800250;
-    pp = D_1F800260;
+    D_1F80019C = SCRATCHPAD.actorHeldCount;
+    pp = SCRATCHPAD.actorHeldList;
     while (D_1F80019C != 0) {
         e = *pp;
         D_1F80019C--;

@@ -65,13 +65,13 @@ s32 func_8003887C(GameObject *obj)
         obj->unkA5 = 0;
         obj->touchFlag = 0;
         if (PLAYER.obj.unk9E == 0) {
-            if (!(D_1F800282 & 0x800)) {
-                if (D_1F800282 & 2) obj->touchFlag = 1;
+            if (!(SCRATCHPAD.hitFlags & 0x800)) {
+                if (SCRATCHPAD.hitFlags & 2) obj->touchFlag = 1;
             }
         }
 #if REGION != REGION_JP
-        k = (D_1F800282 >> 5) & 0xf;
-        if (!(D_1F800282 & 0x3000)) {
+        k = (SCRATCHPAD.hitFlags >> 5) & 0xf;
+        if (!(SCRATCHPAD.hitFlags & 0x3000)) {
             switch (k) {
             case 1:
             case 2:
@@ -401,7 +401,7 @@ void func_80038AC0(GameObject *obj)
         obj->animFrame = G.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&G, 0);
-        if ((D_1F8001F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
 #if REGION != REGION_JP
             func_80028A74(0, 0, 0xc0, 2);
 #endif
@@ -455,7 +455,7 @@ void func_80038AC0(GameObject *obj)
         obj->animFrame = G.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&G, 0);
-        if ((D_1F8001F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
 #if REGION != REGION_JP
             func_80028A74(0, 0, 0xff, 2);
 #endif

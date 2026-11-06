@@ -487,7 +487,7 @@ void func_801233E0(GameObject *o, GameObject *e)
     case 3:
         if (e->active & 2) break;
         e->touchFlag = 8;
-        if (SCRATCHPAD.unk1A4) break;
+        if (SCRATCHPAD.debugInvincible) break;
         if (o->active & 2) break;
         o->active = 2;
         r = e->h->p.whole > o->h->p.whole;
@@ -785,7 +785,7 @@ void func_801243DC(GameObject *a, GameObject *b)
     if (a->subState == 0x22) return;
     if (b->id == 7) r = func_80051A18(a, b);
     else r = func_80123F58(a, b);
-    if (r == 1 && !SCRATCHPAD.unk1A4 && !(a->active & 2) && !(b->active & 2)) {
+    if (r == 1 && !SCRATCHPAD.debugInvincible && !(a->active & 2) && !(b->active & 2)) {
         a->active = 2;
         if (b->h->p.whole > a->h->p.whole) a->animFrame = 1;
         else a->animFrame = 0;
@@ -1042,7 +1042,7 @@ void func_80125DA8(u8 *a, u8 *b)
         return;
     if (boxesOverlap(a, b) == 0)
         return;
-    if (D_1F8001A4 != 0)
+    if (SCRATCHPAD.debugInvincible != 0)
         return;
     if (a[0] & 2)
         return;
@@ -1488,12 +1488,12 @@ void func_80127448(GameObject *o)
         o->cooldownTimer = 0;
         o->subState = 0;
         h = o->h;
-        if ((u16)(D_1F80016A[0] - h->p.whole + 0xf0) < 0x1e1
+        if ((u16)(SCRATCHPAD.cameraTarget.x.p.whole - h->p.whole + 0xf0) < 0x1e1
             && (u16)((*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) - o->y.p.whole + 0xa0) < 0x141) {
             if (o->unkA7) o->subState = D_8013BB18[nextRandom() & 0xf];
             else o->subState = D_8013BB28[nextRandom() & 0xf];
             if (o->subState == 0) o->subState++;
-            o->animFrame = (s16)D_1F80016A[0] < o->h->p.whole;
+            o->animFrame = (s16)SCRATCHPAD.cameraTarget.x.p.whole < o->h->p.whole;
         }
     }
 }
@@ -1537,7 +1537,7 @@ void func_80127608(GameObject *o)
                 o->unkBA = 0;
                 t = D_1F80027E;
                 o->unkB2 = t;
-                o->unkAE = D_1F800284;
+                o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
                 o->rotZ = -(t << 2) & 0xff;
             }
         }
@@ -1620,7 +1620,7 @@ static __inline__ s32 land_2791C(GameObject *o)
         o->touchFlag = 0;
         o->unkBA = 0;
         o->unkB2 = D_1F80027E;
-        o->unkAE = D_1F800284;
+        o->unkAE = (*(u16 *)&SCRATCHPAD.hitSurface);
         o->rotZ = (-D_1F80027E << 2) & 0xff;
         return 1;
     }

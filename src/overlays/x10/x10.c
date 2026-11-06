@@ -1252,7 +1252,7 @@ void func_8011BA78(O_1BA78 *o)
         p = D_8009C650_O_1BA78Ptr;
         o->h->s2 = p->h->s2;
         o->y16 = p->y16 - p->s70;
-        if (D_1F8001FC & (*(u16 *)&D_1F8003C6)) {
+        if (D_1F8001FC & (*(u16 *)&(*(s16 *)&SCRATCHPAD.buttonJump))) {
             o->b9c = 0;
             o->b69 = 0;
             o->bac = 0;
@@ -1555,7 +1555,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
     if (p->id == 0) {
         if (!pushOutOfBoxX(o, p)) return;
         if (o->active & 2) return;
-        if (SCRATCHPAD.unk1A4) return;
+        if (SCRATCHPAD.debugInvincible) return;
         goto kill;
     }
     if ((u16)(o->d->p.whole - p->d->p.whole + 0x2d) >= 0x5b)
@@ -1583,7 +1583,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
     if ((u16)(c - d) < 5) {
         o->h->p.whole = p->h->p.whole + t;
         if (o->active & 2) return;
-        if (SCRATCHPAD.unk1A4) return;
+        if (SCRATCHPAD.debugInvincible) return;
         goto kill;
     }
     if ((s16)dy <= 0) {
@@ -1594,7 +1594,7 @@ void func_8011FC7C(GameObject *o, GameObject *p)
             o->y.p.whole = b - (a + c);
         } else if (!(o->active & 2)) {
             if (p->unk6A == 0) goto kill;
-            if (SCRATCHPAD.unk1A4 == 0) {
+            if (SCRATCHPAD.debugInvincible == 0) {
                 GameObject *a = (GameObject *)p->parent;
                 GameObject *b = (GameObject *)p->child;
                 p->unk6A = 0;
@@ -1994,7 +1994,7 @@ static __inline__ s32 turn_23D20(GameObject *o)
     s32 c, a;
     u8 d;
 
-    a = angleFromDelta(D_1F80016A[0] - o->h->p.whole, SCRATCHPAD.cameraTarget.y.p.whole - o->y.p.whole);
+    a = angleFromDelta(SCRATCHPAD.cameraTarget.x.p.whole - o->h->p.whole, SCRATCHPAD.cameraTarget.y.p.whole - o->y.p.whole);
     c = o->localZ;
     a -= c;
     d = a;

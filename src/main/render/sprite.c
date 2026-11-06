@@ -8,9 +8,9 @@ void drawModelList(void)
     s32 *p;
     s32 a;
 
-    if (D_1F8001C6 != 0) {
-        n = (*(s16 *)&D_1F800258);
-        p = D_1F800274;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = (*(s16 *)&SCRATCHPAD.modelHeldCount);
+        p = SCRATCHPAD.modelHeldList;
         if (n != 0) {
             do {
                 a = *p++;
@@ -19,8 +19,8 @@ void drawModelList(void)
             } while (n != 0);
         }
     } else {
-        (*(s16 *)&D_1F800258) = D_1F800242;
-        D_1F800274 = D_1F800230;
+        (*(s16 *)&SCRATCHPAD.modelHeldCount) = D_1F800242;
+        SCRATCHPAD.modelHeldList = D_1F800230;
         if (D_1F800242 != 0) {
             do {
                 a = *D_1F800230++;
@@ -39,9 +39,9 @@ void drawFxList(void)
     GameObject **p;
     s32 n;
 
-    if (D_1F8001C6 != 0) {
-        n = (*(s16 *)&D_1F80025A);
-        p = D_1F800270;
+    if (SCRATCHPAD.drawFrozen != 0) {
+        n = (*(s16 *)&SCRATCHPAD.fxHeldCount);
+        p = SCRATCHPAD.fxHeldList;
         while (n != 0) {
             obj = *p++;
             n--;
@@ -70,8 +70,8 @@ void drawFxList(void)
             }
         }
     } else {
-        (*(s16 *)&D_1F80025A) = D_1F800240;
-        D_1F800270 = D_1F80022C;
+        (*(s16 *)&SCRATCHPAD.fxHeldCount) = D_1F800240;
+        SCRATCHPAD.fxHeldList = D_1F80022C;
         while (D_1F800240 != 0) {
             obj = *D_1F80022C++;
             D_1F800240--;
@@ -120,7 +120,7 @@ void func_8004DFA0(GameObject *obj)
     }
     sprt = (SPRT *)D_1F800164;
     SetDrawMode((DR_MODE *)sprt, 0, 0, 0, 0);
-    AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), sprt);
+    AddPrim((u_long *)SCRATCHPAD.ot + (pri + 0x324), sprt);
     D_1F800164 += sizeof(DR_MODE);
     e = (s16 *)(obj->spriteBank + *(u16 *)obj->anim * 4);
     n = e[0];
@@ -139,7 +139,7 @@ void func_8004DFA0(GameObject *obj)
             if (obj->drawFlags & 1) {
                 sprt->clut = obj->clut;
             }
-            AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), sprt);
+            AddPrim((u_long *)SCRATCHPAD.ot + (pri + 0x324), sprt);
             D_1F800164 += sizeof(SPRT);
         }
         f++;
@@ -147,7 +147,7 @@ void func_8004DFA0(GameObject *obj)
     } while (n != 0);
     sprt = (SPRT *)D_1F800164;
     SetDrawMode((DR_MODE *)sprt, 0, 0, obj->tpage + (s16)tp, 0);
-    AddPrim((u_long *)D_1F8001E0 + (pri + 0x324), sprt);
+    AddPrim((u_long *)SCRATCHPAD.ot + (pri + 0x324), sprt);
     D_1F800164 += sizeof(DR_MODE);
 }
 

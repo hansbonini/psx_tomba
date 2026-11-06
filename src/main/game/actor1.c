@@ -1246,7 +1246,7 @@ s32 func_8005242C(GameObject *obj, GameObject *other)
         if (c > obj->hitboxH + other->hitboxH)
             return -1;
     }
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
     ad = dx;
     if (dx < 0)
         dx = -dx;
@@ -1400,7 +1400,7 @@ void func_800527C8(GameObject *obj, GameObject *other)
         if ((other->category & 0x7f) == 4) s = 6;
         playSFX(s);
     }
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800529A8);
@@ -1416,7 +1416,7 @@ static __inline__ s16 hit_529A8(GameObject *obj, GameObject *other)
         return -1;
     if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
     if (dx < 0)
         return 0;
     return 1;
@@ -1487,7 +1487,7 @@ static __inline__ s32 spawn_52B88(GameObject *obj, GameObject *other)
         spawned->parent = (s32)obj;
         spawned->child = (s32)other;
         other->active = 5;
-        other->h->p.whole = obj->h->p.whole + (D_1F80019E & 3) * 4;
+        other->h->p.whole = obj->h->p.whole + (SCRATCHPAD.listCounter & 3) * 4;
         other->y.p.whole = obj->y.p.whole;
         other->d->p.whole = obj->d->p.whole;
         return 1;
@@ -1519,7 +1519,7 @@ void func_80052B88(GameObject *obj, GameObject *other)
             }
             other->animFrame = v;
         }
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -1562,7 +1562,7 @@ void func_80052D5C(GameObject *obj, GameObject *other)
                 setObjState(other, 2, 2, 0);
             }
         }
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -1581,7 +1581,7 @@ static __inline__ s16 hit_52F20(O_52F20 *a, O_52F20 *b)
         return -1;
     if ((u16)((a->y.whole - b->y.whole) + (a->box2 + b->box2)) > a->box3 + b->box3)
         return -1;
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
     if (d < 0)
         return 0;
     return 1;
@@ -1693,7 +1693,7 @@ void func_800530F0(GameObject *obj, GameObject *other)
             func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
             playSFX((other->category & 0x7f) == 4 ? 6 : 7);
         }
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -1724,7 +1724,7 @@ static __inline__ s16 side_5334C(GameObject *obj, GameObject *other)
     dx = obj->h->p.whole - other->h->p.whole;
     if ((u16)(dx + (other->hitboxX + obj->hitboxX)) > other->hitboxW + obj->hitboxW) return -1;
     if ((u16)(obj->y.p.whole - other->y.p.whole + (obj->hitboxY + other->hitboxY)) > obj->hitboxH + other->hitboxH) return -1;
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
     if (dx < 0) return 0;
     return 1;
 }
@@ -1867,7 +1867,7 @@ void func_8005368C(u8 *a, u8 *b)
             *(u8 **)(a + 0xe4) = b;
             a[0xac] = 2;
             func_800224FC(2, *(s16 *)(a + 0x12), *(s16 *)(a + 0x16), *(s16 *)(a + 0x1a));
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
     }
 }
@@ -1906,7 +1906,7 @@ void func_80053808(GameObject *obj, GameObject *other)
             ((u8 *)obj)[0xac] = 2;
             func_800224FC(2, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
         }
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
     } else {
         if (obj->h->p.whole > other->h->p.whole) {
             obj->unkBE = 8;
@@ -2050,8 +2050,8 @@ typedef struct { u8 act, p1, type; char p[0xa2]; u8 ba5; } O_53DA0;
 
 void func_80053DA0(void)
 {
-    s16 n = D_1F800244;
-    O_53DA0 **pp = D_1F800218;
+    s16 n = SCRATCHPAD.weaponDrawCount;
+    O_53DA0 **pp = SCRATCHPAD.weaponDrawList;
     O_53DA0 *o;
     u8 **q;
     u8 *b;
@@ -2062,7 +2062,7 @@ void func_80053DA0(void)
             o = *pp++;
             n--;
             if ((o->act & 1) && o->ba5 != 0) {
-                q = D_1F800228;
+                q = SCRATCHPAD.itemDrawList;
                 s2 = (u8)(o->type - 5) < 3;
                 v = (*(s16 *)&D_1F800248);
                 D_1F80019E = v;
@@ -2098,7 +2098,7 @@ static __inline__ s16 hit_53F08(GameObject *obj, GameObject *other)
         return -1;
     if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
     if (dx < 0)
         return 0;
     return 1;
@@ -2161,20 +2161,20 @@ static __inline__ void col_53F08(GameObject *obj, GameObject *other)
 
 void func_80053F08(void)
 {
-    s16 n = D_1F800244;
-    GameObject **pp = D_1F800218;
+    s16 n = SCRATCHPAD.weaponDrawCount;
+    GameObject **pp = SCRATCHPAD.weaponDrawList;
     GameObject **qq;
     GameObject *obj, *other;
 
-    if ((*(s16 *)&D_1F800246) == 0)
+    if ((*(s16 *)&SCRATCHPAD.actorDrawCount) == 0)
         return;
     while (n != 0) {
         obj = *pp++;
         n--;
         if (!(obj->active & 1) || obj->unkA5 == 0)
             continue;
-        qq = D_1F80021C;
-        for (D_1F80019E = D_1F800246; D_1F80019E != 0;) {
+        qq = SCRATCHPAD.actorDrawList;
+        for (D_1F80019E = SCRATCHPAD.actorDrawCount; D_1F80019E != 0;) {
             other = *qq++;
             D_1F80019E--;
             if (!(other->active & 1))
@@ -2272,7 +2272,7 @@ static __inline__ s16 hit_54618(GameObject *obj, GameObject *other)
         return -1;
     if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
     if (dx < 0)
         return 0;
     return 1;
@@ -2335,20 +2335,20 @@ static __inline__ void col_54618(GameObject *obj, GameObject *other)
 
 void func_80054618(void)
 {
-    s16 n = D_1F800244;
-    GameObject **pp = D_1F800218;
+    s16 n = SCRATCHPAD.weaponDrawCount;
+    GameObject **pp = SCRATCHPAD.weaponDrawList;
     GameObject **qq;
     GameObject *obj, *other;
 
-    if ((*(s16 *)&D_1F80024C) == 0)
+    if ((*(s16 *)&SCRATCHPAD.areaDrawCount) == 0)
         return;
     while (n != 0) {
         obj = *pp++;
         n--;
         if (!(obj->active & 1) || obj->unkA5 == 0)
             continue;
-        qq = D_1F800224;
-        for (D_1F80019E = D_1F80024C; D_1F80019E != 0;) {
+        qq = SCRATCHPAD.areaDrawList;
+        for (D_1F80019E = SCRATCHPAD.areaDrawCount; D_1F80019E != 0;) {
             other = *qq++;
             D_1F80019E--;
             if (!(other->active & 1))
@@ -2460,8 +2460,8 @@ void func_80054D60(GameObject *obj)
     GameObject **pp;
     GameObject *other;
 
-    pp = D_1F800224;
-    for (D_1F80019E = D_1F80024C; D_1F80019E != 0; ) {
+    pp = SCRATCHPAD.areaDrawList;
+    for (D_1F80019E = SCRATCHPAD.areaDrawCount; D_1F80019E != 0; ) {
         other = *pp++;
         D_1F80019E--;
         if (!(other->active & 1))
@@ -2571,8 +2571,8 @@ void func_8005548C(GameObject *obj)
     s16 v;
 
     if (D_8009BCA2 == 0) return;
-    r = D_1F80021C;
-    D_1F80019E = D_1F800246;
+    r = SCRATCHPAD.actorDrawList;
+    D_1F80019E = SCRATCHPAD.actorDrawCount;
     while (D_1F80019E != 0) {
         q = *r;
         D_1F80019E = D_1F80019E - 1;
@@ -2768,8 +2768,8 @@ void func_80055A44(void *self)
     GameObject *other;
 
     if (D_8009BCA0 == 0 && D_8009C618[0] != 3) {
-        pp = (GameObject **)D_1F800228;
-        for (D_1F80019E = D_1F800248; D_1F80019E != 0; ) {
+        pp = (GameObject **)SCRATCHPAD.itemDrawList;
+        for (D_1F80019E = SCRATCHPAD.itemDrawCount; D_1F80019E != 0; ) {
             other = *pp++;
             D_1F80019E--;
             if (!(other->active & 3))
@@ -2829,7 +2829,7 @@ void func_80055BA0(void)
             break;
         }
     check:
-        if (SPAD->unk1A4 == 0 && (u16)SPAD->currentTask->state2 == 1 && D_8009C618[0] != 3 &&
+        if (SPAD->debugInvincible == 0 && (u16)SPAD->currentTask->state2 == 1 && D_8009C618[0] != 3 &&
             D_800A38EA + 0x98 < obj->y.p.whole) {
             obj->active = 5;
             setObjState(obj, 2, 3, 0);

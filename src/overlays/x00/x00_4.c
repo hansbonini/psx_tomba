@@ -266,7 +266,7 @@ void func_8011FF1C(GameObject *o)
         y = o->y.p.whole;
         o->y.p.whole = y + 2;
         probeCollisionAtDepthA(o, o->h->p.whole, (s16)(y + 0x12));
-        o->rotX = (-(s32)D_1F80027E << 6) & 0xfff;
+        o->rotX = (-(s32)SCRATCHPAD.hitSlope << 6) & 0xfff;
         (*(Fix16 **)&D_800A53D8)->p.whole = o->h->p.whole;
         (*(G_1FF1C *)&PLAYER).y = o->y.p.whole - 8;
         (*(Fix16 **)&D_800A53DC)->p.whole = o->d->p.whole;
@@ -336,7 +336,7 @@ void func_8012095C(GameObject *o)
         n->type = 0x31;
         n->id = 1;
         hp = n->h;
-        n->param = (D_1F8001F8 + (char)D_1F800198) & 3;
+        n->param = (SCRATCHPAD.unk1F8 + (char)SCRATCHPAD.updateIndex) & 3;
         i = ((u32)o->rotY >> 8) & 0x1fe;
         hp->raw = o->h->raw + D_80138238[i] * 0x10000;
         n->y.raw = o->y.raw + D_80138238[i + 1] * 0x10000;

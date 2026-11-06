@@ -114,7 +114,7 @@ void func_801341A0(GameObject *o)
             case 1:
                 if (D_8009D2B0 == 3) break;
                 if ((u16)((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole + 32) >= 64) break;
-                if (!(D_1F8001FC & (*(u16 *)&D_1F8003C4))) break;
+                if (!(SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) break;
                 if (D_800A5401 == 0) break;
                 if (D_800A603C != 1) break;
                 if ((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole > 0) o->animFrame = 0;
@@ -137,7 +137,7 @@ void func_801341A0(GameObject *o)
         case 3:
             if (D_8009D2B0 == 3) break;
             if ((u16)((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole + 32) >= 64) break;
-            if (!(D_1F8001FC & (*(u16 *)&D_1F8003C4))) break;
+            if (!(SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) break;
             if (D_800A5401 == 0) break;
             if (D_800A603C != 1) break;
             if ((*(Fix16 **)&D_800A53D8)->p.whole - o->h->p.whole > 0) o->animFrame = 0;
@@ -240,7 +240,7 @@ void func_801341A0(GameObject *o)
         case 15:
             D_1F8001CC = 1;
             D_1F8001CD = 3;
-            D_1F8001C6 = 2;
+            SCRATCHPAD.drawFrozen = 2;
             stopBgm(0);
             openTask(1, moviePlayerTask);
             o->unkB6++;
@@ -438,7 +438,7 @@ void func_80134E50(GameObject *o)
         a.x = o->h->p.whole;
         a.y = o->y.p.whole;
         b.x = (*(u16 *)&D_1F80016A);
-        b.y = D_1F80016E;
+        b.y = SCRATCHPAD.cameraTarget.y.p.whole;
         o->rotY = angleBetweenPoints(a, b);
         o->timer = 0x78;
         o->subState++;

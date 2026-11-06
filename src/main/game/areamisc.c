@@ -187,7 +187,7 @@ void func_80033964(GameObject *obj)
                 D_800A539C = 1;
                 D_800A539D = 0;
                 D_800A539E = 0;
-                D_1F8001C6 = 0;
+                SCRATCHPAD.drawFrozen = 0;
                 D_800A5458 = 0;
                 obj->subState = 0;
                 if (obj->id == 0x11) {

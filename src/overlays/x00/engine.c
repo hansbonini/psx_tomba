@@ -151,7 +151,7 @@ void func_800E99DC(GameObject *o)
                     c->active = 1;
                     c->type = 0xc;
                     c->id = 1;
-                    c->unkAC = (D_1F8001F8 + D_1F800198) & 1;
+                    c->unkAC = (SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1;
                     c->param = nextRandom() & 7;
                     *c->h = *o->h;
                     c->h->p.whole += o->timer * 2 - 8;
@@ -167,7 +167,7 @@ void func_800E99DC(GameObject *o)
             break;
         case 1:
             o->state++;
-            if ((D_1F8001F8 + D_1F800198) & 1) o->timer = 0x32; else o->timer = 0x1e;
+            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) o->timer = 0x32; else o->timer = 0x1e;
             o->drawFlags = 0;
             *(s8 *)&o->priority = -12;
             if ((*(u16 *)&GAME) == 0) {
@@ -229,7 +229,7 @@ void func_800E99DC(GameObject *o)
                 c->active = 1;
                 c->type = 0xc;
                 c->id = 3;
-                c->unkAC = (D_1F8001F8 + D_1F800198) & 1;
+                c->unkAC = (SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1;
                 c->param = o->timer + 7;
                 *c->h = *o->h;
                 c->y = o->y;
@@ -603,7 +603,7 @@ void func_800EAA0C(GameObject *o)
         else
             o->rotZ = (o->rotZ - 8) & 0xff;
         applyAnimVelocityX(o, (u16)o->cooldownTimer);
-        if (o->timer >= 0x1e || ((D_1F8001F8 + D_1F800198) & 1))
+        if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1))
             cullAndQueueDraw(o);
         if (--o->timer == -1)
             o->state = 2;
@@ -684,7 +684,7 @@ void func_800EAD50(GameObject *o)
             o->subState++;
             break;
         case 1:
-            if ((D_1F8001F8 >> 2) & 1)
+            if ((SCRATCHPAD.unk1F8 >> 2) & 1)
                 cullAndQueueDraw(o);
             if (--o->timer == -1)
                 o->state = 3;
@@ -1152,13 +1152,13 @@ void func_800EBD20(GameObject *o)
             o->animFrame = (o->animFrame + 3) & 0xff;
             o->rotY = ((o->animFrame - 0x40) & 0xff) << 4;
             k = (NEG_SIN_TABLE[(u8)o->animFrame] * 3 >> 11) - 0x10;
-            o->y.p.whole = D_1F80016E - k;
+            o->y.p.whole = SCRATCHPAD.cameraTarget.y.p.whole - k;
             break;
         case 1:
             o->animFrame = (o->animFrame - 3) & 0xff;
             o->rotY = ((o->animFrame - 0x80) & 0xff) << 4;
             k = (NEG_SIN_TABLE[(u8)o->animFrame] * 3 >> 11) + 0x10;
-            o->y.p.whole = D_1F80016E + k;
+            o->y.p.whole = SCRATCHPAD.cameraTarget.y.p.whole + k;
             break;
         }
         o->h->p.whole = (*(u16 *)&D_1F80016A) + (COS_TABLE[(u8)o->animFrame] * *(s8 *)&o->unkA5 >> 12);
@@ -1257,7 +1257,7 @@ void func_800EC0E8(GameObject *o)
     gte_avsz4();
     gte_stotz(&LZ_FILE_CTRL_Long);
     gte_stsxy(p + 0x20);
-    insertPrimWithBias(p, D_1F8001E0 + 0x10, LZ_FILE_CTRL_Long, (s8)o->priority, 0x8000000);
+    insertPrimWithBias(p, SCRATCHPAD.ot + 0x10, LZ_FILE_CTRL_Long, (s8)o->priority, 0x8000000);
     D_1F800164 += 0x24;
     q = (u8 *)D_1F800164;
 #if REGION == REGION_EU && VERSION == 0
@@ -1268,7 +1268,7 @@ void func_800EC0E8(GameObject *o)
     else m = 0x20;
 #endif
     SetDrawMode(q, 0, 0, m, 0);
-    AddPrim((s32 *)D_1F8001E0 + (LZ_FILE_CTRL_Long + 4) + (s8)o->priority, q);
+    AddPrim((s32 *)SCRATCHPAD.ot + (LZ_FILE_CTRL_Long + 4) + (s8)o->priority, q);
     D_1F800164 += 0xc;
 }
 

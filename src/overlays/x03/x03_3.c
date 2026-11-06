@@ -292,7 +292,7 @@ void func_8011EC1C(GameObject *o, GameObject *e)
     case 3:
         if (e->active & 2) break;
         e->touchFlag = 8;
-        if (SCRATCHPAD.unk1A4) break;
+        if (SCRATCHPAD.debugInvincible) break;
         if (o->active & 2) break;
         o->active = 2;
         r = e->h->p.whole > o->h->p.whole;
@@ -370,7 +370,7 @@ void func_8011F188(GameObject *a, GameObject *b)
         a->unk9E = 4;
         a->unkBA = -3;
         a->velY = 0;
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
         a->unkB8 = D_1F8003BC;
         b->unk68 = 2;
         D_1F8003C0 = b;
@@ -591,7 +591,7 @@ u8 func_8011FC48(s32 a)
     s32 v;
     u8 *t;
     if ((u16)(*(u16 *)(*(s32 *)(a + 0x44) + 2) - (*(u16 *)&D_1F800172) + 0x2d) >= 0x5b) return 0xff;
-    if ((u16)(*(u16 *)(a + 0x16) - D_1F80016E + 0x46) >= 0x6f) return 0xff;
+    if ((u16)(*(u16 *)(a + 0x16) - SCRATCHPAD.cameraTarget.y.p.whole + 0x46) >= 0x6f) return 0xff;
     d = *(u16 *)(*(s32 *)(a + 0x40) + 2) - (*(u16 *)&D_1F80016A);
     if ((u16)(d + 0x80) >= 0x101) return 0xff;
                 s = d;

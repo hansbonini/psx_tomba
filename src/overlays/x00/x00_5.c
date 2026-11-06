@@ -166,7 +166,7 @@ void func_80121810(GameObject *o)
         o->localY = o->y.p.whole;
         break;
     case 1:
-        x = ((s16 *)&D_1F800176)[0];
+        x = (*(s16 *)&SCRATCHPAD.cameraPos.x.p.whole);
         if (x >= 0x35d) break;
         pa = (s16)(o->localX - x) >> 1;
         py = (s16)(o->localY - D_1F80017A[0]) >> 1;
@@ -546,7 +546,7 @@ void func_80123148(GameObject *o)
     p->y2 = p->y0 + s->h + (u16)o->unkBA * 2 - 1;
     p->x3 = p->x1;
     p->y3 = p->y2;
-    insertPrimWithBias(p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority, 0x9000000);
+    insertPrimWithBias(p, (*(u_long *)&SCRATCHPAD.ot) + 0x10, D_1F800074, (s8)o->priority, 0x9000000);
     D_1F800164 = (PFT4_23148 *)((char *)D_1F800164 + 0x28);
 }
 
@@ -945,7 +945,7 @@ void func_801248A0(GameObject *o, GameObject *p)
             o->touchFlag = 1;
             o->y.p.whole = b - (a + c);
         } else if (!(o->active & 2) && p->unk6A != 0) {
-            if (D_1F8001A4 == 0) {
+            if (SCRATCHPAD.debugInvincible == 0) {
                 GameObject *a = (GameObject *)p->parent;
                 GameObject *b = (GameObject *)p->child;
                 p->unk6A = 0;
@@ -1010,7 +1010,7 @@ void func_80124B38(u8 *a, u8 *b)
     case 3:
         if ((b[0] & 2) == 0) {
             b[0x69] = 8;
-            if (D_1F8001A4 == 0 && (a[0] & 2) == 0) {
+            if (SCRATCHPAD.debugInvincible == 0 && (a[0] & 2) == 0) {
                 s32 ah, bh;
                 a[0] = 2;
                 bh = *(s16 *)((*(u8 **)(b + 0x40)) + 2);
@@ -1054,7 +1054,7 @@ void func_80124CC8(char *a, char *b)
                 v = *(u16 *)((u8 *)a + 0x2e) & 1;
             }
             *(u16 *)((u8 *)b + 0x2e) = v;
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
     }
 }
@@ -1091,7 +1091,7 @@ void func_80124DF0(GameObject *o, GameObject *p)
             o->unkA8 = 0x4ff;
             o->unkA5 = 0;
             o->active = 2;
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
         break;
     case 1:
@@ -1113,14 +1113,14 @@ void func_80124DF0(GameObject *o, GameObject *p)
             o->unkA8 = 0x4ff;
             o->unkA5 = 0;
             o->active = 2;
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
         break;
     case 10:
         if (o->id != 2) {
             o->unk6A = 1;
             o->active = 2;
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
         break;
     case 2:
@@ -1184,7 +1184,7 @@ void func_80124FC8(GameObject *a, GameObject *o)
                 o->animFrame = 1 - (t & 1);
             }
         }
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -1205,7 +1205,7 @@ void func_801250E8(u8 *o, u8 *p)
             *(s16 *)(o + 0xa8) = 0x4ff;
             o[0xa5] = 0;
             o[0] = 2;
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
         break;
     case 1:
@@ -1229,7 +1229,7 @@ void func_801250E8(u8 *o, u8 *p)
             *(s16 *)(o + 0xa8) = 0x4ff;
             o[0xa5] = 0;
             o[0] = 2;
-            D_1F80019E = 0;
+            SCRATCHPAD.listCounter = 0;
         }
         break;
     case 8:
@@ -1431,7 +1431,7 @@ void func_801257A8(GameObject *a, GameObject *b)
         }
     case 0:
     case 3:
-        if (D_1F8001A4)
+        if (SCRATCHPAD.debugInvincible)
             return;
         if (b->active & 2)
             return;
@@ -1519,7 +1519,7 @@ void func_80125AB4(GameObject *o)
                         o->touchFlag = 1;
                         return;
                     }
-                    if (D_1F8001A4 != 0) return;
+                    if (SCRATCHPAD.debugInvincible != 0) return;
                     o->active = 2;
                     o->animFrame = 1;
                     o->state = 2;
@@ -1532,7 +1532,7 @@ void func_80125AB4(GameObject *o)
     }
     if (o->d->p.whole < 0x5b && o->h->p.whole >= 0xc35 && (u16)(-0x23f - o->y.p.whole) < 0xfb) {
         o->h->p.whole = 0xc35;
-        if (!(o->active & 2) && D_1F8001A4 == 0) {
+        if (!(o->active & 2) && SCRATCHPAD.debugInvincible == 0) {
             o->active = 2;
             o->animFrame = 1;
             o->state = 2;
@@ -1552,7 +1552,7 @@ void func_80125C84(GameObject *a, GameObject *b)
         a->unk9E = 4;
         a->unkBA = -3;
         a->velY = 0;
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
         a->unkB8 = D_1F8003BC;
         b->unk68 = 2;
         D_1F8003C0 = b;
@@ -1648,7 +1648,7 @@ tail:
     c[0x6b] = *(u16 *)(b + 0x2c);
     c[0x68] = a[0x68];
     a[0x68] = 0;
-    D_1F80019E = 0;
+    SCRATCHPAD.listCounter = 0;
 }
 
 INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80125FA4);
@@ -1753,7 +1753,7 @@ void func_801262AC(O_262AC *o, u8 *p)
         p[4] = 2;
         p[5] = 1;
         p[6] = 0;
-        D_1F80019E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -1959,10 +1959,10 @@ s32 func_80126810(O_26810 *o)
             if (v > 8) v = 8;
             if (D_1F80027E < 0) v = -v;
             o->d8c = (-v) & 0xff;
-            s = D_1F800284;
+            s = SCRATCHPAD.hitSurface;
             o->wb2 = v;
             o->b9c = 0;
-            u = D_1F800282;
+            u = SCRATCHPAD.hitFlags;
             o->wb6 = ((-v) << 2) & 0xff;
             o->wae = s;
             if ((u >> 5) & 8)
@@ -2019,7 +2019,7 @@ u8 func_80126A64(s32 a)
     s32 v;
     u8 *t;
     if ((u16)(*(u16 *)(*(s32 *)(a + 0x44) + 2) - (*(u16 *)&D_1F800172) + 0x2d) >= 0x5b) return 0xff;
-    if ((u16)(*(u16 *)(a + 0x16) - D_1F80016E + 0x46) >= 0x6f) return 0xff;
+    if ((u16)(*(u16 *)(a + 0x16) - SCRATCHPAD.cameraTarget.y.p.whole + 0x46) >= 0x6f) return 0xff;
     d = *(u16 *)(*(s32 *)(a + 0x40) + 2) - (*(u16 *)&D_1F80016A);
     if ((u16)(d + 0x80) >= 0x101) return 0xff;
                 s = d;
@@ -3134,7 +3134,7 @@ void func_801292F8(GameObject *o)
             o->unk7 = 8;
             if ((u16)(o->d->p.whole - (*(u16 *)&D_1F800172) + 0x2d) > 0x5a) break;
             if ((u16)(o->h->p.whole - (*(u16 *)&D_1F80016A) + 0x60) > 0xc0) break;
-            if ((*(s16 *)&D_1F80016E) < o->y.p.whole + 0x10) break;
+            if ((*(s16 *)&SCRATCHPAD.cameraTarget.y.p.whole) < o->y.p.whole + 0x10) break;
             o->unk7 = 13;
             o->timer = 0x50;
             o->unkAC = 0x28;
@@ -3274,7 +3274,7 @@ void func_801292F8(GameObject *o)
         o->unk7 = 0;
         if ((u16)(o->d->p.whole - D_1F800172[0] + 0x2d) > 0x5a) break;
         if ((u16)(o->h->p.whole - (*(u16 *)&D_1F80016A) + 0x40) > 0x80) break;
-        if ((*(s16 *)&D_1F80016E) < o->y.p.whole + 0x10) break;
+        if ((*(s16 *)&SCRATCHPAD.cameraTarget.y.p.whole) < o->y.p.whole + 0x10) break;
         o->animFrame = 1;
         x->b0a = 1;
         x->b0b = 2;
@@ -3663,7 +3663,7 @@ static __inline__ void SetBox_2A914(GameObject *o)
 static __inline__ s16 InRange_2A914(GameObject *o)
 {
     if ((u16)(o->d->p.whole - (*(u16 *)&D_1F800172) + 0x2d) >= 0x5b) return 0;
-    if ((u16)(o->y.p.whole - D_1F80016E + 0x46) >= 0x6f) return 0;
+    if ((u16)(o->y.p.whole - SCRATCHPAD.cameraTarget.y.p.whole + 0x46) >= 0x6f) return 0;
     return (u16)(o->h->p.whole - (*(u16 *)&D_1F80016A) + 0x80) < 0x101;
 }
 
@@ -3879,7 +3879,7 @@ void func_8012ADD8(GameObject *o)
         if (o->rotZ >= 0x100)
             o->rotZ = 0x100;
         if (o->touchFlag == 1 || (o->touchFlag & 8) || ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-            if (((D_1F800282 >> 5) & 0xf) == 0xf)
+            if (((SCRATCHPAD.hitFlags >> 5) & 0xf) == 0xf)
                 o->unk98 = 0;
             if (!(o->touchFlag & 8))
                 Spawn_2ADD8(o);
@@ -3911,7 +3911,7 @@ void func_8012ADD8(GameObject *o)
         if (o->velV > 0)
             o->unk9C = 2;
         if (o->touchFlag == 1 || (o->touchFlag & 8) || ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-            if (((D_1F800282 >> 5) & 0xf) == 0xf)
+            if (((SCRATCHPAD.hitFlags >> 5) & 0xf) == 0xf)
                 o->unk98 = 0;
             if (!(o->touchFlag & 8))
                 Spawn_2ADD8(o);
@@ -3955,7 +3955,7 @@ void func_8012ADD8(GameObject *o)
                 o->rotZ = 0x100;
         }
         if (o->touchFlag == 1 || ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-            if (((D_1F800282 >> 5) & 0xf) == 0xf)
+            if (((SCRATCHPAD.hitFlags >> 5) & 0xf) == 0xf)
                 o->unk98 = 0;
             Spawn_2ADD8(o);
             o->timer = 0x14;
@@ -4571,7 +4571,7 @@ void func_8012CD40(GameObject *o)
         if (o->h->p.whole < o->velH - 8)
             o->h->p.whole = o->velH - 8;
         (t = o->y.p.whole + 0x10, ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, t - o->param * 16));
-        if ((D_1F8001F8 & 0xf) == 0 && (nextRandom() & 3) == 0)
+        if ((SCRATCHPAD.unk1F8 & 0xf) == 0 && (nextRandom() & 3) == 0)
             playSFXWithNote(0x3a, 0);
         if (--o->timer == 0)
             o->step = 0;
@@ -4895,7 +4895,7 @@ void func_8012D808(GameObject *o)
         case 0:
             if (func_80022F6C(o) == 0)
                 break;
-            if ((D_1F8001F8 + D_1F800198) & 1) {
+            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) {
                 if (Hit_2D808(o, pl)) {
                     func_80119D80(pl->x.p.whole, (s16)(pl->y.p.whole - 0x10), pl->z.p.whole);
                     Act_2D808(o);

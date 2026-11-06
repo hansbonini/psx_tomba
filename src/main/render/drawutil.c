@@ -30,7 +30,7 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
 
     sprt = &buf;
     while (*fmt != 0) {
-        if ((u_int)D_8009C8A8 >= (u_int)(D_800A1FF8 + D_1F8001F4 * 0x780)) {
+        if ((u_int)D_8009C8A8 >= (u_int)(D_800A1FF8 + SCRATCHPAD.frameBufferIndex * 0x780)) {
             break;
         }
         setlen(sprt, 3);
@@ -49,7 +49,7 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
     }
 
     drMode = D_8009C8A8;
-    if ((u_int)drMode < (u_int)(D_800A2008 + D_1F8001F4 * 0x780)) {
+    if ((u_int)drMode < (u_int)(D_800A2008 + SCRATCHPAD.frameBufferIndex * 0x780)) {
         SetDrawMode(drMode, 0, 0, 0x15, NULL);
         addPrim(CURRENT_OT, drMode);
         D_8009C8A8 += sizeof(DR_MODE);

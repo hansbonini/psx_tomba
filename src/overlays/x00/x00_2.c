@@ -249,11 +249,11 @@ void func_8011A92C(GameObject *o)
     switch (t) {
     case 0:
         o->subState = t + 1;
-        if ((*(s16 *)&D_1F800176) + 0xa0 >= (*(s16 *)&D_1F80016A))
+        if ((*(s16 *)&SCRATCHPAD.cameraPos.x.p.whole) + 0xa0 >= (*(s16 *)&D_1F80016A))
             o->x.p.whole = 0xf0;
         else
             o->x.p.whole = 0x50;
-        if (D_1F80017A_S16 - 0x78 >= D_1F80016E_S16)
+        if (SCRATCHPAD.cameraPos.y.p.whole - 0x78 >= SCRATCHPAD.cameraTarget.y.p.whole)
             o->y.p.whole = 0xd8;
         else
             o->y.p.whole = 0x78;
@@ -442,7 +442,7 @@ void func_8011D500(O_1D500 *o)
     switch (o->st) {
     case 0:
         if ((u16)((*(u16 *)&D_1F80016A) - 0x400) >= 0x18) break;
-        if ((u16)(o->w16 - D_1F80016E_S16 + 0x30) > 0x60) break;
+        if ((u16)(o->w16 - SCRATCHPAD.cameraTarget.y.p.whole + 0x30) > 0x60) break;
         if (D_800A543A == 1) break;
         if (D_800A543A == 2) {
             c = o->st;

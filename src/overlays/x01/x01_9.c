@@ -199,7 +199,7 @@ s32 func_80138E64(GameObject *o)
         (u16)((*(Fix16 **)&PLAYER.obj.h)->p.whole - p->h->p.whole + 0x30) < 0x60) {
         if (*(u16 *)&o->anim) {
             r = 1;
-        } else if ((*(s8 *)&D_8009C618) == PLAYER.obj.state && (D_1F8001FC & (*(u16 *)&D_1F8003C4))) {
+        } else if ((*(s8 *)&D_8009C618) == PLAYER.obj.state && (SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) {
             r = 1;
             *(u16 *)&o->anim = 1;
             D_8009BC98.unk12 = 1;
@@ -415,7 +415,7 @@ s32 func_8013952C(GameObject *o)
         && (u16)((*(Fix16 **)&PLAYER.obj.h)->p.whole - 0xaad) < 0x40 && PLAYER.obj.y.p.whole >= -0x10f) {
         if (o->animTimer != 0) {
             r = 1;
-        } else if ((*(s8 *)&D_8009C618) == 1 && (D_1F8001FC & (*(u16 *)&D_1F8003C4))) {
+        } else if ((*(s8 *)&D_8009C618) == 1 && (SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) {
             r = 1;
             D_8009BC98.unk12 = 1;
             D_800A5458 = 1;
@@ -588,7 +588,7 @@ s32 func_8013999C(GameObject *o)
             r = 1;
             break;
         }
-        if ((*(s8 *)&D_8009C618) == 1 && (D_1F8001FC & (*(u16 *)&D_1F8003C4))) {
+        if ((*(s8 *)&D_8009C618) == 1 && (SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) {
             D_8009BC98.unk12 = 1;
             D_800A5458 = 1;
             r = 1;
@@ -608,7 +608,7 @@ s32 func_8013999C(GameObject *o)
             r = 1;
             break;
         }
-        if ((*(s8 *)&D_8009C618) == 1 && (D_1F8001FC & (*(u16 *)&D_1F8003C4))) {
+        if ((*(s8 *)&D_8009C618) == 1 && (SCRATCHPAD.joypad_state & (*(u16 *)&SCRATCHPAD.buttonAction))) {
             r = 1;
             D_8009BC98.unk12 = 1;
             D_800A5458 = 1;
