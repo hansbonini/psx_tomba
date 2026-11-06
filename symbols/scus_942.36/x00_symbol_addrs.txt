@@ -6,3 +6,6 @@ updateBubbleDroplet = 0x801187B8; // type:func
 updateEvilGrass = 0x80126330; // type:func
 updateNpcCharles = 0x80133F64; // type:func
 updateCharlesTalkScene = 0x80136AFC; // type:func
+resolvePlayerEnemyContact = 0x80124B38; // type:func
+resolveWeaponPigContact = 0x80124CC8; // type:func
+pigKnockbackStun = 0x8012A160; // type:func
