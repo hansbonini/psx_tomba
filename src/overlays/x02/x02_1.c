@@ -90,8 +90,11 @@ void func_80116994(GameObject *o)
         o->scaleY = o->scaleX;
         o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
-            SCRATCHPAD.currentTask->state2 = 7;
-            SCRATCHPAD.currentTask->step.value = 0;
+            {
+                Task *task = SCRATCHPAD.currentTask;
+                task->state2 = 7;
+                *(s16 *)&task->step = 0;
+            }
             D_8009D6DD_U8Arr[0] = 0xff;
             D_8009D6DE_U8Arr[0] = 0xff;
             D_8009D6DF_U8Arr[0] = 0xff;

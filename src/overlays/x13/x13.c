@@ -66,8 +66,9 @@ void func_80115304(GameObject *o)
             { s32 *g = &SCRATCHPAD.vpy.raw; *g += *k << 8; }
         }
         if (GAME.fadeScreenControl == 1) {
-            SCRATCHPAD.currentTask->state2 = 7;
-            SCRATCHPAD.currentTask->step.value = 0;
+            Task *task = SCRATCHPAD.currentTask;
+            task->state2 = 7;
+            task->step.value = 0;
         }
         break;
     }

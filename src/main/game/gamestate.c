@@ -1849,7 +1849,7 @@ void func_8001D480(void)
 void openMenuScreen(s16 arg0)
 {
     Task* task = SCRATCHPAD.currentTask;
-    u16 a = task->state2;
+    u16 a = *(u16 *)&task->state2;
     u16 b = task->step.value;
 
     D_800A3940[0] = 0;

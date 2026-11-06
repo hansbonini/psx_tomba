@@ -576,7 +576,7 @@ void func_8004CC84(GameObject *obj)
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800060.vy = obj->y.p.whole;
-    if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&SCRATCHPAD.currentTask->state2 != 3)
+    if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&(*(Task **)&SCRATCHPAD.currentTask)->state2 != 3)
         D_1F800060.vz = obj->z.p.whole >> 2;
     else
         D_1F800060.vz = obj->z.p.whole;

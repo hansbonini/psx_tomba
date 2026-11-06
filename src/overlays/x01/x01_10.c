@@ -49,8 +49,11 @@ void func_8013A248(GameObject *o)
             D_8009C068.unk57f = 0;
             GAME.nextSpawnPoint = 0;
             GAME.nextSection = GAME.selectedSection;
-            SCRATCHPAD.currentTask->state2 = 7;
-            SCRATCHPAD.currentTask->step.value = 0;
+            {
+                Task *task = SCRATCHPAD.currentTask;
+                task->state2 = 7;
+                *(s16 *)&task->step = 0;
+            }
         }
         break;
     }
