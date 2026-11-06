@@ -85,7 +85,7 @@ void func_8011792C(void) {
 
 
 extern void func_800EDDDC(GameObject *, s32, s32);
-extern void func_800EDEBC(GameObject *, s32);
+extern void playerSetAnimIfChanged(GameObject *, s32);
 
 void func_80117934(GameObject *o)
 {
@@ -149,7 +149,7 @@ void func_80117934(GameObject *o)
     case 5:
         if (--o->clut > 0)
             break;
-        func_800EDEBC(&(*(GameObject *)&PLAYER), 0x2b);
+        playerSetAnimIfChanged(&(*(GameObject *)&PLAYER), 0x2b);
         o->step++;
         break;
     case 6:

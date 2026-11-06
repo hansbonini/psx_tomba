@@ -1715,7 +1715,7 @@ void func_800288C4(void)
     pad = &PAD_PRESSED;
     *pad = m;
     SCRATCHPAD.joypad_state = *pad & ~D_8009C9DC;
-    SCRATCHPAD.unk1FE = D_8009C9DC & ~*pad;
+    SCRATCHPAD.joypadReleased = D_8009C9DC & ~*pad;
     D_800A5474 = *pad;
 }
 #undef AXIS

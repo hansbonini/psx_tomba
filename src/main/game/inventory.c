@@ -200,81 +200,116 @@ s32 stepPlayerXToward(s32 arg0) {
     return 1;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/inventory", func_80029CDC);
+// INCLUDE_ASM("nonmatchings/main/game/inventory", animateDoorSwing);
 typedef struct {
-    char p0[7]; u8 step;
-    char p8[0x20 - 8]; s32 d20; s32 d24;
-    char p28[0x3f - 0x28]; u8 b3f;
-    char p40[0x4a - 0x40]; s16 w4a, w4c; s16 w4e; s16 w50, w52; s16 w54; s16 w56;
-    s16 w58; s16 w5a; s16 w5c; s16 w5e, w60, w62;
-} S_29CDC;
+    /* 0x00 */ u16 posX;
+    /* 0x02 */ u16 posY;
+    /* 0x04 */ u8 kind;
+    /* 0x05 */ u8 area;
+    /* 0x06 */ u8 section;
+    /* 0x07 */ u8 entrance;
+} DoorEntry;
+
+typedef struct {
+    /* 0x00 */ u8 pad00[6];
+    /* 0x06 */ u8 step;
+    /* 0x07 */ u8 swingStep;
+    /* 0x08 */ u8 pad08[0x18];
+    /* 0x20 */ s32 zoom;
+    /* 0x24 */ s32 angle;
+    /* 0x28 */ u8 pad28[0x17];
+    /* 0x3F */ u8 kind;
+    /* 0x40 */ u8 pad40[0xA];
+    /* 0x4A */ s16 swingTimer;
+    /* 0x4C */ s16 posX;
+    /* 0x4E */ u8 pad4E[2];
+    /* 0x50 */ s16 posY;
+    /* 0x52 */ s16 startX;
+    /* 0x54 */ u8 pad54[2];
+    /* 0x56 */ s16 startZ;
+    /* 0x58 */ u8 pad58[2];
+    /* 0x5A */ s16 swingDone;
+    /* 0x5C */ u8 pad5C[2];
+    /* 0x5E */ s16 swingAngle;
+    /* 0x60 */ s16 swingSpeed;
+    /* 0x62 */ s16 swingZoom;
+    /* 0x64 */ u8 pad64[4];
+    /* 0x68 */ DoorEntry *entry;
+    /* 0x6C */ u8 pad6C[2];
+    /* 0x6E */ u8 unk6E;
+    /* 0x6F */ u8 unk6F;
+    /* 0x70 */ u8 pad70;
+    /* 0x71 */ u8 unk71;
+    /* 0x72 */ u8 unk72;
+    /* 0x73 */ u8 unk73;
+} DoorTransition;
 #define F6 SCRATCHPAD.vpz.p.whole
 
-static __inline__ s32 body_29CDC(S_29CDC *s)
+static __inline__ s32 body_29CDC(DoorTransition *s)
 {
     s32 r;
     s16 n, v;
     volatile s16 *ee;
     r = 0;
-    switch (s->step) {
+    switch (s->swingStep) {
     case 0:
         ee = &SCRATCHPAD.vpx.p.whole;
-        s->w4c -= *ee;
-        s->w50 -= F6;
-        s->w52 = *ee;
-        s->w56 = F6;
-        s->w62 = 0;
-        s->w5e = 0;
-        s->w60 = 0;
-        s->w4a = 0;
-        s->w5a = 0;
-        s->step++;
+        s->posX -= *ee;
+        s->posY -= F6;
+        s->startX = *ee;
+        s->startZ = F6;
+        s->swingZoom = 0;
+        s->swingAngle = 0;
+        s->swingSpeed = 0;
+        s->swingTimer = 0;
+        s->swingDone = 0;
+        s->swingStep++;
         break;
     case 1:
-        if (s->w4a != 90) {
-            s->w4a++;
-            if (s->w4a == 26) {
+        if (s->swingTimer != 90) {
+            s->swingTimer++;
+            if (s->swingTimer == 26) {
                 D_8009BCA4 = 0;
                 D_8009BCDD = 3;
             }
-            SCRATCHPAD.vpx.p.whole = s->w52 + s->w4c * s->w4a / 90;
-            F6 = s->w56 + s->w50 * s->w4a / 90;
+            SCRATCHPAD.vpx.p.whole = s->startX + s->posX * s->swingTimer / 90;
+            F6 = s->startZ + s->posY * s->swingTimer / 90;
         }
-        n = s->w4a;
+        n = s->swingTimer;
         if (n != 90) {
             if (n >= 45) n = 90 - n;
-            if (n < 32) s->w60 = ((n & 0x38) << 1) | 0x80;
-            else s->w60 = 0x120;
+            if (n < 32) s->swingSpeed = ((n & 0x38) << 1) | 0x80;
+            else s->swingSpeed = 0x120;
         } else {
-            s->w60 = 0x80;
+            s->swingSpeed = 0x80;
         }
-        if (s->b3f == 0) {
-            s->w5e += s->w60;
-            if (s->w5e >= 0x5a00) {
-                s->w5e = 0x5a00;
-                s->w5a++;
+        if (s->kind == 0) {
+            s->swingAngle += s->swingSpeed;
+            if (s->swingAngle >= 0x5a00) {
+                s->swingAngle = 0x5a00;
+                s->swingDone++;
             }
-            if (s->w5e <= 0x2d00) goto inc;
-            if (s->w5e >= 0x4600) goto dec;
+            if (s->swingAngle <= 0x2d00) goto inc;
+            if (s->swingAngle >= 0x4600) goto dec;
         } else {
-            s->w5e -= s->w60;
-            if (s->w5e < -0x59ff) {
-                s->w5e = -0x5a00;
-                s->w5a++;
+            s->swingAngle -= s->swingSpeed;
+            if (s->swingAngle < -0x59ff) {
+                s->swingAngle = -0x5a00;
+                s->swingDone++;
             }
-            if (s->w5e >= -0x2d00) {
+            if (s->swingAngle >= -0x2d00) {
             inc:
-                s->w62 += 0x80;
-                if (s->w62 > 0x1200) s->w62 = 0x1200;
-            } else if (s->w5e < -0x1bff) {
+                s->swingZoom += 0x80;
+                if (s->swingZoom > 0x1200) s->swingZoom = 0x1200;
+            } else if (s->swingAngle < -0x1bff) {
             dec:
-                s->w62 -= 0x80;
-                if (s->w62 < 0) s->w62 = 0;
+                s->swingZoom -= 0x80;
+                if (s->swingZoom < 0) s->swingZoom = 0;
             }
         }
-        s->d24 = s->w5e;
-        s->d20 = s->w62;
-        if (s->w5a != 0 || D_8009BCDD == 1) s->step++;
+        s->angle = s->swingAngle;
+        s->zoom = s->swingZoom;
+        if (s->swingDone != 0 || D_8009BCDD == 1) s->swingStep++;
         break;
     case 2:
         r = 1;
@@ -283,7 +318,7 @@ static __inline__ s32 body_29CDC(S_29CDC *s)
     return r;
 }
 
-s32 func_80029CDC(S_29CDC *s)
+s32 animateDoorSwing(DoorTransition *s)
 {
     return body_29CDC(s);
 }
@@ -1657,7 +1692,7 @@ void func_8002C7D8(O_2C7D8 *o)
     }
     func_8002B704(o);
     func_8002BB9C(o);
-    SCRATCHPAD.unk286 = -o->d24 >> 6;
+    SCRATCHPAD.doorSwingAngle = -o->d24 >> 6;
     Clamp_2C7D8(o);
 }
 
@@ -1840,39 +1875,7 @@ void func_8002CEF8(GameObject *obj)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002CFF4);
-typedef struct {
-    /* 0x00 */ u16 posX;
-    /* 0x02 */ u16 posY;
-    /* 0x04 */ u8 kind;
-    /* 0x05 */ u8 area;
-    /* 0x06 */ u8 section;
-    /* 0x07 */ u8 entrance;
-} DoorEntry;
-
-typedef struct {
-    /* 0x00 */ u8 pad00[6];
-    /* 0x06 */ u8 step;
-    /* 0x07 */ u8 unk7;
-    /* 0x08 */ u8 pad08[0x18];
-    /* 0x20 */ s32 zoom;
-    /* 0x24 */ s32 angle;
-    /* 0x28 */ u8 pad28[0x17];
-    /* 0x3F */ u8 kind;
-    /* 0x40 */ u8 pad40[0xC];
-    /* 0x4C */ u16 posX;
-    /* 0x4E */ u8 pad4E[2];
-    /* 0x50 */ u16 posY;
-    /* 0x52 */ u8 pad52[0x16];
-    /* 0x68 */ DoorEntry *entry;
-    /* 0x6C */ u8 pad6C[2];
-    /* 0x6E */ u8 unk6E;
-    /* 0x6F */ u8 unk6F;
-    /* 0x70 */ u8 pad70;
-    /* 0x71 */ u8 unk71;
-    /* 0x72 */ u8 unk72;
-    /* 0x73 */ u8 unk73;
-} DoorTransition;
+// INCLUDE_ASM("nonmatchings/main/game/inventory", updateDoorTransition);
 
 extern DoorEntry **D_8007C54C[];
 extern u8 D_8009C10A_A[] asm("D_8009C10A");
@@ -1930,7 +1933,7 @@ static inline s32 settleDoorView(DoorTransition *o)
     return 1;
 }
 
-void func_8002CFF4(o)
+void updateDoorTransition(o)
 DoorTransition *o;
 {
     Player *pl = &PLAYER;
@@ -1954,7 +1957,7 @@ DoorTransition *o;
         break;
     case 1:
         e = &D_8007C54C[GAME.selectedArea][D_8009BCCA][(u16)D_8009BCEA];
-        o->unk7 = 0;
+        o->swingStep = 0;
         o->entry = e;
         o->step++;
         o->posX = (*(DoorEntry **)&o->entry)->posX;
@@ -2062,7 +2065,7 @@ DoorTransition *o;
         }
         break;
     case 2:
-        if (func_80029CDC((S_29CDC *)o)) {
+        if (animateDoorSwing(o)) {
             o->step++;
         }
         break;
@@ -2221,7 +2224,7 @@ void updateCameraScroll(S_2D784 *o)
         o->b75 = 0;
         o->b76 = 0;
         o->b77 = 0;
-        SCRATCHPAD.unk286 = 0;
+        SCRATCHPAD.doorSwingAngle = 0;
         o->w58 = w;
         o->b4++;
         if ((*(s32 *)&GAME) == 6) {

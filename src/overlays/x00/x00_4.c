@@ -336,7 +336,7 @@ void func_8012095C(GameObject *o)
         n->type = 0x31;
         n->id = 1;
         hp = n->h;
-        n->param = (SCRATCHPAD.unk1F8 + (char)SCRATCHPAD.updateIndex) & 3;
+        n->param = (SCRATCHPAD.activeFrameCount + (char)SCRATCHPAD.updateIndex) & 3;
         i = ((u32)o->rotY >> 8) & 0x1fe;
         hp->raw = o->h->raw + D_80138238[i] * 0x10000;
         n->y.raw = o->y.raw + D_80138238[i + 1] * 0x10000;

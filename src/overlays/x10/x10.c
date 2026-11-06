@@ -722,7 +722,7 @@ void func_80119818(GameObject *o)
         if (t == 0) {
             GAME.fadeScreenControl = 3;
             ((u8*)&D_8009BC98.unk0C)[0] = 1;
-            ((u8*)&SCRATCHPAD.unk3D1)[0] = 1;
+            ((u8*)&SCRATCHPAD.warpFadeActive)[0] = 1;
             o->step++;
         } else {
             o->timer = t - 1;
@@ -743,8 +743,8 @@ void func_80119818(GameObject *o)
         o->scaleY = o->scaleX;
         o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
-            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
+            SCRATCHPAD.currentTask->state2 = 7;
+            SCRATCHPAD.currentTask->step.value = 0;
             D_8009D6DD_U8Arr[0] = 0xff;
             D_8009D6DE_U8Arr[0] = 0xff;
             D_8009D6DF_U8Arr[0] = 0xff;
@@ -981,7 +981,7 @@ typedef struct { u8 b0; char p1[6]; u8 b7, b8; char p9[0x20 - 9]; s16 w20; } G_1
 extern G_1AAF4 *D_8009B698;
 extern s32 D_8009C650;
 extern s16 probeCollisionAtDepthA(GameObject *o, s16 x, s16 y);
-extern void func_800EDEBC(GameObject *o, s32);
+extern void playerSetAnimIfChanged(GameObject *o, s32);
 
 void func_8011AAF4(GameObject *o)
 {
@@ -1044,7 +1044,7 @@ void func_8011AAF4(GameObject *o)
         if (g->b0 == 0) {
             if (U8(o, 0xc6)) break;
             o->animFrame = (s8)g->b7;
-            func_800EDEBC(o, 4);
+            playerSetAnimIfChanged(o, 4);
             o->unk9D = 0;
             o->timer = 0;
             o->rotX = 0;
@@ -1114,7 +1114,7 @@ void func_8011ADC0(GameObject *o)
         if (pl->active == 0) {
             if (U8(o, 0xc6) == 0) {
                 (*(u8*)&o->unkAC) = 0;
-                func_800EDEBC(o, 4);
+                playerSetAnimIfChanged(o, 4);
                 o->unk9D = 0;
                 o->unk9C = 1;
                 o->rotX = 0;
@@ -1234,13 +1234,13 @@ void func_8011BA78(O_1BA78 *o)
             o->h->s2 -= 8;
             if (o->h->s2 <= D_8009C650_O_1BA78Ptr->h->s2) {
                 o->h->s2 = D_8009C650_O_1BA78Ptr->h->s2;
-                if (flag) func_800EDEBC(o, 0xd);
+                if (flag) playerSetAnimIfChanged(o, 0xd);
             }
         } else {
             o->h->s2 += 8;
             if (o->h->s2 >= D_8009C650_O_1BA78Ptr->h->s2) {
                 o->h->s2 = D_8009C650_O_1BA78Ptr->h->s2;
-                if (flag) func_800EDEBC(o, 0xd);
+                if (flag) playerSetAnimIfChanged(o, 0xd);
             }
         }
         if (o->b69 != 0 || probeSidesAndApplyTileResponse(o, (s16)(D_8009C650_O_1BA78Ptr->y16 - o->y16 - o->s70), 1) || o->s20 > 10) {
@@ -2375,7 +2375,7 @@ void func_801264F8(GameObject *o, s32 n)
         o->unkA7 += 8;
         s = NEG_SIN_TABLE[o->unkA7] << 7;
         PLAYER.obj.y.raw = o->localY + s;
-        if (n && !(SCRATCHPAD.unk1F8 & 0x1f)) playSFX(0xe);
+        if (n && !(SCRATCHPAD.activeFrameCount & 0x1f)) playSFX(0xe);
     }
 }
 #undef D_800A6078
@@ -2586,7 +2586,7 @@ void func_80128098(GameObject *o)
         break;
     case 2:
         tickAnimation(o);
-        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 3) == 0) {
+        if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 3) == 0) {
             updateObjectSideFlag(o);
             if (near_28098(o, 0xc0)) {
                 o->step = 0;

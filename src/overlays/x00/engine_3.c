@@ -1177,7 +1177,7 @@ void func_80111F74(GameObject *o)
         if (--o->timer == -1) {
             o->subState++;
         }
-        o->y.p.whole = o->localY + (SCRATCHPAD.unk1F8 & 1);
+        o->y.p.whole = o->localY + (SCRATCHPAD.activeFrameCount & 1);
         o->h->p.whole = (s16)(o->localX - 2) + (((s32 (*)(void))nextRandom)() & 3);
         break;
     case 6:
@@ -1271,7 +1271,7 @@ void func_80112384(GameObject *o)
     case 5:
         if (--o->timer == -1)
             o->subState++;
-        o->y.p.whole = o->localY + (SCRATCHPAD.unk1F8 & 1);
+        o->y.p.whole = o->localY + (SCRATCHPAD.activeFrameCount & 1);
         o->h->p.whole = (s16)(o->localX - 2) + (((s32 (*)(void))nextRandom)() & 3);
         break;
     case 6:

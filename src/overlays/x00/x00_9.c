@@ -41,7 +41,7 @@ void func_801350F4(GameObject *o)
     case 5:
         tickAnimation(o);
         applyAnimVelocityX(o, o->animFrame);
-        if (SPAD->unk1F8 & 1) {
+        if (SPAD->activeFrameCount & 1) {
             o->rotY--;
         } else {
             o->rotY++;

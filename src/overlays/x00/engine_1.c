@@ -440,9 +440,9 @@ void func_800EDE44(void *o, u16 x, s16 y)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800EDEBC);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", playerSetAnimIfChanged);
 
-void func_800EDEBC(GameObject *o, u16 anim)
+void playerSetAnimIfChanged(GameObject *o, u16 anim)
 {
     GameObject *p = D_8009B698_GameObjectPtr;
     p->animTimer = anim;

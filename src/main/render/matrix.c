@@ -202,9 +202,9 @@ void func_8004D7E0(char *o)
     func_800279E8(S32(o, 0xa0), (s32)((*(char **)&SCRATCHPAD.ot) + ((S8(o, 0xf) << 2) + 0x10)), o);
 }
 
-// INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D91C);
+// INCLUDE_ASM("nonmatchings/main/render/matrix", drawObjectModelMatrix);
 
-void func_8004D91C(GameObject *obj)
+void drawObjectModelMatrix(GameObject *obj)
 {
     D_1F800060.vx = obj->x.p.whole;
     D_1F800060.vy = obj->y.p.whole;

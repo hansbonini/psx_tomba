@@ -69,7 +69,7 @@ void func_80116994(GameObject *o)
         if (t == 0) {
             GAME.fadeScreenControl = 3;
             ((u8*)&D_8009BC98.unk0C)[0] = 1;
-            ((u8*)&SCRATCHPAD.unk3D1)[0] = 1;
+            ((u8*)&SCRATCHPAD.warpFadeActive)[0] = 1;
             o->step++;
         } else {
             o->timer = t - 1;
@@ -90,8 +90,8 @@ void func_80116994(GameObject *o)
         o->scaleY = o->scaleX;
         o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
-            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
+            SCRATCHPAD.currentTask->state2 = 7;
+            SCRATCHPAD.currentTask->step.value = 0;
             D_8009D6DD_U8Arr[0] = 0xff;
             D_8009D6DE_U8Arr[0] = 0xff;
             D_8009D6DF_U8Arr[0] = 0xff;

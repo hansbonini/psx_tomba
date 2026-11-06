@@ -275,7 +275,7 @@ void func_8012567C(GameObject *o)
         slope_2567C(o);
         if (func_80124A44(o, o->animFrame)) {
             go3_2567C(o, 0x3c, 0x1d);
-        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
+        } else if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
             go3_2567C(o, 0x1e, 0x1d);
         }
         } else {
@@ -330,7 +330,7 @@ void func_8012567C(GameObject *o)
         if (func_80124A44(o, o->animFrame)) {
             o->cooldownTimer = 0x3c;
             o->unk7++;
-        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
+        } else if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
             o->cooldownTimer = 0x1e;
             o->unk7++;
         }
@@ -485,7 +485,7 @@ void func_80126288(GameObject *o)
         o->hitboxH = *b++;
         readAnimFrameCount(o);
     case 1:
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         tickAnimation(o);
         applyFrameVelocityX(o);
         if (o->animFrame & 1)
@@ -500,7 +500,7 @@ void func_80126288(GameObject *o)
         }
         break;
     case 2:
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         tickAnimation(o);
         o->y.p.whole++;
         if (o->animFrame & 1)
@@ -516,7 +516,7 @@ void func_80126288(GameObject *o)
         }
         break;
     }
-    if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0xf) == 0 && D_800A38EA + 0x98 < o->y.p.whole) o->state = 3;
+    if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0xf) == 0 && D_800A38EA + 0x98 < o->y.p.whole) o->state = 3;
 }
 #endif
 
@@ -548,7 +548,7 @@ void func_8012659C(GameObject *o)
         readAnimFrameCount(o);
     case 1:
         tickAnimation(o);
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         applyFrameVelocityX(o);
         if (func_80043AB0(o, o->h->p.whole + 0x18, o->y.p.whole, 0)) {
             o->unk9C = 2;
@@ -556,7 +556,7 @@ void func_8012659C(GameObject *o)
         }
         break;
     case 2:
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         tickAnimation(o);
         o->y.p.whole++;
         func_80043AB0(o, o->h->p.whole + 0x18, o->y.p.whole, 0);
@@ -1052,7 +1052,7 @@ void func_8012754C(GameObject *o)
     case 4:
         if (o->timer) {
             o->timer--;
-        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x3f) == 0 && !func_80022F6C(o)) {
+        } else if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0x3f) == 0 && !func_80022F6C(o)) {
             o->active = 1;
             o->state = 0;
             o->subState = 1;

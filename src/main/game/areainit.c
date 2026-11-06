@@ -26,7 +26,7 @@ void func_80032DB4(GameObject *obj)
         break;
     case 1:
 #if REGION != REGION_JP
-        if (obj->param == 0 && !(SCRATCHPAD.unk1F8 & 3))
+        if (obj->param == 0 && !(SCRATCHPAD.activeFrameCount & 3))
             func_80028A74(0, 0, 0xff, 2);
 #endif
         tickAnimation(obj);
@@ -89,9 +89,9 @@ void func_8003301C(u8 *o)
 #endif
     }
 #if REGION == REGION_JP
-    if ((SPAD->unk1F8 & 3) == 0) playSFXWithNote(3, 0xc);
+    if ((SPAD->activeFrameCount & 3) == 0) playSFXWithNote(3, 0xc);
 #else
-    if (o[3] != 9 && (SPAD->unk1F8 & 3) == 0) playSFXWithNote(3, 0xc);
+    if (o[3] != 9 && (SPAD->activeFrameCount & 3) == 0) playSFXWithNote(3, 0xc);
 #endif
 }
 
@@ -121,9 +121,9 @@ void func_800330EC(GameObject *obj)
 #endif
         }
 #if REGION == REGION_JP
-        if ((SCRATCHPAD.unk1F8 & 3) == 0)
+        if ((SCRATCHPAD.activeFrameCount & 3) == 0)
 #else
-        if (obj->id != 9 && (SCRATCHPAD.unk1F8 & 3) == 0)
+        if (obj->id != 9 && (SCRATCHPAD.activeFrameCount & 3) == 0)
 #endif
             playSFXWithNote(3, 12);
         break;

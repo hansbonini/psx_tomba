@@ -1470,19 +1470,19 @@ void func_8005AF70(GameObject *obj)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005B1A4);
-void func_8005B1A4(u8* self)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", initSectionObjectSpawner);
+void initSectionObjectSpawner(u8* self)
 {
     if (self[4] == 0) {
         *(s16*)(self + 0xC) = GAME.selectedArea;
         self[0xE] = D_8009BCCA;
         self[4] = self[4] + 1;
-        func_8005B1F8(self);
+        spawnSectionObjects(self);
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", func_8005B1F8);
-void func_8005B1F8(u8 *o)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", spawnSectionObjects);
+void spawnSectionObjects(u8 *o)
 {
     R_5A660 ***tbl;
     R_5A660 *r;

@@ -75,7 +75,7 @@ void func_80115D60(G_15D60 *g, char *s)
             if (!(i & 1)) LoadImage(&r, D_80124AFC);
             else LoadImage(&r, D_80124BDC);
         }
-    } else if (GAME.selectedSection == 3 && !(SCRATCHPAD.unk1F8 & 7)) {
+    } else if (GAME.selectedSection == 3 && !(SCRATCHPAD.activeFrameCount & 7)) {
         i = g->b165;
         t = D_80124EA8[i];
         g->b165++;

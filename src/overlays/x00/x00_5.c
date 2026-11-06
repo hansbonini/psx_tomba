@@ -249,12 +249,12 @@ void func_80121CD4(char *o)
 }
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80121D1C);
-extern void func_800EDEBC(void *o, s32 a);
+extern void playerSetAnimIfChanged(void *o, s32 a);
 extern void func_800224FC(s32 a, s32 b, s32 c, s32 d);
 
 void func_80121D1C(char *o)
 {
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     func_800224FC(2, *(s16 *)(o + 0x12), *(s16 *)(o + 0x16), *(s16 *)(o + 0x1a));
 }
 
@@ -290,7 +290,7 @@ void func_80121D5C(O_21D5C *o)
         if (o->h->s2 <= D_8009C650->h->s2) {
             o->h->s2 = D_8009C650->h->s2;
             if (flag) {
-                func_800EDEBC(o, 0xd);
+                playerSetAnimIfChanged(o, 0xd);
                 func_800224FC(2, o->x12, o->y16, o->z1a);
             }
         }
@@ -299,13 +299,13 @@ void func_80121D5C(O_21D5C *o)
         if (o->h->s2 >= D_8009C650->h->s2) {
             o->h->s2 = D_8009C650->h->s2;
             if (flag) {
-                func_800EDEBC(o, 0xd);
+                playerSetAnimIfChanged(o, 0xd);
                 func_800224FC(2, o->x12, o->y16, o->z1a);
             }
         }
     }
     if (probeSidesAndApplyTileResponse(o, 0x10e, 1)) {
-        func_800EDEBC(o, 0xd);
+        playerSetAnimIfChanged(o, 0xd);
         o->bac = 3;
         o->b9c = 0;
         o->vx = 0;
@@ -334,7 +334,7 @@ void func_80122538(GameObject *o)
         o->velX = 0;
         o->velY = 0;
         o->unkB6 = 0;
-        func_800EDEBC(o, 0x22);
+        playerSetAnimIfChanged(o, 0x22);
         o->step++;
     case 1:
         tickAnimation(o);
@@ -985,10 +985,10 @@ void func_801248A0(GameObject *o, GameObject *p)
         o->velY = 0;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80124B38);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", resolvePlayerEnemyContact);
 extern s16 func_80051604(u8 *, u8 *);
 
-void func_80124B38(u8 *a, u8 *b)
+void resolvePlayerEnemyContact(u8 *a, u8 *b)
 {
     s16 r = func_80051604(a, b);
     if (r == -1)
@@ -1039,9 +1039,9 @@ void func_80124B38(u8 *a, u8 *b)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_80124CC8);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", resolveWeaponPigContact);
 extern s16 boxesOverlapSigned(char *, char *);
-void func_80124CC8(char *a, char *b)
+void resolveWeaponPigContact(char *a, char *b)
 {
     if (*(s32 *)((u8 *)b + 0x94) == 0 && boxesOverlapSigned(a, b) >= 0) {
         u16 v;
@@ -3466,7 +3466,7 @@ void func_80129B64(GameObject *o)
 #undef ANIMT
 #undef COLLIDE
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", func_8012A160);
+// INCLUDE_ASM("overlays/x00/nonmatchings/x00_5", pigKnockbackStun);
 typedef struct P_2A160 { u8 b0; u8 b1; u16 w2; s16 w4; } P_2A160;
 
 #define SETBOX(o, A) \
@@ -3512,7 +3512,7 @@ static __inline__ void fin2_2A160(GameObject *t)
     cloneItemPickupObject(t);
 }
 
-void func_8012A160(GameObject *o)
+void pigKnockbackStun(GameObject *o)
 {
     P_2A160 *p = (P_2A160 *)&o->unkB4;
     u8 t;
@@ -4404,7 +4404,7 @@ void func_8012C03C(GameObject *o)
                 cullAndQueueDraw(o);
                 break;
             }
-            func_8012A160(o);
+            pigKnockbackStun(o);
             cullAndQueueDraw(o);
             if (o->unk98 == 0) {
                 o->active = 2;
@@ -4571,7 +4571,7 @@ void func_8012CD40(GameObject *o)
         if (o->h->p.whole < o->velH - 8)
             o->h->p.whole = o->velH - 8;
         (t = o->y.p.whole + 0x10, ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, t - o->param * 16));
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0 && (nextRandom() & 3) == 0)
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0 && (nextRandom() & 3) == 0)
             playSFXWithNote(0x3a, 0);
         if (--o->timer == 0)
             o->step = 0;
@@ -4895,7 +4895,7 @@ void func_8012D808(GameObject *o)
         case 0:
             if (func_80022F6C(o) == 0)
                 break;
-            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) {
+            if ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1) {
                 if (Hit_2D808(o, pl)) {
                     func_80119D80(pl->x.p.whole, (s16)(pl->y.p.whole - 0x10), pl->z.p.whole);
                     Act_2D808(o);

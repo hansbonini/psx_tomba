@@ -299,7 +299,10 @@ typedef enum PlayerSubState {
     PLAYER_CLING = 0x0D,              /* playerCling: on a vine or a wall */
     PLAYER_HOLD_ENEMY = 0x0E,         /* playerHoldEnemy */
     PLAYER_THROW_ENEMY = 0x0F,        /* playerThrowEnemy */
+    PLAYER_JUMP_TO_BACK_WALL = 0x11,  /* playerJumpToBackWall */
     PLAYER_JUMP_PLANE = 0x12,         /* playerJumpPlane: to the next depth plane */
+    PLAYER_CLIMB_WALL = 0x15,         /* playerClimbWall */
+    PLAYER_HOP_ONTO_LEDGE = 0x16,     /* playerHopOntoLedge */
     PLAYER_CLIMB = 0x1D,              /* playerClimb */
 } PlayerSubState;
 

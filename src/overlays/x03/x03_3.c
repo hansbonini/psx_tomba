@@ -9,7 +9,7 @@ INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011D1A8);
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011D41C);
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011D4F4);
-extern void func_800EDEBC(GameObject *, s32);
+extern void playerSetAnimIfChanged(GameObject *, s32);
 
 void func_8011D4F4(GameObject *o)
 {
@@ -20,7 +20,7 @@ void func_8011D4F4(GameObject *o)
         one = 1;
         o->unkB2 = 0;
         ((u8 *)o)[0xa2] = one;
-        func_800EDEBC(o, 0x42);
+        playerSetAnimIfChanged(o, 0x42);
         playSFX(0x20);
         ((u8 *)o)[0xab] = one;
         o->timer = 0x78;
@@ -108,7 +108,7 @@ void func_8011DA00(GameObject *o)
         o->step++;
     case 1:
         o->visible = 1;
-        func_800EDEBC(o, 0x39);
+        playerSetAnimIfChanged(o, 0x39);
         playSFXWithNote(0x23, 0x24);
         playSFX(0x1f);
         func_800FB38C(o);
@@ -122,7 +122,7 @@ void func_8011DA00(GameObject *o)
         o->h->raw += o->velX << 8;
         o->y.raw += o->velY << 8;
         if (tickAnimation(o)) {
-            func_800EDEBC(o, 0x10);
+            playerSetAnimIfChanged(o, 0x10);
             o->step = 3;
         }
         break;
@@ -181,7 +181,7 @@ void func_8011DA00(GameObject *o)
 }
 
 // INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011DE38);
-extern void func_800EDEBC(GameObject *, s32);
+extern void playerSetAnimIfChanged(GameObject *, s32);
 
 void func_8011DE38(GameObject *o)
 {
@@ -189,14 +189,14 @@ void func_8011DE38(GameObject *o)
 
     switch (o->step) {
     case 0:
-        func_800EDEBC(o, 0x37);
+        playerSetAnimIfChanged(o, 0x37);
         o->timer = 8;
         func_800FB38C(o);
         break;
     case 2:
         if (--o->timer > 0)
             break;
-        func_800EDEBC(o, 0x10);
+        playerSetAnimIfChanged(o, 0x10);
         o->step++;
         break;
     case 3:

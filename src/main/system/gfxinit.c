@@ -96,13 +96,13 @@ void resetCamera(void)
     camera->vrz = -544; 
     camera->vpx = 160;
     camera->vpy = -NTSC_PAL(120, 128);
-    SPAD->unk200 = 69;
+    SPAD->randomSeed = 69;
     camera->vrx = 0;
     camera->vry = 0;
     camera->vpz = 0;
     SPAD->pauseMenuLock = 0;
     (*(short *)&SPAD->axisSwap) = 0;
-    SPAD->unk3D1 = 0;
+    SPAD->warpFadeActive = 0;
     LOADED_LIST_FILE = 0xFF;
     LOADED_SOUND_SET = 0xFF;
     D_8009EBA0 = 0;

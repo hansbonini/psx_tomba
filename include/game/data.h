@@ -284,7 +284,12 @@ extern u8   D_800A3D08;
 extern u8   D_800B07D8;
 extern u8   D_800A55C4;
 extern u8   D_800A37D0;
-extern short D_800A3952;
+typedef enum {
+    MENU_SCREEN_SAVE = 4,
+    MENU_SCREEN_LOAD = 5,
+} MenuScreen;
+
+extern short menuScreenId;
 extern short D_800A3954;
 extern short D_800A3956;
 extern MessageSlot MESSAGE_SLOTS[];

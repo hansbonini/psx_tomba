@@ -49,7 +49,7 @@ void func_8011590C(GameObject *o)
         }
         break;
     case 2:
-        func_8002CFF4(o);
+        updateDoorTransition(o);
         break;
     }
 }

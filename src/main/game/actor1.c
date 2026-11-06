@@ -1702,7 +1702,7 @@ void dispatchAreaActorInit(void)
 {
     switch (GAME.selectedArea) {
     case AREA00_VILLAGEOFALLBEGINNINGS:
-        func_80124B38();
+        resolvePlayerEnemyContact();
         break;
     case AREA01_DWARFFOREST:
         func_801233E0();
@@ -1932,7 +1932,7 @@ void dispatchAreaActorDraw1(void)
 void dispatchAreaActorDraw2(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
-        func_80124CC8();
+        resolveWeaponPigContact();
     } else {
         func_8011F218();
     }
@@ -2260,7 +2260,7 @@ void func_80053F08(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/actor1", func_80054618);
+// INCLUDE_ASM("nonmatchings/main/game/actor1", resolveWeaponActorContacts);
 
 static __inline__ s16 hit_54618(GameObject *obj, GameObject *other)
 {
@@ -2333,7 +2333,7 @@ static __inline__ void col_54618(GameObject *obj, GameObject *other)
     }
 }
 
-void func_80054618(void)
+void resolveWeaponActorContacts(void)
 {
     s16 n = SCRATCHPAD.weaponDrawCount;
     GameObject **pp = SCRATCHPAD.weaponDrawList;
@@ -2366,7 +2366,7 @@ void func_80054618(void)
             case 4:
                 if ((*(u16 *)&GAME) == 0) {
             case 2:
-                    func_80124CC8(obj, other);
+                    resolveWeaponPigContact(obj, other);
                     break;
                 }
                 func_8011F218(obj, other);
@@ -2587,7 +2587,7 @@ void func_8005548C(GameObject *obj)
                 break;
             case 2:
                 switch (GAME.selectedArea) {
-                case 0: func_80124B38(obj, q); break;
+                case 0: resolvePlayerEnemyContact(obj, q); break;
                 case 1: func_801233E0(obj, q); break;
                 case 3: func_8011EC1C(obj, q); break;
                 case 4: func_8011E254(obj, q); break;
@@ -2842,6 +2842,6 @@ void func_80055BA0(void)
     }
     func_80053F08();
     func_80053DA0();
-    func_80054618();
+    resolveWeaponActorContacts();
     func_800574BC();
 }

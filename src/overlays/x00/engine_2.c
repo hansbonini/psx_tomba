@@ -1333,7 +1333,7 @@ static __inline__ void dust_F10A4(GameObject *o)
         q->active = 1;
         q->type = 0x31;
         q->id = 1;
-        t = &D_80114530[SCRATCHPAD.unk1F8 & 7];
+        t = &D_80114530[SCRATCHPAD.activeFrameCount & 7];
         q->x.p.whole = x;
         q->y.p.whole = y;
         q->z.p.whole = z;
@@ -4072,7 +4072,7 @@ void func_800F79C0(GameObject *o)
     o->rotZ = b;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_800F7A48);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerHopOntoLedge);
 typedef struct P_F7A48 { char p0[2]; s16 h02; char p04[4]; u8 b8; char p1[0x20-9]; s16 h20; char p2[0x2c-0x22]; u16 h2c; u16 h2e; } P_F7A48;
 typedef struct H_F7A48 { s16 p0; s16 whole; } H_F7A48;
 typedef struct O_F7A48 {
@@ -4085,7 +4085,7 @@ typedef struct O_F7A48 {
     char pb8[0xe0-0xb8]; s16 he0; char pe2[2]; void *de4; char pe8[0xf6-0xe8]; s16 hf6;
 } O_F7A48;
 
-void func_800F7A48(O_F7A48 *o)
+void playerHopOntoLedge(O_F7A48 *o)
 {
     extern P_F7A48 *D_8009B698;
     switch (o->state) {
@@ -7696,8 +7696,8 @@ void updatePlayerActive(GameObject *o, s32 p2)
     case 16:
         func_80106928(o);
         break;
-    case 17:
-        func_80107A58(o);
+    case PLAYER_JUMP_TO_BACK_WALL:
+        playerJumpToBackWall(o);
         break;
     case PLAYER_JUMP_PLANE:
         playerJumpPlane(o);
@@ -7707,8 +7707,8 @@ void updatePlayerActive(GameObject *o, s32 p2)
         func_8010633C(o);
         turn_FFAE8(o);
         break;
-    case 0x15:
-        func_801091A0(o);
+    case PLAYER_CLIMB_WALL:
+        playerClimbWall(o);
         break;
     case 0x17:
         func_80122258(o);
@@ -7866,8 +7866,8 @@ void updatePlayerActive(GameObject *o, s32 p2)
         func_80105D68(o);
         break;
     case 0x49:
-    case 0x16:
-        func_800F7A48(o);
+    case PLAYER_HOP_ONTO_LEDGE:
+        playerHopOntoLedge(o);
         break;
     case 0x63:
         switch (o->step) {
@@ -8076,7 +8076,7 @@ void func_80100C98(O_00C98 *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_801010D4);
 void func_801010D4(GameObject *o)
 {
-    extern void func_8010D2D4(GameObject *);
+    extern void playerScriptedWalk(GameObject *);
     extern GameObject *D_8009B698;
     extern char D_800108A8[];
     s16 c;
@@ -8147,7 +8147,7 @@ void func_801010D4(GameObject *o)
             v = -0x128;
         }
         o->unkB2 = v;
-        func_8010D2D4(o);
+        playerScriptedWalk(o);
         if (o->touchFlag != 0) {
             o->y.p.whole += 2;
         }
@@ -8249,9 +8249,9 @@ INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80101D58);
 typedef struct O_01DAC { char p0[0x12]; s16 x; char p1[2]; s16 y; char p2[2]; s16 z; char p3[4]; s16 t; } O_01DAC;
 void func_80101DAC(O_01DAC *o)
 {
-    extern void func_800EDEBC(O_01DAC *, s32);
+    extern void playerSetAnimIfChanged(O_01DAC *, s32);
     o->t = 0;
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     func_800224FC(2, o->x, o->y, o->z);
     if ((*(char **)&D_8009C650)[2] == 2)
         (*(char **)&D_8009C650)[6] = 2;
@@ -8282,7 +8282,7 @@ void func_80101E10(GameObject *o)
                 o->h->p.whole = D_8009C650->h->p.whole;
                 if (f) {
                     o->timer = 0;
-                    func_800EDEBC(o, 0xd);
+                    playerSetAnimIfChanged(o, 0xd);
                     func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
                     if (D_8009C650->type == 2) D_8009C650->step = 2;
                 }
@@ -8293,7 +8293,7 @@ void func_80101E10(GameObject *o)
                 o->h->p.whole = D_8009C650->h->p.whole;
                 if (f) {
                     o->timer = 0;
-                    func_800EDEBC(o, 0xd);
+                    playerSetAnimIfChanged(o, 0xd);
                     func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
                     if (D_8009C650->type == 2) D_8009C650->step = 2;
                 }
@@ -8302,13 +8302,13 @@ void func_80101E10(GameObject *o)
         if (D_8009C650->type == 0x21) {
             D_8009C650->h->p.whole = o->h->p.whole;
             D_8009C650->y.p.whole = o->y.p.whole + 8;
-            func_800EDEBC(o, 0xd);
+            playerSetAnimIfChanged(o, 0xd);
             func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
             o->step = 2;
         } else if (o->touchFlag != 0 || ((s16 (*)(GameObject *, s32, s32))probeSidesAndApplyTileResponse)(o, 0, 1)) {
             D_8009C650->h->p.whole = o->h->p.whole;
             D_8009C650->y.p.whole = o->y.p.whole + 8;
-            func_800EDEBC(o, 0xd);
+            playerSetAnimIfChanged(o, 0xd);
             func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
             if (D_8009C650->type == 2) D_8009C650->step = 2;
             o->step = 2;
@@ -8316,14 +8316,14 @@ void func_80101E10(GameObject *o)
             D_8009C650->h->p.whole = o->h->p.whole;
             D_8009C650->y.p.whole = o->y.p.whole + 8;
             o->timer = 0;
-            func_800EDEBC(o, 0xd);
+            playerSetAnimIfChanged(o, 0xd);
             func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
             if (D_8009C650->type == 2) D_8009C650->step = 2;
             o->step = 2;
         }
         break;
     case 2:
-        func_800EDEBC(o, 0xd);
+        playerSetAnimIfChanged(o, 0xd);
         o->unk9C = 0;
         o->velX = 0;
         o->velY = 0;
@@ -8381,7 +8381,7 @@ void func_80102204(O_02204 *o)
 {
     O_02204 *p;
     o->timer = 0;
-    func_800EDEBC(o, 0x23);
+    playerSetAnimIfChanged(o, 0x23);
     o->wac = 3;
     o->b9c = 0;
     p = D_8009C650;
@@ -8422,20 +8422,20 @@ void func_80102290(GameObject *o)
             } else {
                 o->h->p.whole = D_8009C650->h->p.whole;
                 if (flag)
-                    func_800EDEBC(o, 0x23);
+                    playerSetAnimIfChanged(o, 0x23);
             }
         } else {
             if (o->h->p.whole >= D_8009C650->h->p.whole) {
                 o->h->p.whole = D_8009C650->h->p.whole;
                 if (flag)
-                    func_800EDEBC(o, 0x23);
+                    playerSetAnimIfChanged(o, 0x23);
             } else {
                 o->h->p.whole += 8;
             }
         }
         if (D_8009C650->touchFlag || o->touchFlag || ((s16 (*)(GameObject *, s32, s32))probeSidesAndApplyTileResponse)(o, 0, 1) || o->timer > 0x14) {
             o->timer = 0;
-            func_800EDEBC(o, 0x23);
+            playerSetAnimIfChanged(o, 0x23);
             *(u8 *)&o->unkAC = 3;
             o->unk9C = 0;
             o->velX = 0;
@@ -8499,7 +8499,7 @@ void func_8010254C(O_0254C *o)
     O_0254C *p;
     u16 s1, s2, s3;
     o->timer = 0;
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     func_800224FC(2, o->a, o->y, o->b);
     o->wac = 3;
     o->b9c = 0;
@@ -8519,7 +8519,7 @@ s32 func_80135A94(s16, s16, s16, s16, s16, s16);
 #define BLOCK()                                                                     \
     {                                                                               \
         o->timer = 0;                                                               \
-        func_800EDEBC(o, 0xd);                                             \
+        playerSetAnimIfChanged(o, 0xd);                                             \
         func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);                  \
         *(u8 *)&o->unkAC = 3;                                              \
         o->unk9C = 0;                                                                 \
@@ -8595,7 +8595,7 @@ void func_80102978(GameObject *o)
     o->h->p.whole = *(s16 *)(*(char **)(p + 0x40) + 2);
     o->y.p.whole = *(u16 *)(p + 0x16) - *(u16 *)(p + 0x70);
     o->timer = 0;
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     o->velH = 0;
     o->velV = 0;
     o->unkB2 = 0;
@@ -8786,7 +8786,7 @@ typedef struct {
 void func_8010300C(TO_0300C *o)
 {
     o->s20 = 0;
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     o->bac = 3;
     o->b9c = 0;
     {
@@ -8854,7 +8854,7 @@ void func_80103090(O_03090 *o)
         }
         if (o->b69 != 0 || ((s16 (*)(O_03090 *, s32, s32))probeSidesAndApplyTileResponse)(o, (s16)(D_8009C650_O_03090Ptr->y16 - o->y16 - o->s70), 1) || o->s20 > 10) {
             o->s20 = 0;
-            func_800EDEBC(o, 0xd);
+            playerSetAnimIfChanged(o, 0xd);
             o->bac = 3;
             o->b9c = 0;
             o->vx = 0;
@@ -8889,7 +8889,7 @@ void func_80103390(GameObject *o)
 {
     GameObject *p;
     o->timer = 0;
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
     *(char *)((char *)o + 0xac) = 3;
     o->unk9C = 0;
@@ -8905,7 +8905,7 @@ void func_80103390(GameObject *o)
 #define LAND(o)                                                         \
     do {                                                                \
         o->timer = 0;                                                   \
-        func_800EDEBC(o, 0xd);                                 \
+        playerSetAnimIfChanged(o, 0xd);                                 \
         func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);      \
         ((u8 *)o)[0xac] = 3;                                                 \
         o->unk9C = 0;                                                     \
@@ -8976,14 +8976,14 @@ void func_80103420(GameObject *o)
 #undef LAND
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80103744);
-extern void func_800EDEBC(void *o, s32 a);
+extern void playerSetAnimIfChanged(void *o, s32 a);
 extern void func_800224FC(s32 a, s32 b, s32 c, s32 d);
 
 void func_80103744(char *o)
 {
     *(s16 *)(o + 0x20) = 0;
     playSFX(9);
-    func_800EDEBC(o, 0xd);
+    playerSetAnimIfChanged(o, 0xd);
     func_800224FC(2, *(s16 *)(o + 0x12), *(s16 *)(o + 0x16), *(s16 *)(o + 0x1a));
     o[6]++;
 }
@@ -9021,7 +9021,7 @@ void func_801037A4(O_037A4 *o)
             if (flag) {
                 o->s20 = 0;
                 playSFX(9);
-                func_800EDEBC(o, 0xd);
+                playerSetAnimIfChanged(o, 0xd);
                 func_800224FC(2, o->x12, o->y16, o->z1a);
                 o->b6++;
             }
@@ -9038,7 +9038,7 @@ void func_801037A4(O_037A4 *o)
             if (flag) {
                 o->s20 = 0;
                 playSFX(9);
-                func_800EDEBC(o, 0xd);
+                playerSetAnimIfChanged(o, 0xd);
                 func_800224FC(2, o->x12, o->y16, o->z1a);
                 o->b6++;
             }
@@ -9047,7 +9047,7 @@ void func_801037A4(O_037A4 *o)
     if (o->s20 > 10) {
         o->s20 = 0;
         playSFX(9);
-        func_800EDEBC(o, 0xd);
+        playerSetAnimIfChanged(o, 0xd);
         func_800224FC(2, o->x12, o->y16, o->z1a);
         o->b6++;
     }
@@ -9116,12 +9116,12 @@ void playerHoldEnemy(S_039E8 *o)
             o->velY = 0x100;
             break;
         case 0xe:
-            func_800EDEBC(o, 0xd);
+            playerSetAnimIfChanged(o, 0xd);
             break;
         case 0x42:
             break;
         }
-        func_800EDEBC(o, 0xd);
+        playerSetAnimIfChanged(o, 0xd);
         o->substep = 0;
         func_80028A74(0, 0, 0xff, 4);
         o->state++;
@@ -9493,7 +9493,7 @@ s32 c = o->animFrame & 1; Fix16 *h = q->h; s32 w = h->p.whole; s32 r;
                 break;
             }
             o->velY = 0;
-            func_800EDEBC(o, 0x1d);
+            playerSetAnimIfChanged(o, 0x1d);
             o->rotZ = 0x200;
             o->unk7 = 3;
         } else {
@@ -9598,7 +9598,7 @@ void func_801049E4(GameObject *o)
         }
         break;
     case 2:
-        func_800EDEBC(o, 0xf);
+        playerSetAnimIfChanged(o, 0xf);
         if (tickAnimation(o)) {
             GameObject *q;
             playSFXWithNote(0x22, 0x23);
@@ -9626,7 +9626,7 @@ void func_801049E4(GameObject *o)
         }
         break;
     case 3:
-        func_800EDEBC(o, 0x1d);
+        playerSetAnimIfChanged(o, 0x1d);
         o->rotZ = 0x200;
         o->unkB2 = 0x100;
         o->unk9C = 2;
@@ -9824,7 +9824,7 @@ void func_80104F1C(GameObject *o)
         }
         break;
     case 2:
-        func_800EDEBC(o, 0xf);
+        playerSetAnimIfChanged(o, 0xf);
         if (tickAnimation(o)) {
             playSFXWithNote(0x22, 0x23);
             o->velY = 0;
@@ -10047,7 +10047,7 @@ void playerThrowEnemy(GameObject *o)
         (*(P_05A14 **)&D_8009B698)->b9 = D_8009C650->type;
         o->touchFlag = 0;
         o->velV = 0;
-        func_800EDEBC(o, 13);
+        playerSetAnimIfChanged(o, 13);
         if ((D_8009BCEC & 0x40) && (*(volatile u16 *)&PAD_PRESSED & SPAD->buttonAction)) {
             o->unkA7 = 1;
         } else {
@@ -10120,7 +10120,7 @@ void func_80105D68(O_05D68 *o)
         o->d8c = 0;
         o->af = o->af & 1;
         D_8009B698_P_05D68Ptr->z = 0;
-        func_800EDEBC(o, 13);
+        playerSetAnimIfChanged(o, 13);
         o->a7 = 0;
         o->a6 = o->a6 + 1;
     } else {
@@ -10159,7 +10159,7 @@ void func_80105EA0(GameObject *o)
     switch (o->step) {
     case 0:
         o->unkB2 = 0;
-        func_800EDEBC(o, 0x28);
+        playerSetAnimIfChanged(o, 0x28);
         playSFX(0x20);
         if (*((u8 *)o + 0xab) & 0x80) {
             o->active = 3;
@@ -10242,7 +10242,7 @@ void func_80106100(GameObject *o)
     switch (o->step) {
     case 0:
         o->unkB2 = 0;
-        func_800EDEBC(o, 0x29);
+        playerSetAnimIfChanged(o, 0x29);
         playSFXWithNote(0x25, 0x28);
         if (*((u8 *)o + 0xab) & 0x80) {
             o->active = 3;
@@ -10251,7 +10251,7 @@ void func_80106100(GameObject *o)
         } else {
             o->timer = 0x1e;
             o->step = 2;
-            func_800EDEBC(o, 0x36);
+            playerSetAnimIfChanged(o, 0x36);
         }
         break;
     case 1:
@@ -10596,7 +10596,7 @@ void func_80106928(GameObject *o)
     case 3:
         if (--o->timer == 0) {
             o->unk9C = 2;
-            func_800EDEBC(o, 0x12);
+            playerSetAnimIfChanged(o, 0x12);
             o->step++;
         }
         break;
@@ -10713,7 +10713,7 @@ void func_80106F50(GameObject *o)
             if (o->animFrame != (o->unkBE & 1)) o->unkB2 = 0;
             o->modelLit = 0;
             o->unkB6 = 0;
-            func_800EDEBC(o, 4);
+            playerSetAnimIfChanged(o, 4);
             if (D_8009B698_U8Ptr[0] == 0) {
                 o->velX = 0;
                 o->velY = 0;
@@ -10768,7 +10768,7 @@ void func_8010731C(GameObject *o)
         *(s8 *)((u8 *)o + 0xf) = -20;
         *(u8 *)((u8 *)o + 0xa2) = 2;
         o->animFrame = f & 1;
-        func_800EDEBC(o, 0x2b);
+        playerSetAnimIfChanged(o, 0x2b);
         o->step++;
     case 1:
         tickAnimation(o);
@@ -10820,7 +10820,7 @@ void func_801074B8(GameObject *o)
         *(s8 *)((char*)o+0xf) = -20;
         *(u8 *)((u8 *)o + 0xa2) = 2;
         o->animFrame = u & 1;
-        func_800EDEBC(o, 0x2b);
+        playerSetAnimIfChanged(o, 0x2b);
         o->step++;
     case 1:
         tickAnimation(o);
@@ -10905,7 +10905,7 @@ void func_80107688(GameObject *o)
         D_8009B698_CharPtr[8] = 0;
         *(s16 *)(D_8009B698_CharPtr + 0x20) = 0;
         *(u8 *)&o->unkAC = 0;
-        func_800EDEBC(o, 4);
+        playerSetAnimIfChanged(o, 4);
         playSFXWithNote(2, 4);
         o->step = 1;
     case 1:
@@ -10967,9 +10967,9 @@ void func_80107688(GameObject *o)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_80107A58);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerJumpToBackWall);
 extern s16 func_800458B0(s32, s32, s32);
-void func_80107A58(GameObject *o)
+void playerJumpToBackWall(GameObject *o)
 {
     u16 f;
     s16 r;
@@ -10991,7 +10991,7 @@ void func_80107A58(GameObject *o)
         *(s8 *)((u8 *)o + 0xf) = -20;
         *(u8 *)((u8 *)o + 0xa2) = 2;
         o->animFrame = f & 1;
-        func_800EDEBC(o, 0x15);
+        playerSetAnimIfChanged(o, 0x15);
         o->step++;
         if ((*(u16 *)&GAME) == 10 && (D_8009BCCA == 1 || D_8009BCCA == 5)) {
             o->velY = -0x300;
@@ -11009,7 +11009,7 @@ void func_80107A58(GameObject *o)
         o->velY += 0x10;
         if (o->velX == 0) {
             *(s8 *)((u8 *)o + 0xf) = -8;
-            func_800EDEBC(o, 0x16);
+            playerSetAnimIfChanged(o, 0x16);
             o->d->p.whole = (s16)(o->d->p.whole / 90) * 90;
             if (*(s16 *)((u8 *)o + 0xe0) != 0) {
                 o->active = 3;
@@ -11034,7 +11034,7 @@ void func_80107A58(GameObject *o)
                     o->d->p.whole = (s16)(o->d->p.whole / 90) * 90;
                     *(u8 *)((u8 *)o + 0xa2) = 3;
                     o->unkB2 = 0;
-                    o->subState = 0x15;
+                    o->subState = PLAYER_CLIMB_WALL;
                     o->step = 0;
                 }
             }
@@ -11088,7 +11088,7 @@ void func_80107E20(GameObject *o)
         *(s8 *)&o->priority = -20;
         ((u8 *)o)[0xa3] = 2;
         o->animFrame = f & 1;
-        func_800EDEBC(o, 0x2c);
+        playerSetAnimIfChanged(o, 0x2c);
     case 1:
         tickAnimation(o);
         if (SCRATCHPAD.axisSwap & 1)
@@ -11165,7 +11165,7 @@ void func_8010810C(GameObject *o)
         o->touchFlag = 0;
         o->step++;
         o->animFrame &= 1;
-        func_800EDEBC(o, 0x2c);
+        playerSetAnimIfChanged(o, 0x2c);
     case 1:
         tickAnimation(o);
         if (SCRATCHPAD.axisSwap & 1)
@@ -11249,7 +11249,7 @@ void playerJumpPlane(PO_08388 *o)
         o->t.velX = fixedMulCos(0, o->t.unkB2);
         o->t.velY = -0x570;
         (*(P_08388 **)&D_8009B698)->w20 = 5;
-        func_800EDEBC(o, 0x19);
+        playerSetAnimIfChanged(o, 0x19);
         if (SPAD->axisSwap & 1)
             o->wf6 = (o->t.d->p.whole + 90) / 90 * 90;
         else
@@ -11374,7 +11374,7 @@ void func_801087E4(GameObject *o)
         o->velX = fixedMulCos(0, o->unkB2);
         o->velY = -0x570;
         (*(G330_087E4 **)&D_8009B698)->w20 = 5;
-        func_800EDEBC(o, 0x19);
+        playerSetAnimIfChanged(o, 0x19);
         if ((*(u16 *)&GAME) == 0) {
             playSFXWithPitchSlide(0xd, 1, -8, 0x96);
             startAreaBgm();
@@ -11466,7 +11466,7 @@ void func_80108B3C(GameObject *o)
             o->velV = 0;
             o->velX = 0;
             o->velY = 0;
-            func_800EDEBC(o, 0x20);
+            playerSetAnimIfChanged(o, 0x20);
             ((u8 *)o)[0xc3] = 1;
             o->step++;
         case 1:
@@ -11505,7 +11505,7 @@ void func_80108C70(GameObject *o)
         o->velV = 0;
         *(char *)&o->unkAC = 0;
         o->animFrame = o->animFrame & 1;
-        func_800EDEBC(o, 0x1e);
+        playerSetAnimIfChanged(o, 0x1e);
         o->step++;
     case 1:
         tickAnimation(o);
@@ -11523,7 +11523,7 @@ void playerCling(GameObject *o)
 
     switch (o->step) {
     case 0:
-        func_800EDEBC(o, 10);
+        playerSetAnimIfChanged(o, 10);
         *(u8 *)&o->model = 0;
         o->unkBE = 0;
         o->unk9E = 6;
@@ -11539,15 +11539,15 @@ void playerCling(GameObject *o)
         tickAnimation(o);
         k = &PAD_PRESSED;
         if ((*k & 0x50) == 0) {
-            func_800EDEBC(o, 10);
+            playerSetAnimIfChanged(o, 10);
         } else if (*k & 0x10) {
-            func_800EDEBC(o, 0xb);
-            if ((SPAD->unk1F8 & 0xf) == 0) playSFXWithNote(0x1d, 0);
+            playerSetAnimIfChanged(o, 0xb);
+            if ((SPAD->activeFrameCount & 0xf) == 0) playSFXWithNote(0x1d, 0);
             o->y.raw -= 0x18000;
             func_80043D2C(o, o->h->p.whole + ((o->animFrame & 1) ? (-4) : 4), (s16)(o->y.p.whole - 0x15));
         } else if (*k & 0x40) {
-            func_800EDEBC(o, 0xc);
-            if ((SPAD->unk1F8 & 0xf) == 0) playSFXWithNote(0x1d, 0);
+            playerSetAnimIfChanged(o, 0xc);
+            if ((SPAD->activeFrameCount & 0xf) == 0) playSFXWithNote(0x1d, 0);
             o->y.raw += 0x28000;
             if (o->touchFlag) {
                 *(u8 *)&o->unkAA = 0;
@@ -11555,12 +11555,12 @@ void playerCling(GameObject *o)
                 if (o->unkBE & 8) {
                     (*(u8 **)&D_8009B698)[8] = o->animFrame & 1;
                     if ((o->unkBE & 1) != o->animFrame) {
-                        func_800EDEBC(o, 8);
+                        playerSetAnimIfChanged(o, 8);
                         advanceAnimFrame(o, 2);
                         o->subState = 0x1b;
                         o->step = 0;
                     } else {
-                        func_800EDEBC(o, 0x11);
+                        playerSetAnimIfChanged(o, 0x11);
                         o->subState = 0x1b;
                         o->step = 0;
                     }
@@ -11575,12 +11575,12 @@ void playerCling(GameObject *o)
                 if (o->unkBE & 8) {
                     (*(u8 **)&D_8009B698)[8] = o->animFrame & 1;
                     if ((o->unkBE & 1) != o->animFrame) {
-                        func_800EDEBC(o, 8);
+                        playerSetAnimIfChanged(o, 8);
                         advanceAnimFrame(o, 2);
                         o->subState = 0x1b;
                         o->step = 0;
                     } else {
-                        func_800EDEBC(o, 0x11);
+                        playerSetAnimIfChanged(o, 0x11);
                         o->subState = 0x1b;
                         o->step = 0;
                     }
@@ -11637,10 +11637,10 @@ void playerCling(GameObject *o)
     func_800EE50C(o);
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_801091A0);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerClimbWall);
 extern s32 func_80045780(s16, s16, s16);
 
-void func_801091A0(GameObject *o)
+void playerClimbWall(GameObject *o)
 {
     s16 v;
     s16 a;
@@ -11649,7 +11649,7 @@ void func_801091A0(GameObject *o)
     switch (o->step) {
     case 0:
         *(u8 *)((u8 *)o + 0xa0) = 0;
-        func_800EDEBC(o, 0x1b);
+        playerSetAnimIfChanged(o, 0x1b);
         o->unkB6 = 0;
         *(s16 *)((u8 *)D_8009B698 + 2) = 0;
         *(u8 *)((u8 *)o + 0xa2) = 3;
@@ -11666,7 +11666,7 @@ void func_801091A0(GameObject *o)
         tickAnimation(o);
         if (--o->timer == 0) {
             o->timer = 8;
-            func_800EDEBC(o, 0x17);
+            playerSetAnimIfChanged(o, 0x17);
             o->step++;
         }
         break;
@@ -11680,7 +11680,7 @@ void func_801091A0(GameObject *o)
         if ((func_80045780(o->h->p.whole - 8, v, a) & 2) || (func_80045780(hx, v, a) & 2)) {
             o->d->p.whole = (s16)(o->d->p.whole / 90) * 90;
             o->state = 1;
-            o->subState = 0x16;
+            o->subState = PLAYER_HOP_ONTO_LEDGE;
             o->step = 0;
         }
         break;
@@ -11694,7 +11694,7 @@ void func_801091A0(GameObject *o)
         if ((func_80045780(o->h->p.whole - 8, v, a) & 2) || (func_80045780(hx, v, a) & 2)) {
             o->d->p.whole = (s16)(o->d->p.whole / 90) * 90;
             o->state = 1;
-            o->subState = 0x16;
+            o->subState = PLAYER_HOP_ONTO_LEDGE;
             o->step = 0;
         }
         break;
@@ -11941,7 +11941,7 @@ void func_80109FE0(GameObject *o)
         func_800EDFA0(o);
         o->y.raw += o->velY << 8;
         o->velY -= 0x30;
-        func_800EDEBC(o, 4);
+        playerSetAnimIfChanged(o, 4);
         if (--o->timer <= 0) {
             o->timer = 0x3c;
             D_8009BCDD_U8Arr[0] = 3;
@@ -11954,7 +11954,7 @@ void func_80109FE0(GameObject *o)
         func_800EDFA0(o);
         o->y.raw += o->velY << 8;
         o->velY -= 0x30;
-        func_800EDEBC(o, 4);
+        playerSetAnimIfChanged(o, 4);
         if (o->timer != 0) {
             if (--o->timer <= 0) {
                 (*(GameObject **)&SCRATCHPAD.currentTask)->unk4C = 7;
@@ -12001,7 +12001,7 @@ void func_8010A1E4(GameObject *o)
         o->velY = o->velY - 0x30;
         if (o->velY < -0x570)
             o->velY = -0x570;
-        func_800EDEBC(o, 4);
+        playerSetAnimIfChanged(o, 4);
         if (o->y.p.whole < -0x20c) {
             setEventComplete(0xa4, 0);
             o->state = 5;
@@ -12065,7 +12065,7 @@ void func_8010A3A0(GameObject *o)
         }
         *(u8 *)&o->unkAC = 0;
         func_8010E678(o);
-        func_800EDEBC(o, 0x2e);
+        playerSetAnimIfChanged(o, 0x2e);
         o->step = 1;
     case 1:
         if (--D_8009B698_G_0A3A0Ptr->b9 != 0) {
@@ -12175,7 +12175,7 @@ void func_8010A794(GameObject *o)
         *(s16 *)(G + 0x20) = 0;
         *(u8 *)((u8 *)o + 0xac) = 0;
         func_8010E678(o);
-        func_800EDEBC(o, 4);
+        playerSetAnimIfChanged(o, 4);
         playSFXWithNote(2, 4);
         o->step = 1;
     case 1:
@@ -12879,13 +12879,13 @@ void func_8010BD68(GameObject *o)
             goto up;
         pad = &D_8009C9D8_U16;
         if (*pad & 0x10) {
-            func_800EDEBC(o, 0x26);
+            playerSetAnimIfChanged(o, 0x26);
             ((s32 (*)(GameObject *))tickAnimation)(o);
             if (o->unk9E != 0xc)
                 o->y.raw -= 0x18000;
         } else if (*pad & 0x40) {
         up:
-            func_800EDEBC(o, 0x27);
+            playerSetAnimIfChanged(o, 0x27);
             ((s32 (*)(GameObject *))tickAnimation)(o);
             o->y.raw += 0x28000;
         }
@@ -12903,7 +12903,7 @@ void func_8010BD68(GameObject *o)
         if (t) {
             playSFXWithNote(0x1e, 8);
             D_8009B698_G330_0BD68Ptr->w2e = 0xff;
-            func_800EDEBC(o, 0x38);
+            playerSetAnimIfChanged(o, 0x38);
             o->step = 3;
         }
         break;
@@ -13108,7 +13108,7 @@ void func_8010C6E0(GameObject *o)
             o->unkB6 = 0;
         }
         o->unkB2 = 0;
-        func_800EDEBC(o, 0x43);
+        playerSetAnimIfChanged(o, 0x43);
         o->step++;
     case 1:
         break;
@@ -13118,7 +13118,7 @@ void func_8010C6E0(GameObject *o)
     if (((s32 (*)(GameObject *))tickAnimation)(o)) {
         (*(G330 **)&D_8009B698)->w2c = 0x47;
         if ((*(G330 **)&D_8009B698)->w2e != 0x47)
-            func_800EDEBC(o, 0x47);
+            playerSetAnimIfChanged(o, 0x47);
     }
     switch (o->scaleY & 7) {
     case 0: o->unk7A = 0; break;
@@ -13157,7 +13157,7 @@ void func_8010C6E0(GameObject *o)
     if (D_1F8001FC & (*(u16 *)&SCRATCHPAD.buttonAction)) {
         (*(G330 **)&D_8009B698)->w2c = 0x43;
         if ((*(G330 **)&D_8009B698)->w2e != 0x43) {
-            func_800EDEBC(o, 0x43);
+            playerSetAnimIfChanged(o, 0x43);
             o->unkB2 = 0x400;
         }
     }
@@ -13221,7 +13221,7 @@ void func_8010CBD8(GameObject *o)
         o->step++;
     case 1:
         if (((s32 (*)(GameObject *))tickAnimation)(o) && (u16)(*(u16 *)o->anim - 0x136) >= 4)
-            func_800EDEBC(o, 0x44);
+            playerSetAnimIfChanged(o, 0x44);
         d = o->scaleY & 7;
         switch (d) {
         case 0: o->unk7A = 0; break;
@@ -13257,7 +13257,7 @@ void func_8010CBD8(GameObject *o)
             o->unkB2 -= 8;
         if (D_1F8001FC & (*(u16 *)&SCRATCHPAD.buttonAction)) {
             if ((u16)(*(u16 *)o->anim - 0x136) < 4) {
-                func_800EDEBC(o, 0x45);
+                playerSetAnimIfChanged(o, 0x45);
                 o->unkB2 = 0x400;
             }
         }
@@ -13376,7 +13376,7 @@ void func_8010D0DC(GameObject *o)
         o->touchFlag = 0;
         o->unkB2 = 0x200;
         *(u8 *)((u8 *)o + 0xca) = 0;
-        func_800EDEBC(o, 0x1d);
+        playerSetAnimIfChanged(o, 0x1d);
         o->timer = 0x78;
         o->step++;
     case 1:
@@ -13431,7 +13431,7 @@ void func_8010D0DC(GameObject *o)
     o->step = 0;
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", func_8010D2D4);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_2", playerScriptedWalk);
 typedef struct { char p0[0x2e]; u16 af; } P_0D2D4;
 typedef struct { char p0[8]; u8 b8; } Q_0D2D4;
 typedef struct {
@@ -13439,7 +13439,7 @@ typedef struct {
     char p3[0x8c - 0x30]; s32 d8c; char p4[0xa0 - 0x90]; u8 da0, pa1, da2, da3; char p5[0xac - 0xa4]; u8 wac;
 } O_0D2D4;
 
-void func_8010D2D4(O_0D2D4 *o)
+void playerScriptedWalk(O_0D2D4 *o)
 {
     o->wac = 0;
     if (o->u.s.af < 2) {

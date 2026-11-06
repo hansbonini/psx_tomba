@@ -49,8 +49,8 @@ void func_8013A248(GameObject *o)
             D_8009C068.unk57f = 0;
             GAME.nextSpawnPoint = 0;
             GAME.nextSection = GAME.selectedSection;
-            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
-            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
+            SCRATCHPAD.currentTask->state2 = 7;
+            SCRATCHPAD.currentTask->step.value = 0;
         }
         break;
     }
@@ -532,7 +532,7 @@ void func_8013B360(GameObject *o)
                 if (e) {
                     e->active = 2;
                     e->type = 0x13;
-                    e->id = ((*(u8*)&SCRATCHPAD.unk1F8) + SCRATCHPAD.updateIndex) & 1;
+                    e->id = ((*(u8*)&SCRATCHPAD.activeFrameCount) + SCRATCHPAD.updateIndex) & 1;
                     e->param = 0;
                     r = nextRandom() & 3;
                     e->x.raw = SCRATCHPAD.vpx.raw;

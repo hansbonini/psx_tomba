@@ -151,7 +151,7 @@ void func_800E99DC(GameObject *o)
                     c->active = 1;
                     c->type = 0xc;
                     c->id = 1;
-                    c->unkAC = (SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1;
+                    c->unkAC = (SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1;
                     c->param = nextRandom() & 7;
                     *c->h = *o->h;
                     c->h->p.whole += o->timer * 2 - 8;
@@ -167,7 +167,7 @@ void func_800E99DC(GameObject *o)
             break;
         case 1:
             o->state++;
-            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) o->timer = 0x32; else o->timer = 0x1e;
+            if ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1) o->timer = 0x32; else o->timer = 0x1e;
             o->drawFlags = 0;
             *(s8 *)&o->priority = -12;
             if ((*(u16 *)&GAME) == 0) {
@@ -229,7 +229,7 @@ void func_800E99DC(GameObject *o)
                 c->active = 1;
                 c->type = 0xc;
                 c->id = 3;
-                c->unkAC = (SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1;
+                c->unkAC = (SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1;
                 c->param = o->timer + 7;
                 *c->h = *o->h;
                 c->y = o->y;
@@ -603,7 +603,7 @@ void func_800EAA0C(GameObject *o)
         else
             o->rotZ = (o->rotZ - 8) & 0xff;
         applyAnimVelocityX(o, (u16)o->cooldownTimer);
-        if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1))
+        if (o->timer >= 0x1e || ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1))
             cullAndQueueDraw(o);
         if (--o->timer == -1)
             o->state = 2;
@@ -684,7 +684,7 @@ void func_800EAD50(GameObject *o)
             o->subState++;
             break;
         case 1:
-            if ((SCRATCHPAD.unk1F8 >> 2) & 1)
+            if ((SCRATCHPAD.activeFrameCount >> 2) & 1)
                 cullAndQueueDraw(o);
             if (--o->timer == -1)
                 o->state = 3;
@@ -1122,9 +1122,9 @@ void func_800EBBAC(s32 type)
     }
 }
 
-// INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800EBD20);
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine", updateEquipOrbitEffect);
 
-void func_800EBD20(GameObject *o)
+void updateEquipOrbitEffect(GameObject *o)
 {
     SVECTOR *p = &((SVECTOR *)((u8 *)o + 0xb4))[0];
     SVECTOR *q = &((SVECTOR *)((u8 *)o + 0xb4))[1];

@@ -161,7 +161,7 @@ void setDrawSyncParams(short id, short arg1)
 {
     scratchpad* scratch = PSX_SCRATCH;
 
-    scratch->unk1EA = id;
+    scratch->drawSyncId = id;
     scratch->useDrawSync = arg1;
 }
 
@@ -178,7 +178,7 @@ void initGlobalState(void)
     scratch->unk1F2 = 0;
     scratch->pauseToggle = 0;
     scratch->frameCount = 0;
-    scratch->unk1F8 = 0;
+    scratch->activeFrameCount = 0;
     scratch->moviePlayState = 0;
     scratch->inGame = 0;
     scratch->inTitle = 0;

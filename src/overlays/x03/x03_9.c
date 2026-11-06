@@ -79,7 +79,7 @@ void func_8012CA90(GameObject *o)
 
     switch (o->step) {
     case 0:
-        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 3) == 0 && inview_2CA90(o)) {
+        if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 3) == 0 && inview_2CA90(o)) {
             o->timer = D_80135170[nextRandom() & 0xf];
             o->step++;
         }

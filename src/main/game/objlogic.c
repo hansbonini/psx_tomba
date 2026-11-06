@@ -509,7 +509,7 @@ void func_80034C14(GameObject *obj)
         obj->animFrame = PLAYER_P38_34C14.animFrame;
         func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
             func_80028A74(0, 0, 0xc0, 2);
             playSFX(3);
         }
@@ -546,7 +546,7 @@ void func_80034C14(GameObject *obj)
         obj->animFrame = PLAYER_P38_34C14.animFrame;
         func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
             func_80028A74(0, 0, 0xff, 2);
             playSFXWithNote(3, 6);
         }
@@ -1297,7 +1297,7 @@ void func_80036F98(GameObject *obj)
         obj->animFrame = PLAYER.obj.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
             func_80028A74(0, 0, 0xc0, 2);
             playSFX(3);
         }
@@ -1337,7 +1337,7 @@ void func_80036F98(GameObject *obj)
         obj->animFrame = PLAYER.obj.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
             func_80028A74(0, 0, 0xff, 2);
             playSFXWithNote(3, 6);
         }

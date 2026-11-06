@@ -674,7 +674,7 @@ void func_80130D00(GameObject *o)
             if (o->velV > 0x400)
                 o->velV = 0x400;
             o->y.raw += o->velV << 8;
-            if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1))
+            if (o->timer >= 0x1e || ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1))
                 cullAndQueueDraw(o);
             if (--o->timer == -1)
                 o->state++;
@@ -744,7 +744,7 @@ void func_80131A98(GameObject *o)
         if (o->cooldownTimer & 1) o->rotZ = (u8)(o->rotZ + 8);
         else o->rotZ = (u8)(o->rotZ - 8);
         if (o->cooldownTimer != 2) applyAnimVelocityX(o, o->cooldownTimer);
-        if (o->timer >= 0x1e || ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1)) cullAndQueueDraw(o);
+        if (o->timer >= 0x1e || ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1)) cullAndQueueDraw(o);
         if (--o->timer == -1) o->state = 2;
         break;
     case 2:

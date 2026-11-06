@@ -1760,7 +1760,7 @@ typedef struct {
 } G_1D1A8;
 extern G_1D1A8 *D_8009B698_G_1D1A8Ptr asm("D_8009B698");
 extern void func_800EE1F0(GameObject *o);
-extern void func_800EDEBC(GameObject *o, s32);
+extern void playerSetAnimIfChanged(GameObject *o, s32);
 
 void func_8011D1A8(GameObject *o)
 {
@@ -1789,7 +1789,7 @@ void func_8011D1A8(GameObject *o)
         o->y.p.whole += 4;
         func_800EE1F0(o);
         playSFXWithVolume(4, 0x7f);
-        func_800EDEBC(o, 7);
+        playerSetAnimIfChanged(o, 7);
         o->step++;
     case 1:
         tickAnimation(o);

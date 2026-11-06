@@ -572,7 +572,7 @@ void func_8012E874(GameObject *o)
                 }
                 break;
             }
-            if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0xf) == 0) {
+            if (((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0xf) == 0) {
                 func_80023020(o);
             }
             o->unk9D = 0;

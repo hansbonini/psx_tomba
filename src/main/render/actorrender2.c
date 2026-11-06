@@ -65,7 +65,7 @@ void func_80045EFC(GameObject *obj)
     case DRAW_MODEL_EX_ROTATED: c12: func_8004D448(obj); break;
     case DRAW_MODEL_ROTATED_SCALED: c13: func_8004D5F0(obj); break;
     case DRAW_MODEL_SCREEN: c14: func_8004D7E0(obj); break;
-    case DRAW_MODEL_MATRIX: c15: func_8004D91C(obj); break;
+    case DRAW_MODEL_MATRIX: c15: drawObjectModelMatrix(obj); break;
     case DRAW_MODEL_EX_MATRIX: c16: func_8004DA28(obj); break;
     }
 }

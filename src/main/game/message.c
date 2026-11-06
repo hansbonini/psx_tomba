@@ -722,9 +722,9 @@ void updateMessageBox(MessageBox *o)
                     break;
                 }
             } else {
-                if (SPAD->debugNoMessageMenu == 0 && (SPAD->joypad_state & 0x4000)) {
+                if (SPAD->debugNoSaveScreen == 0 && (SPAD->joypad_state & 0x4000)) {
                     playSFXWithNote(0xA, 0xA);
-                    openMenuScreen(4);
+                    openMenuScreen(MENU_SCREEN_SAVE);
                     o->mode = 0;
                     o->timer = 2;
                     freeMessageGlyphs(o->slot);

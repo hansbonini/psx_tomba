@@ -490,7 +490,7 @@ void func_8013058C(GameObject *o)
                 break;
             }
             if ((u16)(p->x.p.whole - 0x1086) < 0xbe) {
-                if (SCRATCHPAD.unk1F8 & 0xf)
+                if (SCRATCHPAD.activeFrameCount & 0xf)
                     break;
                 if (!(nextRandom() & 1))
                     break;
@@ -498,7 +498,7 @@ void func_8013058C(GameObject *o)
             } else {
                 if ((u16)(p->x.p.whole - 0x1144) >= 0xaf)
                     break;
-                if (SCRATCHPAD.unk1F8 & 0xf)
+                if (SCRATCHPAD.activeFrameCount & 0xf)
                     break;
                 if (!(nextRandom() & 1))
                     break;
@@ -525,7 +525,7 @@ void func_8013058C(GameObject *o)
             q = &(*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2));
             if ((u16)(*q - 0x10a9) >= 0x73)
                 break;
-            if (SCRATCHPAD.unk1F8 & 0xf)
+            if (SCRATCHPAD.activeFrameCount & 0xf)
                 break;
             if (!(nextRandom() & 1))
                 break;

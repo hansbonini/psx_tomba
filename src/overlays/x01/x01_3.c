@@ -19,7 +19,7 @@ extern GameObject *D_8009C650;
 extern void func_800ED9E0(GameObject *);
 extern s16 func_80045310(GameObject *, s16, s16);
 extern s16 probeSidesAndApplyTileResponse(GameObject *, s32, s32);
-extern void func_800EDEBC(GameObject *, s32);
+extern void playerSetAnimIfChanged(GameObject *, s32);
 
 void func_80120708(GameObject *o)
 {
@@ -78,7 +78,7 @@ void func_80120708(GameObject *o)
                 n->h->p.whole += (o->animFrame & 1) ? -0x10 : 0x10;
             }
             o->velY = 0;
-            func_800EDEBC(o, 0x1d);
+            playerSetAnimIfChanged(o, 0x1d);
             o->rotZ = 0x200;
             o->unk7 = 3;
         } else {
@@ -139,9 +139,9 @@ void func_80120AC8(GameObject *o)
         (*(GameObject **)&D_8009B698)->active = 0;
         o->modelLit = 1;
         if ((o->unkBE & 1) != o->animFrame) {
-            func_800EDEBC(o, 8);
+            playerSetAnimIfChanged(o, 8);
         } else {
-            func_800EDEBC(o, 0x11);
+            playerSetAnimIfChanged(o, 0x11);
         }
         o->step++;
     case 1:
@@ -234,7 +234,7 @@ void func_801210A4(GameObject *o)
     switch (o->step) {
     case 0:
         (*(u8*)&o->model) = 0;
-        func_800EDEBC(o, 0x1b);
+        playerSetAnimIfChanged(o, 0x1b);
         o->unkB6 = 0;
         (*(s16*)&(*(GameObject **)&D_8009B698)->type) = 0;
         (*(u8*)((char*)&o->model + 2)) = 3;
@@ -252,14 +252,14 @@ void func_801210A4(GameObject *o)
         tickAnimation(o);
         if (--o->timer == 0) {
             o->timer = 8;
-            func_800EDEBC(o, 0x17);
+            playerSetAnimIfChanged(o, 0x17);
             o->step++;
         }
         break;
     case 2:
         if (!clampToCeilingAndProbeSides(o)) o->y.p.whole--;
         tickAnimation(o);
-        if (!(SCRATCHPAD.unk1F8 & 0xf)) playSFXWithNote(0x1d, 0);
+        if (!(SCRATCHPAD.activeFrameCount & 0xf)) playSFXWithNote(0x1d, 0);
         y = o->y.p.whole - 8;
         w = o->h->p.whole + 8;
         z = o->d->p.whole;
@@ -1658,7 +1658,7 @@ void func_8012791C(GameObject *o)
             break;
         }
         tickAnimation(o);
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0xf) == 0)
+        if (o->visible && ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 0xf) == 0)
             playSFX(0x5e);
         if (p->w6) {
             s32 t = o->rotZ;

@@ -48,7 +48,7 @@ void func_801168F4(GameObject *o)
             func_8002CEF8(o);
             break;
         case 2:
-            func_8002CFF4(o);
+            updateDoorTransition(o);
             break;
         }
     } else {

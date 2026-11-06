@@ -401,7 +401,7 @@ void func_80038AC0(GameObject *obj)
         obj->animFrame = G.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&G, 0);
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
 #if REGION != REGION_JP
             func_80028A74(0, 0, 0xc0, 2);
 #endif
@@ -455,7 +455,7 @@ void func_80038AC0(GameObject *obj)
         obj->animFrame = G.animFrame;
         func_800348FC(obj);
         advanceAnimFrame(&G, 0);
-        if ((SCRATCHPAD.unk1F8 & 0xf) == 0) {
+        if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
 #if REGION != REGION_JP
             func_80028A74(0, 0, 0xff, 2);
 #endif

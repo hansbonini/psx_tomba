@@ -122,7 +122,7 @@ void func_80031C90(GameObject *obj)
     case 0:
         switch (obj->id) {
         case 0:
-            if ((((scratchpad *)((void *)0x1F800000))->unk1F8 + SCRATCHPAD.updateIndex) & 1) {
+            if ((((scratchpad *)((void *)0x1F800000))->activeFrameCount + SCRATCHPAD.updateIndex) & 1) {
                 if (--obj->timer == -1) {
                     obj->state = 3;
                     break;
@@ -190,7 +190,7 @@ void func_80031F88(GameObject *obj)
     case 0:
         switch (obj->id) {
         case 0:
-            if ((SPAD->unk1F8 + SPAD->updateIndex) & 1) {
+            if ((SPAD->activeFrameCount + SPAD->updateIndex) & 1) {
                 if (--obj->timer == -1) {
                     obj->state = 3;
                     break;
@@ -374,7 +374,7 @@ void func_800325C0(GameObject *obj)
     default:
         return;
     }
-    if (obj->param == 0 && (SCRATCHPAD.unk1F8 & 3) == 0)
+    if (obj->param == 0 && (SCRATCHPAD.activeFrameCount & 3) == 0)
         func_80028A74(0, 0, 0xff, 2);
     tickAnimation(obj);
     obj->timer = obj->timer - 1;
@@ -505,7 +505,7 @@ void func_80032934(GameObject *obj)
         obj->timer = 0xb4;
         obj->step++;
     case 1:
-        if (obj->param == 0 && (SCRATCHPAD.unk1F8 & 3) == 0)
+        if (obj->param == 0 && (SCRATCHPAD.activeFrameCount & 3) == 0)
             func_80028A74(0, 0, 0xff, 2);
         obj->timer--;
         obj->visible = PLAYER.obj.visible;

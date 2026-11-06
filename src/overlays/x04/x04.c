@@ -994,7 +994,7 @@ void func_80119D8C(GameObject *o)
     case 0:
         switch (o->id) {
         case 0:
-            if (SCRATCHPAD.unk1F8 & 0x3f) break;
+            if (SCRATCHPAD.activeFrameCount & 0x3f) break;
             p = allocEffectObject();
             if (p == 0) break;
             one = 1;
@@ -1645,7 +1645,7 @@ void func_8011CC08(GameObject *o)
 
 // INCLUDE_ASM("overlays/x04/nonmatchings/x04/x04", func_8011CCE8);
 
-extern void func_800EDEBC(GameObject *, s32);
+extern void playerSetAnimIfChanged(GameObject *, s32);
 
 #define B(o, n) (((u8 *)(o))[n])
 
@@ -1656,7 +1656,7 @@ void func_8011CCE8(GameObject *o)
         ((u8*)&D_8009BC98.unk0F)[0] = 1;
         o->unkB2 = 0;
         B(o, 0xa2) = 1;
-        func_800EDEBC(o, 0x41);
+        playerSetAnimIfChanged(o, 0x41);
         playSFXWithNote(0x25, 0x28);
         B(o, 0xab) = 2;
         o->timer = 0x78;
@@ -1695,7 +1695,7 @@ void func_8011CE24(GameObject *o)
         one = 1;
         o->unkB2 = 0;
         ((u8 *)o)[0xa2] = one;
-        func_800EDEBC(o, 0x42);
+        playerSetAnimIfChanged(o, 0x42);
         playSFX(0x20);
         ((u8 *)o)[0xab] = one;
         o->timer = 0x78;

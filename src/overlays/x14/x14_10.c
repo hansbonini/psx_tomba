@@ -295,7 +295,7 @@ void func_80120738(GameObject *o)
         if (o->animFrame) o->rotZ = (o->rotZ + 0x80) & 0xfff;
         else o->rotZ = (o->rotZ - 0x80) & 0xfff;
         if (o->timer < 0x28) {
-            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) o->visible = 1;
+            if ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1) o->visible = 1;
             else o->visible = 0;
         }
         if (--o->timer == -1) o->state++;

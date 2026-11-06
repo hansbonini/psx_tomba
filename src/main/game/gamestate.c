@@ -377,7 +377,7 @@ void titleScreenHandler(void)
         case 1:
             if (LOAD_COMPLETE != 0) {
                 clearMenuParams();
-                D_800A3952 = 5;
+                menuScreenId = MENU_SCREEN_LOAD;
                 startBgmTrack(0);
                 SetDispMask(1);
                 temp_v1_2 = CURRENT_TASK;
@@ -856,7 +856,7 @@ void gameplayTick(void)
     }
     updatePauseMenu();
     if (SPAD->drawFrozen == 0) {
-        ((*(s16 *)&SCRATCHPAD.unk1F8))=((*(s16 *)&SPAD->unk1F8))+1;
+        ((*(s16 *)&SCRATCHPAD.activeFrameCount))=((*(s16 *)&SPAD->activeFrameCount))+1;
         updateAreaScreenEffect();
         func_80029008();
         if (SCRATCHPAD.drawFrozen == 0) {
@@ -944,7 +944,7 @@ void areaMode2Tick(void)
         temp_v1 = CURRENT_TASK;
         var_a0 = *(u_short*)&temp_v1->state2;
         var_a1 = *(u_short*)&(CURRENT_TASK)->step.value;
-        D_800A3952 = 6;
+        menuScreenId = 6;
         D_800A3954 = 0;
         D_800A3956 = 0;
         D_800A3940[0] = 0;
@@ -954,7 +954,7 @@ void areaMode2Tick(void)
         (*(u_short *)&SPAD->vabIds[9]) = var_a1;
     }
     if (SCRATCHPAD.drawFrozen == 0) {
-        (SCRATCHPAD.unk1F8)++;
+        (SCRATCHPAD.activeFrameCount)++;
         updateAreaScreenEffect();
         func_80029008();
         if (SPAD->drawFrozen == 0) {
@@ -1016,17 +1016,17 @@ void inventoryScreenHandler(void)
             return;
         case 1:
             LOAD_COMPLETE = 0;
-            switch (D_800A3952) {
+            switch (menuScreenId) {
                 case 0:
                 case 1:
                 case 2:
                 case 6:
                     queueSystemLoadList(3, 1);
                     break;
-                case 4:
+                case MENU_SCREEN_SAVE:
                     queueSystemLoadList(4, 1);
                     break;
-                case 5:
+                case MENU_SCREEN_LOAD:
                     queueSystemLoadList(5, 1);
                     break;
                 case 7:
@@ -1044,9 +1044,9 @@ void inventoryScreenHandler(void)
                 EnterCriticalSection();
                 FlushCache();
                 ExitCriticalSection();
-                temp_s1 = *(volatile u16*)&D_800A3952;
+                temp_s1 = *(volatile u16*)&menuScreenId;
                 clearMenuParams();
-                *(s16*)&(*(volatile u16**)&D_800A3952) = temp_s1;
+                *(s16*)&(*(volatile u16**)&menuScreenId) = temp_s1;
                 SetDispMask(1);
                 temp_v1_2 = CURRENT_TASK;
                 temp_v1_2->step.value++;
@@ -1115,9 +1115,9 @@ void inventoryScreenTick(void)
 {
     s32 var_s0;
 
-    SCRATCHPAD.unk1F8=SPAD->unk1F8+1;
+    SCRATCHPAD.activeFrameCount=SPAD->activeFrameCount+1;
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
-    switch (D_800A3952) {
+    switch (menuScreenId) {
         case 0:
         case 1:
         case 2:
@@ -1128,8 +1128,8 @@ void inventoryScreenTick(void)
                 func_800EEE84();
             }
             break;
-        case 4:
-        case 5:
+        case MENU_SCREEN_SAVE:
+        case MENU_SCREEN_LOAD:
             var_s0 = func_800E9438();
             if (var_s0 == 0) {
                 func_800E9EF8();
@@ -1142,7 +1142,7 @@ void inventoryScreenTick(void)
             }
             break;
     }
-    if (D_800A3952 == 5) {
+    if (menuScreenId == MENU_SCREEN_LOAD) {
         if (var_s0 == 1) {
             (CURRENT_TASK)->step.value = 7U;
         } else {
@@ -1227,7 +1227,7 @@ void areaMode4Tick(void)
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (SCRATCHPAD.drawFrozen == 0) {
-        (SCRATCHPAD.unk1F8)++;
+        (SCRATCHPAD.activeFrameCount)++;
         updateAreaScreenEffect();
         if (SCRATCHPAD.drawFrozen == 0) {
             func_8003C9D4();
@@ -1319,7 +1319,7 @@ void areaMode5Tick(void)
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (SCRATCHPAD.drawFrozen == 0) {
-        (SCRATCHPAD.unk1F8)++;
+        (SCRATCHPAD.activeFrameCount)++;
         updateAreaScreenEffect();
         if (SCRATCHPAD.drawFrozen == 0) {
             updateMainObjects();
@@ -1410,7 +1410,7 @@ void areaMode6Tick(void)
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
     if (SCRATCHPAD.drawFrozen == 0) {
-        ((*(s16 *)&SCRATCHPAD.unk1F8))++;
+        ((*(s16 *)&SCRATCHPAD.activeFrameCount))++;
         updateAreaScreenEffect();
         if (SCRATCHPAD.drawFrozen == 0) {
             updateMainObjects();
@@ -1848,16 +1848,16 @@ void func_8001D480(void)
 // INCLUDE_ASM("nonmatchings/main/game/gamestate", openMenuScreen);
 void openMenuScreen(s16 arg0)
 {
-    u8* p = (u8 *)SCRATCHPAD.currentTask;
-    u16 a = *(u16*)(p + 0x4C);
-    u16 b = *(u16*)(p + 0x4E);
+    Task* task = SCRATCHPAD.currentTask;
+    u16 a = task->state2;
+    u16 b = task->step.value;
 
     D_800A3940[0] = 0;
     D_800A3941 = 0;
-    D_800A3952 = arg0;
+    menuScreenId = arg0;
     D_800A3956 = 0;
-    *(u16*)(p + 0x4C) = 3;
-    *(u16*)(p + 0x4E) = 0;
+    task->state2 = 3;
+    task->step.value = 0;
     D_1F8003B8 = a;
     D_1F8003BA = b;
 }
@@ -1867,7 +1867,7 @@ void openMenuScreenEx(s16 arg0, s16 arg1, s16 arg2)
 {
     Task* p = CURRENT_TASK;
 
-    D_800A3952 = arg0;
+    menuScreenId = arg0;
     D_800A3954 = arg1;
     D_800A3956 = arg2;
     D_800A3940[0] = 0;

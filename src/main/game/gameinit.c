@@ -14,7 +14,7 @@ void initGameConfig(void)
     camera->vrx = 0;
     camera->vry = 0;
     camera->vpz = 0;
-    SPAD->unk200 = 69;
+    SPAD->randomSeed = 69;
     LOADED_LIST_FILE = 0xFF;
     LOADED_SOUND_SET = 0xFF;
     GAME.playerAP = 0;
@@ -24,7 +24,7 @@ void initGameConfig(void)
     GAME.unk730 = 0xFF;
     SPAD->pauseMenuLock = 0;
     (*(short *)&SPAD->axisSwap) = 0;
-    SPAD->unk3D1 = 0; 
+    SPAD->warpFadeActive = 0; 
     D_8009EBA0 = 0;
     GAME.selectedSection = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
     GAME.inventoryScreen = INVENTORY_SCREEN_ITEM;

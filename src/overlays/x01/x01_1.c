@@ -303,7 +303,7 @@ void func_801180F8(GameObject *o)
         t = o->id;
         switch (t) {
         case 0:
-            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) break;
+            if ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1) break;
             if (--o->timer == -1) goto done;
             e = allocEffectObject();
             if (e == 0) break;
@@ -380,7 +380,7 @@ void func_801180F8(GameObject *o)
             break;
         case 1:
             if (o->timer < 0x1e) {
-                if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) cullAndQueueDraw(o);
+                if ((SCRATCHPAD.activeFrameCount + SCRATCHPAD.updateIndex) & 1) cullAndQueueDraw(o);
             } else {
                 if (!cullAndQueueDraw(o)) o->state = 3;
             }

@@ -11,6 +11,7 @@ import re
 @dataclass
 class UnitMetadata:
     progress_categories: list[str]
+    complete: bool = False
 
 @dataclass
 class Unit:
@@ -86,6 +87,7 @@ def _get_base_path(path: Path) -> Path:
     hasm_path = name + ".hasm.s.o"
     if Path(c_path).exists(): return c_path
     if Path(hasm_path).exists(): return hasm_path
+    if Path(name + ".s.o").exists(): return name + ".s.o"
     return None
 
 _AREA_START = {}
@@ -111,25 +113,70 @@ def _engine_copy(unit: str) -> bool:
     return int(name, 16) < _AREA_START[(version, ov)]
 
 
+DATA_KINDS = ("data", "rodata", "sdata", "bss", "sbss")
+
+
+def _data_blobs(asm_root: Path) -> list[Path]:
+    """Data files with no code unit of the same name (blobs between units)."""
+    blobs = []
+    for p in asm_root.rglob("*.s.o"):
+        rel = p.relative_to(asm_root)
+        if "data" not in rel.parts or not any(p.name.endswith(".%s.s.o" % k) for k in DATA_KINDS):
+            continue
+        i = rel.parts.index("data")
+        unit = Path(*rel.parts[:i], *rel.parts[i + 1:])
+        stem = str(unit).rsplit(".", 3)[0]
+        if not (asm_root / (stem + ".s.o")).exists():
+            blobs.append(p)
+    return blobs
+
+
+def _source_complete(base_path) -> bool:
+    """A unit whose C is linked whole: no INCLUDE_ASM / INCLUDE_RODATA left."""
+    if base_path is None:
+        return False
+    if base_path.endswith(".s.o"):
+        return True
+    m = re.match(r"build/[^/]+/(?:exe/[^/]+/)?(src/.+\.c)\.o$", base_path)
+    if not m or not Path(m.group(1)).exists():
+        return False
+    text = Path(m.group(1)).read_text(errors="replace")
+    return not re.search(r"^\s*INCLUDE_(ASM|RODATA)\s*\(", text, re.M)
+
+
 def main():
     logging.basicConfig(level = logging.INFO)
     config = _create_config()
+    asm_root = Path(config["expected_paths"]["asm"])
 
-    expected_objects = _collect_objects(Path(config["expected_paths"]["asm"]), config) + _collect_objects(Path(config["expected_paths"]["src"]), config)
-    
+    expected_objects = _collect_objects(asm_root, config) + _collect_objects(Path(config["expected_paths"]["src"]), config)
+
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
+        name = processed_path[1].removesuffix(".s.o").removesuffix(".c.o")
         # the engine is the same in every Xnn: it counts once, in X00
-        if _engine_copy(processed_path[1].removesuffix(".s.o").removesuffix(".c.o")):
+        if _engine_copy(name):
             continue
-        unit = Unit(
-            processed_path[1].removesuffix(".s.o").removesuffix(".c.o"),
-            _get_base_path(processed_path[1]),
-            str(file),
-            processed_path[0])
-        units.append(unit)
+        base = _get_base_path(processed_path[1])
+        processed_path[0].complete = _source_complete(base)
+        units.append(Unit(name, base, str(file), processed_path[0]))
+
+    # data with no code unit: counted, with nothing to match against yet
+    for file in _data_blobs(asm_root):
+        rel = file.relative_to(asm_root)
+        if any(f in str(rel) for f in config["ignored_files"]):
+            continue
+        version, exe, unit = _split_path(str(rel).replace("data/", "", 1))
+        if _engine_copy("/".join(x for x in (version, exe, unit.rsplit(".", 3)[0]) if x)):
+            continue
+        categories = [c["id"] for c in config["categories"]
+                      if any(unit.startswith(p) for p in c["paths"])] or ["main"]
+        stem = "/".join(x for x in (version, exe, unit.rsplit(".", 3)[0]) if x)
+        base = _get_base_path(stem + ".s.o")
+        units.append(Unit(str(rel).removesuffix(".s.o"), base, str(file),
+                          UnitMetadata(categories, _source_complete(base))))
     
     # only the categories this release has units in (no overlays where there
     # are none, no X07/X12/X15)

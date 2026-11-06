@@ -218,7 +218,7 @@ void titleSequenceTask(void)
     sp10[0] = 0;
     scratch->currentTask->titleScreenSelectedOption = 0;
     while(true) {
-        SPAD->unk1F8 = *(u16* )(D_1F8000F8+0x100) + 1;
+        SPAD->activeFrameCount = *(u16* )(D_1F8000F8+0x100) + 1;
         asm("");
         func_800223E0();
         task = CURRENT_TASK;
@@ -536,7 +536,7 @@ void loopTitleScreen(int* arg0)
                     break;
             }
             printTitleScreenMessage(48, 192, TITLESCREEN_MESSAGE_WHOOPCAMPCOPYRIGHT);
-            if (SPAD->unk1F8 & 0x20) {
+            if (SPAD->activeFrameCount & 0x20) {
                 printTitleScreenMessage(56, 144, TITLESCREEN_MESSAGE_PRESSSTART);
             }
             gameControlTemp7 = CURRENT_TASK;
