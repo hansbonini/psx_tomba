@@ -1,6 +1,7 @@
 #include "common.h"
 #include "game.h"
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/render/matrix", drawItemList);
 void drawItemList(void)
 {
@@ -30,6 +31,7 @@ void drawItemList(void)
         }
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/matrix", drawAreaList);
 void drawAreaList(void)

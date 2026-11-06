@@ -39,6 +39,7 @@ options:
     - ./symbols/slps_011.44/slps_011.44_symbol_addrs.txt
   reloc_addrs_path:
     - ./symbols/slps_011.44/reloc_addrs.txt
+    - ./symbols/slps_011.44/slps_011.44_reloc_addrs.txt
 
   undefined_funcs_auto_path: ./linker/slps_011.44/undefined_funcs_auto.slps_011.44.txt
   undefined_syms_auto_path: ./linker/slps_011.44/undefined_syms_auto.slps_011.44.txt
@@ -111,7 +112,7 @@ segments:
       - [0x651C, asm]
       - [0x68EC, asm, main/main]
       - [0x6D48, c, main/system/task]
-      - [0x7394, asm, main/system/gfxinit]
+      - [0x7394, c, main/system/gfxinit]
       - [0x766C, asm]
       - [0x7B04, asm, main/game/gameinit]
       - [0x8E58, asm, main/system/boot]
@@ -119,7 +120,7 @@ segments:
       - [0xA1F0, asm, main/game/gamestate]
       - [0xCF8C, asm]
       - [0xD08C, asm, main/game/event]
-      - [0xDC14, asm, main/video/movie]
+      - [0xDC14, c, main/video/movie]
       - [0xE2F0, asm, main/audio/sound]
       - [0xFD4C, asm]
       - [0x10624, asm, main/system/cdfile]
@@ -151,7 +152,7 @@ segments:
       - [0x38D40, asm]
       - [0x397B8, asm, main/render/actorrender3]
       - [0x39EAC, asm]
-      - [0x3AEC4, asm, main/render/matrix]
+      - [0x3AEC4, c, main/render/matrix]
       - [0x3BA38, c, main/render/sprite]
       - [0x3D8F8, asm, main/game/actor1]
       - [0x43724, c, main/game/actor2]
@@ -377,6 +378,8 @@ segments:
       - [0x61740, c, psyq/libspu/s_sca]
       - [0x61AD4, c, psyq/libspu/sr_gaks]
       - [0x61C2C, data]
+      - [0x6253C, .data, main/video/movie]
+      - [0x62588, data]
       - [0x6721C, .data, main/game/areamisc]
       - [0x67344, data]
       - [0x67468, .data, main/game/objutil]

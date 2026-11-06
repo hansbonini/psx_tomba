@@ -76,7 +76,11 @@ extern u_char EVENT_STARTED_AP_TABLE[];
 extern u_char EVENT_COMPLETE_AP_TABLE[];
 extern CdlATV D_80077754;
 extern CdlATV D_80077758;
+#if REGION == REGION_JP
+extern s16 *D_8007775C[];
+#else
 extern u_char D_8007775C[];
+#endif
 extern int  SPU_BANK_ADDRS[];
 extern u_char SOUND_INITIALIZED;
 extern short MOVIE_FILE_IDS[];

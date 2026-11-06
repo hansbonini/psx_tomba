@@ -12,10 +12,24 @@ CdlATV D_80077754 = { 0x7F, 0, 0x7F, 0 };
 
 CdlATV D_80077758 = { 0, 0, 0, 0 };
 
+#if REGION == REGION_JP
+extern s16 D_8007AFF4_slps01144[];
+extern s16 D_8007B01C_slps01144[];
+extern s16 D_8007B044_slps01144[];
+extern s16 D_8007B06C_slps01144[];
+extern s16 D_8007B094_slps01144[];
+extern s16 D_8007B0BC_slps01144[];
+
+s16 *D_8007775C[6] = {
+    D_8007B044_slps01144, D_8007B06C_slps01144, D_8007AFF4_slps01144,
+    D_8007B01C_slps01144, D_8007B094_slps01144, D_8007B0BC_slps01144
+};
+#else
 u_char D_8007775C[0x18] = {
     2, 3, 0, 1, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF,
     0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x15, 0x15
 };
+#endif
 
 
 // INCLUDE_ASM("nonmatchings/main/video/movie", movieDecodeNextFrame);
@@ -58,14 +72,18 @@ int movieDecodeNextFrame(DecEnv* dec)
 // INCLUDE_ASM("nonmatchings/main/video/movie", cdSeekStream);
 void cdSeekStream(short file_id)
 {
+#if REGION == REGION_JP
+    if (CdControl(CdlSetloc, (u_char*)&FILE_LINKS[*D_8007775C[file_id]], 0) != 0) {
+#else
     if (CdControl(CdlSetloc, (u_char*)&FILE_LINKS[MOVIE_FILE_IDS[D_8007775C[file_id]]], 0) != 0) {
+#endif
         CdControlF(CdlSeekL, 0);
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/video/movie", moviePlayerTask);
 void moviePlayerTask(void)
-{   
+{
     u_short state;
     Task* gameControl;
     Task* gameControlTemp;
@@ -85,7 +103,11 @@ void moviePlayerTask(void)
         switch (state) {
             case 0:
                 movieInitDecodeEnv((DecEnv*)&MOVIE_DEC_ENV, 384, 256, 704, 256);
+#if REGION == REGION_JP
+                startMovieStream((int)&FILE_LINKS[*D_8007775C[MOVIE_ID]]);
+#else
                 startMovieStream((int)&FILE_LINKS[MOVIE_FILE_IDS[D_8007775C[MOVIE_ID]]]);
+#endif
                 gameControl = SCRATCHPAD.currentTask;
                 gameControl->state0+=1;
                 do {

@@ -1,0 +1,12 @@
+rom:0x6F14 reloc:MIPS_HI16 symbol:0x801FD80C
+rom:0x6F1C reloc:MIPS_LO16 symbol:0x801FD80C
+rom:0x6F60 reloc:MIPS_HI16 symbol:0x801FD800
+rom:0x6F68 reloc:MIPS_LO16 symbol:0x801FD800
+rom:0x6F74 reloc:MIPS_HI16 symbol:0x801FD808
+rom:0x6F7C reloc:MIPS_LO16 symbol:0x801FD808
+rom:0x6F80 reloc:MIPS_HI16 symbol:0x801FD810
+rom:0x6F88 reloc:MIPS_LO16 symbol:0x801FD810
+rom:0x6F94 reloc:MIPS_HI16 symbol:0x801FD804
+rom:0x6F9C reloc:MIPS_LO16 symbol:0x801FD804
+rom:0x7080 reloc:MIPS_HI16 symbol:0x801FD804
+rom:0x7088 reloc:MIPS_LO16 symbol:0x801FD804

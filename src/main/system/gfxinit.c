@@ -88,6 +88,7 @@ void resetDrawLists(void)
     SPAD->fxDrawCount = 0;
 }
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/system/gfxinit", resetCamera);
 void resetCamera(void)
 {
@@ -107,3 +108,4 @@ void resetCamera(void)
     LOADED_SOUND_SET = 0xFF;
     D_8009EBA0 = 0;
 }
+#endif
