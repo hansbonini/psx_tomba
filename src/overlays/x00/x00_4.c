@@ -168,7 +168,7 @@ void func_8011FBE0(GameObject *o)
         g = &PLAYER;
         switch (o->step) {
         case 0:
-            d = o->h->p.whole - ((*(u16 *)&SPAD->unk168[0].p.whole) + 0x20);
+            d = o->h->p.whole - ((*(u16 *)&SPAD->cameraTarget.x.p.whole) + 0x20);
             if (d == 0) {
                 o->step = 2;
                 break;
@@ -331,7 +331,7 @@ void func_8012095C(GameObject *o)
     o->rotY = (o->rotY + 0x18) & 0xfff;
     u = o->cooldownTimer + 1;
     o->cooldownTimer = u;
-    if ((u & 7) == 0 && (n = allocObjectLayer3()) != 0) {
+    if ((u & 7) == 0 && (n = allocEffectObject()) != 0) {
         n->active = 1;
         n->type = 0x31;
         n->id = 1;
@@ -412,7 +412,7 @@ void func_80120BC0(GameObject *o)
         func_80120A6C(o);
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -420,7 +420,7 @@ void func_80120BC0(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/x00_4", func_80120DAC);
 GameObject *func_80120DAC(u8 a, s32 x, s32 y, s32 z)
 {
-    GameObject *p = allocObjectLayer3();
+    GameObject *p = allocEffectObject();
 
     if (p) {
         p->param = a;

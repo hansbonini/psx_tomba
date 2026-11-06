@@ -25,7 +25,7 @@ extern s32 func_80124A44(GameObject *, s16);
         if (o->unkAC >= 0xc) { \
             o->rotZ = 0; \
         } else { \
-            u32 v = (((*(u16*)&SCRATCHPAD.unk27E) << 2) + o->rotZ) & 0xff; \
+            u32 v = (((*(u16*)&SCRATCHPAD.hitSlope) << 2) + o->rotZ) & 0xff; \
             if (v != 0) { \
                 if (v < 0x80) o->rotZ = o->rotZ - 1; \
                 else o->rotZ = o->rotZ + 1; \
@@ -38,11 +38,11 @@ static __inline__ s16 near_25048(GameObject *o)
 {
     s16 lim = 0xc0;
     u16 a;
-    a = (u16)((*(u16*)((char*)&SCRATCHPAD.unk168[2].raw + 2)) - o->d->p.whole + 0x2d);
+    a = (u16)((*(u16*)((char*)&SCRATCHPAD.cameraTarget.z.raw + 2)) - o->d->p.whole + 0x2d);
     if ((u32)a >= 0x5b) return 0;
-    a = (u16)((*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) - o->h->p.whole + 0x60);
+    a = (u16)((*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) - o->h->p.whole + 0x60);
     if (a > lim) return 0;
-    return (u16)((*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) - o->y.p.whole + 0x40) <= lim - 0x40;
+    return (u16)((*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) - o->y.p.whole + 0x40) <= lim - 0x40;
 }
 
 void func_80125048(GameObject *o)
@@ -153,8 +153,8 @@ void func_80125048(GameObject *o)
             }
         } else {
         off:
-            if (*w == 0 || (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2)) + 0x70) >= 0x220 ||
-                (u16)((*(u16 *)&SCRATCHPAD.unk168[7].p.whole) - o->y.p.whole + 0x70) >= 0x1c0) {
+            if (*w == 0 || (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2)) + 0x70) >= 0x220 ||
+                (u16)((*(u16 *)&SCRATCHPAD.screenOrigin.y.p.whole) - o->y.p.whole + 0x70) >= 0x1c0) {
                 o->step = 0;
                 o->unk7 = 0;
             }
@@ -201,7 +201,7 @@ static __inline__ void slope_2567C(GameObject *o)
         if (o->unkAC >= 0xc) {
             o->rotZ = 0;
         } else {
-            v = (((*(u16*)&SCRATCHPAD.unk27E) << 2) + o->rotZ) & 0xff;
+            v = (((*(u16*)&SCRATCHPAD.hitSlope) << 2) + o->rotZ) & 0xff;
             if (v != 0) {
                 if (v < 0x80) o->rotZ = o->rotZ - 1;
                 else o->rotZ = o->rotZ + 1;
@@ -215,11 +215,11 @@ static __inline__ s32 near_2567C(GameObject *o)
 {
     u16 t;
     s16 lim = 0x40;
-    t = (*(u16*)((char*)&SCRATCHPAD.unk168[2].raw + 2)) - o->d->p.whole + 0x2d;
+    t = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.z.raw + 2)) - o->d->p.whole + 0x2d;
     if (t >= 0x5b) return 0;
-    t = (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) - o->h->p.whole + 0x20;
+    t = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) - o->h->p.whole + 0x20;
     if (t > lim) return 0;
-    t = (*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) - o->y.p.whole + 0xa0;
+    t = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) - o->y.p.whole + 0xa0;
     return t <= lim + 0xa0;
 }
 
@@ -275,7 +275,7 @@ void func_8012567C(GameObject *o)
         slope_2567C(o);
         if (func_80124A44(o, o->animFrame)) {
             go3_2567C(o, 0x3c, 0x1d);
-        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
+        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
             go3_2567C(o, 0x1e, 0x1d);
         }
         } else {
@@ -330,7 +330,7 @@ void func_8012567C(GameObject *o)
         if (func_80124A44(o, o->animFrame)) {
             o->cooldownTimer = 0x3c;
             o->unk7++;
-        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
+        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x3f) == 0 && isObjectPastReferenceX(o) != o->animFrame) {
             o->cooldownTimer = 0x1e;
             o->unk7++;
         }
@@ -418,7 +418,7 @@ void func_80126068(GameObject *o)
     case 1:
         o->y.p.whole -= 4;
         if (func_80043D2C(o, o->h->p.whole, o->y.p.whole - 0x10) != 0) {
-            o->rotZ = (-SCRATCHPAD.unk27E * 4 + 0x80) & 0xff;
+            o->rotZ = (-SCRATCHPAD.hitSlope * 4 + 0x80) & 0xff;
             o->step++;
         }
         break;
@@ -448,7 +448,7 @@ void func_80126174(GameObject *o)
     case 1:
         applyFrameVelocityY(o);
         if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0xe) != 0) {
-            o->rotZ = (-SCRATCHPAD.unk27E * 4) & 0xff;
+            o->rotZ = (-SCRATCHPAD.hitSlope * 4) & 0xff;
             o->step = 0;
             o->subState++;
         }
@@ -485,7 +485,7 @@ void func_80126288(GameObject *o)
         o->hitboxH = *b++;
         readAnimFrameCount(o);
     case 1:
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         tickAnimation(o);
         applyFrameVelocityX(o);
         if (o->animFrame & 1)
@@ -494,13 +494,13 @@ void func_80126288(GameObject *o)
             v = 0x18;
         if (func_80043AB0(o, o->h->p.whole + v, o->y.p.whole, o->animFrame)
             || ((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0xe)
-            || (u16)(v = (u16)SCRATCHPAD.unk168[0].p.whole - (u16)o->h->p.whole + 0x40) < 0x80) {
+            || (u16)(v = (u16)SCRATCHPAD.cameraTarget.x.p.whole - (u16)o->h->p.whole + 0x40) < 0x80) {
             o->unk9C = 2;
             o->step++;
         }
         break;
     case 2:
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         tickAnimation(o);
         o->y.p.whole++;
         if (o->animFrame & 1)
@@ -509,14 +509,14 @@ void func_80126288(GameObject *o)
             v = 0x18;
         func_80043AB0(o, o->h->p.whole + v, o->y.p.whole, o->animFrame);
         if (((s16 (*)(GameObject *, s16, s16))probeCollisionAtDepthA)(o, o->h->p.whole, o->y.p.whole + 0xe)) {
-            o->rotZ = (-SCRATCHPAD.unk27E << 2) & 0xff;
+            o->rotZ = (-SCRATCHPAD.hitSlope << 2) & 0xff;
             o->step = 1;
             o->unk9C = 0;
             o->subState++;
         }
         break;
     }
-    if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0xf) == 0 && D_800A38EA + 0x98 < o->y.p.whole) o->state = 3;
+    if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0xf) == 0 && D_800A38EA + 0x98 < o->y.p.whole) o->state = 3;
 }
 #endif
 
@@ -548,7 +548,7 @@ void func_8012659C(GameObject *o)
         readAnimFrameCount(o);
     case 1:
         tickAnimation(o);
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         applyFrameVelocityX(o);
         if (func_80043AB0(o, o->h->p.whole + 0x18, o->y.p.whole, 0)) {
             o->unk9C = 2;
@@ -556,7 +556,7 @@ void func_8012659C(GameObject *o)
         }
         break;
     case 2:
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x1f) == 0) playSFX(0x76);
+        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x1f) == 0) playSFX(0x76);
         tickAnimation(o);
         o->y.p.whole++;
         func_80043AB0(o, o->h->p.whole + 0x18, o->y.p.whole, 0);
@@ -592,7 +592,7 @@ static __inline__ s32 Ground_267DC(GameObject *o)
         if (o->unkAC >= 0xc) {
             o->rotZ = 0;
         } else {
-            t = (*(u16*)&SCRATCHPAD.unk27E) * 4 + o->rotZ;
+            t = (*(u16*)&SCRATCHPAD.hitSlope) * 4 + o->rotZ;
             if (t) {
                 s32 w;
                 if (t < 0x80) w = o->rotZ - 1; else w = o->rotZ + 1;
@@ -619,7 +619,7 @@ static __inline__ s32 Ground_267DC(GameObject *o)
 }
 
 #define SPAWN(o) { \
-    GameObject *e = allocObjectLayer3(); \
+    GameObject *e = allocEffectObject(); \
     if (e) { \
         e->active = 2; \
         e->type = 0x2f; \
@@ -744,7 +744,7 @@ void func_801267DC(GameObject *o)
         if (o->velV > 0x600) o->velV = 0x600;
         o->y.raw += o->velV << 8;
         if (Ground_267DC(o)) {
-            o->rotZ = (-(s16)(*(u16*)&SCRATCHPAD.unk27E) << 2) & 0xff;
+            o->rotZ = (-(s16)(*(u16*)&SCRATCHPAD.hitSlope) << 2) & 0xff;
             o->active = 1;
             o->state = 1;
             o->subState = 1;
@@ -788,7 +788,7 @@ static __inline__ void fall_27098(GameObject *o)
         if (o->unkAC >= 0xc) {
             o->rotZ = 0;
         } else {
-            t = (((*(u16*)&SCRATCHPAD.unk27E) << 2) + o->rotZ) & 0xff;
+            t = (((*(u16*)&SCRATCHPAD.hitSlope) << 2) + o->rotZ) & 0xff;
             if (t) {
                 if (t < 0x80) o->rotZ--;
                 else o->rotZ++;
@@ -1001,7 +1001,7 @@ void func_8012754C(GameObject *o)
                             if (o->unkAC >= 0xc) {
                                 o->rotZ = 0;
                             } else {
-                                v = (((*(u16*)&SCRATCHPAD.unk27E) << 2) + o->rotZ) & 0xff;
+                                v = (((*(u16*)&SCRATCHPAD.hitSlope) << 2) + o->rotZ) & 0xff;
                                 if (v != 0) {
                                     if (v < 0x80) o->rotZ = o->rotZ - 1;
                                     else o->rotZ = o->rotZ + 1;
@@ -1038,7 +1038,7 @@ void func_8012754C(GameObject *o)
     case 3:
         if (o->id >= 2) {
             (*(s16 *)o->parent)--;
-            freeObjectLayer2(o);
+            freeActorObject(o);
         } else {
             *(s8 *)&o->priority = -9;
             o->timer = D_8013508C[((s32 (*)(void))nextRandom)() & 7] + 0x12c;
@@ -1052,7 +1052,7 @@ void func_8012754C(GameObject *o)
     case 4:
         if (o->timer) {
             o->timer--;
-        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0x3f) == 0 && !func_80022F6C(o)) {
+        } else if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0x3f) == 0 && !func_80022F6C(o)) {
             o->active = 1;
             o->state = 0;
             o->subState = 1;
@@ -1113,7 +1113,7 @@ void func_80127B48(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

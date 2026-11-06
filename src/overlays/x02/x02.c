@@ -56,7 +56,7 @@ void func_8011592C(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

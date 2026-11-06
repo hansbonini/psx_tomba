@@ -56,95 +56,95 @@ extern GameObject *showMessageBox();
 extern s16 D_800A53AA_S16 asm("D_800A53AA");
 extern s16 D_800A53AA_S16Arr[] asm("D_800A53AA");
 
-void func_80033964(GameObject *o)
+void func_80033964(GameObject *obj)
 {
     GameObject *box;
     s32 msg, tone;
 
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        switch (o->id) {
+        switch (obj->id) {
         case 0x13:
-            o->model = 0;
+            obj->model = 0;
             break;
         case 0x22:
             if (D_8009C114 != 0 || D_800A53AA_S16 < 0x280) {
-                o->state = 3;
+                obj->state = 3;
                 return;
             }
             break;
         case 0x12:
-            o->state = 3;
+            obj->state = 3;
             return;
         case 0x63:
-            o->unkB4 = -0x10;
-            o->unkB6 = -0x18;
-            o->unkB8 = 0;
-            o->unkBC = 0x18;
-            *(s16 *)&o->unkBE = -0x18;
-            *(s16 *)((u8 *)o + 0xC0) = 0;
-            *(s16 *)((u8 *)o + 0xC4) = -0x10;
-            *(s16 *)((u8 *)o + 0xC6) = 0x18;
-            *(s16 *)((u8 *)o + 0xC8) = 0;
-            *(s16 *)((u8 *)o + 0xCC) = 0x18;
-            *(s16 *)((u8 *)o + 0xCE) = 0x18;
-            *(s16 *)((u8 *)o + 0xD0) = 0;
+            obj->unkB4 = -0x10;
+            obj->unkB6 = -0x18;
+            obj->unkB8 = 0;
+            obj->unkBC = 0x18;
+            *(s16 *)&obj->unkBE = -0x18;
+            *(s16 *)((u8 *)obj + 0xC0) = 0;
+            *(s16 *)((u8 *)obj + 0xC4) = -0x10;
+            *(s16 *)((u8 *)obj + 0xC6) = 0x18;
+            *(s16 *)((u8 *)obj + 0xC8) = 0;
+            *(s16 *)((u8 *)obj + 0xCC) = 0x18;
+            *(s16 *)((u8 *)obj + 0xCE) = 0x18;
+            *(s16 *)((u8 *)obj + 0xD0) = 0;
             if (GAME.selectedArea == 1 || GAME.selectedArea == 7) {
-                o->drawFlags = 1;
-                o->clut = GetClut(0xD0, 0x1E5);
-                o->tpage = 7;
-                o->anim = (void *)D_8013DAB0;
+                obj->drawFlags = 1;
+                obj->clut = GetClut(0xD0, 0x1E5);
+                obj->tpage = 7;
+                obj->anim = (void *)D_8013DAB0;
             } else {
-                o->drawFlags = 0;
-                o->tpage = 8;
-                o->anim = (void *)D_8013829C;
+                obj->drawFlags = 0;
+                obj->tpage = 8;
+                obj->anim = (void *)D_8013829C;
             }
-            o->spriteBank = SPR_DATA[3];
-            o->active = 2;
-            o->unkE = 0;
+            obj->spriteBank = SPR_DATA[3];
+            obj->active = 2;
+            obj->unkE = 0;
             break;
         }
-        setHitbox(o, 4, 0x28, 8, 0x28);
-        o->state++;
-        o->touchFlag = 0;
-        o->subState = 0;
-        o->rotX = 0;
-        o->rotY = 0;
-        o->rotZ = 0;
+        setHitbox(obj, 4, 0x28, 8, 0x28);
+        obj->state++;
+        obj->touchFlag = 0;
+        obj->subState = 0;
+        obj->rotX = 0;
+        obj->rotY = 0;
+        obj->rotZ = 0;
 #if REGION == REGION_JP
-        if (o->animFrame == 1) {
-            o->rotY = -0x400;
+        if (obj->animFrame == 1) {
+            obj->rotY = -0x400;
         }
 #else
-        if (o->animFrame == 1) {
-            o->rotY = -0x400;
-        } else if (o->animFrame == 2) {
-            o->rotY = 0x800;
-            o->active = 2;
-        } else if (o->animFrame == 3) {
-            o->rotY = 0x400;
-            o->active = 2;
+        if (obj->animFrame == 1) {
+            obj->rotY = -0x400;
+        } else if (obj->animFrame == 2) {
+            obj->rotY = 0x800;
+            obj->active = 2;
+        } else if (obj->animFrame == 3) {
+            obj->rotY = 0x400;
+            obj->active = 2;
         }
 #endif
         break;
     case 1:
-        cullAndQueueDraw((u8 *)o);
-        switch (o->subState) {
+        cullAndQueueDraw((u8 *)obj);
+        switch (obj->subState) {
         case 0:
-            if (o->touchFlag == 1) {
+            if (obj->touchFlag == 1) {
                 if (D_800A5458 & 1) {
-                    switch (o->id) {
+                    switch (obj->id) {
                     case 19:
-                        if (D_8009C255 == 2) o->id = 0x14;
+                        if (D_8009C255 == 2) obj->id = 0x14;
                         break;
                     case 20:
-                        if (D_8009C13E == 0xFF) o->id = 0x23;
+                        if (D_8009C13E == 0xFF) obj->id = 0x23;
                         break;
                     }
 #if REGION == REGION_JP
-                    tone = D_8007D454[o->id].tone;
-                    msg = D_8007D454[o->id].msg;
-                    switch (o->id) {
+                    tone = D_8007D454[obj->id].tone;
+                    msg = D_8007D454[obj->id].msg;
+                    switch (obj->id) {
                     case 2:
                     case 3:
                     case 4:
@@ -153,8 +153,8 @@ void func_80033964(GameObject *o)
                         break;
                     }
 #else
-                    msg = D_8007D454[o->id].msg;
-                    switch (o->id) {
+                    msg = D_8007D454[obj->id].msg;
+                    switch (obj->id) {
                     case 2:
                         tone = D_8007D424[(s16)BUTTON_CONFIG_INDEX];
                         break;
@@ -168,18 +168,18 @@ void func_80033964(GameObject *o)
                         tone = D_8007D448[(s16)BUTTON_CONFIG_INDEX];
                         break;
                     default:
-                        tone = D_8007D454[o->id].tone;
+                        tone = D_8007D454[obj->id].tone;
                         break;
                     }
 #endif
-                    o->parent = (s32)showMessageBox((s16)msg, (s16)tone, 0xA0, 0x8C);
-                    o->subState++;
+                    obj->parent = (s32)showMessageBox((s16)msg, (s16)tone, 0xA0, 0x8C);
+                    obj->subState++;
                 }
-                o->touchFlag = 0;
+                obj->touchFlag = 0;
             }
             break;
         case 1:
-            box = (GameObject *)o->parent;
+            box = (GameObject *)obj->parent;
             if (box->state >= 2) {
                 box->state++;
                 D_8009BCAA = 0;
@@ -189,50 +189,50 @@ void func_80033964(GameObject *o)
                 D_800A539E = 0;
                 D_1F8001C6 = 0;
                 D_800A5458 = 0;
-                o->subState = 0;
-                if (o->id == 0x11) {
+                obj->subState = 0;
+                if (obj->id == 0x11) {
                     setEventStarted(0x25, 0, 0);
                 }
-                if (o->id == 0x13 && D_8009C13A == 0) {
+                if (obj->id == 0x13 && D_8009C13A == 0) {
                     setEventStarted(0x2E, 0, 0);
                     D_8009C255 = 1;
                 }
-                if (o->id == 0x14 && D_8009C13D == 0) {
+                if (obj->id == 0x14 && D_8009C13D == 0) {
                     setEventStarted(0x31, 0, 0);
                 }
-            } else if (o->id == 1 && (D_8009BCEC & 1) && D_8009BC98.unk00 == o->id) {
-                o->subState++;
+            } else if (obj->id == 1 && (D_8009BCEC & 1) && D_8009BC98.unk00 == obj->id) {
+                obj->subState++;
             }
             break;
         case 2:
-            box = (GameObject *)o->parent;
+            box = (GameObject *)obj->parent;
             if (*(u16 *)&box->state == 0x101) {
                 box->subState = 0;
-                o->subState++;
+                obj->subState++;
             }
             break;
         case 3:
-            box = (GameObject *)o->parent;
+            box = (GameObject *)obj->parent;
             if (box->state >= 2) {
                 box->state++;
                 D_800A5458 = 0;
-                o->subState++;
+                obj->subState++;
             }
             break;
         case 4:
             if (D_8009BC98.unk00 >= 2) {
-                o->subState = 0;
+                obj->subState = 0;
             }
             break;
         }
-        if (o->id == 0x22 && D_800A53AA_S16Arr[0] < 0x3E8) {
+        if (obj->id == 0x22 && D_800A53AA_S16Arr[0] < 0x3E8) {
             D_800A53AA_S16Arr[0] = 0x3E8;
         }
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(obj);
         break;
     }
 }

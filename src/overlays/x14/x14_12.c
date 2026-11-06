@@ -24,7 +24,7 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_12", func_80122538);
 
 void func_801229DC(GameObject *o)
 {
-    GameObject *e = allocObjectLayer2();
+    GameObject *e = allocActorObject();
     s16 d;
 
     if (e != 0) {
@@ -70,12 +70,12 @@ static __inline__ s32 Chk_230A8(GameObject *o, s16 k)
 {
     s16 r = func_80044694(o, o->h->p.whole, o->y.p.whole);
     s32 n = k;
-    if (r != 0 && n == r && SCRATCHPAD.unk284 == 0)
+    if (r != 0 && n == r && SCRATCHPAD.hitSurface == 0)
         n++;
     else if (func_80045310(o, o->h->p.whole, o->y.p.whole) == 0)
         n = 0;
     else
-        n = SCRATCHPAD.unk284 == 0;
+        n = SCRATCHPAD.hitSurface == 0;
     return n;
 }
 
@@ -99,13 +99,13 @@ void func_801230A8(GameObject *o)
         o->anim = D_80129350[0];
         readAnimFrameCount(o);
         o->velH = 0x480;
-        o->h->p.whole = (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2)) + D_80125A24[nextRandom() & 7];
-        o->y.p.whole = (u16)SCRATCHPAD.unk168[4].p.whole - 0xf0;
+        o->h->p.whole = (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2)) + D_80125A24[nextRandom() & 7];
+        o->y.p.whole = (u16)SCRATCHPAD.cameraPos.y.p.whole - 0xf0;
         o->d->p.whole = D_1F800172[0];
-        o->localZ = angleFromDelta(((u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2))[0] - o->h->p.whole, D_1F80016E_U16Arr[0] - o->y.p.whole);
+        o->localZ = angleFromDelta(((u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2))[0] - o->h->p.whole, D_1F80016E_U16Arr[0] - o->y.p.whole);
         o->rotZ = (u8)(o->localZ + 0x40);
         o->localZ = *(u8 *)&o->localZ;
-        n = allocObjectLayer2();
+        n = allocActorObject();
         if (n) {
             u8 f;
             n->active = 2;
@@ -242,7 +242,7 @@ void func_801234A0(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -252,7 +252,7 @@ void func_801234A0(GameObject *o)
 
 s32 func_80123760(GameObject *o, u8 k)
 {
-    GameObject *n = allocObjectLayer2();
+    GameObject *n = allocActorObject();
     s32 x;
 
     if (n != 0) {
@@ -366,7 +366,7 @@ void func_80123814(GameObject *o)
         cullAndQueueDraw(o);
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -375,7 +375,7 @@ void func_80123814(GameObject *o)
 
 s32 func_80123B8C(GameObject *o, u8 sub, u8 k)
 {
-    GameObject *n = allocObjectLayer2();
+    GameObject *n = allocActorObject();
     s32 x;
 
     if (n != 0) {
@@ -427,8 +427,8 @@ s32 func_80123C60(GameObject *o)
 
 static __inline__ s32 Near_23D14(GameObject *o, s32 r, s16 lim)
 {
-    if ((u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) + r) > lim) return 0;
-    return (u16)(o->y.p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) + r) <= lim;
+    if ((u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) + r) > lim) return 0;
+    return (u16)(o->y.p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) + r) <= lim;
 }
 
 s32 func_80123D14(GameObject *o)
@@ -445,7 +445,7 @@ extern s16 probeCollisionAtDepthA(GameObject *o, s16 x, s16 y);
 static __inline__ s32 land_23E14(GameObject *o)
 {
     if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 10)) {
-        o->unkAE = SCRATCHPAD.unk284;
+        o->unkAE = SCRATCHPAD.hitSurface;
         o->unkB2 = D_1F80027E;
         return 1;
     }
@@ -629,7 +629,7 @@ static __inline__ void setbox_244F8(GameObject *o, s16 a, s16 b, s16 c, s16 d)
 }
 
 #define SPAWN(o, st, c) { \
-    GameObject *e = allocObjectLayer2(); \
+    GameObject *e = allocActorObject(); \
     if (e) { \
         e->active = 2; \
         e->type = 0x50; \
@@ -725,7 +725,7 @@ void func_801244F8(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

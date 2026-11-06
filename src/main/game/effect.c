@@ -25,8 +25,8 @@ u16 D_8007D5BC[10] = { 0x7808, 0x7848, 0x7908, 0x78C8, 0x7888, 0x7948, 0x7988, 0
 
 u16 D_8007D5D0[10] = { 1, 0, 0, 0, 0, 1, 2, 3, 1, 1 };
 
-// INCLUDE_ASM("nonmatchings/main/game/effect", dispatchAreaEffectA);
-void dispatchAreaEffectA(void)
+// INCLUDE_ASM("nonmatchings/main/game/effect", dispatchAreaFrontPlaneEffect);
+void dispatchAreaFrontPlaneEffect(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80120054();
@@ -53,7 +53,7 @@ void spawnEffectObject(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
     ObjectPosView* temp_v0;
 
-    temp_v0 = allocObjectLayer4();
+    temp_v0 = allocAreaObject();
     if (temp_v0 != NULL) {
         temp_v0->unk0 = 1;
         temp_v0->unk2 = 32;
@@ -81,8 +81,8 @@ void spawnEffectObject(s16 arg0, s32 arg1, s32 arg2, s32 arg3)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/effect", dispatchAreaEffectB);
-void dispatchAreaEffectB(void)
+// INCLUDE_ASM("nonmatchings/main/game/effect", dispatchAreaBackPlaneEffect);
+void dispatchAreaBackPlaneEffect(void)
 {
     switch (GAME.selectedArea) {
         case AREA01_DWARFFOREST:
@@ -165,7 +165,7 @@ void updateEffectHitbox(u8* self)
         switch (self[0xC]) {
         case 0:
             self[1] = 1;
-            pushDrawListLayer4(self);
+            pushAreaDrawList(self);
             break;
         case 2:
             if (D_8009C1C0 != 0) {
@@ -182,7 +182,7 @@ void updateEffectHitbox(u8* self)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(self);
+        freeAreaObject(self);
         break;
     }
 }
@@ -229,8 +229,8 @@ const u32 D_80010814[] = {
     0x00000000,
 };
 
-// INCLUDE_ASM("nonmatchings/main/game/effect", updateObjectsLayer7);
-void updateObjectsLayer7(void)
+// INCLUDE_ASM("nonmatchings/main/game/effect", updateFxObjects);
+void updateFxObjects(void)
 {
     u8* p = &D_800A3D08;
 
@@ -264,15 +264,15 @@ void updateScrollAnchoredEffect(u8* self)
             break;
         }
         self[1] = 1;
-        *(s16*)(self + 0x12) = *(int*)(self + 0x30) - (*(u16 *)&SPAD->unk168[3].p.whole);
-        *(s16*)(self + 0x16) = *(int*)(self + 0x34) - (*(u16 *)&SPAD->unk168[7].p.whole);
-        pushDrawListLayer7(self);
+        *(s16*)(self + 0x12) = *(int*)(self + 0x30) - (*(u16 *)&SPAD->cameraPos.x.p.whole);
+        *(s16*)(self + 0x16) = *(int*)(self + 0x34) - (*(u16 *)&SPAD->screenOrigin.y.p.whole);
+        pushFxDrawList(self);
         break;
     case 2:
         self[4] = state + 1;
         break;
     case 3:
-        freeObjectLayer7(self);
+        freeFxObject(self);
         break;
     }
 }
@@ -329,7 +329,7 @@ void updateAreaScreenEffect(void)
     if (D_8009BCCA == 7 && D_8009BCA6 != 0) {
         return;
     }
-    updateObjectsLayer1();
+    updateWeaponObjects();
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/effect", dispatchScreenEffect);

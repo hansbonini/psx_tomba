@@ -49,8 +49,8 @@ void func_8013A248(GameObject *o)
             D_8009C068.unk57f = 0;
             GAME.nextSpawnPoint = 0;
             GAME.nextSection = GAME.selectedSection;
-            (*(GameTask **)&D_1F8001D4)->mode = 7;
-            (*(GameTask **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
         }
         break;
     }
@@ -141,7 +141,7 @@ void func_8013A67C(GameObject *o)
 
     o->state = 3;
     if (D_8009C068.event_B2 == 0xff) return;
-    e = allocObjectLayer8();
+    e = allocModelObject();
     if (e) {
         s32 **g;
         s32 *b;
@@ -166,7 +166,7 @@ void func_8013A67C(GameObject *o)
         o->subState = 0;
         o->step = 0;
     }
-    f = allocObjectLayer8();
+    f = allocModelObject();
     if (f) {
         s32 **g;
         s32 *b;
@@ -289,7 +289,7 @@ void func_8013A854(GameObject *o)
         (*(s16*)&GAME.nextSection) = 2;
         (*(s16*)&GAME.nextSpawnPoint) = 1;
         {
-            GameObject *q = D_1F8001D4;
+            GameObject *q = (GameObject *)SCRATCHPAD.currentTask;
             q->unk4C = 7;
             q->unk4E = 0;
         }
@@ -313,7 +313,7 @@ void func_8013ACBC(GameObject *o)
             o->state = 3;
             break;
         }
-        e = allocObjectLayer2();
+        e = allocActorObject();
         if (e) {
             e->active = 1;
             e->type = 0x16;
@@ -335,7 +335,7 @@ void func_8013ACBC(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -374,7 +374,7 @@ void func_8013ADE8(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -421,7 +421,7 @@ void func_8013AF5C(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -440,7 +440,7 @@ void func_8013B0D8(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -471,7 +471,7 @@ void func_8013B180(O_3B180 *o)
         else o->b04 = 3;
         break;
     case 1:
-        t = (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
+        t = (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2));
         if ((u16)(t - 1000) < 0x49d && o->w1c < 2) {
             if (!(t & 0x1f)) {
                 o->w1e = 1;
@@ -482,7 +482,7 @@ void func_8013B180(O_3B180 *o)
                 o->w1e = 0;
             }
             o->w08 = D_8013BD38[nextRandom() & 7];
-            e = allocObjectLayer2();
+            e = allocActorObject();
             if (e) {
                 e->active = 2;
                 e->type = 2;
@@ -498,7 +498,7 @@ void func_8013B180(O_3B180 *o)
         }
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -528,11 +528,11 @@ void func_8013B360(GameObject *o)
         if (W0A(o) < 2) {
             if (--o->clut == -1) {
                 o->clut = D_8013BD58[nextRandom() & 3];
-                e = allocObjectLayer2();
+                e = allocActorObject();
                 if (e) {
                     e->active = 2;
                     e->type = 0x13;
-                    e->id = ((*(u8*)&SCRATCHPAD.unk1F8) + SCRATCHPAD.unk198) & 1;
+                    e->id = ((*(u8*)&SCRATCHPAD.unk1F8) + SCRATCHPAD.updateIndex) & 1;
                     e->param = 0;
                     r = nextRandom() & 3;
                     e->x.raw = SCRATCHPAD.vpx.raw;
@@ -546,7 +546,7 @@ void func_8013B360(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }

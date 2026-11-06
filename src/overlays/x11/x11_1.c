@@ -35,7 +35,7 @@ void func_801168B0(GameObject *o)
             break;
         if ((*(GameObject *)&PLAYER).d->p.whole != 0)
             break;
-        if ((SCRATCHPAD.joypad_state & SCRATCHPAD.unk3C4) == 0)
+        if ((SCRATCHPAD.joypad_state & SCRATCHPAD.buttonAction) == 0)
             break;
         v = *(V_168B0 *)&o->x;
         ((u8*)&D_8009BC98.unk12)[0] = 1;
@@ -176,7 +176,7 @@ void func_80118CBC(GameObject *o)
     GameObject *p;
 
     for (i = 0, e = tbl; e->f0 != 0xff; e = &tbl[++i]) {
-        p = allocObjectLayer2();
+        p = allocActorObject();
         if (p) {
             p->active = 3;
             p->type = 0x32;
@@ -227,7 +227,7 @@ void func_80118E74(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }

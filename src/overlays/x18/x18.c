@@ -28,20 +28,20 @@ void func_801158F8(GameObject *o)
         readAnimFrameCount(o);
         break;
     case 1:
-        o->x.p.whole = o->localX - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
+        o->x.p.whole = o->localX - (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2));
         {
             s32 y = o->localY;
-            o->y.p.whole = y - (u16)SCRATCHPAD.unk168[7].p.whole;
+            o->y.p.whole = y - (u16)SCRATCHPAD.screenOrigin.y.p.whole;
         }
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         tickAnimation(o);
         break;
     case 2:
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -69,7 +69,7 @@ void func_80115A40(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         u = o->subState;
         switch (u) {
         case 0:
@@ -98,7 +98,7 @@ void func_80115A40(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

@@ -64,9 +64,9 @@ void func_80115620(GameObject *o)
     case 1:
         if (o->id != 2 || D_8009C068.event_61 == 0xff) {
             o->visible = 1;
-            o->x.p.whole = o->localX - ((u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))[0];
-            o->y.p.whole = o->localY - (u16)SCRATCHPAD.unk168[7].p.whole;
-            pushDrawListCapped(o);
+            o->x.p.whole = o->localX - ((u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2))[0];
+            o->y.p.whole = o->localY - (u16)SCRATCHPAD.screenOrigin.y.p.whole;
+            pushEffectDrawList(o);
             tickAnimation(o);
         }
         break;
@@ -74,7 +74,7 @@ void func_80115620(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -98,7 +98,7 @@ void func_80115970(GameObject *o)
         D_800A38BB[0] = 3;
         D_800A38D0[0] = 0;
         D_1F800190 = o->y.raw;
-        SCRATCHPAD.unk18C = o->h->raw;
+        SCRATCHPAD.prevTargetX = o->h->raw;
         o->timer = 60;
         o->step++;
         break;
@@ -182,7 +182,7 @@ void func_8011624C(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -210,7 +210,7 @@ void func_801162D8(GameObject *o)
 
     for (; p->f0 != 0xff; p = &base[++i]) {
         if (*(volatile u16 *)&p->f0 & 0x80) {
-            n = allocObjectLayer4();
+            n = allocAreaObject();
             if (n == 0) continue;
             n->active = 1;
             n->type = 0x1a;
@@ -222,7 +222,7 @@ void func_801162D8(GameObject *o)
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
         } else {
-            n = allocObjectLayer2();
+            n = allocActorObject();
             if (n == 0) continue;
             n->active = 3;
             n->type = 0x32;
@@ -274,7 +274,7 @@ void func_80116578(GameObject *o)
 
     for (i = 0, e = tbl; e->flags != 0xff; e = &tbl[++i]) {
         if (*(volatile u16 *)&e->flags & 0x80) {
-            p = allocObjectLayer4();
+            p = allocAreaObject();
             if (p) {
                 p->active = 1;
                 p->type = 0x1a;
@@ -287,7 +287,7 @@ void func_80116578(GameObject *o)
                 p->z.p.whole = e->z;
             }
         } else {
-            p = allocObjectLayer2();
+            p = allocActorObject();
             if (p) {
                 p->active = 3;
                 p->type = 0x32;

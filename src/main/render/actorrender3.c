@@ -85,7 +85,7 @@ void func_8004B450(GameObject *obj)
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_4B450 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_4B450 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -542,8 +542,8 @@ static __inline__ s32 project_4CC84(void)
 {
     gte_ldv0(&D_1F800060);
     gte_rtps();
-    gte_stflg(&SCRATCHPAD.unk08C);
-    if (SCRATCHPAD.unk08C < 0) return 1;
+    gte_stflg(&SCRATCHPAD.gteWork.gteFlag);
+    if (SCRATCHPAD.gteWork.gteFlag < 0) return 1;
     gte_stsxy(&LZ_FILE_CTRL_Long);
     gte_stszotz(&SCRATCHPAD.lz.offset);
     return 0;
@@ -576,7 +576,7 @@ void func_8004CC84(GameObject *obj)
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800060.vy = obj->y.p.whole;
-    if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&(*(GameTask **)&D_1F8001D4)->mode != 3)
+    if ((*(s32*)&GAME.selectedArea) == 0x10005 && *(u16 *)&(*(GameTask **)&SCRATCHPAD.currentTask)->mode != 3)
         D_1F800060.vz = obj->z.p.whole >> 2;
     else
         D_1F800060.vz = obj->z.p.whole;

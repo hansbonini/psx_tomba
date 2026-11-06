@@ -56,7 +56,7 @@ void func_8012175C(GameObject *o)
             o->drawType = 0x11;
             o->param = 0;
             func_80120C90(o, 0);
-            e = allocObjectLayer4();
+            e = allocAreaObject();
             if (e) {
                 e->type = 0x42;
                 e->localX = 0x150000;
@@ -133,7 +133,7 @@ void func_8012175C(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -143,14 +143,14 @@ void func_8012175C(GameObject *o)
 
 s32 func_80121B04(GameObject *o)
 {
-    GameObject *n = allocObjectLayer2();
+    GameObject *n = allocActorObject();
 
     if (n) {
         n->active = 1;
         n->type = 0x48;
         n->id = 0;
         n->param = 0;
-        n->x.raw = (((s16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))[0] + 0xa0) << 16;
+        n->x.raw = (((s16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2))[0] + 0xa0) << 16;
         n->y.raw = (D_1F80017A_S16Arr[0] - 0xf0) << 16;
         n->z.raw = o->z.p.whole << 16;
     }

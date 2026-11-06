@@ -32,7 +32,7 @@ void updateGrabSnout(GameObject *obj)
         break;
     case 1:
         obj->visible = 1;
-        pushDrawListCapped(obj);
+        pushEffectDrawList(obj);
         if (--obj->timer == 0) {
             obj->timer = 1;
             if (--*(u16 *)&obj->unkB4 == 0) obj->state++;
@@ -46,7 +46,7 @@ void updateGrabSnout(GameObject *obj)
         obj->state++;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -81,7 +81,7 @@ void updateEventCube(GameObject *obj)
                 obj->state++;
             }
             obj->visible = 1;
-            pushDrawListCapped(obj);
+            pushEffectDrawList(obj);
             break;
         }
         break;
@@ -89,7 +89,7 @@ void updateEventCube(GameObject *obj)
         obj->state++;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -112,49 +112,49 @@ static inline void setupPoolType31(GameObject *obj)
     readAnimFrameCount(obj);
 }
 
-void func_80031C90(GameObject *o)
+void func_80031C90(GameObject *obj)
 {
-    GameObject *p;
+    GameObject *spawned;
     u16 r;
     s32 s;
 
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        switch (o->id) {
+        switch (obj->id) {
         case 0:
             if ((((scratchpad *)((void *)0x1F800000))->unk1F8 + D_1F800198) & 1) {
-                if (--o->timer == -1) {
-                    o->state = 3;
+                if (--obj->timer == -1) {
+                    obj->state = 3;
                     break;
                 }
-                p = allocObjectLayer3();
-                if (p != NULL) {
+                spawned = allocEffectObject();
+                if (spawned != NULL) {
                     r = nextRandom();
                     s = ((r & 1) << 11) + 0x800;
-                    p->h->raw = o->h->raw;
-                    p->y.raw = o->y.raw;
-                    p->d->raw = o->d->raw;
-                    p->h->raw += (COS_TABLE[r & 0xF0] * s) >> 4;
-                    p->y.raw += (NEG_SIN_TABLE[r & 0xF0] * s) >> 4;
-                    setupPoolType31(p);
+                    spawned->h->raw = obj->h->raw;
+                    spawned->y.raw = obj->y.raw;
+                    spawned->d->raw = obj->d->raw;
+                    spawned->h->raw += (COS_TABLE[r & 0xF0] * s) >> 4;
+                    spawned->y.raw += (NEG_SIN_TABLE[r & 0xF0] * s) >> 4;
+                    setupPoolType31(spawned);
                 }
             }
             break;
         case 1:
-            setupPoolType31(o);
+            setupPoolType31(obj);
             break;
         }
         break;
     case 1:
-        cullAndQueueDraw(o);
-        if (tickAnimation(o) != 0) {
-            o->state = 3;
+        cullAndQueueDraw(obj);
+        if (tickAnimation(obj) != 0) {
+            obj->state = 3;
         }
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -163,7 +163,7 @@ void func_80031C90(GameObject *o)
 
 void func_80031F00(s32 a, s32 b, s32 c)
 {
-    GameObject *obj = allocObjectLayer3();
+    GameObject *obj = allocEffectObject();
     if (obj != 0) {
         obj->active = 1;
         obj->type = 0x31;
@@ -178,73 +178,73 @@ void func_80031F00(s32 a, s32 b, s32 c)
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031F88);
 
-void func_80031F88(GameObject *o)
+void func_80031F88(GameObject *obj)
 {
-    GameObject *n;
+    GameObject *spawned;
     s16 r;
     s16 s;
     s16 b;
     s16 i;
 
-    switch (o->state) {
+    switch (obj->state) {
     case 0:
-        switch (o->id) {
+        switch (obj->id) {
         case 0:
-            if ((SPAD->unk1F8 + SPAD->unk198) & 1) {
-                if (--o->timer == -1) {
-                    o->state = 3;
+            if ((SPAD->unk1F8 + SPAD->updateIndex) & 1) {
+                if (--obj->timer == -1) {
+                    obj->state = 3;
                     break;
                 }
-                n = allocObjectLayer3();
-                if (n == 0) break;
+                spawned = allocEffectObject();
+                if (spawned == 0) break;
                 r = ((s32 (*)(void))nextRandom)();
                 b = r & 1;
                 s = b;
-                switch (o->param) {
+                switch (obj->param) {
                 case 0:
                     s = (b << 11) + 0x800;
-                    n->unkAC = 0;
-                    n->drawType = DRAW_SPRITE;
+                    spawned->unkAC = 0;
+                    spawned->drawType = DRAW_SPRITE;
                     break;
                 case 1:
                     s = (b * 3 << 10) + 0xc00;
-                    n->unkAC = ((s32 (*)(void))nextRandom)() & 1;
-                    if (n->unkAC) goto one;
-                    n->drawType = DRAW_SPRITE;
+                    spawned->unkAC = ((s32 (*)(void))nextRandom)() & 1;
+                    if (spawned->unkAC) goto one;
+                    spawned->drawType = DRAW_SPRITE;
                     break;
                 case 2:
                     s = (b << 12) + 0x1000;
-                    n->unkAC = 1;
+                    spawned->unkAC = 1;
                 one:
-                    n->drawType = DRAW_SPRITE_SCALED;
-                    n->scale = 0x1800;
+                    spawned->drawType = DRAW_SPRITE_SCALED;
+                    spawned->scale = 0x1800;
                     break;
                 }
-                n->h->raw = o->h->raw;
-                n->y.raw = o->y.raw;
-                n->d->raw = o->d->raw;
+                spawned->h->raw = obj->h->raw;
+                spawned->y.raw = obj->y.raw;
+                spawned->d->raw = obj->d->raw;
                 i = r & 0xf0;
-                n->h->raw += (COS_TABLE[i] * s) >> 4;
-                n->y.raw += (NEG_SIN_TABLE[i] * s) >> 4;
-                n->state = 1;
-                func_80032230(n);
+                spawned->h->raw += (COS_TABLE[i] * s) >> 4;
+                spawned->y.raw += (NEG_SIN_TABLE[i] * s) >> 4;
+                spawned->state = 1;
+                func_80032230(spawned);
             }
             break;
         case 1:
-            o->state = 1;
-            func_80032230(o);
+            obj->state = 1;
+            func_80032230(obj);
             break;
         }
         break;
     case 1:
-        cullAndQueueDraw(o);
-        if (o->unkAC == 1) o->scale += 0x200;
-        if (tickAnimation(o)) o->state = 3;
+        cullAndQueueDraw(obj);
+        if (obj->unkAC == 1) obj->scale += 0x200;
+        if (tickAnimation(obj)) obj->state = 3;
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -283,7 +283,7 @@ typedef struct O_322A4 {
 
 void func_800322A4(char a, s32 x, s32 y, s32 z)
 {
-    O_322A4 *p = allocObjectLayer3();
+    O_322A4 *p = allocEffectObject();
     s16 s;
     if (p == 0) return;
     p->act = 1;

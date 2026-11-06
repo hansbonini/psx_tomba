@@ -149,7 +149,7 @@ void func_801178B8(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -182,7 +182,7 @@ void func_80118044(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

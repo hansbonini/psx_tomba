@@ -33,13 +33,13 @@ static __inline__ s32 land2_2B424(GameObject *o)
         return 1;
     }
     if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-        t = SCRATCHPAD.unk27E;
+        t = SCRATCHPAD.hitSlope;
         if (t < 0) t = -t;
         if (t >= 9) t = 8;
-        if (SCRATCHPAD.unk27E < 0) t = -t;
+        if (SCRATCHPAD.hitSlope < 0) t = -t;
         o->rotZ = -t & 0xff;
         o->unkB2 = t;
-        w = SCRATCHPAD.unk284;
+        w = SCRATCHPAD.hitSurface;
         o->unkB6 = (-t << 2) & 0xff;
         o->unk9C = 0;
         o->unkAE = w;
@@ -350,7 +350,7 @@ void func_8012C7E4(GameObject *o)
             o->unkAC = 7;
             o->step++;
             SETANIM(7);
-            n = allocObjectLayer3();
+            n = allocEffectObject();
             if (n) {
                 n->active = 1;
                 n->type = 0x10;
@@ -468,13 +468,13 @@ static __inline__ s32 land2_2D2D0(GameObject *o)
         return 1;
     }
     if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-        t = SCRATCHPAD.unk27E;
+        t = SCRATCHPAD.hitSlope;
         if (t < 0) t = -t;
         if (t >= 9) t = 8;
-        if (SCRATCHPAD.unk27E < 0) t = -t;
+        if (SCRATCHPAD.hitSlope < 0) t = -t;
         o->rotZ = -t & 0xff;
         o->unkB2 = t;
-        w = SCRATCHPAD.unk284;
+        w = SCRATCHPAD.hitSurface;
         o->unkB6 = (-t << 2) & 0xff;
         o->unk9C = 0;
         o->unkAE = w;
@@ -741,7 +741,7 @@ void func_8012E780(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -777,7 +777,7 @@ void func_8012ECC0(GameObject *o)
         case 0:
             o->y.p.whole += 4;
             if (probeCollisionAtDepthA(o, o->h->p.whole + 0x20, o->y.p.whole + 0x18)) {
-                o->rotZ = (-SCRATCHPAD.unk27E << 6) & 0xfc0;
+                o->rotZ = (-SCRATCHPAD.hitSlope << 6) & 0xfc0;
                 o->subState++;
             }
             break;
@@ -788,7 +788,7 @@ void func_8012ECC0(GameObject *o)
             }
             o->y.p.whole += 2;
             func_80043AB0(o, o->h->p.whole + 0x20, o->y.p.whole, 0);
-            if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x18)) o->rotZ = (-SCRATCHPAD.unk27E << 6) & 0xfc0;
+            if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x18)) o->rotZ = (-SCRATCHPAD.hitSlope << 6) & 0xfc0;
             if (o->h->p.whole >= 0x2d0) break;
             func_8002367C(*(u16 *)&o->unkB4);
             o->type = 0xc;
@@ -817,7 +817,7 @@ void func_8012ECC0(GameObject *o)
                 o->subState++;
                 break;
             }
-            o->rotZ = (-SCRATCHPAD.unk27E << 6) & 0xfc0;
+            o->rotZ = (-SCRATCHPAD.hitSlope << 6) & 0xfc0;
             break;
         case 3:
             if (o->rotZ == 0x200) o->subState++;
@@ -907,7 +907,7 @@ void func_8012F44C(GameObject *o)
 static __inline__ s32 land_2F5D0(GameObject *o)
 {
     if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-        o->rotX = (-SCRATCHPAD.unk27E << 2) & 0xff;
+        o->rotX = (-SCRATCHPAD.hitSlope << 2) & 0xff;
         return 1;
     }
     return 0;
@@ -932,7 +932,7 @@ void func_8012F5D0(GameObject *o)
         if (o->visible) o->step++;
         break;
     case 2:
-        if (o->h->p.whole < SCRATCHPAD.unk168[0].p.whole) {
+        if (o->h->p.whole < SCRATCHPAD.cameraTarget.x.p.whole) {
             o->step = 0;
             o->animFrame = 0;
             o->subState++;
@@ -946,7 +946,7 @@ void func_8012F5D0(GameObject *o)
 static __inline__ s32 ground_2F758(GameObject *o)
 {
     if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 16)) {
-        o->rotX = -SCRATCHPAD.unk27E * 4 & 0xff;
+        o->rotX = -SCRATCHPAD.hitSlope * 4 & 0xff;
         return 1;
     }
     return 0;

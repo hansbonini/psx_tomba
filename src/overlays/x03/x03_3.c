@@ -227,8 +227,8 @@ void func_8011E6DC(GameObject *o, GameObject *p)
         o->unk9E = 4;
         o->unkBA = 0;
         o->velY = 0;
-        SCRATCHPAD.unk19E = 0;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = p;
+        SCRATCHPAD.listCounter = 0;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = p;
         o->unkB8 = D_1F8003BC;
     }
 }
@@ -246,13 +246,13 @@ void func_8011E7C4(GameObject *o, GameObject *p)
     GameObject *q;
     if (func_80059638(o, p)) {
         o->unk9E = 1;
-        o->unkB8 = SCRATCHPAD.unk3BC;
+        o->unkB8 = SCRATCHPAD.touchOffsetX;
         o->unkBA = -((s16)(u16)p->hitboxY >> 1);
         o->velY = 0;
         q = (GameObject *)p->movetab;
         q->touchFlag = 1;
         D_1F80019E = 0;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = p;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = p;
         q->animFrame = o->animFrame & 1;
     }
 }
@@ -392,7 +392,7 @@ void func_8011F218(GameObject *o, GameObject *e)
         } else {
             e->animFrame = o->animFrame & 1;
         }
-        SCRATCHPAD.unk19E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -409,7 +409,7 @@ extern s16 func_80056284(void);
 void func_8011F6DC(s32 a, char *p)
 {
     if (*(s32 *)(p + 0x94) == 0 && func_80056284() != 0)
-        SPAD->unk19E = 0;
+        SPAD->listCounter = 0;
 }
 
 INCLUDE_ASM("overlays/x03/nonmatchings/x03/x03_3", func_8011F720);
@@ -540,7 +540,7 @@ s32 func_8011FA40(GameObject *o)
     o->unkB2 = v;
     o->rotZ = -v & 0xff;
     o->unkB6 = (-v << 2) & 0xff;
-    o->unkAE = (*(u16*)&SCRATCHPAD.unk284);
+    o->unkAE = (*(u16*)&SCRATCHPAD.hitSurface);
     o->unk9C = 0;
     if ((s16)((D_1F800282 >> 5) & 0xf) >= 0xe)
         o->unk98 = 0;
@@ -622,7 +622,7 @@ extern A_1FD48 *D_80137AAC[];
     o->animTimer = ((A_1FD48 *)o->anim)->w6 & 0x3fff; }
 
 #define SPAWN() \
-    { GameObject *e = allocObjectLayer3(); \
+    { GameObject *e = allocEffectObject(); \
     if (e) { \
         e->active = 1; \
         e->type = 0x10; \
@@ -893,8 +893,8 @@ void func_80123510(GameObject *o)
         break;
     case 2:
         func_8011F788(o);
-        dx = o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) + 0x60;
-        dz = o->d->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[2].raw + 2)) + 0x2d;
+        dx = o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) + 0x60;
+        dz = o->d->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.z.raw + 2)) + 0x2d;
         if (dz >= 0x5b || dx >= 0xc1) {
             o->timer = 0;
             break;
@@ -976,7 +976,7 @@ void func_8012434C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -1002,7 +1002,7 @@ void func_80124514(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -1107,9 +1107,9 @@ void func_80124700(GameObject *o)
 
 static __inline__ s32 near_2487C(GameObject *o)
 {
-    if ((u16)(o->d->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[2].raw + 2)) + 0x2d) >= 0x5b) return 0;
-    if ((s16)((*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) - o->y.p.whole) < -0xb0) return 0;
-    return (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) + 0x10) < 0x21;
+    if ((u16)(o->d->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.z.raw + 2)) + 0x2d) >= 0x5b) return 0;
+    if ((s16)((*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) - o->y.p.whole) < -0xb0) return 0;
+    return (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) + 0x10) < 0x21;
 }
 
 void func_8012487C(GameObject *o)
@@ -1154,7 +1154,7 @@ void func_8012487C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -1224,7 +1224,7 @@ void func_80124B84(GameObject *o)
             if (o->unkAC >= 0xc) {
                 o->rotZ = 0;
             } else {
-                v = (((*(u16*)&SCRATCHPAD.unk27E) << 2) + o->rotZ) & 0xff;
+                v = (((*(u16*)&SCRATCHPAD.hitSlope) << 2) + o->rotZ) & 0xff;
                 if (v != 0) {
                     if (v < 0x80) o->rotZ = o->rotZ - 1;
                     else o->rotZ = o->rotZ + 1;
@@ -1255,7 +1255,7 @@ static __inline__ void fall_24CFC(GameObject *o)
         if (o->unkAC >= 0xc) {
             o->rotZ = 0;
         } else {
-            v = (((*(u16*)&SCRATCHPAD.unk27E) << 2) + o->rotZ) & 0xff;
+            v = (((*(u16*)&SCRATCHPAD.hitSlope) << 2) + o->rotZ) & 0xff;
             if (v != 0) {
                 if (v < 0x80) o->rotZ = o->rotZ - 1;
                 else o->rotZ = o->rotZ + 1;
@@ -1292,8 +1292,8 @@ void func_80124CFC(GameObject *o)
                 o->step = 2;
                 o->unk7 = 0;
             }
-        } else if (*w == 0 || (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2)) + 0x70) >= 0x220 ||
-                   (u16)((*(u16 *)&SCRATCHPAD.unk168[7].p.whole) - o->y.p.whole + 0x70) >= 0x1c0) {
+        } else if (*w == 0 || (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2)) + 0x70) >= 0x220 ||
+                   (u16)((*(u16 *)&SCRATCHPAD.screenOrigin.y.p.whole) - o->y.p.whole + 0x70) >= 0x1c0) {
             o->step = 0;
             o->unk7 = 0;
         }

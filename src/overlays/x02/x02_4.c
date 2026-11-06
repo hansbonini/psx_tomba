@@ -129,7 +129,7 @@ void func_80118C64(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -147,7 +147,7 @@ void func_80119268(s32 k, s32 x, s32 y, s32 z)
     s16 *p;
 
     t = D_80115344;
-    o = allocObjectLayer3();
+    o = allocEffectObject();
     if (o != 0) {
         o->active = 1;
         o->type = 0x31;
@@ -205,7 +205,7 @@ void func_8011B950(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }

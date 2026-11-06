@@ -83,7 +83,7 @@ void func_8011EA14(GameObject *o)
         o->anim = D_8013DA84;
         readAnimFrameCount(o);
         o->timer = 0x50;
-        n = allocObjectLayer2();
+        n = allocActorObject();
         if (n != 0) {
             n->active = 1;
             n->id = 1;
@@ -192,7 +192,7 @@ void func_8011EE60(GameObject *o)
         break;
     case 3:
         D_8009C068.unk597 = 0;
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -236,7 +236,7 @@ void func_8011F0CC(GameObject *o)
         case 1:
             if (--o->timer == -1) {
                 o->subState++;
-            } else if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 1) {
+            } else if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) {
                 cullAndQueueDraw(o);
             }
             break;
@@ -249,7 +249,7 @@ void func_8011F0CC(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -298,7 +298,7 @@ void func_8011F30C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -359,7 +359,7 @@ void func_8011F43C(GameObject *o)
             setEventStarted(EVENT_WHATISTHIS, 0, 1);
             D_8009C3EC_U8 = 1;
             o->model = (s32)((char **)&D_1F800334)[0] + *(s32 *)((*(char **)&SCRATCHPAD.wmdData[1]) + 0x34);
-            e = allocObjectLayer3();
+            e = allocEffectObject();
             if (e != 0) {
                 e->type = 0x3d;
                 e->active = 1;
@@ -409,7 +409,7 @@ void func_8011F43C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -443,7 +443,7 @@ void func_8011F940(GameObject *o)
         D_800A38BB[0] = 3;
         D_800A38D0[0] = 0;
         D_1F800190 = o->y.raw;
-        SCRATCHPAD.unk18C = o->h->raw;
+        SCRATCHPAD.prevTargetX = o->h->raw;
         o->timer = 60;
         o->step++;
         break;
@@ -542,8 +542,8 @@ void func_8011FAD0(GameObject *o)
         o->scaleY = o->scaleX;
         o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask **)&D_1F8001D4)->mode = 7;
-            (*(GameTask **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
             D_8009D6DD_U8Arr[0] = 0xff;
             D_8009D6DE_U8Arr[0] = 0xff;
             D_8009D6DF_U8Arr[0] = 0xff;
@@ -562,8 +562,8 @@ void func_8011FAD0(GameObject *o)
 static __inline__ s32 onscreen_1FD7C(GameObject *o)
 {
     if (D_8009BC98.unk0A == 0) return 0;
-    if ((u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))) >= 0x12d) return 0;
-    return (u16)((*(u16 *)&SCRATCHPAD.unk168[7].p.whole) - (o->y.p.whole + 0x10)) < 0xc9;
+    if ((u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2))) >= 0x12d) return 0;
+    return (u16)((*(u16 *)&SCRATCHPAD.screenOrigin.y.p.whole) - (o->y.p.whole + 0x10)) < 0xc9;
 }
 
 void func_8011FD7C(GameObject *o)
@@ -631,7 +631,7 @@ void func_8011FD7C(GameObject *o)
             o->h->raw = p->h->raw + (dx << 4);
             o->y.raw = p->y.raw + (dy << 4);
             o->visible = 1;
-            pushDrawListLayer4(o);
+            pushAreaDrawList(o);
             switch (o->subState) {
             case 0:
                 if (o->unk6A) o->subState++;
@@ -673,7 +673,7 @@ void func_8011FD7C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -715,10 +715,10 @@ void func_80120174(GameObject *o)
     }
     {
         s32 y = o->localY;
-        o->y.p.whole = ((u32)(y - (*(u16 *)&SCRATCHPAD.unk168[7].p.whole)) & 0xfff) >> 4;
+        o->y.p.whole = ((u32)(y - (*(u16 *)&SCRATCHPAD.screenOrigin.y.p.whole)) & 0xfff) >> 4;
     }
     o->visible = 1;
-    pushDrawListLayer7(o);
+    pushFxDrawList(o);
 }
 
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_2", func_8012029C);

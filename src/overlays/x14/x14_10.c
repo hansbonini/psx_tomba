@@ -64,7 +64,7 @@ void func_8011F7E0(GameObject *o)
 
 s32 func_8011F97C(GameObject *o)
 {
-    GameObject *n = allocObjectLayer2();
+    GameObject *n = allocActorObject();
 
     if (n) {
         n->active = 1;
@@ -237,7 +237,7 @@ void func_8011FA04(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -250,14 +250,14 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_801200E4);
 
 s32 func_801204B4(GameObject *o)
 {
-    GameObject *n = allocObjectLayer2();
+    GameObject *n = allocActorObject();
     if (n) {
         n->active = 1;
         n->type = 0x46;
         n->id = 0;
         n->param = 0;
-        n->x.p.whole = (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2)) + 0xa0;
-        n->y.p.whole = (u16)SCRATCHPAD.unk168[4].p.whole - 0xf0;
+        n->x.p.whole = (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2)) + 0xa0;
+        n->y.p.whole = (u16)SCRATCHPAD.cameraPos.y.p.whole - 0xf0;
         n->z.p.whole = o->z.p.whole;
     }
 }
@@ -295,7 +295,7 @@ void func_80120738(GameObject *o)
         if (o->animFrame) o->rotZ = (o->rotZ + 0x80) & 0xfff;
         else o->rotZ = (o->rotZ - 0x80) & 0xfff;
         if (o->timer < 0x28) {
-            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 1) o->visible = 1;
+            if ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 1) o->visible = 1;
             else o->visible = 0;
         }
         if (--o->timer == -1) o->state++;
@@ -354,7 +354,7 @@ void func_801208F4(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -371,7 +371,7 @@ void func_80120BA0(GameObject *o, s32 sub)
     GameObject *e;
 
     for (i = 0; i < 6; i++) {
-        e = allocObjectLayer2();
+        e = allocActorObject();
         if (e) {
             e->type = 0x47;
             e->active = 2;
@@ -393,7 +393,7 @@ void func_80120BA0(GameObject *o, s32 sub)
 // INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_10", func_80120C90);
 
 #define SPAWN(o, X, Y, Z) { \
-    e = allocObjectLayer4(); \
+    e = allocAreaObject(); \
     if (e) { \
         e->active = 1; \
         e->type = 0x43; \

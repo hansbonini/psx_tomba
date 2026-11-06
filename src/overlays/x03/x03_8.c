@@ -66,7 +66,7 @@ void func_8012BBA8(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

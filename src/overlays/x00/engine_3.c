@@ -717,7 +717,7 @@ void func_80110C6C(u8 *o)
         o[4] = 3;
         break;
     case 3:
-        freeObjectLayer1(o);
+        freeWeaponObject(o);
         break;
     }
 }
@@ -1381,7 +1381,7 @@ void updateTreasureChest(GameObject *o)
         D_80115118[o->id](o);
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -1682,7 +1682,7 @@ void func_80113288(S_13288 *o)
                 o->p90->b04 = 3;
                 f = D_800A53F4;
                 D_800A539C = 1;
-                SPAD->unk1C6 = 0;
+                SPAD->drawFrozen = 0;
                 D_8009BCAA = 0;
                 D_800A544A = 0;
                 D_800A539D = 0;
@@ -1837,7 +1837,7 @@ void func_801139DC(GameObject *o)
             func_80113610(o);
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -1848,7 +1848,7 @@ INCLUDE_ASM("overlays/x00/nonmatchings/engine_3", func_80113BE0);
 typedef struct N_13C20 { char t, p1, k, b; char pad[0x10]; s32 y; char pad2[0x28]; s32 *x; s32 *z; char pad3[0x48]; s32 a; } N_13C20;
 void func_80113C20(s32 a, char b, s32 c, s32 d, s16 e)
 {
-    N_13C20 *n = (N_13C20 *)allocObjectLayer2();
+    N_13C20 *n = (N_13C20 *)allocActorObject();
     if (n != 0) {
         n->t = 1; n->k = 0x1f; n->b = b; *n->x = c << 16; n->y = d << 16; *n->z = e << 16; n->a = a;
     }
@@ -1858,7 +1858,7 @@ void func_80113C20(s32 a, char b, s32 c, s32 d, s16 e)
 
 void func_80113CB8(s32 unused, char sub, s32 x, s32 y, s32 z)
 {
-    char *p = allocObjectLayer2();
+    char *p = allocActorObject();
     if (p != 0) {
         p[0] = 1;
         p[2] = 0x1f;

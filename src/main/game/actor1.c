@@ -797,29 +797,29 @@ GameObject *b;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051488);
-s32 func_80051488(GameObject *o, GameObject *e)
+s32 func_80051488(GameObject *obj, GameObject *other)
 {
     s16 dx, dy, sx, sy, ax, ay;
-    if ((u16)(o->d->p.whole - e->d->p.whole + 45) > 90)
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 45) > 90)
         return -1;
-    sx = e->hitboxX + o->hitboxX;
-    dx = o->h->p.whole - e->h->p.whole;
-    if ((u16)(dx + sx) > e->hitboxW + o->hitboxW)
+    sx = other->hitboxX + obj->hitboxX;
+    dx = obj->h->p.whole - other->h->p.whole;
+    if ((u16)(dx + sx) > other->hitboxW + obj->hitboxW)
         return -1;
-    dy = o->y.p.whole - e->y.p.whole;
-    sy = e->hitboxY + o->hitboxY;
-    if ((u16)(dy + sy) > o->hitboxH + e->hitboxH)
+    dy = obj->y.p.whole - other->y.p.whole;
+    sy = other->hitboxY + obj->hitboxY;
+    if ((u16)(dy + sy) > obj->hitboxH + other->hitboxH)
         return -1;
     ax = dx;
     if (dx < 0)
         dx = -dx;
     else
-        sx = (e->hitboxW - e->hitboxX) + (o->hitboxW - o->hitboxX);
+        sx = (other->hitboxW - other->hitboxX) + (obj->hitboxW - obj->hitboxX);
     ay = dy;
     if (dy < 0)
         dy = -dy;
     else
-        sy = (e->hitboxH - e->hitboxY) + (o->hitboxH - o->hitboxY);
+        sy = (other->hitboxH - other->hitboxY) + (obj->hitboxH - obj->hitboxY);
     if (sx - dx < sy - dy)
         return ax >= 0;
     if (ay <= 0)
@@ -951,64 +951,64 @@ s32 func_80051804(TO_51804 *a, TO_51804 *b)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051A18);
-s32 func_80051A18(GameObject *a, GameObject *b)
+s32 func_80051A18(GameObject *obj, GameObject *other)
 {
     s16 s, dx, ax, w, off, d0, sy;
     s32 dy, d; u16 t;
-    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2d) > 0x5a) return 0;
-    s = b->hitboxX + a->hitboxX;
-    dx = a->h->p.whole - b->h->p.whole;
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 0x2d) > 0x5a) return 0;
+    s = other->hitboxX + obj->hitboxX;
+    dx = obj->h->p.whole - other->h->p.whole;
     off = s;
     ax = dx;
-    if ((u16)(dx + s) > b->hitboxW + a->hitboxW) return 0;
-    d = (u16)a->y.p.whole - (u16)b->y.p.whole;
-    t = d + (b->hitboxY + a->hitboxY);
+    if ((u16)(dx + s) > other->hitboxW + obj->hitboxW) return 0;
+    d = (u16)obj->y.p.whole - (u16)other->y.p.whole;
+    t = d + (other->hitboxY + obj->hitboxY);
     dy = d;
-    if ((u16)t > a->hitboxH + b->hitboxH) return 0;
+    if ((u16)t > obj->hitboxH + other->hitboxH) return 0;
     w = off;
     d0 = ax;
     if (dx < 0) {
         ax = -dx;
         off = -s;
     } else {
-        off = (b->hitboxW - b->hitboxX) + (a->hitboxW - a->hitboxX);
+        off = (other->hitboxW - other->hitboxX) + (obj->hitboxW - obj->hitboxX);
         w = off;
     }
     if ((u16)(w - ax) < 4) {
-        a->h->p.whole = b->h->p.whole + off;
-        if (off < 0) a->unkA6 = 2; else a->unkA6 = 3;
+        obj->h->p.whole = other->h->p.whole + off;
+        if (off < 0) obj->unkA6 = 2; else obj->unkA6 = 3;
         return 2;
     }
     sy = dy;
     if (sy <= 0) {
-        if (a->unk9C & 1) {
-            a->h->p.whole = b->h->p.whole + off;
+        if (obj->unk9C & 1) {
+            obj->h->p.whole = other->h->p.whole + off;
             return 2;
         }
-        a->y.p.whole = b->y.p.whole - (b->hitboxY + a->hitboxY);
-        a->y.p.frac = 0;
-        a->touchFlag = 1;
-        b->touchFlag = 1;
+        obj->y.p.whole = other->y.p.whole - (other->hitboxY + obj->hitboxY);
+        obj->y.p.frac = 0;
+        obj->touchFlag = 1;
+        other->touchFlag = 1;
         if (d0 >= 0) {
-            a->unkBE = 8;
-            a->unkB0 = 2;
+            obj->unkBE = 8;
+            obj->unkB0 = 2;
         } else {
-            a->unkBE = 9;
-            a->unkB0 = -2;
+            obj->unkBE = 9;
+            obj->unkB0 = -2;
         }
         return 1;
     }
-    if ((b->hitboxH - b->hitboxY) + (a->hitboxH - a->hitboxY) - sy < 5) {
-        a->y.p.whole = b->y.p.whole + ((b->hitboxH - b->hitboxY) + (a->hitboxH - a->hitboxY));
-        if (a->velY < 0) {
-            a->velY = 0;
-            b->touchFlag = 1;
-            if (b->type == 5) b->touchFlag = 4;
+    if ((other->hitboxH - other->hitboxY) + (obj->hitboxH - obj->hitboxY) - sy < 5) {
+        obj->y.p.whole = other->y.p.whole + ((other->hitboxH - other->hitboxY) + (obj->hitboxH - obj->hitboxY));
+        if (obj->velY < 0) {
+            obj->velY = 0;
+            other->touchFlag = 1;
+            if (other->type == 5) other->touchFlag = 4;
         }
         return 3;
     }
-    a->h->p.whole = b->h->p.whole + off;
-    if (off < 0) a->unkA6 = 2; else a->unkA6 = 3;
+    obj->h->p.whole = other->h->p.whole + off;
+    if (off < 0) obj->unkA6 = 2; else obj->unkA6 = 3;
     return 2;
 }
 
@@ -1094,25 +1094,25 @@ s32 func_80051DA4(TO_51DA4 *a, TO_51DA4 *b)
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80051EE0);
 
-void func_80051EE0(GameObject *o, GameObject *e)
+void func_80051EE0(GameObject *obj, GameObject *other)
 {
     s16 dx, dy, sx, px, cx, ax;
     s16 tx, ty;
     Vec2s *t;
     s16 w;
-    if ((u16)(o->d->p.whole - e->d->p.whole + 45) > 90)
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 45) > 90)
         return;
-    { s16 *u = &D_8007EDD0[e->param].x;
-    px = sx = e->hitboxX + o->hitboxX + 8;
+    { s16 *u = &D_8007EDD0[other->param].x;
+    px = sx = other->hitboxX + obj->hitboxX + 8;
     tx = *u++;
-    dx = o->h->p.whole - (e->h->p.whole + tx);
+    dx = obj->h->p.whole - (other->h->p.whole + tx);
     ty = *u; }
-    if ((u16)(dx + sx) > e->hitboxW + 16 + o->hitboxW)
+    if ((u16)(dx + sx) > other->hitboxW + 16 + obj->hitboxW)
         return;
     {
-        u16 c = ((o->y.p.whole - (e->y.p.whole + ty)) - 8) + (e->hitboxY + o->hitboxY);
-        dy = o->y.p.whole - (e->y.p.whole + ty);
-        if (c > o->hitboxH + e->hitboxH - 16)
+        u16 c = ((obj->y.p.whole - (other->y.p.whole + ty)) - 8) + (other->hitboxY + obj->hitboxY);
+        dy = obj->y.p.whole - (other->y.p.whole + ty);
+        if (c > obj->hitboxH + other->hitboxH - 16)
             return;
     }
     cx = px;
@@ -1121,31 +1121,31 @@ void func_80051EE0(GameObject *o, GameObject *e)
         dx = -dx;
         px = -sx;
     } else {
-        px = (e->hitboxW - e->hitboxX) + (s16)(o->hitboxW - o->hitboxX + 8);
+        px = (other->hitboxW - other->hitboxX) + (s16)(obj->hitboxW - obj->hitboxX + 8);
         cx = px;
     }
     if ((u16)(cx - dx) < 4) {
-        o->h->p.whole = px + (e->h->p.whole + tx);
+        obj->h->p.whole = px + (other->h->p.whole + tx);
         return;
     }
     if (dy < 5) {
-        if (o->unk9C & 1) return;
-        w = e->y.p.whole + ty + 8;
-        o->y.p.whole = w - (e->hitboxY + o->hitboxY);
-        o->y.p.frac = 0;
-        o->touchFlag = 1;
-        e->touchFlag = 1;
+        if (obj->unk9C & 1) return;
+        w = other->y.p.whole + ty + 8;
+        obj->y.p.whole = w - (other->hitboxY + obj->hitboxY);
+        obj->y.p.frac = 0;
+        obj->touchFlag = 1;
+        other->touchFlag = 1;
         if (ax >= 0) {
-            o->unkBE = 8;
-            o->unkB0 = 2;
+            obj->unkBE = 8;
+            obj->unkB0 = 2;
         } else {
-            o->unkBE = 9;
-            o->unkB0 = -2;
+            obj->unkBE = 9;
+            obj->unkB0 = -2;
         }
         return;
     }
-    o->y.p.whole = (e->y.p.whole + ty) + ((e->hitboxH - e->hitboxY) + (o->hitboxH - o->hitboxY));
-    if (o->velY < 0) o->velY = 0;
+    obj->y.p.whole = (other->y.p.whole + ty) + ((other->hitboxH - other->hitboxY) + (obj->hitboxH - obj->hitboxY));
+    if (obj->velY < 0) obj->velY = 0;
 }
 
 static inline u8 boxesOverlapInline(u8* p0, u8* p1) {
@@ -1231,19 +1231,19 @@ void onOverlapConsumeObject(u8* arg0, u8* arg1) {
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_8005242C);
-s32 func_8005242C(GameObject *a, GameObject *b)
+s32 func_8005242C(GameObject *obj, GameObject *other)
 {
     s16 dy; s16 sx; s16 ad; s16 dx;
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    sx = *(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c);
-    dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
-    if ((u16)(dx + sx) > b->hitboxW + a->hitboxW)
+    sx = *(u16 *)((u8 *)other + 0x6c) + *(u16 *)((u8 *)obj + 0x6c);
+    dx = *(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2);
+    if ((u16)(dx + sx) > other->hitboxW + obj->hitboxW)
         return -1;
     {
-        u16 c = (*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)b + 0x70) + *(u16 *)((u8 *)a + 0x70));
-        dy = *(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16);
-        if (c > a->hitboxH + b->hitboxH)
+        u16 c = (*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)other + 0x70) + *(u16 *)((u8 *)obj + 0x70));
+        dy = *(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16);
+        if (c > obj->hitboxH + other->hitboxH)
             return -1;
     }
     D_1F80019E = 0;
@@ -1251,7 +1251,7 @@ s32 func_8005242C(GameObject *a, GameObject *b)
     if (dx < 0)
         dx = -dx;
     else
-        sx = (*(u16 *)((u8 *)b + 0x6e) - *(u16 *)((u8 *)b + 0x6c)) + (*(u16 *)((u8 *)a + 0x6e) - *(u16 *)((u8 *)a + 0x6c));
+        sx = (*(u16 *)((u8 *)other + 0x6e) - *(u16 *)((u8 *)other + 0x6c)) + (*(u16 *)((u8 *)obj + 0x6e) - *(u16 *)((u8 *)obj + 0x6c));
     if ((u16)(sx - dx) < 4)
         return (s16)ad >= 0;
     if ((s16)dy <= 0)
@@ -1281,7 +1281,7 @@ s32 boxesOverlapSide(u8* arg0, u8* arg1) {
     if ((u16)(dy + w) > *(s16*)(a + 0x72) + *(s16*)(b + 0x72)) {
         return -1;
     }
-    SPAD->unk19E = 0;
+    SPAD->listCounter = 0;
     if (dx < 0) {
         return 0;
     }
@@ -1346,7 +1346,7 @@ s32 boxesOverlapFlipAware(u8* arg0, u8* arg1) {
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800527C8);
 
-void func_800527C8(GameObject *o, GameObject *q)
+void func_800527C8(GameObject *obj, GameObject *other)
 {
     Vec2u *t;
     s32 tx;
@@ -1355,49 +1355,49 @@ void func_800527C8(GameObject *o, GameObject *q)
     s32 s;
     u16 b0;
 
-    if ((u16)(o->d->p.whole - q->d->p.whole + 0x2d) > 0x5a) return;
-    { u16 *u = &D_8007EDD0_Vec2uArr[q->param].x;
-    b0 = o->hitboxX;
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 0x2d) > 0x5a) return;
+    { u16 *u = &D_8007EDD0_Vec2uArr[other->param].x;
+    b0 = obj->hitboxX;
     tx = *u++;
     ty = *u; }
-    if ((u16)(o->h->p.whole - (q->h->p.whole + tx) + (q->hitboxX + b0)) > q->hitboxW + o->hitboxW) return;
+    if ((u16)(obj->h->p.whole - (other->h->p.whole + tx) + (other->hitboxX + b0)) > other->hitboxW + obj->hitboxW) return;
     n = 1;
-    if ((u16)(o->y.p.whole - (q->y.p.whole + ty) - 4 + (q->hitboxY + o->hitboxY)) > o->hitboxH + q->hitboxH - 4) return;
-    q->unk68 = 1;
-    q->unk9E = 0;
-    switch (func_800505E8(o, q, b0)) {
+    if ((u16)(obj->y.p.whole - (other->y.p.whole + ty) - 4 + (other->hitboxY + obj->hitboxY)) > obj->hitboxH + other->hitboxH - 4) return;
+    other->unk68 = 1;
+    other->unk9E = 0;
+    switch (func_800505E8(obj, other, b0)) {
     case 1: case 7:
         n = 1;
         break;
     case 4: case 5: case 10:
         n = 1;
-        o->unk6A = 1;
-        o->active = 2;
-        o->unkA8 = 0x4ff;
+        obj->unk6A = 1;
+        obj->active = 2;
+        obj->unkA8 = 0x4ff;
         break;
     case 0: case 3: case 9:
         n = 2;
         break;
     case 13:
-        q->unk68 = 0;
+        other->unk68 = 0;
         n = -1;
         break;
     case 6: case 11: case 12:
         n = 2;
-        o->unk6A = 1;
-        o->active = 2;
-        o->unkA8 = 0x4ff;
+        obj->unk6A = 1;
+        obj->active = 2;
+        obj->unkA8 = 0x4ff;
         break;
     case 2: case 8:
         n = 0;
-        q->unk9E = 1;
-        q->unk9F = 0;
+        other->unk9E = 1;
+        other->unk9F = 0;
         break;
     }
     if (n >= 0) {
-        func_800224FC(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+        func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
         s = 7;
-        if ((q->category & 0x7f) == 4) s = 6;
+        if ((other->category & 0x7f) == 4) s = 6;
         playSFX(s);
     }
     D_1F80019E = 0;
@@ -1406,15 +1406,15 @@ void func_800527C8(GameObject *o, GameObject *q)
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800529A8);
 extern void func_800224FC(s32, s32, s32, s32);
 
-static __inline__ s16 hit_529A8(GameObject *a, GameObject *b)
+static __inline__ s16 hit_529A8(GameObject *obj, GameObject *other)
 {
     s16 dx;
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
-    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitboxW + a->hitboxW)
+    dx = *(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2);
+    if ((u16)(dx + (*(u16 *)((u8 *)other + 0x6c) + *(u16 *)((u8 *)obj + 0x6c))) > other->hitboxW + obj->hitboxW)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitboxH + b->hitboxH)
+    if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
     D_1F80019E = 0;
     if (dx < 0)
@@ -1422,18 +1422,18 @@ static __inline__ s16 hit_529A8(GameObject *a, GameObject *b)
     return 1;
 }
 
-static __inline__ s32 react_529A8(GameObject *a, GameObject *b)
+static __inline__ s32 react_529A8(GameObject *obj, GameObject *other)
 {
     s32 r = 1;
-    b->unk68 = 1;
-    b->unk9E = 0;
-    switch (func_800505E8(a, b)) {
+    other->unk68 = 1;
+    other->unk9E = 0;
+    switch (func_800505E8(obj, other)) {
     case 1: case 4: case 5: case 7: case 10:
         r = 1;
         break;
     case 13:
-        if ((b->category & 0x7f) == 4) {
-            b->unk68 = 0;
+        if ((other->category & 0x7f) == 4) {
+            other->unk68 = 0;
             return r;
         }
     case 0: case 3: case 6: case 9: case 11: case 12:
@@ -1441,83 +1441,83 @@ static __inline__ s32 react_529A8(GameObject *a, GameObject *b)
         break;
     case 2: case 8:
         r = 0;
-        b->unk68 = 0;
-        b->unk9E = 1;
-        b->unk9F = 0;
+        other->unk68 = 0;
+        other->unk9E = 1;
+        other->unk9F = 0;
         break;
     }
-    func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
-    playSFX((b->category & 0x7f) == 4 ? 6 : 7);
+    func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
+    playSFX((other->category & 0x7f) == 4 ? 6 : 7);
     return r;
 }
 
-void func_800529A8(GameObject *a, GameObject *b)
+void func_800529A8(GameObject *obj, GameObject *other)
 {
     s16 h;
 
-    h = hit_529A8(a, b);
+    h = hit_529A8(obj, other);
     if (h < 0)
         return;
-    if (react_529A8(a, b) && a->type != 10) {
-        s16 t = a->unk98;
-        b->animFrame = h & 1;
-        b->unk68 = t;
+    if (react_529A8(obj, other) && obj->type != 10) {
+        s16 t = obj->unk98;
+        other->animFrame = h & 1;
+        other->unk68 = t;
     }
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80052B88);
-static __inline__ s16 hit_52B88(GameObject *a, GameObject *b)
+static __inline__ s16 hit_52B88(GameObject *obj, GameObject *other)
 {
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitboxW + a->hitboxW)
+    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2)) + (*(u16 *)((u8 *)other + 0x6c) + *(u16 *)((u8 *)obj + 0x6c))) > other->hitboxW + obj->hitboxW)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitboxH + b->hitboxH)
+    if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
     return 1;
 }
 
-static __inline__ s32 spawn_52B88(GameObject *a, GameObject *b)
+static __inline__ s32 spawn_52B88(GameObject *obj, GameObject *other)
 {
-    GameObject *o = allocObjectLayer3();
+    GameObject *spawned = allocEffectObject();
 
-    if (o) {
-        o->active = 2;
-        o->type = 0x5b;
-        o->parent = (s32)a;
-        o->child = (s32)b;
-        b->active = 5;
-        b->h->p.whole = a->h->p.whole + (D_1F80019E & 3) * 4;
-        b->y.p.whole = a->y.p.whole;
-        b->d->p.whole = a->d->p.whole;
+    if (spawned) {
+        spawned->active = 2;
+        spawned->type = 0x5b;
+        spawned->parent = (s32)obj;
+        spawned->child = (s32)other;
+        other->active = 5;
+        other->h->p.whole = obj->h->p.whole + (D_1F80019E & 3) * 4;
+        other->y.p.whole = obj->y.p.whole;
+        other->d->p.whole = obj->d->p.whole;
         return 1;
     }
     return 0;
 }
 
-void func_80052B88(GameObject *a, GameObject *b)
+void func_80052B88(GameObject *obj, GameObject *other)
 {
     u16 v, f;
     s16 t;
 
-    if (hit_52B88(a, b) >= 0) {
-        resolveHitResultD(a, b);
-        t = a->type;
+    if (hit_52B88(obj, other) >= 0) {
+        resolveHitResultD(obj, other);
+        t = obj->type;
         if ((u8)t == 10)
             return;
-        if ((u32)(t - 5) < 3 && spawn_52B88(a, b)) {
+        if ((u32)(t - 5) < 3 && spawn_52B88(obj, other)) {
         } else {
-            b->unk68 = 1;
-            if (a->type == 1) {
-                v = a->animFrame & 1;
+            other->unk68 = 1;
+            if (obj->type == 1) {
+                v = obj->animFrame & 1;
             } else {
-                f = a->animFrame;
+                f = obj->animFrame;
                 if (f < 6)
                     v = f & 1;
                 else
                     v = 2;
             }
-            b->animFrame = v;
+            other->animFrame = v;
         }
         D_1F80019E = 0;
     }
@@ -1525,41 +1525,41 @@ void func_80052B88(GameObject *a, GameObject *b)
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80052D5C);
 
-static __inline__ s16 hit_52D5C(GameObject *a, GameObject *b)
+static __inline__ s16 hit_52D5C(GameObject *obj, GameObject *other)
 {
     u16 off;
 
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    if (b->animFrame & 1) off = *(u16 *)((u8 *)b + 0x6e) - *(u16 *)((u8 *)b + 0x6c);
-    else off = *(u16 *)((u8 *)b + 0x6c);
-    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (off + *(u16 *)((u8 *)a + 0x6c))) > b->hitboxW + a->hitboxW)
+    if (other->animFrame & 1) off = *(u16 *)((u8 *)other + 0x6e) - *(u16 *)((u8 *)other + 0x6c);
+    else off = *(u16 *)((u8 *)other + 0x6c);
+    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2)) + (off + *(u16 *)((u8 *)obj + 0x6c))) > other->hitboxW + obj->hitboxW)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)b + 0x70) + *(u16 *)((u8 *)a + 0x70))) > a->hitboxH + b->hitboxH)
+    if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)other + 0x70) + *(u16 *)((u8 *)obj + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
     return 1;
 }
 
-void func_80052D5C(GameObject *a, GameObject *b)
+void func_80052D5C(GameObject *obj, GameObject *other)
 {
     s32 t;
 
-    if (GAME.selectedArea == AREA03_PHOENIXMOUNTAIN && b->id == 4) {
+    if (GAME.selectedArea == AREA03_PHOENIXMOUNTAIN && other->id == 4) {
         func_8011EDBC();
         return;
     }
-    if (hit_52D5C(a, b) != -1) {
-        b->unk7A = a->animFrame & 1;
-        t = resolveHitResultE(a, b);
+    if (hit_52D5C(obj, other) != -1) {
+        other->unk7A = obj->animFrame & 1;
+        t = resolveHitResultE(obj, other);
         if (t != 0) {
             if (t == 1) {
-                b->active = 3;
-                setObjState(b, 2, 0, 0);
+                other->active = 3;
+                setObjState(other, 2, 0, 0);
             } else {
-                func_800E92D4(500, b->x.p.whole, b->y.p.whole, b->z.p.whole);
-                b->active = 2;
-                b->animFrame = 1 - (a->animFrame & 1);
-                setObjState(b, 2, 2, 0);
+                func_800E92D4(500, other->x.p.whole, other->y.p.whole, other->z.p.whole);
+                other->active = 2;
+                other->animFrame = 1 - (obj->animFrame & 1);
+                setObjState(other, 2, 2, 0);
             }
         }
         D_1F80019E = 0;
@@ -1633,26 +1633,26 @@ void func_80052F20(O_52F20 *a, O_52F20 *b)
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_800530F0);
 extern void func_800224FC(s32, s32, s32, s32);
 
-static __inline__ s16 hit_530F0(GameObject *a, GameObject *b)
+static __inline__ s16 hit_530F0(GameObject *obj, GameObject *other)
 {
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2)) + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitboxW + a->hitboxW)
+    if ((u16)((*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2)) + (*(u16 *)((u8 *)other + 0x6c) + *(u16 *)((u8 *)obj + 0x6c))) > other->hitboxW + obj->hitboxW)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitboxH + b->hitboxH)
+    if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
     return 1;
 }
 
-void func_800530F0(GameObject *a, GameObject *b)
+void func_800530F0(GameObject *obj, GameObject *other)
 {
     s32 r;
 
-    if (hit_530F0(a, b) >= 0) {
+    if (hit_530F0(obj, other) >= 0) {
         r = 1;
-        b->unk68 = 1;
-        b->unk9E = 0;
-        switch (func_800505E8(a, b)) {
+        other->unk68 = 1;
+        other->unk9E = 0;
+        switch (func_800505E8(obj, other)) {
         case 1:
         case 7:
             r = 1;
@@ -1661,9 +1661,9 @@ void func_800530F0(GameObject *a, GameObject *b)
         case 5:
         case 10:
             r = 1;
-            a->unk6A = 1;
-            a->active = 2;
-            a->unkA8 = 0x4ff;
+            obj->unk6A = 1;
+            obj->active = 2;
+            obj->unkA8 = 0x4ff;
             break;
         case 0:
         case 3:
@@ -1671,27 +1671,27 @@ void func_800530F0(GameObject *a, GameObject *b)
             r = 2;
             break;
         case 13:
-            b->unk68 = 0;
+            other->unk68 = 0;
             r = -1;
             break;
         case 6:
         case 11:
         case 12:
             r = 2;
-            a->unk6A = 1;
-            a->active = 2;
-            a->unkA8 = 0x4ff;
+            obj->unk6A = 1;
+            obj->active = 2;
+            obj->unkA8 = 0x4ff;
             break;
         case 2:
         case 8:
             r = 0;
-            b->unk9E = 1;
-            b->unk9F = 0;
+            other->unk9E = 1;
+            other->unk9F = 0;
             break;
         }
         if (r >= 0) {
-            func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
-            playSFX((b->category & 0x7f) == 4 ? 6 : 7);
+            func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
+            playSFX((other->category & 0x7f) == 4 ? 6 : 7);
         }
         D_1F80019E = 0;
     }
@@ -1717,86 +1717,86 @@ void dispatchAreaActorInit(void)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_8005334C);
-static __inline__ s16 side_5334C(GameObject *a, GameObject *b)
+static __inline__ s16 side_5334C(GameObject *obj, GameObject *other)
 {
     s16 dx;
-    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2d) >= 0x5b) return -1;
-    dx = a->h->p.whole - b->h->p.whole;
-    if ((u16)(dx + (b->hitboxX + a->hitboxX)) > b->hitboxW + a->hitboxW) return -1;
-    if ((u16)(a->y.p.whole - b->y.p.whole + (a->hitboxY + b->hitboxY)) > a->hitboxH + b->hitboxH) return -1;
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 0x2d) >= 0x5b) return -1;
+    dx = obj->h->p.whole - other->h->p.whole;
+    if ((u16)(dx + (other->hitboxX + obj->hitboxX)) > other->hitboxW + obj->hitboxW) return -1;
+    if ((u16)(obj->y.p.whole - other->y.p.whole + (obj->hitboxY + other->hitboxY)) > obj->hitboxH + other->hitboxH) return -1;
     D_1F80019E = 0;
     if (dx < 0) return 0;
     return 1;
 }
-static __inline__ s32 touch_5334C(GameObject *o, GameObject *p)
+static __inline__ s32 touch_5334C(GameObject *obj, GameObject *other)
 {
     s32 r;
     r = 1;
-    p->unk68 = 1;
-    p->unk9E = 0;
-    switch (func_800505E8(o, p)) {
+    other->unk68 = 1;
+    other->unk9E = 0;
+    switch (func_800505E8(obj, other)) {
     case 1: case 7:
         r = 1;
         break;
     case 4: case 5: case 10:
         r = 1;
-        o->unk6A = 1;
-        o->active = 2;
-        o->unkA8 = 0x4ff;
+        obj->unk6A = 1;
+        obj->active = 2;
+        obj->unkA8 = 0x4ff;
         break;
     case 0: case 3: case 9:
         r = 2;
         break;
     case 13:
-        p->unk68 = 0;
+        other->unk68 = 0;
         r = -1;
         break;
     case 6: case 11: case 12:
         r = 2;
-        o->unk6A = 1;
-        o->active = 2;
-        o->unkA8 = 0x4ff;
+        obj->unk6A = 1;
+        obj->active = 2;
+        obj->unkA8 = 0x4ff;
         break;
     case 2: case 8:
         r = 0;
-        p->unk9E = 1;
-        p->unk9F = 0;
+        other->unk9E = 1;
+        other->unk9F = 0;
         break;
     }
     if (r < 0) {
         r = 0;
     } else {
         s32 s;
-        func_800224FC(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+        func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
         s = 7;
-        if ((p->category & 0x7f) == 4) s = 6;
+        if ((other->category & 0x7f) == 4) s = 6;
         playSFX(s);
     }
     return r;
 }
 
-void func_8005334C(GameObject *o, GameObject *p)
+void func_8005334C(GameObject *obj, GameObject *other)
 {
     s16 s;
-    GameObject *q, *q2;
+    GameObject *part1, *part2;
     u8 v;
-    s = side_5334C(o, p);
+    s = side_5334C(obj, other);
     if (s < 0) return;
-    if (touch_5334C(o, p) == 0) return;
-    switch (p->id) {
+    if (touch_5334C(obj, other) == 0) return;
+    switch (other->id) {
     case 0:
-        q = (GameObject *)p->child;
-        q2 = (GameObject *)q->child;
+        part1 = (GameObject *)other->child;
+        part2 = (GameObject *)part1->child;
         break;
     case 1:
-        q = (GameObject *)p->parent;
-        q2 = (GameObject *)p->child;
+        part1 = (GameObject *)other->parent;
+        part2 = (GameObject *)other->child;
         break;
     }
     v = s | 2;
-    p->unk68 = v;
-    q->unk68 = v;
-    q2->unk68 = v;
+    other->unk68 = v;
+    part1->unk68 = v;
+    part2->unk68 = v;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", dispatchAreaActorUpdate);
@@ -1830,7 +1830,7 @@ void tryAttachObjectOnOverlap(u8* arg0, u8* arg1) {
             *(u8**)(arg0 + 0xE4) = arg1;
             arg0[0xAC] = 2;
         }
-        SPAD->unk19E = 0;
+        SPAD->listCounter = 0;
     }
 }
 
@@ -1874,46 +1874,46 @@ void func_8005368C(u8 *a, u8 *b)
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80053808);
 
-void func_80053808(GameObject *o, GameObject *e)
+void func_80053808(GameObject *obj, GameObject *other)
 {
     s16 r;
-    if (o->unk9E != 0 || ((u8 *)o)[0xc8] != 0)
+    if (obj->unk9E != 0 || ((u8 *)obj)[0xc8] != 0)
         return;
-    if (e->param == 0x32) {
+    if (other->param == 0x32) {
         if (D_8009C12F != 0xff)
             return;
-        if ((u16)(o->h->p.whole - e->h->p.whole + (o->hitboxX + e->hitboxX)) > o->hitboxW + e->hitboxW)
+        if ((u16)(obj->h->p.whole - other->h->p.whole + (obj->hitboxX + other->hitboxX)) > obj->hitboxW + other->hitboxW)
             return;
-        if ((u16)(o->y.p.whole - e->y.p.whole + (o->hitboxY + e->hitboxY)) > o->hitboxH + e->hitboxH)
+        if ((u16)(obj->y.p.whole - other->y.p.whole + (obj->hitboxY + other->hitboxY)) > obj->hitboxH + other->hitboxH)
             return;
-        ((u8 *)o)[0xa0] = 1;
-        ((u8 *)o)[0xa8] = 9;
+        ((u8 *)obj)[0xa0] = 1;
+        ((u8 *)obj)[0xa8] = 9;
         return;
     }
-    r = func_80051284(o, e);
+    r = func_80051284(obj, other);
     if (r == 0)
         return;
-    if (o->unkA6 & 2)
-        o->unkA6 += 2;
+    if (obj->unkA6 & 2)
+        obj->unkA6 += 2;
     if (r != 1)
         return;
-    if (e->active & 4) {
-        if (((u8 *)o)[0xac] == r) {
-            e->active = 2;
-            setObjState(e, 2, 0, 0);
-            e->touchFlag = 0;
-            *(GameObject **)((char *)o + 0xe4) = e;
-            ((u8 *)o)[0xac] = 2;
-            func_800224FC(2, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+    if (other->active & 4) {
+        if (((u8 *)obj)[0xac] == r) {
+            other->active = 2;
+            setObjState(other, 2, 0, 0);
+            other->touchFlag = 0;
+            *(GameObject **)((char *)obj + 0xe4) = other;
+            ((u8 *)obj)[0xac] = 2;
+            func_800224FC(2, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
         }
         D_1F80019E = 0;
     } else {
-        if (o->h->p.whole > e->h->p.whole) {
-            o->unkBE = 8;
-            o->unkB0 = 2;
+        if (obj->h->p.whole > other->h->p.whole) {
+            obj->unkBE = 8;
+            obj->unkB0 = 2;
         } else {
-            o->unkBE = 9;
-            o->unkB0 = -2;
+            obj->unkBE = 9;
+            obj->unkB0 = -2;
         }
     }
 }
@@ -1986,44 +1986,44 @@ void callObjectInteraction(void)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80053BB4);
-s32 func_80053BB4(GameObject *a, GameObject *b)
+s32 func_80053BB4(GameObject *obj, GameObject *other)
 {
     s32 dy;
     s16 d;
 
-    if ((u16)(a->d->p.whole - b->d->p.whole + 0x2D) >= 0x5B) {
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 0x2D) >= 0x5B) {
         return 0;
     }
-    if ((u16)(a->h->p.whole - b->h->p.whole + ((u16)b->hitboxX + (u16)a->hitboxX)) > b->hitboxW + a->hitboxW) {
+    if ((u16)(obj->h->p.whole - other->h->p.whole + ((u16)other->hitboxX + (u16)obj->hitboxX)) > other->hitboxW + obj->hitboxW) {
         return 0;
     }
-    dy = (u16)a->y.p.whole - (u16)b->y.p.whole;
-    if ((u16)(dy + ((u16)b->hitboxY + (u16)a->hitboxY)) > a->hitboxH + b->hitboxH) {
+    dy = (u16)obj->y.p.whole - (u16)other->y.p.whole;
+    if ((u16)(dy + ((u16)other->hitboxY + (u16)obj->hitboxY)) > obj->hitboxH + other->hitboxH) {
         return 0;
     }
     d = dy;
     if (d <= 0) {
-        if (a->unk9C & 1) {
+        if (obj->unk9C & 1) {
             return 0;
         }
-        a->unkB0 = 0;
-        d = (u16)b->y.p.whole - ((u16)b->hitboxY + (u16)a->hitboxY);
-        a->y.p.frac = 0;
-        a->touchFlag = 1;
-        a->velY = 0;
-        a->y.p.whole = d;
-        b->touchFlag = 1;
+        obj->unkB0 = 0;
+        d = (u16)other->y.p.whole - ((u16)other->hitboxY + (u16)obj->hitboxY);
+        obj->y.p.frac = 0;
+        obj->touchFlag = 1;
+        obj->velY = 0;
+        obj->y.p.whole = d;
+        other->touchFlag = 1;
         return 1;
     }
-    if (a->unk9C == 0) {
+    if (obj->unk9C == 0) {
         return 0;
     }
     if (d < 9) {
         return 3;
     }
-    a->y.p.whole = (u16)b->y.p.whole + ((b->hitboxH - (u16)b->hitboxY) + (a->hitboxH - (u16)a->hitboxY));
-    if (a->velY < 0) {
-        a->velY = 0;
+    obj->y.p.whole = (u16)other->y.p.whole + ((other->hitboxH - (u16)other->hitboxY) + (obj->hitboxH - (u16)obj->hitboxY));
+    if (obj->velY < 0) {
+        obj->velY = 0;
     }
     return 3;
 }
@@ -2088,15 +2088,15 @@ void func_80053DA0(void)
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80053F08);
 
-static __inline__ s16 hit_53F08(GameObject *a, GameObject *b)
+static __inline__ s16 hit_53F08(GameObject *obj, GameObject *other)
 {
     s16 dx;
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
-    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitboxW + a->hitboxW)
+    dx = *(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2);
+    if ((u16)(dx + (*(u16 *)((u8 *)other + 0x6c) + *(u16 *)((u8 *)obj + 0x6c))) > other->hitboxW + obj->hitboxW)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitboxH + b->hitboxH)
+    if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
     D_1F80019E = 0;
     if (dx < 0)
@@ -2104,15 +2104,15 @@ static __inline__ s16 hit_53F08(GameObject *a, GameObject *b)
     return 1;
 }
 
-static __inline__ void col_53F08(GameObject *a, GameObject *b)
+static __inline__ void col_53F08(GameObject *obj, GameObject *other)
 {
     s32 r;
 
-    if (hit_53F08(a, b) >= 0) {
+    if (hit_53F08(obj, other) >= 0) {
         r = 1;
-        b->unk68 = 1;
-        b->unk9E = 0;
-        switch (func_800505E8(a, b)) {
+        other->unk68 = 1;
+        other->unk9E = 0;
+        switch (func_800505E8(obj, other)) {
         case 1:
         case 7:
             r = 1;
@@ -2121,9 +2121,9 @@ static __inline__ void col_53F08(GameObject *a, GameObject *b)
         case 5:
         case 10:
             r = 1;
-            a->unk6A = 1;
-            a->active = 2;
-            a->unkA8 = 0x4ff;
+            obj->unk6A = 1;
+            obj->active = 2;
+            obj->unkA8 = 0x4ff;
             break;
         case 0:
         case 3:
@@ -2131,27 +2131,27 @@ static __inline__ void col_53F08(GameObject *a, GameObject *b)
             r = 2;
             break;
         case 13:
-            b->unk68 = 0;
+            other->unk68 = 0;
             r = -1;
             break;
         case 6:
         case 11:
         case 12:
             r = 2;
-            a->unk6A = 1;
-            a->active = 2;
-            a->unkA8 = 0x4ff;
+            obj->unk6A = 1;
+            obj->active = 2;
+            obj->unkA8 = 0x4ff;
             break;
         case 2:
         case 8:
             r = 0;
-            b->unk9E = 1;
-            b->unk9F = 0;
+            other->unk9E = 1;
+            other->unk9F = 0;
             break;
         }
         if (r >= 0) {
-            func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
-            if ((b->category & 0x7f) == 4)
+            func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
+            if ((other->category & 0x7f) == 4)
                 playSFX(6);
             else
                 playSFX(7);
@@ -2164,96 +2164,96 @@ void func_80053F08(void)
     s16 n = D_1F800244;
     GameObject **pp = D_1F800218;
     GameObject **qq;
-    GameObject *a, *b;
+    GameObject *obj, *other;
 
     if ((*(s16 *)&D_1F800246) == 0)
         return;
     while (n != 0) {
-        a = *pp++;
+        obj = *pp++;
         n--;
-        if (!(a->active & 1) || a->unkA5 == 0)
+        if (!(obj->active & 1) || obj->unkA5 == 0)
             continue;
         qq = D_1F80021C;
         for (D_1F80019E = D_1F800246; D_1F80019E != 0;) {
-            b = *qq++;
+            other = *qq++;
             D_1F80019E--;
-            if (!(b->active & 1))
+            if (!(other->active & 1))
                 continue;
-            switch (b->type) {
+            switch (other->type) {
             case 0:
-                func_8012523C(a, b);
+                func_8012523C(obj, other);
                 break;
             case 1:
-                func_80124DF0(a, b);
+                func_80124DF0(obj, other);
                 break;
             case 2:
-                func_80052D5C(a, b);
+                func_80052D5C(obj, other);
                 break;
             case 10:
-                func_8011FD70(a, b);
+                func_8011FD70(obj, other);
                 break;
             case 11:
-                col_53F08(a, b);
+                col_53F08(obj, other);
                 break;
             case 4:
-                col_53F08(a, b);
+                col_53F08(obj, other);
                 break;
             case 14:
-                func_80052F20(a, b);
+                func_80052F20(obj, other);
                 break;
             case 18:
-                func_80124F60(a, b);
+                func_80124F60(obj, other);
                 break;
             case 6:
-                func_801250E8(a, b);
+                func_801250E8(obj, other);
                 break;
             case 7:
-                func_8005334C(a, b);
+                func_8005334C(obj, other);
                 break;
             case 8:
-                func_80124FC8(a, b);
+                func_80124FC8(obj, other);
                 break;
             case 30:
-                func_8011EAF4(a, b);
+                func_8011EAF4(obj, other);
                 break;
             case 16:
             case 26:
             case 28:
-                col_53F08(a, b);
+                col_53F08(obj, other);
                 break;
             case 39:
-                func_8011D0E0(a, b);
+                func_8011D0E0(obj, other);
                 break;
             case 17:
-                func_8012533C(a, b);
+                func_8012533C(obj, other);
                 break;
             case 19:
-                func_80124EC0(a, b);
+                func_80124EC0(obj, other);
                 break;
             case 33:
-                func_8011FEE4(a, b);
+                func_8011FEE4(obj, other);
                 break;
             case 40:
-                func_8011F2B4(a, b);
+                func_8011F2B4(obj, other);
                 break;
             case 41:
-                func_8011EC28(a, b);
+                func_8011EC28(obj, other);
                 break;
             case 56:
-                func_8011EB3C(a, b);
+                func_8011EB3C(obj, other);
                 break;
             case 58:
-                func_8011F884(a, b);
+                func_8011F884(obj, other);
                 break;
             case 59: case 60: case 61: case 62:
             case 63: case 64: case 65: case 66:
-                func_8011C620(a, b);
+                func_8011C620(obj, other);
                 break;
             case 71:
-                func_8011BEE4(a, b);
+                func_8011BEE4(obj, other);
                 break;
             case 79:
-                func_8011C334(a, b);
+                func_8011C334(obj, other);
                 break;
             }
         }
@@ -2262,15 +2262,15 @@ void func_80053F08(void)
 
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80054618);
 
-static __inline__ s16 hit_54618(GameObject *a, GameObject *b)
+static __inline__ s16 hit_54618(GameObject *obj, GameObject *other)
 {
     s16 dx;
-    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)a + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x44)) + 2) + 0x2d) >= 0x5b)
+    if ((u16)(*(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x44)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x44)) + 2) + 0x2d) >= 0x5b)
         return -1;
-    dx = *(u16 *)((u8 *)(*(char **)((u8 *)a + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)b + 0x40)) + 2);
-    if ((u16)(dx + (*(u16 *)((u8 *)b + 0x6c) + *(u16 *)((u8 *)a + 0x6c))) > b->hitboxW + a->hitboxW)
+    dx = *(u16 *)((u8 *)(*(char **)((u8 *)obj + 0x40)) + 2) - *(u16 *)((u8 *)(*(char **)((u8 *)other + 0x40)) + 2);
+    if ((u16)(dx + (*(u16 *)((u8 *)other + 0x6c) + *(u16 *)((u8 *)obj + 0x6c))) > other->hitboxW + obj->hitboxW)
         return -1;
-    if ((u16)((*(u16 *)((u8 *)a + 0x16) - *(u16 *)((u8 *)b + 0x16)) + (*(u16 *)((u8 *)a + 0x70) + *(u16 *)((u8 *)b + 0x70))) > a->hitboxH + b->hitboxH)
+    if ((u16)((*(u16 *)((u8 *)obj + 0x16) - *(u16 *)((u8 *)other + 0x16)) + (*(u16 *)((u8 *)obj + 0x70) + *(u16 *)((u8 *)other + 0x70))) > obj->hitboxH + other->hitboxH)
         return -1;
     D_1F80019E = 0;
     if (dx < 0)
@@ -2278,15 +2278,15 @@ static __inline__ s16 hit_54618(GameObject *a, GameObject *b)
     return 1;
 }
 
-static __inline__ void col_54618(GameObject *a, GameObject *b)
+static __inline__ void col_54618(GameObject *obj, GameObject *other)
 {
     s32 r;
 
-    if (hit_54618(a, b) >= 0) {
+    if (hit_54618(obj, other) >= 0) {
         r = 1;
-        b->unk68 = 1;
-        b->unk9E = 0;
-        switch (func_800505E8(a, b)) {
+        other->unk68 = 1;
+        other->unk9E = 0;
+        switch (func_800505E8(obj, other)) {
         case 1:
         case 7:
             r = 1;
@@ -2295,9 +2295,9 @@ static __inline__ void col_54618(GameObject *a, GameObject *b)
         case 5:
         case 10:
             r = 1;
-            a->unk6A = 1;
-            a->active = 2;
-            a->unkA8 = 0x4ff;
+            obj->unk6A = 1;
+            obj->active = 2;
+            obj->unkA8 = 0x4ff;
             break;
         case 0:
         case 3:
@@ -2305,27 +2305,27 @@ static __inline__ void col_54618(GameObject *a, GameObject *b)
             r = 2;
             break;
         case 13:
-            b->unk68 = 0;
+            other->unk68 = 0;
             r = -1;
             break;
         case 6:
         case 11:
         case 12:
             r = 2;
-            a->unk6A = 1;
-            a->active = 2;
-            a->unkA8 = 0x4ff;
+            obj->unk6A = 1;
+            obj->active = 2;
+            obj->unkA8 = 0x4ff;
             break;
         case 2:
         case 8:
             r = 0;
-            b->unk9E = 1;
-            b->unk9F = 0;
+            other->unk9E = 1;
+            other->unk9F = 0;
             break;
         }
         if (r >= 0) {
-            func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
-            if ((b->category & 0x7f) == 4)
+            func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
+            if ((other->category & 0x7f) == 4)
                 playSFX(6);
             else
                 playSFX(7);
@@ -2338,101 +2338,101 @@ void func_80054618(void)
     s16 n = D_1F800244;
     GameObject **pp = D_1F800218;
     GameObject **qq;
-    GameObject *a, *b;
+    GameObject *obj, *other;
 
     if ((*(s16 *)&D_1F80024C) == 0)
         return;
     while (n != 0) {
-        a = *pp++;
+        obj = *pp++;
         n--;
-        if (!(a->active & 1) || a->unkA5 == 0)
+        if (!(obj->active & 1) || obj->unkA5 == 0)
             continue;
         qq = D_1F800224;
         for (D_1F80019E = D_1F80024C; D_1F80019E != 0;) {
-            b = *qq++;
+            other = *qq++;
             D_1F80019E--;
-            if (!(b->active & 1))
+            if (!(other->active & 1))
                 continue;
-            switch (b->type) {
+            switch (other->type) {
             case 0:
-                func_800529A8(a, b);
+                func_800529A8(obj, other);
                 break;
             case 1:
-                func_80124D6C(a, b);
+                func_80124D6C(obj, other);
                 break;
             case 3:
-                func_800527C8(a, b);
+                func_800527C8(obj, other);
                 break;
             case 4:
                 if ((*(u16 *)&GAME) == 0) {
             case 2:
-                    func_80124CC8(a, b);
+                    func_80124CC8(obj, other);
                     break;
                 }
-                func_8011F218(a, b);
+                func_8011F218(obj, other);
                 break;
             case 5:
-                func_80124E1C(a, b);
+                func_80124E1C(obj, other);
                 break;
             case 0xb: case 0xc:
-                func_80124C1C(a, b);
+                func_80124C1C(obj, other);
                 break;
             case 6: case 0x42: case 0x43:
-                col_54618(a, b);
+                col_54618(obj, other);
                 break;
             case 10:
-                col_54618(a, b);
+                col_54618(obj, other);
                 break;
             case 0x14:
-                func_80124BA0(a, b);
+                func_80124BA0(obj, other);
                 break;
             case 0x15:
-                func_80124CCC(a, b);
+                func_80124CCC(obj, other);
                 break;
             case 0xf:
-                col_54618(a, b);
+                col_54618(obj, other);
                 break;
             case 0x1c:
-                func_8011FC08(a, b);
+                func_8011FC08(obj, other);
                 break;
             case 0x1d:
-                func_8011D25C(a, b);
+                func_8011D25C(obj, other);
                 break;
             case 0x23:
-                func_801252F4(a, b);
+                func_801252F4(obj, other);
                 break;
             case 0x28:
-                func_8011E8D4(a, b);
+                func_8011E8D4(obj, other);
                 break;
             case 0x1f:
-                func_8011E818(a, b);
+                func_8011E818(obj, other);
                 break;
             case 0x2e:
-                func_8011F634(a, b);
+                func_8011F634(obj, other);
                 break;
             case 0x2f:
-                func_80124C74(a, b);
+                func_80124C74(obj, other);
                 break;
             case 0x24:
-                func_8011E680(a, b);
+                func_8011E680(obj, other);
                 break;
             case 0x22:
-                func_8011E768(a, b);
+                func_8011E768(obj, other);
                 break;
             case 0x33:
-                func_801202E0(a, b);
+                func_801202E0(obj, other);
                 break;
             case 0x34:
-                func_8011E838(a, b);
+                func_8011E838(obj, other);
                 break;
             case 0x39:
-                func_800530F0(a, b);
+                func_800530F0(obj, other);
                 break;
             case 0x31:
-                func_80120710(a, b);
+                func_80120710(obj, other);
                 break;
             case 0x1e:
-                func_8011E6CC(a, b);
+                func_8011E6CC(obj, other);
                 break;
             }
         }
@@ -2444,119 +2444,119 @@ void func_80124200(GameObject *o, GameObject *e);
 void func_80123390(GameObject *o, GameObject *e);
 void func_8011F7C0(GameObject *o, GameObject *e);
 
-static __inline__ s16 hit_54D60(GameObject *o, GameObject *e)
+static __inline__ s16 hit_54D60(GameObject *obj, GameObject *other)
 {
-    if ((u16)(o->d->p.whole - e->d->p.whole + 0x2d) >= 0x5b)
+    if ((u16)(obj->d->p.whole - other->d->p.whole + 0x2d) >= 0x5b)
         return 0;
-    if ((u16)(o->h->p.whole - e->h->p.whole + (o->hitboxX + e->hitboxX)) > o->hitboxW + e->hitboxW)
+    if ((u16)(obj->h->p.whole - other->h->p.whole + (obj->hitboxX + other->hitboxX)) > obj->hitboxW + other->hitboxW)
         return 0;
-    if ((u16)(o->y.p.whole - e->y.p.whole + (o->hitboxY + e->hitboxY)) > o->hitboxH + e->hitboxH)
+    if ((u16)(obj->y.p.whole - other->y.p.whole + (obj->hitboxY + other->hitboxY)) > obj->hitboxH + other->hitboxH)
         return 0;
     return 1;
 }
 
-void func_80054D60(GameObject *o)
+void func_80054D60(GameObject *obj)
 {
     GameObject **pp;
-    GameObject *e;
+    GameObject *other;
 
     pp = D_1F800224;
     for (D_1F80019E = D_1F80024C; D_1F80019E != 0; ) {
-        e = *pp++;
+        other = *pp++;
         D_1F80019E--;
-        if (!(e->active & 1))
+        if (!(other->active & 1))
             continue;
-        switch (e->type) {
-        case 0: func_80051090(o, e); break;
-        case 1: func_80124200(o, e); break;
-        case 2: func_80124280(o, e); break;
-        case 3: func_80051EE0(o, e); break;
+        switch (other->type) {
+        case 0: func_80051090(obj, other); break;
+        case 1: func_80124200(obj, other); break;
+        case 2: func_80124280(obj, other); break;
+        case 3: func_80051EE0(obj, other); break;
         case 4:
             if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS)
-                func_801242E8(o, e);
+                func_801242E8(obj, other);
             else
-                func_8011F158(o, e);
+                func_8011F158(obj, other);
             break;
-        case 5: func_8012437C(o, e); break;
-        case 6: func_801245FC(o, e); break;
+        case 5: func_8012437C(obj, other); break;
+        case 6: func_801245FC(obj, other); break;
         case 7:
             switch (GAME.selectedArea) {
-            case 0: func_80123D24(o, e); break;
-            case 3: func_8011EF08(o, e); break;
-            case 4: func_8011E170(o, e); break;
-            case 9: func_8011F650(o, e); break;
+            case 0: func_80123D24(obj, other); break;
+            case 3: func_8011EF08(obj, other); break;
+            case 4: func_8011E170(obj, other); break;
+            case 9: func_8011F650(obj, other); break;
             }
             break;
-        case 9: func_80124054(o, e); break;
-        case 10: func_80124318(o, e); break;
-        case 0xb: func_80051DA4(o, e); break;
-        case 0xc: func_801243AC(o, e); break;
-        case 0x14: func_80123EE0(o, e); break;
-        case 0x15: func_801243DC(o, e); break;
-        case 0xe: func_801244E8(o, e); break;
-        case 0xf: func_801246C4(o, e); break;
-        case 0x17: func_80124240(o, e); break;
-        case 0x18: func_80124260(o, e); break;
-        case 0x12: func_80123390(o, e); break;
+        case 9: func_80124054(obj, other); break;
+        case 10: func_80124318(obj, other); break;
+        case 0xb: func_80051DA4(obj, other); break;
+        case 0xc: func_801243AC(obj, other); break;
+        case 0x14: func_80123EE0(obj, other); break;
+        case 0x15: func_801243DC(obj, other); break;
+        case 0xe: func_801244E8(obj, other); break;
+        case 0xf: func_801246C4(obj, other); break;
+        case 0x17: func_80124240(obj, other); break;
+        case 0x18: func_80124260(obj, other); break;
+        case 0x12: func_80123390(obj, other); break;
         case 0x1a:
-            e->touchFlag = 0;
-            if (hit_54D60(o, e)) {
-                if (e->type != 0x26)
-                    *(u8 *)&o->model = 4;
-                e->touchFlag = 1;
+            other->touchFlag = 0;
+            if (hit_54D60(obj, other)) {
+                if (other->type != 0x26)
+                    *(u8 *)&obj->model = 4;
+                other->touchFlag = 1;
             }
             break;
-        case 0x1c: func_8011F7C0(o, e); break;
-        case 0x1d: func_8011D23C(o, e); break;
-        case 0x23: func_80125FFC(o, e); break;
-        case 0x28: func_8011E964(o, e); break;
-        case 0x25: func_8011E868(o, e); break;
+        case 0x1c: func_8011F7C0(obj, other); break;
+        case 0x1d: func_8011D23C(obj, other); break;
+        case 0x23: func_80125FFC(obj, other); break;
+        case 0x28: func_8011E964(obj, other); break;
+        case 0x25: func_8011E868(obj, other); break;
         case 0x26:
-            e->touchFlag = 0;
-            if (hit_54D60(o, e)) {
-                if (e->type != 0x26)
-                    *(u8 *)&o->model = 4;
-                e->touchFlag = 1;
+            other->touchFlag = 0;
+            if (hit_54D60(obj, other)) {
+                if (other->type != 0x26)
+                    *(u8 *)&obj->model = 4;
+                other->touchFlag = 1;
             }
             break;
-        case 0x1f: func_8011E78C(o, e); break;
+        case 0x1f: func_8011E78C(obj, other); break;
         case 0x38:
-            e->touchFlag = 0;
-            if (hit_54D60(o, e)) {
-                *(u8 *)&o->unkA8 = 3;
-                *(u8 *)&o->model = 1;
-                e->touchFlag = 1;
+            other->touchFlag = 0;
+            if (hit_54D60(obj, other)) {
+                *(u8 *)&obj->unkA8 = 3;
+                *(u8 *)&obj->model = 1;
+                other->touchFlag = 1;
             }
             break;
-        case 0x24: func_8011E660(o, e); break;
-        case 0x22: func_8011E748(o, e); break;
-        case 0x33: func_8011FFA8(o, e); break;
-        case 0x34: func_8011DC04(o, e); break;
-        case 0x3b: func_8011D208(o, e); break;
-        case 0x31: func_80120404(o, e); break;
-        case 0x42: func_8011C6B4(o, e); break;
-        case 0x43: func_8011BCE0(o, e); break;
+        case 0x24: func_8011E660(obj, other); break;
+        case 0x22: func_8011E748(obj, other); break;
+        case 0x33: func_8011FFA8(obj, other); break;
+        case 0x34: func_8011DC04(obj, other); break;
+        case 0x3b: func_8011D208(obj, other); break;
+        case 0x31: func_80120404(obj, other); break;
+        case 0x42: func_8011C6B4(obj, other); break;
+        case 0x43: func_8011BCE0(obj, other); break;
         case 0x32:
         case 0x44:
-            e->touchFlag = 0;
-            if (func_80051284(o, e) == 1)
-                o->h->raw += e->velH << 8;
+            other->touchFlag = 0;
+            if (func_80051284(obj, other) == 1)
+                obj->h->raw += other->velH << 8;
             break;
         case 0x45:
-            switch (e->param) {
+            switch (other->param) {
             case 3:
                 if (GAME.selectedArea == AREA01_DWARFFOREST || (D_8009C62B & 0x40))
-                    func_80053BB4(o, e);
+                    func_80053BB4(obj, other);
                 break;
             case 4:
-                pushOutOfBoxX(o, e);
+                pushOutOfBoxX(obj, other);
                 break;
             default:
-                func_80051284(o, e);
+                func_80051284(obj, other);
                 break;
             }
             break;
-        case 0x1e: func_8011E67C(o, e); break;
+        case 0x1e: func_8011E67C(obj, other); break;
         }
     }
 }
@@ -2564,7 +2564,7 @@ void func_80054D60(GameObject *o)
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_8005548C);
 extern void func_80125DA8(GameObject *, u8 *);
 
-void func_8005548C(GameObject *o)
+void func_8005548C(GameObject *obj)
 {
     register u8 **r asm("$20");
     u8 *q;
@@ -2580,127 +2580,127 @@ void func_8005548C(GameObject *o)
         if (q[0] & 1) {
             switch (q[2]) {
             case 0:
-                func_80125630(o, q);
+                func_80125630(obj, q);
                 break;
             case 1:
-                func_80125274(o, q);
+                func_80125274(obj, q);
                 break;
             case 2:
                 switch (GAME.selectedArea) {
-                case 0: func_80124B38(o, q); break;
-                case 1: func_801233E0(o, q); break;
-                case 3: func_8011EC1C(o, q); break;
-                case 4: func_8011E254(o, q); break;
+                case 0: func_80124B38(obj, q); break;
+                case 1: func_801233E0(obj, q); break;
+                case 3: func_8011EC1C(obj, q); break;
+                case 4: func_8011E254(obj, q); break;
                 }
                 break;
             case 4:
             case 0x1b:
-                v = func_80051090(o, q);
+                v = func_80051090(obj, q);
                 if (v != 0) {
-                    if (*(u8 *)&o->unkAC == 1 && v == 1) {
+                    if (*(u8 *)&obj->unkAC == 1 && v == 1) {
                         q[0] = 2;
                         q[4] = 2;
                         q[5] = 1;
                         q[6] = 0;
                         q[0x69] = 0;
-                        { GameObject *p = o; *(u8 **)((char *)p + 0xe4) = q; }
-                        { GameObject *p = o; *(u8 *)&p->unkAC = 2; }
+                        { GameObject *p = obj; *(u8 **)((char *)p + 0xe4) = q; }
+                        { GameObject *p = obj; *(u8 *)&p->unkAC = 2; }
                     }
                     D_1F80019E = 0;
                 }
                 break;
             case 3:
             case 0x12:
-                func_8012543C(o, q);
+                func_8012543C(obj, q);
                 break;
             case 6:
-                func_80125584(o, q);
+                func_80125584(obj, q);
                 break;
             case 7:
                 switch (GAME.selectedArea) {
-                case 0: func_801248A0(o, q); break;
-                case 4: func_8011E3E4(o, q); break;
-                case 10: func_8011FC7C(o, q); break;
+                case 0: func_801248A0(obj, q); break;
+                case 4: func_8011E3E4(obj, q); break;
+                case 10: func_8011FC7C(obj, q); break;
                 }
                 break;
             case 8:
-                func_801257A8(o, q);
+                func_801257A8(obj, q);
                 break;
             case 0x1f:
-                if (GAME.selectedArea == AREA01_DWARFFOREST) func_80123748(o, q);
-                else func_8011D178(o, q);
+                if (GAME.selectedArea == AREA01_DWARFFOREST) func_80123748(obj, q);
+                else func_8011D178(obj, q);
                 break;
             case 9:
-                func_801259DC(o, q);
+                func_801259DC(obj, q);
                 break;
             case 10:
-                func_8011FFAC(o, q);
+                func_8011FFAC(obj, q);
                 break;
             case 0xb:
-                func_80125BB4(o, q);
+                func_80125BB4(obj, q);
                 break;
             case 0xe:
-                func_8005368C(o, q);
+                func_8005368C(obj, q);
                 break;
             case 0xf:
-                func_80125DA8(o, q);
+                func_80125DA8(obj, q);
                 break;
             case 0x11:
-                func_80125EF4(o, q);
+                func_80125EF4(obj, q);
                 break;
             case 0x15:
-                func_801254DC(o, q);
+                func_801254DC(obj, q);
                 break;
             case 0x13:
-                func_8012589C(o, q);
+                func_8012589C(obj, q);
                 break;
             case 0x1a:
-                func_8011F710(o, q);
+                func_8011F710(obj, q);
                 break;
             case 0x1c:
-                func_801204C4(o, q);
+                func_801204C4(obj, q);
                 break;
             case 0x17:
-                func_80123680(o, q);
+                func_80123680(obj, q);
                 break;
             case 0x16:
-                func_801235F8(o, q);
+                func_801235F8(obj, q);
                 break;
             case 0x1d:
-                func_8011F070(o, q);
+                func_8011F070(obj, q);
                 break;
             case 0x1e:
-                func_8011E978(o, q);
+                func_8011E978(obj, q);
                 break;
             case 0x21:
-                func_80120278(o, q);
+                func_80120278(obj, q);
                 break;
             case 0x22:
-                func_8012370C(o, q);
+                func_8012370C(obj, q);
                 break;
             case 0x28:
-                func_8011F490(o, q);
+                func_8011F490(obj, q);
                 break;
             case 0x29:
-                func_8011EC90(o, q);
+                func_8011EC90(obj, q);
                 break;
             case 0x2b:
-                func_80125354(o, q);
+                func_80125354(obj, q);
                 break;
             case 0x24:
-                func_8011EFD4(o, q);
+                func_8011EFD4(obj, q);
                 break;
             case 0x37:
-                func_8011EE24(o, q);
+                func_8011EE24(obj, q);
                 break;
             case 0x38:
-                func_8011E984(o, q);
+                func_8011E984(obj, q);
                 break;
             case 0x39:
-                func_8011E858(o, q);
+                func_8011E858(obj, q);
                 break;
             case 0x3a:
-                func_8011FA14(o, q);
+                func_8011FA14(obj, q);
                 break;
             case 0x3b:
             case 0x3c:
@@ -2710,25 +2710,25 @@ void func_8005548C(GameObject *o)
             case 0x40:
             case 0x41:
             case 0x42:
-                func_8011C47C(o, q);
+                func_8011C47C(obj, q);
                 break;
             case 0x43:
-                func_8011C384(o, q);
+                func_8011C384(obj, q);
                 break;
             case 0x46:
-                func_8011BB50(o, q);
+                func_8011BB50(obj, q);
                 break;
             case 0x47:
-                func_8011BDA4(o, q);
+                func_8011BDA4(obj, q);
                 break;
             case 0x48:
-                func_8011BF60(o, q);
+                func_8011BF60(obj, q);
                 break;
             case 0x49:
-                func_8011C0B0(o, q);
+                func_8011C0B0(obj, q);
                 break;
             case 0x4b:
-                func_8011C1A8(o, q);
+                func_8011C1A8(obj, q);
                 break;
             case 0x18:
             case 0x23:
@@ -2738,22 +2738,22 @@ void func_8005548C(GameObject *o)
             case 0x58:
             case 0x59:
             case 0x5a:
-                func_80053808(o, q);
+                func_80053808(obj, q);
                 break;
             case 0x4f:
-                func_8011C270(o, q);
+                func_8011C270(obj, q);
                 break;
             case 0x50:
-                func_8011BC04(o, q);
+                func_8011BC04(obj, q);
                 break;
             case 0x53:
-                func_8011D6F8(o, q);
+                func_8011D6F8(obj, q);
                 break;
             case 0x27:
-                func_8011CF54(o, q);
+                func_8011CF54(obj, q);
                 break;
             case 0x57:
-                func_80051284(o, q);
+                func_80051284(obj, q);
                 break;
             }
         }
@@ -2763,21 +2763,21 @@ void func_8005548C(GameObject *o)
 // INCLUDE_ASM("nonmatchings/main/game/actor1", func_80055A44);
 void func_80055A44(void *self)
 {
-    GameObject *o = self;
+    GameObject *obj = self;
     GameObject **pp;
-    GameObject *e;
+    GameObject *other;
 
     if (D_8009BCA0 == 0 && D_8009C618[0] != 3) {
         pp = (GameObject **)D_1F800228;
         for (D_1F80019E = D_1F800248; D_1F80019E != 0; ) {
-            e = *pp++;
+            other = *pp++;
             D_1F80019E--;
-            if (!(e->active & 3))
+            if (!(other->active & 3))
                 continue;
-            if (hit_54D60(o, e)) {
-                o->unk6A = 1;
-                e->active = 4;
-                setObjState(e, 2, 0, 0);
+            if (hit_54D60(obj, other)) {
+                obj->unk6A = 1;
+                other->active = 4;
+                setObjState(other, 2, 0, 0);
             }
         }
     }
@@ -2789,7 +2789,7 @@ void func_80055BA0(void)
     s16 *p;
     GameObject *obj;
 
-    if (SPAD->unk1A5 != 0) {
+    if (SPAD->debugNoAreaUpdate != 0) {
         return;
     }
     if (*(s32 *)&GAME == 6) {

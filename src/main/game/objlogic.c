@@ -207,7 +207,7 @@ void func_80034AB8(GameObject *obj)
 
 #define PADOK() ((*(volatile u16 *)&PAD_PRESSED & (*(u16 *)&D_1F8003C8)) && (*(P38_34C14 *)&PLAYER).b04 == 1 && (*(P38_34C14 *)&PLAYER).ba4 == 0)
 
-void func_80034C14(GameObject *o)
+void func_80034C14(GameObject *obj)
 {
     extern s16 angleBetweenPoints(Vec2s, Vec2s);
     extern void advanceAnimFrame(GameObject *, s32);
@@ -221,15 +221,15 @@ void func_80034C14(GameObject *o)
     s16 v2;
 
     D_8009B698->w2e = 0xffff;
-    switch (o->step) {
+    switch (obj->step) {
     case 0:
-        o->animFrame = (*(P38_34C14 *)&PLAYER).animFrame;
+        obj->animFrame = (*(P38_34C14 *)&PLAYER).animFrame;
         (*(P38_34C14 *)&PLAYER).b9d = 1;
-        D_8009B698->b7 = o->animFrame;
-        v = D_8007D60C[TB(o)];
-        o->drawType = DRAW_SPRITE;
-        o->active = 2;
-        o->unkAA = v;
+        D_8009B698->b7 = obj->animFrame;
+        v = D_8007D60C[TB(obj)];
+        obj->drawType = DRAW_SPRITE;
+        obj->active = 2;
+        obj->unkAA = v;
         D_8009B6A0->mode = 0;
         D_8009B698->w22 = 0;
         D_8009C968.w2 = 0;
@@ -237,169 +237,169 @@ void func_80034C14(GameObject *o)
         D_8009B6A0->shadowLen2 = 0;
         D_8009B6A0->w34 = 0;
         D_8009B6A0->w36 = 0;
-        o->unkA8 = 0;
+        obj->unkA8 = 0;
         if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7) {
-            o->child = (s32)D_8009E454;
+            obj->child = (s32)D_8009E454;
             *D_8009E454 = 2;
         }
-        IDX(o, i);
-        if (o->animFrame & 1) dx = 160 - D_8007D5E4[i];
+        IDX(obj, i);
+        if (obj->animFrame & 1) dx = 160 - D_8007D5E4[i];
         else dx = D_8007D5E4[i] - 32;
         dy = D_8007D5E6[i];
-        if (o->animFrame >= 6) {
+        if (obj->animFrame >= 6) {
             k = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
-            if (o->animFrame & 1) v2 = k - 4;
+            if (obj->animFrame & 1) v2 = k - 4;
             else v2 = k + 4;
-            o->velX = v2;
-            o->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
+            obj->velX = v2;
+            obj->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
         } else {
-            o->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
-            o->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
+            obj->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
+            obj->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
         }
-        o->h->p.whole = o->velX + ((s16 (*)(s32, s32))fixedMulCos)(((u16)o->unkAA + 0x80) & 0xff, 16);
-        o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 16);
-        o->d->p.whole = (*(P38_34C14 *)&PLAYER).d->p.whole;
-        o->unkA5 = 1;
-        o->hitboxX = 6;
-        o->hitboxY = 6;
-        o->hitboxW = 12;
-        o->hitboxH = 12;
+        obj->h->p.whole = obj->velX + ((s16 (*)(s32, s32))fixedMulCos)(((u16)obj->unkAA + 0x80) & 0xff, 16);
+        obj->y.p.whole = obj->velY + fixedMulSin(((u16)obj->unkAA + 0x80) & 0xff, 16);
+        obj->d->p.whole = (*(P38_34C14 *)&PLAYER).d->p.whole;
+        obj->unkA5 = 1;
+        obj->hitboxX = 6;
+        obj->hitboxY = 6;
+        obj->hitboxW = 12;
+        obj->hitboxH = 12;
         D_8009B6A0->frame = 0;
         switch (D_8009B698->b0) {
         case 2:
-            o->unkA8 = 0x1400;
+            obj->unkA8 = 0x1400;
             playSFXWithNote(3, 2);
-            o->unk98 = 1;
+            obj->unk98 = 1;
             break;
         case 1:
-            o->unkA8 = 0x1900;
+            obj->unkA8 = 0x1900;
             playSFXWithNote(3, 8);
-            o->unk98 = 2;
+            obj->unk98 = 2;
             break;
         }
-        o->velH = ((s16 (*)(s32, s32))fixedMulCos)(o->unkAA, o->unkA8);
-        o->velV = fixedMulSin(o->unkAA, o->unkA8);
+        obj->velH = ((s16 (*)(s32, s32))fixedMulCos)(obj->unkAA, obj->unkA8);
+        obj->velV = fixedMulSin(obj->unkAA, obj->unkA8);
         D_8009B698->w28 = 0xffff;
         D_8009B698->w2a = 0xffff;
-        func_800348FC(o);
+        func_800348FC(obj);
         advanceAnimFrame((GameObject *)&(*(P38_34C14 *)&PLAYER), 0);
-        o->unkAA += 0x80;
-        o->step++;
+        obj->unkAA += 0x80;
+        obj->step++;
         break;
     case 1:
         tickAnimation((GameObject *)&(*(P38_34C14 *)&PLAYER));
-        IDX(o, i);
-        if (o->animFrame & 1) dx = 160 - D_8007D5E4[i];
+        IDX(obj, i);
+        if (obj->animFrame & 1) dx = 160 - D_8007D5E4[i];
         else dx = D_8007D5E4[i] - 32;
         dy = D_8007D5E6[i];
-        if (o->animFrame >= 6) {
+        if (obj->animFrame >= 6) {
             k = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
-            if (o->animFrame & 1) v2 = k - 4;
+            if (obj->animFrame & 1) v2 = k - 4;
             else v2 = k + 4;
-            o->velX = v2;
-            o->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
+            obj->velX = v2;
+            obj->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
         } else {
-            o->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
-            o->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
+            obj->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
+            obj->velY = PLAYER_P38_34C14.y.p.whole + fixedMulSin((u8)dx, dy);
         }
-        o->h->p.whole = o->velX + ((s16 (*)(s32, s32))fixedMulCos)((u8)o->unkAA, 16);
-        o->y.p.whole = o->velY + fixedMulSin((u8)o->unkAA, 16);
+        obj->h->p.whole = obj->velX + ((s16 (*)(s32, s32))fixedMulCos)((u8)obj->unkAA, 16);
+        obj->y.p.whole = obj->velY + fixedMulSin((u8)obj->unkAA, 16);
         {
-            n = TB(o);
-            o->unkAA += D_8007D60A[n];
-            if (o->animFrame & 1) {
-                if (o->unkAA < D_8007D60A[n + 1] + 0x40) {
-                    func_8003473C(o);
-                    o->unkAA = D_8007D60A[n + 1];
+            n = TB(obj);
+            obj->unkAA += D_8007D60A[n];
+            if (obj->animFrame & 1) {
+                if (obj->unkAA < D_8007D60A[n + 1] + 0x40) {
+                    func_8003473C(obj);
+                    obj->unkAA = D_8007D60A[n + 1];
                     D_8009B6A0->mode = 1;
                     (*(P38_34C14 *)&PLAYER).d8c = 0;
-                    o->timer = 1;
-                    o->step++;
+                    obj->timer = 1;
+                    obj->step++;
                 }
             } else {
-                if (o->unkAA > D_8007D60A[n + 1] + 0xc0) {
-                    func_8003473C(o);
-                    o->unkAA = D_8007D60A[n + 1];
+                if (obj->unkAA > D_8007D60A[n + 1] + 0xc0) {
+                    func_8003473C(obj);
+                    obj->unkAA = D_8007D60A[n + 1];
                     D_8009B6A0->mode = 1;
                     (*(P38_34C14 *)&PLAYER).d8c = 0;
-                    o->timer = 1;
-                    o->step++;
+                    obj->timer = 1;
+                    obj->step++;
                 }
             }
         }
         break;
     case 2:
-        if (o->timer != 0 && --o->timer <= 0) {
-            o->timer = 0;
-            o->active = 1;
-            o->step++;
+        if (obj->timer != 0 && --obj->timer <= 0) {
+            obj->timer = 0;
+            obj->active = 1;
+            obj->step++;
         }
     case 3:
-        D_8009B6A0->shadowLen += (s16)o->unkA8 >> 8;
+        D_8009B6A0->shadowLen += (s16)obj->unkA8 >> 8;
         if (D_8009B6A0->shadowLen > 0x60 - D_8009B698->b0 * 16)
             D_8009B6A0->shadowLen = 0x60 - (D_8009B698->b0 << 4);
-        D_8009B6A0->shadowLen2 -= ((s16)o->unkA8 >> 8) * 2;
+        D_8009B6A0->shadowLen2 -= ((s16)obj->unkA8 >> 8) * 2;
         if (D_8009B6A0->shadowLen2 < 0) D_8009B6A0->shadowLen2 = 0;
         {
-            s16 s = o->unkA8 - 0x200;
-            o->unkA8 = s;
-            o->velH = ((s16 (*)(s32, s32))fixedMulCos)(o->unkAA, s);
+            s16 s = obj->unkA8 - 0x200;
+            obj->unkA8 = s;
+            obj->velH = ((s16 (*)(s32, s32))fixedMulCos)(obj->unkAA, s);
         }
-        o->velV = fixedMulSin(o->unkAA, o->unkA8);
-        applyObjectSpeedXY(o);
-        if (o->active == 1 && probeCollisionAtDepthB(o, o->h->p.whole, o->y.p.whole) != 0) {
+        obj->velV = fixedMulSin(obj->unkAA, obj->unkA8);
+        applyObjectSpeedXY(obj);
+        if (obj->active == 1 && probeCollisionAtDepthB(obj, obj->h->p.whole, obj->y.p.whole) != 0) {
             u16 u;
             s32 m;
-            func_800224FC(1, o->x.p.whole, o->y.p.whole, o->z.p.whole);
+            func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
             u = D_1F800282;
             m = u >> 5 & 0xf;
             if ((u & 0x3000) == 0 && m < 4 && m != 0)
-                func_800EA35C(o->h->p.whole, o->y.p.whole, o->d->p.whole, (u8)o->animFrame);
+                func_800EA35C(obj->h->p.whole, obj->y.p.whole, obj->d->p.whole, (u8)obj->animFrame);
             playSFX(5);
-            o->unkA8 = 0x4ff;
+            obj->unkA8 = 0x4ff;
         }
         (*(P38_34C14 *)&PLAYER).d8c = 0;
-        if (o->unkA8 >= 0x500) break;
+        if (obj->unkA8 >= 0x500) break;
         {
-            u16 w = D_8007D60C[TB(o)];
-            o->unkAA = w;
-            o->velX = o->h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((w + 0x80) & 0xff, 24);
+            u16 w = D_8007D60C[TB(obj)];
+            obj->unkAA = w;
+            obj->velX = obj->h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((w + 0x80) & 0xff, 24);
         }
-        o->velY = o->y.p.whole + fixedMulSin(((u16)o->unkAA + 0x80) & 0xff, 24);
+        obj->velY = obj->y.p.whole + fixedMulSin(((u16)obj->unkAA + 0x80) & 0xff, 24);
         {
             ObjectAC *q = D_8009B6A0;
             q->mode = 2;
             q->shadowLen2 = 0;
             D_8009B6A0->angle = 0;
         }
-        if (o->visible) {
-            s32 x = o->x.p.whole;
-            func_8002F05C(o, (s16)((o->animFrame & 1) ? x - 16 : x + 16), o->y.p.whole, o->z.p.whole);
+        if (obj->visible) {
+            s32 x = obj->x.p.whole;
+            func_8002F05C(obj, (s16)((obj->animFrame & 1) ? x - 16 : x + 16), obj->y.p.whole, obj->z.p.whole);
         }
-        o->step++;
+        obj->step++;
         break;
     case 4:
-        D_8009B6A0->shadowLen -= ((s16)o->unkA8 >> 8) * 2;
+        D_8009B6A0->shadowLen -= ((s16)obj->unkA8 >> 8) * 2;
         if (D_8009B6A0->shadowLen < 0) D_8009B6A0->shadowLen = 0;
-        o->h->p.whole = o->velX + ((s16 (*)(s32, s32))fixedMulCos)(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 24);
-        o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 24);
-        D_8009B6A0->angle += D_8007D60A[TB(o)] >> 1;
+        obj->h->p.whole = obj->velX + ((s16 (*)(s32, s32))fixedMulCos)(((u16)obj->unkAA + (u16)D_8009B6A0->angle) & 0xff, 24);
+        obj->y.p.whole = obj->velY + fixedMulSin(((u16)obj->unkAA + (u16)D_8009B6A0->angle) & 0xff, 24);
+        D_8009B6A0->angle += D_8007D60A[TB(obj)] >> 1;
         PLAYER_P38_34C14.d8c = 0;
-        if (o->animFrame & 1) {
+        if (obj->animFrame & 1) {
             {
                 u8 b = 1;
                 if (D_8009B6A0->angle < -32) b = 2;
                 D_8009B6A0->frame = b;
             }
             if (D_8009B6A0->angle >= -64) break;
-            o->unkAA = ((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff;
+            obj->unkAA = ((u16)obj->unkAA + (u16)D_8009B6A0->angle) & 0xff;
             D_8009B6A0->mode = 3;
-            func_8003481C(o);
+            func_8003481C(obj);
             advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
-            D_8009B6A0->angle = (D_8007D60A[TB(o) + 1] - 0x40) & 0xff;
-            o->unkA5 = 0;
-            o->active = 2;
-            o->step++;
+            D_8009B6A0->angle = (D_8007D60A[TB(obj) + 1] - 0x40) & 0xff;
+            obj->unkA5 = 0;
+            obj->active = 2;
+            obj->step++;
         } else {
             {
                 u8 b = 1;
@@ -407,172 +407,172 @@ void func_80034C14(GameObject *o)
                 D_8009B6A0->frame = b;
             }
             if (D_8009B6A0->angle <= 64) break;
-            o->unkAA = ((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff;
+            obj->unkAA = ((u16)obj->unkAA + (u16)D_8009B6A0->angle) & 0xff;
             D_8009B6A0->mode = 3;
-            func_8003481C(o);
+            func_8003481C(obj);
             advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
-            D_8009B6A0->angle = (D_8007D60A[TB(o) + 1] + 0x40) & 0xff;
-            o->unkA5 = 0;
-            o->active = 2;
-            o->step++;
+            D_8009B6A0->angle = (D_8007D60A[TB(obj) + 1] + 0x40) & 0xff;
+            obj->unkA5 = 0;
+            obj->active = 2;
+            obj->step++;
         }
         break;
     case 5:
         D_8009B6A0->frame = 0;
-        o->unkA8 = 0x1400;
+        obj->unkA8 = 0x1400;
         D_8009B6A0->shadowLen += 20;
         if (D_8009B6A0->shadowLen > 0x60 - D_8009B698->b0 * 16)
             D_8009B6A0->shadowLen = 0x60 - (D_8009B698->b0 << 4);
-        D_8009B6A0->shadowLen2 -= (s16)o->unkA8 >> 8;
+        D_8009B6A0->shadowLen2 -= (s16)obj->unkA8 >> 8;
         if (D_8009B6A0->shadowLen2 < 0) D_8009B6A0->shadowLen2 = 0;
-        if (o->animFrame & 1) o->velX = PLAYER.obj.h->p.whole + 16;
-        else o->velX = PLAYER.obj.h->p.whole - 16;
-        o->velY = (*(P38_34C14 *)&PLAYER).y.p.whole - 16;
-        t.x = o->velX + ((s16 (*)(s32, s32))fixedMulCos)(D_8009B6A0->angle, 12);
-        t.y = o->velY + fixedMulSin(D_8009B6A0->angle, 12);
-        c.x = o->h->p.whole;
-        c.y = o->y.p.whole;
-        o->unkAA = angleBetweenPoints(c, t);
-        o->velH = ((s16 (*)(s32, s32))fixedMulCos)(o->unkAA, o->unkA8);
-        o->velV = fixedMulSin(o->unkAA, o->unkA8);
-        applyObjectSpeedXY(o);
+        if (obj->animFrame & 1) obj->velX = PLAYER.obj.h->p.whole + 16;
+        else obj->velX = PLAYER.obj.h->p.whole - 16;
+        obj->velY = (*(P38_34C14 *)&PLAYER).y.p.whole - 16;
+        t.x = obj->velX + ((s16 (*)(s32, s32))fixedMulCos)(D_8009B6A0->angle, 12);
+        t.y = obj->velY + fixedMulSin(D_8009B6A0->angle, 12);
+        c.x = obj->h->p.whole;
+        c.y = obj->y.p.whole;
+        obj->unkAA = angleBetweenPoints(c, t);
+        obj->velH = ((s16 (*)(s32, s32))fixedMulCos)(obj->unkAA, obj->unkA8);
+        obj->velV = fixedMulSin(obj->unkAA, obj->unkA8);
+        applyObjectSpeedXY(obj);
         dx = t.x - c.x + 16;
         dy = t.y - c.y + 16;
         if ((u16)dx >= 32 || (u16)dy >= 32) break;
-        o->unkAA = D_8007D60C[TB(o)] + 0x80;
-        if (o->animFrame & 1) {
+        obj->unkAA = D_8007D60C[TB(obj)] + 0x80;
+        if (obj->animFrame & 1) {
             {
                 s16 pv = PLAYER.obj.h->p.whole;
-                o->unkAA = (*(volatile u16 *)&o->unkAA + 0x40) & 0xff;
-                o->velX = pv + 16;
+                obj->unkAA = (*(volatile u16 *)&obj->unkAA + 0x40) & 0xff;
+                obj->velX = pv + 16;
             }
         } else {
             {
                 s16 pv = PLAYER.obj.h->p.whole;
-                o->unkAA = (*(volatile u16 *)&o->unkAA - 0x40) & 0xff;
-                o->velX = pv - 16;
+                obj->unkAA = (*(volatile u16 *)&obj->unkAA - 0x40) & 0xff;
+                obj->velX = pv - 16;
             }
         }
-        o->velY = (*(P38_34C14 *)&PLAYER).y.p.whole - 16;
-        o->h->p.whole = o->velX + ((s16 (*)(s32, s32))fixedMulCos)(o->unkAA, 12);
-        o->y.p.whole = o->velY + fixedMulSin(o->unkAA, 12);
+        obj->velY = (*(P38_34C14 *)&PLAYER).y.p.whole - 16;
+        obj->h->p.whole = obj->velX + ((s16 (*)(s32, s32))fixedMulCos)(obj->unkAA, 12);
+        obj->y.p.whole = obj->velY + fixedMulSin(obj->unkAA, 12);
         D_8009B6A0->shadowLen2 = 0;
         D_8009B6A0->angle = 0;
         D_8009B6A0->mode = 0;
         (*(P38_34C14 *)&PLAYER).b9d = 0;
-        o->unkA5 = 0;
-        o->step++;
+        obj->unkA5 = 0;
+        obj->step++;
         break;
     case 6:
-        if (o->animFrame & 1) o->velX = PLAYER.obj.h->p.whole + 16;
-        else o->velX = PLAYER.obj.h->p.whole - 16;
-        o->velY = PLAYER_P38_34C14.y.p.whole - 16;
+        if (obj->animFrame & 1) obj->velX = PLAYER.obj.h->p.whole + 16;
+        else obj->velX = PLAYER.obj.h->p.whole - 16;
+        obj->velY = PLAYER_P38_34C14.y.p.whole - 16;
         tickAnimation((GameObject *)&PLAYER_P38_34C14);
-        D_8009B6A0->angle += D_8007D60A[TB(o)];
-        if (o->animFrame & 1) {
+        D_8009B6A0->angle += D_8007D60A[TB(obj)];
+        if (obj->animFrame & 1) {
             if (D_8009B6A0->angle < -64) {
                 if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7)
-                    *(u8 *)o->child = D_8009B698->b6;
+                    *(u8 *)obj->child = D_8009B698->b6;
                 if (PADOK() && (*(P38_34C14 *)&PLAYER).bac < 2 && D_8009BCA7_U8 == 0) {
-                    func_800EBA70((*(u8 *)&D_8009C61A), o);
+                    func_800EBA70((*(u8 *)&D_8009C61A), obj);
                     (*(P38_34C14 *)&PLAYER).b9d = 0;
                     D_8009B6A0->angle = 0;
-                    o->unkAA -= 0x40;
-                    o->step++;
+                    obj->unkAA -= 0x40;
+                    obj->step++;
                 } else {
                     PLAYER_P38_34C14.b9d = 0;
                     D_8009B6A0->mode = 0;
                     D_8009B698->b0 = 0;
-                    setObjState(o, 2, 0, 0);
+                    setObjState(obj, 2, 0, 0);
                 }
             }
         } else if (D_8009B6A0->angle > 64) {
             if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7)
-                *(u8 *)o->child = D_8009B698->b6;
+                *(u8 *)obj->child = D_8009B698->b6;
             if (!PADOK() || (*(P38_34C14 *)&PLAYER).bac >= 2 || D_8009BCA7_U8 != 0) {
                 PLAYER_P38_34C14.b9d = 0;
                 D_8009B6A0->mode = 0;
                 D_8009B698->b0 = 0;
-                setObjState(o, 2, 0, 0);
+                setObjState(obj, 2, 0, 0);
             } else {
-                func_800EBA70((*(u8 *)&D_8009C61A), o);
+                func_800EBA70((*(u8 *)&D_8009C61A), obj);
                 (*(P38_34C14 *)&PLAYER).b9d = 0;
                 D_8009B6A0->angle = 0;
-                o->unkAA += 0x40;
-                o->step++;
+                obj->unkAA += 0x40;
+                obj->step++;
             }
         }
-        o->h->p.whole = o->velX + ((s16 (*)(s32, s32))fixedMulCos)(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 12);
-        o->y.p.whole = o->velY + fixedMulSin(((u16)o->unkAA + (u16)D_8009B6A0->angle) & 0xff, 12);
+        obj->h->p.whole = obj->velX + ((s16 (*)(s32, s32))fixedMulCos)(((u16)obj->unkAA + (u16)D_8009B6A0->angle) & 0xff, 12);
+        obj->y.p.whole = obj->velY + fixedMulSin(((u16)obj->unkAA + (u16)D_8009B6A0->angle) & 0xff, 12);
         break;
     case 7:
-        o->animFrame = PLAYER_P38_34C14.animFrame;
-        func_800348FC(o);
+        obj->animFrame = PLAYER_P38_34C14.animFrame;
+        func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xc0, 2);
             playSFX(3);
         }
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, D_8009B698->w22 >> 2 & 3);
-        n = TB(o);
+        n = TB(obj);
         D_8009C968.w0 = 10;
         D_8009C968.w2 = 2;
         D_8009C968.w4 = D_8007D608[n];
-        o->unkAA += D_8007D60A[n];
-        if (o->unkAA >= 0x100) o->unkAA -= 0x100;
-        if (o->unkAA < 0) o->unkAA += 0x100;
-        IDX(o, i);
-        if (o->animFrame & 1) dx = 0x80 - D_8007D5E4[i];
+        obj->unkAA += D_8007D60A[n];
+        if (obj->unkAA >= 0x100) obj->unkAA -= 0x100;
+        if (obj->unkAA < 0) obj->unkAA += 0x100;
+        IDX(obj, i);
+        if (obj->animFrame & 1) dx = 0x80 - D_8007D5E4[i];
         else dx = D_8007D5E4[i];
         dy = D_8007D5E6[i];
-        o->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
-        o->velY = (*(P38_34C14 *)&PLAYER).y.p.whole + fixedMulSin((u8)dx, dy);
-        func_800349DC(&D_8009C968, o->unkAA, &dx, &dy);
-        o->h->p.whole = o->velX + dx;
-        o->y.p.whole = o->velY + dy;
+        obj->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
+        obj->velY = (*(P38_34C14 *)&PLAYER).y.p.whole + fixedMulSin((u8)dx, dy);
+        func_800349DC(&D_8009C968, obj->unkAA, &dx, &dy);
+        obj->h->p.whole = obj->velX + dx;
+        obj->y.p.whole = obj->velY + dy;
         if (!PADOK() || D_8009BCA7_U8 != 0) {
             (*(P38_34C14 *)&PLAYER).b9d = 1;
             D_8009B698->b0 = 2;
             D_8009B698->w22 = 0;
-            o->step = 0;
+            obj->step = 0;
         } else {
             D_8009B698->w22++;
         }
         if (D_8009B698->w22 < 61) break;
         D_8009B698->w22 = 0;
-        o->step++;
+        obj->step++;
         break;
     case 8:
-        o->animFrame = PLAYER_P38_34C14.animFrame;
-        func_800348FC(o);
+        obj->animFrame = PLAYER_P38_34C14.animFrame;
+        func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
         if ((D_1F8001F8 & 0xf) == 0) {
             func_80028A74(0, 0, 0xff, 2);
             playSFXWithNote(3, 6);
         }
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, D_8009B698->w22 / 3 & 3);
-        o->animFrame = PLAYER_P38_34C14.animFrame;
-        n = TB(o);
+        obj->animFrame = PLAYER_P38_34C14.animFrame;
+        n = TB(obj);
         D_8009C968.w0 = 16;
         D_8009C968.w2 = 4;
         D_8009C968.w4 = D_8007D608[n];
-        o->unkAA += D_8007D60A[n];
-        if (o->unkAA >= 0x100) o->unkAA -= 0x100;
-        if (o->unkAA < 0) o->unkAA += 0x100;
-        IDX(o, i);
-        if (o->animFrame & 1) dx = 0x80 - D_8007D5E4[i];
+        obj->unkAA += D_8007D60A[n];
+        if (obj->unkAA >= 0x100) obj->unkAA -= 0x100;
+        if (obj->unkAA < 0) obj->unkAA += 0x100;
+        IDX(obj, i);
+        if (obj->animFrame & 1) dx = 0x80 - D_8007D5E4[i];
         else dx = D_8007D5E4[i];
         dy = D_8007D5E6[i];
-        o->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
-        o->velY = (*(P38_34C14 *)&PLAYER).y.p.whole + fixedMulSin((u8)dx, dy);
-        func_800349DC(&D_8009C968, o->unkAA, &dx, &dy);
-        o->h->p.whole = o->velX + dx;
-        o->y.p.whole = o->velY + dy;
+        obj->velX = PLAYER.obj.h->p.whole + ((s16 (*)(s32, s32))fixedMulCos)((u8)dx, dy);
+        obj->velY = (*(P38_34C14 *)&PLAYER).y.p.whole + fixedMulSin((u8)dx, dy);
+        func_800349DC(&D_8009C968, obj->unkAA, &dx, &dy);
+        obj->h->p.whole = obj->velX + dx;
+        obj->y.p.whole = obj->velY + dy;
         if (!PADOK() || D_8009BCA7_U8 != 0) {
             D_8009B698->b0 = 1;
             D_8009B698->w22 = 0;
             (*(P38_34C14 *)&PLAYER).b9d = 1;
-            o->step = 0;
+            obj->step = 0;
         }
         D_8009B698->w22++;
         break;
@@ -587,15 +587,15 @@ void func_80034C14(GameObject *o)
         (*(P38_34C14 *)&PLAYER).substep = 0;
         D_8009B698->w2c = 13;
         if (D_8009B698->w2e != 13) {
-            func_800EEF64(o);
-            advanceAnimFrame(o, 0);
+            func_800EEF64(obj);
+            advanceAnimFrame(obj, 0);
             D_8009B698->w2e = D_8009B698->w2c;
         }
         D_8009B698->w2e = 0xffff;
         (*(P38_34C14 *)&PLAYER).b9d = 0;
         D_8009B6A0->mode = 0;
         D_8009B698->b0 = 0;
-        setObjState(o, 2, 0, 0);
+        setObjState(obj, 2, 0, 0);
     }
 }
 #undef IDX
@@ -655,7 +655,7 @@ void func_80036494(GameObject *obj)
         obj->state = 3;
         break;
     case 3:
-        freeObjectLayer1(obj);
+        freeWeaponObject(obj);
         break;
     }
 }
@@ -672,18 +672,18 @@ void func_800365DC(u8* self)
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80036618);
 s16 func_80036618(u8 *self)
 {
-    GameObject *o = (GameObject *)self;
+    GameObject *obj = (GameObject *)self;
     Vec2s b, a;
     GameObject *list[64];
     GameObject **p;
-    GameObject *q, *t;
+    GameObject *other, *t;
     Fix16 *h1, *h2;
     short i, m, n, c, k;
     short best;
     int wx, wy;
     short x;
 
-    p = (*(GameObject ***)&SPAD->unk260);
+    p = (*(GameObject ***)&SPAD->actorHeldList);
     D_1F80019E = D_1F800250;
     for (i = 0; i < 0x40; i++)
         list[i] = 0;
@@ -692,22 +692,22 @@ s16 func_80036618(u8 *self)
         wx = 0x80;
         wy = 0x90;
         do {
-        q = *p++;
+        other = *p++;
         D_1F80019E = x - 1;
-        if ((q->active & 1) && D_8007D638[q->type]) {
-            k = o->d->p.whole - q->d->p.whole + 0x2d;
+        if ((other->active & 1) && D_8007D638[other->type]) {
+            k = obj->d->p.whole - other->d->p.whole + 0x2d;
             c = (unsigned short)k < 0x5a;
-            if (o->animFrame & 1)
-                k = o->h->p.whole - q->h->p.whole;
+            if (obj->animFrame & 1)
+                k = obj->h->p.whole - other->h->p.whole;
             else
-                k = q->h->p.whole - o->h->p.whole;
+                k = other->h->p.whole - obj->h->p.whole;
             if ((unsigned short)k < wx)
                 c++;
-            k = o->y.p.whole - q->y.p.whole + 0x20;
+            k = obj->y.p.whole - other->y.p.whole + 0x20;
             if ((unsigned short)k < wy)
                 c++;
             if (c == 3) {
-                list[n] = q;
+                list[n] = other;
                 n++;
             }
         }
@@ -736,16 +736,16 @@ s16 func_80036618(u8 *self)
         if (i != 0) goto T;
         n--;
     T:
-        a.x = o->h->p.whole;
-        a.y = o->y.p.whole;
+        a.x = obj->h->p.whole;
+        a.y = obj->y.p.whole;
         for (i = 0; list[i] != 0; i++) {
             int r; int u;
             b.x = list[i]->h->p.whole;
             b.y = list[i]->y.p.whole;
             u = angleBetweenPoints(a, b); r = u;
-            u = u - (unsigned short)o->unkAA; if ((unsigned char)(u + k) < k * 2) {
-                o->unkAC = r;
-                if (o->y.p.whole < b.y)
+            u = u - (unsigned short)obj->unkAA; if ((unsigned char)(u + k) < k * 2) {
+                obj->unkAC = r;
+                if (obj->y.p.whole < b.y)
                     return 2;
                 return 1;
             }
@@ -1432,7 +1432,7 @@ void func_800383AC(GameObject *obj)
         obj->state = 3;
         break;
     case 3:
-        freeObjectLayer1(obj);
+        freeWeaponObject(obj);
         break;
     }
 }

@@ -62,7 +62,7 @@ void func_8011828C(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -87,7 +87,7 @@ void func_8011845C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -126,7 +126,7 @@ void func_80118514(GameObject *o)
         e->ce = D_80134BEC[7];
         e->d0 = 0;
         o->x.raw = (D_1F800176_S16Arr[0] - 0xa0) << 16;
-        { s16 r = (nextRandom() & 7) * 24 + 0x10; o->y.raw = (SCRATCHPAD.unk168[7].p.whole - r) << 16; }
+        { s16 r = (nextRandom() & 7) * 24 + 0x10; o->y.raw = (SCRATCHPAD.screenOrigin.y.p.whole - r) << 16; }
         o->velH = o->id << 7;
         break;
     case 2:
@@ -165,7 +165,7 @@ void func_80118720(GameObject *o)
         if (GAME.selectedSection == 3)
             o->y.raw = (-0x272 - (nextRandom() & 0xf) * 42) << 16;
         else
-            o->y.raw = (SCRATCHPAD.unk168[7].p.whole - ((nextRandom() & 7) * 32 + k)) << 16;
+            o->y.raw = (SCRATCHPAD.screenOrigin.y.p.whole - ((nextRandom() & 7) * 32 + k)) << 16;
         o->velH = o->id * 24;
         break;
     case 1:
@@ -178,7 +178,7 @@ void func_80118720(GameObject *o)
         if (GAME.selectedSection == 3)
             o->y.raw = (-0x272 - (nextRandom() & 0xf) * 42) << 16;
         else
-            o->y.raw = (SCRATCHPAD.unk168[7].p.whole - ((nextRandom() & 7) * 32 + k)) << 16;
+            o->y.raw = (SCRATCHPAD.screenOrigin.y.p.whole - ((nextRandom() & 7) * 32 + k)) << 16;
         o->velH = o->id * 24;
         break;
     case 2:
@@ -219,14 +219,14 @@ void func_80118A48(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         if (GAME.selectedSection != 3 && GAME.selectedSection < 4) func_80118514(o);
         else func_80118720(o);
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -258,7 +258,7 @@ void func_80118B88(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -293,7 +293,7 @@ void func_80118C7C(GameObject *o)
         switch (o->param) {
         case 0:
             o->visible = 1;
-            pushDrawListCapped(o);
+            pushEffectDrawList(o);
             switch (o->subState) {
             case 0:
                 o->subState++;
@@ -349,7 +349,7 @@ void func_80118C7C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -541,7 +541,7 @@ void func_80119894(GameObject *o)
         o->state = s + 1;
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -553,8 +553,8 @@ s32 func_80119A14(GameObject *o)
 {
     switch (o->step) {
     case 0:
-        if ((u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) + 0x20) > 0x40) return 0;
-        if ((u16)(o->y.p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) + 0x30) > 0x60) break;
+        if ((u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) + 0x20) > 0x40) return 0;
+        if ((u16)(o->y.p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) + 0x30) > 0x60) break;
         if ((*(u8*)((char*)&PLAYER.obj.model + 2)) == 1) return 1;
         if ((*(u8*)((char*)&PLAYER.obj.model + 2)) == 2) {
             o->localX = 0;
@@ -746,7 +746,7 @@ void func_80119BC4(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -827,7 +827,7 @@ void func_8011A318(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -847,8 +847,8 @@ s32 func_8011A674(GameObject *o)
     s32 dx, dy;
     s32 a;
 
-    dx = SCRATCHPAD.unk168[0].p.whole - o->h->p.whole;
-    dy = SCRATCHPAD.unk168[1].p.whole - o->y.p.whole;
+    dx = SCRATCHPAD.cameraTarget.x.p.whole - o->h->p.whole;
+    dy = SCRATCHPAD.cameraTarget.y.p.whole - o->y.p.whole;
     if (SquareRoot0(dx * dx + dy * dy) > 0x10) {
     a = (u8)angleFromDelta(dx, dy);
     o->unkB0 = a;
@@ -880,7 +880,7 @@ s32 func_8011A8D8(GameObject *o, s32 mode, s32 target)
     u8 thr;
 
     if (mode == 0)
-        t = angleFromDelta(SCRATCHPAD.unk168[0].p.whole - o->h->p.whole, SCRATCHPAD.unk168[1].p.whole - o->y.p.whole);
+        t = angleFromDelta(SCRATCHPAD.cameraTarget.x.p.whole - o->h->p.whole, SCRATCHPAD.cameraTarget.y.p.whole - o->y.p.whole);
     else if (mode == 1) {
         if (o->id & 2)
             t = (o->id & 1) << 7;
@@ -931,11 +931,11 @@ static __inline__ s32 near_1ABC0(GameObject *o)
     u16 t;
     s16 lim = 0xc8;
     if (((u8 *)&PLAYER)[0] == 2) return 0;
-    t = (*(u16*)((char*)&SCRATCHPAD.unk168[2].raw + 2)) - o->d->p.whole + 0x2d;
+    t = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.z.raw + 2)) - o->d->p.whole + 0x2d;
     if (t >= 0x5b) return 0;
-    t = (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) - o->h->p.whole + 0x64;
+    t = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) - o->h->p.whole + 0x64;
     if (t > lim) return 0;
-    t = (*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) - o->y.p.whole + 0x78;
+    t = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) - o->y.p.whole + 0x78;
     return t <= lim - 0x10;
 }
 

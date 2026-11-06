@@ -185,7 +185,7 @@ void func_800332CC(GameObject *obj)
         obj->state++;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -195,7 +195,7 @@ void func_800332CC(GameObject *obj)
 void func_80033374(char a, char b, char c)
 {
     s32 t;
-    char *p = allocObjectLayer3();
+    char *p = allocEffectObject();
     if (p != 0) {
         p[0] = 1;
         p[2] = 0x4e;
@@ -213,7 +213,7 @@ void func_80033374(char a, char b, char c)
 
 void func_80033404(s32 a, s32 b)
 {
-    GameObject *obj = allocObjectLayer3();
+    GameObject *obj = allocEffectObject();
     if (obj) {
         obj->active = 1;
         obj->type = 0x4e;
@@ -231,7 +231,7 @@ typedef struct { s32 a, y, b; } P3_33488;
 
 static __inline__ void spawn_33488(s16 sub, s32 idx)
 {
-    GameObject *obj = allocObjectLayer3();
+    GameObject *obj = allocEffectObject();
     if (obj != 0) {
         obj->active = 1;
         obj->type = 0x4e;
@@ -279,8 +279,8 @@ void func_80033858(void) {
 }
 #endif
 
-// INCLUDE_ASM("nonmatchings/main/game/areainit", dispatchAreaInitA);
-void dispatchAreaInitA(void)
+// INCLUDE_ASM("nonmatchings/main/game/areainit", dispatchAreaFrontPlaneInit);
+void dispatchAreaFrontPlaneInit(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
             func_8011BB54();
@@ -290,8 +290,8 @@ void dispatchAreaInitA(void)
     return;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/areainit", dispatchAreaInitB);
-void dispatchAreaInitB(void)
+// INCLUDE_ASM("nonmatchings/main/game/areainit", dispatchAreaBackPlaneInit);
+void dispatchAreaBackPlaneInit(void)
 {
     switch (GAME.selectedArea) {
         case AREA00_VILLAGEOFALLBEGINNINGS:

@@ -181,7 +181,7 @@ void func_80117CEC(GameObject *o)
             o->h->raw -= 0x18000;
         func_80117B5C(o);
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         switch (D_8009BCCE) {
         case 0:
             break;
@@ -213,7 +213,7 @@ void func_80117CEC(GameObject *o)
         o->h->raw += 0x18000;
         func_80117B5C(o);
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         break;
     }
 }
@@ -268,7 +268,7 @@ void func_80117F10(O_17F10 *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -284,7 +284,7 @@ void func_801180DC(char *o, s16 b, s16 c, s32 d)
     char *n;
     u16 t;
     do {
-        n = allocObjectLayer3();
+        n = allocEffectObject();
         if (n != 0) {
             n[0] = 1;
             n[2] = 2;
@@ -388,7 +388,7 @@ void func_801182E0(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -400,7 +400,7 @@ void func_80118500(s16 a, s16 b, s16 c, s16 d)
     s32 i;
     char *n;
     for (i = 0; i < 2; i++) {
-        n = allocObjectLayer3();
+        n = allocEffectObject();
         if (n != 0) {
             n[2] = 3;
             n[10] = 5;
@@ -445,7 +445,7 @@ void func_801185BC(char *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -477,7 +477,7 @@ void func_801186AC(char *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -512,7 +512,7 @@ void updateBubbleDroplet(char *o)
         o[4]++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -521,7 +521,7 @@ void updateBubbleDroplet(char *o)
 
 void func_801188D4(s32 a, s32 x, s32 y, s32 z)
 {
-    char *p = allocObjectLayer3();
+    char *p = allocEffectObject();
     if (p != 0) {
         p[0] = 1;
         p[2] = 8;

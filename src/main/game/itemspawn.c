@@ -349,7 +349,7 @@ void func_8004117C(GameObject *obj)
         ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[obj->id]](obj);
         break;
     case 3:
-        freeObjectLayer5(obj);
+        freeItemObject(obj);
         break;
     }
 }
@@ -400,7 +400,7 @@ void spawnItemChest(short arg0, short arg1, int arg2)
 
 void func_80041940(s32 type, s16 sub, s16 flag, Fix16 *pos, s16 vx, s16 vy)
 {
-    GameObject *obj = allocObjectLayer5();
+    GameObject *obj = allocItemObject();
     u8 c;
     s32 d;
 
@@ -564,7 +564,7 @@ void func_80041DB4(GameObject *obj)
         ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[obj->id]](obj);
         break;
     case 3:
-        freeObjectLayer5(obj);
+        freeItemObject(obj);
         break;
     }
 }
@@ -573,7 +573,7 @@ void func_80041DB4(GameObject *obj)
 void spawnItemFromEntry(u8* arg0, s16* arg1, s32 arg2, s32 arg3, u8* arg4) {
     u8* obj;
 
-    obj = allocObjectLayer5();
+    obj = allocItemObject();
     if (obj != NULL) {
         obj[0] = 4;
         obj[2] = 9;
@@ -653,7 +653,7 @@ void func_80042204(GameObject *obj)
         ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[obj->id]](obj);
         break;
     case 3:
-        freeObjectLayer5(obj);
+        freeItemObject(obj);
         break;
     }
 }
@@ -662,7 +662,7 @@ void func_80042204(GameObject *obj)
 void spawnItemLinked(u8* arg0, s16 arg1, s16 arg2, s16* arg3, u16 arg4, u16 arg5) {
     u8* obj;
 
-    obj = allocObjectLayer5();
+    obj = allocItemObject();
     if (obj != NULL) {
         obj[0] = 4;
         obj[2] = 3;
@@ -738,7 +738,7 @@ s16 y;
         t += D_8009BCCA;
     } else if ((GAME.selectedArea == 4 || GAME.selectedArea == 12) && D_8009BCCA < 4) {
         t = &D_8007E9E8[D_8009BCCA];
-        b = (char *)WHM_DATA_S32Arr[SPAD->unk1C8 & 1];
+        b = (char *)WHM_DATA_S32Arr[SPAD->axisSwap & 1];
     } else if (GAME.selectedArea == 3 && (D_8009BCCA == 1 || D_8009BCCA == 5)) {
         if (PLAYER.obj.d->p.whole < 0) {
             b = (char *)WHM_DATA_S32Arr[1];
@@ -754,7 +754,7 @@ s16 y;
         b = (char *)WHM_DATA_S32Arr[0];
         t += D_8009BCCA;
     }
-    if (SPAD->unk1C8 & 1)
+    if (SPAD->axisSwap & 1)
         r = (t->y - y) / 90;
     else
         r = (y - t->y) / 90;
@@ -772,7 +772,7 @@ inline s32 readCollisionTileShape(u8* arg0) {
     u16 pad;
     s32 dir;
 
-    pad = SPAD->unk282;
+    pad = SPAD->hitFlags;
     dir = (pad >> 5) & 0xF;
     if (!(pad & 0x3000)) {
         switch (dir) {
@@ -837,7 +837,7 @@ s16 func_80042C20(GameObject *obj)
 
     if (*(u8 *)&obj->unkAA != 0) return 0;
     if (obj->active == 5) return 0;
-    d = obj->h->p.whole - (*(u16 *)&SPAD->unk168[0].p.whole);
+    d = obj->h->p.whole - (*(u16 *)&SPAD->cameraTarget.x.p.whole);
     if (d == 0) {
         if (!(obj->animFrame & 1)) {
             dx = 8; dx2 = -8; t = 0; dir2 = 1;
@@ -922,11 +922,11 @@ void applyCollisionTileResponse(u8* arg0) {
         speed = -speed;
     }
     arg0[0x69] = 1;
-    tmp = (*(u16 *)&SPAD->unk284);
-    SPAD->unk1D2 = 1;
+    tmp = (*(u16 *)&SPAD->hitSurface);
+    SPAD->tileResponseActive = 1;
     arg0[0xA0] = 0;
     arg0[0xBE] = 0;
-    pad = SPAD->unk282;
+    pad = SPAD->hitFlags;
     *(s16*)(arg0 + 0xB0) = speed;
     *(u16*)(arg0 + 0xAE) = tmp;
     hi = pad >> 15;
@@ -962,7 +962,7 @@ void applyCollisionTileResponse(u8* arg0) {
                 break;
             }
         }
-        if (SPAD->unk282 & 0x1000) {
+        if (SPAD->hitFlags & 0x1000) {
             switch (dir2 & 3) {
             case 0:
                 arg0[0xA0] |= 0x10;

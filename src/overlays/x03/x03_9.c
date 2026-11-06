@@ -69,8 +69,8 @@ s32 func_8012C9BC(GameObject *o)
 
 static __inline__ s32 inview_2CA90(GameObject *o)
 {
-    if ((u16)(o->x.p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2)) + 0x64) >= 0x209) return 0;
-    return (u16)((*(u16 *)&SCRATCHPAD.unk168[7].p.whole) - o->y.p.whole + 0x80) < 0x1e1;
+    if ((u16)(o->x.p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2)) + 0x64) >= 0x209) return 0;
+    return (u16)((*(u16 *)&SCRATCHPAD.screenOrigin.y.p.whole) - o->y.p.whole + 0x80) < 0x1e1;
 }
 
 void func_8012CA90(GameObject *o)
@@ -79,7 +79,7 @@ void func_8012CA90(GameObject *o)
 
     switch (o->step) {
     case 0:
-        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 3) == 0 && inview_2CA90(o)) {
+        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 3) == 0 && inview_2CA90(o)) {
             o->timer = D_80135170[nextRandom() & 0xf];
             o->step++;
         }
@@ -104,7 +104,7 @@ void func_8012CA90(GameObject *o)
             o->unk7 = 0;
             o->anim = 0;
             if (isOnScreen(o->x.p.whole, o->y.p.whole)) {
-                e = allocObjectLayer3();
+                e = allocEffectObject();
                 if (e) {
                     e->active = 2;
                     e->type = 0x43;
@@ -191,7 +191,7 @@ void func_8012CDB8(GameObject *o)
         break;
     case 3:
         if (o->visible) {
-            e = allocObjectLayer3();
+            e = allocEffectObject();
             if (e) {
                 e->active = 2;
                 e->type = 0x43;

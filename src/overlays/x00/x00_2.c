@@ -119,7 +119,7 @@ void func_8011A0E8(GameObject *o)
         o->visible = 1;
         o->x.p.whole = o->localX - ((struct { char pad[0x176]; u16 v; } *)0x1F800000)->v;
         o->y.p.whole = o->localY - ((struct { char pad[0x186]; u16 v; } *)0x1F800000)->v;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         switch (o->id) {
         case 1:
             if (--o->timer == 0) {
@@ -146,7 +146,7 @@ void func_8011A0E8(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -192,7 +192,7 @@ void func_8011A530(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
     }
 }
 
@@ -234,7 +234,7 @@ void func_8011A800(GameObject *o)
             D_8009BCA7 = 0;
             D_8009BCA6 = 0;
             D_8009BCAA = 0;
-            freeObjectUnlayered(o);
+            freeAreaCtrlObject(o);
         }
         break;
     }
@@ -264,7 +264,7 @@ void func_8011A92C(GameObject *o)
             ((char *)o->parent)[4] = 3;
             D_8009BCA7 = 0;
             D_8009BCA6 = 0;
-            freeObjectLayer3(o);
+            freeEffectObject(o);
         }
         break;
     }
@@ -297,7 +297,7 @@ void func_8011AB40(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -375,7 +375,7 @@ void func_8011C360(O_1C360 *o)
         o->st = o->st + 1;
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -654,7 +654,7 @@ void func_8011DFB8(S_1DFB8 *o)
         o->b04++;
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -675,11 +675,11 @@ void func_8011E520(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        pushDrawListLayer4();
+        pushAreaDrawList();
         break;
     case 2:
     case 3:
-        freeObjectLayer4();
+        freeAreaObject();
         break;
     }
 }
@@ -733,7 +733,7 @@ void func_8011E958(GameObject *o)
         o->state++;
         break;
     case 3:
-        ((void (*)(GameObject *))freeObjectLayer4)(o);
+        ((void (*)(GameObject *))freeAreaObject)(o);
         break;
     }
 }

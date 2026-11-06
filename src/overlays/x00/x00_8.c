@@ -276,7 +276,7 @@ void func_801341A0(GameObject *o)
             break;
         case 20:
             {
-                C4C_341A0 *c = D_1F8001D4;
+                C4C_341A0 *c = (C4C_341A0 *)SCRATCHPAD.currentTask;
                 D_8009CD96 = 2;
                 D_8009CDA0 = 1;
                 D_8009CD94 = 0;
@@ -392,7 +392,7 @@ void func_801341A0(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

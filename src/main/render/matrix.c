@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004CFE0);
-void func_8004CFE0(void)
+// INCLUDE_ASM("nonmatchings/main/render/matrix", drawItemList);
+void drawItemList(void)
 {
     s32 n;
     s32 *p;
@@ -31,8 +31,8 @@ void func_8004CFE0(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/render/matrix", func_8004D0C0);
-void func_8004D0C0(void)
+// INCLUDE_ASM("nonmatchings/main/render/matrix", drawAreaList);
+void drawAreaList(void)
 {
     s32 n;
     s32 *p;

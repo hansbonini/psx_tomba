@@ -65,7 +65,7 @@ void func_80115EA8(GameObject *o)
         o->state = t + 1;
         break;
     case 3:
-        freeObjectLayer5(o);
+        freeItemObject(o);
         break;
     }
 }
@@ -150,7 +150,7 @@ void func_801162F8(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

@@ -35,7 +35,7 @@ void func_80115304(GameObject *o)
         D_8007C59C[o->id](o);
         if ((*(u8*)((char*)&PLAYER.obj.model + 2)) == 2) {
             stepPlayerXToward(0xa0);
-            if (SCRATCHPAD.unk168[2].p.whole >= 0x50) {
+            if (SCRATCHPAD.cameraTarget.z.p.whole >= 0x50) {
                 PLAYER.obj.state = PLAYER_SCRIPTED;
                 PLAYER.obj.visible = 0;
                 PLAYER.obj.subState = 0x41;
@@ -66,8 +66,8 @@ void func_80115304(GameObject *o)
             { s32 *g = &SCRATCHPAD.vpy.raw; *g += *k << 8; }
         }
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask **)&D_1F8001D4)->mode = 7;
-            (*(GameTask **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
         }
         break;
     }

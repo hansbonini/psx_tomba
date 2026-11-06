@@ -8,19 +8,19 @@
 // INCLUDE_ASM("nonmatchings/main/render/actorrender1", projectActorPosition);
 int projectActorPosition(u8* self, long* sxy, long* otz)
 {
-    SPAD->unk060.vx = *(u16*)(self + 0x12);
-    SPAD->unk060.vy = *(u16*)(self + 0x16);
+    SPAD->workVecA.vx = *(u16*)(self + 0x12);
+    SPAD->workVecA.vy = *(u16*)(self + 0x16);
     if (*(u_long*)&GAME.selectedArea == 0x10005 && (u16)(CURRENT_TASK)->state2 != 3) {
-        SPAD->unk060.vz = (s16)*(u16*)(self + 0x1A) >> 2;
+        SPAD->workVecA.vz = (s16)*(u16*)(self + 0x1A) >> 2;
     } else {
-        SPAD->unk060.vz = *(u16*)(self + 0x1A);
+        SPAD->workVecA.vz = *(u16*)(self + 0x1A);
     }
     SetRotMatrix(SCRATCH_VIEW_MATRIX);
     SetTransMatrix(SCRATCH_VIEW_MATRIX);
     gte_ldv0(&D_1F800060);
     gte_rtps_real();
     gte_stflg(&D_1F80008C);
-    if (SPAD->unk08C < 0) {
+    if (SPAD->gteWork.gteFlag < 0) {
         return 1;
     }
     gte_stsxy(sxy);
@@ -153,7 +153,7 @@ int func_80045D0C(u8* self)
         return self[0xA];
     }
     if (self[0xA] < 4) {
-        switch (SPAD->unk1C8 & 1) {
+        switch (SPAD->axisSwap & 1) {
         case 0:
             d = (*(u16 *)&SPAD->vpz.p.whole) - *(u16*)(self + 0x1A);
             break;

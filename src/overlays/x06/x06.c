@@ -38,12 +38,12 @@ void func_8011590C(GameObject *o)
         case 1:
             if ((u16)((*(u16*)&PLAYER.obj.x.p.whole) - 0x2e7) < 0x80 && PLAYER.obj.z.p.whole >= 0x5b) {
                 tryStartItemInteraction(o, 1, 0);
-            } else if (SCRATCHPAD.unk168[0].p.whole >= 0x3ad && SCRATCHPAD.unk168[1].p.whole >= -0x3b) {
+            } else if (SCRATCHPAD.cameraTarget.x.p.whole >= 0x3ad && SCRATCHPAD.cameraTarget.y.p.whole >= -0x3b) {
                 tryStartItemInteraction(o, 1, 1);
             }
             break;
         case 2:
-            if (SCRATCHPAD.unk168[0].p.whole < 0x1e && SCRATCHPAD.unk168[1].p.whole >= -0x3b)
+            if (SCRATCHPAD.cameraTarget.x.p.whole < 0x1e && SCRATCHPAD.cameraTarget.y.p.whole >= -0x3b)
                 tryStartItemInteraction(o, 1, 0);
             break;
         }
@@ -151,7 +151,7 @@ void func_80115D0C(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -190,7 +190,7 @@ void func_801160A0(s32 n, s16 x, s16 y, s16 z, s16 t)
     }
     if (i < 0)
         return;
-    o = allocObjectLayer3();
+    o = allocEffectObject();
     if (o == 0)
         return;
     h = n / 100000;
@@ -337,7 +337,7 @@ void func_80116498(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -840,7 +840,7 @@ void func_8011A238(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -897,7 +897,7 @@ void func_8011AD80(GameObject *o)
         ITEM_REWARD_TABLE[ITEM_REWARD_INDEX[o->id]](o);
         break;
     case 3:
-        freeObjectLayer5(o);
+        freeItemObject(o);
         break;
     }
 }
@@ -1244,7 +1244,7 @@ void func_8011E068(GameObject *o)
             o->rotZ = (o->rotZ - 0x14) & 0xff;
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

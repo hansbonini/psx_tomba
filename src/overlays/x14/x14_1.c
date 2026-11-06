@@ -26,15 +26,15 @@ INCLUDE_ASM("overlays/x14/nonmatchings/x14/x14_1", func_80117790);
 
 void func_8011781C(void)
 {
-    GameObject *n = allocObjectLayer3();
+    GameObject *n = allocEffectObject();
 
     if (n) {
         n->active = 1;
         n->type = 0x61;
         n->id = 5;
-        n->h->p.whole = ((u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2))[0];
-        n->y.p.whole = SCRATCHPAD.unk168[4].p.whole - 0x104;
-        n->d->p.whole = SCRATCHPAD.unk168[5].p.whole;
+        n->h->p.whole = ((u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2))[0];
+        n->y.p.whole = SCRATCHPAD.cameraPos.y.p.whole - 0x104;
+        n->d->p.whole = SCRATCHPAD.cameraPos.z.p.whole;
     }
 }
 
@@ -335,7 +335,7 @@ void func_80118960(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }

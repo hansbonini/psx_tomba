@@ -1,8 +1,8 @@
 #include "common.h"
 #include "game.h"
 
-// INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004DC34);
-void func_8004DC34(void)
+// INCLUDE_ASM("nonmatchings/main/render/sprite", drawModelList);
+void drawModelList(void)
 {
     s32 n;
     s32 *p;
@@ -31,9 +31,9 @@ void func_8004DC34(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/render/sprite", func_8004DD14);
+// INCLUDE_ASM("nonmatchings/main/render/sprite", drawFxList);
 
-void func_8004DD14(void)
+void drawFxList(void)
 {
     GameObject *obj;
     GameObject **p;
@@ -737,7 +737,7 @@ void func_8004F5A4(void)
     s32 k;
     s32 w;
 
-    switch (SPAD->unk3CD) {
+    switch (SPAD->menuCloseMode) {
     case 0:
         l = D_8007ED70;
         kind = MENU_KIND_0;
@@ -902,7 +902,7 @@ void func_8004F5A4(void)
     SetDrawMode(r, 0, 0, 0, 0);
     AddPrim((u_long *)D_1F8001E0 + 4, r);
     D_1F800164 = D_1F800164 + sizeof(DR_MODE);
-    switch (SPAD->unk3CD) {
+    switch (SPAD->menuCloseMode) {
     case 0:
         l = D_8007ED70;
         kind = 1;

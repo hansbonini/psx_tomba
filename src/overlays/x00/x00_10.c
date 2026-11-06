@@ -17,7 +17,7 @@ void func_80135DDC(GameObject *o)
     u32 f;
     switch (D_8009C111) {
     case 0:
-        n = allocObjectLayer2();
+        n = allocActorObject();
         if (n != 0) {
             n->active = 1;
             n->type = 0x14;
@@ -34,7 +34,7 @@ void func_80135DDC(GameObject *o)
         o->state = 3;
         break;
     default:
-        n = allocObjectLayer2();
+        n = allocActorObject();
         if (n != 0) {
             n->active = 1;
             n->type = 0x14;
@@ -274,7 +274,7 @@ void func_801366BC(O_366BC *o)
     if (D_8009C1B2 == 0xff)
         o->state = 3;
     if (D_8009C225 >= 6) st = 3; else {
-        n = allocObjectLayer2();
+        n = allocActorObject();
         if (n) {
             n->p0 = 1;
             n->f2 = 0x15;
@@ -625,7 +625,7 @@ void func_80137298(u8 *o)
         o[4] = 3;
         break;
     case 3:
-        freeObjectUnlayered();
+        freeAreaCtrlObject();
         break;
     }
 }
@@ -646,7 +646,7 @@ void func_8013734C(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -662,7 +662,7 @@ void func_801373FC(u8 *o)
         if (D_8009C1B2 == 0xff)
             o[4] = 3;
         if (D_8009C225 < 6) {
-            q = allocObjectLayer2();
+            q = allocActorObject();
             if (q != 0) {
                 q[0] = 1;
                 q[2] = 0x15;
@@ -693,7 +693,7 @@ void func_801373FC(u8 *o)
         o[4] = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }

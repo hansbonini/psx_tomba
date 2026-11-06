@@ -86,7 +86,7 @@ void func_80118944(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -152,7 +152,7 @@ void func_80119498(s32 x, s32 y, s32 z, u8 sub)
     void *a;
 
     if (D_8009BCCE < 3) {
-        o = allocObjectLayer3();
+        o = allocEffectObject();
         if (o != 0) {
             o->active = 1;
             o->type = 9;
@@ -180,7 +180,7 @@ void func_80119498(s32 x, s32 y, s32 z, u8 sub)
             o->c6.x = *(volatile s16 *)&o->c0.x;
             o->c6.y = *(volatile s16 *)&o->c0.y;
             o->c6.z = *(volatile s16 *)&o->c0.z;
-            p = allocObjectLayer3();
+            p = allocEffectObject();
             if (p != 0) {
                 p->active = 1;
                 p->type = 9;
@@ -220,7 +220,7 @@ void func_80119648(P_19648 *s, u8 t)
     s32 v, one;
     u16 x0, x1, x2;
     for (i = 0, one = 1, b = 4, c = 16, a = 5, tp = D_8013A504; i < 4; b += 4, c += 4, a += 2, i++, tp++) {
-        p = allocObjectLayer3();
+        p = allocEffectObject();
         if (p) {
             p->active = one;
             p->type = 9;
@@ -276,7 +276,7 @@ void func_8011998C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -368,7 +368,7 @@ void func_80119A94(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -379,7 +379,7 @@ void func_80119D80(s16 x, s16 y, s16 z)
     s32 i;
     char *o;
     for (i = 0; i < 3; i++) {
-        o = allocObjectLayer3();
+        o = allocEffectObject();
         if (o != 0) {
             *(u8 *)((u8 *)o + 0) = 1;
             *(u8 *)((u8 *)o + 2) = 0xb;
@@ -435,7 +435,7 @@ void func_80119E60(u8 *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

@@ -171,7 +171,7 @@ void func_80137888(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -204,7 +204,7 @@ void func_80137F84(GameObject *o)
         o->state = s + 1;
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -242,7 +242,7 @@ void func_80138084(GameObject *o)
             o->state++;
             break;
         case 3:
-            freeObjectLayer2(o);
+            freeActorObject(o);
             break;
         }
         break;

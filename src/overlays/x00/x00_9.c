@@ -127,7 +127,7 @@ void func_801353D4(u8 *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -150,7 +150,7 @@ void func_80135528(u8 *o)
         return;
     D_800A5403 = 0;
     D_800A5402 = 0;
-    a = allocObjectLayer3();
+    a = allocEffectObject();
     if (a != 0) {
         a[0] = 1;
         a[2] = 0x17;
@@ -165,7 +165,7 @@ void func_80135528(u8 *o)
         a[5] = 0;
         a[6] = 0;
     }
-    b = allocObjectLayer4();
+    b = allocAreaObject();
     if (b != 0) {
         b[0] = 1;
         b[2] = 0x18;
@@ -180,7 +180,7 @@ void func_80135528(u8 *o)
         b[5] = 0;
         b[6] = 0;
     }
-    c = allocObjectLayer4();
+    c = allocAreaObject();
     if (c != 0) {
         volatile s32 *pp = &D_1F800334;
         s32 base;

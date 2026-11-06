@@ -54,7 +54,7 @@ void func_80116444(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -78,7 +78,7 @@ void func_801164FC(GameObject *o)
 
     for (; p->f0 != 0xff; p = &base[++i]) {
         if (*(volatile u16 *)&p->f0 & 0x80) {
-            n = allocObjectLayer4();
+            n = allocAreaObject();
             if (n == 0) continue;
             n->active = 1;
             n->type = 0x1a;
@@ -90,7 +90,7 @@ void func_801164FC(GameObject *o)
             n->y.p.whole = p->f14;
             n->z.p.whole = p->f16;
         } else {
-            n = allocObjectLayer2();
+            n = allocActorObject();
             if (n) {
                 n->active = 3;
                 n->type = 0x32;
@@ -142,7 +142,7 @@ void func_8011673C(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -169,7 +169,7 @@ void func_801169AC(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }

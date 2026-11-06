@@ -78,14 +78,14 @@ void func_80046264(void)
     s32 u;
     SetLightMatrix(D_1F800118);
     func_8004637C();
-    func_80046CDC();
-    func_8004AD8C();
-    func_8004AFAC();
-    func_8004D0C0();
-    func_8004CFE0();
+    drawWeaponList();
+    drawActorList();
+    drawEffectList();
+    drawAreaList();
+    drawItemList();
     func_8004DB3C();
-    func_8004DC34();
-    func_8004DD14();
+    drawModelList();
+    drawFxList();
     if (D_1F8001C6 == 1)
         func_8004F5A4();
     switch (D_8009BCDD) {
@@ -196,7 +196,7 @@ GameObject *obj;
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -284,10 +284,10 @@ GameObject *obj;
 #undef C_46428
 #undef D_46428
 
-// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_80046CDC);
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", drawWeaponList);
 typedef struct { char p0[1]; u8 vis; char p1[8]; u8 k; } O_46CDC;
 
-void func_80046CDC(void)
+void drawWeaponList(void)
 {
     s32 n;
     O_46CDC **pp;
@@ -334,32 +334,32 @@ void func_80046CDC(void)
 #define SIN(i) NEG_SIN_TABLE[i]
 
 #define SHADOW(q) { \
-    p = (POLY_FT4 *)D_1F800164; \
-    func_8004FE24(o, D_8009B6A0->x, D_8009B6A0->y); \
-    p->code = 0x2c; \
-    SetSemiTrans(p, 1); \
-    p->tpage = D_8009B6A0->tpage2; \
-    p->clut = D_8009B6A0->clut2; \
-    p->u0 = 0xc0; \
-    p->u2 = 0xc0; \
-    p->v0 = 0; \
-    p->u1 = 0xcf; \
-    p->v1 = 0; \
-    p->v2 = 0xf; \
-    p->u3 = 0xcf; \
-    p->v3 = 0xf; \
-    p->x0 = q[0]; \
-    p->x1 = q[2]; \
-    p->x2 = q[4]; \
-    p->x3 = q[6]; \
-    p->y0 = q[1]; \
-    p->y1 = q[3]; \
-    p->y2 = q[5]; \
-    p->y3 = q[7]; \
-    p->r0 = 0x40; \
-    p->g0 = 0x40; \
-    p->b0 = 0x40; \
-    if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority - 5, 0x9000000) == 0) \
+    poly = (POLY_FT4 *)D_1F800164; \
+    func_8004FE24(obj, D_8009B6A0->x, D_8009B6A0->y); \
+    poly->code = 0x2c; \
+    SetSemiTrans(poly, 1); \
+    poly->tpage = D_8009B6A0->tpage2; \
+    poly->clut = D_8009B6A0->clut2; \
+    poly->u0 = 0xc0; \
+    poly->u2 = 0xc0; \
+    poly->v0 = 0; \
+    poly->u1 = 0xcf; \
+    poly->v1 = 0; \
+    poly->v2 = 0xf; \
+    poly->u3 = 0xcf; \
+    poly->v3 = 0xf; \
+    poly->x0 = q[0]; \
+    poly->x1 = q[2]; \
+    poly->x2 = q[4]; \
+    poly->x3 = q[6]; \
+    poly->y0 = q[1]; \
+    poly->y1 = q[3]; \
+    poly->y2 = q[5]; \
+    poly->y3 = q[7]; \
+    poly->r0 = 0x40; \
+    poly->g0 = 0x40; \
+    poly->b0 = 0x40; \
+    if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority - 5, 0x9000000) == 0) \
         D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1); \
 }
 
@@ -396,7 +396,7 @@ s32 m, n2, m2, n;
     poly->y3 = y + ((m2 * SIN(a0)) >> 12) + ((n2 * SIN((a0 + 0xc0) & 0xff)) >> 12);
 }
 
-void func_80046EC0(GameObject *o)
+void func_80046EC0(GameObject *obj)
 {
     Vec2s s;
     Vec2s t;
@@ -407,17 +407,17 @@ void func_80046EC0(GameObject *o)
     s16 idx;
     s16 x, y;
     u32 a0, a1;
-    POLY_FT4 *p;
+    POLY_FT4 *poly;
     s32 ang, c, sn, r;
     s16 k;
     s16 t1;
 
-    D_1F800060.vx = o->x.p.whole;
-    D_1F800062 = o->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
-        D_1F800064 = o->z.p.whole >> 2;
+    D_1F800060.vx = obj->x.p.whole;
+    D_1F800062 = obj->y.p.whole;
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
+        D_1F800064 = obj->z.p.whole >> 2;
     else
-        D_1F800064 = o->z.p.whole;
+        D_1F800064 = obj->z.p.whole;
     SetRotMatrix(D_1F8000C0);
     SetTransMatrix(D_1F8000C0_CharArr);
     if (proj_46EC0()) return;
@@ -426,8 +426,8 @@ void func_80046EC0(GameObject *o)
     y = (unsigned long)LZ_FILE_CTRL_Long >> 16;
     D_8009B6A0->x = x;
     D_8009B6A0->y = y;
-    a0 = o->rotZ & 0xff;
-    a1 = (o->rotZ + 0x80) & 0xff;
+    a0 = obj->rotZ & 0xff;
+    a1 = (obj->rotZ + 0x80) & 0xff;
     if (D_800A5435)
         k = D_8009B698->b7;
     else
@@ -469,12 +469,12 @@ void func_80046EC0(GameObject *o)
             SHADOW(D_8009B6A0->shadow);
         if (D_8009B6A0->shadowLen2 > 0)
             SHADOW(D_8009B6A0->shadow2);
-        p = (POLY_FT4 *)D_1F800164;
-        p->code = 0x2d;
-        SetSemiTrans(p, 0);
-        p->tpage = D_8009B6A0->tpage;
-        p->clut = D_8009B6A0->clut2;
-        setUV4(p, D_8009B6A0->frame * 32 - 0x80, 0x10, D_8009B6A0->frame * 32 - 0x61, 0x10, D_8009B6A0->frame * 32 - 0x80, 0x1f, D_8009B6A0->frame * 32 - 0x61, 0x1f);
+        poly = (POLY_FT4 *)D_1F800164;
+        poly->code = 0x2d;
+        SetSemiTrans(poly, 0);
+        poly->tpage = D_8009B6A0->tpage;
+        poly->clut = D_8009B6A0->clut2;
+        setUV4(poly, D_8009B6A0->frame * 32 - 0x80, 0x10, D_8009B6A0->frame * 32 - 0x61, 0x10, D_8009B6A0->frame * 32 - 0x80, 0x1f, D_8009B6A0->frame * 32 - 0x61, 0x1f);
         s.x = D_8009B6A0->x;
         s.y = D_8009B6A0->y;
         if (D_800A5460 && *D_800A53BC_U16Ptr >= 0xa9) {
@@ -486,7 +486,7 @@ void func_80046EC0(GameObject *o)
             s16 an;
             t0 = (s8)tbl[idx];
             k = (s8)tbl[idx + 1];
-            if (o->animFrame & 1) {
+            if (obj->animFrame & 1) {
                 if (D_800A5448 <= 0) {
                     kk = k;
                     an = D_800A5424_S32 + 0x180;
@@ -513,43 +513,43 @@ void func_80046EC0(GameObject *o)
         {
             s32 b1 = (r + 0x140) & 0xff;
             s32 b2;
-            setXY0(p, t.x + fixedMulCos(b1, 8), t.y + fixedMulSin(b1, 8));
+            setXY0(poly, t.x + fixedMulCos(b1, 8), t.y + fixedMulSin(b1, 8));
             b2 = (r + 0xc0) & 0xff;
-            p->x2 = t.x + fixedMulCos(b2, 8);
-            p->y2 = t.y + fixedMulSin(b2, 8);
-            p->x1 = s.x + fixedMulCos(b1, 8);
-            p->y1 = s.y + fixedMulSin(b1, 8);
-            p->x3 = s.x + fixedMulCos(b2, 8);
-            p->y3 = s.y + fixedMulSin(b2, 8);
+            poly->x2 = t.x + fixedMulCos(b2, 8);
+            poly->y2 = t.y + fixedMulSin(b2, 8);
+            poly->x1 = s.x + fixedMulCos(b1, 8);
+            poly->y1 = s.y + fixedMulSin(b1, 8);
+            poly->x3 = s.x + fixedMulCos(b2, 8);
+            poly->y3 = s.y + fixedMulSin(b2, 8);
         }
-        if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority - 3, 0x9000000) == 0)
+        if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority - 3, 0x9000000) == 0)
             D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
     }
-    p = (POLY_FT4 *)D_1F800164;
-    p->code = 0x2d;
-    SetSemiTrans(p, o->drawFlags >> 7);
+    poly = (POLY_FT4 *)D_1F800164;
+    poly->code = 0x2d;
+    SetSemiTrans(poly, obj->drawFlags >> 7);
     {
     u16 cl;
-    p->tpage = D_8009B6A0->tpage;
+    poly->tpage = D_8009B6A0->tpage;
     cl = D_8009B6A0->clut;
     k = (D_1F8001F8 & 3) * D_8007EB7C;
-    setUV4(p, k - 0x80, 0, p->u0 + (u8)D_8007EB7C - 1, p->v0, p->u0, p->v0 + (u8)D_8007EB7E - 1, p->u1, p->v2);
-    *(u16 *)((char *)p + 14) = cl;
+    setUV4(poly, k - 0x80, 0, poly->u0 + (u8)D_8007EB7C - 1, poly->v0, poly->u0, poly->v0 + (u8)D_8007EB7E - 1, poly->u1, poly->v2);
+    *(u16 *)((char *)poly + 14) = cl;
     }
     if (D_800A5460 && *D_800A53BC_U16Ptr >= 0xa9) {
         s32 t, g = D_800A5424_S32;
-        if (o->animFrame & 1)
+        if (obj->animFrame & 1)
             t = g + 0xc0;
         else
             t = g + 0x40;
         a0 = t & 0xff;
         a1 = (a0 + 0x80) & 0xff;
     }
-    if (o->animFrame & 1)
-        quadA_46EC0(p, x, y, a0, a1);
+    if (obj->animFrame & 1)
+        quadA_46EC0(poly, x, y, a0, a1);
     else
-        quadB_46EC0(p, x, y, a0, a1);
-    if (otadd_46EC0((unsigned long *)p, D_1F8001E0 + 0x10, D_1F800074, (s8)o->priority - 4, 0x9000000) == 0)
+        quadB_46EC0(poly, x, y, a0, a1);
+    if (otadd_46EC0((unsigned long *)poly, D_1F8001E0 + 0x10, D_1F800074, (s8)obj->priority - 4, 0x9000000) == 0)
         D_1F800164 = (u8 *)((POLY_FT4 *)D_1F800164 + 1);
 }
 #undef COS
@@ -576,7 +576,7 @@ void func_80047FC8(GameObject *obj)
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -662,7 +662,7 @@ void func_800487A4(GameObject *obj)
     if (obj->anim == NULL) return;
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -727,7 +727,7 @@ void func_80048BF0(GameObject *obj)
     if (obj->anim == NULL) return;
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -738,7 +738,7 @@ void func_80048BF0(GameObject *obj)
     n = e[0];
     f = (SprFrag *)(*(volatile s32 *)&obj->spriteBank + e[1]);
     if (obj->drawType == DRAW_SPRITE_SCALED) {
-        switch (SPAD->unk1C8 & 1) {
+        switch (SPAD->axisSwap & 1) {
         case 0:
             d = VIEW_CAMERA.pos[2].p.whole - obj->z.p.whole;
             k = obj->scale * (d * 7 + 0x1000) >> 12;
@@ -802,7 +802,7 @@ void func_80049134(GameObject *obj)
     if (obj->anim == NULL) return;
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -888,7 +888,7 @@ void func_80049994(GameObject *obj)
     if (obj->anim == NULL) return;
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -904,7 +904,7 @@ void func_80049994(GameObject *obj)
     D_1F800078 = e[0];
     f = (SprFrag *)(obj->spriteBank + e[1]);
     if (obj->drawType & 1) {
-        switch (SPAD->unk1C8 & 1) {
+        switch (SPAD->axisSwap & 1) {
         case 0:
             d = VIEW_CAMERA.pos[2].p.whole - obj->z.p.whole;
             s = obj->scale * (d * 7 + 0x1000) >> 12;
@@ -977,7 +977,7 @@ void func_8004A300(GameObject *obj)
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -1028,7 +1028,7 @@ void func_8004A6A0(GameObject *obj)
 
     D_1F800060.vx = obj->x.p.whole;
     D_1F800062 = obj->y.p.whole;
-    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&D_1F8001D4)->w4c != 3)
+    if ((*(s32 *)&GAME) == 0x10005 && (*(C4C_46EC0 **)&SCRATCHPAD.currentTask)->w4c != 3)
         D_1F800064 = obj->z.p.whole >> 2;
     else
         D_1F800064 = obj->z.p.whole;
@@ -1125,10 +1125,10 @@ void func_8004AA70(GameObject *obj)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AD8C);
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", drawActorList);
 extern GameObject **D_1F800260;
 
-void func_8004AD8C(void)
+void drawActorList(void)
 {
     s32 n;
     GameObject **p;
@@ -1174,12 +1174,12 @@ void func_8004AD8C(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/render/actorrender2", func_8004AFAC);
+// INCLUDE_ASM("nonmatchings/main/render/actorrender2", drawEffectList);
 
 void func_8004BAF0(GameObject *o);
 void func_800EC0E8(GameObject *o);
 
-void func_8004AFAC(void)
+void drawEffectList(void)
 {
     s32 n;
     GameObject **p;

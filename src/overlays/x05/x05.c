@@ -45,16 +45,16 @@ void func_80115330(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        o->x.p.whole = o->localX - (*(u16*)((char*)&SCRATCHPAD.unk168[3].raw + 2));
-        o->y.p.whole = o->localY - (u16)SCRATCHPAD.unk168[7].p.whole;
-        pushDrawListCapped(o);
+        o->x.p.whole = o->localX - (*(u16*)((char*)&SCRATCHPAD.cameraPos.x.raw + 2));
+        o->y.p.whole = o->localY - (u16)SCRATCHPAD.screenOrigin.y.p.whole;
+        pushEffectDrawList(o);
         tickAnimation(o);
         break;
     case 2:
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -99,7 +99,7 @@ void func_801159E0(GameObject *o)
         p = (GameObject *)o->parent;
         if (p->state != 2) break;
         p->state = 3;
-        SCRATCHPAD.unk1C6 = 0;
+        SCRATCHPAD.drawFrozen = 0;
         ((u8*)&D_8009BC98.unk12)[0] = 0;
         ((s16*)&PLAYER.obj.unkB2)[0] = 0;
         if (D_8009BC98.unk0F == 0) {
@@ -163,7 +163,7 @@ void func_80115E94(GameObject *o)
             addItemToInventory(ITEM_WINE, 1, 1);
             *f = 1;
         }
-        SCRATCHPAD.unk1C6 = 0;
+        SCRATCHPAD.drawFrozen = 0;
         ((u8*)&D_8009BC98.unk12)[0] = 0;
         ((s16*)&PLAYER.obj.unkB2)[0] = 0;
         if (((u8*)&D_8009BC98.unk0F)[0] == 0) {
@@ -240,7 +240,7 @@ void func_8011697C(GameObject *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }

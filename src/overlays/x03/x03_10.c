@@ -130,7 +130,7 @@ extern s16 isObjectPastReferenceX(GameObject *o);
 
 static __inline__ s32 side_2D6C8(GameObject *o)
 {
-    u16 d = (*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2));
+    u16 d = (*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2));
     if ((u16)(d - o->y.p.whole + 0x60) < 0xc0) return 0;
     return (s16)d > o->y.p.whole ? 6 : 2;
 }
@@ -217,7 +217,7 @@ void func_8012D6C8(GameObject *o)
 
 static __inline__ void spawn_2DA00(GameObject *o, s32 sub)
 {
-    GameObject *n = allocObjectLayer2();
+    GameObject *n = allocActorObject();
     if (n) {
         n->active = 2;
         n->type = 0x39;
@@ -572,7 +572,7 @@ void func_8012E874(GameObject *o)
                 }
                 break;
             }
-            if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0xf) == 0) {
+            if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0xf) == 0) {
                 func_80023020(o);
             }
             o->unk9D = 0;
@@ -711,7 +711,7 @@ void func_8012ECF0(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -741,7 +741,7 @@ void func_8012EF14(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

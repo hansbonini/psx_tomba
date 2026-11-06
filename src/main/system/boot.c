@@ -47,8 +47,8 @@ void bootSequenceTask(void)
     D_8009E3ED = 0;
     D_8009E3EE = 0;
     D_8009E3EF = 0;
-    (*(s8 *)&SPAD->unk1D1) = 0;
-    (*(s8 *)&SPAD->unk1D0) = 0;
+    (*(s8 *)&SPAD->inTitle) = 0;
+    (*(s8 *)&SPAD->inGame) = 0;
     BUTTON_CONFIG_INDEX = 0;
     D_8009C9E4 = 1;
     D_8009E450 = 0;
@@ -213,8 +213,8 @@ void titleSequenceTask(void)
     u32 sp10[2];
     u16 state;
 
-    *(s8* )&scratch->unk1D1 = 1;
-    *(s8* )&scratch->unk1D0 = 0;
+    *(s8* )&scratch->inTitle = 1;
+    *(s8* )&scratch->inGame = 0;
     sp10[0] = 0;
     scratch->currentTask->titleScreenSelectedOption = 0;
     while(true) {
@@ -629,8 +629,8 @@ void gameTask(void)
     Task* task = *(Task**)&scratch->currentTask;
     int state;
 
-    scratch->unk1D1 = 0;
-    scratch->unk1D0 = 1;
+    scratch->inTitle = 0;
+    scratch->inGame = 1;
     task->state0 = 0;
     task->state1 = 0;
     task->state2 = 0;
@@ -638,8 +638,8 @@ void gameTask(void)
     task->unk6A = 0;
     setRGB0((DRAWENV*)&DRAW_ENV_1, 0, 0, 0);
     setRGB0((DRAWENV*)&DRAW_ENV_2, 0, 0, 0);
-    scratch->unk1DC = -1;
-    scratch->unk1DE = 0;
+    scratch->pendingState = -1;
+    scratch->pendingStep = 0;
     D_8009EB4C = 0;
     scratch->loadComplete = 0;
     D_8009EBA0 = 0;

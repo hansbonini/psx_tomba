@@ -37,7 +37,7 @@ void spawnItemNotification(s32 arg0, u8 arg1)
     u8* p;
 
     D_800B07CC[arg0] = arg1;
-    p = allocObjectLayer3();
+    p = allocEffectObject();
     if (p != NULL) {
         p[0] = 1;
         p[2] = 0x20;
@@ -208,7 +208,7 @@ typedef struct {
     char p40[0x4a - 0x40]; s16 w4a, w4c; s16 w4e; s16 w50, w52; s16 w54; s16 w56;
     s16 w58; s16 w5a; s16 w5c; s16 w5e, w60, w62;
 } S_29CDC;
-#define F6 D_1F8000F6[0]
+#define F6 SCRATCHPAD.vpz.p.whole
 
 static __inline__ s32 body_29CDC(S_29CDC *s)
 {
@@ -218,7 +218,7 @@ static __inline__ s32 body_29CDC(S_29CDC *s)
     r = 0;
     switch (s->step) {
     case 0:
-        ee = D_1F8000EE;
+        ee = &SCRATCHPAD.vpx.p.whole;
         s->w4c -= *ee;
         s->w50 -= F6;
         s->w52 = *ee;
@@ -237,7 +237,7 @@ static __inline__ s32 body_29CDC(S_29CDC *s)
                 D_8009BCA4 = 0;
                 D_8009BCDD = 3;
             }
-            D_1F8000EE[0] = s->w52 + s->w4c * s->w4a / 90;
+            SCRATCHPAD.vpx.p.whole = s->w52 + s->w4c * s->w4a / 90;
             F6 = s->w56 + s->w50 * s->w4a / 90;
         }
         n = s->w4a;
@@ -395,11 +395,11 @@ void func_8002A334(S_2A334 *o)
         }
     }
     if (D_8009C618[0] < 3) {
-        c = &D_1F8000F0;
+        c = &SCRATCHPAD.vpy;
         c->raw = g->d14;
-        if (D_1F8000F0.p.whole > o->s32) {
+        if (SCRATCHPAD.vpy.p.whole > o->s32) {
             c->raw = o->s32 << 16;
-        } else if (D_1F8000F0.p.whole < o->s30) {
+        } else if (SCRATCHPAD.vpy.p.whole < o->s30) {
             c->raw = o->s30 << 16;
         }
     }
@@ -409,13 +409,13 @@ void func_8002A334(S_2A334 *o)
 void func_8002A480(GameObject *o_)
 {
     CameraScroll *o = (CameraScroll *)o_;
-    GameObject *g;
+    GameObject *player;
     unsigned char flag;
     int v;
     int k;
     int m;   
 
-    g = &PLAYER.obj;
+    player = &PLAYER.obj;
     if (D_8009C618[0] >= 3)
         return;
     flag = 0;
@@ -436,9 +436,9 @@ void func_8002A480(GameObject *o_)
     }
     if (!flag) {
         if (o->rising) {
-            switch (g->unk9E) {
+            switch (player->unk9E) {
             case 4:
-                if (U8(g, 0xA9))
+                if (U8(player, 0xA9))
                     goto clampA;
                 goto clr;
             case 0:
@@ -446,7 +446,7 @@ void func_8002A480(GameObject *o_)
             case 8:
             case 9:
             clampA:
-                D_1F8000F0_S32Arr[0] = g->y.raw + k - NTSC_PAL(0x780000, 0x800000);
+                D_1F8000F0_S32Arr[0] = player->y.raw + k - NTSC_PAL(0x780000, 0x800000);
                 if (D_1F8000F2 > o->maxY) {
                     D_1F8000F0.raw = o->maxY << 16;
                     o->velY = 0;
@@ -480,7 +480,7 @@ void func_8002A480(GameObject *o_)
             }
             return;
         }
-        D_1F8000F0_S32Arr[0] = g->y.raw + k - NTSC_PAL(0x780000, 0x800000);
+        D_1F8000F0_S32Arr[0] = player->y.raw + k - NTSC_PAL(0x780000, 0x800000);
         if (D_1F8000F2 > o->maxY) {
             D_1F8000F0.raw = o->maxY << 16;
             o->velY = 0;
@@ -488,7 +488,7 @@ void func_8002A480(GameObject *o_)
         }
         return;
     }
-    if (g->unk9C == 0) {
+    if (player->unk9C == 0) {
         if (v < -0x40000) {
             if (o->velY < v) {
                 if (v > -0x40000)
@@ -673,8 +673,7 @@ void func_8002A9FC(GameObject *obj)
 typedef struct {
     char p0[0x18]; s32 v; char p1[0x30 - 0x1c]; s16 s30, s32; char p2[0x44 - 0x34]; u16 f44;
 } O_2ABC0;
-typedef union { s32 i; struct { s16 lo, hi; } s; } FX_2ABC0;
-#define VF (*(volatile s32 *)&(*(FX_2ABC0 *)&D_1F8000F0).i)
+#define VF (*(volatile s32 *)&SCRATCHPAD.vpy.raw)
 
 static __inline__ void inl_2ABC0(O_2ABC0 *o)
 {
@@ -689,15 +688,15 @@ static __inline__ void inl_2ABC0(O_2ABC0 *o)
                 o->v += 0x8000;
             }
             VF += o->v;
-            if ((*(FX_2ABC0 *)&D_1F8000F0).s.hi > o->s32) {
-                (*(FX_2ABC0 *)&D_1F8000F0).i = o->s32 << 16;
+            if (SCRATCHPAD.vpy.p.whole > o->s32) {
+                SCRATCHPAD.vpy.raw = o->s32 << 16;
                 o->v = 0;
                 o->f44 |= 8;
             }
         } else {
             VF = D_1F800190;
-            if ((*(FX_2ABC0 *)&D_1F8000F0).s.hi > o->s32) {
-                (*(FX_2ABC0 *)&D_1F8000F0).i = o->s32 << 16;
+            if (SCRATCHPAD.vpy.p.whole > o->s32) {
+                SCRATCHPAD.vpy.raw = o->s32 << 16;
                 o->v = 0;
                 o->f44 |= 8;
             }
@@ -715,8 +714,8 @@ static __inline__ void inl_2ABC0(O_2ABC0 *o)
             o->v = d;
         }
         VF += o->v;
-        if ((*(FX_2ABC0 *)&D_1F8000F0).s.hi < o->s30) {
-            (*(FX_2ABC0 *)&D_1F8000F0).i = o->s30 << 16;
+        if (SCRATCHPAD.vpy.p.whole < o->s30) {
+            SCRATCHPAD.vpy.raw = o->s30 << 16;
             o->v = 0;
             o->f44 |= 4;
         }
@@ -898,7 +897,7 @@ static inline s32 cameraTargetY(void)
         t = (u16)SPAD->vpy.p.whole - 0x14;
         return t - D_800A53CC;
     }
-    return (u16)SPAD->vpy.p.whole - (u16)SPAD->unk168[1].p.whole;
+    return (u16)SPAD->vpy.p.whole - (u16)SPAD->cameraTarget.y.p.whole;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002B110);
@@ -1310,7 +1309,7 @@ static __inline__ s32 decay_2BB9C(void)
 
 static __inline__ void clamp_2BB9C(S_2BB9C *o)
 {
-    s16 f = D_1F8000F2;
+    s16 f = SCRATCHPAD.vpy.p.whole;
     s32 s = f + CAMERA_TILT;
     if (o->w30 > s) CAMERA_TILT = o->w30 - f;
     else if (o->w32 < s) CAMERA_TILT = o->w32 - f;
@@ -1568,7 +1567,7 @@ void func_8002BB9C(S_2BB9C *o)
         func_801162C4(o);
         break;
     }
-    if (D_1F8000F2 > o->w32) D_1F8000F0 = o->w32 << 16;
+    if (SCRATCHPAD.vpy.p.whole > o->w32) SCRATCHPAD.vpy.raw = o->w32 << 16;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/inventory", func_8002C7D8);
@@ -1772,7 +1771,7 @@ void func_8002CC20(S_2CC20 *o)
     func_8002A798(o);
     func_8002A480(o);
     if ((u16)(o->p34[1] - (*(u16 *)&D_1F80016A) + 0x8c) < 0x118 || (o->f44 & 3)) {
-        if ((u16)(D_1F8000F2 - D_1F80016E + 0xb4) < 0x168 || (o->f44 & 0xc)) {
+        if ((u16)(SCRATCHPAD.vpy.p.whole - D_1F80016E + 0xb4) < 0x168 || (o->f44 & 0xc)) {
             o->b3 = 1;
             if (D_8009BCCE == 3 || D_8009C10E == 0xff) o->b3 = 0;
             D_8009BCA7 = 0;
@@ -1810,7 +1809,7 @@ void func_8002CD7C(S8002A258_2CD7C *o)
     func_8002A9FC(o);
     func_8002ABC0(o);
     if ((u16)(o->p34[1] - (*(u16 *)&D_1F80016A) + 0x40) < 0x80 || (o->w44 & 3)) {
-        if ((u16)(D_1F8000F2 - D_1F80016E + 0x5a) < 0xb4 || (o->w44 & 0xc)) {
+        if ((u16)(SCRATCHPAD.vpy.p.whole - D_1F80016E + 0x5a) < 0xb4 || (o->w44 & 0xc)) {
             o->b3 = 1;
             if (D_8009BCCE == 3 || D_8009C10E == 0xff) o->b3 = 0;
             D_8009BCA7 = 0;
@@ -2251,7 +2250,7 @@ void updateCameraScroll(S_2D784 *o)
         t = o->dc;
         D_1F800178[0] = t;
         D_1F80017C[0] = o->d10;
-        D_1F800184[0] = D_1F8000E4 + t;
+        D_1F800184[0] = SCRATCHPAD.vry.raw + t;
         D_1F800180 = o->d8;
         break;
     }
@@ -2323,8 +2322,8 @@ void func_8002DA2C(void)
 void stubInventory1(void) {
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/inventory", updateObjectsLayer8);
-void updateObjectsLayer8(void)
+// INCLUDE_ASM("nonmatchings/main/game/inventory", updateModelObjects);
+void updateModelObjects(void)
 {
     u8* p = &D_800B0B88;
 
@@ -2422,7 +2421,7 @@ void func_8002DBD8(PopupIcon *o)
         }
         if (o->active & 1) {
             o->visible = 1;
-            pushDrawListLayer8(o);
+            pushModelDrawList(o);
         }
         break;
     case 2:
@@ -2457,7 +2456,7 @@ void func_8002DBD8(PopupIcon *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer8(o);
+        freeModelObject(o);
         break;
     }
 }
@@ -2489,7 +2488,7 @@ void func_8002DBD8(PopupIcon *o)
             func_8002DEC4(o);
         }
         o->visible = 1;
-        pushDrawListLayer8(o);
+        pushModelDrawList(o);
         break;
     case 2:
         if (--SPRITE_SLOTS[o->slot].refCount == 0) {
@@ -2521,7 +2520,7 @@ void func_8002DBD8(PopupIcon *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer8(o);
+        freeModelObject(o);
         break;
     }
 }
@@ -2694,7 +2693,7 @@ void spawnItemPickupObject(u8 arg0)
     u8* p;
 
     if (D_8009BCBC == 0) {
-        p = allocObjectLayer3();
+        p = allocEffectObject();
         if (p != NULL) {
             p[0] = 1;
             p[2] = 0xD;
@@ -2706,7 +2705,7 @@ void spawnItemPickupObject(u8 arg0)
 // INCLUDE_ASM("nonmatchings/main/game/inventory", cloneItemPickupObject);
 void cloneItemPickupObject(u8* src)
 {
-    u8* p = allocObjectLayer3();
+    u8* p = allocEffectObject();
 
     if (p != NULL) {
         p[0] = 1;
@@ -2847,7 +2846,7 @@ void updateItemGetIcon(GameObject *o)
             break;
         }
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         switch (o->subState) {
         case 0:
             o->velV += 0x20;
@@ -2871,7 +2870,7 @@ void updateItemGetIcon(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

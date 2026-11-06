@@ -64,7 +64,7 @@ void func_80120708(GameObject *o)
         }
         if (tickAnimation(o)) {
             playSFXWithNote(0x22, 0x23);
-            n = allocObjectLayer1();
+            n = allocWeaponObject();
             if (n) {
                 n->active = 1;
                 n->type = 1;
@@ -210,7 +210,7 @@ void func_80120D48(PL_20D48 *o)
         o->o.unk9C = 1;
         o->o.state = 1;
         o->o.y.p.whole -= 8;
-        if ((D_8009BCEC_U32Arr[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->o.unkA7 = 1;
+        if ((D_8009BCEC_U32Arr[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.buttonAction)) o->o.unkA7 = 1;
         o->o.subState = 2;
         o->o.step = 0;
     }
@@ -335,7 +335,7 @@ void func_801215FC(GameObject *o)
         }
     }
     o->h->p.whole += (o->animFrame & 1) ? 0x10 : -0x10;
-    if ((D_8009BCEC_U32Arr[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.unk3C4)) o->unkA7 = 1;
+    if ((D_8009BCEC_U32Arr[0] & 0x40) && (PAD_PRESSED[0] & SCRATCHPAD.buttonAction)) o->unkA7 = 1;
     o->subState = 2;
     o->step = 0;
 }
@@ -370,7 +370,7 @@ INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_3", func_80123038);
 
 void func_80123188(Fix16 *pos, u8 c, s16 vx)
 {
-    GameObject *o = allocObjectLayer5();
+    GameObject *o = allocItemObject();
 
     if (o == 0) return;
     o->active = 1;
@@ -428,7 +428,7 @@ void func_8012325C(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer5(o);
+        freeItemObject(o);
         break;
     }
 }
@@ -608,7 +608,7 @@ s32 func_801237D8(GameObject *a, GameObject *b, u8 mode, s32 ang)
     if (!(kind & 1)) {
         if (a->y.p.whole < b->y.p.whole - s2) {
             if ((-(s2 + 4) + b->y.p.whole) > a->y.p.whole + a->hitboxY) return 3;
-            if (SCRATCHPAD.unk1D2 != 0) {
+            if (SCRATCHPAD.tileResponseActive != 0) {
                 if (dx > 0) a->h->p.whole = b->h->p.whole + cx;
                 else a->h->p.whole = b->h->p.whole - cx;
                 return 3;
@@ -640,7 +640,7 @@ s32 func_801237D8(GameObject *a, GameObject *b, u8 mode, s32 ang)
                 return 3;
             }
             { s32 by = b->y.p.whole; if ((-(s2 + -4) + by) < a->y.p.whole - (a->hitboxH - a->hitboxY)) return 3; }
-            if (SCRATCHPAD.unk1D2 != 0) {
+            if (SCRATCHPAD.tileResponseActive != 0) {
                 s16 d = a->y.p.whole - ((-(s2 + -4) + b->y.p.whole) + (a->hitboxH - a->hitboxY));
                 if (dx > 0) {
                     s16 t;
@@ -793,7 +793,7 @@ void func_801243DC(GameObject *a, GameObject *b)
         a->subState = 0;
         a->step = 0;
         decreaseObjectTimer(a, 1);
-        SCRATCHPAD.unk19E = 0;
+        SCRATCHPAD.listCounter = 0;
     }
 }
 
@@ -954,7 +954,7 @@ s32 func_801246E4(GameObject *a, GameObject *b, u8 k, s32 ang)
         playSFX(5);
         func_800224FC(1, a->x.p.whole, a->y.p.whole, a->z.p.whole);
     }
-    SCRATCHPAD.unk19E = 0;
+    SCRATCHPAD.listCounter = 0;
     return 1;
 }
 
@@ -1065,7 +1065,7 @@ void func_80125DA8(u8 *a, u8 *b)
     a[6] = 0;
     U8(a, 0xd1) = 1;
     decreaseObjectTimer(a, 1);
-    SCRATCHPAD.unk19E = 0;
+    SCRATCHPAD.listCounter = 0;
 }
 
 INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_3", func_80125ED4);
@@ -1102,8 +1102,8 @@ void func_801261C4(P_261C4 *o, GameObject *e)
         o->t.unkBA = e->localY - e->y.p.whole;
         o->t.velY = 0;
         e->touchFlag = 1;
-        SCRATCHPAD.unk19E = 0;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = e;
+        SCRATCHPAD.listCounter = 0;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = e;
     }
 }
 
@@ -1117,10 +1117,10 @@ void func_8012629C(GameObject *o, GameObject *e)
         o->unk9E = 4;
         o->unkBA = 0;
         o->velY = 0;
-        SCRATCHPAD.unk19E = 0;
+        SCRATCHPAD.listCounter = 0;
         o->unkB8 = D_1F8003BC;
         e->unk68 = 1;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = e;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = e;
     }
 }
 
@@ -1132,10 +1132,10 @@ void func_8012631C(GameObject *o, GameObject *e)
         o->unk9E = 4;
         o->unkBA = 0;
         o->velY = 0;
-        SCRATCHPAD.unk19E = 0;
-        o->unkB8 = (*(u16*)&SCRATCHPAD.unk3BC);
+        SCRATCHPAD.listCounter = 0;
+        o->unkB8 = (*(u16*)&SCRATCHPAD.touchOffsetX);
         e->unk6A = 1;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = e;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = e;
         e->animFrame = (o->animFrame & 1) << 1;
     }
 }
@@ -1246,8 +1246,8 @@ asm("" :: "r"(dy));
         o->velY = 0;
         e->velX = dx;
         e->touchFlag = 1;
-        SCRATCHPAD.unk19E = 0;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = e;
+        SCRATCHPAD.listCounter = 0;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = e;
         e->unk7A = t;
         return 1;
     } else {
@@ -1287,8 +1287,8 @@ asm("" :: "r"(cx)); asm("" :: "r"(cx));
         e->unk7A = t;
         o->velY = 0;
         o->unk9E = 8;
-        SCRATCHPAD.unk19E = 0;
-        (*(GameObject **)&(*(void * *)&SCRATCHPAD.unk3C0)) = e;
+        SCRATCHPAD.listCounter = 0;
+        (*(GameObject **)&(*(void * *)&SCRATCHPAD.touchedObject)) = e;
         return 1;
     }
 }
@@ -1489,7 +1489,7 @@ void func_80127448(GameObject *o)
         o->subState = 0;
         h = o->h;
         if ((u16)(D_1F80016A[0] - h->p.whole + 0xf0) < 0x1e1
-            && (u16)((*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) - o->y.p.whole + 0xa0) < 0x141) {
+            && (u16)((*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) - o->y.p.whole + 0xa0) < 0x141) {
             if (o->unkA7) o->subState = D_8013BB18[nextRandom() & 0xf];
             else o->subState = D_8013BB28[nextRandom() & 0xf];
             if (o->subState == 0) o->subState++;
@@ -1547,7 +1547,7 @@ void func_80127608(GameObject *o)
             if (o->cooldownTimer)
                 o->animFrame = o->h->p.whole > o->unkB4;
             else
-                o->animFrame = SCRATCHPAD.unk168[0].p.whole < o->h->p.whole;
+                o->animFrame = SCRATCHPAD.cameraTarget.x.p.whole < o->h->p.whole;
             o->unkAC = 0x12;
             o->anim = D_8013F030[0];
             readAnimFrameCount(o);
@@ -1658,7 +1658,7 @@ void func_8012791C(GameObject *o)
             break;
         }
         tickAnimation(o);
-        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 0xf) == 0)
+        if (o->visible && ((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 0xf) == 0)
             playSFX(0x5e);
         if (p->w6) {
             s32 t = o->rotZ;

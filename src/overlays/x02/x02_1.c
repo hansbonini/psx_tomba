@@ -90,8 +90,8 @@ void func_80116994(GameObject *o)
         o->scaleY = o->scaleX;
         o->scaleZ = o->scaleX;
         if (GAME.fadeScreenControl == 1) {
-            (*(GameTask **)&D_1F8001D4)->mode = 7;
-            (*(GameTask **)&D_1F8001D4)->step = 0;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->mode = 7;
+            (*(GameTask **)&SCRATCHPAD.currentTask)->step = 0;
             D_8009D6DD_U8Arr[0] = 0xff;
             D_8009D6DE_U8Arr[0] = 0xff;
             D_8009D6DF_U8Arr[0] = 0xff;

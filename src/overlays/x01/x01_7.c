@@ -277,7 +277,7 @@ void func_80136554(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -285,7 +285,7 @@ void func_80136554(GameObject *o)
 // INCLUDE_ASM("overlays/x01/nonmatchings/x01/x01_7", func_801367F8);
 void func_801367F8(u8 sub, s16 x, s16 y, s16 z)
 {
-    GameObject *o = allocObjectLayer2();
+    GameObject *o = allocActorObject();
     u16 t;
     if (o != 0) {
         o->active = 1;
@@ -370,8 +370,8 @@ extern s16 func_80043AB0(GameObject *, s16, s16, s16);
 
 static __inline__ s32 inView_36A4C(GameObject *o)
 {
-    if ((u16)(o->y.p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[1].raw + 2)) + 0xb0) >= 0x161) return 0;
-    return (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.unk168[0].raw + 2)) + 0x12c) < 0x259;
+    if ((u16)(o->y.p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.y.raw + 2)) + 0xb0) >= 0x161) return 0;
+    return (u16)(o->h->p.whole - (*(u16*)((char*)&SCRATCHPAD.cameraTarget.x.raw + 2)) + 0x12c) < 0x259;
 }
 
 void func_80136A4C(GameObject *o)
@@ -567,7 +567,7 @@ void func_801376D4(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

@@ -15,104 +15,104 @@ void setAnimation(u8* self, s16 arg1)
 typedef struct { char p[0x4c]; s16 w4c; s16 w4e; } G4_57C74;
 extern void func_800EDDDC(GameObject *, s32, s32);
 
-void func_80057C74(GameObject *o)
+void func_80057C74(GameObject *obj)
 {
-    GameObject *pl = &PLAYER.obj;
-    switch (o->step) {
+    GameObject *player = &PLAYER.obj;
+    switch (obj->step) {
     case 0:
-        if ((*(s32 *)&pl->state & 0xffffff) == 0x23001) {
-            pl->active = 5;
-            pl->visible = 1;
-            setObjState(pl, 5, 0x41, 0);
-            o->timer = 50;
-            o->step++;
+        if ((*(s32 *)&player->state & 0xffffff) == 0x23001) {
+            player->active = 5;
+            player->visible = 1;
+            setObjState(player, 5, 0x41, 0);
+            obj->timer = 50;
+            obj->step++;
         }
         break;
     case 1:
-        tickAnimation(o);
-        if (o->timer == 0) {
-            o->timer = 16;
-            o->step++;
-            pl->visible = 1;
-            setObjState(pl, 5, 0x41, 0);
-            pl->rotZ = 0;
-            pl->animFrame = 0;
-            func_800EDDDC(pl, 0, 0);
+        tickAnimation(obj);
+        if (obj->timer == 0) {
+            obj->timer = 16;
+            obj->step++;
+            player->visible = 1;
+            setObjState(player, 5, 0x41, 0);
+            player->rotZ = 0;
+            player->animFrame = 0;
+            func_800EDDDC(player, 0, 0);
         } else {
-            o->timer--;
+            obj->timer--;
         }
         break;
     case 2:
-        o->h->p.whole++;
-        if ((*(s16 *)&D_1F800176) + 0x134 < o->h->p.whole)
-            o->h->p.whole = (*(s16 *)&D_1F800176) + 0x134;
-        tickAnimation(o);
-        if (--o->timer == -1) {
-            o->timer = 40;
-            o->step++;
-            o->unkAC = 0;
-            o->anim = (*(void ***)&o->unkA8)[0];
-            readAnimFrameCount(o);
-            o->priority = pl->priority - 2;
+        obj->h->p.whole++;
+        if ((*(s16 *)&D_1F800176) + 0x134 < obj->h->p.whole)
+            obj->h->p.whole = (*(s16 *)&D_1F800176) + 0x134;
+        tickAnimation(obj);
+        if (--obj->timer == -1) {
+            obj->timer = 40;
+            obj->step++;
+            obj->unkAC = 0;
+            obj->anim = (*(void ***)&obj->unkA8)[0];
+            readAnimFrameCount(obj);
+            obj->priority = player->priority - 2;
         }
         break;
     case 3:
-        if (--o->timer == -1)
-            o->step++;
+        if (--obj->timer == -1)
+            obj->step++;
         break;
     case 4:
-        pl->animFrame = 0;
-        func_800EDDDC(pl, 1, 0);
-        o->step++;
+        player->animFrame = 0;
+        func_800EDDDC(player, 1, 0);
+        obj->step++;
         break;
     case 5:
-        tickAnimation(pl);
-        pl->h->p.whole++;
-        if (pl->h->p.whole >= o->h->p.whole) {
-            pl->h->p.whole = o->h->p.whole;
-            o->timer = 30;
-            o->step++;
-            func_800EDDDC(pl, 0x2c, 0);
+        tickAnimation(player);
+        player->h->p.whole++;
+        if (player->h->p.whole >= obj->h->p.whole) {
+            player->h->p.whole = obj->h->p.whole;
+            obj->timer = 30;
+            obj->step++;
+            func_800EDDDC(player, 0x2c, 0);
         }
         break;
     case 6:
-        if (--o->timer == -1)
-            o->step++;
-        pl->y.raw -= 0x8000;
+        if (--obj->timer == -1)
+            obj->step++;
+        player->y.raw -= 0x8000;
         break;
     case 7:
-        o->unkAC = 1;
-        o->anim = (*(void ***)&o->unkA8)[1];
-        readAnimFrameCount(o);
-        o->timer = 70;
-        o->velV = 0;
-        o->step++;
+        obj->unkAC = 1;
+        obj->anim = (*(void ***)&obj->unkA8)[1];
+        readAnimFrameCount(obj);
+        obj->timer = 70;
+        obj->velV = 0;
+        obj->step++;
         break;
     case 8:
-        if (--o->timer == -1) {
-            o->step++;
+        if (--obj->timer == -1) {
+            obj->step++;
             D_8009BCA4 = 0;
             D_8009BCDD = 3;
         }
-        o->velV += 0x20;
-        if (o->velV > 0x600)
-            o->velV = 0x600;
-        o->y.raw -= o->velV << 8;
-        pl->y.raw -= o->velV << 8;
+        obj->velV += 0x20;
+        if (obj->velV > 0x600)
+            obj->velV = 0x600;
+        obj->y.raw -= obj->velV << 8;
+        player->y.raw -= obj->velV << 8;
         break;
     case 9:
-        o->velV += 0x20;
-        if (o->velV > 0x600)
-            o->velV = 0x600;
-        o->y.raw -= o->velV << 8;
-        pl->y.raw -= o->velV << 8;
+        obj->velV += 0x20;
+        if (obj->velV > 0x600)
+            obj->velV = 0x600;
+        obj->y.raw -= obj->velV << 8;
+        player->y.raw -= obj->velV << 8;
         if (D_8009BCDD == 1) {
             D_8009C361 = 1;
             if ((*(s32 *)&GAME) == 0x7000E && D_8009C62B == 0xff) {
-                o->step++;
+                obj->step++;
             } else {
-                (*(G4_57C74 **)&D_1F8001D4)->w4c = 7;
-                (*(G4_57C74 **)&D_1F8001D4)->w4e = 0;
+                (*(G4_57C74 **)&SCRATCHPAD.currentTask)->w4c = 7;
+                (*(G4_57C74 **)&SCRATCHPAD.currentTask)->w4e = 0;
             }
         }
         break;
@@ -125,91 +125,91 @@ void func_80057C74(GameObject *o)
 extern void func_800EDDDC(GameObject *, s32, s32);
 extern s16 probeCollisionAtDepthA(GameObject *, s16, s16);
 
-void func_800580BC(GameObject *o)
+void func_800580BC(GameObject *obj)
 {
-    GameObject *s = &PLAYER.obj;
+    GameObject *player = &PLAYER.obj;
 
-    switch (o->step) {
+    switch (obj->step) {
     case 0:
-        if ((*(s32 *)((u8 *)s + 4) & 0xffffff) != 0x30405)
+        if ((*(s32 *)((u8 *)player + 4) & 0xffffff) != 0x30405)
             break;
-        o->h->p.whole = s->h->p.whole;
-        s->h->p.whole = o->h->p.whole;
-        s->y.p.whole = o->y.p.whole - 0x14;
-        o->priority = s->priority - 2;
-        s->active = 5;
-        s->visible = 1;
-        setObjState(s, 5, 0x41, 0);
-        func_800EDDDC(s, 0x2c, 0);
-        o->unkAC = 1;
-        o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[1];
-        readAnimFrameCount(o);
-        o->velV = 0x500;
-        o->step++;
+        obj->h->p.whole = player->h->p.whole;
+        player->h->p.whole = obj->h->p.whole;
+        player->y.p.whole = obj->y.p.whole - 0x14;
+        obj->priority = player->priority - 2;
+        player->active = 5;
+        player->visible = 1;
+        setObjState(player, 5, 0x41, 0);
+        func_800EDDDC(player, 0x2c, 0);
+        obj->unkAC = 1;
+        obj->anim = ((void **)*(s32 *)((u8 *)obj + 0xa8))[1];
+        readAnimFrameCount(obj);
+        obj->velV = 0x500;
+        obj->step++;
         break;
     case 1:
-        o->velV -= 8;
-        if (o->velV < 0x100)
-            o->velV = 0x100;
-        o->y.raw += o->velV << 8;
-        s->y.raw += o->velV << 8;
-        if (o->y.p.whole < *(s16 *)((u8 *)s + 0xf2) - 0x1e)
+        obj->velV -= 8;
+        if (obj->velV < 0x100)
+            obj->velV = 0x100;
+        obj->y.raw += obj->velV << 8;
+        player->y.raw += obj->velV << 8;
+        if (obj->y.p.whole < *(s16 *)((u8 *)player + 0xf2) - 0x1e)
             break;
-        if (probeCollisionAtDepthA(o, o->h->p.whole, o->y.p.whole + 0x10)) {
-            o->timer = 0x1e;
-            o->unkAC = 0;
-            o->step++;
-            o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[0];
-            readAnimFrameCount(o);
+        if (probeCollisionAtDepthA(obj, obj->h->p.whole, obj->y.p.whole + 0x10)) {
+            obj->timer = 0x1e;
+            obj->unkAC = 0;
+            obj->step++;
+            obj->anim = ((void **)*(s32 *)((u8 *)obj + 0xa8))[0];
+            readAnimFrameCount(obj);
         }
         break;
     case 2:
-        if (--o->timer == -1)
-            o->step++;
+        if (--obj->timer == -1)
+            obj->step++;
         break;
     case 3:
-        s->y.raw += 0x8000;
-        if (probeCollisionAtDepthA(s, s->h->p.whole, s->y.p.whole + 0x14)) {
-            o->unkAC = 0;
-            o->step++;
-            o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[0];
-            readAnimFrameCount(o);
+        player->y.raw += 0x8000;
+        if (probeCollisionAtDepthA(player, player->h->p.whole, player->y.p.whole + 0x14)) {
+            obj->unkAC = 0;
+            obj->step++;
+            obj->anim = ((void **)*(s32 *)((u8 *)obj + 0xa8))[0];
+            readAnimFrameCount(obj);
         }
         break;
     case 4:
-        o->timer = 0x10;
-        s->animFrame = 0;
-        func_800EDDDC(s, 1, 0);
-        o->step++;
+        obj->timer = 0x10;
+        player->animFrame = 0;
+        func_800EDDDC(player, 1, 0);
+        obj->step++;
         break;
     case 5:
-        tickAnimation(s);
-        s->h->p.whole++;
-        if (--o->timer == -1) {
-            o->timer = 0x1e;
-            o->step++;
-            s->animFrame = 0;
-            func_800EDDDC(s, 0, 0);
+        tickAnimation(player);
+        player->h->p.whole++;
+        if (--obj->timer == -1) {
+            obj->timer = 0x1e;
+            obj->step++;
+            player->animFrame = 0;
+            func_800EDDDC(player, 0, 0);
         }
         break;
     case 6:
-        if (--o->timer == -1) {
-            o->step++;
-            o->priority = s->priority + 1;
-            o->unkAC = 3;
-            o->animFrame = 0;
-            o->anim = ((void **)*(s32 *)((u8 *)o + 0xa8))[3];
-            readAnimFrameCount(o);
+        if (--obj->timer == -1) {
+            obj->step++;
+            obj->priority = player->priority + 1;
+            obj->unkAC = 3;
+            obj->animFrame = 0;
+            obj->anim = ((void **)*(s32 *)((u8 *)obj + 0xa8))[3];
+            readAnimFrameCount(obj);
         }
         break;
     case 7:
-        tickAnimation(o);
-        o->h->p.whole++;
-        if (o->h->p.whole >= s->h->p.whole) {
-            setObjState(s, 5, 4, 2);
+        tickAnimation(obj);
+        obj->h->p.whole++;
+        if (obj->h->p.whole >= player->h->p.whole) {
+            setObjState(player, 5, 4, 2);
             D_8009C361 = 0;
-            o->active = 2;
-            o->state = 3;
+            obj->active = 2;
+            obj->state = 3;
         }
         break;
     }
@@ -231,92 +231,92 @@ static __inline__ void SetAnim_58464(GameObject *obj, s16 n)
     readAnimFrameCount(obj);
 }
 
-void func_80058464(GameObject *o)
+void func_80058464(GameObject *obj)
 {
-    GameObject *p = &PLAYER.obj;
+    GameObject *player = &PLAYER.obj;
 
-    switch (o->step) {
+    switch (obj->step) {
     case 0:
-        if ((*(s32 *)&p->state & 0xffffff) == 0x23001) {
-            p->active = 5;
-            p->visible = 1;
-            setObjState(p, 4, 0, 0);
-            o->timer = 0x32;
-            o->step++;
+        if ((*(s32 *)&player->state & 0xffffff) == 0x23001) {
+            player->active = 5;
+            player->visible = 1;
+            setObjState(player, 4, 0, 0);
+            obj->timer = 0x32;
+            obj->step++;
         }
         break;
     case 1:
-        tickAnimation(o);
-        if (--o->timer == -1) {
-            o->timer = 0x10;
-            o->step++;
-            p->subState = 6;
-            SETANIM(o, 0, 6);
+        tickAnimation(obj);
+        if (--obj->timer == -1) {
+            obj->timer = 0x10;
+            obj->step++;
+            player->subState = 6;
+            SETANIM(obj, 0, 6);
         }
         break;
     case 2:
-        o->h->p.whole++;
-        if (o->h->p.whole > (*(s16 *)&D_1F800176) + 0x136)
-            o->h->p.whole = (*(s16 *)&D_1F800176) + 0x136;
-        tickAnimation(o);
-        if (--o->timer == -1) {
-            o->timer = 0x28;
-            o->step++;
-            SetAnim_58464(o, 0);
-            o->priority = p->priority - 2;
+        obj->h->p.whole++;
+        if (obj->h->p.whole > (*(s16 *)&D_1F800176) + 0x136)
+            obj->h->p.whole = (*(s16 *)&D_1F800176) + 0x136;
+        tickAnimation(obj);
+        if (--obj->timer == -1) {
+            obj->timer = 0x28;
+            obj->step++;
+            SetAnim_58464(obj, 0);
+            obj->priority = player->priority - 2;
         }
         break;
     case 3:
-        if (--o->timer == -1)
+        if (--obj->timer == -1)
             goto next;
         break;
     case 4:
-        p->animFrame = 0;
-        SETANIM(o, 1, 0);
+        player->animFrame = 0;
+        SETANIM(obj, 1, 0);
     next:
-        o->step++;
+        obj->step++;
         break;
     case 5:
-        tickAnimation(p);
-        p->h->p.whole++;
-        if (p->h->p.whole >= o->h->p.whole) {
-            p->h->p.whole = o->h->p.whole;
-            o->timer = 0x1e;
-            o->step++;
-            SETANIM(o, 0, 6);
+        tickAnimation(player);
+        player->h->p.whole++;
+        if (player->h->p.whole >= obj->h->p.whole) {
+            player->h->p.whole = obj->h->p.whole;
+            obj->timer = 0x1e;
+            obj->step++;
+            SETANIM(obj, 0, 6);
         }
         break;
     case 6:
-        if (--o->timer == -1)
-            o->step++;
-        p->y.raw -= 0x8000;
+        if (--obj->timer == -1)
+            obj->step++;
+        player->y.raw -= 0x8000;
         break;
     case 7:
-        SetAnim_58464(o, 1);
-        o->timer = 0x46;
-        o->velV = 0;
-        o->step++;
+        SetAnim_58464(obj, 1);
+        obj->timer = 0x46;
+        obj->velV = 0;
+        obj->step++;
         break;
     case 8:
-        if (--o->timer == -1) {
-            o->step++;
+        if (--obj->timer == -1) {
+            obj->step++;
             D_8009BCA4 = 0;
             D_8009BCDD = 3;
         }
-        if ((o->velV += 0x20) > 0x600)
-            o->velV = 0x600;
-        o->y.raw -= o->velV << 8;
-        p->y.raw -= o->velV << 8;
+        if ((obj->velV += 0x20) > 0x600)
+            obj->velV = 0x600;
+        obj->y.raw -= obj->velV << 8;
+        player->y.raw -= obj->velV << 8;
         break;
     case 9:
-        if ((o->velV += 0x20) > 0x600)
-            o->velV = 0x600;
-        o->y.raw -= o->velV << 8;
-        p->y.raw -= o->velV << 8;
+        if ((obj->velV += 0x20) > 0x600)
+            obj->velV = 0x600;
+        obj->y.raw -= obj->velV << 8;
+        player->y.raw -= obj->velV << 8;
         if (D_8009BCDD == 1) {
             D_8009C361 = 1;
-            (*(GameObject **)&D_1F8001D4)->unk4C = 7;
-            (*(GameObject **)&D_1F8001D4)->unk4E = 0;
+            (*(GameObject **)&SCRATCHPAD.currentTask)->unk4C = 7;
+            (*(GameObject **)&SCRATCHPAD.currentTask)->unk4E = 0;
         }
         break;
     }
@@ -340,78 +340,78 @@ static __inline__ void SetAnim_58960(GameObject *obj, s16 n)
     readAnimFrameCount(obj);
 }
 
-void func_80058960(GameObject *o)
+void func_80058960(GameObject *obj)
 {
-    GameObject *p = &(*(BigObj_58960 *)&PLAYER).o;
+    GameObject *player = &(*(BigObj_58960 *)&PLAYER).o;
     s32 d;
 
-    switch (o->step) {
+    switch (obj->step) {
     case 0:
-        if ((*(s32 *)&p->state & 0xffffff) == 0x30504) {
-            o->h->p.whole = p->h->p.whole;
-            o->localY = ((BigObj_58960 *)p)->wf2;
-            o->y.p.whole = p->y.p.whole + 0x14;
-            setObjState(p, 4, 6, 0);
-            SETANIM(o, 0, 6);
-            SetAnim_58960(o, 1);
-            o->velV = 0x100;
-            o->step++;
-            o->priority = p->priority - 1;
+        if ((*(s32 *)&player->state & 0xffffff) == 0x30504) {
+            obj->h->p.whole = player->h->p.whole;
+            obj->localY = ((BigObj_58960 *)player)->wf2;
+            obj->y.p.whole = player->y.p.whole + 0x14;
+            setObjState(player, 4, 6, 0);
+            SETANIM(obj, 0, 6);
+            SetAnim_58960(obj, 1);
+            obj->velV = 0x100;
+            obj->step++;
+            obj->priority = player->priority - 1;
         }
         break;
     case 1:
-        o->y.raw += (s16)(o->velV += 8) << 8;
-        p->y.raw += o->velV << 8;
-        if (o->y.p.whole > (d = o->localY)) {
-            o->timer = 0x1e;
-            o->y.p.whole = d;
-            o->step++;
-            SetAnim_58960(o, 0);
+        obj->y.raw += (s16)(obj->velV += 8) << 8;
+        player->y.raw += obj->velV << 8;
+        if (obj->y.p.whole > (d = obj->localY)) {
+            obj->timer = 0x1e;
+            obj->y.p.whole = d;
+            obj->step++;
+            SetAnim_58960(obj, 0);
         }
         break;
     case 2:
-        if (--o->timer == -1)
+        if (--obj->timer == -1)
             goto next;
         break;
     case 3:
-        p->y.raw += 0x8000;
-        if (o->localY < p->y.p.whole) {
-            o->step++;
-            SetAnim_58960(o, 0);
+        player->y.raw += 0x8000;
+        if (obj->localY < player->y.p.whole) {
+            obj->step++;
+            SetAnim_58960(obj, 0);
         }
         break;
     case 4:
-        o->timer = 0x10;
-        p->animFrame = 0;
-        SETANIM(o, 1, 4);
+        obj->timer = 0x10;
+        player->animFrame = 0;
+        SETANIM(obj, 1, 4);
     next:
-        o->step++;
+        obj->step++;
         break;
     case 5:
-        tickAnimation(p);
-        p->h->p.whole++;
-        if (--o->timer == -1) {
-            o->timer = 0x1e;
-            o->step++;
-            p->animFrame = 0;
-            SETANIM(o, 0, 6);
+        tickAnimation(player);
+        player->h->p.whole++;
+        if (--obj->timer == -1) {
+            obj->timer = 0x1e;
+            obj->step++;
+            player->animFrame = 0;
+            SETANIM(obj, 0, 6);
         }
         break;
     case 6:
-        if (--o->timer == -1) {
-            o->animFrame = 0;
-            o->step++;
-            SetAnim_58960(o, 3);
+        if (--obj->timer == -1) {
+            obj->animFrame = 0;
+            obj->step++;
+            SetAnim_58960(obj, 3);
         }
         break;
     case 7:
-        tickAnimation(o);
-        o->h->p.whole++;
-        if (o->h->p.whole >= p->h->p.whole) {
-            setObjState(p, 4, 5, 2);
+        tickAnimation(obj);
+        obj->h->p.whole++;
+        if (obj->h->p.whole >= player->h->p.whole) {
+            setObjState(player, 4, 5, 2);
             D_8009C361 = 0;
-            o->active = 2;
-            o->state = 3;
+            obj->active = 2;
+            obj->state = 3;
         }
         break;
     }
@@ -684,7 +684,7 @@ void func_80058E14(GameObject *obj)
         break;
     case 2:
     case 3:
-        freeObjectLayer2(obj);
+        freeActorObject(obj);
         break;
     case 4:
         func_801156E8(obj);
@@ -878,8 +878,8 @@ s32 func_80059A40(void *o)
     return D_1F8003C0_S32;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchAreaUnlayeredHandler);
-void dispatchAreaUnlayeredHandler(void)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchAreaCtrlHandler);
+void dispatchAreaCtrlHandler(void)
 {
     if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
         func_80125C84();
@@ -1040,7 +1040,7 @@ void func_80059F7C(void)
 
     p = D_8007F6A4[GAME.selectedArea][D_8009BCCA];
     while (*p != 0xff) {
-        e = allocObjectUnlayered();
+        e = allocAreaCtrlObject();
         if (e) {
             *e = 1;
             e[2] = p[0];
@@ -1051,8 +1051,8 @@ void func_80059F7C(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", updateObjectsUnlayered);
-void updateObjectsUnlayered(void)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", updateAreaCtrlObjects);
+void updateAreaCtrlObjects(void)
 {
     u8* p = &D_800A55C8;
 
@@ -1066,10 +1066,10 @@ void updateObjectsUnlayered(void)
     } while (D_1F800198 < 0xA);
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", spawnUnlayeredObjectAndInit);
-void spawnUnlayeredObjectAndInit(u8 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", spawnAreaCtrlObjectAndInit);
+void spawnAreaCtrlObjectAndInit(u8 arg0)
 {
-    u8* p = allocObjectUnlayered();
+    u8* p = allocAreaCtrlObject();
 
     if (p != NULL) {
         p[0] = 1;
@@ -1078,10 +1078,10 @@ void spawnUnlayeredObjectAndInit(u8 arg0)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", spawnUnlayeredObject);
-void spawnUnlayeredObject(u8 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", spawnAreaCtrlObject);
+void spawnAreaCtrlObject(u8 arg0)
 {
-    u8* p = allocObjectUnlayered();
+    u8* p = allocAreaCtrlObject();
 
     if (p != NULL) {
         p[0] = 1;
@@ -1146,7 +1146,7 @@ void func_8005A184(S_5A184 *o)
         o->b4 = t - 1;
         break;
     case 3:
-        freeObjectUnlayered(o);
+        freeAreaCtrlObject(o);
         break;
     }
 }
@@ -1280,8 +1280,8 @@ typedef struct {
 void func_8005AA98(Ent_5AA98 *e, s32 z)
 {
     u8 kind;
-    GameObject *p;
-    GameObject *q2;
+    GameObject *obj;
+    GameObject *parent;
     u8 ty;
     volatile s32 *q;
     s32 idx;
@@ -1290,28 +1290,28 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
 
     kind = e->b1 & 0x7f;
     switch (kind) {
-    case 2:
-        p = allocObjectLayer2();
-        D_8009B100 = p;
-        if (p == 0)
+    case OBJ_CAT_ACTOR:
+        obj = allocActorObject();
+        D_8009B100 = obj;
+        if (obj == 0)
             return;
         if (e->bc & 0x10) {
             q = &D_1F800334;
             goto link;
         }
         break;
-    case 3:
-        if ((D_8009B100 = allocObjectLayer3()) == 0)
+    case OBJ_CAT_EFFECT:
+        if ((D_8009B100 = allocEffectObject()) == 0)
             return;
         break;
-    case 4:
-        p = allocObjectLayer4();
-        D_8009B100 = p;
-        if (p == 0)
+    case OBJ_CAT_AREA:
+        obj = allocAreaObject();
+        D_8009B100 = obj;
+        if (obj == 0)
             return;
         idx = e->be;
         if (idx == 0xff) {
-            p->model = 0;
+            obj->model = 0;
             break;
         }
         if (e->bc & 0x10) {
@@ -1321,18 +1321,18 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
             q = (volatile s32 *)*q;
             tt = *(s32 *)(tt + s + 4);
             q = (volatile s32 *)((s32)q + tt);
-            p->modelLit = 1;
-            p->model = (s32)q;
+            obj->modelLit = 1;
+            obj->model = (s32)q;
         }
         break;
-    case 5:
-        if ((D_8009B100 = allocObjectLayer5()) == 0)
+    case OBJ_CAT_ITEM:
+        if ((D_8009B100 = allocItemObject()) == 0)
             return;
         break;
-    case 8:
-        p = allocObjectLayer8();
-        D_8009B100 = p;
-        if (p == 0)
+    case OBJ_CAT_MODEL:
+        obj = allocModelObject();
+        D_8009B100 = obj;
+        if (obj == 0)
             return;
         q = &D_1F800338;
     link:
@@ -1341,11 +1341,11 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
         q = (volatile s32 *)*q;
         tt = *(s32 *)(tt + s + 4);
         q = (volatile s32 *)((s32)q + tt);
-        p->modelLit = 1;
-        p->model = (s32)q;
+        obj->modelLit = 1;
+        obj->model = (s32)q;
         break;
-    case 7:
-        if ((D_8009B100 = allocObjectLayer7()) == 0)
+    case OBJ_CAT_FX:
+        if ((D_8009B100 = allocFxObject()) == 0)
             return;
         break;
     }
@@ -1394,10 +1394,10 @@ void func_8005AA98(Ent_5AA98 *e, s32 z)
         D_8009B100->localX = e->s6 << 16;
         D_8009B100->localY = e->s8 << 16;
         D_8009B100->localZ = e->sa << 16;
-        q2 = D_8009B104;
+        parent = D_8009B104;
         D_8009B104 = D_8009B100;
-        D_8009B100->parent = (s32)q2;
-        q2->child = (s32)D_8009B100;
+        D_8009B100->parent = (s32)parent;
+        parent->child = (s32)D_8009B100;
         break;
     case 3:
         D_8009B100->x.raw = D_8009B104->x.raw + (e->s6 << 16);
@@ -1500,8 +1500,8 @@ void func_8005B1F8(u8 *o)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchUnlayeredByVariant);
-void dispatchUnlayeredByVariant(u8* self)
+// INCLUDE_ASM("nonmatchings/main/game/objpool", dispatchAreaCtrlByVariant);
+void dispatchAreaCtrlByVariant(u8* self)
 {
     D_8007F988[self[3]]();
 }

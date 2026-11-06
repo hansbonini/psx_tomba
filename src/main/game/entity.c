@@ -34,13 +34,13 @@ s32 func_80022C08(GameObject *obj, s32 x)
     if ((u16)(D_1F800186 - obj->y.p.whole + x) > (s16)x * 2 + 0xf0) return 0;
     obj->visible = 1;
     switch (obj->category & 0x7f) {
-    case 1: pushDrawListLayer1(obj); return 1;
-    case 2: pushDrawListMain(obj); return 1;
-    case 3: pushDrawListCapped(obj); return 1;
-    case 4: pushDrawListLayer4(obj); return 1;
-    case 5: pushDrawListLayer5(obj); return 1;
-    case 7: pushDrawListLayer7(obj); return 1;
-    case 8: pushDrawListLayer8(obj);
+    case OBJ_CAT_WEAPON: pushWeaponDrawList(obj); return 1;
+    case OBJ_CAT_ACTOR: pushActorDrawList(obj); return 1;
+    case OBJ_CAT_EFFECT: pushEffectDrawList(obj); return 1;
+    case OBJ_CAT_AREA: pushAreaDrawList(obj); return 1;
+    case OBJ_CAT_ITEM: pushItemDrawList(obj); return 1;
+    case OBJ_CAT_FX: pushFxDrawList(obj); return 1;
+    case OBJ_CAT_MODEL: pushModelDrawList(obj);
     }
     return 1;
 }
@@ -54,13 +54,13 @@ s32 func_80022D3C(GameObject *obj, s32 x)
     if ((u16)(obj->h->p.whole - D_1F800176 + x) > (s16)x * 2 + 0x140) return 0;
     obj->visible = 1;
     switch (obj->category & 0x7f) {
-    case 1: pushDrawListLayer1(obj); return 1;
-    case 2: pushDrawListMain(obj); return 1;
-    case 3: pushDrawListCapped(obj); return 1;
-    case 4: pushDrawListLayer4(obj); return 1;
-    case 5: pushDrawListLayer5(obj); return 1;
-    case 7: pushDrawListLayer7(obj); return 1;
-    case 8: pushDrawListLayer8(obj);
+    case OBJ_CAT_WEAPON: pushWeaponDrawList(obj); return 1;
+    case OBJ_CAT_ACTOR: pushActorDrawList(obj); return 1;
+    case OBJ_CAT_EFFECT: pushEffectDrawList(obj); return 1;
+    case OBJ_CAT_AREA: pushAreaDrawList(obj); return 1;
+    case OBJ_CAT_ITEM: pushItemDrawList(obj); return 1;
+    case OBJ_CAT_FX: pushFxDrawList(obj); return 1;
+    case OBJ_CAT_MODEL: pushModelDrawList(obj);
     }
     return 1;
 }
@@ -77,13 +77,13 @@ s32 cullAndQueueDraw(u8 *o)
         return 0;
     o[1] = 1;
     switch (o[0x1c] & 0x7f) {
-    case 1: pushDrawListLayer1(o); return 1;
-    case 2: pushDrawListMain(o); return 1;
-    case 3: pushDrawListCapped(o); return 1;
-    case 4: pushDrawListLayer4(o); return 1;
-    case 5: pushDrawListLayer5(o); return 1;
-    case 7: pushDrawListLayer7(o); return 1;
-    case 8: pushDrawListLayer8(o);
+    case 1: pushWeaponDrawList(o); return 1;
+    case 2: pushActorDrawList(o); return 1;
+    case 3: pushEffectDrawList(o); return 1;
+    case 4: pushAreaDrawList(o); return 1;
+    case 5: pushItemDrawList(o); return 1;
+    case 7: pushFxDrawList(o); return 1;
+    case 8: pushModelDrawList(o);
     default: return 1;
     }
 }
@@ -95,8 +95,8 @@ static __inline__ s32 vis_22F6C(void *q)
 {
     S_22F6C *p = q;
     if (p->on == 0) return 0;
-    if ((u16)(p->pos->y - (*(u16 *)&SPAD->unk168[3].p.whole) + 0x40) >= 0x1c1) return 0;
-    return (u16)((*(u16 *)&SPAD->unk168[7].p.whole) - p->z + 0x40) < 0x171;
+    if ((u16)(p->pos->y - (*(u16 *)&SPAD->cameraPos.x.p.whole) + 0x40) >= 0x1c1) return 0;
+    return (u16)((*(u16 *)&SPAD->screenOrigin.y.p.whole) - p->z + 0x40) < 0x171;
 }
 s32 func_80022F6C(S_22F6C *o)
 {
@@ -198,7 +198,7 @@ s32 angleBetweenPoints(Vec2s a, Vec2s b) {
 // INCLUDE_ASM("nonmatchings/main/game/entity", setObjectAxisPointers);
 void setObjectAxisPointers(u8* self)
 {
-    if ((SPAD->unk1C8 & 1) == 0) {
+    if ((SPAD->axisSwap & 1) == 0) {
         *(u8**)(self + 0x40) = self + 0x10;
         *(u8**)(self + 0x44) = self + 0x18;
     } else {
@@ -225,11 +225,11 @@ void func_800233B8(void)
         D_800A53D8 = b + 0x18;
     }
     if (!(D_1F8001C8 & 1)) {
-        D_800A38EC = D_1F8000EC;
-        D_800A38F0 = D_1F8000EC + 8;
+        D_800A38EC = &SCRATCHPAD.vpx;
+        D_800A38F0 = &SCRATCHPAD.vpz;
     } else {
-        D_800A38F0 = D_1F8000EC;
-        D_800A38EC = D_1F8000EC + 8;
+        D_800A38F0 = &SCRATCHPAD.vpx;
+        D_800A38EC = &SCRATCHPAD.vpz;
     }
     e1 = ((S1_233B8 *)&D_800B07D8);
     for (D_1F80019C = 0; D_1F80019C < 4; D_1F80019C++, e1++) {
@@ -347,10 +347,10 @@ void insertionSortU32(s32 n, u32* arr)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/entity", spawnLayer3Object);
-void spawnLayer3Object(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
+// INCLUDE_ASM("nonmatchings/main/game/entity", spawnEffectAt);
+void spawnEffectAt(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
-    u8* p = allocObjectLayer3();
+    u8* p = allocEffectObject();
 
     if (p != NULL) {
         p[0] = 1;
@@ -363,12 +363,12 @@ void spawnLayer3Object(u8 arg0, s16 arg1, s16 arg2, s16 arg3)
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", func_80023928);
 
-GameObject *func_80023928(GameObject *p)
+GameObject *func_80023928(GameObject *obj)
 {
     s32 i, n, k;
-    GameObject *o;
+    GameObject *spawned;
     char pad;
-    k = p->id;
+    k = obj->id;
     n = 0;
     for (i = 0; i < GAME.selectedArea; i++) {
         n += ((u16 *)&D_8007B294)[i];
@@ -376,15 +376,15 @@ GameObject *func_80023928(GameObject *p)
     n += D_8009BCCA;
     if (k >= 32) n++;
     { s32 s = k % 32; if (D_8009BEFC[n] & (1 << s)) return 0; }
-    if (p->state != 2) return 0;
-    o = allocObjectLayer2();
-    if (o == 0) return 0;
-o->type = p->active;
-o->id = p->visible;
-o->active = 2;
-o->param = p->type | 0x80;
-    o->objectIndex = p->id;
-    return o;
+    if (obj->state != 2) return 0;
+    spawned = allocActorObject();
+    if (spawned == 0) return 0;
+spawned->type = obj->active;
+spawned->id = obj->visible;
+spawned->active = 2;
+spawned->param = obj->type | 0x80;
+    spawned->objectIndex = obj->id;
+    return spawned;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/entity", loadButtonConfig);

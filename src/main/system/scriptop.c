@@ -92,7 +92,7 @@ void func_8003CE18(void)
     s32 z = g->z;
     switch (k) {
     case 2: case 9: case 10: {
-        GameObject *obj = allocObjectLayer2();
+        GameObject *obj = allocActorObject();
         if (obj == 0) break;
         if (k == 9) obj->active = 1; else obj->active = 2;
         if (k == 9) obj->type = 0x19; else obj->type = 0x18;
@@ -129,7 +129,7 @@ void func_8003CE18(void)
         break;
     }
     case 3: {
-        GameObject *obj = allocObjectLayer3();
+        GameObject *obj = allocEffectObject();
         if (obj == 0) break;
         obj->active = 1;
         obj->type = 0x2e;
@@ -153,7 +153,7 @@ void func_8003CE18(void)
         break;
     }
     case 4: {
-        GameObject *obj = allocObjectLayer4();
+        GameObject *obj = allocAreaObject();
         u8 c;
         if (obj == 0) break;
         c = 1;
@@ -1516,8 +1516,8 @@ void func_8003F124(void)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/system/scriptop", updateObjectsLayer1);
-void updateObjectsLayer1(void)
+// INCLUDE_ASM("nonmatchings/main/system/scriptop", updateWeaponObjects);
+void updateWeaponObjects(void)
 {
     u8* p = &D_800B07D8;
 

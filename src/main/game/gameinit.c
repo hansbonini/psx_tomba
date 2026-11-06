@@ -22,8 +22,8 @@ void initGameConfig(void)
     GAME.playerLives = 3;
     GAME.saveSlot = 0xFF;
     GAME.unk730 = 0xFF;
-    SPAD->unk3CE = 0;
-    (*(short *)&SPAD->unk1C8) = 0;
+    SPAD->pauseMenuLock = 0;
+    (*(short *)&SPAD->axisSwap) = 0;
     SPAD->unk3D1 = 0; 
     D_8009EBA0 = 0;
     GAME.selectedSection = AREA00_SECTION00_VILLAGEOFALLBEGINNINGS;
@@ -38,8 +38,8 @@ void initGameConfig(void)
     GAME.unk672 = 0x639;
     GAME.unk674 = 0x691;
     GAME.unk5bc = BUTTON_CONFIG_INDEX;
-    if (SPAD->unk1B3 == 0) {
-        if (SPAD->unk1AB != 0) {
+    if (SPAD->debugKeepInventory == 0) {
+        if (SPAD->debugGiveItems != 0) {
             GAME.inventory.slots[0] = ITEM_BLACKJACK;
             GAME.inventory.slots[1] = ITEM_GRAPPLE;
             GAME.inventory.slots[2] = ITEM_GRAPPLEJACK;
@@ -88,9 +88,9 @@ void initHud(void)
     char *tmp;
 
     memset(&D_8009BC98, 0, sizeof(D_8009BC98));
-    SPAD->unk1C6 = 0;
+    SPAD->drawFrozen = 0;
     GAME.fadeScreenControl = 1;
-    SPAD->unk3D0 = 0;
+    SPAD->movieSkippable = 0;
     GAME.playerIdleState = 0;
     initAreaScripts();
     restoreAreaBgmVolume();
@@ -112,8 +112,8 @@ void clearPlayerObject(void)
     memset(&PLAYER, 0, sizeof(PLAYER));
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initObjectPoolUnlayered);
-void initObjectPoolUnlayered(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initAreaCtrlPool);
+void initAreaCtrlPool(void)
 {
     s32 i;
     u8* p;
@@ -137,8 +137,8 @@ void initObjectPoolUnlayered(void)
     D_1F80023E = 10;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initObjectPoolLayer1);
-void initObjectPoolLayer1(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initWeaponPool);
+void initWeaponPool(void)
 {
     s32 i;
     u8* p;
@@ -155,7 +155,7 @@ void initObjectPoolLayer1(void)
     D_1F800204 = (s32*)CAMERA_SCROLL;
     i = 0;
     do {
-        ((ObjectAxisView*)q)->layer = 1;
+        ((ObjectAxisView*)q)->category = OBJ_CAT_WEAPON;
         *--D_1F800204 = (s32)q;
         q -= 0xEC;
         i++;
@@ -167,8 +167,8 @@ void initObjectPoolLayer1(void)
     D_1F800244 = 0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initObjectPool);
-void initObjectPool(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initActorPool);
+void initActorPool(void)
 {
     s32 i;
     u8* p;
@@ -185,7 +185,7 @@ void initObjectPool(void)
     D_1F800208 = (s32*)&D_800A3D08;
     i = 0;
     do {
-        ((ObjectAxisView*)q)->layer = 0;
+        ((ObjectAxisView*)q)->category = OBJ_CAT_NONE;
         *--D_1F800208 = (s32)q;
         q -= 0xD4;
         i++;
@@ -193,23 +193,23 @@ void initObjectPool(void)
     D_1F800238 = 0xC8;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initLayer1DrawList);
-void initLayer1DrawList(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initActorDrawList);
+void initActorDrawList(void)
 {
-    SPAD->unk21C = &D_800A5970;
-    (*(int *)&SPAD->unk260) = &D_800A5970;
-    (*(short *)&SPAD->unk250) = 0;
-    SPAD->unk246 = 0;
+    SPAD->actorDrawList = &D_800A5970;
+    (*(int *)&SPAD->actorHeldList) = &D_800A5970;
+    (*(short *)&SPAD->actorHeldCount) = 0;
+    SPAD->actorDrawCount = 0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initMainDrawList);
-void initMainDrawList(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initEffectDrawList);
+void initEffectDrawList(void)
 {
     s32 i;
     s32 off;
 
-    (*(s32* *)&SPAD->unk264) = SPAD->unk220 = &D_800B0680;
-    SPAD->unk24A = SPAD->unk252 = 0;
+    (*(s32* *)&SPAD->effectHeldList) = SPAD->effectDrawList = &D_800B0680;
+    SPAD->effectDrawCount = SPAD->effectHeldCount = 0;
     for (i = 7; 0 <= i; --i) {
         off = i * 0x8C;
         *(s16*)&LOAD_BUFFER[off] = 0xFFFF;
@@ -218,17 +218,17 @@ void initMainDrawList(void)
     return;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initLayer4DrawList);
-void initLayer4DrawList(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initAreaDrawList);
+void initAreaDrawList(void)
 {
-    (*(int* *)&SPAD->unk224) = &D_800B0470;
-    (*(int* *)&SPAD->unk268) = &D_800B0470;
-    SPAD->unk254 = 0;
-    (*(short *)&SPAD->unk24C) = 0;
+    (*(int* *)&SPAD->areaDrawList) = &D_800B0470;
+    (*(int* *)&SPAD->areaHeldList) = &D_800B0470;
+    SPAD->areaHeldCount = 0;
+    (*(short *)&SPAD->areaDrawCount) = 0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initObjectPoolLayer8);
-void initObjectPoolLayer8(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initModelPool);
+void initModelPool(void)
 {
     s32 i;
     u8* p;
@@ -245,7 +245,7 @@ void initObjectPoolLayer8(void)
     D_1F80020C = (s32*)&D_800A55C4;
     i = 0;
     do {
-        ((ObjectAxisView*)q)->layer = 8;
+        ((ObjectAxisView*)q)->category = OBJ_CAT_MODEL;
         *--D_1F80020C = (s32)q;
         q -= 0xD4;
         i++;
@@ -258,13 +258,13 @@ void initObjectPoolLayer8(void)
     initSpriteSlots8();
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initLayer5DrawList);
-void initLayer5DrawList(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initItemDrawList);
+void initItemDrawList(void)
 {
-    (*(int* *)&SPAD->unk228) = &D_800B04F0;
+    (*(int* *)&SPAD->itemDrawList) = &D_800B04F0;
     *(int** )0x1F80026C = &D_800B04F0;
-    SPAD->unk256 = 0;
-    SPAD->unk248 = 0;
+    SPAD->itemHeldCount = 0;
+    SPAD->itemDrawCount = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/gameinit", clearLayer1Buffer);
@@ -279,8 +279,8 @@ void clearOtBuffer(void)
     memset(D_800B00F8, 0, sizeof(D_800B00F8));
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", initObjectPoolLayer7);
-void initObjectPoolLayer7(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", initFxPool);
+void initFxPool(void)
 {
     s32 i;
     u8* p;
@@ -297,7 +297,7 @@ void initObjectPoolLayer7(void)
     D_1F800214 = (s32*)&D_800A37D0;
     i = 0;
     do {
-        ((ObjectAxisView*)q)->layer = 7;
+        ((ObjectAxisView*)q)->category = OBJ_CAT_FX;
         *--D_1F800214 = (s32)q;
         q -= 0x6C;
         i++;
@@ -320,8 +320,8 @@ void clearMenuParams(void)
     memset(D_800A3940, 0, sizeof(D_800A3940));
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer1);
-void* allocObjectLayer1(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocWeaponObject);
+void* allocWeaponObject(void)
 {
     s16  n = D_1F800236;
     s32* p;
@@ -344,8 +344,8 @@ void* allocObjectLayer1(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer);
-void* allocObjectLayer(u8 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocActorWithCategory);
+void* allocActorWithCategory(u8 arg0)
 {
     s16  n = D_1F800238;
     s32* p;
@@ -356,7 +356,7 @@ void* allocObjectLayer(u8 arg0)
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
-        obj->layer = arg0;
+        obj->category = arg0;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
@@ -369,20 +369,20 @@ void* allocObjectLayer(u8 arg0)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer2);
-void* allocObjectLayer2(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocActorObject);
+void* allocActorObject(void)
 {
     s16  n = D_1F800238;
     s32* p;
     ObjectAxisView* obj;
-    u8   layer = OBJECT_LAYER_2;
+    u8   layer = OBJ_CAT_ACTOR;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
-        obj->layer = layer;
+        obj->category = layer;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
@@ -395,18 +395,18 @@ void* allocObjectLayer2(void)
     return NULL;
 }
 
-void* allocObjectLayer3(void)
+void* allocEffectObject(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
     ObjectAxisView* obj;
-    u_char layer = OBJECT_LAYER_3;
+    u_char layer = OBJ_CAT_EFFECT;
 
-    if (scratch->freeObjectCount > 0) {
-        scratch->freeObjectCount -= 1;
-        obj = *scratch->freeObjects++;
-        obj->layer = layer;
+    if (scratch->freeActorCount > 0) {
+        scratch->freeActorCount -= 1;
+        obj = *scratch->freeActorObjects++;
+        obj->category = layer;
 
-        if ((scratch->unk1C8 & 1) == 0) {
+        if ((scratch->axisSwap & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
         } else {
@@ -418,20 +418,20 @@ void* allocObjectLayer3(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer4);
-void* allocObjectLayer4(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocAreaObject);
+void* allocAreaObject(void)
 {
     s16  n = D_1F800238;
     s32* p;
     ObjectAxisView* obj;
-    u8   layer = OBJECT_LAYER_4;
+    u8   layer = OBJ_CAT_AREA;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
-        obj->layer = layer;
+        obj->category = layer;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
@@ -444,20 +444,20 @@ void* allocObjectLayer4(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer5);
-void* allocObjectLayer5(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocItemObject);
+void* allocItemObject(void)
 {
     s16  n = D_1F800238;
     s32* p;
     ObjectAxisView* obj;
-    u8   layer = OBJECT_LAYER_5;
+    u8   layer = OBJ_CAT_ITEM;
 
     if (n > 0) {
         p = D_1F800208;
         D_1F800238 = n - 1;
         D_1F800208 = p + 1;
         obj = (ObjectAxisView*)*p;
-        obj->layer = layer;
+        obj->category = layer;
         if ((D_1F8001C8 & 1) == 0) {
             obj->drawBufA = &obj->data[0x10];
             obj->drawBufB = &obj->data[0x18];
@@ -470,8 +470,8 @@ void* allocObjectLayer5(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer8);
-void* allocObjectLayer8(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocModelObject);
+void* allocModelObject(void)
 {
     s16  n = D_1F80023A;
     s32* p;
@@ -494,8 +494,8 @@ void* allocObjectLayer8(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectLayer7);
-void* allocObjectLayer7(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocFxObject);
+void* allocFxObject(void)
 {
     s16  n = D_1F80023C;
     s32* p;
@@ -518,8 +518,8 @@ void* allocObjectLayer7(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocObjectUnlayered);
-u8* allocObjectUnlayered(void)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", allocAreaCtrlObject);
+u8* allocAreaCtrlObject(void)
 {
     s16  n = D_1F80023E;
     s32* p;
@@ -533,8 +533,8 @@ u8* allocObjectUnlayered(void)
     return NULL;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer1);
-void freeObjectLayer1(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeWeaponObject);
+void freeWeaponObject(s32* arg0)
 {
     ((u8*)arg0)[0x1C] &= 0x7F;
     arg0[0] = 0;
@@ -545,8 +545,8 @@ void freeObjectLayer1(s32* arg0)
     *--D_1F800204 = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer2);
-void freeObjectLayer2(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeActorObject);
+void freeActorObject(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -562,8 +562,8 @@ void freeObjectLayer2(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer3);
-void freeObjectLayer3(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeEffectObject);
+void freeEffectObject(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -579,8 +579,8 @@ void freeObjectLayer3(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer4);
-void freeObjectLayer4(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeAreaObject);
+void freeAreaObject(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -596,8 +596,8 @@ void freeObjectLayer4(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer8);
-void freeObjectLayer8(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeModelObject);
+void freeModelObject(s32* arg0)
 {
     ((u8*)arg0)[0x1C] &= 0x7F;
     arg0[0] = 0;
@@ -610,8 +610,8 @@ void freeObjectLayer8(s32* arg0)
     *--D_1F80020C = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer5);
-void freeObjectLayer5(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeItemObject);
+void freeItemObject(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -627,8 +627,8 @@ void freeObjectLayer5(s32* arg0)
     *--D_1F800208 = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectLayer7);
-void freeObjectLayer7(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeFxObject);
+void freeFxObject(s32* arg0)
 {
     ((u8*)arg0)[0x1C] &= 0x7F;
     arg0[0] = 0;
@@ -639,8 +639,8 @@ void freeObjectLayer7(s32* arg0)
     *--D_1F800214 = (s32)arg0;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeObjectUnlayered);
-void freeObjectUnlayered(s32* arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", freeAreaCtrlObject);
+void freeAreaCtrlObject(s32* arg0)
 {
     arg0[0] = 0;
     arg0[1] = 0;
@@ -690,7 +690,7 @@ const char BUILD_TIME[] asm("D_80010008") = "21:11";
 void freeObjectByLayer(s32* self)
 {
     switch (((u8*)self)[0x1C] & 0x7F) {
-    case OBJECT_LAYER_1:
+    case OBJ_CAT_WEAPON:
         ((u8*)self)[0x1C] &= 0x7F;
         self[0] = 0;
         self[1] = 0;
@@ -699,7 +699,7 @@ void freeObjectByLayer(s32* self)
         D_1F800236++;
         *--D_1F800204 = (s32)self;
         break;
-    case OBJECT_LAYER_2:
+    case OBJ_CAT_ACTOR:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -713,7 +713,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case OBJECT_LAYER_3:
+    case OBJ_CAT_EFFECT:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -727,7 +727,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case OBJECT_LAYER_4:
+    case OBJ_CAT_AREA:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -741,7 +741,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case OBJECT_LAYER_5:
+    case OBJ_CAT_ITEM:
         self[0] = 0;
         self[1] = 0;
         self[2] = 0;
@@ -755,7 +755,7 @@ void freeObjectByLayer(s32* self)
         D_1F800238++;
         *--D_1F800208 = (s32)self;
         break;
-    case OBJECT_LAYER_7:
+    case OBJ_CAT_FX:
         ((u8*)self)[0x1C] &= 0x7F;
         self[0] = 0;
         self[1] = 0;
@@ -764,7 +764,7 @@ void freeObjectByLayer(s32* self)
         D_1F80023C++;
         *--D_1F800214 = (s32)self;
         break;
-    case OBJECT_LAYER_8:
+    case OBJ_CAT_MODEL:
         ((u8*)self)[0x1C] &= 0x7F;
         self[0] = 0;
         self[1] = 0;
@@ -778,22 +778,22 @@ void freeObjectByLayer(s32* self)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListLayer1);
-void pushDrawListLayer1(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushWeaponDrawList);
+void pushWeaponDrawList(s32 arg0)
 {
     *--D_1F800218 = arg0;
     D_1F800244++;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListMain);
-void pushDrawListMain(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushActorDrawList);
+void pushActorDrawList(s32 arg0)
 {
     *--D_1F80021C = arg0;
     D_1F800246++;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListCapped);
-void pushDrawListCapped(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushEffectDrawList);
+void pushEffectDrawList(s32 arg0)
 {
     if (D_1F80024A < 0x56) {
         *--D_1F800220 = arg0;
@@ -801,29 +801,29 @@ void pushDrawListCapped(s32 arg0)
     }
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListLayer4);
-void pushDrawListLayer4(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushAreaDrawList);
+void pushAreaDrawList(s32 arg0)
 {
     *--D_1F800224 = arg0;
     D_1F80024C++;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListLayer8);
-void pushDrawListLayer8(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushModelDrawList);
+void pushModelDrawList(s32 arg0)
 {
     *--D_1F800230 = arg0;
     D_1F800242++;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListLayer5);
-void pushDrawListLayer5(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushItemDrawList);
+void pushItemDrawList(s32 arg0)
 {
     *--D_1F800228 = arg0;
     D_1F800248++;
 }
 
-// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushDrawListLayer7);
-void pushDrawListLayer7(s32 arg0)
+// INCLUDE_ASM("nonmatchings/main/game/gameinit", pushFxDrawList);
+void pushFxDrawList(s32 arg0)
 {
     *--D_1F80022C = arg0;
     D_1F800240++;

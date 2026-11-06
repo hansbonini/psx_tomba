@@ -112,7 +112,7 @@ s16 func_8004339C(u8 *o_, s16 x_, s16 y)
 // INCLUDE_ASM("nonmatchings/main/game/collision", probeCollisionAtDepthA);
 s16 probeCollisionAtDepthA(u8* self, s16 arg1, s16 arg2)
 {
-    D_1F800278 = getCollisionPlaneAt(arg1, *(s16*)(*(u8**)(self + 0x44) + 2));
+    SCRATCHPAD.collisionCursor = getCollisionPlaneAt(arg1, *(s16*)(*(u8**)(self + 0x44) + 2));
     return func_8004339C(self, arg1, arg2);
 }
 
@@ -289,7 +289,7 @@ extern s32 func_80043740(GameObject *, s32, s32, s32);
 
 s16 func_80043AB0(O8004065C_43AB0 *o, s16 a, s16 b, s32 c)
 {
-    SPAD->unk278 = getCollisionPlaneAt(a, o->p44[1]);
+    SPAD->collisionCursor = (u16 *)getCollisionPlaneAt(a, o->p44[1]);
     return func_80043740((GameObject *)o, a, b, (s16)((c & 1) | 0xff00));
 }
 
@@ -1042,29 +1042,29 @@ static __inline__ s32 check_45570(GameObject *obj, s16 a, s16 b)
     s32 ys;
 
     q = getCollisionPlaneAt(a, obj->d->p.whole);
-    D_1F800278 = (u16 *)(q + 1);
+    SCRATCHPAD.collisionCursor = (u16 *)(q + 1);
     nn = *q;
     n = nn;
     if (nn == 0) return 0;
     do {
-        t = *D_1F800278++;
+        t = *SCRATCHPAD.collisionCursor++;
         n--;
         if (t & 2) {
             if (!(t & 0x10)) goto take;
         }
-        D_1F800278 += 3;
+        SCRATCHPAD.collisionCursor += 3;
         continue;
 take:
-        ys = (s16)*D_1F800278++;
+        ys = (s16)*SCRATCHPAD.collisionCursor++;
         y0 = ys;
         ys -= 16;
         if (b < ys) return 0;
-        h = *D_1F800278++;
+        h = *SCRATCHPAD.collisionCursor++;
         if (h == 0) {
-            D_1F800278++;
+            SCRATCHPAD.collisionCursor++;
             t = y0;
         } else {
-            v = *D_1F800278++;
+            v = *SCRATCHPAD.collisionCursor++;
             lo = v & 0xf;
             v >>= 4;
             t = v & 0xf;

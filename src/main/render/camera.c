@@ -68,7 +68,7 @@ void initPlayerAtSpawn(void)
     flags = (u16)row[1];
     plane = flags >> 8;
     flags &= 1;
-    SPAD->unk1C8 = flags;
+    SPAD->axisSwap = flags;
     GAME.area00_fogControl = plane;
     if (flags == 0) {
         *(u8**)(p + 0x40) = p + 0x10;
@@ -123,8 +123,8 @@ typedef struct {
 } C_246B0;
 typedef struct { char p[0x4c]; u16 w4c; } O_246B0;
 extern void func_8002A0A0(C_246B0 *);
-#define FLAG (SPAD->unk1C8)
-#define SFLAG ((*(s16 *)&SPAD->unk1C8))
+#define FLAG (SPAD->axisSwap)
+#define SFLAG ((*(s16 *)&SPAD->axisSwap))
 
 static __inline__ s32 smax_246B0(s32 a, s16 b) { s16 r = a; asm("" : "=r"(r) : "0"(r)); if (a < b) r = b; return r; }
 static __inline__ s32 smin_246B0(s32 a, s16 b) { register s16 r asm("$4") = a; if ((s16)a > b) r = b; return r; }
@@ -161,7 +161,7 @@ void func_800246B0(void)
         ((s32*)&SCRATCHPAD.vrx.raw)[2] = 0xFDE00000;
 #endif
     q = D_8007BF78[((u16 *)&GAME)[0]][D_8009BCCA];
-    w = (*(O_246B0 **)&D_1F8001D4)->w4c;
+    w = (*(O_246B0 **)&SCRATCHPAD.currentTask)->w4c;
     q += (*(u16 *)&D_8009BCEA) * 4;
     switch (w) {
     case 1: case 2:
@@ -202,12 +202,12 @@ void func_800246B0(void)
         c->d7c = SFLAG * 0x5A00;
     }
     func_8002A0A0(c);
-    ((s32*)&SCRATCHPAD.unk168[3].raw)[0] = c->pos.x;
-    ((s32*)&SCRATCHPAD.unk168[3].raw)[1] = c->pos.y;
-    ((s32*)&SCRATCHPAD.unk168[3].raw)[2] = c->pos.z;
-    ((s32*)&SCRATCHPAD.unk168[3].raw)[3] = c->pos.x;
-    ((s32*)&SCRATCHPAD.unk168[3].raw)[4] = c->pos.y + ((s32*)&SCRATCHPAD.vrx.raw)[1];
-    ((s32*)&SCRATCHPAD.unk168[3].raw)[5] = c->pos.z;
+    ((s32*)&SCRATCHPAD.cameraPos.x.raw)[0] = c->pos.x;
+    ((s32*)&SCRATCHPAD.cameraPos.x.raw)[1] = c->pos.y;
+    ((s32*)&SCRATCHPAD.cameraPos.x.raw)[2] = c->pos.z;
+    ((s32*)&SCRATCHPAD.cameraPos.x.raw)[3] = c->pos.x;
+    ((s32*)&SCRATCHPAD.cameraPos.x.raw)[4] = c->pos.y + ((s32*)&SCRATCHPAD.vrx.raw)[1];
+    ((s32*)&SCRATCHPAD.cameraPos.x.raw)[5] = c->pos.z;
 }
 #undef FLAG
 #undef SFLAG

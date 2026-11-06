@@ -33,7 +33,7 @@ void updateImpactEffect(GameObject *obj)
     case 1:
         if (obj->id == 2) {
             obj->visible = 1;
-            pushDrawListCapped(obj);
+            pushEffectDrawList(obj);
             if (PLAYER.obj.animFrame & 1) d = -14; else d = 14;
             obj->h->p.whole = PLAYER.obj.h->p.whole + d;
             obj->y.p.whole = (u16)PLAYER.obj.y.p.whole - 14;
@@ -50,7 +50,7 @@ void updateImpactEffect(GameObject *obj)
         obj->state = s + 1;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -198,7 +198,7 @@ void updateStrikeBurst(GameObject *obj)
         obj->state++;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -206,26 +206,26 @@ void updateStrikeBurst(GameObject *obj)
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F05C);
 void func_8002F05C(GameObject *parent, s32 x, s32 y, s32 z)
 {
-    GameObject *o = allocObjectLayer3();
+    GameObject *obj = allocEffectObject();
     s32 v;
-    if (o != 0) {
-        o->active = 1;
-        o->type = 0x12;
-        o->animFrame = parent->animFrame;
-        o->x.raw = x << 16;
-        o->y.raw = y << 16;
-        o->z.raw = z << 16;
-        o->tpage = D_8009B6A0->tpage2;
-        o->clut = D_8009B6A0->clut2;
-        o->drawType = DRAW_OVERLAY_8;
-        *(s8 *)&o->priority = -0x1C;
-        o->drawFlags = 1;
-        o->id = 0;
+    if (obj != 0) {
+        obj->active = 1;
+        obj->type = 0x12;
+        obj->animFrame = parent->animFrame;
+        obj->x.raw = x << 16;
+        obj->y.raw = y << 16;
+        obj->z.raw = z << 16;
+        obj->tpage = D_8009B6A0->tpage2;
+        obj->clut = D_8009B6A0->clut2;
+        obj->drawType = DRAW_OVERLAY_8;
+        *(s8 *)&obj->priority = -0x1C;
+        obj->drawFlags = 1;
+        obj->id = 0;
         v = SPAD->sprData[1];
-        o->category |= 0x80;
-        o->unk1D = 0x4d;
-        *(GameObject **)&o->parent = parent;
-        o->spriteBank = v;
+        obj->category |= 0x80;
+        obj->unk1D = 0x4d;
+        *(GameObject **)&obj->parent = parent;
+        obj->spriteBank = v;
     }
 }
 
@@ -236,7 +236,7 @@ void func_8002F138(void)
     GameObject *obj;
     s32 v;
 
-    if (D_8009C260 != 0 && (obj = allocObjectLayer3()) != 0) {
+    if (D_8009C260 != 0 && (obj = allocEffectObject()) != 0) {
         obj->active = 1;
         obj->type = 0x12;
         obj->animFrame = ((u16 *)&PLAYER.obj.animFrame)[0] & 1;
@@ -300,7 +300,7 @@ void func_8002F220(GameObject *obj)
         obj->state = s + 1;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -347,7 +347,7 @@ void func_8002F404(GameObject *obj)
         obj->state = t + 1;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -399,7 +399,7 @@ void func_8002F56C(GameObject *obj)
         obj->state++;
         break;
     case 3:
-        freeObjectLayer3(obj);
+        freeEffectObject(obj);
         break;
     }
 }
@@ -411,37 +411,37 @@ void dispatchMsgBoxHandler(u8* self)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/message", func_8002F804);
-void func_8002F804(GameObject *a, s16 b, char c)
+void func_8002F804(GameObject *parent, s16 b, char c)
 {
-    GameObject *o = allocObjectLayer3();
-    if (o != 0) {
-        o->active = 1;
-        o->type = 0x13;
-        o->animFrame = a->animFrame;
-        *(Vec3L *)&o->x = *(Vec3L *)&a->x;
+    GameObject *obj = allocEffectObject();
+    if (obj != 0) {
+        obj->active = 1;
+        obj->type = 0x13;
+        obj->animFrame = parent->animFrame;
+        *(Vec3L *)&obj->x = *(Vec3L *)&parent->x;
         if (b == 0) {
-            o->tpage = 0;
-            o->clut = GetClut(0x80, 0x1f0);
-            o->drawFlags = 0x81;
-            o->spriteBank = D_1F8002CC;
-            o->drawType = DRAW_OVERLAY_8;
-            *(s8 *)&o->priority = -7;
-            o->id = b;
-            o->param = c;
-            o->unk1D = 0x4d;
-            *(GameObject **)&o->parent = a;
-            o->category |= 0x80;
+            obj->tpage = 0;
+            obj->clut = GetClut(0x80, 0x1f0);
+            obj->drawFlags = 0x81;
+            obj->spriteBank = D_1F8002CC;
+            obj->drawType = DRAW_OVERLAY_8;
+            *(s8 *)&obj->priority = -7;
+            obj->id = b;
+            obj->param = c;
+            obj->unk1D = 0x4d;
+            *(GameObject **)&obj->parent = parent;
+            obj->category |= 0x80;
         } else {
-            o->tpage = 0x14;
-            o->drawFlags = 0;
-            o->spriteBank = D_1F8002D8[0];
-            o->drawType = DRAW_SPRITE_ROTATED;
-            o->id = b;
-            o->param = c;
-            o->priority = D_800A53A7[0] - 1;
-            o->category |= 0x80;
-            o->unk1D = 0x4d;
-            *(GameObject **)&o->parent = a;
+            obj->tpage = 0x14;
+            obj->drawFlags = 0;
+            obj->spriteBank = D_1F8002D8[0];
+            obj->drawType = DRAW_SPRITE_ROTATED;
+            obj->id = b;
+            obj->param = c;
+            obj->priority = D_800A53A7[0] - 1;
+            obj->category |= 0x80;
+            obj->unk1D = 0x4d;
+            *(GameObject **)&obj->parent = parent;
         }
     }
 }
@@ -784,7 +784,7 @@ void updateMessageBox(MessageBox *o)
         MESSAGE_SLOTS[o->slot].y = o->top;
         if (MESSAGE_SLOTS[o->slot].count != -1) {
             o->visible = 1;
-            pushDrawListCapped(o);
+            pushEffectDrawList(o);
         }
         if (o->closeTimer != -1 && !(--o->closeTimer & 0xFFFF)) {
             freeMessageGlyphs(o->slot);
@@ -795,7 +795,7 @@ void updateMessageBox(MessageBox *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -870,7 +870,7 @@ E2d_30800 *openMessageBox(s32 k, s32 dx, s16 *pos, s16 anim, u16 w)
     u16 v;
     char *b;
     for (i = 0; i < 4; i++) {
-        if (MESSAGE_SLOTS[i].count == -1 && (o = allocObjectLayer3()) != 0) {
+        if (MESSAGE_SLOTS[i].count == -1 && (o = allocEffectObject()) != 0) {
             o->type = 0x1a;
             o->b0a = 10;
             o->w1e = 0x14;
@@ -1052,7 +1052,7 @@ void updateInfoMessage(S_30EF8 *o)
         MESSAGE_SLOTS[o->wca].x = o->wbe;
         MESSAGE_SLOTS[o->wca].y = o->wc0;
         o->b01 = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         if (--o->timer == 0 || MESSAGE_SLOTS[o->wca].unk2 == -1) {
             MESSAGE_SLOTS[o->wca].unk2 = -1;
             o->b04++;
@@ -1068,7 +1068,7 @@ void updateInfoMessage(S_30EF8 *o)
         o->b04++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -1137,7 +1137,7 @@ void *printInfoMessage(s32 id, s32 kind)
         index += id;
     }
     skip = 0;
-    o = allocObjectLayer3();
+    o = allocEffectObject();
     if (o != NULL) {
         o->active = 1;
         o->type = 0x1C;

@@ -41,7 +41,7 @@ void main(void)
     initTasks();
     startTask(0, bootSequenceTask);
     EnterCriticalSection();
-    SPAD->unk1D8 = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
+    SPAD->vblankEvent = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
     ExitCriticalSection();
     joypad_state_ptr = &D_8009EB5A;
     EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
@@ -61,7 +61,7 @@ void main(void)
         if ((*(u16 *)&SCRATCHPAD.useDrawSync) == 0) {
             ResetGraph(1);
         }
-        if ((SPAD->unk1BD != 0) && ((SPAD->unk1D1 | SPAD->unk1D0) != 0)) {
+        if ((SPAD->debugMoveDisplay != 0) && ((SPAD->inTitle | SPAD->inGame) != 0)) {
             while (~*joypad_state_ptr & JOY_R2) {
                 if (~*joypad_state_ptr & JOY_LEFT) {
                     D_8009AFE8.disp.x -= 4;
@@ -100,11 +100,11 @@ void main(void)
                 break;
         }
 
-        if (SPAD->unk1BF != 0) {
-            if ((MOVIE_PLAY_STATE == MOVIE_STATE_IDLE) && ((SPAD->unk1D1 | SPAD->unk1D0) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
+        if (SPAD->debugFreeze != 0) {
+            if ((MOVIE_PLAY_STATE == MOVIE_STATE_IDLE) && ((SPAD->inTitle | SPAD->inGame) != 0) && (LOAD_COMPLETE == 1) && (JOYPAD_STATE & JOY_L1)) {
                 (*(u16 *)&SCRATCHPAD.pauseFlags) = (u16)(0x8000 - PAUSE_FLAGS);
             }
-        } else if (SPAD->unk1BE != 0 && MOVIE_PLAY_STATE == MOVIE_STATE_IDLE && ((SPAD->unk1D1 | SPAD->unk1D0) != 0)) {
+        } else if (SPAD->debugPauseStep != 0 && MOVIE_PLAY_STATE == MOVIE_STATE_IDLE && ((SPAD->inTitle | SPAD->inGame) != 0)) {
             dbgMode = LOAD_COMPLETE;
             if (dbgMode == 1) {
                 joypad_state = JOYPAD_STATE;
@@ -180,12 +180,12 @@ void initGlobalState(void)
     scratch->frameCount = 0;
     scratch->unk1F8 = 0;
     scratch->moviePlayState = 0;
-    scratch->unk1D0 = 0;
-    scratch->unk1D1 = 0;
+    scratch->inGame = 0;
+    scratch->inTitle = 0;
     scratch->loadComplete = 0;
     scratch->unk1CF = 0;
     scratch->movieSkipRequest = 0;
-    scratch->unk1C6 = 0;
+    scratch->drawFrozen = 0;
     scratch->unk1C4 = 0;
     scratch->unk1C5= 0;
     scratch->unk3CC = 0;

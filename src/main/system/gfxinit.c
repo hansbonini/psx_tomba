@@ -40,17 +40,17 @@ void loadTIM(u_long* address, short x, short y, short x2, short y2)
 void initObjectPools(void)
 {
     clearPlayerObject();
-    initObjectPoolLayer1();
-    initObjectPool();
-    initLayer1DrawList();
-    initMainDrawList();
-    initLayer4DrawList();
-    initObjectPoolLayer8();
-    initLayer5DrawList();
+    initWeaponPool();
+    initActorPool();
+    initActorDrawList();
+    initEffectDrawList();
+    initAreaDrawList();
+    initModelPool();
+    initItemDrawList();
     clearOtBuffer();
-    initObjectPoolLayer7();
+    initFxPool();
     clearLayer1Buffer();
-    initObjectPoolUnlayered();
+    initAreaCtrlPool();
     clearMenuState();
     clearMenuParams();
 }
@@ -58,34 +58,34 @@ void initObjectPools(void)
 // INCLUDE_ASM("nonmatchings/main/system/gfxinit", resetDrawLists);
 void resetDrawLists(void)
 {
-    (*(int* *)&SPAD->unk218) = &D_800B0528;
-    (*(int* *)&SPAD->unk25C) = &D_800B0528;
-    (*(int* *)&SPAD->unk21C) = &D_800A5970;
-    (*(int* *)&SPAD->unk260) = &D_800A5970;
-    (*(int* *)&SPAD->unk220) = &D_800B0680;
-    (*(int* *)&SPAD->unk264) = &D_800B0680;
-    (*(int* *)&SPAD->unk224) = &D_800B0470;
-    (*(int* *)&SPAD->unk268) = &D_800B0470;
-    (*(int* *)&SPAD->unk230) = &D_800B3184;
-    (*(int* *)&SPAD->unk274) = &D_800B3184;
-    (*(int* *)&SPAD->unk228) = &D_800B04F0;
+    (*(int* *)&SPAD->weaponDrawList) = &D_800B0528;
+    (*(int* *)&SPAD->weaponHeldList) = &D_800B0528;
+    (*(int* *)&SPAD->actorDrawList) = &D_800A5970;
+    (*(int* *)&SPAD->actorHeldList) = &D_800A5970;
+    (*(int* *)&SPAD->effectDrawList) = &D_800B0680;
+    (*(int* *)&SPAD->effectHeldList) = &D_800B0680;
+    (*(int* *)&SPAD->areaDrawList) = &D_800B0470;
+    (*(int* *)&SPAD->areaHeldList) = &D_800B0470;
+    (*(int* *)&SPAD->modelDrawList) = &D_800B3184;
+    (*(int* *)&SPAD->modelHeldList) = &D_800B3184;
+    (*(int* *)&SPAD->itemDrawList) = &D_800B04F0;
     *(int** )0x1F80026C = &D_800B04F0;
-    SPAD->unk24E = 0;
-    SPAD->unk244 = 0;
-    (*(short *)&SPAD->unk250) = 0;
-    SPAD->unk246 = 0;
-    SPAD->unk252 = 0;
-    SPAD->unk24A = 0;
-    SPAD->unk254 = 0;
-    (*(short *)&SPAD->unk24C) = 0;
-    SPAD->unk258 = 0;
-    SPAD->unk242 = 0;
-    SPAD->unk256 = 0;
-    SPAD->unk248 = 0;
-    (*(int* *)&SPAD->unk22C) = &D_800A5858;
-    (*(int* *)&SPAD->unk270) = &D_800A5858;
-    SPAD->unk25A = 0;
-    SPAD->unk240 = 0;
+    SPAD->weaponHeldCount = 0;
+    SPAD->weaponDrawCount = 0;
+    (*(short *)&SPAD->actorHeldCount) = 0;
+    SPAD->actorDrawCount = 0;
+    SPAD->effectHeldCount = 0;
+    SPAD->effectDrawCount = 0;
+    SPAD->areaHeldCount = 0;
+    (*(short *)&SPAD->areaDrawCount) = 0;
+    SPAD->modelHeldCount = 0;
+    SPAD->modelDrawCount = 0;
+    SPAD->itemHeldCount = 0;
+    SPAD->itemDrawCount = 0;
+    (*(int* *)&SPAD->fxDrawList) = &D_800A5858;
+    (*(int* *)&SPAD->fxHeldList) = &D_800A5858;
+    SPAD->fxHeldCount = 0;
+    SPAD->fxDrawCount = 0;
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/gfxinit", resetCamera);
@@ -100,8 +100,8 @@ void resetCamera(void)
     camera->vrx = 0;
     camera->vry = 0;
     camera->vpz = 0;
-    SPAD->unk3CE = 0;
-    (*(short *)&SPAD->unk1C8) = 0;
+    SPAD->pauseMenuLock = 0;
+    (*(short *)&SPAD->axisSwap) = 0;
     SPAD->unk3D1 = 0;
     LOADED_LIST_FILE = 0xFF;
     LOADED_SOUND_SET = 0xFF;

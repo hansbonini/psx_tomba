@@ -111,7 +111,7 @@ void updateFrog(GameObject *o)
             break;
         case 1:
             o->visible = 0;
-            pushDrawListMain(o);
+            pushActorDrawList(o);
             break;
         }
         break;
@@ -380,7 +380,7 @@ void updateFrog(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -390,7 +390,7 @@ void updateFrog(GameObject *o)
 
 void func_80133408(s32 x, s32 y, s32 z)
 {
-    GameObject *o = allocObjectLayer2();
+    GameObject *o = allocActorObject();
     if (o) {
         u16 u;
         o->active = 1;
@@ -583,7 +583,7 @@ void func_80133748(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -799,7 +799,7 @@ void updateNpcCharles(GameObject *o)
         tickAnimation(o);
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }

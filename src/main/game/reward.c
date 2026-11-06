@@ -714,7 +714,7 @@ void func_8003F3D4(u8* self)
         if ((s16)probeCollisionAtDepthB(self, *(s16*)(*(int*)(self + 0x40) + 2), *(s16*)(self + 0x16)) != 0) {
             self[0] = 2;
             self[0xA5] = 0;
-            *(int*)(self + 0x8C) = (-SPAD->unk27E << 2) & 0xFF;
+            *(int*)(self + 0x8C) = (-SPAD->hitSlope << 2) & 0xFF;
             self[4] = 2;
             self[5] = 0;
             self[6] = 0;
@@ -730,7 +730,7 @@ void func_8003F3D4(u8* self)
         }
         break;
     case 3:
-        freeObjectLayer1(self);
+        freeWeaponObject(self);
         break;
     }
 }
@@ -837,7 +837,7 @@ void func_8003F9A4(u8* self)
             func_800E98A4(self, *(s16*)(self + 0x12), *(s16*)(self + 0x16), *(s16*)(self + 0x1A));
             if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
                 D_8009C616 |= 1 << self[3];
-                obj = allocObjectLayer2();
+                obj = allocActorObject();
                 if (obj != NULL) {
                     obj[0] = 1;
                     obj[2] = 3;
@@ -856,7 +856,7 @@ void func_8003F9A4(u8* self)
         }
         break;
     case 3:
-        freeObjectLayer1(self);
+        freeWeaponObject(self);
         break;
     }
 }

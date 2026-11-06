@@ -745,7 +745,7 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
         x = D_800A53AA - D_800A38C2;
         y = (u16)PLAYER.obj.y.p.whole - (*(u16 *)&SPAD->vpy.p.whole);
     }
-    src = (*(u8* *)&SPAD->unk39C);
+    src = (*(u8* *)&SPAD->eventData);
     src += *(u16*)(src + 8);
     idx = D_800776D0[GAME.selectedArea][event_id];
     if (idx == 0xFF) {
@@ -860,7 +860,7 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
     D_8009BC9B = 1;
     once = 0;
     for (; p[0] != -1; p += 4) {
-        obj = (u8*)allocObjectLayer8();
+        obj = (u8*)allocModelObject();
         if (obj != NULL) {
             obj[0] = 1;
             obj[2] = 1;
@@ -968,7 +968,7 @@ short acquireSpriteSlot(int id)
     }
 
     SPRITE_SLOTS[slot].refCount = 1;
-    src = ((scratchpad*)PSX_SCRATCH)->unk39C;
+    src = ((scratchpad*)PSX_SCRATCH)->eventData;
     dst = (u16*)(id * 2 + (int)src);
     src = (u16*)((u8*)src + dst[0x48]);
     w = *src++;
@@ -1049,7 +1049,7 @@ void printEventMessage(int event_id, int completed)
     }
 
     for (i = 0; i < count; i++) {
-        obj = allocObjectLayer3();
+        obj = allocEffectObject();
         if (obj != NULL) {
             int active = 1;
 

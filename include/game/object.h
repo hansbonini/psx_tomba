@@ -5,14 +5,15 @@
    Part of game.h: include "game.h", not this file. */
 
 typedef enum {
-    OBJECT_LAYER_1 = 1,
-    OBJECT_LAYER_2 = 2,
-    OBJECT_LAYER_3 = 3,
-    OBJECT_LAYER_4 = 4,
-    OBJECT_LAYER_5 = 5,
-    OBJECT_LAYER_7 = 7,
-    OBJECT_LAYER_8 = 8,
-} OBJECT_LAYER;
+    OBJ_CAT_NONE = 0,
+    OBJ_CAT_WEAPON = 1,
+    OBJ_CAT_ACTOR = 2,
+    OBJ_CAT_EFFECT = 3,
+    OBJ_CAT_AREA = 4,
+    OBJ_CAT_ITEM = 5,
+    OBJ_CAT_FX = 7,
+    OBJ_CAT_MODEL = 8,
+} ObjectCategory;
 
 /* Item definition entry, reached through ITEM_INIT_TABLE[ITEM_INIT_INDEX[item_id]].
    Holds the sprite/CLUT/animation description for one item. */
@@ -35,7 +36,7 @@ typedef struct ItemInit {
 } ItemInit;
 
 /* Views over the object returned by the allocator family
-   (allocObjectLayer3 / allocObjectLayer4 / allocObjectLayer7). They describe the same
+   (allocEffectObject / allocAreaObject / allocFxObject). They describe the same
    block through different field subsets and cannot be merged into a single
    struct: offset 0x10 is u_char in ObjectRawView and int in
    ObjectPosView. */
@@ -67,7 +68,7 @@ typedef struct ObjectRawView {
 
 typedef struct ObjectAxisView {
     byte  data[0x1C];
-    byte  layer;
+    byte  category;
     byte  pad0[0x23];
     void* drawBufA;
     void* drawBufB;

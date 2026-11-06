@@ -96,7 +96,7 @@ void func_80115D60(G_15D60 *g, char *s)
 
 void func_80115F60(GameObject *o)
 {
-    GameObject *n = allocObjectLayer3();
+    GameObject *n = allocEffectObject();
     if (n != 0) {
         n->active = 1;
         n->type = 0x15;
@@ -114,7 +114,7 @@ void func_80115F60(GameObject *o)
 
 void func_80115FEC(GameObject *o)
 {
-    GameObject *n = allocObjectLayer3();
+    GameObject *n = allocEffectObject();
     if (n != 0) {
         n->active = 1;
         n->type = 0x60;
@@ -172,7 +172,7 @@ void func_80116210(GameObject *o)
         o->state = t + 1;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -181,7 +181,7 @@ void func_80116210(GameObject *o)
 
 s32 func_801163EC(GameObject *o, u8 n)
 {
-    GameObject *e = allocObjectLayer3();
+    GameObject *e = allocEffectObject();
     if (e) {
         e->active = 2;
         e->type = 0x23;
@@ -238,7 +238,7 @@ void func_80116464(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -279,7 +279,7 @@ void func_8011662C(GameObject *o)
         break;
     case 2:
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -288,7 +288,7 @@ void func_8011662C(GameObject *o)
 
 s32 func_80116778(GameObject *o)
 {
-    GameObject *p = allocObjectLayer3();
+    GameObject *p = allocEffectObject();
     if (p != 0) {
         p->active = 2;
         p->type = 0x4f;
@@ -340,7 +340,7 @@ void func_801168F0(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -363,12 +363,12 @@ void func_80116A60(GameObject *o)
         break;
     case 1:
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -401,12 +401,12 @@ void func_80116B14(GameObject *o)
     case 1:
         tickAnimation(o);
         o->visible = 1;
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }

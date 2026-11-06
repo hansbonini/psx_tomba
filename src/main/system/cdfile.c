@@ -1587,7 +1587,7 @@ FILE_LINK_SIZES = FILE_LINKS + 4");
 #define CD_REQ   (*(u8**)0x1F800288)
 #define CD_HDR   (*(s16**)0x1F80028C)
 #define CD_DST   (*(u8**)0x1F800290)
-#define CD_NSEC  (SPAD->unk294)
+#define CD_NSEC  (SPAD->cdSectorCount)
 #define CD_HEAD  (SPAD->cdQueueHead)
 #define CD_TAIL  (SPAD->cdQueueTail)
 #define CD_FLAGS (*(s32*)((u8*)CD_HDR + 0x10))
@@ -2038,7 +2038,7 @@ void updateObjectSideFlag(u8* self)
     u8* q = self;
     s16 a = *(s16*)(*(u8**)(self + 0x40) + 2);
 
-    if (a > SPAD->unk168[0].p.whole) {
+    if (a > SPAD->cameraTarget.x.p.whole) {
         *(s16*)(self + 0x2E) = 1;
     } else {
         *(s16*)(q + 0x2E) = 0;
@@ -2050,7 +2050,7 @@ s32 isObjectPastReferenceX(u8* self)
 {
     s16 a = *(s16*)(*(u8**)(self + 0x40) + 2);
 
-    return a > SPAD->unk168[0].p.whole;
+    return a > SPAD->cameraTarget.x.p.whole;
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", playObjectSfx);
@@ -2064,7 +2064,7 @@ void playObjectSfx(u8* self, s32 arg1)
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", func_800224FC);
 void func_800224FC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    u8* p = allocObjectLayer3();
+    u8* p = allocEffectObject();
 
     if (p != NULL) {
         p[0] = 1;

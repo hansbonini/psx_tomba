@@ -27,7 +27,7 @@ void func_800E94C8(TO_E94C8 *o)
         o->b4++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -97,7 +97,7 @@ void updateEggShellPiece(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -110,7 +110,7 @@ void func_800E98A4(GameObject *a, s16 x, s16 y, s16 z)
     s8 *p;
     s32 i;
     for (i = 0; i < 6; i++) {
-        o = allocObjectLayer3();
+        o = allocEffectObject();
         if (o != 0) {
             p = &D_80113DD0[i * 4];
             o->active = 2;
@@ -146,7 +146,7 @@ void func_800E99DC(GameObject *o)
         case 0:
             if (--o->cooldownTimer == -1) {
                 o->cooldownTimer = nextRandom() & 0xf;
-                c = allocObjectLayer3();
+                c = allocEffectObject();
                 if (c) {
                     c->active = 1;
                     c->type = 0xc;
@@ -224,7 +224,7 @@ void func_800E99DC(GameObject *o)
             }
             break;
         case 2:
-            c = allocObjectLayer3();
+            c = allocEffectObject();
             if (c) {
                 c->active = 1;
                 c->type = 0xc;
@@ -325,7 +325,7 @@ void func_800E99DC(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -340,7 +340,7 @@ void func_800EA16C(s16 x, s16 y, s16 z, u8 f)
 
     if (*g < 2 || *(s32 *)g == 9) {
         if (*g != 1 || !(D_8009C62B & 1)) {
-            o = allocObjectLayer3();
+            o = allocEffectObject();
             if (o) {
                 o->active = 1;
                 o->type = 0xc;
@@ -377,7 +377,7 @@ typedef struct Q_EA35C {
 void func_800EA35C(s32 a, s32 b, s32 c)
 {
     Q_EA35C *q;
-    if ((*(u16 *)&GAME) == 1 && D_8009BCCA < 2 && (D_8009C62B & 1) == 0 && (q = allocObjectLayer3()) != 0) {
+    if ((*(u16 *)&GAME) == 1 && D_8009BCCA < 2 && (D_8009C62B & 1) == 0 && (q = allocEffectObject()) != 0) {
         q->b0 = 1;
         q->b2 = 0xc;
         q->b3 = 2;
@@ -434,7 +434,7 @@ void func_800EA428(GameObject *o)
         o->state = o->state + 1;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -530,7 +530,7 @@ void func_800EA6F4(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -543,7 +543,7 @@ extern E_EA86C D_80113E34[];
 void func_800EA86C(s16 a, s32 x, s32 y, s32 z)
 {
     char *n;
-    n = allocObjectLayer3();
+    n = allocEffectObject();
     if (n != 0) {
         n[0] = 1;
         n[2] = 0x1b;
@@ -612,7 +612,7 @@ void func_800EAA0C(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -642,7 +642,7 @@ void func_800EAC50(N_EAC50 *o, s16 x, s16 y, s16 z)
     p = D_80113F58;
     i = 0;
     do {
-        n = allocObjectLayer3();
+        n = allocEffectObject();
         if (n != 0) {
             n->b0 = 1;
             n->b2 = 0x1e;
@@ -692,7 +692,7 @@ void func_800EAD50(GameObject *o)
         }
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -724,7 +724,7 @@ void func_800EAEA8(GameObject *o)
         o->state = o->state + 1;
         break;
     case 1:
-        ((void (*)(void))freeObjectLayer3)();
+        ((void (*)(void))freeEffectObject)();
         break;
     }
 }
@@ -1031,7 +1031,7 @@ void func_800EB780(GameObject *o)
         o->state = s + 1;
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -1039,7 +1039,7 @@ void func_800EB780(GameObject *o)
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine", func_800EB954);
 void func_800EB954(char *o, s32 a, s32 b, s32 c)
 {
-    char *p = allocObjectLayer3();
+    char *p = allocEffectObject();
     if (p != 0) {
         *p = 1;
         p[2] = 0x5c;
@@ -1094,7 +1094,7 @@ void func_800EBBAC(s32 type)
         break;
     }
     for (i = 0; i < 8; i++) {
-        o = allocObjectLayer3();
+        o = allocEffectObject();
         if (o) {
             o->type = 0x5f;
             o->drawType = 0x13;
@@ -1202,7 +1202,7 @@ void func_800EBD20(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -1337,7 +1337,7 @@ void func_800EC384(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -1426,7 +1426,7 @@ void func_800EC5B8(S_EC5B8 *o)
             o->timer++;
             o->velV += o->velY / o->timer;
             if (o->subtype == 0 && *(s16 *)((char *)o + 0x20) == 4)
-                spawnLayer3Object(6, o->aw, (s16)(o->yw - 10), o->bw);
+                spawnEffectAt(6, o->aw, (s16)(o->yw - 10), o->bw);
         } else {
             o->state = 2;
             o->b6b = 0;

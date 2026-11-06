@@ -281,7 +281,7 @@ void func_8011F5F4(O_1F5F4 *o)
             o->b69 = 0;
             o->b68 = 0;
             o->b0f = 4;
-            c = allocObjectLayer3();
+            c = allocEffectObject();
             if (c != 0) {
                 c->active = 1;
                 c->type = 4;
@@ -318,7 +318,7 @@ void func_8011F5F4(O_1F5F4 *o)
         o->state = 3;
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }

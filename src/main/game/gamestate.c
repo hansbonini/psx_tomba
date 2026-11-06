@@ -410,7 +410,7 @@ void titleScreenHandler(void)
         case 4:
             stopBgm(0);
             temp_v0_3 = CURRENT_TASK;
-            SPAD->unk1D0 = 0;
+            SPAD->inGame = 0;
             temp_v0_3->state0 = 1;
             temp_v0_3->state1 = 0U;
             temp_v0_3->state2 = 0;
@@ -567,12 +567,12 @@ void gameplayStateDispatcher(void)
             transitionToGameOver();
             break;
     }
-    temp_v0 = SPAD->unk1DC;
+    temp_v0 = SPAD->pendingState;
     if ((temp_v0 >= 0) && ((LOAD_COMPLETE) != 0)) {
         temp_v0_2 = (CURRENT_TASK);
-        SCRATCHPAD.unk1DC = -1;
+        SCRATCHPAD.pendingState = -1;
         temp_v0_2->state2 = (u_short) temp_v0;
-        temp_v0_2->step = (u_short) (*(u_short *)&SPAD->unk1DE);
+        temp_v0_2->step = (u_short) (*(u_short *)&SPAD->pendingStep);
     }
 }
 
@@ -793,13 +793,13 @@ void gameplayMainHandler(void)
                 temp_v1_2->step.value++;
                 stopBgm(1);
             }
-            if (((*(u_char *)&SPAD->unk1C2) != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
+            if (((*(u_char *)&SPAD->debugSkipStep) != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
             return;
         case 2:
-            if (((*(u_char *)&SPAD->unk1BB) == 0) && (temp_v0 = GAME.playerLives - 1, GAME.playerLives = temp_v0, ((temp_v0 & 0xFF) == 0))) {
+            if (((*(u_char *)&SPAD->debugInfiniteLives) == 0) && (temp_v0 = GAME.playerLives - 1, GAME.playerLives = temp_v0, ((temp_v0 & 0xFF) == 0))) {
                 temp_a0->step.value = 3U;
             } else {
                 temp_a0->state2 = 0;
@@ -838,11 +838,11 @@ void gameplayMainHandler(void)
 void gameplayTick(void)
 {
     SCRATCHPAD.nextprim = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
-    if (SCRATCHPAD.unk1C6 == 2) {
+    if (SCRATCHPAD.drawFrozen == 2) {
         if (SCRATCHPAD.moviePlayState == 0) {
-            SPAD->unk1C6 = 0;
+            SPAD->drawFrozen = 0;
         } else if (
-            ((*(u8 *)&SCRATCHPAD.unk3D0) == 1) &&
+            ((*(u8 *)&SCRATCHPAD.movieSkippable) == 1) &&
             ( 
                 (
                     ((SCRATCHPAD.movieId) == 5) || 
@@ -851,28 +851,28 @@ void gameplayTick(void)
             )
         ) {
             (*(s8 *)&SCRATCHPAD.movieSkipRequest) = 1;
-            (*(u8 *)&SCRATCHPAD.unk3D0) = 0U;
+            (*(u8 *)&SCRATCHPAD.movieSkippable) = 0U;
         }
     }
     updatePauseMenu();
-    if (SPAD->unk1C6 == 0) {
+    if (SPAD->drawFrozen == 0) {
         ((*(s16 *)&SCRATCHPAD.unk1F8))=((*(s16 *)&SPAD->unk1F8))+1;
         updateAreaScreenEffect();
         func_80029008();
-        if (SCRATCHPAD.unk1C6 == 0) {
+        if (SCRATCHPAD.drawFrozen == 0) {
             func_8003C9D4();
             updateMainObjects();
-            updateObjectsLayer7();
-            updateObjectsUnlayered();
+            updateFxObjects();
+            updateAreaCtrlObjects();
             func_80055BA0();
         }
     }
-    if (SPAD->unk1C6 != 1) {
+    if (SPAD->drawFrozen != 1) {
         updateInventoryOverlay();
     }
-    if (SCRATCHPAD.unk1C6 == 0) {
+    if (SCRATCHPAD.drawFrozen == 0) {
         func_8002DA2C();
-        updateObjectsLayer8();
+        updateModelObjects();
     }
     if (*(s16* )((byte*)D_1F8001A0+0x26) != 2) {
         func_80046264();
@@ -910,7 +910,7 @@ void areaMode2Handler(void)
         case 1:
             GAME.totalTimePlayed++;
             areaMode2Tick();
-            if (scratch->unk1C2 != 0) {
+            if (scratch->debugSkipStep != 0) {
                 volatile u_short *temp_v1 = (volatile int* )PAD_PRESSED;
                 if (((*temp_v1 & 0x8) != 0) && ((temp_v1[0] & 0x800) != 0)) {
                     scratch->currentTask->step.value = 2;
@@ -935,8 +935,8 @@ void areaMode2Tick(void)
     Task* temp_v1;
 
     NEXT_PRIM = (int) ((FRAME_BUFFER_INDEX * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
-    if ((SCRATCHPAD.unk1C6 == 2) && (MOVIE_PLAY_STATE == MOVIE_STATE_IDLE)) {
-        SPAD->unk1C6 = 0;
+    if ((SCRATCHPAD.drawFrozen == 2) && (MOVIE_PLAY_STATE == MOVIE_STATE_IDLE)) {
+        SPAD->drawFrozen = 0;
     }
     updatePauseMenu();
     if (GAME.inventoryScreen == 0xFF) {
@@ -953,26 +953,26 @@ void areaMode2Tick(void)
         SPAD->vabIds[8] = (short)var_a0;
         (*(u_short *)&SPAD->vabIds[9]) = var_a1;
     }
-    if (SCRATCHPAD.unk1C6 == 0) {
+    if (SCRATCHPAD.drawFrozen == 0) {
         (SCRATCHPAD.unk1F8)++;
         updateAreaScreenEffect();
         func_80029008();
-        if (SPAD->unk1C6 == 0) {
+        if (SPAD->drawFrozen == 0) {
             func_8003C9D4();
-            updateObjectsLayer7();
+            updateFxObjects();
             updateMainObjects();
-            updateObjectsUnlayered();
+            updateAreaCtrlObjects();
             func_80055BA0();
         }
     }
     if (*(short* )(&D_1F8000C0[0]+0x106) != 1) {
         updateInventoryOverlay();
     }
-    if (SCRATCHPAD.unk1C6 == 0) {
+    if (SCRATCHPAD.drawFrozen == 0) {
         func_8002DA2C();
-        updateObjectsLayer8();
+        updateModelObjects();
     }
-    if (SPAD->unk1C6 != 2) {
+    if (SPAD->drawFrozen != 2) {
         func_80046264();
     } else {
         resetDrawLists();
@@ -1056,7 +1056,7 @@ void inventoryScreenHandler(void)
             return;
         case 3:
             inventoryScreenTick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
+            if ((SPAD->debugSkipStep != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (CURRENT_TASK)->step.value = 6U;
                 return;
             }
@@ -1082,7 +1082,7 @@ void inventoryScreenHandler(void)
                 ExitCriticalSection();
                 SetDispMask(1);
                 temp_v0 = CURRENT_TASK;
-                SPAD->unk1C6 = 0;
+                SPAD->drawFrozen = 0;
                 temp_v0->state2 = (u16) (*(u16 *)&SPAD->vabIds[8]);
                 temp_v0->step.value = (u16) (*(u16 *)&SPAD->vabIds[9]);
                 return;
@@ -1187,7 +1187,7 @@ void areaMode4Handler(void)
             }
             temp_v1_2 = SCRATCHPAD.currentTask;
             temp_v1_2->step.value++;
-            temp_v0 = (ObjectRawView*)allocObjectLayer7();
+            temp_v0 = (ObjectRawView*)allocFxObject();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 5;
@@ -1203,7 +1203,7 @@ void areaMode4Handler(void)
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode4Tick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
+            if ((SPAD->debugSkipStep != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1226,27 +1226,27 @@ void areaMode4Tick(void)
 {
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
-    if (SCRATCHPAD.unk1C6 == 0) {
+    if (SCRATCHPAD.drawFrozen == 0) {
         (SCRATCHPAD.unk1F8)++;
         updateAreaScreenEffect();
-        if (SCRATCHPAD.unk1C6 == 0) {
+        if (SCRATCHPAD.drawFrozen == 0) {
             func_8003C9D4();
             updateMainObjects();
-            updateObjectsUnlayered();
+            updateAreaCtrlObjects();
             func_800EB804();
         }
     }
-    if (SCRATCHPAD.unk1C6 != 1) {
+    if (SCRATCHPAD.drawFrozen != 1) {
         updateInventoryOverlay();
     }
     if (*(s16* )(&D_1F8000C0[0]+0x106) == 0) {
-        updateObjectsLayer8();
-        if (SPAD->unk1C6 == 0) {
+        updateModelObjects();
+        if (SPAD->drawFrozen == 0) {
             func_800EAED4();
-            updateObjectsLayer7();
+            updateFxObjects();
         }
     }
-    if (SCRATCHPAD.unk1C6 != 2) {
+    if (SCRATCHPAD.drawFrozen != 2) {
         func_80046264();
     } else {
         resetDrawLists();
@@ -1279,7 +1279,7 @@ void areaMode5Handler(void)
             }
             temp_v1_2 = SCRATCHPAD.currentTask;
             temp_v1_2->step.value++;
-            temp_v0 = (ObjectRawView*)allocObjectLayer7();
+            temp_v0 = (ObjectRawView*)allocFxObject();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 10;
@@ -1295,7 +1295,7 @@ void areaMode5Handler(void)
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode5Tick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
+            if ((SPAD->debugSkipStep != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1318,26 +1318,26 @@ void areaMode5Tick(void)
 {
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
-    if (SCRATCHPAD.unk1C6 == 0) {
+    if (SCRATCHPAD.drawFrozen == 0) {
         (SCRATCHPAD.unk1F8)++;
         updateAreaScreenEffect();
-        if (SCRATCHPAD.unk1C6 == 0) {
+        if (SCRATCHPAD.drawFrozen == 0) {
             updateMainObjects();
-            updateObjectsUnlayered();
+            updateAreaCtrlObjects();
             func_800ECEEC();
         }
     }
-    if (SCRATCHPAD.unk1C6 != 1) {
+    if (SCRATCHPAD.drawFrozen != 1) {
         updateInventoryOverlay();
     }
     if (*(s16* )(&D_1F8000C0[0]+0x106) == 0) {
-        updateObjectsLayer8();
-        if (SPAD->unk1C6 == 0) {
+        updateModelObjects();
+        if (SPAD->drawFrozen == 0) {
             func_800EC588();
-            updateObjectsLayer7();
+            updateFxObjects();
         }
     }
-    if (SCRATCHPAD.unk1C6 != 2) {
+    if (SCRATCHPAD.drawFrozen != 2) {
         func_80046264();
     } else {
         resetDrawLists();
@@ -1370,7 +1370,7 @@ void areaMode6Handler(void)
             }
             temp_v1_2 = SCRATCHPAD.currentTask;
             temp_v1_2->step.value++;
-            temp_v0 = (ObjectRawView*)allocObjectLayer7();
+            temp_v0 = (ObjectRawView*)allocFxObject();
             if (temp_v0 != NULL) {
                 temp_v0->unk0 = 1;
                 temp_v0->unk2 = 13;
@@ -1386,7 +1386,7 @@ void areaMode6Handler(void)
         case 1:
             GAME.totalTimePlayed += 1;
             areaMode6Tick();
-            if ((SPAD->unk1C2 != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
+            if ((SPAD->debugSkipStep != 0) && (PAD_PRESSED[0] & JOY_START) && (PAD_PRESSED[0] & JOY_R1)) {
                 (SCRATCHPAD.currentTask)->step.value = 3U;
                 return;
             }
@@ -1409,26 +1409,26 @@ void areaMode6Tick(void)
 {
     NEXT_PRIM = (s32) ((SCRATCHPAD.frameBufferIndex * 0xC000) + &LOAD_BUFFER_ALT) & 0xFFFFFF;
     updatePauseMenu();
-    if (SCRATCHPAD.unk1C6 == 0) {
+    if (SCRATCHPAD.drawFrozen == 0) {
         ((*(s16 *)&SCRATCHPAD.unk1F8))++;
         updateAreaScreenEffect();
-        if (SCRATCHPAD.unk1C6 == 0) {
+        if (SCRATCHPAD.drawFrozen == 0) {
             updateMainObjects();
-            updateObjectsUnlayered();
+            updateAreaCtrlObjects();
             func_800EB5B8();
         }
     }
-    if (SCRATCHPAD.unk1C6 != 1) {
+    if (SCRATCHPAD.drawFrozen != 1) {
         updateInventoryOverlay();
     }
     if (*(s16* )(&D_1F8000C0[0]+0x106) == 0) {
         func_8002DA2C();
-        updateObjectsLayer8();
-        if (SPAD->unk1C6 == 0) {
-            updateObjectsLayer7();
+        updateModelObjects();
+        if (SPAD->drawFrozen == 0) {
+            updateFxObjects();
         }
     }
-    if (SCRATCHPAD.unk1C6 != 2) {
+    if (SCRATCHPAD.drawFrozen != 2) {
         func_80046264();
     } else {
         resetDrawLists();
@@ -1604,11 +1604,11 @@ void loadCurrentArea(s16 arg0)
     variant = resolveAreaVariant() & 0xFF;
 
     val = D_80077084[GAME.selectedArea + (u16)D_8009EBA0][GAME.selectedSection];
-    SPAD->unk1DE = 0;
+    SPAD->pendingStep = 0;
     D_8009C610 = GAME.selectedArea;
     D_8009C612 = GAME.selectedSection;
     D_8009C614 = D_8009BCEA;
-    SPAD->unk1DC = val;
+    SPAD->pendingState = val;
 
     loadAreaListFile(GAME.selectedArea + (u16)D_8009EBA0);
 
@@ -1696,11 +1696,11 @@ void areaTransitionHandler(void)
         variant = resolveAreaVariant() & 0xFF;
 
         val = D_80077084[GAME_A + (u16)D_8009EBA0][D_8009BCCA];
-        SPAD->unk1DE = 0;
+        SPAD->pendingStep = 0;
         D_8009C610 = GAME_A;
         D_8009C612 = D_8009BCCA;
         D_8009C614 = D_8009BCEA;
-        SPAD->unk1DC = val;
+        SPAD->pendingState = val;
 
         loadAreaListFile(GAME_A + (u16)D_8009EBA0);
 
@@ -1778,7 +1778,7 @@ void func_8001D2F0(void)
         Task* t;
         stopAllSound();
         t = TASK_C;
-        SPAD->unk1D0 = 0;
+        SPAD->inGame = 0;
         t->state0 = 1;
         t->state1 = 0;
         t->state2 = 0;
@@ -1839,7 +1839,7 @@ void func_8001D480(void)
         task->state1 = 0;
         task->state2 = 0;
         task->step.value = 0;
-        SPAD->unk1D0 = 0;
+        SPAD->inGame = 0;
         setTask(&titleSequenceTask);
         break;
     }
@@ -1848,7 +1848,7 @@ void func_8001D480(void)
 // INCLUDE_ASM("nonmatchings/main/game/gamestate", openMenuScreen);
 void openMenuScreen(s16 arg0)
 {
-    u8* p = D_1F8001D4;
+    u8* p = (u8 *)SCRATCHPAD.currentTask;
     u16 a = *(u16*)(p + 0x4C);
     u16 b = *(u16*)(p + 0x4E);
 
@@ -1880,11 +1880,11 @@ void openMenuScreenEx(s16 arg0, s16 arg1, s16 arg2)
 #define MENU_STATE ((unk_800A3940*)D_800A3940)
 
 void updatePauseMenu(void) {
-    if (SPAD->unk3CE | MOVIE_PLAY_STATE) {
+    if (SPAD->pauseMenuLock | MOVIE_PLAY_STATE) {
         return;
     }
 
-    switch (SPAD->unk1C6) {
+    switch (SPAD->drawFrozen) {
     case 0: {
         u16 pad;
 
@@ -1894,9 +1894,9 @@ void updatePauseMenu(void) {
 
         pad = JOYPAD_STATE;
         if ((pad & JOY_START) || D_8009EB58 != 0) {
-            SCRATCHPAD.unk1C6 = 1;
+            SCRATCHPAD.drawFrozen = 1;
             D_8009C10B = 0;
-            SCRATCHPAD.unk3CD = 1;
+            SCRATCHPAD.menuCloseMode = 1;
             keyOffSfxAll(0);
             playSFX(0x29);
             return;
@@ -1925,24 +1925,24 @@ void updatePauseMenu(void) {
         }
 
         if (pad & JOY_SELECT) {
-            SCRATCHPAD.unk1C6 = 1;
+            SCRATCHPAD.drawFrozen = 1;
             D_8009C10B = 0;
-            SCRATCHPAD.unk3CD = 0;
+            SCRATCHPAD.menuCloseMode = 0;
             keyOffSfxAll(0);
             playSFX(0x29);
             return;
         }
 
-        if (SPAD->unk1B8 != 0) {
+        if (SPAD->debugNoMenu != 0) {
             return;
         }
         if ((pad & SPAD->buttonMenu) == 0) {
             return;
         }
 
-        SCRATCHPAD.unk1C6 = 1;
+        SCRATCHPAD.drawFrozen = 1;
         D_8009C10B = 4;
-        SCRATCHPAD.unk3CD = 0;
+        SCRATCHPAD.menuCloseMode = 0;
         keyOffSfxAll(0);
 
         {
@@ -1970,7 +1970,7 @@ void updatePauseMenu(void) {
         u8 cd;
         short buttons;
 
-        cd = SPAD->unk3CD;
+        cd = SPAD->menuCloseMode;
         switch (cd) {
         case 0:
             buttons = JOY_CIRCLE | JOY_SELECT;
@@ -1980,23 +1980,23 @@ void updatePauseMenu(void) {
             break;
         }
 
-        if (SPAD->unk3CD < 2) {
+        if (SPAD->menuCloseMode < 2) {
             if (JOYPAD_STATE & buttons) {
                 SCRATCHPAD.joypad_state = 0;
-                SCRATCHPAD.unk1C6 = 0;
+                SCRATCHPAD.drawFrozen = 0;
                 D_8009C10B = 0;
                 return;
             }
         }
 
-        switch (SPAD->unk3CD) {
+        switch (SPAD->menuCloseMode) {
         case 0: {
             u16 pad = JOYPAD_STATE;
 
             if (pad & JOY_START) {
-                SCRATCHPAD.unk1C6 = 1;
+                SCRATCHPAD.drawFrozen = 1;
                 D_8009C10B = 0;
-                SCRATCHPAD.unk3CD = 1;
+                SCRATCHPAD.menuCloseMode = 1;
                 playSFX(0x29);
                 return;
             }
@@ -2084,17 +2084,17 @@ void updatePauseMenu(void) {
                 switch (c10b) {
                 case 0:
                     SCRATCHPAD.joypad_state = 0;
-                    SCRATCHPAD.unk1C6 = 0;
+                    SCRATCHPAD.drawFrozen = 0;
                     *s0 = 0;
                     return;
                 case 1:
                     playSFXWithNote(10, 10);
-                    SCRATCHPAD.unk3CD = 2;
+                    SCRATCHPAD.menuCloseMode = 2;
                     *s0 = 1;
                     return;
                 case 2:
                     playSFXWithNote(10, 10);
-                    SCRATCHPAD.unk3CD = 3;
+                    SCRATCHPAD.menuCloseMode = 3;
                     *s0 = 1;
                     return;
                 default:
@@ -2130,7 +2130,7 @@ void updatePauseMenu(void) {
                 u8 c10b = D_8009C10B;
 
                 if (c10b == 0) {
-                    if (SPAD->unk3CD == 2) {
+                    if (SPAD->menuCloseMode == 2) {
                         SetDispMask(0);
                         stopAllSound();
                         {
@@ -2164,12 +2164,12 @@ void updatePauseMenu(void) {
 
             if (JOYPAD_STATE & JOY_CIRCLE) {
             cd_check:
-                if (SPAD->unk3CD == 2) {
+                if (SPAD->menuCloseMode == 2) {
                     D_8009C10B = 1;
                 } else {
                     D_8009C10B = 2;
                 }
-                SCRATCHPAD.unk3CD = 1;
+                SCRATCHPAD.menuCloseMode = 1;
                 return;
             }
 
@@ -2256,16 +2256,16 @@ void updateMainObjects(void)
     do {
         if (*s0 != 0) {
             switch (s1[0x1A] & 0x7F) {
-            case 2:
+            case OBJ_CAT_ACTOR:
                 ((void (*)(u8*))D_800772BC[*s1])(s0);
                 break;
-            case 3:
+            case OBJ_CAT_EFFECT:
                 ((void (*)(u8*))D_8007C6B0[*s1])(s0);
                 break;
-            case 4:
+            case OBJ_CAT_AREA:
                 ((void (*)(u8*))D_8007D30C[*s1])(s0);
                 break;
-            case 5:
+            case OBJ_CAT_ITEM:
                 ((void (*)(u8*))D_8007E8A8[*s1])(s0);
                 break;
             }

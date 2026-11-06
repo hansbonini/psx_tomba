@@ -78,7 +78,7 @@ void func_800ED2F4(GameObject *o)
         o->state++;
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -96,7 +96,7 @@ void func_800ED4EC(char *o)
     case 1:
         if ((*(u16 *)&GAME) == 4 || (*(u16 *)&GAME) == 0xc) {
             *(u8 *)((u8 *)o + 1) = 1;
-            pushDrawListLayer4();
+            pushAreaDrawList();
         } else {
             ((void (*)())cullAndQueueDraw)();
         }
@@ -105,7 +105,7 @@ void func_800ED4EC(char *o)
         *(u8 *)((u8 *)o + 4) = s + 1;
         break;
     case 3:
-        freeObjectLayer4();
+        freeAreaObject();
         break;
     }
 }
@@ -158,7 +158,7 @@ void func_800ED604(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4();
+        freeAreaObject();
         break;
     }
 }
@@ -370,7 +370,7 @@ void func_800EDCA8(s8 *o, u8 p)
     s32 pad[1];
     if (o[0xe3] < D_8007D5D0[D_8009C61A[0]]) {
         o[0xe3]++;
-        q = allocObjectLayer1();
+        q = allocWeaponObject();
         if (q != 0) {
             q[0] = 1;
             q[2] = D_8009C61A[0];
@@ -581,7 +581,7 @@ s16 func_800EE26C(void)
     }
     if (s != 0) {
         if ((*(s16 *)&D_1F800238) < 6) return 0;
-        o = allocObjectLayer3();
+        o = allocEffectObject();
         if (o != 0) {
             u16 *t;
             Fix16 *h = o->h;
@@ -607,7 +607,7 @@ void func_800EE3BC(u32 a, s16 x, s16 y, s16 z)
 {
     GameObject *p;
     s16 *t;
-    if (func_800EE26C() == 0 && (*(s16 *)&D_1F800238) > 5 && (p = allocObjectLayer3()) != 0) {
+    if (func_800EE26C() == 0 && (*(s16 *)&D_1F800238) > 5 && (p = allocEffectObject()) != 0) {
         p->active = 1;
         p->type = 0x31;
         p->id = 1;

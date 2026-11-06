@@ -240,7 +240,7 @@ void func_8011C174(GameObject *o)
         hw = o->h->p.whole;
         o->unkB4 = o->y.p.whole;
         o->localX = hw;
-        p = allocObjectLayer3();
+        p = allocEffectObject();
         if (p) {
             p->active = 2;
             p->type = 0x38;
@@ -284,7 +284,7 @@ void func_8011C174(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer4(o);
+        freeAreaObject(o);
         break;
     }
 }
@@ -344,12 +344,12 @@ void func_8011C3CC(GameObject *o)
             p->h->raw = o->localX + ((s16)x << 8);
             p->y.raw = o->localY + (o->velY << 8);
         }
-        pushDrawListCapped(o);
+        pushEffectDrawList(o);
         break;
     case 2:
         break;
     case 3:
-        freeObjectLayer3(o);
+        freeEffectObject(o);
         break;
     }
 }
@@ -375,7 +375,7 @@ void func_8011C75C(GameObject *o)
         D_800A38BB[0] = 3;
         D_800A38D0[0] = 0;
         D_1F800190 = o->y.raw;
-        SCRATCHPAD.unk18C = o->h->raw;
+        SCRATCHPAD.prevTargetX = o->h->raw;
         o->timer = 60;
         o->step++;
         break;

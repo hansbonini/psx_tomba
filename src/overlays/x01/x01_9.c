@@ -22,7 +22,7 @@ void func_801387A4(GameObject *o)
         }
         break;
     case 1:
-        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 3) == 0) {
+        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 3) == 0) {
             s16 w = o->unkAC + 4;
             o->unkAC = w;
             o->anim = D_8013EE08[w];
@@ -30,7 +30,7 @@ void func_801387A4(GameObject *o)
         }
         break;
     case 2:
-        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.unk198) & 3) == 0) {
+        if (((SCRATCHPAD.unk1F8 + SCRATCHPAD.updateIndex) & 3) == 0) {
             if (++o->timer >= 0x10) {
                 o->subState++;
                 switch (o->unkAC) {
@@ -149,7 +149,7 @@ void func_80138C4C(GameObject *o)
     case 2:
         break;
     case 3:
-        freeObjectLayer2(o);
+        freeActorObject(o);
         break;
     }
 }
@@ -164,7 +164,7 @@ void func_80138DB8(GameObject *o)
         if (GAME.area00_eventControl & 0x100) {
             o->state = 3;
         } else {
-            n = allocObjectLayer2();
+            n = allocActorObject();
             if (n) {
                 n->active = 1;
                 n->type = 0x16;
@@ -369,7 +369,7 @@ void func_80139410(GameObject *o)
 
     if (D_8009C068.unk69a == 0 && D_8009C068.item_0E == 0 && (k = D_8009C068.baronState) != 0 && k != 0xff) {
         if (k < 3) {
-            n = allocObjectLayer2();
+            n = allocActorObject();
             if (n) {
                 n->active = 1;
                 n->type = 0x16;
@@ -382,7 +382,7 @@ void func_80139410(GameObject *o)
                 n->z.p.whole = 0;
                 *(GameObject **)&o->category = n;
             }
-            m = allocObjectLayer2();
+            m = allocActorObject();
             if (m) {
                 m->active = 1;
                 m->type = 0x17;
@@ -498,7 +498,7 @@ void func_801397E8(GameObject *o)
     case 3:
         q = &D_8009C068.unk57e;
         if (*q == 1) {
-            e = allocObjectLayer2();
+            e = allocActorObject();
             if (e) {
                 e->active = 1;
                 e->active = 1;
@@ -517,7 +517,7 @@ void func_801397E8(GameObject *o)
                 o->state = 1;
             }
         } else {
-            e = allocObjectLayer2();
+            e = allocActorObject();
             if (e) {
                 e->active = 1;
                 e->active = 1;
@@ -535,7 +535,7 @@ void func_801397E8(GameObject *o)
         }
         break;
     case 2:
-        e = allocObjectLayer2();
+        e = allocActorObject();
         if (e) {
             e->active = 1;
             e->type = 0xd;
