@@ -213,3 +213,14 @@ subtractScaledVertices = 0x80024EA0;
 syncObjectTargetY = 0x800277F8;
 tickAnimation = 0x8001FEC0;
 tryStartItemInteraction = 0x800270A0;
+
+/* Additional bindings used by the verified PAL player dispatcher. */
+D_1F8001D2 = 0x1f8001d2;
+D_8007D5CC = 0x8007a034;
+D_8007D5CE = 0x8007a036;
+D_8009C978 = 0x8009d610;
+D_8009C9DC = 0x8009d674;
+D_8009EB58 = 0x8009f7f0;
+D_800A53A0 = 0x800a6040;
+D_800A545C = 0x800a60fc;
+D_800E7764 = 0x800e8404;
