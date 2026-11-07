@@ -64,9 +64,13 @@ segments:
       - [0x4, .rodata, engine]
       - [0x1C8, .rodata, engine_1]
       - [0x1EC, rodata]
+      - [0xEAC, .rodata, player_update]
+      - [0xF04, rodata]
       - [0x1D98, c, engine]
       - [0x5F40, c, engine_1]
       - [0x770C, asm]
+      - [0x1A1A8, c, player_update]
+      - [0x1A99C, asm]
       - [0x2C9DC, data, engine]
   - name: x00
     type: code

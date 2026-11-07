@@ -179,3 +179,22 @@ D_8013A624 = 0x8013AD70;
 D_8013A628 = 0x8013AD74;
 D_8013A634 = 0x8013AD80;
 D_8013AB58 = 0x8013B2A4;
+
+// Verified configured EU1 player dispatcher and its original callees.
+func_800288C4 = 0x80025d44; // type:func
+func_80042C20 = 0x8003f860; // type:func
+func_800F7490 = 0x800f7bec; // type:func
+func_800FDABC = 0x800fe218; // type:func
+func_800FDCEC = 0x800fe448; // type:func
+func_801010D4 = 0x80101830; // type:func
+func_80108C70 = 0x801093dc; // type:func
+func_8010A3A0 = 0x8010ab0c; // type:func
+func_8010A794 = 0x8010af00; // type:func
+initPlayer = 0x800eff64; // type:func
+memcpy = 0x8005bd84; // type:func
+playerClimb = 0x800f9ad8; // type:func
+playerFallInWater = 0x800fdbf8; // type:func
+playerHurt = 0x800fce14; // type:func
+playerHurtBitten = 0x800fd638; // type:func
+updatePlayer = 0x80101cd0; // type:func
+updatePlayerActive = 0x80100244; // type:func

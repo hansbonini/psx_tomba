@@ -201,3 +201,14 @@ PROVIDE(getBaseMatrix = 0x80021F10);
 PROVIDE(insertPrimWithBias = 0x8004FE00);
 PROVIDE(SetDrawMode = 0x80060004);
 PROVIDE(D_8013A450 = 0x8013AB9C);
+
+/* Additional bindings used by the verified configured EU1 dispatcher. */
+D_1F8001D2 = 0x1f8001d2;
+D_8007D5CC = 0x80079b20;
+D_8007D5CE = 0x80079b22;
+D_8009C978 = 0x8009d100;
+D_8009C9DC = 0x8009d164;
+D_8009EB58 = 0x8009f2e0;
+D_800A53A0 = 0x800a5b40;
+D_800A545C = 0x800a5bfc;
+D_800E7764 = 0x800e7f04;
