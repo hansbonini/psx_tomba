@@ -180,7 +180,21 @@ void func_800ED734(u8 *o)
     *(s32 *)(o + 0x8c) = 0;
 }
 
+// INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED788);
+#if REGION == REGION_US || (REGION == REGION_EU && VERSION == 1)
+void func_800ED788(GameObject *o)
+{
+    s32 value = 0x10;
+
+    o->timer = 10;
+    o->unk84 = 0;
+    if (o->animFrame & 1) value = 0xF0;
+    o->unk88 = value;
+    o->unk8C = 0;
+}
+#else
 INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED788);
+#endif
 
 // INCLUDE_ASM("overlays/x00/nonmatchings/engine_1", func_800ED7B4);
 void func_800ED7B4(GameObject *o)
