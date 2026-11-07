@@ -13,3 +13,22 @@ D_8013A49C = 0x80138DC4;
 D_8013A4A4 = 0x80138DCC;
 D_8013A4E4 = 0x80138E0C;
 D_8013A4E8 = 0x80138E10;
+
+// Verified Japanese player dispatcher and its original callees.
+advanceAnimFrame = 0x80020e0c; // type:func
+func_80042C20 = 0x8004039c; // type:func
+func_800F7490 = 0x800f7dc0; // type:func
+func_800FDABC = 0x800fde70; // type:func
+func_800FDCEC = 0x800fe09c; // type:func
+func_801010D4 = 0x80101308; // type:func
+func_80108C70 = 0x80109410; // type:func
+func_8010A3A0 = 0x8010ab44; // type:func
+func_8010A794 = 0x8010af38; // type:func
+initPlayer = 0x800f05c0; // type:func
+memcpy = 0x80058768; // type:func
+playerClimb = 0x800f9ca4; // type:func
+playerFallInWater = 0x800fd9b0; // type:func
+playerHurt = 0x800fce48; // type:func
+playerHurtBitten = 0x800fd41c; // type:func
+updatePlayer = 0x80101758; // type:func
+updatePlayerActive = 0x800ffc74; // type:func

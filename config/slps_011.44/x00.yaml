@@ -62,7 +62,11 @@ segments:
     subsegments:
       - [0x0, rodata, engine_header]
       - [0x4, rodata, engine]
+      - [0xD80, .rodata, player_update]
+      - [0xDD8, rodata]
       - [0x1C1C, asm, engine]
+      - [0x17C60, c, player_update]
+      - [0x183E4, asm]
       - [0x2A2AC, data, engine]
   - name: x00
     type: code
