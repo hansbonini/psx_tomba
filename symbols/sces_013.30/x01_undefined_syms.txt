@@ -166,3 +166,29 @@ PROVIDE(SetTransMatrix = 0x80063E68);
 PROVIDE(getBaseMatrix = 0x80021F10);
 PROVIDE(insertPrimWithBias = 0x8004FE00);
 PROVIDE(SetDrawMode = 0x80060004);
+
+/* Original regional bindings for the X001 vine group. */
+COS_TABLE = 0x8007A0DC;
+D_8013C44C = 0x8013BF08;
+D_8013C474 = 0x8013BF30;
+D_8013C47C = 0x8013BF38;
+D_8013E5AC = 0x8013E068;
+D_8013E5BC = 0x8013E078;
+D_8013E7D8 = 0x8013E294;
+D_8013E7E0 = 0x8013E29C;
+D_8013E7E8 = 0x8013E2A4;
+D_8013E7F0 = 0x8013E2AC;
+FUN_80018838 = 0x80018838;
+FUN_8001e4f0 = 0x8001E4F0;
+NEG_SIN_TABLE = 0x80079EDC;
+ObjAlloc = 0x80018448;
+ObjListPush_1F800224 = 0x80018CF0;
+boxesOverlapSideB = 0x800444B8;
+cullObjectToDrawListMargin = 0x800201AC;
+probeGrabPointInBoxA = 0x8004B610;
+pushObjectOutOfObjectBoxC = 0x80043A88;
+resolveHitResultA = 0x80042954;
+spawnForestDwarfAt = 0x80136218;
+spawnLayer2ObjectUnlessFlagged = 0x80020D98;
+/* Shared engine alias inside the byte-identical vine replacement span. */
+PROVIDE(func_80119798 = 0x80119F04);

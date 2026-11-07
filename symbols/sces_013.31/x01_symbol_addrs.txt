@@ -199,3 +199,21 @@ D_8013EE3C = 0x8013FAC4;
 D_8013EE40 = 0x8013FAC8;
 D_8013EE44 = 0x8013FACC;
 D_8013EE48 = 0x8013FAD0;
+
+// Verified PAL X001 spring-vine, grab and rope routines.
+spawnSpringVineLeafBurst = 0x801191E4; // type:func
+updateSpringVine = 0x8011A1C0; // type:func
+stepSpringVine = 0x8011A528; // type:func
+springVineIdle = 0x8011A5DC; // type:func
+springVineSwayStep = 0x8011A72C; // type:func
+springVineGrabbed = 0x8011A85C; // type:func
+springVineRopeStep1 = 0x8011AEFC; // type:func
+springVineStep2 = 0x8011B164; // type:func
+springVineRopeStep2 = 0x8011B498; // type:func
+springVineStep3 = 0x8011B624; // type:func
+springVineRopeStep3 = 0x8011B74C; // type:func
+springVineStep4 = 0x8011B958; // type:func
+springVineRopeStep4 = 0x8011BADC; // type:func
+springVinePlayerCollision = 0x80125044; // type:func
+springVineObjectCollision = 0x80125AE4; // type:func
+springVineGrabProbe = 0x80126FE4; // type:func
