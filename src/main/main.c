@@ -7,6 +7,81 @@ u_long _stacksize = 0x00000400;
 
 
 // INCLUDE_ASM("nonmatchings/main/main", main);
+#if REGION == REGION_JP
+int stubCdFunction(void);
+extern u16 D_1F8001EC;
+extern u16 D_1F8001F0;
+extern u8 D_1F8001CC_Byte asm("D_1F8001CC");
+
+void main(void)
+{
+    u8 cdMode;
+    u16 targetFrame;
+
+    SetDispMask(0);
+    SetVideoMode(MODE_NTSC);
+    ResetCallback();
+    initGlobalState();
+    PadInit(0);
+    ResetGraph(0);
+    InitGeom();
+    CdInit();
+    cdMode = CdlModeSpeed;
+    while (CdControl(CdlSetmode, &cdMode, 0) == 0);
+    stubCdFunction();
+    DecDCTReset(0);
+    initGraphics();
+    setDrawSyncParams(1, 1);
+    shutdownSound();
+    memCardInit();
+    initTasks();
+    startTask(0, bootSequenceTask);
+    EnterCriticalSection();
+    SPAD->vblankEvent = OpenEvent(RCntCNT3, EvSpINT, RCntMdINTR, &vblankHandler);
+    ExitCriticalSection();
+    EnableEvent(*(u32*)(&D_1F8000C0[0]+0x118));
+    SetRCnt(RCntCNT3, 1, RCntMdINTR);
+    StartRCnt(RCntCNT3);
+    SetDispMask(1);
+    while (true) {
+        ((Task*)0x1F8001D4)->unk14 = 0;
+        ClearOTagR((u_long*)D_1F8001E0, OT_LENGTH);
+        if (D_1F8001F0 < 0x4001U) {
+            D_8009C8A8 = (FRAME_BUFFER_INDEX * 0x780) + &D_800A1890;
+            dispatchTasks();
+        }
+        if (D_1F8001EC != 0) {
+            DrawSync(0);
+        }
+        targetFrame = *(u16*)(&D_1F8000C0[0]+0x12A);
+        while (((Task*)0x1F8001D4)->unk14 < targetFrame) {
+        }
+        if (D_1F8001EC == 0) {
+            ResetGraph(1);
+        }
+
+        switch (D_1F8001CC_Byte) {
+            case MOVIE_STATE_PLAYING:
+                break;
+            case MOVIE_STATE_IDLE:
+            case MOVIE_STATE_STARTING:
+                if (D_1F8001F0 <= 0x4000) {
+                    flipFrameBuffer();
+                    tickTaskTimers();
+                }
+                break;
+            case MOVIE_STATE_ENDING:
+                D_1F8001CC_Byte = 2;
+                if (D_1F8001F0 <= 0x4000) {
+                    flipFrameBuffer();
+                    tickTaskTimers();
+                }
+                break;
+        }
+    }
+}
+
+#else
 void main(void)
 {
     u8 cdMode;
@@ -135,6 +210,7 @@ void main(void)
         }   
     };
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/main", flipFrameBuffer);
 void flipFrameBuffer(void)
@@ -143,7 +219,11 @@ void flipFrameBuffer(void)
     u_long* ot;
     u_long* prevOt;
 
+#if REGION == REGION_JP
+    bufIndex = (*(u_short *)&SPAD->frameBufferIndex) ^ 1;
+#else
     bufIndex = 1 - (*(u_short *)&SPAD->frameBufferIndex);
+#endif
     ot = (bufIndex * (int)sizeof(FrameBuffer)) + (byte*)&OT_FRAMEBUFFER;
     prevOt = *(u_long** )((byte*)&D_1F8000C0[0]+0x120);
     (*(u_short *)&SCRATCHPAD.frameBufferIndex) = (u_short) bufIndex;
@@ -153,7 +233,9 @@ void flipFrameBuffer(void)
     PutDrawEnv(&((FrameBuffer*)CURRENT_OT)->draw);
     compactOrderingTable((*(u_long *)&SCRATCHPAD.prevOt) + 0xC9C);
     DrawOTag((*(u_long *)&SCRATCHPAD.prevOt) + 0xC9C);
+#if REGION != REGION_JP
     ClearOTagR((*(u_long *)&SCRATCHPAD.ot), OT_LENGTH);
+#endif
 }
 
 // INCLUDE_ASM("nonmatchings/main/main", setDrawSyncParams);
@@ -170,10 +252,12 @@ void initGlobalState(void)
 {
     scratchpad* scratch = PSX_SCRATCH;
     
+#if REGION != REGION_JP
     D_8009EB5A = 0xFFFF;
     D_8009EB7C = 0xFFFF;
     scratch->loadedSoundSet = 0xFF;
     scratch->loadedListFile = 0xFF;
+#endif
     scratch->pauseFlags = 0;
     scratch->unk1F2 = 0;
     scratch->pauseToggle = 0;
@@ -189,12 +273,14 @@ void initGlobalState(void)
     scratch->unk1C4 = 0;
     scratch->unk1C5= 0;
     scratch->unk3CC = 0;
+#if REGION != REGION_JP
     (*(short *)&D_8009C9DA) = 0;
     (*(short *)&D_8009C9DE) = 0;
     D_8009C940 = 0;
     D_8009EB52 = 0;
     D_8009C864 = 0;
     D_8009C866 = 8;
+#endif
 }
 
 // INCLUDE_ASM("nonmatchings/main/main", initGraphics);
@@ -250,15 +336,22 @@ void initDisplay(u_char r0, u_char g0, u_char b0)
     SetDefDispEnv(dispenv1, 704, 256, 320, 224);
     SetDefDrawEnv(drawenv2, 704, 256, 320, 224);
     SetDefDispEnv(dispenv2, 384, 256, 320, 224);
+#if REGION == REGION_JP
+    setRECT(&dispenv1->screen, 0, 8, 256, 224);
+    setRECT(&dispenv2->screen, 0, 8, 256, 224);
+#else
     setWH(&dispenv1->screen, 256, 224);
     setWH(&dispenv2->screen, 256, 224);
+#endif
     drawenv1->isbg = drawenv2->isbg = true;
     drawenv1->dtd = drawenv2->dtd = true;
     drawenv1->dfe = drawenv2->dfe = false;
     setRGB0(drawenv1, r0, g0, b0);
     setRGB0(drawenv2, r0, g0, b0);
+#if REGION != REGION_JP
     setXY(&dispenv1->screen, D_8009C864, D_8009C866);
     setXY(&dispenv2->screen, D_8009C864, D_8009C866);
+#endif
     PutDispEnv(dispenv1);
     PutDrawEnv(drawenv1);
     return;

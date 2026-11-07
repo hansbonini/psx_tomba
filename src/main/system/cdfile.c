@@ -6,6 +6,7 @@ s32 fixedMulCos(s16 arg0, s16 arg1);
 s32 fixedMulSin2(s16 arg0, s16 arg1);
 
 
+#if REGION != REGION_JP
 LoadRecord D_80077FAC[2] = {
     { FILE_SYS_LDSYS_BIN, 0xFF, LOAD_KIND_LDSYS, 0x00000000, 0x1E18, 0, 0, LOAD_TYPE_RAW },
     LOAD_LIST_END
@@ -1582,6 +1583,1059 @@ fileLink FILE_LINKS[1054] = {
 };
 asm(".globl FILE_LINK_SIZES
 FILE_LINK_SIZES = FILE_LINKS + 4");
+#else
+fileLink FILE_LINKS[1047] = {
+    [FILE_SYSTEM_A00000_GAM] = { { itob(22), itob(15), itob(35), 0 }, 0x37D7 },
+    [FILE_SYSTEM_A00001_000] = { { itob(22), itob(15), itob(42), 0 }, 0x200 },
+    [FILE_SYSTEM_A00002_000] = { { itob(22), itob(15), itob(43), 0 }, 0x80 },
+    [FILE_SYSTEM_A00003_GAM] = { { itob(22), itob(15), itob(44), 0 }, 0x3BC0 },
+    [FILE_SYSTEM_A00004_000] = { { itob(22), itob(15), itob(52), 0 }, 0x200 },
+    [FILE_SYSTEM_A00005_000] = { { itob(22), itob(15), itob(53), 0 }, 0x120 },
+    [FILE_SYSTEM_A00006_GAM] = { { itob(22), itob(15), itob(54), 0 }, 0x6C84 },
+    [FILE_SYSTEM_A00007_000] = { { itob(22), itob(15), itob(68), 0 }, 0x200 },
+    [FILE_SYSTEM_SND_INI_WVD] = { { itob(23), itob(50), itob(16), 0 }, 0x4B72C },
+    [FILE_SYSTEM_SND_LOGO_WVD] = { { itob(23), itob(52), itob(17), 0 }, 0x2582C },
+    [FILE_SYSTEM_OPTSUB00_BIN] = { { itob(23), itob(50), itob(13), 0 }, 0x148C },
+    [FILE_SYSTEM_A00008_GAM] = { { itob(22), itob(15), itob(69), 0 }, 0x6C84 },
+    [FILE_SYSTEM_A00009_000] = { { itob(22), itob(16), itob(8), 0 }, 0x200 },
+    [FILE_SYSTEM_S_LOGO_SEQ] = { { itob(23), itob(54), itob(25), 0 }, 0x2A },
+    [FILE_SYSTEM_A00010_GAM] = { { itob(22), itob(16), itob(9), 0 }, 0x10B9B },
+    [FILE_SYSTEM_A00011_000] = { { itob(22), itob(16), itob(43), 0 }, 0x200 },
+    [FILE_SYSTEM_A00012_000] = { { itob(22), itob(16), itob(44), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00013_000] = { { itob(22), itob(17), itob(1), 0 }, 0x200 },
+    [FILE_SYSTEM_SND_TTL_WVD] = { { itob(23), itob(53), itob(50), 0 }, 0xB7BC },
+    [FILE_SYSTEM_S_TITLE_SEQ] = { { itob(23), itob(54), itob(28), 0 }, 0x5A1 },
+    [FILE_SYSTEM_A00014_000] = { { itob(22), itob(17), itob(2), 0 }, 0x30000 },
+    [FILE_SYSTEM_DSPSUB_BIN] = { { itob(23), itob(46), itob(59), 0 }, 0x27928 },
+    [FILE_SYSTEM_A00017_000] = { { itob(22), itob(18), itob(23), 0 }, 0x20000 },
+    [FILE_SYSTEM_DSPCLUT_TIM] = { { itob(23), itob(46), itob(57), 0 }, 0xC00 },
+    [FILE_SYSTEM_A00018_000] = { { itob(22), itob(19), itob(12), 0 }, 0x200 },
+    [FILE_SYSTEM_DSPSUB2_BIN] = { { itob(23), itob(47), itob(64), 0 }, 0x99BC },
+    [FILE_SYSTEM_A00019_000] = { { itob(22), itob(19), itob(13), 0 }, 0x20000 },
+    [FILE_SYSTEM_A00020_000] = { { itob(22), itob(20), itob(2), 0 }, 0x200 },
+    [FILE_SYSTEM_SND_SYS_WVD] = { { itob(23), itob(53), itob(18), 0 }, 0xFBCC },
+    [FILE_SYSTEM_S_SYS00_SEQ] = { { itob(23), itob(54), itob(26), 0 }, 0xE10 },
+    [FILE_SYSTEM_A00021_000] = { { itob(22), itob(20), itob(3), 0 }, 0x20000 },
+    [FILE_SYSTEM_DSPSUB3_BIN] = { { itob(23), itob(48), itob(9), 0 }, 0x15A9C },
+    [FILE_SYSTEM_A00023_000] = { { itob(22), itob(20), itob(67), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00024_000] = { { itob(22), itob(21), itob(24), 0 }, 0x20000 },
+    [FILE_SYSTEM_A00025_000] = { { itob(22), itob(22), itob(13), 0 }, 0x200 },
+    [FILE_SYSTEM_SUBMAP_WMD] = { { itob(23), itob(53), itob(73), 0 }, 0xD800 },
+    [FILE_SYSTEM_A00026_GAM] = { { itob(22), itob(22), itob(14), 0 }, 0xA410 },
+    [FILE_SYSTEM_A00027_000] = { { itob(22), itob(22), itob(35), 0 }, 0x200 },
+    [FILE_SYSTEM_A00028_000] = { { itob(22), itob(22), itob(36), 0 }, 0x60 },
+    [FILE_SYSTEM_A00031_000] = { { itob(22), itob(22), itob(37), 0 }, 0x30000 },
+    [FILE_SYSTEM_X00_BIN] = { { itob(23), itob(54), itob(29), 0 }, 0x500E4 },
+    [FILE_SYSTEM_HIT001A_WMH] = { { itob(23), itob(48), itob(53), 0 }, 0x5948 },
+    [FILE_SYSTEM_A00033_000] = { { itob(22), itob(23), itob(58), 0 }, 0x40000 },
+    [FILE_SYSTEM_A00056_000] = { { itob(22), itob(31), itob(34), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00037_000] = { { itob(22), itob(25), itob(36), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00038_000] = { { itob(22), itob(25), itob(68), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00039_000] = { { itob(22), itob(26), itob(9), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00041_000] = { { itob(22), itob(26), itob(25), 0 }, 0x30000 },
+    [FILE_SYSTEM_X01_BIN] = { { itob(23), itob(56), itob(40), 0 }, 0x53CE0 },
+    [FILE_SYSTEM_A00045_000] = { { itob(22), itob(27), itob(46), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00049_000] = { { itob(22), itob(28), itob(67), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00054_000] = { { itob(22), itob(30), itob(13), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00061_000] = { { itob(22), itob(31), itob(66), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00062_000] = { { itob(22), itob(32), itob(39), 0 }, 0x20000 },
+    [FILE_SYSTEM_INFO_BIN] = { { itob(23), itob(48), itob(65), 0 }, 0xA9B4 },
+    [FILE_SYSTEM_A00067_000] = { { itob(22), itob(33), itob(28), 0 }, 0x30000 },
+    [FILE_SYSTEM_X02_BIN] = { { itob(23), itob(58), itob(58), 0 }, 0x32F74 },
+    [FILE_SYSTEM_A000710_000] = { { itob(22), itob(34), itob(49), 0 }, 0x10000 },
+    [FILE_SYSTEM_A000711_000] = { { itob(22), itob(35), itob(6), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00187_000] = { { itob(23), itob(32), itob(3), 0 }, 0x18000 },
+    [FILE_SYSTEM_INFO3_BIN] = { { itob(23), itob(49), itob(74), 0 }, 0x6ECC },
+    [FILE_SYSTEM_A001890_000] = { { itob(23), itob(32), itob(51), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001891_000] = { { itob(23), itob(33), itob(8), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001892_000] = { { itob(23), itob(33), itob(40), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00210_000] = { { itob(23), itob(43), itob(58), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00211_000] = { { itob(23), itob(44), itob(15), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00212_000] = { { itob(23), itob(44), itob(47), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00074_000] = { { itob(22), itob(35), itob(38), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00075_000] = { { itob(22), itob(36), itob(11), 0 }, 0x18000 },
+    [FILE_SYSTEM_X03_BIN] = { { itob(24), itob(0), itob(10), 0 }, 0x4DD54 },
+    [FILE_SYSTEM_A002014_000] = { { itob(23), itob(40), itob(43), 0 }, 0x10000 },
+    [FILE_SYSTEM_A002015_000] = { { itob(23), itob(41), itob(0), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00077_000] = { { itob(22), itob(36), itob(59), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00077A_000] = { { itob(22), itob(37), itob(32), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00079_000] = { { itob(22), itob(38), itob(5), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00079A_000] = { { itob(22), itob(38), itob(37), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00081_000] = { { itob(22), itob(38), itob(53), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00081A_000] = { { itob(22), itob(39), itob(26), 0 }, 0x18000 },
+    [FILE_SYSTEM_X04_BIN] = { { itob(24), itob(2), itob(16), 0 }, 0x48030 },
+    [FILE_SYSTEM_A00082A_000] = { { itob(22), itob(39), itob(74), 0 }, 0x30000 },
+    [FILE_SYSTEM_A000830_000] = { { itob(22), itob(42), itob(57), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00202_000] = { { itob(23), itob(41), itob(32), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00204_000] = { { itob(23), itob(42), itob(5), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00192_000] = { { itob(23), itob(33), itob(56), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00194_000] = { { itob(23), itob(35), itob(2), 0 }, 0x30000 },
+    [FILE_SYSTEM_A002012_000] = { { itob(23), itob(40), itob(11), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00196_000] = { { itob(23), itob(36), itob(23), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00198_000] = { { itob(23), itob(37), itob(44), 0 }, 0x30000 },
+    [FILE_SYSTEM_A00083_000] = { { itob(22), itob(41), itob(20), 0 }, 0x38000 },
+    [FILE_SYSTEM_INFO2_BIN] = { { itob(23), itob(49), itob(12), 0 }, 0x1EAB4 },
+    [FILE_SYSTEM_A00087_000] = { { itob(22), itob(44), itob(3), 0 }, 0x30000 },
+    [FILE_SYSTEM_X05_BIN] = { { itob(24), itob(4), itob(11), 0 }, 0x2DA80 },
+    [FILE_SYSTEM_A00090_000] = { { itob(22), itob(45), itob(24), 0 }, 0x18000 },
+    [FILE_SYSTEM_X06_BIN] = { { itob(24), itob(5), itob(28), 0 }, 0x36260 },
+    [FILE_SYSTEM_A002000_000] = { { itob(23), itob(38), itob(65), 0 }, 0x10000 },
+    [FILE_SYSTEM_A002001_000] = { { itob(23), itob(39), itob(22), 0 }, 0x10000 },
+    [FILE_SYSTEM_A002002_000] = { { itob(23), itob(39), itob(54), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00091_000] = { { itob(22), itob(45), itob(72), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00092_000] = { { itob(22), itob(46), itob(45), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00095_000] = { { itob(22), itob(47), itob(18), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00096_000] = { { itob(22), itob(47), itob(66), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00099_000] = { { itob(22), itob(48), itob(39), 0 }, 0x20000 },
+    [FILE_SYSTEM_A00100_000] = { { itob(22), itob(49), itob(28), 0 }, 0x8000 },
+    [FILE_SYSTEM_A00103_000] = { { itob(22), itob(49), itob(44), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00105_000] = { { itob(22), itob(50), itob(17), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00109_000] = { { itob(22), itob(50), itob(65), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001130_000] = { { itob(22), itob(51), itob(38), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001131_000] = { { itob(22), itob(51), itob(70), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001150_000] = { { itob(22), itob(52), itob(27), 0 }, 0x8000 },
+    [FILE_SYSTEM_X08_BIN] = { { itob(24), itob(6), itob(62), 0 }, 0x2B8F4 },
+    [FILE_SYSTEM_A00119_000] = { { itob(22), itob(52), itob(43), 0 }, 0x30000 },
+    [FILE_SYSTEM_X09_BIN] = { { itob(24), itob(8), itob(0), 0 }, 0x44490 },
+    [FILE_SYSTEM_A00123_000] = { { itob(22), itob(53), itob(64), 0 }, 0x38000 },
+    [FILE_SYSTEM_A001270_000] = { { itob(22), itob(55), itob(26), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001271_000] = { { itob(22), itob(55), itob(58), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001272_000] = { { itob(22), itob(56), itob(15), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00129_000] = { { itob(22), itob(56), itob(47), 0 }, 0x8000 },
+    [FILE_SYSTEM_A001330_000] = { { itob(22), itob(56), itob(63), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001331_000] = { { itob(22), itob(57), itob(20), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001400_000] = { { itob(22), itob(58), itob(73), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001401_000] = { { itob(22), itob(59), itob(30), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001440_000] = { { itob(22), itob(59), itob(62), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001441_000] = { { itob(23), itob(0), itob(19), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00136_000] = { { itob(22), itob(57), itob(52), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00137_000] = { { itob(22), itob(58), itob(9), 0 }, 0x8000 },
+    [FILE_SYSTEM_X10_BIN] = { { itob(24), itob(9), itob(62), 0 }, 0x454DC },
+    [FILE_SYSTEM_A00138_000] = { { itob(22), itob(58), itob(25), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001462_000] = { { itob(23), itob(0), itob(51), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00206_000] = { { itob(23), itob(42), itob(21), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00207_000] = { { itob(23), itob(42), itob(53), 0 }, 0x28000 },
+    [FILE_SYSTEM_A00147_000] = { { itob(23), itob(1), itob(8), 0 }, 0x38000 },
+    [FILE_SYSTEM_A001490_000] = { { itob(23), itob(2), itob(45), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001491_000] = { { itob(23), itob(3), itob(2), 0 }, 0x10000 },
+    [FILE_SYSTEM_X11_BIN] = { { itob(24), itob(11), itob(51), 0 }, 0x2F4B4 },
+    [FILE_SYSTEM_A001510_000] = { { itob(23), itob(3), itob(34), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001511_000] = { { itob(23), itob(3), itob(66), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00218_000] = { { itob(23), itob(44), itob(63), 0 }, 0x20000 },
+    [FILE_SYSTEM_A00220_000] = { { itob(23), itob(45), itob(52), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00222_000] = { { itob(23), itob(46), itob(25), 0 }, 0x10000 },
+    [FILE_SYSTEM_X13_BIN] = { { itob(24), itob(12), itob(71), 0 }, 0x2D808 },
+    [FILE_SYSTEM_A001742_000] = { { itob(23), itob(15), itob(30), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001743_000] = { { itob(23), itob(16), itob(3), 0 }, 0x18000 },
+    [FILE_SYSTEM_X14_BIN] = { { itob(24), itob(14), itob(13), 0 }, 0x3BA9C },
+    [FILE_SYSTEM_A001746_000] = { { itob(23), itob(16), itob(51), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001747_000] = { { itob(23), itob(17), itob(24), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001750_000] = { { itob(23), itob(18), itob(61), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001751_000] = { { itob(23), itob(19), itob(34), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001754_000] = { { itob(23), itob(20), itob(7), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001755_000] = { { itob(23), itob(20), itob(55), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001758_000] = { { itob(23), itob(21), itob(28), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001759_000] = { { itob(23), itob(22), itob(1), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001762_000] = { { itob(23), itob(23), itob(6), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001763_000] = { { itob(23), itob(23), itob(54), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001766_000] = { { itob(23), itob(24), itob(27), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001767_000] = { { itob(23), itob(25), itob(0), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001770_000] = { { itob(23), itob(25), itob(48), 0 }, 0x18000 },
+    [FILE_SYSTEM_A001771_000] = { { itob(23), itob(26), itob(21), 0 }, 0x18000 },
+    [FILE_SYSTEM_A00153_000] = { { itob(23), itob(4), itob(23), 0 }, 0x28000 },
+    [FILE_SYSTEM_A00154_000] = { { itob(23), itob(5), itob(28), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001560_000] = { { itob(23), itob(5), itob(60), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001561_000] = { { itob(23), itob(6), itob(17), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00157_000] = { { itob(23), itob(6), itob(49), 0 }, 0x10000 },
+    [FILE_SYSTEM_X16_BIN] = { { itob(24), itob(15), itob(58), 0 }, 0x2EBF4 },
+    [FILE_SYSTEM_A001590_000] = { { itob(23), itob(7), itob(6), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001591_000] = { { itob(23), itob(7), itob(38), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001610_000] = { { itob(23), itob(7), itob(70), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001611_000] = { { itob(23), itob(8), itob(27), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00163_000] = { { itob(23), itob(8), itob(59), 0 }, 0x38000 },
+    [FILE_SYSTEM_A001650_000] = { { itob(23), itob(10), itob(21), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001651_000] = { { itob(23), itob(10), itob(53), 0 }, 0x10000 },
+    [FILE_SYSTEM_X17_BIN] = { { itob(24), itob(17), itob(2), 0 }, 0x2F190 },
+    [FILE_SYSTEM_A001670_000] = { { itob(23), itob(11), itob(10), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001671_000] = { { itob(23), itob(11), itob(42), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001672_000] = { { itob(23), itob(11), itob(74), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001690_000] = { { itob(23), itob(12), itob(31), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001691_000] = { { itob(23), itob(12), itob(63), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001710_000] = { { itob(23), itob(13), itob(20), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001711_000] = { { itob(23), itob(13), itob(52), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001730_000] = { { itob(23), itob(14), itob(9), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001731_000] = { { itob(23), itob(14), itob(41), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001732_000] = { { itob(23), itob(14), itob(73), 0 }, 0x10000 },
+    [FILE_SYSTEM_A00175_000] = { { itob(23), itob(17), itob(56), 0 }, 0x28000 },
+    [FILE_SYSTEM_A00176_000] = { { itob(23), itob(22), itob(49), 0 }, 0x10000 },
+    [FILE_SYSTEM_X18_BIN] = { { itob(24), itob(18), itob(22), 0 }, 0x2FDA4 },
+    [FILE_SYSTEM_A001790_000] = { { itob(23), itob(26), itob(69), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001791_000] = { { itob(23), itob(27), itob(26), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001792_000] = { { itob(23), itob(27), itob(58), 0 }, 0x8000 },
+    [FILE_SYSTEM_A001810_000] = { { itob(23), itob(27), itob(74), 0 }, 0x30000 },
+    [FILE_SYSTEM_A001820_000] = { { itob(23), itob(29), itob(20), 0 }, 0x20000 },
+    [FILE_SYSTEM_A001830_000] = { { itob(23), itob(30), itob(9), 0 }, 0x8000 },
+    [FILE_SYSTEM_A001831_000] = { { itob(23), itob(30), itob(25), 0 }, 0x8000 },
+    [FILE_SYSTEM_A001850_000] = { { itob(23), itob(30), itob(41), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001851_000] = { { itob(23), itob(30), itob(73), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001852_000] = { { itob(23), itob(31), itob(30), 0 }, 0x10000 },
+    [FILE_SYSTEM_A001860_000] = { { itob(23), itob(31), itob(62), 0 }, 0x8000 },
+    [FILE_MOVIE_MIST_STR] = { { itob(16), itob(51), itob(9), 0 }, 0x70EC00 },
+    [FILE_MOVIE_100JP_STR] = { { itob(6), itob(43), itob(17), 0 }, 0xA68800 },
+    [FILE_MOVIE_OP_UTA_STR] = { { itob(18), itob(18), itob(28), 0 }, 0x1F82800 },
+    [FILE_MOVIE_BOY_STR] = { { itob(8), itob(47), itob(45), 0 }, 0x829A00 },
+    [FILE_MOVIE_MCC_STR] = { { itob(16), itob(6), itob(8), 0 }, 0x275A00 },
+    [FILE_MOVIE_NOZOITE1_STR] = { { itob(17), itob(33), itob(27), 0 }, 0x375200 },
+    [FILE_MOVIE_SORA1_STR] = { { itob(21), itob(26), itob(72), 0 }, 0x40BB00 },
+    [FILE_MOVIE_SORA2_STR] = { { itob(21), itob(51), itob(13), 0 }, 0x40BB00 },
+    [FILE_MOVIE_NOZOITE2_STR] = { { itob(17), itob(54), itob(4), 0 }, 0x410400 },
+    [FILE_MOVIE_MILLION_STR] = { { itob(16), itob(20), itob(62), 0 }, 0x50FC00 },
+    [FILE_MOVIE_HONOO2_STR] = { { itob(13), itob(4), itob(58), 0 }, 0x522000 },
+    [FILE_MOVIE_BUNMEI_STR] = { { itob(9), itob(36), itob(34), 0 }, 0x50FC00 },
+    [FILE_MOVIE_BUNMEI2_STR] = { { itob(10), itob(6), itob(56), 0 }, 0x382D00 },
+    [FILE_MOVIE_HANA_STR] = { { itob(12), itob(33), itob(71), 0 }, 0x526900 },
+    [FILE_MOVIE_ARASHI_STR] = { { itob(7), itob(45), itob(39), 0 }, 0x52FB00 },
+    [FILE_MOVIE_MANTION_STR] = { { itob(15), itob(35), itob(5), 0 }, 0x52FB00 },
+    [FILE_MOVIE_BAKKASU_STR] = { { itob(8), itob(16), itob(42), 0 }, 0x52FB00 },
+    [FILE_MOVIE_JUNGLE_STR] = { { itob(13), itob(35), itob(37), 0 }, 0x52FB00 },
+    [FILE_MOVIE_KARAKURI_STR] = { { itob(14), itob(6), itob(40), 0 }, 0x52FB00 },
+    [FILE_MOVIE_MABUTA_STR] = { { itob(14), itob(52), itob(62), 0 }, 0x70EC00 },
+    [FILE_MOVIE_ENDING_STR] = { { itob(10), itob(27), itob(57), 0 }, 0x1515700 },
+    [FILE_MOVIE_LOGO_STR] = { { itob(14), itob(37), itob(43), 0 }, 0x28C700 },
+    [FILE_UNUSED_217] = { { itob(0), itob(0), itob(0), 0 }, 0x0 },
+    [FILE_UNUSED_218] = { { itob(0), itob(0), itob(0), 0 }, 0x0 },
+    [FILE_AREA00_A000_GAM] = { { itob(0), itob(6), itob(11), 0 }, 0x13C },
+    [FILE_AREA00_A001_GAM] = { { itob(0), itob(6), itob(12), 0 }, 0x3182 },
+    [FILE_AREA00_A002_GAM] = { { itob(0), itob(6), itob(19), 0 }, 0x228B5 },
+    [FILE_AREA00_A003_GAM] = { { itob(0), itob(7), itob(14), 0 }, 0x12E0E },
+    [FILE_AREA00_X00_BIN] = { { itob(0), itob(23), itob(29), 0 }, 0x500E4 },
+    [FILE_AREA00_A004_GAM] = { { itob(0), itob(7), itob(52), 0 }, 0x2198 },
+    [FILE_AREA00_A005_000] = { { itob(0), itob(7), itob(57), 0 }, 0x43B80 },
+    [FILE_AREA00_A006_GAM] = { { itob(0), itob(9), itob(43), 0 }, 0x10A6B },
+    [FILE_AREA00_B000_GAM] = { { itob(0), itob(10), itob(2), 0 }, 0x24DC3 },
+    [FILE_AREA00_CLUT01_GAM] = { { itob(0), itob(15), itob(0), 0 }, 0x2802 },
+    [FILE_AREA00_D001_GAM] = { { itob(0), itob(15), itob(35), 0 }, 0x2198 },
+    [FILE_AREA00_SND0000_WVD] = { { itob(0), itob(21), itob(23), 0 }, 0x2F564 },
+    [FILE_AREA00_D003_GAM] = { { itob(0), itob(15), itob(40), 0 }, 0x35423 },
+    [FILE_AREA00_B100_GAM] = { { itob(0), itob(11), itob(1), 0 }, 0x24DC3 },
+    [FILE_AREA00_CLUT02_GAM] = { { itob(0), itob(15), itob(6), 0 }, 0x2802 },
+    [FILE_AREA00_D101_GAM] = { { itob(0), itob(16), itob(72), 0 }, 0x2198 },
+    [FILE_AREA00_D103_GAM] = { { itob(0), itob(17), itob(2), 0 }, 0x35423 },
+    [FILE_AREA00_B200_GAM] = { { itob(0), itob(12), itob(0), 0 }, 0x24DC3 },
+    [FILE_AREA00_CLUT03_GAM] = { { itob(0), itob(15), itob(12), 0 }, 0x2802 },
+    [FILE_AREA00_D201_GAM] = { { itob(0), itob(18), itob(34), 0 }, 0x2198 },
+    [FILE_AREA00_D203_GAM] = { { itob(0), itob(18), itob(39), 0 }, 0x35423 },
+    [FILE_AREA00_B300_GAM] = { { itob(0), itob(12), itob(74), 0 }, 0x63AF },
+    [FILE_AREA00_B301_000] = { { itob(0), itob(13), itob(12), 0 }, 0x30000 },
+    [FILE_AREA00_CLUT04_GAM] = { { itob(0), itob(15), itob(18), 0 }, 0x2855 },
+    [FILE_AREA00_SND0003_WVD] = { { itob(0), itob(22), itob(43), 0 }, 0x1E394 },
+    [FILE_AREA00_D302_GAM] = { { itob(0), itob(19), itob(71), 0 }, 0x4E6D },
+    [FILE_AREA00_B400_GAM] = { { itob(0), itob(14), itob(33), 0 }, 0x5DDC },
+    [FILE_AREA00_B401_GAM] = { { itob(0), itob(14), itob(45), 0 }, 0x362 },
+    [FILE_AREA00_CLUT05_GAM] = { { itob(0), itob(15), itob(24), 0 }, 0x27BA },
+    [FILE_AREA00_D403_GAM] = { { itob(0), itob(20), itob(6), 0 }, 0x1AB9D },
+    [FILE_AREA00_B500_GAM] = { { itob(0), itob(14), itob(46), 0 }, 0x6215 },
+    [FILE_AREA00_B501_GAM] = { { itob(0), itob(14), itob(59), 0 }, 0xD24 },
+    [FILE_AREA00_B502_GAM] = { { itob(0), itob(14), itob(61), 0 }, 0x390 },
+    [FILE_AREA00_B503_GAM] = { { itob(0), itob(14), itob(62), 0 }, 0x6631 },
+    [FILE_AREA00_CLUT06_GAM] = { { itob(0), itob(15), itob(29), 0 }, 0x2D0E },
+    [FILE_AREA00_D505_GAM] = { { itob(0), itob(20), itob(60), 0 }, 0x12D61 },
+    [FILE_AREA01_A000_GAM] = { { itob(0), itob(25), itob(42), 0 }, 0x13C },
+    [FILE_AREA01_A001_GAM] = { { itob(0), itob(25), itob(43), 0 }, 0x3182 },
+    [FILE_AREA01_A002_GAM] = { { itob(0), itob(25), itob(50), 0 }, 0x14A16 },
+    [FILE_AREA01_A003_GAM] = { { itob(0), itob(26), itob(17), 0 }, 0xEF6E },
+    [FILE_AREA01_A004_GAM] = { { itob(0), itob(26), itob(47), 0 }, 0xB5D1 },
+    [FILE_AREA01_A006_000] = { { itob(0), itob(26), itob(70), 0 }, 0x1F77C },
+    [FILE_AREA01_A007_000] = { { itob(0), itob(27), itob(58), 0 }, 0x2EEA4 },
+    [FILE_AREA01_A008_GAM] = { { itob(0), itob(29), itob(2), 0 }, 0x17B5B },
+    [FILE_AREA01_X01_BIN] = { { itob(0), itob(41), itob(5), 0 }, 0x53CE0 },
+    [FILE_AREA01_B000_GAM] = { { itob(0), itob(29), itob(50), 0 }, 0x16867 },
+    [FILE_AREA01_B001_GAM] = { { itob(0), itob(30), itob(21), 0 }, 0x2C37 },
+    [FILE_AREA01_B002_GAM] = { { itob(0), itob(30), itob(27), 0 }, 0xC2E7 },
+    [FILE_AREA01_B003_GAM] = { { itob(0), itob(30), itob(52), 0 }, 0x2CE4 },
+    [FILE_AREA01_CLUT01_GAM] = { { itob(0), itob(34), itob(45), 0 }, 0x286E },
+    [FILE_AREA01_D004_000] = { { itob(0), itob(34), itob(74), 0 }, 0xC77C },
+    [FILE_AREA01_D005_GAM] = { { itob(0), itob(35), itob(24), 0 }, 0x1F35E },
+    [FILE_AREA01_B100_GAM] = { { itob(0), itob(30), itob(58), 0 }, 0x16867 },
+    [FILE_AREA01_B101_GAM] = { { itob(0), itob(31), itob(29), 0 }, 0x2C37 },
+    [FILE_AREA01_B102_GAM] = { { itob(0), itob(31), itob(35), 0 }, 0xC2E7 },
+    [FILE_AREA01_B103_GAM] = { { itob(0), itob(31), itob(60), 0 }, 0x2CE4 },
+    [FILE_AREA01_CLUT02_GAM] = { { itob(0), itob(34), itob(51), 0 }, 0x286E },
+    [FILE_AREA01_D104_000] = { { itob(0), itob(36), itob(12), 0 }, 0xC77C },
+    [FILE_AREA01_D105_GAM] = { { itob(0), itob(36), itob(37), 0 }, 0x1F35E },
+    [FILE_AREA01_B200_GAM] = { { itob(0), itob(31), itob(66), 0 }, 0x166BC },
+    [FILE_AREA01_B201_GAM] = { { itob(0), itob(32), itob(36), 0 }, 0x1EDC },
+    [FILE_AREA01_B202_GAM] = { { itob(0), itob(32), itob(40), 0 }, 0xAD66 },
+    [FILE_AREA01_CLUT03_GAM] = { { itob(0), itob(34), itob(57), 0 }, 0x2900 },
+    [FILE_AREA01_D203_000] = { { itob(0), itob(37), itob(25), 0 }, 0x14DCC },
+    [FILE_AREA01_D204_GAM] = { { itob(0), itob(37), itob(67), 0 }, 0x1CAD8 },
+    [FILE_AREA01_B300_GAM] = { { itob(0), itob(32), itob(62), 0 }, 0x116BB },
+    [FILE_AREA01_B301_GAM] = { { itob(0), itob(33), itob(22), 0 }, 0x2C37 },
+    [FILE_AREA01_B302_GAM] = { { itob(0), itob(33), itob(28), 0 }, 0x34B2 },
+    [FILE_AREA01_B303_GAM] = { { itob(0), itob(33), itob(35), 0 }, 0x4F83 },
+    [FILE_AREA01_B304_GAM] = { { itob(0), itob(33), itob(45), 0 }, 0x2CE4 },
+    [FILE_AREA01_CLUT04_GAM] = { { itob(0), itob(34), itob(63), 0 }, 0x27CC },
+    [FILE_AREA01_D305_000] = { { itob(0), itob(38), itob(50), 0 }, 0xE30C },
+    [FILE_AREA01_D306_GAM] = { { itob(0), itob(39), itob(4), 0 }, 0x241BF },
+    [FILE_AREA01_B400_GAM] = { { itob(0), itob(33), itob(51), 0 }, 0x1656A },
+    [FILE_AREA01_B401_GAM] = { { itob(0), itob(34), itob(21), 0 }, 0xAD66 },
+    [FILE_AREA01_B402_GAM] = { { itob(0), itob(34), itob(43), 0 }, 0x9F1 },
+    [FILE_AREA01_CLUT05_GAM] = { { itob(0), itob(34), itob(68), 0 }, 0x28CC },
+    [FILE_AREA01_D403_000] = { { itob(0), itob(40), itob(2), 0 }, 0xC77C },
+    [FILE_AREA01_D404_GAM] = { { itob(0), itob(40), itob(27), 0 }, 0x1A3DD },
+    [FILE_AREA02_A000_GAM] = { { itob(0), itob(43), itob(25), 0 }, 0x13C },
+    [FILE_AREA02_A003_GAM] = { { itob(0), itob(43), itob(26), 0 }, 0x1521A },
+    [FILE_AREA02_B000_GAM] = { { itob(0), itob(43), itob(69), 0 }, 0x12321 },
+    [FILE_AREA02_B001_000] = { { itob(0), itob(44), itob(31), 0 }, 0x30000 },
+    [FILE_AREA02_B002_000] = { { itob(0), itob(45), itob(52), 0 }, 0x20000 },
+    [FILE_AREA02_B003_000] = { { itob(0), itob(46), itob(41), 0 }, 0x8000 },
+    [FILE_AREA02_CLUT01_GAM] = { { itob(0), itob(53), itob(52), 0 }, 0x14F2 },
+    [FILE_AREA02_D004_000] = { { itob(0), itob(53), itob(72), 0 }, 0x16994 },
+    [FILE_AREA02_D005_000] = { { itob(0), itob(54), itob(43), 0 }, 0x4E4FC },
+    [FILE_AREA02_D006_GAM] = { { itob(0), itob(56), itob(50), 0 }, 0x3D1A },
+    [FILE_AREA02_INFO_BIN] = { { itob(1), itob(6), itob(59), 0 }, 0xA9B4 },
+    [FILE_AREA02_B100_GAM] = { { itob(0), itob(46), itob(57), 0 }, 0x113B5 },
+    [FILE_AREA02_B101_GAM] = { { itob(0), itob(47), itob(17), 0 }, 0x1984D },
+    [FILE_AREA02_B102_GAM] = { { itob(0), itob(47), itob(69), 0 }, 0x5073 },
+    [FILE_AREA02_B103_000] = { { itob(0), itob(48), itob(5), 0 }, 0x8000 },
+    [FILE_AREA02_B104_GAM] = { { itob(0), itob(48), itob(21), 0 }, 0x6210 },
+    [FILE_AREA02_B105_GAM] = { { itob(0), itob(48), itob(34), 0 }, 0x6938 },
+    [FILE_AREA02_CLUT02_GAM] = { { itob(0), itob(53), itob(55), 0 }, 0x180D },
+    [FILE_AREA02_D106_000] = { { itob(0), itob(56), itob(58), 0 }, 0x16994 },
+    [FILE_AREA02_D107_000] = { { itob(0), itob(57), itob(29), 0 }, 0x2EEA4 },
+    [FILE_AREA02_D108_GAM] = { { itob(0), itob(58), itob(48), 0 }, 0x28FD },
+    [FILE_AREA02_D109_GAM] = { { itob(0), itob(58), itob(54), 0 }, 0x23E5 },
+    [FILE_AREA02_X02_BIN] = { { itob(1), itob(7), itob(20), 0 }, 0x32F74 },
+    [FILE_AREA02_B200_GAM] = { { itob(0), itob(48), itob(48), 0 }, 0x16765 },
+    [FILE_AREA02_B201_GAM] = { { itob(0), itob(49), itob(18), 0 }, 0x6210 },
+    [FILE_AREA02_B202_GAM] = { { itob(0), itob(49), itob(31), 0 }, 0xA58D },
+    [FILE_AREA02_CLUT03_GAM] = { { itob(0), itob(53), itob(59), 0 }, 0x1402 },
+    [FILE_AREA02_D203_000] = { { itob(0), itob(58), itob(59), 0 }, 0x16994 },
+    [FILE_AREA02_D204_000] = { { itob(0), itob(59), itob(30), 0 }, 0x2EEA4 },
+    [FILE_AREA02_D205_GAM] = { { itob(1), itob(0), itob(49), 0 }, 0x28FD },
+    [FILE_AREA02_D206_GAM] = { { itob(1), itob(0), itob(55), 0 }, 0x13FC },
+    [FILE_AREA02_B300_GAM] = { { itob(0), itob(49), itob(52), 0 }, 0x95EF },
+    [FILE_AREA02_B301_000] = { { itob(0), itob(49), itob(71), 0 }, 0x20000 },
+    [FILE_AREA02_B302_GAM] = { { itob(0), itob(50), itob(60), 0 }, 0x34B0 },
+    [FILE_AREA02_CLUT04_GAM] = { { itob(0), itob(53), itob(62), 0 }, 0x1658 },
+    [FILE_AREA02_D303_000] = { { itob(1), itob(0), itob(58), 0 }, 0x15E04 },
+    [FILE_AREA02_D304_000] = { { itob(1), itob(1), itob(27), 0 }, 0x9D84 },
+    [FILE_AREA02_D305_000] = { { itob(1), itob(1), itob(47), 0 }, 0xB2D4 },
+    [FILE_AREA02_D306_GAM] = { { itob(1), itob(1), itob(70), 0 }, 0xD54 },
+    [FILE_AREA02_D307_GAM] = { { itob(1), itob(1), itob(72), 0 }, 0x18477 },
+    [FILE_AREA02_INFO3_BIN] = { { itob(1), itob(7), itob(6), 0 }, 0x6ECC },
+    [FILE_AREA02_B400_GAM] = { { itob(0), itob(50), itob(67), 0 }, 0x16724 },
+    [FILE_AREA02_B401_GAM] = { { itob(0), itob(51), itob(37), 0 }, 0x4C42 },
+    [FILE_AREA02_B402_000] = { { itob(0), itob(51), itob(47), 0 }, 0x8000 },
+    [FILE_AREA02_B403_GAM] = { { itob(0), itob(51), itob(63), 0 }, 0x7DB6 },
+    [FILE_AREA02_CLUT05_GAM] = { { itob(0), itob(53), itob(65), 0 }, 0x149A },
+    [FILE_AREA02_D404_000] = { { itob(1), itob(2), itob(46), 0 }, 0x1E394 },
+    [FILE_AREA02_D405_000] = { { itob(1), itob(3), itob(32), 0 }, 0x2EEA4 },
+    [FILE_AREA02_D406_GAM] = { { itob(1), itob(4), itob(51), 0 }, 0x1DC4 },
+    [FILE_AREA02_D407_GAM] = { { itob(1), itob(4), itob(55), 0 }, 0x2030 },
+    [FILE_AREA02_B500_GAM] = { { itob(0), itob(52), itob(4), 0 }, 0x1D04A },
+    [FILE_AREA02_B501_GAM] = { { itob(0), itob(52), itob(63), 0 }, 0x9F09 },
+    [FILE_AREA02_B502_GAM] = { { itob(0), itob(53), itob(8), 0 }, 0x221B },
+    [FILE_AREA02_B503_000] = { { itob(0), itob(53), itob(13), 0 }, 0x8000 },
+    [FILE_AREA02_B504_GAM] = { { itob(0), itob(53), itob(29), 0 }, 0xB5DE },
+    [FILE_AREA02_CLUT06_GAM] = { { itob(0), itob(53), itob(68), 0 }, 0x1C2B },
+    [FILE_AREA02_D505_000] = { { itob(1), itob(4), itob(60), 0 }, 0x15E04 },
+    [FILE_AREA02_D506_000] = { { itob(1), itob(5), itob(29), 0 }, 0x2EEA4 },
+    [FILE_AREA02_D507_GAM] = { { itob(1), itob(6), itob(48), 0 }, 0x56DD },
+    [FILE_AREA03_A000_GAM] = { { itob(1), itob(8), itob(49), 0 }, 0x13C },
+    [FILE_AREA03_A001_GAM] = { { itob(1), itob(8), itob(50), 0 }, 0x3182 },
+    [FILE_AREA03_A002_GAM] = { { itob(1), itob(8), itob(57), 0 }, 0xC56B },
+    [FILE_AREA03_A003_GAM] = { { itob(1), itob(9), itob(7), 0 }, 0x2193 },
+    [FILE_AREA03_A004_000] = { { itob(1), itob(9), itob(12), 0 }, 0x2EEA4 },
+    [FILE_AREA03_A005_GAM] = { { itob(1), itob(10), itob(31), 0 }, 0x12FC9 },
+    [FILE_AREA03_X03_BIN] = { { itob(1), itob(33), itob(61), 0 }, 0x4DD54 },
+    [FILE_AREA03_B000_GAM] = { { itob(1), itob(10), itob(69), 0 }, 0x1D951 },
+    [FILE_AREA03_B001_GAM] = { { itob(1), itob(11), itob(54), 0 }, 0xE119 },
+    [FILE_AREA03_B002_GAM] = { { itob(1), itob(12), itob(8), 0 }, 0x8522 },
+    [FILE_AREA03_B003_GAM] = { { itob(1), itob(12), itob(25), 0 }, 0x4409 },
+    [FILE_AREA03_CLUT01_GAM] = { { itob(1), itob(18), itob(26), 0 }, 0x1D81 },
+    [FILE_AREA03_D005_000] = { { itob(1), itob(18), itob(50), 0 }, 0x319A4 },
+    [FILE_AREA03_D006_GAM] = { { itob(1), itob(20), itob(0), 0 }, 0x36433 },
+    [FILE_AREA03_B100_GAM] = { { itob(1), itob(12), itob(34), 0 }, 0x6DA0 },
+    [FILE_AREA03_B101_GAM] = { { itob(1), itob(12), itob(48), 0 }, 0x53E0 },
+    [FILE_AREA03_B102_GAM] = { { itob(1), itob(12), itob(59), 0 }, 0xB7EF },
+    [FILE_AREA03_B103_GAM] = { { itob(1), itob(13), itob(7), 0 }, 0x13016 },
+    [FILE_AREA03_B104_GAM] = { { itob(1), itob(13), itob(46), 0 }, 0x4409 },
+    [FILE_AREA03_CLUT02_GAM] = { { itob(1), itob(18), itob(30), 0 }, 0x1CA1 },
+    [FILE_AREA03_D105_000] = { { itob(1), itob(21), itob(34), 0 }, 0x319A4 },
+    [FILE_AREA03_D106_GAM] = { { itob(1), itob(22), itob(59), 0 }, 0x29D0D },
+    [FILE_AREA03_B200_GAM] = { { itob(1), itob(13), itob(55), 0 }, 0xFD1B },
+    [FILE_AREA03_B201_GAM] = { { itob(1), itob(14), itob(12), 0 }, 0x6925 },
+    [FILE_AREA03_B202_GAM] = { { itob(1), itob(14), itob(26), 0 }, 0xBF49 },
+    [FILE_AREA03_B203_GAM] = { { itob(1), itob(14), itob(50), 0 }, 0x9F1 },
+    [FILE_AREA03_B204_GAM] = { { itob(1), itob(14), itob(52), 0 }, 0x9C8E },
+    [FILE_AREA03_B205_GAM] = { { itob(1), itob(14), itob(72), 0 }, 0x43DD },
+    [FILE_AREA03_CLUT03_GAM] = { { itob(1), itob(18), itob(34), 0 }, 0x1C60 },
+    [FILE_AREA03_D206_000] = { { itob(1), itob(23), itob(68), 0 }, 0x24A04 },
+    [FILE_AREA03_D207_000] = { { itob(1), itob(24), itob(67), 0 }, 0x1E6A4 },
+    [FILE_AREA03_D208_GAM] = { { itob(1), itob(25), itob(53), 0 }, 0x6C2 },
+    [FILE_AREA03_D209_GAM] = { { itob(1), itob(25), itob(54), 0 }, 0xA7E },
+    [FILE_AREA03_D210_GAM] = { { itob(1), itob(25), itob(56), 0 }, 0x21FBD },
+    [FILE_AREA03_B300_GAM] = { { itob(1), itob(15), itob(6), 0 }, 0x6379 },
+    [FILE_AREA03_B301_GAM] = { { itob(1), itob(15), itob(19), 0 }, 0x34B0 },
+    [FILE_AREA03_B302_GAM] = { { itob(1), itob(15), itob(26), 0 }, 0x7447 },
+    [FILE_AREA03_B303_GAM] = { { itob(1), itob(15), itob(41), 0 }, 0x4409 },
+    [FILE_AREA03_CLUT04_GAM] = { { itob(1), itob(18), itob(38), 0 }, 0x193D },
+    [FILE_AREA03_D304_000] = { { itob(1), itob(26), itob(49), 0 }, 0x319A4 },
+    [FILE_AREA03_D305_000] = { { itob(1), itob(27), itob(74), 0 }, 0x22CF4 },
+    [FILE_AREA03_D306_GAM] = { { itob(1), itob(28), itob(69), 0 }, 0x1A28 },
+    [FILE_AREA03_D307_GAM] = { { itob(1), itob(28), itob(73), 0 }, 0xFCD },
+    [FILE_AREA03_D308_GAM] = { { itob(1), itob(29), itob(0), 0 }, 0xE995 },
+    [FILE_AREA03_B400_GAM] = { { itob(1), itob(15), itob(50), 0 }, 0x18E7B },
+    [FILE_AREA03_B4001_GAM] = { { itob(1), itob(16), itob(25), 0 }, 0xE119 },
+    [FILE_AREA03_B402_GAM] = { { itob(1), itob(16), itob(54), 0 }, 0x8522 },
+    [FILE_AREA03_B403_GAM] = { { itob(1), itob(16), itob(71), 0 }, 0x40E6 },
+    [FILE_AREA03_CLUT05_GAM] = { { itob(1), itob(18), itob(42), 0 }, 0x1C44 },
+    [FILE_AREA03_D405_000] = { { itob(1), itob(29), itob(30), 0 }, 0x22CF4 },
+    [FILE_AREA03_D406_GAM] = { { itob(1), itob(30), itob(25), 0 }, 0x359EC },
+    [FILE_AREA03_B500_GAM] = { { itob(1), itob(17), itob(5), 0 }, 0x6DA0 },
+    [FILE_AREA03_B501_GAM] = { { itob(1), itob(17), itob(19), 0 }, 0x53E0 },
+    [FILE_AREA03_B502_GAM] = { { itob(1), itob(17), itob(30), 0 }, 0xB7EF },
+    [FILE_AREA03_B503_GAM] = { { itob(1), itob(17), itob(53), 0 }, 0x13016 },
+    [FILE_AREA03_B504_GAM] = { { itob(1), itob(18), itob(17), 0 }, 0x40E6 },
+    [FILE_AREA03_CLUT06_GAM] = { { itob(1), itob(18), itob(46), 0 }, 0x1CA9 },
+    [FILE_AREA03_D505_000] = { { itob(1), itob(31), itob(58), 0 }, 0x22CF4 },
+    [FILE_AREA03_D506_GAM] = { { itob(1), itob(32), itob(53), 0 }, 0x2926D },
+    [FILE_AREA04_A000_GAM] = { { itob(1), itob(35), itob(70), 0 }, 0x13C },
+    [FILE_AREA04_A001_GAM] = { { itob(1), itob(35), itob(71), 0 }, 0x3182 },
+    [FILE_AREA04_A002_GAM] = { { itob(1), itob(36), itob(3), 0 }, 0x10FBD },
+    [FILE_AREA04_A004_GAM] = { { itob(1), itob(36), itob(37), 0 }, 0x10016 },
+    [FILE_AREA04_A005_GAM] = { { itob(1), itob(36), itob(70), 0 }, 0x34B0 },
+    [FILE_AREA04_A006_000] = { { itob(1), itob(37), itob(2), 0 }, 0x2EEA4 },
+    [FILE_AREA04_A007_GAM] = { { itob(1), itob(38), itob(21), 0 }, 0x12491 },
+    [FILE_AREA04_X04_BIN] = { { itob(2), itob(20), itob(21), 0 }, 0x48030 },
+    [FILE_AREA04_B000_GAM] = { { itob(1), itob(38), itob(58), 0 }, 0x12D97 },
+    [FILE_AREA04_CLUT01_GAM] = { { itob(1), itob(48), itob(17), 0 }, 0x1C6B },
+    [FILE_AREA04_D002_000] = { { itob(1), itob(49), itob(22), 0 }, 0x2DEC4 },
+    [FILE_AREA04_D003_GAM] = { { itob(1), itob(50), itob(39), 0 }, 0x1D160 },
+    [FILE_AREA04_D004_GAM] = { { itob(1), itob(51), itob(23), 0 }, 0xAB4F },
+    [FILE_AREA04_B100_GAM] = { { itob(1), itob(39), itob(21), 0 }, 0x12D97 },
+    [FILE_AREA04_CLUT02_GAM] = { { itob(1), itob(48), itob(21), 0 }, 0x1C6B },
+    [FILE_AREA04_D102_000] = { { itob(1), itob(51), itob(45), 0 }, 0x2DEC4 },
+    [FILE_AREA04_D103_GAM] = { { itob(1), itob(52), itob(62), 0 }, 0x1D160 },
+    [FILE_AREA04_D104_GAM] = { { itob(1), itob(53), itob(46), 0 }, 0xB59A },
+    [FILE_AREA04_B200_GAM] = { { itob(1), itob(39), itob(59), 0 }, 0x12D97 },
+    [FILE_AREA04_CLUT03_GAM] = { { itob(1), itob(48), itob(25), 0 }, 0x1C6B },
+    [FILE_AREA04_D202_000] = { { itob(1), itob(53), itob(69), 0 }, 0x2DEC4 },
+    [FILE_AREA04_D203_GAM] = { { itob(1), itob(55), itob(11), 0 }, 0x1CAB3 },
+    [FILE_AREA04_D204_GAM] = { { itob(1), itob(55), itob(69), 0 }, 0xBC4D },
+    [FILE_AREA04_B300_GAM] = { { itob(1), itob(40), itob(22), 0 }, 0x12D97 },
+    [FILE_AREA04_CLUT04_GAM] = { { itob(1), itob(48), itob(29), 0 }, 0x1C6B },
+    [FILE_AREA04_D302_000] = { { itob(1), itob(56), itob(18), 0 }, 0x2DEC4 },
+    [FILE_AREA04_D303_GAM] = { { itob(1), itob(57), itob(35), 0 }, 0x1CAB3 },
+    [FILE_AREA04_D304_GAM] = { { itob(1), itob(58), itob(18), 0 }, 0xB204 },
+    [FILE_AREA04_B400_GAM] = { { itob(1), itob(40), itob(60), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT05_GAM] = { { itob(1), itob(48), itob(33), 0 }, 0x1C71 },
+    [FILE_AREA04_D402_000] = { { itob(1), itob(58), itob(41), 0 }, 0x2F504 },
+    [FILE_AREA04_D403_GAM] = { { itob(1), itob(59), itob(61), 0 }, 0x486B },
+    [FILE_AREA04_B500_GAM] = { { itob(1), itob(41), itob(41), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT06_GAM] = { { itob(1), itob(48), itob(37), 0 }, 0x1D64 },
+    [FILE_AREA04_D501_000] = { { itob(1), itob(59), itob(71), 0 }, 0x2F504 },
+    [FILE_AREA04_D502_GAM] = { { itob(2), itob(1), itob(16), 0 }, 0x3A8C },
+    [FILE_AREA04_B600_GAM] = { { itob(1), itob(42), itob(22), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT07_GAM] = { { itob(1), itob(48), itob(41), 0 }, 0x1C71 },
+    [FILE_AREA04_D602_000] = { { itob(2), itob(1), itob(24), 0 }, 0x2F504 },
+    [FILE_AREA04_D603_GAM] = { { itob(2), itob(2), itob(44), 0 }, 0x6407 },
+    [FILE_AREA04_B700_GAM] = { { itob(1), itob(43), itob(3), 0 }, 0x11B9C },
+    [FILE_AREA04_CLUT08_GAM] = { { itob(1), itob(48), itob(45), 0 }, 0x1C79 },
+    [FILE_AREA04_D701_000] = { { itob(2), itob(2), itob(57), 0 }, 0x2F504 },
+    [FILE_AREA04_D702_GAM] = { { itob(2), itob(4), itob(2), 0 }, 0x614F },
+    [FILE_AREA04_B800_000] = { { itob(1), itob(43), itob(39), 0 }, 0x18000 },
+    [FILE_AREA04_CLUT09_GAM] = { { itob(1), itob(48), itob(49), 0 }, 0x1C01 },
+    [FILE_AREA04_D801_000] = { { itob(2), itob(4), itob(15), 0 }, 0x2F504 },
+    [FILE_AREA04_D802_GAM] = { { itob(2), itob(5), itob(35), 0 }, 0x43A3 },
+    [FILE_AREA04_B900_GAM] = { { itob(1), itob(44), itob(12), 0 }, 0x232E },
+    [FILE_AREA04_CLUT10_GAM] = { { itob(1), itob(48), itob(53), 0 }, 0x1C97 },
+    [FILE_AREA04_D900_000] = { { itob(2), itob(5), itob(44), 0 }, 0x2F504 },
+    [FILE_AREA04_D901_GAM] = { { itob(2), itob(6), itob(64), 0 }, 0x4B2B },
+    [FILE_AREA04_CLUT11_GAM] = { { itob(1), itob(48), itob(57), 0 }, 0x1BDF },
+    [FILE_AREA04_DA00_000] = { { itob(2), itob(6), itob(74), 0 }, 0x2F504 },
+    [FILE_AREA04_DA01_GAM] = { { itob(2), itob(8), itob(19), 0 }, 0x3234 },
+    [FILE_AREA04_BB00_GAM] = { { itob(1), itob(44), itob(17), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT12_GAM] = { { itob(1), itob(48), itob(61), 0 }, 0x1C71 },
+    [FILE_AREA04_DB01_000] = { { itob(2), itob(8), itob(26), 0 }, 0x2F504 },
+    [FILE_AREA04_DB02_GAM] = { { itob(2), itob(9), itob(46), 0 }, 0x5357 },
+    [FILE_AREA04_BC00_GAM] = { { itob(1), itob(44), itob(73), 0 }, 0x1BE1E },
+    [FILE_AREA04_BC01_GAM] = { { itob(1), itob(45), itob(54), 0 }, 0x22A6 },
+    [FILE_AREA04_BC02_GAM] = { { itob(1), itob(45), itob(59), 0 }, 0x1F7B },
+    [FILE_AREA04_CLUT13_GAM] = { { itob(1), itob(48), itob(65), 0 }, 0x1C8A },
+    [FILE_AREA04_DC02_000] = { { itob(2), itob(9), itob(57), 0 }, 0x2F504 },
+    [FILE_AREA04_DC03_GAM] = { { itob(2), itob(11), itob(2), 0 }, 0x597E },
+    [FILE_AREA04_CLUT14_GAM] = { { itob(1), itob(48), itob(69), 0 }, 0x1BDF },
+    [FILE_AREA04_DD00_000] = { { itob(2), itob(11), itob(14), 0 }, 0x2F504 },
+    [FILE_AREA04_DD01_GAM] = { { itob(2), itob(12), itob(34), 0 }, 0x3E74 },
+    [FILE_AREA04_CLUT15_GAM] = { { itob(1), itob(48), itob(73), 0 }, 0x1BDF },
+    [FILE_AREA04_DE00_000] = { { itob(2), itob(12), itob(42), 0 }, 0x2F504 },
+    [FILE_AREA04_DE01_GAM] = { { itob(2), itob(13), itob(62), 0 }, 0x2A8C },
+    [FILE_AREA04_BF00_GAM] = { { itob(1), itob(45), itob(63), 0 }, 0x5223 },
+    [FILE_AREA04_CLUT16_GAM] = { { itob(1), itob(49), itob(2), 0 }, 0x1C1D },
+    [FILE_AREA04_DF02_000] = { { itob(2), itob(13), itob(68), 0 }, 0x1E394 },
+    [FILE_AREA04_DF03_GAM] = { { itob(2), itob(14), itob(54), 0 }, 0x2305 },
+    [FILE_AREA04_BG00_GAM] = { { itob(1), itob(45), itob(74), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT17_GAM] = { { itob(1), itob(49), itob(6), 0 }, 0x1C71 },
+    [FILE_AREA04_DG02_000] = { { itob(2), itob(14), itob(59), 0 }, 0x2F504 },
+    [FILE_AREA04_DG03_GAM] = { { itob(2), itob(16), itob(4), 0 }, 0x4854 },
+    [FILE_AREA04_BH00_GAM] = { { itob(1), itob(46), itob(55), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT18_GAM] = { { itob(1), itob(49), itob(10), 0 }, 0x1C71 },
+    [FILE_AREA04_DH01_000] = { { itob(2), itob(16), itob(14), 0 }, 0x2F504 },
+    [FILE_AREA04_DH02_GAM] = { { itob(2), itob(17), itob(34), 0 }, 0x3A5B },
+    [FILE_AREA04_BI00_GAM] = { { itob(1), itob(47), itob(36), 0 }, 0x1BE1E },
+    [FILE_AREA04_CLUT19_GAM] = { { itob(1), itob(49), itob(14), 0 }, 0x1C71 },
+    [FILE_AREA04_DI01_000] = { { itob(2), itob(17), itob(42), 0 }, 0x2F504 },
+    [FILE_AREA04_DI02_GAM] = { { itob(2), itob(18), itob(62), 0 }, 0x3A4D },
+    [FILE_AREA04_CLUT20_GAM] = { { itob(1), itob(49), itob(18), 0 }, 0x1BDF },
+    [FILE_AREA04_DJ00_000] = { { itob(2), itob(18), itob(70), 0 }, 0x2F504 },
+    [FILE_AREA04_DJ01_GAM] = { { itob(2), itob(20), itob(15), 0 }, 0x2A6E },
+    [FILE_AREA05_A000_GAM] = { { itob(2), itob(22), itob(18), 0 }, 0x13C },
+    [FILE_AREA05_A001_GAM] = { { itob(2), itob(22), itob(19), 0 }, 0x3182 },
+    [FILE_AREA05_A002_000] = { { itob(2), itob(22), itob(26), 0 }, 0x1918C },
+    [FILE_AREA05_A003_GAM] = { { itob(2), itob(23), itob(2), 0 }, 0xFE1B },
+    [FILE_AREA05_B000_GAM] = { { itob(2), itob(23), itob(34), 0 }, 0x35FF3 },
+    [FILE_AREA05_B001_GAM] = { { itob(2), itob(24), itob(67), 0 }, 0x4A44 },
+    [FILE_AREA05_B002_000] = { { itob(2), itob(25), itob(2), 0 }, 0x8000 },
+    [FILE_AREA05_CLUT01_GAM] = { { itob(2), itob(29), itob(30), 0 }, 0x1769 },
+    [FILE_AREA05_D002_000] = { { itob(2), itob(29), itob(42), 0 }, 0x4008 },
+    [FILE_AREA05_D003_000] = { { itob(2), itob(29), itob(51), 0 }, 0x80620 },
+    [FILE_AREA05_D004_000] = { { itob(2), itob(33), itob(8), 0 }, 0xB2D4 },
+    [FILE_AREA05_D005_GAM] = { { itob(2), itob(33), itob(31), 0 }, 0x1AF7 },
+    [FILE_AREA05_INFO2_BIN] = { { itob(2), itob(40), itob(9), 0 }, 0x1EAB4 },
+    [FILE_AREA05_B100_GAM] = { { itob(2), itob(25), itob(18), 0 }, 0x5FB2 },
+    [FILE_AREA05_B101_GAM] = { { itob(2), itob(25), itob(30), 0 }, 0x669E },
+    [FILE_AREA05_B102_GAM] = { { itob(2), itob(25), itob(43), 0 }, 0x1C28B },
+    [FILE_AREA05_B103_GAM] = { { itob(2), itob(26), itob(25), 0 }, 0x3338 },
+    [FILE_AREA05_CLUT02_GAM] = { { itob(2), itob(29), itob(33), 0 }, 0x16C7 },
+    [FILE_AREA05_D103_000] = { { itob(2), itob(33), itob(35), 0 }, 0x2EEA4 },
+    [FILE_AREA05_D104_GAM] = { { itob(2), itob(34), itob(54), 0 }, 0x4701 },
+    [FILE_AREA05_X05_BIN] = { { itob(2), itob(40), itob(71), 0 }, 0x2DA80 },
+    [FILE_AREA05_B200_GAM] = { { itob(2), itob(26), itob(32), 0 }, 0x35FF3 },
+    [FILE_AREA05_B201_GAM] = { { itob(2), itob(27), itob(65), 0 }, 0x4A44 },
+    [FILE_AREA05_B202_000] = { { itob(2), itob(28), itob(0), 0 }, 0x8000 },
+    [FILE_AREA05_CLUT03_GAM] = { { itob(2), itob(29), itob(36), 0 }, 0x1769 },
+    [FILE_AREA05_D202_000] = { { itob(2), itob(34), itob(63), 0 }, 0x4008 },
+    [FILE_AREA05_D203_000] = { { itob(2), itob(34), itob(72), 0 }, 0x80620 },
+    [FILE_AREA05_D204_000] = { { itob(2), itob(38), itob(29), 0 }, 0xB2D4 },
+    [FILE_AREA05_D205_GAM] = { { itob(2), itob(38), itob(52), 0 }, 0x1AF7 },
+    [FILE_AREA05_B300_GAM] = { { itob(2), itob(28), itob(16), 0 }, 0x5FB2 },
+    [FILE_AREA05_B301_GAM] = { { itob(2), itob(28), itob(28), 0 }, 0x669E },
+    [FILE_AREA05_B302_GAM] = { { itob(2), itob(28), itob(41), 0 }, 0x1C28B },
+    [FILE_AREA05_B303_GAM] = { { itob(2), itob(29), itob(23), 0 }, 0x3338 },
+    [FILE_AREA05_CLUT04_GAM] = { { itob(2), itob(29), itob(39), 0 }, 0x16C7 },
+    [FILE_AREA05_D303_000] = { { itob(2), itob(38), itob(56), 0 }, 0x2EEA4 },
+    [FILE_AREA05_D304_GAM] = { { itob(2), itob(40), itob(0), 0 }, 0x4701 },
+    [FILE_AREA06_A000_GAM] = { { itob(2), itob(42), itob(14), 0 }, 0x13C },
+    [FILE_AREA06_A001_GAM] = { { itob(2), itob(42), itob(15), 0 }, 0x506E },
+    [FILE_AREA06_A002_GAM] = { { itob(2), itob(42), itob(26), 0 }, 0x18871 },
+    [FILE_AREA06_X06_BIN] = { { itob(2), itob(57), itob(52), 0 }, 0x36260 },
+    [FILE_AREA06_B000_GAM] = { { itob(2), itob(43), itob(1), 0 }, 0xAF30 },
+    [FILE_AREA06_B001_GAM] = { { itob(2), itob(43), itob(23), 0 }, 0x1831 },
+    [FILE_AREA06_B002_GAM] = { { itob(2), itob(43), itob(27), 0 }, 0x9985 },
+    [FILE_AREA06_B003_GAM] = { { itob(2), itob(43), itob(47), 0 }, 0x91FA },
+    [FILE_AREA06_CLUT01_GAM] = { { itob(2), itob(52), itob(73), 0 }, 0x17F2 },
+    [FILE_AREA06_SND0060_WVD] = { { itob(2), itob(55), itob(68), 0 }, 0x2ABA4 },
+    [FILE_AREA06_D006_000] = { { itob(2), itob(53), itob(7), 0 }, 0x5D2E0 },
+    [FILE_AREA06_D007_GAM] = { { itob(2), itob(55), itob(44), 0 }, 0xF9B },
+    [FILE_AREA06_B101_000] = { { itob(2), itob(43), itob(66), 0 }, 0x38000 },
+    [FILE_AREA06_B102_000] = { { itob(2), itob(45), itob(28), 0 }, 0x30000 },
+    [FILE_AREA06_B103_GAM] = { { itob(2), itob(46), itob(49), 0 }, 0x34B0 },
+    [FILE_AREA06_B104_000] = { { itob(2), itob(46), itob(56), 0 }, 0x10000 },
+    [FILE_AREA06_CLUT02_GAM] = { { itob(2), itob(53), itob(1), 0 }, 0x158B },
+    [FILE_AREA06_B105_000] = { { itob(2), itob(47), itob(13), 0 }, 0x2EEA4 },
+    [FILE_AREA06_SND0062_WVD] = { { itob(2), itob(57), itob(4), 0 }, 0x17A8C },
+    [FILE_AREA06_D106_GAM] = { { itob(2), itob(55), itob(46), 0 }, 0x55F0 },
+    [FILE_AREA06_B201_000] = { { itob(2), itob(48), itob(32), 0 }, 0x38000 },
+    [FILE_AREA06_B202_000] = { { itob(2), itob(49), itob(69), 0 }, 0x30000 },
+    [FILE_AREA06_B203_GAM] = { { itob(2), itob(51), itob(15), 0 }, 0x34B0 },
+    [FILE_AREA06_B204_000] = { { itob(2), itob(51), itob(22), 0 }, 0x10000 },
+    [FILE_AREA06_CLUT03_GAM] = { { itob(2), itob(53), itob(4), 0 }, 0x158B },
+    [FILE_AREA06_B205_000] = { { itob(2), itob(51), itob(54), 0 }, 0x2EEA4 },
+    [FILE_AREA06_D206_GAM] = { { itob(2), itob(55), itob(57), 0 }, 0x55D0 },
+    [FILE_AREA07_A000_GAM] = { { itob(2), itob(59), itob(13), 0 }, 0x13C },
+    [FILE_AREA07_A001_GAM] = { { itob(2), itob(59), itob(14), 0 }, 0x3182 },
+    [FILE_AREA07_A002_GAM] = { { itob(2), itob(59), itob(21), 0 }, 0x15162 },
+    [FILE_AREA07_A003_GAM] = { { itob(2), itob(59), itob(64), 0 }, 0xEA46 },
+    [FILE_AREA07_A004_GAM] = { { itob(3), itob(0), itob(19), 0 }, 0xB5D1 },
+    [FILE_AREA07_A006_000] = { { itob(3), itob(0), itob(42), 0 }, 0x14EDC },
+    [FILE_AREA07_A007_000] = { { itob(3), itob(1), itob(9), 0 }, 0x2EEA4 },
+    [FILE_AREA07_A008_GAM] = { { itob(3), itob(2), itob(28), 0 }, 0x181AD },
+    [FILE_AREA07_X01_BIN] = { { itob(3), itob(14), itob(34), 0 }, 0x53CE0 },
+    [FILE_AREA07_B000_GAM] = { { itob(3), itob(3), itob(2), 0 }, 0x16867 },
+    [FILE_AREA07_B001_GAM] = { { itob(3), itob(3), itob(48), 0 }, 0x2C37 },
+    [FILE_AREA07_B002_GAM] = { { itob(3), itob(3), itob(54), 0 }, 0xC229 },
+    [FILE_AREA07_B003_GAM] = { { itob(3), itob(4), itob(4), 0 }, 0x2CE4 },
+    [FILE_AREA07_CLUT01_GAM] = { { itob(3), itob(7), itob(72), 0 }, 0x27D7 },
+    [FILE_AREA07_D004_000] = { { itob(3), itob(8), itob(24), 0 }, 0xC77C },
+    [FILE_AREA07_D005_GAM] = { { itob(3), itob(8), itob(49), 0 }, 0x2066F },
+    [FILE_AREA07_B100_GAM] = { { itob(3), itob(4), itob(10), 0 }, 0x16867 },
+    [FILE_AREA07_B101_GAM] = { { itob(3), itob(4), itob(56), 0 }, 0x2C37 },
+    [FILE_AREA07_B102_GAM] = { { itob(3), itob(4), itob(62), 0 }, 0xC229 },
+    [FILE_AREA07_B103_GAM] = { { itob(3), itob(5), itob(12), 0 }, 0x2CE4 },
+    [FILE_AREA07_CLUT02_GAM] = { { itob(3), itob(8), itob(2), 0 }, 0x27D7 },
+    [FILE_AREA07_D104_000] = { { itob(3), itob(9), itob(39), 0 }, 0xC77C },
+    [FILE_AREA07_D105_GAM] = { { itob(3), itob(9), itob(64), 0 }, 0x2066F },
+    [FILE_AREA07_B200_GAM] = { { itob(3), itob(5), itob(18), 0 }, 0x166BC },
+    [FILE_AREA07_B201_GAM] = { { itob(3), itob(5), itob(63), 0 }, 0x1EDC },
+    [FILE_AREA07_B202_GAM] = { { itob(3), itob(5), itob(67), 0 }, 0xAD66 },
+    [FILE_AREA07_CLUT03_GAM] = { { itob(3), itob(8), itob(7), 0 }, 0x286A },
+    [FILE_AREA07_D203_000] = { { itob(3), itob(10), itob(54), 0 }, 0x14DCC },
+    [FILE_AREA07_D204_GAM] = { { itob(3), itob(11), itob(21), 0 }, 0x1CF63 },
+    [FILE_AREA07_B300_GAM] = { { itob(3), itob(6), itob(14), 0 }, 0x116BB },
+    [FILE_AREA07_B301_GAM] = { { itob(3), itob(6), itob(49), 0 }, 0x2C37 },
+    [FILE_AREA07_B302_GAM] = { { itob(3), itob(6), itob(55), 0 }, 0x33D0 },
+    [FILE_AREA07_B303_GAM] = { { itob(3), itob(6), itob(62), 0 }, 0x4F83 },
+    [FILE_AREA07_B304_GAM] = { { itob(3), itob(6), itob(72), 0 }, 0x2CE4 },
+    [FILE_AREA07_CLUT04_GAM] = { { itob(3), itob(8), itob(13), 0 }, 0x2728 },
+    [FILE_AREA07_D305_000] = { { itob(3), itob(12), itob(4), 0 }, 0xE30C },
+    [FILE_AREA07_D306_GAM] = { { itob(3), itob(12), itob(33), 0 }, 0x24757 },
+    [FILE_AREA07_B400_GAM] = { { itob(3), itob(7), itob(3), 0 }, 0x1656A },
+    [FILE_AREA07_B401_GAM] = { { itob(3), itob(7), itob(48), 0 }, 0xAD66 },
+    [FILE_AREA07_B402_GAM] = { { itob(3), itob(7), itob(70), 0 }, 0x9F1 },
+    [FILE_AREA07_CLUT05_GAM] = { { itob(3), itob(8), itob(18), 0 }, 0x2835 },
+    [FILE_AREA07_D403_000] = { { itob(3), itob(13), itob(31), 0 }, 0xC77C },
+    [FILE_AREA07_D404_GAM] = { { itob(3), itob(13), itob(56), 0 }, 0x1A3DD },
+    [FILE_AREA08_A000_GAM] = { { itob(3), itob(16), itob(53), 0 }, 0x13C },
+    [FILE_AREA08_A001_GAM] = { { itob(3), itob(16), itob(54), 0 }, 0x3182 },
+    [FILE_AREA08_SND0080_WVD] = { { itob(3), itob(27), itob(29), 0 }, 0x26064 },
+    [FILE_AREA08_A003_GAM] = { { itob(3), itob(16), itob(61), 0 }, 0xA23A },
+    [FILE_AREA08_B000_GAM] = { { itob(3), itob(17), itob(7), 0 }, 0x9A00 },
+    [FILE_AREA08_B001_GAM] = { { itob(3), itob(17), itob(27), 0 }, 0x23C6 },
+    [FILE_AREA08_CLUT01_GAM] = { { itob(3), itob(19), itob(39), 0 }, 0x14A1 },
+    [FILE_AREA08_D002_000] = { { itob(3), itob(19), itob(51), 0 }, 0x4ACFC },
+    [FILE_AREA08_D003_GAM] = { { itob(3), itob(21), itob(51), 0 }, 0x3B5F },
+    [FILE_AREA08_INFO2_BIN] = { { itob(3), itob(26), itob(42), 0 }, 0x1EAB4 },
+    [FILE_AREA08_B100_GAM] = { { itob(3), itob(17), itob(32), 0 }, 0x163D0 },
+    [FILE_AREA08_B101_GAM] = { { itob(3), itob(18), itob(2), 0 }, 0x36EA },
+    [FILE_AREA08_B102_GAM] = { { itob(3), itob(18), itob(9), 0 }, 0x6925 },
+    [FILE_AREA08_CLUT02_GAM] = { { itob(3), itob(19), itob(42), 0 }, 0x146F },
+    [FILE_AREA08_D103_000] = { { itob(3), itob(21), itob(59), 0 }, 0x2EEA4 },
+    [FILE_AREA08_D104_GAM] = { { itob(3), itob(23), itob(3), 0 }, 0x2D80 },
+    [FILE_AREA08_X08_BIN] = { { itob(3), itob(28), itob(31), 0 }, 0x2B8F4 },
+    [FILE_AREA08_B200_GAM] = { { itob(3), itob(18), itob(23), 0 }, 0x9A00 },
+    [FILE_AREA08_B201_GAM] = { { itob(3), itob(18), itob(43), 0 }, 0x23C6 },
+    [FILE_AREA08_CLUT03_GAM] = { { itob(3), itob(19), itob(45), 0 }, 0x14A1 },
+    [FILE_AREA08_D202_000] = { { itob(3), itob(23), itob(9), 0 }, 0x4ACFC },
+    [FILE_AREA08_D203_GAM] = { { itob(3), itob(25), itob(9), 0 }, 0x3B5F },
+    [FILE_AREA08_B300_GAM] = { { itob(3), itob(18), itob(48), 0 }, 0x163D0 },
+    [FILE_AREA08_B301_GAM] = { { itob(3), itob(19), itob(18), 0 }, 0x36EA },
+    [FILE_AREA08_B302_GAM] = { { itob(3), itob(19), itob(25), 0 }, 0x6925 },
+    [FILE_AREA08_CLUT04_GAM] = { { itob(3), itob(19), itob(48), 0 }, 0x146F },
+    [FILE_AREA08_D303_000] = { { itob(3), itob(25), itob(17), 0 }, 0x2EEA4 },
+    [FILE_AREA08_D304_GAM] = { { itob(3), itob(26), itob(36), 0 }, 0x2D80 },
+    [FILE_AREA09_A000_GAM] = { { itob(3), itob(29), itob(46), 0 }, 0x13C },
+    [FILE_AREA09_A001_GAM] = { { itob(3), itob(29), itob(47), 0 }, 0x3182 },
+    [FILE_AREA09_A002_000] = { { itob(3), itob(29), itob(54), 0 }, 0x2EEA4 },
+    [FILE_AREA09_A003_GAM] = { { itob(3), itob(30), itob(73), 0 }, 0xE5FB },
+    [FILE_AREA09_X09_BIN] = { { itob(3), itob(45), itob(49), 0 }, 0x44490 },
+    [FILE_AREA09_B000_GAM] = { { itob(3), itob(31), itob(27), 0 }, 0x1A81D },
+    [FILE_AREA09_B001_GAM] = { { itob(3), itob(32), itob(6), 0 }, 0x1708F },
+    [FILE_AREA09_B004_GAM] = { { itob(3), itob(32), itob(53), 0 }, 0x156AA },
+    [FILE_AREA09_B005_GAM] = { { itob(3), itob(33), itob(21), 0 }, 0x13A2F },
+    [FILE_AREA09_CLUT01_GAM] = { { itob(3), itob(40), itob(12), 0 }, 0x284E },
+    [FILE_AREA09_SND0090_WVD] = { { itob(3), itob(43), itob(16), 0 }, 0x2E8E4 },
+    [FILE_AREA09_D006_GAM] = { { itob(3), itob(40), itob(36), 0 }, 0x395E1 },
+    [FILE_AREA09_B100_GAM] = { { itob(3), itob(33), itob(61), 0 }, 0x2D6B0 },
+    [FILE_AREA09_B101_GAM] = { { itob(3), itob(35), itob(2), 0 }, 0x12A1A },
+    [FILE_AREA09_B102_GAM] = { { itob(3), itob(35), itob(40), 0 }, 0x14234 },
+    [FILE_AREA09_B103_GAM] = { { itob(3), itob(36), itob(6), 0 }, 0x14FE },
+    [FILE_AREA09_B104_GAM] = { { itob(3), itob(36), itob(9), 0 }, 0xB314 },
+    [FILE_AREA09_B105_GAM] = { { itob(3), itob(36), itob(32), 0 }, 0x34B0 },
+    [FILE_AREA09_CLUT02_GAM] = { { itob(3), itob(40), itob(18), 0 }, 0x1668 },
+    [FILE_AREA09_SND0091_WVD] = { { itob(3), itob(44), itob(35), 0 }, 0x176BC },
+    [FILE_AREA09_SND0010_WVD] = { { itob(3), itob(42), itob(66), 0 }, 0xC77C },
+    [FILE_AREA09_D106_GAM] = { { itob(3), itob(42), itob(1), 0 }, 0x219B },
+    [FILE_AREA09_B200_GAM] = { { itob(3), itob(36), itob(39), 0 }, 0x25501 },
+    [FILE_AREA09_B201_GAM] = { { itob(3), itob(37), itob(39), 0 }, 0x2290 },
+    [FILE_AREA09_B202_GAM] = { { itob(3), itob(37), itob(44), 0 }, 0x42E6 },
+    [FILE_AREA09_CLUT03_GAM] = { { itob(3), itob(40), itob(21), 0 }, 0x13AA },
+    [FILE_AREA09_D203_GAM] = { { itob(3), itob(42), itob(6), 0 }, 0x223A },
+    [FILE_AREA09_B300_GAM] = { { itob(3), itob(37), itob(53), 0 }, 0x16386 },
+    [FILE_AREA09_B301_GAM] = { { itob(3), itob(38), itob(23), 0 }, 0x5FB2 },
+    [FILE_AREA09_CLUT04_GAM] = { { itob(3), itob(40), itob(24), 0 }, 0x143C },
+    [FILE_AREA09_D302_GAM] = { { itob(3), itob(42), itob(11), 0 }, 0x2CA0 },
+    [FILE_AREA09_B400_GAM] = { { itob(3), itob(38), itob(35), 0 }, 0x1634D },
+    [FILE_AREA09_B401_GAM] = { { itob(3), itob(39), itob(5), 0 }, 0x34B0 },
+    [FILE_AREA09_CLUT05_GAM] = { { itob(3), itob(40), itob(27), 0 }, 0x1346 },
+    [FILE_AREA09_D401_GAM] = { { itob(3), itob(42), itob(17), 0 }, 0x1C62 },
+    [FILE_AREA09_B500_GAM] = { { itob(3), itob(39), itob(12), 0 }, 0x164DA },
+    [FILE_AREA09_B501_GAM] = { { itob(3), itob(39), itob(57), 0 }, 0x34B0 },
+    [FILE_AREA09_CLUT06_GAM] = { { itob(3), itob(40), itob(30), 0 }, 0x1346 },
+    [FILE_AREA09_D501_GAM] = { { itob(3), itob(42), itob(21), 0 }, 0x22F3 },
+    [FILE_AREA09_B600_GAM] = { { itob(3), itob(39), itob(64), 0 }, 0x5DDC },
+    [FILE_AREA09_B601_GAM] = { { itob(3), itob(40), itob(1), 0 }, 0x35B5 },
+    [FILE_AREA09_B602_GAM] = { { itob(3), itob(40), itob(8), 0 }, 0x1BBF },
+    [FILE_AREA09_CLUT07_GAM] = { { itob(3), itob(40), itob(33), 0 }, 0x124E },
+    [FILE_AREA09_SND0096_WVD] = { { itob(3), itob(45), itob(7), 0 }, 0x14D0C },
+    [FILE_AREA09_D603_GAM] = { { itob(3), itob(42), itob(26), 0 }, 0x13AB0 },
+    [FILE_AREA10_A000_GAM] = { { itob(3), itob(47), itob(38), 0 }, 0x13C },
+    [FILE_AREA10_A001_GAM] = { { itob(3), itob(47), itob(39), 0 }, 0x3182 },
+    [FILE_AREA10_A002_000] = { { itob(3), itob(47), itob(46), 0 }, 0x2EEA4 },
+    [FILE_AREA10_A003_GAM] = { { itob(3), itob(48), itob(65), 0 }, 0x16331 },
+    [FILE_AREA10_X10_BIN] = { { itob(4), itob(12), itob(32), 0 }, 0x454DC },
+    [FILE_AREA10_B000_GAM] = { { itob(3), itob(49), itob(35), 0 }, 0x7E21 },
+    [FILE_AREA10_B001_GAM] = { { itob(3), itob(49), itob(51), 0 }, 0x12CAD },
+    [FILE_AREA10_B003_GAM] = { { itob(3), itob(50), itob(14), 0 }, 0x1671A },
+    [FILE_AREA10_B004_GAM] = { { itob(3), itob(50), itob(59), 0 }, 0xFD59 },
+    [FILE_AREA10_CLUT01_GAM] = { { itob(4), itob(1), itob(17), 0 }, 0x2165 },
+    [FILE_AREA10_SND0100_WVD] = { { itob(4), itob(7), itob(2), 0 }, 0x37174 },
+    [FILE_AREA10_D005_GAM] = { { itob(4), itob(1), itob(54), 0 }, 0x18A08 },
+    [FILE_AREA10_B100_GAM] = { { itob(3), itob(51), itob(16), 0 }, 0x34B0 },
+    [FILE_AREA10_B101_GAM] = { { itob(3), itob(51), itob(23), 0 }, 0xD954 },
+    [FILE_AREA10_B102_GAM] = { { itob(3), itob(51), itob(51), 0 }, 0x5D4F },
+    [FILE_AREA10_B103_GAM] = { { itob(3), itob(51), itob(63), 0 }, 0xFD59 },
+    [FILE_AREA10_CLUT02_GAM] = { { itob(4), itob(1), itob(22), 0 }, 0x1B85 },
+    [FILE_AREA10_D103_GAM] = { { itob(4), itob(2), itob(29), 0 }, 0x76F6 },
+    [FILE_AREA10_B200_GAM] = { { itob(3), itob(52), itob(20), 0 }, 0xC655 },
+    [FILE_AREA10_B201_GAM] = { { itob(3), itob(52), itob(45), 0 }, 0x7B16 },
+    [FILE_AREA10_B203_GAM] = { { itob(3), itob(52), itob(61), 0 }, 0x15A6D },
+    [FILE_AREA10_B204_GAM] = { { itob(3), itob(53), itob(30), 0 }, 0xFD59 },
+    [FILE_AREA10_CLUT03_GAM] = { { itob(4), itob(1), itob(26), 0 }, 0x1F49 },
+    [FILE_AREA10_D205_GAM] = { { itob(4), itob(2), itob(44), 0 }, 0xFEEC },
+    [FILE_AREA10_B300_GAM] = { { itob(3), itob(53), itob(62), 0 }, 0xE20B },
+    [FILE_AREA10_B302_GAM] = { { itob(3), itob(54), itob(16), 0 }, 0xBA93 },
+    [FILE_AREA10_B304_GAM] = { { itob(3), itob(54), itob(40), 0 }, 0xFD59 },
+    [FILE_AREA10_CLUT04_GAM] = { { itob(4), itob(1), itob(30), 0 }, 0x1E61 },
+    [FILE_AREA10_SND0103_WVD] = { { itob(4), itob(9), itob(60), 0 }, 0x2A9F4 },
+    [FILE_AREA10_D305_GAM] = { { itob(4), itob(3), itob(1), 0 }, 0x22113 },
+    [FILE_AREA10_B400_GAM] = { { itob(3), itob(54), itob(72), 0 }, 0x7E21 },
+    [FILE_AREA10_B401_GAM] = { { itob(3), itob(55), itob(13), 0 }, 0xAEBD },
+    [FILE_AREA10_B403_GAM] = { { itob(3), itob(55), itob(35), 0 }, 0x1E3E5 },
+    [FILE_AREA10_B405_GAM] = { { itob(3), itob(56), itob(21), 0 }, 0x10003 },
+    [FILE_AREA10_CLUT05_GAM] = { { itob(4), itob(1), itob(34), 0 }, 0x20E1 },
+    [FILE_AREA10_SND0100X_WVD] = { { itob(4), itob(8), itob(38), 0 }, 0x30754 },
+    [FILE_AREA10_D406_GAM] = { { itob(4), itob(3), itob(70), 0 }, 0x1909E },
+    [FILE_AREA10_B500_GAM] = { { itob(3), itob(56), itob(54), 0 }, 0x34B0 },
+    [FILE_AREA10_B501_GAM] = { { itob(3), itob(56), itob(61), 0 }, 0xD933 },
+    [FILE_AREA10_B502_GAM] = { { itob(3), itob(57), itob(14), 0 }, 0x5D4F },
+    [FILE_AREA10_B503_GAM] = { { itob(3), itob(57), itob(26), 0 }, 0x10003 },
+    [FILE_AREA10_CLUT06_GAM] = { { itob(4), itob(1), itob(39), 0 }, 0x1B8D },
+    [FILE_AREA10_D503_GAM] = { { itob(4), itob(4), itob(46), 0 }, 0x80C9 },
+    [FILE_AREA10_B600_GAM] = { { itob(3), itob(57), itob(59), 0 }, 0xC655 },
+    [FILE_AREA10_B601_GAM] = { { itob(3), itob(58), itob(9), 0 }, 0x7B16 },
+    [FILE_AREA10_B603_GAM] = { { itob(3), itob(58), itob(25), 0 }, 0x15A4A },
+    [FILE_AREA10_B604_GAM] = { { itob(3), itob(58), itob(69), 0 }, 0x10003 },
+    [FILE_AREA10_CLUT07_GAM] = { { itob(4), itob(1), itob(43), 0 }, 0x1F53 },
+    [FILE_AREA10_D605_GAM] = { { itob(4), itob(4), itob(63), 0 }, 0x108BF },
+    [FILE_AREA10_B700_GAM] = { { itob(3), itob(59), itob(27), 0 }, 0xE20B },
+    [FILE_AREA10_B702_GAM] = { { itob(3), itob(59), itob(56), 0 }, 0xBA93 },
+    [FILE_AREA10_B704_GAM] = { { itob(4), itob(0), itob(5), 0 }, 0x10003 },
+    [FILE_AREA10_CLUT08_GAM] = { { itob(4), itob(1), itob(47), 0 }, 0x1E6E },
+    [FILE_AREA10_SND0103X_WVD] = { { itob(4), itob(10), itob(71), 0 }, 0x37304 },
+    [FILE_AREA10_D705_GAM] = { { itob(4), itob(5), itob(22), 0 }, 0x200BD },
+    [FILE_AREA10_B800_GAM] = { { itob(4), itob(0), itob(38), 0 }, 0x3701 },
+    [FILE_AREA10_B801_GAM] = { { itob(4), itob(0), itob(45), 0 }, 0x13B54 },
+    [FILE_AREA10_B802_GAM] = { { itob(4), itob(1), itob(10), 0 }, 0x34B0 },
+    [FILE_AREA10_CLUT09_GAM] = { { itob(4), itob(1), itob(51), 0 }, 0x140E },
+    [FILE_AREA10_SND0003_WVD] = { { itob(4), itob(6), itob(16), 0 }, 0x1E394 },
+    [FILE_AREA10_D803_GAM] = { { itob(4), itob(6), itob(12), 0 }, 0x18C8 },
+    [FILE_AREA11_A000_GAM] = { { itob(4), itob(14), itob(22), 0 }, 0x13C },
+    [FILE_AREA11_A001_GAM] = { { itob(4), itob(14), itob(23), 0 }, 0x3182 },
+    [FILE_AREA11_A002_GAM] = { { itob(4), itob(14), itob(30), 0 }, 0x104BD },
+    [FILE_AREA11_B100_GAM] = { { itob(4), itob(14), itob(63), 0 }, 0xC019 },
+    [FILE_AREA11_B101_GAM] = { { itob(4), itob(15), itob(13), 0 }, 0x9C83 },
+    [FILE_AREA11_B102_000] = { { itob(4), itob(15), itob(33), 0 }, 0x20000 },
+    [FILE_AREA11_CLUT02_GAM] = { { itob(4), itob(17), itob(1), 0 }, 0x1B51 },
+    [FILE_AREA11_SND0110_WVD] = { { itob(4), itob(21), itob(2), 0 }, 0x1174C },
+    [FILE_AREA11_D103_000] = { { itob(4), itob(17), itob(12), 0 }, 0x2EEA4 },
+    [FILE_AREA11_D104_GAM] = { { itob(4), itob(18), itob(31), 0 }, 0xEF32 },
+    [FILE_AREA11_X11_BIN] = { { itob(4), itob(21), itob(37), 0 }, 0x2F4B4 },
+    [FILE_AREA11_B200_GAM] = { { itob(4), itob(16), itob(22), 0 }, 0x161FA },
+    [FILE_AREA11_B201_GAM] = { { itob(4), itob(16), itob(67), 0 }, 0x34B0 },
+    [FILE_AREA11_CLUT03_GAM] = { { itob(4), itob(17), itob(5), 0 }, 0x1414 },
+    [FILE_AREA11_D202_000] = { { itob(4), itob(18), itob(61), 0 }, 0x2EEA4 },
+    [FILE_AREA11_D203_GAM] = { { itob(4), itob(20), itob(5), 0 }, 0x1DC4 },
+    [FILE_AREA11_D204_GAM] = { { itob(4), itob(20), itob(9), 0 }, 0x2A01 },
+    [FILE_AREA12_A000_GAM] = { { itob(4), itob(22), itob(60), 0 }, 0x13C },
+    [FILE_AREA12_A001_GAM] = { { itob(4), itob(22), itob(61), 0 }, 0x3182 },
+    [FILE_AREA12_A003_GAM] = { { itob(4), itob(22), itob(68), 0 }, 0x10A2D },
+    [FILE_AREA12_A004_GAM] = { { itob(4), itob(23), itob(27), 0 }, 0xEE43 },
+    [FILE_AREA12_A005_GAM] = { { itob(4), itob(23), itob(57), 0 }, 0x34B0 },
+    [FILE_AREA12_A006_000] = { { itob(4), itob(23), itob(64), 0 }, 0x2EEA4 },
+    [FILE_AREA12_A007_GAM] = { { itob(4), itob(25), itob(8), 0 }, 0x124B2 },
+    [FILE_AREA12_X04_BIN] = { { itob(5), itob(7), itob(31), 0 }, 0x48030 },
+    [FILE_AREA12_B000_GAM] = { { itob(4), itob(25), itob(45), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT01_GAM] = { { itob(4), itob(32), itob(25), 0 }, 0x1C59 },
+    [FILE_AREA12_D001_000] = { { itob(4), itob(33), itob(30), 0 }, 0x31FA4 },
+    [FILE_AREA12_D003_GAM] = { { itob(4), itob(34), itob(55), 0 }, 0x1C92B },
+    [FILE_AREA12_D004_GAM] = { { itob(4), itob(35), itob(38), 0 }, 0xAE40 },
+    [FILE_AREA12_B100_GAM] = { { itob(4), itob(26), itob(6), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT02_GAM] = { { itob(4), itob(32), itob(29), 0 }, 0x1C59 },
+    [FILE_AREA12_D102_000] = { { itob(4), itob(35), itob(60), 0 }, 0x31FA4 },
+    [FILE_AREA12_D103_GAM] = { { itob(4), itob(37), itob(10), 0 }, 0x1C92B },
+    [FILE_AREA12_D104_GAM] = { { itob(4), itob(37), itob(68), 0 }, 0xAE40 },
+    [FILE_AREA12_B200_GAM] = { { itob(4), itob(26), itob(42), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT03_GAM] = { { itob(4), itob(32), itob(33), 0 }, 0x1C59 },
+    [FILE_AREA12_D202_000] = { { itob(4), itob(38), itob(15), 0 }, 0x31FA4 },
+    [FILE_AREA12_D203_GAM] = { { itob(4), itob(39), itob(40), 0 }, 0x1C28E },
+    [FILE_AREA12_D204_GAM] = { { itob(4), itob(40), itob(22), 0 }, 0xB408 },
+    [FILE_AREA12_B300_GAM] = { { itob(4), itob(27), itob(3), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT04_GAM] = { { itob(4), itob(32), itob(37), 0 }, 0x1C59 },
+    [FILE_AREA12_D302_000] = { { itob(4), itob(40), itob(45), 0 }, 0x31FA4 },
+    [FILE_AREA12_D303_GAM] = { { itob(4), itob(41), itob(70), 0 }, 0x1C28E },
+    [FILE_AREA12_D304_GAM] = { { itob(4), itob(42), itob(52), 0 }, 0xB408 },
+    [FILE_AREA12_B400_GAM] = { { itob(4), itob(27), itob(39), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT05_GAM] = { { itob(4), itob(32), itob(41), 0 }, 0x1C59 },
+    [FILE_AREA12_D402_000] = { { itob(4), itob(43), itob(0), 0 }, 0x35F54 },
+    [FILE_AREA12_D403_GAM] = { { itob(4), itob(44), itob(33), 0 }, 0x4980 },
+    [FILE_AREA12_B500_GAM] = { { itob(4), itob(28), itob(0), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT06_GAM] = { { itob(4), itob(32), itob(45), 0 }, 0x1C59 },
+    [FILE_AREA12_D501_000] = { { itob(4), itob(44), itob(43), 0 }, 0x35F54 },
+    [FILE_AREA12_D502_GAM] = { { itob(4), itob(46), itob(1), 0 }, 0x3B69 },
+    [FILE_AREA12_B600_GAM] = { { itob(4), itob(28), itob(36), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT07_GAM] = { { itob(4), itob(32), itob(49), 0 }, 0x1C59 },
+    [FILE_AREA12_D602_000] = { { itob(4), itob(46), itob(9), 0 }, 0x35F54 },
+    [FILE_AREA12_D603_GAM] = { { itob(4), itob(47), itob(42), 0 }, 0x6517 },
+    [FILE_AREA12_B700_GAM] = { { itob(4), itob(28), itob(72), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT08_GAM] = { { itob(4), itob(32), itob(53), 0 }, 0x1C59 },
+    [FILE_AREA12_D700_000] = { { itob(4), itob(47), itob(55), 0 }, 0x35F54 },
+    [FILE_AREA12_D701_GAM] = { { itob(4), itob(49), itob(13), 0 }, 0x6D85 },
+    [FILE_AREA12_B800_000] = { { itob(4), itob(29), itob(33), 0 }, 0x18000 },
+    [FILE_AREA12_CLUT09_GAM] = { { itob(4), itob(32), itob(57), 0 }, 0x1BE1 },
+    [FILE_AREA12_D801_000] = { { itob(4), itob(49), itob(27), 0 }, 0x35F54 },
+    [FILE_AREA12_D802_GAM] = { { itob(4), itob(50), itob(60), 0 }, 0x4FCD },
+    [FILE_AREA12_B900_GAM] = { { itob(4), itob(30), itob(6), 0 }, 0x232E },
+    [FILE_AREA12_CLUT10_GAM] = { { itob(4), itob(32), itob(61), 0 }, 0x1C79 },
+    [FILE_AREA12_D900_000] = { { itob(4), itob(50), itob(70), 0 }, 0x35F54 },
+    [FILE_AREA12_D901_GAM] = { { itob(4), itob(52), itob(28), 0 }, 0x5759 },
+    [FILE_AREA12_CLUT11_GAM] = { { itob(4), itob(32), itob(65), 0 }, 0x1BBF },
+    [FILE_AREA12_DA00_000] = { { itob(4), itob(52), itob(39), 0 }, 0x35F54 },
+    [FILE_AREA12_DA01_GAM] = { { itob(4), itob(53), itob(72), 0 }, 0x3E62 },
+    [FILE_AREA12_BB00_GAM] = { { itob(4), itob(30), itob(11), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT12_GAM] = { { itob(4), itob(32), itob(69), 0 }, 0x1C59 },
+    [FILE_AREA12_DB01_000] = { { itob(4), itob(54), itob(5), 0 }, 0x35F54 },
+    [FILE_AREA12_DB02_GAM] = { { itob(4), itob(55), itob(38), 0 }, 0x5464 },
+    [FILE_AREA12_BC00_GAM] = { { itob(4), itob(30), itob(47), 0 }, 0x11B9C },
+    [FILE_AREA12_BC01_GAM] = { { itob(4), itob(31), itob(8), 0 }, 0x22A6 },
+    [FILE_AREA12_BC02_GAM] = { { itob(4), itob(31), itob(13), 0 }, 0x1F7B },
+    [FILE_AREA12_CLUT13_GAM] = { { itob(4), itob(32), itob(73), 0 }, 0x1C71 },
+    [FILE_AREA12_DC02_000] = { { itob(4), itob(55), itob(49), 0 }, 0x35F54 },
+    [FILE_AREA12_DC03_GAM] = { { itob(4), itob(57), itob(7), 0 }, 0x5A8E },
+    [FILE_AREA12_CLUT14_GAM] = { { itob(4), itob(33), itob(2), 0 }, 0x1BBF },
+    [FILE_AREA12_DD00_000] = { { itob(4), itob(57), itob(19), 0 }, 0x35F54 },
+    [FILE_AREA12_DD01_GAM] = { { itob(4), itob(58), itob(52), 0 }, 0x4AA2 },
+    [FILE_AREA12_CLUT15_GAM] = { { itob(4), itob(33), itob(6), 0 }, 0x1BBF },
+    [FILE_AREA12_DE00_000] = { { itob(4), itob(58), itob(62), 0 }, 0x35F54 },
+    [FILE_AREA12_DE01_GAM] = { { itob(5), itob(0), itob(20), 0 }, 0x36BA },
+    [FILE_AREA12_BF00_GAM] = { { itob(4), itob(31), itob(17), 0 }, 0x5223 },
+    [FILE_AREA12_CLUT16_GAM] = { { itob(4), itob(33), itob(10), 0 }, 0x1BFD },
+    [FILE_AREA12_DF02_000] = { { itob(5), itob(0), itob(27), 0 }, 0x1E394 },
+    [FILE_AREA12_DF03_GAM] = { { itob(5), itob(1), itob(13), 0 }, 0x2305 },
+    [FILE_AREA12_CLUT17_GAM] = { { itob(4), itob(33), itob(14), 0 }, 0x1BBF },
+    [FILE_AREA12_DG02_000] = { { itob(5), itob(1), itob(18), 0 }, 0x35F54 },
+    [FILE_AREA12_DG03_GAM] = { { itob(5), itob(2), itob(51), 0 }, 0x3FEF },
+    [FILE_AREA12_BH00_GAM] = { { itob(4), itob(31), itob(28), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT18_GAM] = { { itob(4), itob(33), itob(18), 0 }, 0x1C59 },
+    [FILE_AREA12_DH01_000] = { { itob(5), itob(2), itob(59), 0 }, 0x35F54 },
+    [FILE_AREA12_DH02_GAM] = { { itob(5), itob(4), itob(17), 0 }, 0x3B69 },
+    [FILE_AREA12_BI00_GAM] = { { itob(4), itob(31), itob(64), 0 }, 0x11B9C },
+    [FILE_AREA12_CLUT19_GAM] = { { itob(4), itob(33), itob(22), 0 }, 0x1C59 },
+    [FILE_AREA12_DI01_000] = { { itob(5), itob(4), itob(25), 0 }, 0x35F54 },
+    [FILE_AREA12_DI02_GAM] = { { itob(5), itob(5), itob(58), 0 }, 0x3B6C },
+    [FILE_AREA12_CLUT20_GAM] = { { itob(4), itob(33), itob(26), 0 }, 0x1BBF },
+    [FILE_AREA12_DJ00_000] = { { itob(5), itob(5), itob(66), 0 }, 0x35F54 },
+    [FILE_AREA12_DJ01_GAM] = { { itob(5), itob(7), itob(24), 0 }, 0x369C },
+    [FILE_AREA13_A000_GAM] = { { itob(5), itob(9), itob(27), 0 }, 0x13C },
+    [FILE_AREA13_A001_GAM] = { { itob(5), itob(9), itob(28), 0 }, 0x34B0 },
+    [FILE_AREA13_A002_GAM] = { { itob(5), itob(9), itob(35), 0 }, 0x3182 },
+    [FILE_AREA13_A003_000] = { { itob(5), itob(9), itob(42), 0 }, 0x2EEA4 },
+    [FILE_AREA13_A004_GAM] = { { itob(5), itob(10), itob(61), 0 }, 0x10FE4 },
+    [FILE_AREA13_X13_BIN] = { { itob(5), itob(15), itob(51), 0 }, 0x2D808 },
+    [FILE_AREA13_B100_GAM] = { { itob(5), itob(11), itob(20), 0 }, 0x318C },
+    [FILE_AREA13_B101_GAM] = { { itob(5), itob(11), itob(27), 0 }, 0x6123 },
+    [FILE_AREA13_CLUT01_GAM] = { { itob(5), itob(14), itob(52), 0 }, 0x13B3 },
+    [FILE_AREA13_B102_000] = { { itob(5), itob(11), itob(40), 0 }, 0x1FF34 },
+    [FILE_AREA13_D103_GAM] = { { itob(5), itob(14), itob(58), 0 }, 0x5B4E },
+    [FILE_AREA13_B300_GAM] = { { itob(5), itob(12), itob(29), 0 }, 0x63AF },
+    [FILE_AREA13_B301_000] = { { itob(5), itob(12), itob(42), 0 }, 0x20000 },
+    [FILE_AREA13_B302_000] = { { itob(5), itob(13), itob(31), 0 }, 0x30000 },
+    [FILE_AREA13_CLUT02_GAM] = { { itob(5), itob(14), itob(55), 0 }, 0x1418 },
+    [FILE_AREA13_SND_END_WVD] = { { itob(5), itob(15), itob(14), 0 }, 0x1242C },
+    [FILE_AREA13_D303_GAM] = { { itob(5), itob(14), itob(70), 0 }, 0x9309 },
+    [FILE_AREA14_A000_GAM] = { { itob(5), itob(16), itob(70), 0 }, 0x13C },
+    [FILE_AREA14_A001_GAM] = { { itob(5), itob(16), itob(71), 0 }, 0x3182 },
+    [FILE_AREA14_A002_GAM] = { { itob(5), itob(17), itob(3), 0 }, 0xBF10 },
+    [FILE_AREA14_A003_GAM] = { { itob(5), itob(17), itob(27), 0 }, 0x7D42 },
+    [FILE_AREA14_A004_000] = { { itob(5), itob(17), itob(43), 0 }, 0x2EEA4 },
+    [FILE_AREA14_A005_GAM] = { { itob(5), itob(18), itob(62), 0 }, 0x1384E },
+    [FILE_AREA14_X14_BIN] = { { itob(5), itob(37), itob(26), 0 }, 0x3BA9C },
+    [FILE_AREA14_B000_GAM] = { { itob(5), itob(19), itob(38), 0 }, 0x91F4 },
+    [FILE_AREA14_B001_GAM] = { { itob(5), itob(19), itob(57), 0 }, 0x3974 },
+    [FILE_AREA14_B002_GAM] = { { itob(5), itob(19), itob(65), 0 }, 0x209B },
+    [FILE_AREA14_CLUT01_GAM] = { { itob(5), itob(24), itob(56), 0 }, 0x1642 },
+    [FILE_AREA14_SND0140_WVD] = { { itob(5), itob(27), itob(19), 0 }, 0x30B14 },
+    [FILE_AREA14_D003_GAM] = { { itob(5), itob(25), itob(7), 0 }, 0xEA6C },
+    [FILE_AREA14_B100_GAM] = { { itob(5), itob(19), itob(70), 0 }, 0x6F95 },
+    [FILE_AREA14_B102_GAM] = { { itob(5), itob(20), itob(9), 0 }, 0xC608 },
+    [FILE_AREA14_B103_GAM] = { { itob(5), itob(20), itob(34), 0 }, 0x17B0 },
+    [FILE_AREA14_CLUT02_GAM] = { { itob(5), itob(24), itob(59), 0 }, 0x168F },
+    [FILE_AREA14_SND0141_WVD] = { { itob(5), itob(28), itob(42), 0 }, 0x2C9F4 },
+    [FILE_AREA14_D104_GAM] = { { itob(5), itob(25), itob(37), 0 }, 0x607E },
+    [FILE_AREA14_B200_GAM] = { { itob(5), itob(20), itob(37), 0 }, 0xC69A },
+    [FILE_AREA14_B201_GAM] = { { itob(5), itob(20), itob(62), 0 }, 0x6E43 },
+    [FILE_AREA14_B202_GAM] = { { itob(5), itob(21), itob(1), 0 }, 0x12BC },
+    [FILE_AREA14_CLUT03_GAM] = { { itob(5), itob(24), itob(62), 0 }, 0x16C1 },
+    [FILE_AREA14_SND0142_WVD] = { { itob(5), itob(29), itob(57), 0 }, 0x30014 },
+    [FILE_AREA14_D203_GAM] = { { itob(5), itob(25), itob(50), 0 }, 0x726A },
+    [FILE_AREA14_B300_GAM] = { { itob(5), itob(21), itob(4), 0 }, 0xFEFA },
+    [FILE_AREA14_B301_GAM] = { { itob(5), itob(21), itob(36), 0 }, 0x148FA },
+    [FILE_AREA14_B302_GAM] = { { itob(5), itob(22), itob(3), 0 }, 0x2D76 },
+    [FILE_AREA14_CLUT04_GAM] = { { itob(5), itob(24), itob(65), 0 }, 0x15C7 },
+    [FILE_AREA14_SND0143_WVD] = { { itob(5), itob(31), itob(4), 0 }, 0x2BFD4 },
+    [FILE_AREA14_D303_GAM] = { { itob(5), itob(25), itob(65), 0 }, 0x8DF0 },
+    [FILE_AREA14_B400_GAM] = { { itob(5), itob(22), itob(9), 0 }, 0xB22B },
+    [FILE_AREA14_B401_GAM] = { { itob(5), itob(22), itob(32), 0 }, 0xB32C },
+    [FILE_AREA14_CLUT05_GAM] = { { itob(5), itob(24), itob(68), 0 }, 0x17BC },
+    [FILE_AREA14_SND0144_WVD] = { { itob(5), itob(32), itob(17), 0 }, 0x296D4 },
+    [FILE_AREA14_D403_GAM] = { { itob(5), itob(26), itob(8), 0 }, 0x80DF },
+    [FILE_AREA14_B500_GAM] = { { itob(5), itob(22), itob(55), 0 }, 0xA0C2 },
+    [FILE_AREA14_B501_GAM] = { { itob(5), itob(23), itob(1), 0 }, 0x1116E },
+    [FILE_AREA14_CLUT06_GAM] = { { itob(5), itob(24), itob(71), 0 }, 0x1ACD },
+    [FILE_AREA14_SND0145_WVD] = { { itob(5), itob(33), itob(25), 0 }, 0x2A7D4 },
+    [FILE_AREA14_D502_GAM] = { { itob(5), itob(26), itob(25), 0 }, 0x7CAA },
+    [FILE_AREA14_B600_GAM] = { { itob(5), itob(23), itob(36), 0 }, 0xCD8B },
+    [FILE_AREA14_B601_GAM] = { { itob(5), itob(23), itob(62), 0 }, 0xABFE },
+    [FILE_AREA14_CLUT07_GAM] = { { itob(5), itob(25), itob(0), 0 }, 0x1676 },
+    [FILE_AREA14_SND0146_WVD] = { { itob(5), itob(34), itob(35), 0 }, 0x350E4 },
+    [FILE_AREA14_D602_GAM] = { { itob(5), itob(26), itob(41), 0 }, 0xC30A },
+    [FILE_AREA14_B700_GAM] = { { itob(5), itob(24), itob(9), 0 }, 0xCDB0 },
+    [FILE_AREA14_B701_GAM] = { { itob(5), itob(24), itob(35), 0 }, 0xA7AB },
+    [FILE_AREA14_B_GAM] = { { itob(5), itob(19), itob(27), 0 }, 0x55EC },
+    [FILE_AREA14_CLUT08_GAM] = { { itob(5), itob(25), itob(3), 0 }, 0x19D5 },
+    [FILE_AREA14_SND0147_WVD] = { { itob(5), itob(35), itob(67), 0 }, 0x36344 },
+    [FILE_AREA14_D702_GAM] = { { itob(5), itob(26), itob(66), 0 }, 0xDE52 },
+    [FILE_AREA15_SCR0100_WSS] = { { itob(5), itob(39), itob(35), 0 }, 0xF25 },
+    [FILE_AREA15_0200_WSS] = { { itob(5), itob(39), itob(5), 0 }, 0x4EBC },
+    [FILE_AREA15_0210_WSS] = { { itob(5), itob(39), itob(20), 0 }, 0x1C16 },
+    [FILE_AREA15_0140_WSS] = { { itob(5), itob(39), itob(1), 0 }, 0x1844 },
+    [FILE_AREA15_0130_WSS] = { { itob(5), itob(39), itob(0), 0 }, 0x238 },
+    [FILE_AREA15_0120_WSS] = { { itob(5), itob(38), itob(74), 0 }, 0x381 },
+    [FILE_AREA15_0000_WSS] = { { itob(5), itob(38), itob(72), 0 }, 0x966 },
+    [FILE_AREA15_0220_WSS] = { { itob(5), itob(39), itob(24), 0 }, 0xA4F },
+    [FILE_AREA15_0201_WSS] = { { itob(5), itob(39), itob(15), 0 }, 0x2338 },
+    [FILE_AREA16_A000_GAM] = { { itob(5), itob(39), itob(39), 0 }, 0x13C },
+    [FILE_AREA16_A001_GAM] = { { itob(5), itob(39), itob(40), 0 }, 0x3182 },
+    [FILE_AREA16_A003_GAM] = { { itob(5), itob(39), itob(47), 0 }, 0xD154 },
+    [FILE_AREA16_B300_000] = { { itob(5), itob(39), itob(74), 0 }, 0x20000 },
+    [FILE_AREA16_B301_GAM] = { { itob(5), itob(40), itob(63), 0 }, 0x34B0 },
+    [FILE_AREA16_CLUT04_GAM] = { { itob(5), itob(46), itob(47), 0 }, 0x1210 },
+    [FILE_AREA16_SND0160_WVD] = { { itob(5), itob(53), itob(7), 0 }, 0x2D8C4 },
+    [FILE_AREA16_D303_000] = { { itob(5), itob(46), itob(59), 0 }, 0x2EEA4 },
+    [FILE_AREA16_D304_GAM] = { { itob(5), itob(48), itob(3), 0 }, 0x1DC4 },
+    [FILE_AREA16_D305_GAM] = { { itob(5), itob(48), itob(7), 0 }, 0x2297 },
+    [FILE_AREA16_X16_BIN] = { { itob(5), itob(54), itob(24), 0 }, 0x2EBF4 },
+    [FILE_AREA16_B400_000] = { { itob(5), itob(40), itob(70), 0 }, 0x20000 },
+    [FILE_AREA16_B401_000] = { { itob(5), itob(41), itob(59), 0 }, 0x20000 },
+    [FILE_AREA16_B402_000] = { { itob(5), itob(42), itob(48), 0 }, 0x20000 },
+    [FILE_AREA16_B404_GAM] = { { itob(5), itob(43), itob(37), 0 }, 0x34B0 },
+    [FILE_AREA16_CLUT05_GAM] = { { itob(5), itob(46), itob(50), 0 }, 0x1414 },
+    [FILE_AREA16_D401_000] = { { itob(5), itob(48), itob(12), 0 }, 0x2EEA4 },
+    [FILE_AREA16_D402_GAM] = { { itob(5), itob(49), itob(31), 0 }, 0x38D7 },
+    [FILE_AREA16_B500_000] = { { itob(5), itob(43), itob(44), 0 }, 0x20000 },
+    [FILE_AREA16_B501_000] = { { itob(5), itob(44), itob(33), 0 }, 0x18000 },
+    [FILE_AREA16_B502_GAM] = { { itob(5), itob(45), itob(6), 0 }, 0x41E6 },
+    [FILE_AREA16_B503_GAM] = { { itob(5), itob(45), itob(15), 0 }, 0x9F1 },
+    [FILE_AREA16_CLUT06_GAM] = { { itob(5), itob(46), itob(53), 0 }, 0x1370 },
+    [FILE_AREA16_D504_000] = { { itob(5), itob(49), itob(39), 0 }, 0x2EEA4 },
+    [FILE_AREA16_D505_GAM] = { { itob(5), itob(50), itob(58), 0 }, 0x45A7 },
+    [FILE_AREA16_B600_000] = { { itob(5), itob(45), itob(17), 0 }, 0x20000 },
+    [FILE_AREA16_B601_GAM] = { { itob(5), itob(46), itob(6), 0 }, 0xCC9F },
+    [FILE_AREA16_B602_GAM] = { { itob(5), itob(46), itob(32), 0 }, 0x41E6 },
+    [FILE_AREA16_CLUT07_GAM] = { { itob(5), itob(46), itob(56), 0 }, 0x132E },
+    [FILE_AREA16_D603_000] = { { itob(5), itob(50), itob(67), 0 }, 0x2EEA4 },
+    [FILE_AREA16_D604_GAM] = { { itob(5), itob(52), itob(11), 0 }, 0x4060 },
+    [FILE_AREA17_A000_GAM] = { { itob(5), itob(55), itob(45), 0 }, 0x13C },
+    [FILE_AREA17_A001_GAM] = { { itob(5), itob(55), itob(46), 0 }, 0x34B0 },
+    [FILE_AREA17_A002_GAM] = { { itob(5), itob(55), itob(53), 0 }, 0x3182 },
+    [FILE_AREA17_A003_GAM] = { { itob(5), itob(55), itob(60), 0 }, 0xE23D },
+    [FILE_AREA17_B100_GAM] = { { itob(5), itob(56), itob(14), 0 }, 0x1ADE2 },
+    [FILE_AREA17_CLUT02_GAM] = { { itob(6), itob(1), itob(14), 0 }, 0x1210 },
+    [FILE_AREA17_SND0170_WVD] = { { itob(6), itob(9), itob(24), 0 }, 0x34D34 },
+    [FILE_AREA17_D101_000] = { { itob(6), itob(1), itob(39), 0 }, 0x2EEA4 },
+    [FILE_AREA17_D102_GAM] = { { itob(6), itob(2), itob(58), 0 }, 0x28FD },
+    [FILE_AREA17_D103_GAM] = { { itob(6), itob(2), itob(64), 0 }, 0x16D3 },
+    [FILE_AREA17_X17_BIN] = { { itob(6), itob(10), itob(55), 0 }, 0x2F190 },
+    [FILE_AREA17_B200_GAM] = { { itob(5), itob(56), itob(68), 0 }, 0x2F03F },
+    [FILE_AREA17_B201_GAM] = { { itob(5), itob(58), itob(13), 0 }, 0xCCA5 },
+    [FILE_AREA17_B202_GAM] = { { itob(5), itob(58), itob(39), 0 }, 0x41E6 },
+    [FILE_AREA17_CLUT03_GAM] = { { itob(6), itob(1), itob(17), 0 }, 0x1410 },
+    [FILE_AREA17_D203_000] = { { itob(6), itob(2), itob(67), 0 }, 0x2EEA4 },
+    [FILE_AREA17_D204_GAM] = { { itob(6), itob(4), itob(11), 0 }, 0x28FD },
+    [FILE_AREA17_D205_GAM] = { { itob(6), itob(4), itob(17), 0 }, 0x23F2 },
+    [FILE_AREA17_B300_GAM] = { { itob(5), itob(58), itob(48), 0 }, 0x13E42 },
+    [FILE_AREA17_CLUT04_GAM] = { { itob(6), itob(1), itob(20), 0 }, 0x1210 },
+    [FILE_AREA17_D301_000] = { { itob(6), itob(4), itob(22), 0 }, 0x2EEA4 },
+    [FILE_AREA17_D302_GAM] = { { itob(6), itob(5), itob(41), 0 }, 0x28FD },
+    [FILE_AREA17_D303_GAM] = { { itob(6), itob(5), itob(47), 0 }, 0x2380 },
+    [FILE_AREA17_B400_GAM] = { { itob(5), itob(59), itob(13), 0 }, 0x13E42 },
+    [FILE_AREA17_CLUT05_GAM] = { { itob(6), itob(1), itob(23), 0 }, 0x1210 },
+    [FILE_AREA17_D401_000] = { { itob(6), itob(5), itob(52), 0 }, 0x2EEA4 },
+    [FILE_AREA17_D402_GAM] = { { itob(6), itob(6), itob(71), 0 }, 0x28FD },
+    [FILE_AREA17_D403_GAM] = { { itob(6), itob(7), itob(2), 0 }, 0x2380 },
+    [FILE_AREA17_B500_GAM] = { { itob(5), itob(59), itob(53), 0 }, 0x2491A },
+    [FILE_AREA17_B501_GAM] = { { itob(6), itob(0), itob(52), 0 }, 0xCCA5 },
+    [FILE_AREA17_B502_GAM] = { { itob(6), itob(1), itob(3), 0 }, 0x41E6 },
+    [FILE_AREA17_CLUT06_GAM] = { { itob(6), itob(1), itob(26), 0 }, 0x1410 },
+    [FILE_AREA17_D503_000] = { { itob(6), itob(7), itob(7), 0 }, 0x2EEA4 },
+    [FILE_AREA17_D504_GAM] = { { itob(6), itob(8), itob(26), 0 }, 0x28FD },
+    [FILE_AREA17_D505_GAM] = { { itob(6), itob(8), itob(32), 0 }, 0x23C2 },
+    [FILE_AREA18_A000_GAM] = { { itob(6), itob(12), itob(1), 0 }, 0x13C },
+    [FILE_AREA18_A001_GAM] = { { itob(6), itob(12), itob(2), 0 }, 0x3182 },
+    [FILE_AREA18_A003_GAM] = { { itob(6), itob(12), itob(9), 0 }, 0xF39C },
+    [FILE_AREA18_B100_000] = { { itob(6), itob(12), itob(40), 0 }, 0x8000 },
+    [FILE_AREA18_B101_GAM] = { { itob(6), itob(12), itob(56), 0 }, 0x34B0 },
+    [FILE_AREA18_B102_GAM] = { { itob(6), itob(12), itob(63), 0 }, 0xCC47 },
+    [FILE_AREA18_B103_GAM] = { { itob(6), itob(13), itob(14), 0 }, 0x41E6 },
+    [FILE_AREA18_CLUT02_GAM] = { { itob(6), itob(14), itob(20), 0 }, 0x1335 },
+    [FILE_AREA18_SND0181_WVD] = { { itob(6), itob(17), itob(74), 0 }, 0x32D84 },
+    [FILE_AREA18_D103_000] = { { itob(6), itob(14), itob(26), 0 }, 0x2EEA4 },
+    [FILE_AREA18_D104_GAM] = { { itob(6), itob(15), itob(45), 0 }, 0x73D7 },
+    [FILE_AREA18_X18_BIN] = { { itob(6), itob(20), itob(46), 0 }, 0x2FDA4 },
+    [FILE_AREA18_B200_GAM] = { { itob(6), itob(13), itob(23), 0 }, 0x1C136 },
+    [FILE_AREA18_B201_GAM] = { { itob(6), itob(14), itob(5), 0 }, 0x60CB },
+    [FILE_AREA18_CLUT03_GAM] = { { itob(6), itob(14), itob(23), 0 }, 0x14EE },
+    [FILE_AREA18_SND0182_WVD] = { { itob(6), itob(19), itob(26), 0 }, 0x2F0C4 },
+    [FILE_AREA18_D202_000] = { { itob(6), itob(15), itob(60), 0 }, 0x2EEA4 },
+    [FILE_AREA18_D203_GAM] = { { itob(6), itob(17), itob(4), 0 }, 0x3B77 },
+    [FILE_AREA19_A000_GAM] = { { itob(6), itob(21), itob(69), 0 }, 0x13C },
+    [FILE_AREA19_A003_GAM] = { { itob(6), itob(21), itob(70), 0 }, 0x5A1A },
+    [FILE_AREA19_A004_GAM] = { { itob(6), itob(22), itob(7), 0 }, 0x877 },
+    [FILE_AREA19_B000_GAM] = { { itob(6), itob(22), itob(9), 0 }, 0x12321 },
+    [FILE_AREA19_B001_000] = { { itob(6), itob(22), itob(46), 0 }, 0x30000 },
+    [FILE_AREA19_B002_000] = { { itob(6), itob(23), itob(67), 0 }, 0x20000 },
+    [FILE_AREA19_B003_GAM] = { { itob(6), itob(24), itob(56), 0 }, 0x6210 },
+    [FILE_AREA19_CLUT01_GAM] = { { itob(6), itob(29), itob(69), 0 }, 0x14F2 },
+    [FILE_AREA19_D004_000] = { { itob(6), itob(30), itob(4), 0 }, 0x2C954 },
+    [FILE_AREA19_D005_000] = { { itob(6), itob(31), itob(19), 0 }, 0x4E4FC },
+    [FILE_AREA19_D008_GAM] = { { itob(6), itob(33), itob(26), 0 }, 0x1236E },
+    [FILE_AREA19_INFO_BIN] = { { itob(6), itob(39), itob(37), 0 }, 0xA9B4 },
+    [FILE_AREA19_B100_GAM] = { { itob(6), itob(24), itob(69), 0 }, 0x113B5 },
+    [FILE_AREA19_B101_000] = { { itob(6), itob(25), itob(29), 0 }, 0x20000 },
+    [FILE_AREA19_B102_GAM] = { { itob(6), itob(26), itob(18), 0 }, 0x45B8 },
+    [FILE_AREA19_B103_000] = { { itob(6), itob(26), itob(27), 0 }, 0x8000 },
+    [FILE_AREA19_B104_GAM] = { { itob(6), itob(26), itob(43), 0 }, 0x6210 },
+    [FILE_AREA19_B105_GAM] = { { itob(6), itob(26), itob(56), 0 }, 0x6938 },
+    [FILE_AREA19_CLUT02_GAM] = { { itob(6), itob(29), itob(72), 0 }, 0x180D },
+    [FILE_AREA19_D106_000] = { { itob(6), itob(33), itob(63), 0 }, 0x2C954 },
+    [FILE_AREA19_D107_000] = { { itob(6), itob(35), itob(3), 0 }, 0x2EEA4 },
+    [FILE_AREA19_D108_GAM] = { { itob(6), itob(36), itob(22), 0 }, 0x2DCB },
+    [FILE_AREA19_D109_GAM] = { { itob(6), itob(36), itob(28), 0 }, 0x10570 },
+    [FILE_AREA19_X02_BIN] = { { itob(6), itob(40), itob(46), 0 }, 0x32F74 },
+    [FILE_AREA19_B201_000] = { { itob(6), itob(26), itob(70), 0 }, 0x30000 },
+    [FILE_AREA19_B202_000] = { { itob(6), itob(28), itob(16), 0 }, 0x20000 },
+    [FILE_AREA19_B203_000] = { { itob(6), itob(29), itob(5), 0 }, 0x18000 },
+    [FILE_AREA19_B204_000] = { { itob(6), itob(29), itob(53), 0 }, 0x8000 },
+    [FILE_AREA19_CLUT03_GAM] = { { itob(6), itob(30), itob(1), 0 }, 0x166B },
+    [FILE_AREA19_D205_000] = { { itob(6), itob(36), itob(61), 0 }, 0x16994 },
+    [FILE_AREA19_D206_000] = { { itob(6), itob(37), itob(32), 0 }, 0x3DCFC },
+    [FILE_AREA19_D208_GAM] = { { itob(6), itob(39), itob(6), 0 }, 0xF74F },
+    [FILE_AREA19_INFO2_BIN] = { { itob(6), itob(39), itob(59), 0 }, 0x1EAB4 },
+};
+asm(".globl FILE_LINK_SIZES
+FILE_LINK_SIZES = FILE_LINKS + 4");
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", cdLoadTask);
 #define CD_REQ   (*(u8**)0x1F800288)
@@ -1592,6 +2646,275 @@ FILE_LINK_SIZES = FILE_LINKS + 4");
 #define CD_TAIL  (SPAD->cdQueueTail)
 #define CD_FLAGS (*(s32*)((u8*)CD_HDR + 0x10))
 
+#if REGION == REGION_JP
+extern volatile s32 D_1F800294_Volatile asm("D_1F800294");
+void cdSectorReadyCallback(u_char intr, u_char* result);
+
+void cdLoadTask(void)
+{
+    RECT    rect;
+    u_char  param[40];
+    s32     i;
+    s32     r;
+    s32     base;
+    s32     nhead;
+    u8*     headTop;
+    s32     nbody;
+    s32     tail;
+    s32     head;
+    s32     id;
+    s32     flags;
+    u32     spuAddr;
+    u32     len;
+    u8*     bodyTop;
+    u8*     headCur;
+    u8*     bodyCur;
+    u8*     data;
+    u8*     entry;
+    s16*    hdr;
+    s16     vabId;
+
+    D_8009C8B0 = 0;
+    param[0] = CdlModeSpeed;
+    CURRENT_TASK->state0 = 0;
+    CURRENT_TASK->state1 = 0;
+    while (CdControl(CdlSetmode, param, 0) == 0) {
+    }
+
+    for (;;) {
+        switch ((u16)CURRENT_TASK->state0) {
+        case 0:
+            if (CD_HEAD == CD_TAIL) {
+                break;
+            }
+            CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+            break;
+
+        case 1:
+            entry = (u8*)(CD_QUEUE + CD_TAIL * 2);
+            hdr = *(s16**)entry;
+            id = ((LoadRecord*)hdr)->fileId;
+            CD_REQ = entry;
+            CD_HDR = hdr;
+            if (CdControl(CdlSetloc, (u8*)&FILE_LINKS + (id * 8), 0) == 0) {
+                break;
+            }
+            CdControlF(CdlSeekL, 0);
+            CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+            break;
+
+        case 2:
+            r = CdSync(1, 0);
+            if (r == 2) {
+                flags = CD_FLAGS;
+                CD_NSEC = (u32)(FILE_LINK_SIZES[*CD_HDR * 2] + 0x7FF) >> 11;
+                switch (flags & 0xF) {
+                case LOAD_TYPE_STAGING:
+                case LOAD_TYPE_LZ_TO_RAM:
+                    if (CD_FLAGS & LOAD_TYPE_ALT_BUFFER) {
+                        CD_DST = (u8*)&LOAD_BUFFER_ALT;
+                    } else {
+                        CD_DST = LOAD_BUFFER;
+                    }
+                    break;
+                case LOAD_TYPE_LZ_TO_VRAM:
+                case LOAD_TYPE_RAW:
+                case LOAD_TYPE_RAW_4:
+                    CD_DST = *(u8**)(CD_REQ + 4);
+                    break;
+                }
+                CdReadyCallback((CdlCB)cdSectorReadyCallback);
+                if (CdControlF(CdlReadN, 0) == 0) {
+                    break;
+                }
+                CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+            } else if (r == 5) {
+                CURRENT_TASK->state0 = 1;
+                D_8009C8B0++;
+            }
+            break;
+
+        case 3:
+            if (CD_NSEC > 0) {
+                break;
+            }
+            r = CdSync(1, 0);
+            if (r == 2) {
+                if (CD_NSEC == 0) {
+                    D_8009C8B0 = 0;
+                    CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+                } else {
+                    CURRENT_TASK->state0 = 1;
+                    D_8009C8B0++;
+                }
+            } else if (r == 5) {
+                CURRENT_TASK->state0 = 1;
+                D_8009C8B0++;
+            }
+            break;
+
+        case 4:
+            switch ((u16)CURRENT_TASK->state1) {
+            case 0:
+                switch (CD_FLAGS & 0xF) {
+                case LOAD_TYPE_STAGING:
+                    switch (*((u8*)CD_HDR + 3) & 0xF0) {
+                    case LOAD_KIND_GRPX:
+                        CURRENT_TASK->state1 = 2;
+                        break;
+                    case LOAD_KIND_WVD:
+                        CURRENT_TASK->state1 = 5;
+                        break;
+                    }
+                    break;
+                case LOAD_TYPE_LZ_TO_VRAM:
+                    CURRENT_TASK->state1 = (u16)CURRENT_TASK->state1 + 1;
+                    break;
+                case LOAD_TYPE_RAW:
+                case LOAD_TYPE_RAW_4:
+                    if ((*((u8*)CD_HDR + 3) & 0xF0) != LOAD_KIND_WVD) {
+                        CURRENT_TASK->state1 = 0;
+                        CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+                        break;
+                    }
+                    CURRENT_TASK->state1 = 5;
+                    break;
+                case LOAD_TYPE_LZ_TO_RAM:
+                    CURRENT_TASK->state1 = 4;
+                    break;
+                }
+                break;
+
+            case 1:
+                if (CD_FLAGS & LOAD_TYPE_ALT_BUFFER) {
+                    lzDecompress(*(u8**)(CD_REQ + 4), (u8*)&LOAD_BUFFER_ALT);
+                } else {
+                    lzDecompress(*(u8**)(CD_REQ + 4), LOAD_BUFFER);
+                }
+                CURRENT_TASK->state1 = (u16)CURRENT_TASK->state1 + 1;
+
+            case 2:
+                rect.x = CD_HDR[4];
+                rect.y = CD_HDR[5];
+                setWH(&rect, CD_HDR[6], CD_HDR[7]);
+                if (CD_FLAGS & LOAD_TYPE_ALT_BUFFER) {
+                    LoadImage(&rect, (u_long*)&LOAD_BUFFER_ALT);
+                } else {
+                    LoadImage(&rect, (u_long*)LOAD_BUFFER);
+                }
+                CURRENT_TASK->state1 = (u16)CURRENT_TASK->state1 + 1;
+                break;
+
+            case 3:
+                CURRENT_TASK->state1 = 0;
+                CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+                break;
+
+            case 4:
+                if (CD_FLAGS & LOAD_TYPE_ALT_BUFFER) {
+                    lzDecompress((u8*)&LOAD_BUFFER_ALT, *(u8**)(CD_REQ + 4));
+                } else {
+                    lzDecompress(LOAD_BUFFER, *(u8**)(CD_REQ + 4));
+                }
+                CURRENT_TASK->state1 = 0;
+                CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+                break;
+
+            case 5:
+                data = *(u8**)(CD_REQ + 4);
+                headTop = data + *(s32*)data;
+                i = 0;
+                headCur = headTop;
+                bodyTop = data + *(s32*)(data + 4);
+                bodyCur = bodyTop;
+                base = *((u8*)CD_HDR + 3) & 0xF;
+                nhead = ((u32)*(s32*)headCur >> 2) - 1;
+                nbody = ((u32)*(s32*)bodyTop >> 2) - 1;
+
+                if (nhead > 0) {
+                    do {
+                        vabId = VAB_IDS[base + i];
+                        if (vabId != -1) {
+                            SsVabClose(vabId);
+                        }
+                        i++;
+                    } while (i < nhead);
+                }
+
+                i = 0;
+                if (nhead > 0) {
+                    do {
+                        WVD_HEADERS[base + i] = (s32)(headTop + *(s32*)headCur);
+                        headCur += 4;
+                        i++;
+                    } while (i < nhead);
+                }
+
+                i = 0;
+                if (nbody > 0) {
+                    do {
+                        WVD_BODIES[base + i] = (s32)(bodyTop + *(s32*)bodyCur);
+                        bodyCur += 4;
+                        i++;
+                    } while (i < nbody);
+                }
+
+                spuAddr = SPU_BANK_ADDRS[CD_HDR[7] * 2];
+                i = 0;
+                if (nhead > 0) {
+                    do {
+                        if (i == (nhead - 1)) {
+                            len = (s32)(bodyTop + *(s32*)bodyCur) - WVD_BODIES[base + i];
+                        } else {
+                            len = WVD_BODIES[base + i + 1] - WVD_BODIES[base + i];
+                        }
+                        SpuSetTransferStartAddr(spuAddr);
+                        SpuRead((u_char*)WVD_BODIES[base + i], len);
+                        SpuIsTransferCompleted(1);
+                        VAB_IDS[base + i] = SsVabFakeHead((u_char*)WVD_HEADERS[base + i], -1, spuAddr);
+                        spuAddr += len;
+                        SsVabFakeBody(VAB_IDS[base + i]);
+                        i++;
+                    } while (i < nhead);
+                }
+                CURRENT_TASK->state1 = 0;
+                CURRENT_TASK->state0 = (u16)CURRENT_TASK->state0 + 1;
+                break;
+            }
+            break;
+
+        case 5:
+            tail = (CD_TAIL + 1) & 0x7F;
+            head = CD_HEAD;
+            CD_TAIL = tail;
+            if (head == tail) {
+                LOAD_COMPLETE = 1;
+                exitTask();
+            } else {
+                CURRENT_TASK->state0 = 1;
+            }
+            break;
+        }
+        sleepTask(1);
+    }
+}
+
+void cdSectorReadyCallback(u_char intr, u_char* result)
+{
+    if (intr == CdlDataReady) {
+        CdGetSector(CD_DST, 0x200);
+        CD_NSEC--;
+        CD_DST += 0x800;
+        if (D_1F800294_Volatile != 0) {
+            return;
+        }
+    } else {
+        CD_NSEC = -1;
+    }
+    CdReadyCallback(0);
+    CdControlF(CdlPause, 0);
+}
+#else
 void cdLoadTask(void)
 {
     RECT    rect;
@@ -1843,10 +3166,14 @@ void cdLoadTask(void)
         sleepTask(1);
     }
 }
-
+#endif
 
 int stubCdFunction(void)
 {
+#if REGION == REGION_JP
+    CD_TAIL = 0;
+    CD_HEAD = 0;
+#endif
     return 0;
 }
 
@@ -1861,6 +3188,44 @@ void enqueueCdRead(u8* dst, s16* hdr)
 }
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", loadWssFile);
+#if REGION == REGION_JP
+extern s32* D_800855EC_slps01144[];
+
+s32 readCdFileSync(u8* dst, s16* hdr)
+{
+    RECT rect;
+    u8* loc;
+
+    if (D_801FD8E0 != 0) {
+        return -1;
+    }
+    loc = (u8*)&FILE_LINKS + (*hdr * 8);
+    CD_DST = dst;
+    if (CdControl(CdlSetloc, loc, 0) != 0) {
+        D_1F800294_Volatile = (u32)(FILE_LINK_SIZES[*hdr * 2] + 0x7FF) >> 11;
+        CdRead(D_1F800294_Volatile, (u_long*)CD_DST, CdlModeSpeed);
+    }
+    if (CdReadSync(0, 0) == -1) {
+        return -1;
+    }
+    if ((*((u8*)hdr + 3) & 0xF0) == LOAD_KIND_GRPX) {
+        rect.x = hdr[4];
+        rect.y = hdr[5];
+        setWH(&rect, hdr[6], hdr[7]);
+        LoadImage(&rect, (u_long*)dst);
+    }
+    return FILE_LINK_SIZES[*hdr * 2];
+}
+
+void loadWssFile(int arg1, int arg2)
+{
+    queueLoadList(D_800855EC_slps01144[arg1][arg2]);
+    LOAD_COMPLETE = 0;
+    if (D_801FD8E0 == 0) {
+        openTask(2, &cdLoadTask);
+    }
+}
+#else
 void loadWssFile(int arg1, int arg2)
 {
     queueLoadList((WSS_LOAD_LISTS)[arg2]);
@@ -1889,8 +3254,28 @@ void loadAreaListFile(s32 area)
         }
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", queueAreaSectionLists);
+#if REGION == REGION_JP
+extern s32 D_80085360_slps01144[];
+
+void queueAreaSectionLists(s32 area, s32 section, s32 reloadArea)
+{
+    if (reloadArea == 0) {
+        keyOffSfxAll(1);
+    } else {
+        queueLoadList(D_80085360_slps01144[area]);
+        LOAD_SLOTS[0] = LOAD_NEXT_ADDR;
+    }
+    queueLoadList(D_800855EC_slps01144[area][section]);
+    LOAD_SLOTS[3] = LOAD_NEXT_ADDR;
+    LOAD_COMPLETE = 0;
+    if (D_801FD8E0 == 0) {
+        openTask(2, &cdLoadTask);
+    }
+}
+#else
 void queueAreaSectionLists(s32 area, s32 section, s32 reloadArea)
 {
     AreaLists* lists;
@@ -1906,8 +3291,121 @@ void queueAreaSectionLists(s32 area, s32 section, s32 reloadArea)
     queueLoadList(lists->sectionLists[section]);
     LOAD_SLOTS[3] = LOAD_NEXT_ADDR;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", queueLoadList);
+#if REGION == REGION_JP
+extern s32 D_8007239C_slps01144[];
+
+s32 queueLoadList(e, unused, base)
+LoadRecord *e;
+s32 unused;
+s32 base;
+{
+    s32 pending = 0;
+    s32 saved;
+    u8 t;
+    s32 lo;
+
+    while (e->fileId != -1) {
+        if ((e->kind & 0xf0) == LOAD_KIND_WVD || (e->kind & 0xf0) == LOAD_KIND_SEQ) {
+            switch (e->w) {
+            case 1:
+                if (((u8*)&GAME)[0x963] & 2) {
+                    e++;
+                    continue;
+                }
+                break;
+            case 2:
+                if (!(((u8*)&GAME)[0x963] & 2)) {
+                    e++;
+                    continue;
+                }
+                break;
+            case 3:
+                if (((u8*)&GAME)[0x963] & 4) {
+                    e++;
+                    continue;
+                }
+                break;
+            case 4:
+                if (!(((u8*)&GAME)[0x963] & 4)) {
+                    e++;
+                    continue;
+                }
+                break;
+            }
+        }
+        if ((e->kind & 0xd0) != 0xd0 && e->kind != 0x55 && pending == 1) {
+            base = saved;
+            pending = 0;
+        }
+        if (e->addr != 0) base = e->addr;
+        if (e->slot != 0xff) {
+            if (e->slot < 0x80) LOAD_SLOTS[e->slot] = base;
+            else base = LOAD_SLOTS[e->slot & 0x7f];
+        }
+        if (e->kind == LOAD_KIND_INS) {
+            pending = 1;
+            saved = base;
+            base = (s32)D_800E7388;
+        }
+        CD_QUEUE[D_1F80029C * 2] = (s32)e;
+        CD_QUEUE_DST[D_1F80029C * 2] = base;
+        D_1F80029C = (D_1F80029C + 1) & 0x7f;
+        if ((s32)(e->type & 0xf) < 3) {
+            t = e->kind;
+            lo = t & 0xf;
+            switch (t & 0xf0) {
+            case 0x00: case LOAD_KIND_GRPX: case LOAD_KIND_NONE: break;
+            case LOAD_KIND_SPR: SPR_DATA[lo] = base; break;
+            case LOAD_KIND_FOUR: FOUR_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WMD: WMD_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WPP: WPP_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WHM: WHM_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_APD: APD_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WVD: case LOAD_KIND_UNKA: break;
+            case LOAD_KIND_SEQ: SEQ_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WSS: WSS_DATA_S32Arr[lo] = base; break;
+            case LOAD_KIND_WFM3: WFM3_DATA_S32Arr[lo] = base; break;
+            }
+            if ((e->kind & 0xf0) == LOAD_KIND_WVD) base += D_8007239C_slps01144[e->h * 2];
+            else if ((e->kind & 0xf0) != LOAD_KIND_GRPX) base += e->arg;
+            e++;
+        } else {
+            do {
+                t = e->kind;
+                lo = t & 0xf;
+                switch (t & 0xf0) {
+                case 0x00: case LOAD_KIND_GRPX: case LOAD_KIND_NONE: break;
+                case LOAD_KIND_SPR: SPR_DATA[lo] = base; break;
+                case LOAD_KIND_FOUR: FOUR_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WMD: WMD_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WPP: WPP_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WHM: WHM_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_APD: APD_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WVD: WVD_BODIES[lo] = base; break;
+                case LOAD_KIND_UNKA: WVD_HEADERS[lo] = base; break;
+                case LOAD_KIND_SEQ: SEQ_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WSS: WSS_DATA_S32Arr[lo] = base; break;
+                case LOAD_KIND_WFM3: WFM3_DATA_S32Arr[lo] = base; break;
+                }
+                if ((e->kind & 0xf0) == LOAD_KIND_WVD) base += D_8007239C_slps01144[e->h * 2];
+                else if ((e->kind & 0xf0) != LOAD_KIND_GRPX) base += e->arg;
+                e++;
+            } while (e->type == LOAD_TYPE_SUB);
+        }
+        switch (base & 3) {
+        case 1: base++;
+        case 2: base++;
+        case 3: base++;
+        }
+    }
+    if (pending == 1) LOAD_NEXT_ADDR = saved;
+    else LOAD_NEXT_ADDR = base;
+    return 0;
+}
+#else
 s32 queueLoadList(e, unused, base)
 LoadRecord *e;
 s32 unused;
@@ -1990,8 +3488,10 @@ s32 base;
     else LOAD_NEXT_ADDR = base;
     return 0;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", queueSystemLoadList);
+#if REGION != REGION_JP
 void queueSystemLoadList(s32 id, s32 start)
 {
     if (LOADED_LIST_FILE_SYM != 0) {
@@ -2012,16 +3512,45 @@ void queueSystemLoadList(s32 id, s32 start)
         openTask(2, &cdLoadTask);
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", loadSoundSet);
+#if REGION == REGION_JP
+void loadSoundSet(s32 arg0)
+{
+    queueLoadList(SOUND_SET_LOAD_LISTS[arg0]);
+    LOAD_COMPLETE = 0;
+    if (D_801FD8E0 == 0) {
+        openTask(2, &cdLoadTask);
+    }
+}
+#else
 void loadSoundSet(s32 arg0)
 {
     queueLoadList(SOUND_SET_LOAD_LISTS[arg0]);
     D_1F8002AC = LOAD_NEXT_ADDR;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", func_800223E0);
 
+#if REGION == REGION_JP
+extern volatile u16 D_800A1380_slps01144[];
+extern u16 D_8009F180_slps01144;
+extern volatile u16 D_800A137A_slps01144;
+
+void func_800223E0(void)
+{
+    D_8009C9DC = PAD_PRESSED[0];
+    D_8009C9DE = D_8009C9DA;
+    PAD_PRESSED[0] = D_800A1380_slps01144[0];
+    D_8009C9DA = D_800A1380_slps01144[1];
+    D_1F8001FC = ~D_8009C9DC & PAD_PRESSED[0];
+    D_8009F180_slps01144 = ~D_8009C9DE & D_8009C9DA;
+    SCRATCHPAD.joypadReleased = ~PAD_PRESSED[0] & D_8009C9DC;
+    D_800A137A_slps01144 = ~D_8009C9DA & D_8009C9DE;
+}
+#else
 void func_800223E0(void)
 {
     D_8009C9DC = PAD_PRESSED[0];
@@ -2031,6 +3560,7 @@ void func_800223E0(void)
     SCRATCHPAD.joypadReleased = ~PAD_PRESSED[0] & D_8009C9DC;
     func_80028B34();
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/system/cdfile", updateObjectSideFlag);
 void updateObjectSideFlag(u8* self)
