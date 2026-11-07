@@ -1,0 +1,17 @@
+
+// PAL player motion group; checked against the original regional overlay.
+playerAccelerateUpCapped = 0x8010E5E4; // type:func
+playerStartFall = 0x8010E628; // type:func
+playerGetSpeedTableIndex = 0x8010E918; // type:func
+playerDecelerateIfFlag = 0x8010E97C; // type:func
+playerSpinReleaseSpeedKind = 0x8010F254; // type:func
+playerSetJumpRiseVelocity = 0x8010F328; // type:func
+playerUpdateSpeedFromPad = 0x8010F400; // type:func
+playerSkidDecelerate = 0x8010FE70; // type:func
+playerSlopeSlideAccelerate = 0x801102B4; // type:func
+playerDecelerateSpeedB = 0x80110760; // type:func
+func_80110CAC = 0x80110CAC; // type:func
+playerAccelerateDownhill = 0x80110EEC; // type:func
+playerAttackDecelerate = 0x80110FDC; // type:func
+playerDecelerateSpeed = 0x8011116C; // type:func
+playerStepSuperJump = 0x8010E66C; // type:func

@@ -95,11 +95,13 @@ bios_num = $(word 2,$(subst :, ,$(filter $(notdir $1):%,$(BIOS_FUNCS))))
 # PSY-Q libraries uses ASPSX 2.56 (PSQ 4.0)
 # Archive library code uses GCC 2.6.0.
 # Main-related and psyq code seem to use -G0 instead of -G8
+# The PAL input-speed unit needs the reference compiler's per-unit CSE setting.
+# Do not apply it to other translation units.
 define DL_FlagsSwitch
 	$(eval MASPSX_FLAGS = --aspsx-version=2.56 --expand-div --use-comm-section --run-assembler $(AS_FLAGS))
 
 	$(eval AS_FLAGS := $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
-	$(eval CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -fverbose-asm -quiet)
+	$(eval CC_FLAGS := $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -funsigned-char -gcoff -fverbose-asm -quiet $(if $(findstring /motion_playerUpdateSpeedFromPad.c.,$(1)),-fno-cse-skip-blocks))
 endef
 
 ifeq ($(NON_MATCHING),1)
