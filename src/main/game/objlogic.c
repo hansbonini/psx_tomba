@@ -61,6 +61,9 @@ void func_8003473C(GameObject *obj)
         }
         break;
     case 2:
+#if REGION == REGION_JP
+        D_800A53BC_U16Ptr = (u16 *)D_800114F4_slps01144;
+#endif
         break;
     }
 }
@@ -96,6 +99,9 @@ void func_8003481C(GameObject *obj)
         }
         break;
     case 2:
+#if REGION == REGION_JP
+        D_800A53BC_U16Ptr = (u16 *)D_800114F4_slps01144;
+#endif
         break;
     }
 }
@@ -131,6 +137,9 @@ void func_800348FC(GameObject *obj)
         }
         break;
     case 2:
+#if REGION == REGION_JP
+        D_800A53BC_U16Ptr = (u16 *)D_800114C8_slps01144;
+#endif
         break;
     }
 }
@@ -172,8 +181,6 @@ typedef struct {
     u8 ba4, ba5;
     char pa6[0xac - 0xa6];
     u8 bac;
-    char pad[0xe4 - 0xad];
-    s32 de4;
 } P38_34C14;
 typedef struct {
     u8 b0;
@@ -351,10 +358,12 @@ void func_80034C14(GameObject *obj)
             u16 u;
             s32 m;
             func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
+#if REGION != REGION_JP
             u = SCRATCHPAD.hitFlags;
             m = u >> 5 & 0xf;
             if ((u & 0x3000) == 0 && m < 4 && m != 0)
                 func_800EA35C(obj->h->p.whole, obj->y.p.whole, obj->d->p.whole, (u8)obj->animFrame);
+#endif
             playSFX(5);
             obj->unkA8 = 0x4ff;
         }
@@ -473,6 +482,20 @@ void func_80034C14(GameObject *obj)
             if (D_8009B6A0->angle < -64) {
                 if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7)
                     *(u8 *)obj->child = D_8009B698->b6;
+#if REGION == REGION_JP
+                if (!PADOK() || (*(P38_34C14 *)&PLAYER).bac >= 2 || D_8009BCA7_U8 != 0) {
+                    func_800EEDE0(&PLAYER);
+                    PLAYER_P38_34C14.b9d = 0;
+                    D_8009B6A0->mode = 0;
+                    D_8009B698->b0 = 0;
+                    setObjState(obj, 2, 0, 0);
+                } else {
+                    (*(P38_34C14 *)&PLAYER).b9d = 0;
+                    D_8009B6A0->angle = 0;
+                    obj->unkAA -= 0x40;
+                    obj->step++;
+                }
+#else
                 if (PADOK() && (*(P38_34C14 *)&PLAYER).bac < 2 && D_8009BCA7_U8 == 0) {
                     func_800EBA70((*(u8 *)&D_8009C61A), obj);
                     (*(P38_34C14 *)&PLAYER).b9d = 0;
@@ -485,17 +508,22 @@ void func_80034C14(GameObject *obj)
                     D_8009B698->b0 = 0;
                     setObjState(obj, 2, 0, 0);
                 }
+#endif
             }
         } else if (D_8009B6A0->angle > 64) {
             if (PLAYER_P38_34C14.b9e == 4 || PLAYER_P38_34C14.b9e == 7)
                 *(u8 *)obj->child = D_8009B698->b6;
             if (!PADOK() || (*(P38_34C14 *)&PLAYER).bac >= 2 || D_8009BCA7_U8 != 0) {
+#if REGION != REGION_JP
                 PLAYER_P38_34C14.b9d = 0;
                 D_8009B6A0->mode = 0;
                 D_8009B698->b0 = 0;
+#endif
                 setObjState(obj, 2, 0, 0);
             } else {
+#if REGION != REGION_JP
                 func_800EBA70((*(u8 *)&D_8009C61A), obj);
+#endif
                 (*(P38_34C14 *)&PLAYER).b9d = 0;
                 D_8009B6A0->angle = 0;
                 obj->unkAA += 0x40;
@@ -510,7 +538,9 @@ void func_80034C14(GameObject *obj)
         func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
         if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
+#if REGION != REGION_JP
             func_80028A74(0, 0, 0xc0, 2);
+#endif
             playSFX(3);
         }
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, D_8009B698->w22 >> 2 & 3);
@@ -547,7 +577,9 @@ void func_80034C14(GameObject *obj)
         func_800348FC(obj);
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, 0);
         if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
+#if REGION != REGION_JP
             func_80028A74(0, 0, 0xff, 2);
+#endif
             playSFXWithNote(3, 6);
         }
         advanceAnimFrame((GameObject *)&PLAYER_P38_34C14, D_8009B698->w22 / 3 & 3);
@@ -579,7 +611,7 @@ void func_80034C14(GameObject *obj)
     }
     if ((*(P38_34C14 *)&PLAYER).bac >= 2) {
         char pad[16];
-        D_8009C650 = (*(P38_34C14 *)&PLAYER).de4;
+        D_8009C650 = D_800A547C;
         D_8009B698->b8 = 0;
         (*(P38_34C14 *)&PLAYER).step = 14;
         (*(P38_34C14 *)&PLAYER).ba5 = 0;
@@ -813,10 +845,12 @@ s32 func_80036A8C(GameObject *obj)
     applyObjectSpeedXY(obj);
     if (obj->active == 1 && probeCollisionAtDepthB(obj, obj->h->p.whole, obj->y.p.whole) != 0) {
         func_800224FC(1, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
+#if REGION != REGION_JP
         u = SCRATCHPAD.hitFlags;
         m = u >> 5 & 0xf;
         if ((u & 0x3000) == 0 && m < 4 && m != 0)
             func_800EA35C(obj->h->p.whole, obj->y.p.whole, obj->d->p.whole, (u8)obj->animFrame);
+#endif
         playSFX(5);
         obj->unkA8 = 0x4ff;
     }
@@ -1025,6 +1059,13 @@ static __inline__ s16 dir_36F98(GameObject *obj)
 }
 #define DIR dir_36F98
 
+#if REGION == REGION_JP
+#define STEP_END(n) \
+    { func_800EF1C8_slps01144(n, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole); break; }
+#else
+#define STEP_END(n) break
+#endif
+
 static __inline__ s16 near_36F98(GameObject *obj, s32 d, s32 w)
 {
     if ((u16)(PLAYER.obj.h->p.whole - obj->h->p.whole + d) > w) return 0;
@@ -1125,8 +1166,10 @@ void func_80036F98(GameObject *obj)
         obj->step++;
         obj->unkAA += 0x80;
         D_8009B698_P_36F98Ptr->w2e = 0xffff;
+#if REGION != REGION_JP
         func_800EBA70(D_8009C61A[0], obj);
-        break;
+#endif
+        STEP_END(0);
     case 1:
         SPIN(obj);
         obj->rotX = 0x100;
@@ -1148,7 +1191,7 @@ void func_80036F98(GameObject *obj)
             s32 y = (s16)obj->unkAA, x = D_8007D60A[k + 1] + 0xc0;
             if (x < y) func_80036C88(obj);
         }
-        break;
+        STEP_END(0);
     case 2:
         if (obj->unk7A > 0 && --obj->unk7A <= 0) obj->active = 1;
         SPIN(obj);
@@ -1184,15 +1227,16 @@ void func_80036F98(GameObject *obj)
             }
             obj->step = g ? 3 : 2;
         }
-        if (((s16 (*)(GameObject *))func_80036A8C)(obj) == 0) break;
-        if (obj->animFrame & 1)
-            obj->unkAA = (obj->unkAA - 0x40) & 0xff;
-        else
-            obj->unkAA = (obj->unkAA + 0x40) & 0xff;
-        obj->step = 4;
-        obj->timer = 0;
-        D_8009B698_P_36F98Ptr->w2e = 0xff;
-        break;
+        if (((s16 (*)(GameObject *))func_80036A8C)(obj) != 0) {
+            if (obj->animFrame & 1)
+                obj->unkAA = (obj->unkAA - 0x40) & 0xff;
+            else
+                obj->unkAA = (obj->unkAA + 0x40) & 0xff;
+            obj->step = 4;
+            obj->timer = 0;
+            D_8009B698_P_36F98Ptr->w2e = 0xff;
+        }
+        STEP_END(0);
     case 3:
         if (obj->unk7A > 0 && --obj->unk7A <= 0) obj->active = 1;
         SPIN(obj);
@@ -1228,15 +1272,16 @@ void func_80036F98(GameObject *obj)
             }
             obj->step = g ? 3 : 2;
         }
-        if (((s16 (*)(GameObject *))func_80036A8C)(obj) == 0) break;
-        if (obj->animFrame & 1)
-            obj->unkAA = (obj->unkAA + 0x40) & 0xff;
-        else
-            obj->unkAA = (obj->unkAA - 0x40) & 0xff;
-        obj->step = 4;
-        obj->timer = 0;
-        D_8009B698_P_36F98Ptr->w2e = 0xff;
-        break;
+        if (((s16 (*)(GameObject *))func_80036A8C)(obj) != 0) {
+            if (obj->animFrame & 1)
+                obj->unkAA = (obj->unkAA + 0x40) & 0xff;
+            else
+                obj->unkAA = (obj->unkAA - 0x40) & 0xff;
+            obj->step = 4;
+            obj->timer = 0;
+            D_8009B698_P_36F98Ptr->w2e = 0xff;
+        }
+        STEP_END(0);
     case 4:
         SPIN(obj);
         obj->rotX = (obj->rotX - 0x80) & 0xfff;
@@ -1258,7 +1303,7 @@ void func_80036F98(GameObject *obj)
             obj->unkA8 = 0x1a00;
             obj->step = 6;
         }
-        break;
+        STEP_END(1);
     case 6:
         obj->unkAA = DIR(obj);
         SPIN(obj);
@@ -1282,14 +1327,18 @@ void func_80036F98(GameObject *obj)
                 obj->objectIndex = 0;
             }
             if ((PAD_PRESSED[0] & (*(u16 *)&SCRATCHPAD.buttonAttack)) == 0 || D_800A539C != 1 || D_800A543C != 0 ||
+#if REGION == REGION_JP
+                D_800A5444_U8 >= 2 || D_800A545E != 0 || D_8009BCA7 != 0 || m >= 4) {
+#else
                 D_800A5444_U8 >= 2 || D_800A545E != 0 || D_8009BCA7 != 0 || m >= 4 ||
                 (u8)(D_8009BCF8 - 1) < 2 || D_800A545F != 0) {
+#endif
                 setObjState(obj, 2, 0, 0);
             } else {
                 func_80036DF8(obj);
             }
         }
-        break;
+        STEP_END(0);
     case 7:
         SPIN(obj);
         obj->rotZ = 0;
@@ -1298,7 +1347,9 @@ void func_80036F98(GameObject *obj)
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
         if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
+#if REGION != REGION_JP
             func_80028A74(0, 0, 0xc0, 2);
+#endif
             playSFX(3);
         }
         advanceAnimFrame(&PLAYER.obj, (D_8009B698_P_36F98Ptr->w22 >> 2) & 3);
@@ -1338,7 +1389,9 @@ void func_80036F98(GameObject *obj)
         func_800348FC(obj);
         advanceAnimFrame(&PLAYER.obj, 0);
         if ((SCRATCHPAD.activeFrameCount & 0xf) == 0) {
+#if REGION != REGION_JP
             func_80028A74(0, 0, 0xff, 2);
+#endif
             playSFXWithNote(3, 6);
         }
         advanceAnimFrame(&PLAYER.obj, (D_8009B698_P_36F98Ptr->w22 / 3) & 3);
@@ -1376,6 +1429,7 @@ void func_80036F98(GameObject *obj)
 }
 #undef DIR
 #undef SPIN
+#undef STEP_END
 #undef IDX
 
 // INCLUDE_ASM("nonmatchings/main/game/objlogic", func_80038358);

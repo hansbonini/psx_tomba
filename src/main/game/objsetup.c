@@ -22,7 +22,11 @@ void updateGrabSnout(GameObject *obj)
         obj->spriteBank = D_1F8002D8[0];
         obj->localX = SCRATCHPAD.cameraTarget.x.p.whole << 16;
         obj->y.p.whole = D_1F80016E_U16Arr[0];
+#if REGION == REGION_JP
+        obj->z.p.whole = D_1F800172[0];
+#else
         obj->d->p.whole = D_1F800172[0];
+#endif
         obj->velV = -0xc00;
         obj->timer = 1;
         obj->unkB4 = 0x80;
@@ -95,6 +99,15 @@ void updateEventCube(GameObject *obj)
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031C90);
+#if REGION == REGION_JP
+void initPoolType31(GameObject *obj);
+
+static inline void setupPoolType31(GameObject *obj)
+{
+    obj->state = 1;
+    initPoolType31(obj);
+}
+#else
 static inline void setupPoolType31(GameObject *obj)
 {
     obj->state = 1;
@@ -111,6 +124,7 @@ static inline void setupPoolType31(GameObject *obj)
     obj->anim = *(void **)D_80012364;
     readAnimFrameCount(obj);
 }
+#endif
 
 void func_80031C90(GameObject *obj)
 {
@@ -158,6 +172,113 @@ void func_80031C90(GameObject *obj)
         break;
     }
 }
+
+#if REGION == REGION_JP
+extern u16 D_8009F180_slps01144;
+extern char D_800A3D68_slps01144[];
+extern char D_80010618_slps01144[];
+extern char D_80010624_slps01144[];
+extern char D_80010634_slps01144[];
+extern char D_80010644_slps01144[];
+extern char D_80010658_slps01144[];
+extern char D_80010664_slps01144[];
+extern char D_80010670_slps01144[];
+extern GameObject D_800A6098_slps01144;
+
+
+void func_8002F994(GameObject *obj)
+{
+    s16 result;
+
+    switch (obj->state) {
+    case 0:
+        obj->state++;
+        obj->active = 2;
+        obj->type = 0x15;
+        *(s8 *)&obj->priority = -0x12;
+        obj->tpage = 0x14;
+        obj->animFrame = 0;
+        obj->drawType = 0;
+        obj->otMode = 0;
+        obj->drawFlags = 1;
+        obj->clut = ((obj->param + 0x1FC) << 6) | 0x17;
+        obj->spriteBank = D_1F8002D8[0];
+        obj->anim = *(void **)D_80012364;
+        readAnimFrameCount(obj);
+        break;
+    case 1:
+        cullAndQueueDraw(obj);
+        if (D_8009F180_slps01144 & 0x80) {
+            obj->subState = 1 - obj->subState;
+        }
+        if (obj->subState == 0 || obj->subState != 1) {
+            break;
+        }
+        if (D_1F8001FC & 0x80) {
+            obj->animFrame = 1 - obj->animFrame;
+        }
+        if (PAD_PRESSED[0] & 0x2000) {
+            obj->h->p.whole++;
+        } else if (PAD_PRESSED[0] & 0x8000) {
+            obj->h->p.whole--;
+        }
+        if (PAD_PRESSED[0] & 0x1000) {
+            obj->y.p.whole--;
+        } else if (PAD_PRESSED[0] & 0x4000) {
+            obj->y.p.whole++;
+        }
+        if (PAD_PRESSED[0] & 0x20) {
+            result = func_800450FC((u8*)obj, obj->h->p.whole, obj->y.p.whole);
+            if (result != 0) {
+                sprintf(D_800A3D68_slps01144, D_80010618_slps01144, result);
+                fontDebugPrintf(8, 0x80, 0, D_800A3D68_slps01144);
+                sprintf(D_800A3D68_slps01144, D_80010624_slps01144, obj->h->p.whole);
+                fontDebugPrintf(8, 0x88, 0, D_800A3D68_slps01144);
+                sprintf(D_800A3D68_slps01144, D_80010634_slps01144, obj->y.p.whole);
+                fontDebugPrintf(8, 0x90, 0, D_800A3D68_slps01144);
+            } else {
+                fontDebugPrintf(8, 0x88, 0, D_80010644_slps01144);
+            }
+        }
+        if (PAD_PRESSED[0] & 0x40) {
+            sprintf(D_800A3D68_slps01144, D_80010658_slps01144, obj->h->p.whole);
+            fontDebugPrintf(8, 0xA0, 0, D_800A3D68_slps01144);
+            sprintf(D_800A3D68_slps01144, D_80010664_slps01144, obj->y.p.whole);
+            fontDebugPrintf(8, 0xA8, 0, D_800A3D68_slps01144);
+            sprintf(D_800A3D68_slps01144, D_80010670_slps01144, obj->animFrame);
+            fontDebugPrintf(8, 0xB0, 0, D_800A3D68_slps01144);
+        }
+        D_8009BC98.unk0F = 1;
+        D_8009BC98.unk0E = 1;
+        D_800A6098_slps01144.id = 3;
+        *(s32 *)0x1F800190 = obj->y.raw;
+        *(s32 *)0x1F80018C = obj->h->raw;
+        break;
+    case 2:
+        break;
+    case 3:
+        freeEffectObject(obj);
+        break;
+    }
+}
+
+void initPoolType31(GameObject *obj)
+{
+    obj->active = 1;
+    obj->type = 0x31;
+    obj->animFrame = 1;
+    obj->drawType = DRAW_SPRITE;
+    obj->otMode = OT_MODE_DEPTH;
+    obj->priority = 0;
+    obj->tpage = 0x14;
+    obj->drawFlags = 1;
+    obj->clut = ((obj->param + 0x1FC) << 6) | 0x17;
+    obj->spriteBank = D_1F8002D8[0];
+    obj->anim = *(void **)D_80012364;
+    readAnimFrameCount(obj);
+}
+
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80031F00);
 
@@ -306,6 +427,11 @@ void func_800322A4(char a, s32 x, s32 y, s32 z)
 
 void func_80032374(u8 *o)
 {
+#if REGION == REGION_JP
+    *(u16 *)(o + 0x1e) = D_8007D2E8[o[3]].tpage;
+    *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[o[3]].sprite];
+    *(s32 *)(o + 0x24) = D_8007D2E8[o[3]].anims[o[0xc]];
+#else
     if (o[3] != 9) {
         *(u16 *)(o + 0x1e) = D_8007D2E8[o[3]].tpage;
         *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[o[3]].sprite];
@@ -315,6 +441,7 @@ void func_80032374(u8 *o)
         *(s32 *)(o + 0x3c) = SPR_DATA[D_8007D2E8[0].sprite];
         *(s32 *)(o + 0x24) = *D_8007D2E8[0].anims;
     }
+#endif
     readAnimFrameCount(o);
     o[0xa] = 0xd;
     o[0xd] = 0x80;
@@ -374,8 +501,10 @@ void func_800325C0(GameObject *obj)
     default:
         return;
     }
+#if REGION != REGION_JP
     if (obj->param == 0 && (SCRATCHPAD.activeFrameCount & 3) == 0)
         func_80028A74(0, 0, 0xff, 2);
+#endif
     tickAnimation(obj);
     obj->timer = obj->timer - 1;
     obj->visible = D_800A5399;
@@ -423,6 +552,7 @@ L:
     obj->priority = b;
 }
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_800327D8);
 
 void func_800327D8(GameObject *obj)
@@ -462,6 +592,7 @@ void func_800327D8(GameObject *obj)
     obj->d->p.whole = ((s16 **)&D_800A53DC)[0][1];
     obj->priority = PLAYER.obj.priority - 1;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/objsetup", func_80032934);
 typedef struct { void **tab; s32 a; s32 b; } AT_32934;
@@ -505,8 +636,10 @@ void func_80032934(GameObject *obj)
         obj->timer = 0xb4;
         obj->step++;
     case 1:
+#if REGION != REGION_JP
         if (obj->param == 0 && (SCRATCHPAD.activeFrameCount & 3) == 0)
             func_80028A74(0, 0, 0xff, 2);
+#endif
         obj->timer--;
         obj->visible = PLAYER.obj.visible;
         if (obj->timer >= 0x3d) {

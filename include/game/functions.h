@@ -128,6 +128,9 @@ void func_800EBA70();
 extern void func_800EBDD8(o);
 void func_800EEDE0();
 void func_800EEF64();
+#if REGION == REGION_JP
+void func_800EF1C8_slps01144(s32, s32, s32, s32);
+#endif
 void func_80110DA0();
 extern void func_80112AA4(o);
 extern void func_80116308(GameObject *);

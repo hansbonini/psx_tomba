@@ -171,7 +171,9 @@ typedef struct scratchpad {
     /* 0x1A5 */ u8 debugNoAreaUpdate;
     /* 0x1A6 */ u8 pad1A6[0x5];
     /* 0x1AB */ u8 debugGiveItems;
-    /* 0x1AC */ u8 pad1AC[0x7];
+    /* 0x1AC */ u8 pad1AC[0x2];
+    /* 0x1AE */ u8 unk1AE;
+    /* 0x1AF */ u8 pad1AF[0x4];
     /* 0x1B3 */ u8 debugKeepInventory;
     /* 0x1B4 */ u_char debug_mode_enabled;
     /* 0x1B5 */ u8 pad1B5[0x3];

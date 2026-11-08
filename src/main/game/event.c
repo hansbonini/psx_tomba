@@ -2,6 +2,7 @@
 #include "game.h"
 
 
+#if REGION != REGION_JP
 u8 D_80077428[0xC8] = {
     [EVENT_GRANDPASBRACELET]                           = 0x02,
     [EVENT_THE100YEAROLDWISEMAN]                       = 0x03,
@@ -204,11 +205,323 @@ u8 D_80077428[0xC8] = {
     [EVENT_UNKNOWN69]                                  = 0xFF,
     [EVENT_UNKNOWN70]                                  = 0xFF,
 };
+#endif
 
 s16 D_800774F0[4] = { 0, 0xB4, 0, 0 };
 
 u16 D_800774F8[8] = { 0, 1, 2, 3, 4, 5, 6, 0 };
 
+#if REGION == REGION_JP
+s8 D_80071908_slps01144[7][4] = {
+    { 0, -5, -2, -128 },
+    { 0, -3, -2, -127 },
+    { 0, -1, -2, -126 },
+    { 0, 1, -2, -125 },
+    { 0, 3, -2, -124 },
+    { 0, 5, -2, -123 },
+    { -1, 0, 0, 0 },
+};
+
+s8 D_80071924_slps01144[8][4] = {
+    { 0, -6, -2, -122 },
+    { 0, -4, -2, -128 },
+    { 0, -2, -2, -127 },
+    { 0, 0, -2, -126 },
+    { 0, 2, -2, -125 },
+    { 0, 4, -2, -124 },
+    { 0, 6, -2, -123 },
+    { -1, 0, 0, 0 },
+};
+
+s8 D_80071944_slps01144[9][4] = {
+    { 0, -7, -2, -122 },
+    { 0, -5, -2, -128 },
+    { 0, -3, -2, -127 },
+    { 0, -1, -2, -126 },
+    { 0, 1, -2, -125 },
+    { 0, 3, -2, -124 },
+    { 0, 5, -2, -123 },
+    { 0, 7, -2, -122 },
+    { -1, 0, 0, 0 },
+};
+
+s8 D_80071968_slps01144[10][4] = {
+    { 0, -8, -2, -122 },
+    { 0, -6, -2, -122 },
+    { 0, -4, -2, -128 },
+    { 0, -2, -2, -127 },
+    { 0, 0, -2, -126 },
+    { 0, 2, -2, -125 },
+    { 0, 4, -2, -124 },
+    { 0, 6, -2, -123 },
+    { 0, 8, -2, -122 },
+    { -1, 0, 0, 0 },
+};
+
+s8 D_80071990_slps01144[11][4] = {
+    { 0, -9, -2, -122 },
+    { 0, -7, -2, -122 },
+    { 0, -5, -2, -128 },
+    { 0, -3, -2, -127 },
+    { 0, -1, -2, -126 },
+    { 0, 1, -2, -125 },
+    { 0, 3, -2, -124 },
+    { 0, 5, -2, -123 },
+    { 0, 7, -2, -122 },
+    { 0, 9, -2, -122 },
+    { -1, 0, 0, 0 },
+};
+
+s8 D_800719BC_slps01144[12][4] = {
+    { 0, -10, -2, -122 },
+    { 0, -8, -2, -122 },
+    { 0, -6, -2, -122 },
+    { 0, -4, -2, -128 },
+    { 0, -2, -2, -127 },
+    { 0, 0, -2, -126 },
+    { 0, 2, -2, -125 },
+    { 0, 4, -2, -124 },
+    { 0, 6, -2, -123 },
+    { 0, 8, -2, -122 },
+    { 0, 10, -2, -122 },
+    { -1, 0, 0, 0 },
+};
+
+s8 D_800719EC_slps01144[13][4] = {
+    { 0, -11, -2, -122 },
+    { 0, -9, -2, -122 },
+    { 0, -7, -2, -122 },
+    { 0, -5, -2, -128 },
+    { 0, -3, -2, -127 },
+    { 0, -1, -2, -126 },
+    { 0, 1, -2, -125 },
+    { 0, 3, -2, -124 },
+    { 0, 5, -2, -123 },
+    { 0, 7, -2, -122 },
+    { 0, 9, -2, -122 },
+    { 0, 11, -2, -122 },
+    { -1, 0, 0, 0 },
+};
+
+s8* D_80071A20_slps01144[13] = {
+    (s8*)D_80071908_slps01144, (s8*)D_80071908_slps01144, (s8*)D_80071908_slps01144, (s8*)D_80071908_slps01144,
+    (s8*)D_80071908_slps01144, (s8*)D_80071908_slps01144, (s8*)D_80071908_slps01144, (s8*)D_80071924_slps01144,
+    (s8*)D_80071944_slps01144, (s8*)D_80071968_slps01144, (s8*)D_80071990_slps01144, (s8*)D_800719BC_slps01144,
+    (s8*)D_800719EC_slps01144,
+};
+
+u8 D_80071A54_slps01144[0xC8] = {
+    [EVENT_GRANDPASBRACELET]                           = 8,
+    [EVENT_THE100YEAROLDWISEMAN]                       = 11,
+    [EVENT_CLEARTHEFOG]                                = 7,
+    [EVENT_TAKEMEHOME]                                 = 8,
+    [EVENT_MOTOCROSSCOURSE]                            = 8,
+    [EVENT_WHOAREYOU]                                  = 7,
+    [EVENT_ALARGEPUDDLE]                               = 8,
+    [EVENT_HIDEANDGOSEEK]                              = 7,
+    [EVENT_ICANTSWIM]                                  = 8,
+    [EVENT_INSIDETHEKOKKAEGGS]                         = 9,
+    [EVENT_TALEOFTHEEVILPIGS]                          = 8,
+    [EVENT_THE1000YEAROLDMAN]                          = 9,
+    [EVENT_DWARFELDER]                                 = 7,
+    [EVENT_BEGINNERSDWARFLANGUAGE]                     = 10,
+    [EVENT_ALOSTCHILD]                                 = 8,
+    [EVENT_FLOWERSEEDS]                                = 6,
+    [EVENT_THEAPBOX]                                   = 6,
+    [EVENT_SAVETHEDWARVES]                             = 7,
+    [EVENT_TEACHINGOFTHEDWARVES]                       = 7,
+    [EVENT_LOSTANDFOUND]                               = 7,
+    [EVENT_STOPTHEFIGHT]                               = 7,
+    [EVENT_THEGREATESCAPE]                             = 10,
+    [EVENT_LOOKANDSEE]                                 = 9,
+    [EVENT_AMANSBESTFRIEND]                            = 7,
+    [EVENT_WHATISTHIS]                                 = 8,
+    [EVENT_TREASURESFROMTHEMANSION]                    = 7,
+    [EVENT_TOPHOENIXMOUNTAIN]                          = 6,
+    [EVENT_THEBROKENFOUNTAIN]                          = 9,
+    [EVENT_AFAMILIARLOOKINGMANSION]                    = 8,
+    [EVENT_ASTORMYPIGBAG]                              = 6,
+    [EVENT_PHOENIXMOUNTAIN]                            = 6,
+    [EVENT_WHEREDIDICOMEFROM]                          = 8,
+    [EVENT_MINIATUREMAKINGTRUMPETS]                    = 8,
+    [EVENT_THEFAMOUSDIGGER]                            = 10,
+    [EVENT_LAVACAVES]                                  = 8,
+    [EVENT_THEMASTEOFSKIES]                            = 6,
+    [EVENT_WHATSAFUNGA]                                = 7,
+    [EVENT_MONSTERHUNT]                                = 9,
+    [EVENT_DEATHFRUITJUICE]                            = 8,
+    [EVENT_PLANTAFLOWERGARDEN]                         = 8,
+    [EVENT_TEARSFROMAFLOWER]                           = 7,
+    [EVENT_SMILE]                                      = 6,
+    [EVENT_CRYBABY]                                    = 6,
+    [EVENT_CANTSTOPCRYING]                             = 7,
+    [EVENT_THEREDFORTUNETELLER]                        = 5,
+    [EVENT_APSLOTMACHINE]                              = 10,
+    [EVENT_WHERESTHEBABYMOUSE]                         = 8,
+    [EVENT_SOMECHEESEPLEASE]                           = 11,
+    [EVENT_APOINTSHOW]                                 = 6,
+    [EVENT_ADRINKFORGOWNUPS]                           = 6,
+    [EVENT_ROADTOBACCUSLAKE]                           = 6,
+    [EVENT_ASMALLKEYHOLE]                              = 9,
+    [EVENT_ABABYSBRIDGE]                               = 11,
+    [EVENT_THEMOUSEPIGBAG]                             = 10,
+    [EVENT_THEHAUNTEDMANSION]                          = 8,
+    [EVENT_ALARGEKEYHOLE]                              = 7,
+    [EVENT_PAINTINGOFABIGKEY]                          = 8,
+    [EVENT_BREAKTHEMAGICEGG]                           = 10,
+    [EVENT_REDHIDDENPOWERS]                            = 6,
+    [EVENT_THEELDERREQUEST]                            = 9,
+    [EVENT_LETSLEARNWORDS2]                            = 11,
+    [EVENT_JUNGLEOFTHEMASAKARITRIBE]                   = 9,
+    [EVENT_TREEOFKNOWLEDGEKNOWS]                       = 11,
+    [EVENT_THEPUMPROCKS]                               = 7,
+    [EVENT_AREFRESHINGDRINK]                           = 7,
+    [EVENT_INEEDATEARBOTTLE]                           = 11,
+    [EVENT_THESTOLENPICTUREBOOKOFTHEISLAND]            = 6,
+    [EVENT_DECIPHERSCRIBBLEINSLAND]                    = 8,
+    [EVENT_SECRETOFTHEISLAND1]                         = 6,
+    [EVENT_SECRETOFTHEISLAND2]                         = 6,
+    [EVENT_SECRETOFTHEISLAND3]                         = 6,
+    [EVENT_SECRETOFTHEISLAND4]                         = 6,
+    [EVENT_SECRETOFTHEISLAND5]                         = 6,
+    [EVENT_WENEEDPOWER]                                = 10,
+    [EVENT_CATCHTHEELECTRICITY]                        = 11,
+    [EVENT_ANINCIDENTFINDTHECULPRIT]                   = 6,
+    [EVENT_WONDERSOFTHEBLACKWATER]                     = 7,
+    [EVENT_THECIVILIZATIONMACHINE]                     = 6,
+    [EVENT_FINDCHARLES]                                = 7,
+    [EVENT_WHATSUNDERTHEFOREST]                        = 11,
+    [EVENT_THE100FLOWERFOREST]                         = 6,
+    [EVENT_THEBOSSTREASURE]                            = 9,
+    [EVENT_IMSOHUNGRY]                                 = 8,
+    [EVENT_THERUSTYSTEELCAR]                           = 7,
+    [EVENT_UNKNOWN21]                                  = 6,
+    [EVENT_THEDEEPJUNGLEPIG]                           = 6,
+    [EVENT_HEALINGHERBSFORBARON]                       = 10,
+    [EVENT_DELICIOUSKNOWLEDGEFRUIT]                    = 10,
+    [EVENT_SEAWEEDFORYOURHEALTH]                       = 8,
+    [EVENT_UNKNOWN22]                                  = 6,
+    [EVENT_BLUEHIDDENPOWERS]                           = 9,
+    [EVENT_THEPIGSVILLAGE]                             = 6,
+    [EVENT_THEHOUSEWITHWHITESMOKE]                     = 6,
+    [EVENT_LETSLEARNWORDS3]                            = 6,
+    [EVENT_LETSGETALONG]                               = 7,
+    [EVENT_ABROKENBRIDGE]                              = 7,
+    [EVENT_THEGREATBOULDERINTHEVILLAGEOFTHETREEPEOPLE] = 6,
+    [EVENT_WHATTIMEISIT]                               = 7,
+    [EVENT_UNKNOWN30]                                  = 8,
+    [EVENT_THEUNBREAKABLEGEAR]                         = 8,
+    [EVENT_ABIGKEYHOLE]                                = 6,
+    [EVENT_HOWAREWEGOINDTOKAEIT]                       = 6,
+    [EVENT_BREAKTHERUSTYDOOR]                          = 11,
+    [EVENT_THECUTEWITCH]                               = 10,
+    [EVENT_FOODFORFUEL]                                = 8,
+    [EVENT_INEEDABOMB]                                 = 8,
+    [EVENT_UNKNOWN34]                                  = 6,
+    [EVENT_UNKNOWN35]                                  = 6,
+    [EVENT_UNKNOWN36]                                  = 6,
+    [EVENT_THEPIGGLASSESINTHEPIGVILLAGE]               = 6,
+    [EVENT_UNKNOWN38]                                  = 6,
+    [EVENT_BACCUSVILLAGE]                              = 6,
+    [EVENT_THEMERMAIDNECKLACE]                         = 6,
+    [EVENT_BARONSSTRENGTH]                             = 7,
+    [EVENT_WHATTHEWITCHLOST]                           = 6,
+    [EVENT_ASAFEMUSHROOM]                              = 7,
+    [EVENT_POWERUPFORTOOLS]                            = 9,
+    [EVENT_UNKNOWN39]                                  = 6,
+    [EVENT_THE10000YEAROLDMAN]                         = 9,
+    [EVENT_MIGHTYFISHFOOD]                             = 8,
+    [EVENT_LETSMAKECANDY]                              = 9,
+    [EVENT_THEMERMAIDSINGINGROCK]                      = 6,
+    [EVENT_THEPIRATESTREASURE]                         = 6,
+    [EVENT_THEUNDERWATERPIG]                           = 6,
+    [EVENT_TRICKVILLAGE]                               = 6,
+    [EVENT_THETHIEFSDOOR]                              = 6,
+    [EVENT_THE10MATHBEADS]                             = 8,
+    [EVENT_THE5GOLDENITEMS]                            = 9,
+    [EVENT_UNBREAKABLEWIRE]                            = 7,
+    [EVENT_GREENHIDDENPOWERS]                          = 9,
+    [EVENT_UNKNOWN41]                                  = 6,
+    [EVENT_UNKNOWN42]                                  = 6,
+    [EVENT_TAKETWOOFTHESE]                             = 9,
+    [EVENT_IWANTABRONZEMEDAL]                          = 10,
+    [EVENT_IWANTASILVERMEDAL]                          = 10,
+    [EVENT_IWANTAGOLDMEDAL]                            = 10,
+    [EVENT_UNKNOWN43]                                  = 6,
+    [EVENT_UNKNOWN44]                                  = 6,
+    [EVENT_UNKNOWN45]                                  = 8,
+    [EVENT_UNKNOWN46]                                  = 9,
+    [EVENT_THETHREESISTERSOFKARAKURIFORT]              = 7,
+    [EVENT_LETTERSOFTHETHREESISTERS]                   = 6,
+    [EVENT_UNKNOWN49]                                  = 6,
+    [EVENT_UNKNOWN50]                                  = 6,
+    [EVENT_MILLIONYEAROLDWISH]                         = 7,
+    [EVENT_DIGLIKEAMOLE]                               = 8,
+    [EVENT_THEBLUEFORTUNETELLER]                       = 6,
+    [EVENT_UNKNOWN51]                                  = 6,
+    [EVENT_UNKNOWN52]                                  = 6,
+    [EVENT_UNKNOWN53]                                  = 6,
+    [EVENT_LETSRIDETHERAFT]                            = 8,
+    [EVENT_TAKEOUT]                                    = 8,
+    [EVENT_UNKNOWN54]                                  = 6,
+    [EVENT_WHATSTHEUNDERWATER]                         = 10,
+    [EVENT_UNKNOWN55]                                  = 6,
+    [EVENT_UNKNOWN56]                                  = 6,
+    [EVENT_SOURCEOFEVILMAGIC]                          = 8,
+    [EVENT_SEVENFRIENDS]                               = 6,
+    [EVENT_UNKNOWN57]                                  = 6,
+    [EVENT_THE8THEVILPIGBAG]                           = 10,
+    [EVENT_THEREALEVILPIG]                             = 6,
+    [EVENT_UNDERGROUNDTREASURE]                        = 10,
+    [EVENT_UNKNOWN58]                                  = 8,
+    [EVENT_UNKNOWN59]                                  = 6,
+    [EVENT_THEFLOWERTOWER]                             = 6,
+    [EVENT_UNKNOWN60]                                  = 6,
+    [EVENT_AHUNGRYMONKEY]                              = 10,
+    [EVENT_PEACHFLOWERGAS]                             = 11,
+    [EVENT_THEEVILPIGBAG]                              = 7,
+    [EVENT_BITINGPLANTFLOWER]                          = 7,
+    [EVENT_WHENTHEWINDDIESDOWN]                        = 7,
+    [EVENT_THEPHOENIXFAVORITE]                         = 6,
+    [EVENT_THEFIREPIGBAG]                              = 8,
+    [EVENT_CHARLESPANTS]                               = 7,
+    [EVENT_THEHAUNTEDPIGBAG]                           = 6,
+    [EVENT_THEWORLDSGREATESTSMILE]                     = 10,
+    [EVENT_THEWORLDSGREATESTPOUT]                      = 11,
+    [EVENT_SOMETHINGCOOKIN]                            = 7,
+    [EVENT_LEAFBUTTERFLIES]                            = 9,
+    [EVENT_WHEREDTHELIGHTSGO]                          = 9,
+    [EVENT_WHERETHEBARRELSROLLS]                       = 6,
+    [EVENT_READYSETGO]                                 = 7,
+    [EVENT_AMAGICMIRROR]                               = 7,
+    [EVENT_THEJUNGLEPIGBAG]                            = 7,
+    [EVENT_UNKNOWN61]                                  = 8,
+    [EVENT_APRECIOUSTREASURECHEST]                     = 6,
+    [EVENT_UNKNOWN62]                                  = 8,
+    [EVENT_THEMISTERIOUSMUSHROOM]                      = 7,
+    [EVENT_LEAFSLIDER]                                 = 8,
+    [EVENT_REDBLUE]                                    = 6,
+    [EVENT_THETROUBLEDTHIEF]                           = 6,
+    [EVENT_WHATTHETHIEFFORGOT]                         = 8,
+    [EVENT_UNKNOWN63]                                  = 6,
+    [EVENT_UNKNOWN64]                                  = 6,
+    [EVENT_UNKNOWN65]                                  = 6,
+    [EVENT_UNKNOWN66]                                  = 6,
+    [EVENT_UNKNOWN67]                                  = 6,
+    [EVENT_UNKNOWN68]                                  = 6,
+    [EVENT_UNKNOWN69]                                  = 6,
+    [EVENT_UNKNOWN70]                                  = 6,
+};
+
+unk_80077720 D_80077508[6] = {
+    { 0xFFB8, 0xFFE0 },
+    { 0xFFD0, 0xFFE0 },
+    { 0xFFE8, 0xFFE0 },
+    { 0x0, 0xFFE0 },
+    { 0x18, 0xFFE0 },
+    { 0x30, 0xFFE0 }
+};
+#else
 unk_80077720 D_80077508[6] = {
     { 0xFFD8, 0 },
     { 0xFFEC, 0 },
@@ -217,6 +530,7 @@ unk_80077720 D_80077508[6] = {
     { 40, 0 },
     { 60, 0 }
 };
+#endif
 
 int AP_TABLE[8] = { 0, 500, 1000, 2000, 5000, 10000, 20000, 50000 };
 
@@ -626,6 +940,30 @@ u_char EVENT_COMPLETE_AP_TABLE[0xC8] = {
     [EVENT_UNKNOWN70]                                  = 0,
 };
 
+#if REGION == REGION_JP
+u8* D_800776D0[20] = {
+    [AREA00_VILLAGEOFALLBEGINNINGS]            = (u8*)0x80137BAC,
+    [AREA01_DWARFFOREST]                       = (u8*)0x8013B014,
+    [AREA02_DWARFVILLAGE]                      = (u8*)0x80075AD0,
+    [AREA03_PHOENIXMOUNTAIN]                   = (u8*)0x80135348,
+    [AREA04_HAUNTEDMANSION]                    = (u8*)0x8012F978,
+    [AREA05_BACCUSVILLAGE]                     = (u8*)0x80075C38,
+    [AREA06_DIRTMOTOCROSS]                     = (u8*)0x8011F3B0,
+    [AREA07_DWARFFORESTPURIFIED]               = (u8*)0x80075AD0,
+    [AREA08_BACCUSLAKE]                        = (u8*)0x80075DA0,
+    [AREA09_MUSHROOMVILLAGE]                   = (u8*)0x8012A4A8,
+    [AREA10_DEEPJUNGLE]                        = (u8*)0x8012DB60,
+    [AREA11_VILLAGEOFCIVILIZATION]             = (u8*)0x8011896C,
+    [AREA12_HAUNTEDMANSIONPURIFIED]            = (u8*)0x80137BAC,
+    [AREA13_PIGISLAND]                         = (u8*)0x80116C5C,
+    [AREA14_EVILPIGS]                          = (u8*)0x80123A00,
+    [AREA15_UNKNOWN]                           = (u8*)0x80137BAC,
+    [AREA16_VILLAGEOFCIVILIZATIONCLOCKTOWER]   = (u8*)0x80118130,
+    [AREA17_VILLAGEOFCIVILIZATIONIRONTOWER]    = (u8*)0x801183E8,
+    [AREA18_VILLAGEOFCIVILIZATIONYCROSSING]    = (u8*)0x80075F08,
+    [AREA19_VILLAGEOFCIVILIZATIONPURIFIED]     = (u8*)0x80076070,
+};
+#else
 u8* D_800776D0[20] = {
     [AREA00_VILLAGEOFALLBEGINNINGS]          = D_80077428,
     [AREA01_DWARFFOREST]                     = D_80077428,
@@ -648,6 +986,7 @@ u8* D_800776D0[20] = {
     [AREA18_VILLAGEOFCIVILIZATIONYCROSSING]  = D_80077428,
     [AREA19_VILLAGEOFCIVILIZATIONPURIFIED]   = D_80077428,
 };
+#endif
 
 unk_80077720 D_80077720[2] = {
     { 0x5A, 0xB4 },
@@ -671,7 +1010,9 @@ u_char awardEventProgress(EVENT event_id, int ap_table, int state)
             spawnEventTitle(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
             playJingle(2);
+#if REGION != REGION_JP
             muteBgm();
+#endif
         }
     }
     return GAME.event[event_id];
@@ -709,7 +1050,9 @@ u_char setEventComplete(EVENT event_id, int state)
             spawnEventTitle(event_id, 1, 1, state);
             printEventMessage(event_id, 1);
             playJingle(2);
+#if REGION != REGION_JP
             muteBgm();
+#endif
         }
     }
     return GAME.event[event_id];
@@ -723,6 +1066,121 @@ u_char getEventState(EVENT event_id)
 
 
 // INCLUDE_ASM("nonmatchings/main/game/event", spawnEventTitle);
+#if REGION == REGION_JP
+
+int spawnEventTitle(int event_id, int completed, int duration, int state)
+{
+    s16 x;
+    s16 y;
+    u8* src;
+    u8* entry;
+    s8* p;
+    u8* obj;
+    int i;
+    int done;
+    int once;
+    int n;
+    u16* q;
+    int temp;
+    int* hdr;
+
+    if (event_id == 1) {
+        duration = 1;
+        x = D_800A53AA - D_800A38C2;
+        y = (u16)PLAYER.obj.y.p.whole - (*(u16 *)&SPAD->vpy.p.whole);
+    }
+    src = (*(u8* *)&SPAD->eventData);
+    src += *(u16*)(src + 8);
+    entry = D_800776D0[GAME.selectedArea];
+    entry += event_id;
+    if (*entry == 0xFF) {
+        q = (u16*)(src + 2);
+    } else {
+        q = (u16*)(src + *entry * 2);
+    }
+    src += *q;
+    i = 0;
+    if (*entry == 0xFF) {
+        p = D_80071A20_slps01144[7];
+    } else {
+        p = D_80071A20_slps01144[D_80071A54_slps01144[event_id]];
+    }
+    done = 0;
+    D_8009BC98.unk03 = 1;
+    once = 0;
+    for (; p[0] != -1; p += 4) {
+        obj = (u8*)allocModelObject();
+        if (obj != NULL) {
+            obj[0] = 1;
+            obj[2] = 1;
+            obj[0xD] = 1;
+            *(s16*)(obj + 8) = 0x7D16;
+            obj[3] = completed;
+            *(s16*)(obj + 0x1E) = 0;
+            *(s8*)(obj + 0xF) = -0x5A;
+            *(s16*)(obj + 0x2E) = 1;
+            temp = obj[0x1C] | 0x80;
+            obj[0x1C] = temp;
+            *(s16*)(obj + 0x20) = duration;
+            temp = (int)&SCRATCHPAD.wmdData[3];
+            hdr = *(int* volatile*)temp;
+            temp = (int)*(int* volatile*)temp;
+            temp += hdr[1];
+            *(int*)(obj + 0xA0) = temp;
+            if (event_id == 1) {
+                *(int*)(obj + 0x10) = (x - 0xA0) << 16;
+                *(int*)(obj + 0x14) = y << 16;
+                *(int*)(obj + 0x18) = (PLAYER.obj.z.p.whole + 10) << 16;
+                *(int*)(obj + 0x30) = (x - 0xA0) << 16;
+                *(int*)(obj + 0x34) = y << 16;
+                *(int*)(obj + 0x38) = (PLAYER.obj.z.p.whole + 10) << 16;
+            } else {
+                *(int*)(obj + 0x10) = D_800774F0[1] << 16;
+                *(int*)(obj + 0x14) = D_800774F0[2] << 16;
+                *(int*)(obj + 0x18) = 0;
+                *(int*)(obj + 0x30) = D_800774F0[1] << 16;
+                *(int*)(obj + 0x34) = D_800774F0[2] << 16;
+                *(int*)(obj + 0x38) = 0;
+            }
+            obj[0xC] = i;
+            n = p[3] & 0xF;
+            *(u16*)(obj + 0xBC) = *(u16*)src & 0xFFF;
+            *(u16*)(obj + 0xC0) = D_800774F8[n];
+            *(s16*)(obj + 0xC4) = p[1] * 12;
+            *(s16*)(obj + 0xC6) = p[2] * 12;
+            *(u16*)(obj + 0xC8) = D_80077508[n].unk0;
+            *(u16*)(obj + 0xCA) = D_80077508[n].unk2;
+            *(u16*)(obj + 0xCC) = (u8)p[3];
+            i++;
+            src += 2;
+            if (state != 0 && done == 0) {
+                *(u16*)(obj + 0xD0) = D_8009BC98.unk0F;
+                D_8009BC98.unk0F = 1;
+                D_8009BC98.unk12 = 1;
+                if (PLAYER.obj.unk9E == 0 || ((u8 *)&PLAYER)[0xAC] < 2) {
+                    PLAYER.obj.state = PLAYER_SCRIPTED;
+                    PLAYER.obj.subState = PLAYER_IDLE;
+                    PLAYER.obj.step = 0;
+                    PLAYER.obj.unk7 = 0;
+                } else if (D_8009BC98.unk10 == 0) {
+                    D_8009BC98.unk0E = 1;
+                }
+                *(u16*)(obj + 0xCE) = state;
+                done = 1;
+            } else {
+                *(u16*)(obj + 0xCE) = 0;
+            }
+            if (event_id == 0xF && completed == 1 && once == 0) {
+                once = 1;
+                *(u16*)(obj + 0xD2) = 0x27;
+                *(u16*)(obj + 0xCE) = 2;
+            } else {
+                *(u16*)(obj + 0xD2) = 0;
+            }
+        }
+    }
+}
+#else
 int spawnEventTitle(int event_id, int completed, int duration, int state)
 {
     s16 x;
@@ -933,8 +1391,14 @@ int spawnEventTitle(int event_id, int completed, int duration, int state)
         }
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/game/event", acquireSpriteSlot);
+#if REGION == REGION_JP
+#define SPRITE_STRIPS 5
+#else
+#define SPRITE_STRIPS 4
+#endif
 short acquireSpriteSlot(int id)
 {
     RECT rect;
@@ -980,12 +1444,12 @@ short acquireSpriteSlot(int id)
     SPRITE_SLOTS[slot].val[2] = a;
     SPRITE_SLOTS[slot].val[3] = h;
     SPRITE_SLOTS[slot].val[5] = b;
-    for (k = 0; k < 4; k++) {
+    for (k = 0; k < SPRITE_STRIPS; k++) {
         load = (DR_LOAD*)D_1F800164;
-        setRECT(&rect, SPRITE_SLOTS[slot].val[0], SPRITE_SLOTS[slot].val[1] + k * (h >> 2), w, h >> 2);
+        setRECT(&rect, SPRITE_SLOTS[slot].val[0], SPRITE_SLOTS[slot].val[1] + (h / SPRITE_STRIPS) * k, w, h / SPRITE_STRIPS);
         SetDrawLoad(load, &rect);
         dst = (u16*)load->p;
-        for (j = 0; j < w * (u16)(h >> 2); j++) {
+        for (j = 0; j < w * (u16)(h / SPRITE_STRIPS); j++) {
             *dst++ = *src++;
         }
         addPrim((*(u_long *)&SCRATCHPAD.ot) + 4, load);
@@ -1062,7 +1526,11 @@ void printEventMessage(int event_id, int completed)
             obj[0xD] = 1;
             *(s16*)(obj + 0x2E) = 1;
             obj[0xF] = 0;
+#if REGION == REGION_JP
+            *(int*)(obj + 0x14) = 0x700000;
+#else
             *(int*)(obj + 0x14) = 0x900000;
+#endif
             *(int*)(obj + 0x18) = 0;
             obj[0x1C] |= 0x80;
             *(u16*)(obj + 0xB4) = D_80077720[completed].unk0;

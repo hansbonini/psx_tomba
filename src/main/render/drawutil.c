@@ -2,6 +2,7 @@
 #include "game.h"
 
 
+#if REGION != REGION_JP
 UiSpriteDef D_8007B2F4_data[2] asm("D_8007B2F4") = {
     { 0x70, 0, 0x30, 0x30, 0x30, 0x47 },
     { 0xA0, 0, 0x30, 0x30, 0x30, 0x47 }
@@ -18,7 +19,7 @@ UiSpriteDef D_8007B30C[3] = {
     { 0xB8, 0xC0, 0x28, 0x10, 0x160, 0x1FD },
     { 0xB8, 0xD0, 0x38, 0x10, 0x160, 0x1FD }
 };
-
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/render/drawutil", fontDebugPrintf);
 void fontDebugPrintf(short x, short y, short color, char* fmt)
@@ -56,6 +57,7 @@ void fontDebugPrintf(short x, short y, short color, char* fmt)
     }
 }
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/render/drawutil", drawLoadingSprites);
 void drawLoadingSprites(int arg0, int arg1)
 {
@@ -166,3 +168,4 @@ void drawNowLoadingSprite(int x, int y, short sprt_id, short tpage, short arg4)
     addPrim(CURRENT_OT, poly);
     D_8009C8A8 += sizeof(POLY_FT4);
 }
+#endif

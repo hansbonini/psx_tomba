@@ -75,9 +75,11 @@ SfxDef D_80077774[41] = {
     { 0, 2, 7, 39, 100, 0 }
 };
 
+#if REGION != REGION_JP
 SfxDef D_800778BC[1] = {
     { 4, 0, 0, 7, 120, 0 }
 };
+#endif
 
 SfxDef D_800778C4[4] = {
     { 1, 0, 0, 0, 100, 0 },
@@ -148,7 +150,11 @@ u32 D_800778E4_d[130] asm("D_800778E4") = {
     0x04040304, 0x06040504, 0x08040704, 0x0A040904,
     0x0C040B04, 0x0E040D04, 0x00050F04, 0x02050105,
     0x04050305, 0x06050505, 0x08050705, 0x0A050905,
+#if REGION == REGION_JP
+    0x00060B05, 0x02060106, 0x04060306, 0x06060506,
+#else
     0x001B0B05, 0x02060106, 0x04060306, 0x06060506,
+#endif
     0x08060706, 0x0A060906, 0x0C060B06, 0x00070D06,
     0x02070107, 0x04070307, 0x06070507, 0x08070707,
     0x0A070907, 0x01080008, 0x00090208, 0x02090109,
@@ -170,14 +176,17 @@ u32 D_800778E4_d[130] asm("D_800778E4") = {
     0x090A0709, 0x001A0A0A, 0x021A011A, 0x041A031A,
     0x061A051A, 0x081A071A,
 };
-u32 SFX_BANKS_d[28] asm("SFX_BANKS") = {
+u32 SFX_BANKS_d[] asm("SFX_BANKS") = {
     (u32)D_80077774_x, (u32)D_800778C4_x, (u32)D_801393D4_x, (u32)D_8013CCC0_x,
     (u32)D_8013CD10_x, (u32)D_8013CD90_x, (u32)D_8013CDF0_x, (u32)D_80137A3C_x,
     (u32)D_80137A94_x, (u32)D_80132D50_x, (u32)D_80132D90_x, (u32)D_801152DC_x,
     (u32)D_8012CC40_x, (u32)D_80130E7C_x, (u32)D_80130F04_x, (u32)D_80130F1C_x,
     (u32)D_80130F54_x, (u32)D_80119BE8_x, (u32)D_801280BC_x, (u32)D_801280E4_x,
     (u32)D_8012810C_x, (u32)D_8012813C_x, (u32)D_80128164_x, (u32)D_8012818C_x,
-    (u32)D_801281B4_x, (u32)D_801281E4_x, (u32)D_80121C84_x, (u32)D_800778BC_x,
+    (u32)D_801281B4_x, (u32)D_801281E4_x, (u32)D_80121C84_x,
+#if REGION != REGION_JP
+    (u32)D_800778BC_x,
+#endif
 };
 u32 AREA_BGM_VOLUME_d[12] asm("AREA_BGM_VOLUME") = {
     0x005A004A, 0x005F0050, 0x005A005F, 0x00400054,
@@ -274,6 +283,48 @@ u32 AREA_BGM_DEFS_d[22] asm("AREA_BGM_DEFS") = {
 u32 BGM_TRACK_DEFS_d[4] asm("BGM_TRACK_DEFS") = {
     0x00000300, 0x00000300, 0x00000300, 0x00000300,
 };
+#if REGION == REGION_JP
+u32 SPU_BANK_ADDRS_d[150] asm("SPU_BANK_ADDRS") = {
+    0x00001010, 0x00004000, 0x000492B0, 0x00002100,
+    0x000492B0, 0x00002000, 0x000492B0, 0x00001900,
+    0x000671F0, 0x00000D00, 0x000671F0, 0x00000D00,
+    0x000671F0, 0x00000D00, 0x000671F0, 0x00000D00,
+    0x000492B0, 0x00001300, 0x000492B0, 0x00001500,
+    0x000492B0, 0x00001900, 0x000492B0, 0x00001100,
+    0x000492B0, 0x00002700, 0x000492B0, 0x00002300,
+    0x000492B0, 0x00001700, 0x000492B0, 0x00001900,
+    0x000492B0, 0x00002900, 0x000492B0, 0x00002100,
+    0x00001010, 0x00003900, 0x00001010, 0x00003900,
+    0x000492B0, 0x00001100, 0x00001010, 0x00003900,
+    0x00001010, 0x00003900, 0x00001010, 0x00003900,
+    0x000492B0, 0x00002300, 0x000492B0, 0x00001500,
+    0x00001010, 0x00003900, 0x00001010, 0x00003900,
+    0x00001010, 0x00003900, 0x00001010, 0x00003900,
+    0x00001010, 0x00003900, 0x00001010, 0x00003900,
+    0x000492B0, 0x00002500, 0x00001010, 0x00003900,
+    0x00001010, 0x00003900, 0x00001010, 0x00003900,
+    0x000492B0, 0x00002300, 0x000492B0, 0x00001500,
+    0x00001010, 0x00003900, 0x000492B0, 0x00001700,
+    0x000492B0, 0x00002B00, 0x000492B0, 0x00001B00,
+    0x000492B0, 0x00002300, 0x000492B0, 0x00002700,
+    0x000492B0, 0x00001B00, 0x000492B0, 0x00001500,
+    0x000492B0, 0x00001900, 0x000492B0, 0x00001900,
+    0x000492B0, 0x00002900, 0x000492B0, 0x00002900,
+    0x000492B0, 0x00002900, 0x000492B0, 0x00002900,
+    0x000492B0, 0x00002900, 0x000492B0, 0x00002900,
+    0x000492B0, 0x00002900, 0x000492B0, 0x00002900,
+    0x000492B0, 0x00001D00, 0x000492B0, 0x00002500,
+    0x00001010, 0x00003900, 0x000492B0, 0x00001B00,
+    0x000492B0, 0x00001B00, 0x000492B0, 0x00001700,
+    0x000492B0, 0x00001B00, 0x000492B0, 0x00001F00,
+    0x000492B0, 0x00001700, 0x000492B0, 0x00001700,
+    0x000492B0, 0x00001500, 0x000492B0, 0x00001700,
+    0x000492B0, 0x00001900, 0x000492B0, 0x00001D00,
+    0x000492B0, 0x00002100, 0x000492B0, 0x00002500,
+    0x000492B0, 0x00002500, 0x000492B0, 0x00002900,
+    0x000492B0, 0x00002300,
+};
+#else
 u32 SPU_BANK_ADDRS_d[150] asm("SPU_BANK_ADDRS") = {
     0x00001010, 0x00004000, 0x00048250, 0x00002100,
     0x00048250, 0x00002000, 0x00048250, 0x00001900,
@@ -314,6 +365,7 @@ u32 SPU_BANK_ADDRS_d[150] asm("SPU_BANK_ADDRS") = {
     0x00048250, 0x00002500, 0x00048250, 0x00002900,
     0x00048250, 0x00002300,
 };
+#endif
 u32 SOUND_INITIALIZED_d[1] asm("SOUND_INITIALIZED") = {
     0x00000000,
 };
@@ -364,7 +416,11 @@ void updateSound(void)
         SOUND_QUEUE_HEAD = (SOUND_QUEUE_HEAD + 1) & (SOUND_QUEUE_SIZE - 1);
         SOUND_QUEUE_COUNT--;
     }
+#if REGION == REGION_JP
+    if (BGM_FADE_ACTIVE != 0) {
+#else
     if (BGM_MUTED == 0 && BGM_FADE_ACTIVE != 0) {
+#endif
         if (--BGM_FADE_TIMER == 0) {
             BGM_FADE_TIMER = BGM_FADE_INTERVAL;
             if (BGM_FADE_STEP < 0) {
@@ -380,9 +436,14 @@ void updateSound(void)
             } else if (BGM_FADE_VOLUME >= BGM_FADE_TARGET) {
                 BGM_FADE_ACTIVE = 0;
             }
+#if REGION == REGION_JP
+            SsSeqSetVol(BGM_SEQ_ID, BGM_FADE_VOLUME, BGM_FADE_VOLUME);
+        }
+#else
             BGM_VOLUME = BGM_FADE_VOLUME;
         }
         SsSeqSetVol(BGM_SEQ_ID, BGM_FADE_VOLUME, BGM_FADE_VOLUME);
+#endif
     }
     if (PITCH_SLIDE_ACTIVE != 0) {
         if (--PITCH_SLIDE_TIMER == 0) {
@@ -402,12 +463,14 @@ void updateSound(void)
             PITCH_SLIDE_ACTIVE = 0;
         }
     }
+#if REGION != REGION_JP
     if (BGM_MUTED != 0) {
         muteBgm();
         if (JINGLE_SEQ_ID != -1 && SsIsEos(JINGLE_SEQ_ID, 0) == 0) {
             unmuteBgm();
         }
     }
+#endif
 }
 
 
@@ -523,6 +586,19 @@ s32 setPitchSlideParam(s32 cmd)
     return 0;
 }
 
+#if REGION == REGION_JP
+static inline s32 allocSfxVoice(s32 id)
+{
+    s32 i;
+
+    for (i = 0x17; i >= 0x10; i--) {
+        if (VOICE_KEY_STATUS[i] == 0 && VOICE_SFX_ID[i] == -1) {
+            return i;
+        }
+    }
+    return -1;
+}
+#else
 // INCLUDE_ASM("nonmatchings/main/audio/sound", allocSfxVoice);
 s32 allocSfxVoice(id)
     u16 id;
@@ -548,8 +624,26 @@ s32 allocSfxVoice(id)
     }
     return -1;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/audio/sound", playSFX);
+#if REGION == REGION_JP
+s32 playSFX(s32 arg)
+{
+    s32 slot;
+    s16 id;
+
+    slot = allocSfxVoice(arg);
+    if (slot == -1) {
+        return -1;
+    }
+    id = arg;
+    if (queueSoundCommand(arg & SND_SFX_ID_MASK, slot) != -1) {
+        VOICE_SFX_ID[slot] = id;
+    }
+    return slot;
+}
+#else
 s32 playSFX(s32 arg)
 {
     register s32 id asm("$16") = arg;
@@ -563,12 +657,27 @@ s32 playSFX(s32 arg)
     }
     return slot;
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/audio/sound", playSFXWithNote);
 s32 playSFXWithNote(s32 id, s32 note)
 {
     s32 slot = allocSfxVoice(id);
+#if REGION == REGION_JP
+    u16 cmd;
 
+    if (slot == -1) {
+        return -1;
+    }
+    if (queueSoundCommand((note & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_NOTE), slot) == -1) {
+        return -1;
+    }
+    cmd = (id & SND_SFX_ID_MASK) | SND_KEYON_NOTE_OVERRIDE;
+    if (queueSoundCommand(cmd, slot) != -1) {
+        VOICE_SFX_ID[slot] = id;
+    }
+    return slot;
+#else
     if (slot == -1 || queueSoundCommand((note & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_NOTE), slot) == -1) {
         return -1;
     }
@@ -576,13 +685,28 @@ s32 playSFXWithNote(s32 id, s32 note)
         VOICE_SFX_ID[slot] = id;
     }
     return slot;
+#endif
 }
 
 // INCLUDE_ASM("nonmatchings/main/audio/sound", playSFXWithVolume);
 s32 playSFXWithVolume(s32 id, s32 volume)
 {
     s32 slot = allocSfxVoice(id);
+#if REGION == REGION_JP
+    u16 cmd;
 
+    if (slot == -1) {
+        return -1;
+    }
+    if (queueSoundCommand((volume & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_VOLUME), slot) == -1) {
+        return -1;
+    }
+    cmd = (id & SND_SFX_ID_MASK) | SND_KEYON_VOLUME_OVERRIDE;
+    if (queueSoundCommand(cmd, slot) != -1) {
+        VOICE_SFX_ID[slot] = id;
+    }
+    return slot;
+#else
     if (slot == -1 || queueSoundCommand((volume & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_VOLUME), slot) == -1) {
         return -1;
     }
@@ -590,23 +714,45 @@ s32 playSFXWithVolume(s32 id, s32 volume)
         VOICE_SFX_ID[slot] = id;
     }
     return slot;
+#endif
 }
 
 // INCLUDE_ASM("nonmatchings/main/audio/sound", playSFXWithNoteAndVolume);
 s32 playSFXWithNoteAndVolume(s32 id, s32 note, s32 volume)
 {
     s32 slot;
+#if REGION == REGION_JP
+    u16 cmd;
+#endif
 
+#if REGION != REGION_JP
     if ((GAME.selectedArea == AREA02_DWARFVILLAGE || GAME.selectedArea == AREA19_VILLAGEOFCIVILIZATIONPURIFIED) && id == 0x32) {
         id = 0x61;
     }
+#endif
     slot = allocSfxVoice(id);
+#if REGION == REGION_JP
+    if (slot == -1) {
+        return -1;
+    }
+    if (queueSoundCommand((note & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_NOTE), slot) == -1) {
+        return -1;
+    }
+    if (queueSoundCommand((volume & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_VOLUME), slot) == -1) {
+        return -1;
+    }
+    cmd = (id & SND_SFX_ID_MASK) | (SND_KEYON_NOTE_OVERRIDE | SND_KEYON_VOLUME_OVERRIDE);
+    if (queueSoundCommand(cmd, slot) != -1) {
+        VOICE_SFX_ID[slot] = id;
+    }
+#else
     if (slot == -1 || queueSoundCommand((note & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_NOTE), slot) == -1 || queueSoundCommand((volume & SND_CMD_VALUE_MASK) | (SND_CMD_OVERRIDE | SND_OVERRIDE_VOLUME), slot) == -1) {
         return -1;
     }
     if (queueSoundCommand((id & SND_SFX_ID_MASK) | (SND_KEYON_NOTE_OVERRIDE | SND_KEYON_VOLUME_OVERRIDE), slot) != -1) {
         VOICE_SFX_ID[slot] = id;
     }
+#endif
     return slot;
 }
 
@@ -631,7 +777,15 @@ s32 playSFXWithPitchSlide(s32 id, s32 interval, s32 step, s32 duration)
     PITCH_SLIDE_NEW_NOTE = note;
     PITCH_SLIDE_OLD_NOTE = note;
     slot = allocSfxVoice(id);
-    if (slot == -1 || queueSoundCommand(id & SND_SFX_ID_MASK, slot) == -1 || queueSoundCommand((interval & SND_CMD_VALUE_MASK) | (SND_CMD_PITCH_SLIDE | SND_SLIDE_INTERVAL), slot) == -1 || queueSoundCommand((step & SND_CMD_VALUE_MASK) | (SND_CMD_PITCH_SLIDE | SND_SLIDE_STEP), slot) == -1 || queueSoundCommand((duration & SND_CMD_VALUE_MASK) | (SND_CMD_PITCH_SLIDE | SND_SLIDE_DURATION), slot) == -1) {
+#if REGION == REGION_JP
+    if (slot == -1) {
+        return -1;
+    }
+    if (queueSoundCommand(id & SND_SFX_ID_MASK, slot) == -1 ||
+#else
+    if (slot == -1 || queueSoundCommand(id & SND_SFX_ID_MASK, slot) == -1 ||
+#endif
+        queueSoundCommand((interval & SND_CMD_VALUE_MASK) | (SND_CMD_PITCH_SLIDE | SND_SLIDE_INTERVAL), slot) == -1 || queueSoundCommand((step & SND_CMD_VALUE_MASK) | (SND_CMD_PITCH_SLIDE | SND_SLIDE_STEP), slot) == -1 || queueSoundCommand((duration & SND_CMD_VALUE_MASK) | (SND_CMD_PITCH_SLIDE | SND_SLIDE_DURATION), slot) == -1) {
         return -1;
     }
     if (queueSoundCommand(SND_CMD_PITCH_SLIDE | SND_SLIDE_START, slot) != -1) {
@@ -745,7 +899,9 @@ s32 openAreaBgm(s32 reverbDepth)
         SsSeqClose(BGM_SEQ_ID);
         BGM_SEQ_ID = -1;
     }
+#if REGION != REGION_JP
     BGM_MUTED = 0;
+#endif
     vab = VAB_IDS[AREA_BGM_DEFS[0].vab];
     BGM_VAB_ID = vab;
     BGM_SEQ_ID = SsSeqOpen(SEQ_DATA[AREA_BGM_DEFS[0].seq], vab);
@@ -797,7 +953,9 @@ s32 openAreaBgm(s32 reverbDepth)
     } else {
         t = adjustAreaBgmVolume((s16)AREA_BGM_VOLUME[area]);
         SsSeqSetVol(BGM_SEQ_ID, t, t);
+#if REGION != REGION_JP
         BGM_VOLUME = t;
+#endif
         BGM_FADE_ACTIVE = 0;
     }
     depth = (s16)reverbDepth;
@@ -834,7 +992,9 @@ s32 startBgmTrack(s32 id)
     BGM_MUTED = 0;
 #endif
     BGM_FADE_ACTIVE = 0;
+#if REGION != REGION_JP
     BGM_VOLUME = BGM_TRACK_VOLUME[id];
+#endif
     SsSeqPlay(BGM_SEQ_ID, SSPLAY_PLAY, 1);
     return 0;
 }
@@ -858,6 +1018,7 @@ void stopBgm(s32 fadeOut)
     }
 }
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/audio/sound", restoreAreaBgmVolume);
 void restoreAreaBgmVolume(void)
 {
@@ -869,6 +1030,7 @@ void restoreAreaBgmVolume(void)
         BGM_MUTED = 0;
     }
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/audio/sound", playJingle);
 s32 playJingle(s32 seqIndex)
@@ -927,6 +1089,12 @@ void stopAllSound(void)
         SsSeqClose(BGM_SEQ_ID);
         BGM_SEQ_ID = -1;
     }
+#if REGION == REGION_JP
+    BGM_FADE_ACTIVE = 0;
+    PITCH_SLIDE_ACTIVE = 0;
+    SOUND_QUEUE_COUNT = 0;
+    SOUND_QUEUE_HEAD = SOUND_QUEUE_TAIL;
+#else
     if (JINGLE_SEQ_ID != -1) {
         SsSeqStop(JINGLE_SEQ_ID);
         SsSeqClose(JINGLE_SEQ_ID);
@@ -941,6 +1109,7 @@ void stopAllSound(void)
     SOUND_QUEUE_TAIL = 0;
     SOUND_QUEUE_HEAD = 0;
     SOUND_QUEUE_COUNT = 0;
+#endif
     SpuSetKey(SPU_OFF, SPU_ALLCH);
 }
 
@@ -961,19 +1130,23 @@ void setReverbMode(s32 reverbMode, s16 reverbDepth)
     SpuSetReverbVoice(SPU_OFF, SFX_VOICE_MASK);
 }
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/audio/sound", muteBgm);
 void muteBgm(void)
 {
     BGM_MUTED = 1;
     SsSeqSetVol(BGM_SEQ_ID, 0, 0);
 }
+#endif
 
+#if REGION != REGION_JP
 // INCLUDE_ASM("nonmatchings/main/audio/sound", unmuteBgm);
 void unmuteBgm(void)
 {
     BGM_MUTED = 0;
     SsSeqSetVol(BGM_SEQ_ID, BGM_VOLUME, BGM_VOLUME);
 }
+#endif
 
 // INCLUDE_ASM("nonmatchings/main/audio/sound", keyOffSfxAll);
 void keyOffSfxAll(void)
@@ -1013,7 +1186,9 @@ void shutdownSound(void)
     SOUND_QUEUE_TAIL = 0;
     SOUND_QUEUE_HEAD = 0;
     SOUND_QUEUE_COUNT = 0;
+#if REGION != REGION_JP
     BGM_VOLUME = 0;
+#endif
     BGM_FADE_ACTIVE = 0;
     PITCH_SLIDE_ACTIVE = 0;
     for (i = 0; i < 0x18; ++i) {

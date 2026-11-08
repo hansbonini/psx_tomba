@@ -382,7 +382,7 @@ void func_80038AC0(GameObject *obj)
                 obj->unkA5 = 0;
                 if (!(PAD_PRESSED[0] & SPAD->buttonAttack) || G.state != 1 || G.modelLit || *(u8 *)&G.unkAC >= 2 || D_8009BCA7) {
 #if REGION == REGION_JP
-                    func_800EFBEC_slps01144(&G);
+                    func_800EEDE0(&G);
 #endif
                     D_8009B698->b0 = 0;
                     setObjState(obj, 2, 0, 0);

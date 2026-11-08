@@ -268,11 +268,23 @@ ItemInit ITEM_INIT_BITINGPLANTFLOWER = { 0, 0xC, 0xC, 0xF6, 3, 0, 0, 0, 0, 0, 8,
 
 ItemInit ITEM_INIT_HEALINGMUSHROOM = { 0, 1, 0xA, 0xEC, 3, 0, 0, 1, 0, 0, 8, 0x10, 8, 0x10, (int)&D_8012D3B0 };
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_BUCKET = { 0, 0, 0x14, 0xF6, 4, 1, 1, 0, 0x160, 0x1FA, 8, 0x10, 8, 0x10, (int)&D_8001230C };
+#else
 ItemInit ITEM_INIT_BUCKET = { 0, 0, 0x14, 0xF6, 4, 1, 3, 0, 0x160, 0x1FA, 8, 0x10, 8, 0x10, (int)&D_8001230C };
+#endif
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_TEARJAR = { 0, 1, 9, 0, 3, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_8012D3D0 };
+#else
 ItemInit ITEM_INIT_TEARJAR = { 0, 1, 9, 0, 3, 0, 0, 0, 0, 0, 0xA, 0x14, 8, 0x18, (int)&D_8012D3D0 };
+#endif
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_FLOWERTEARS = { 0, 1, 9, 0, 3, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_8012D3D4 };
+#else
 ItemInit ITEM_INIT_FLOWERTEARS = { 0, 1, 9, 0, 3, 0, 0, 0, 0, 0, 0xA, 0x14, 8, 0x18, (int)&D_8012D3D4 };
+#endif
 
 ItemInit ITEM_INIT_BARON = { 0, 0xB, 0x14, 0xF6, 4, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_80012320 };
 
@@ -292,11 +304,23 @@ ItemInit ITEM_INIT_STONEBOOMERANG = { 0, 8, 0x15, 0xF6, 4, 0, 0, 1, 0, 0, 8, 0x1
 
 ItemInit ITEM_INIT_IRONBOOMERANG = { 0, 9, 0x15, 0xF6, 4, 0, 0, 1, 0, 0, 8, 0x10, 8, 0x10, (int)&D_80012334 };
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_JUMPINGPANTS = { 0, 0, 0x14, 0xF6, 4, 1, 1, 0, 0x160, 0x1FA, 8, 0x10, 8, 0x10, (int)&D_8001230C };
+#else
 ItemInit ITEM_INIT_JUMPINGPANTS = { 0, 0, 0x14, 0xF6, 4, 1, 3, 0, 0x160, 0x1FA, 8, 0x10, 8, 0x10, (int)&D_8001230C };
+#endif
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_LUNCHBOX = { 0, 1, 0x14, 0xF6, 4, 1, 1, 0, 0x160, 0x1FC, 8, 0x10, 8, 0x10, (int)&D_80012304 };
+#else
 ItemInit ITEM_INIT_LUNCHBOX = { 0, 1, 0x14, 0xF6, 4, 1, 1, 0, 0x150, 0x1FC, 8, 0x10, 8, 0x10, (int)&D_80012304 };
+#endif
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_LARGELUNCHBOX = { 0, 1, 0x14, 0xF6, 4, 1, 1, 0, 0x160, 0x1FD, 8, 0x10, 8, 0x10, (int)&D_80012304 };
+#else
 ItemInit ITEM_INIT_LARGELUNCHBOX = { 0, 1, 0x14, 0xF6, 4, 1, 1, 0, 0x150, 0x1FD, 8, 0x10, 8, 0x10, (int)&D_80012304 };
+#endif
 
 ItemInit ITEM_INIT_GRAPPLE = { 0, 0xD, 0x14, 0xF6, 4, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_80012310 };
 
@@ -414,7 +438,11 @@ ItemInit ITEM_INIT_PIPE = { 0, 1, 0xF, 0xF6, 3, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10,
 
 ItemInit ITEM_INIT_WHATTHETHIEFLOST = { 0, 1, 9, 0xF6, 3, 1, 0, 0, 0x110, 0x1E2, 8, 0x10, 8, 0x10, (int)&D_801382A8 };
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_FLASHPANTS = { 0, 0, 0x14, 0xF6, 4, 1, 1, 0, 0x160, 0x1FA, 8, 0x10, 8, 0x10, (int)&D_8001230C };
+#else
 ItemInit ITEM_INIT_FLASHPANTS = { 0, 0, 0x14, 0xF6, 4, 1, 3, 0, 0x160, 0x1FA, 8, 0x10, 8, 0x10, (int)&D_8001230C };
+#endif
 
 ItemInit ITEM_INIT_JEWELOFFIRE = { 0, 1, 9, 0xF6, 3, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_801340AC };
 
@@ -422,7 +450,11 @@ ItemInit ITEM_INIT_JEWELOFWIND = { 0, 1, 9, 0xF6, 3, 1, 0, 0, 0xE0, 0x1E4, 8, 0x
 
 ItemInit ITEM_INIT_MIGHTYFISHFOOD = { 0, 1, 8, 0xF6, 3, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_80134098 };
 
+#if REGION == REGION_JP
+ItemInit ITEM_INIT_RISEANDSHINEPOWDER = { 0, 1, 0xB, 0xF6, 3, 0, 0, 0, 0, 0, 8, 0x10, 8, 0x10, (int)&D_8012D404 };
+#else
 ItemInit ITEM_INIT_RISEANDSHINEPOWDER = { 0, 1, 0xB, 0xF6, 3, 0, 0, 0, 0, 0, 0xA, 0x14, 8, 0x18, (int)&D_8012D404 };
+#endif
 
 ItemInit ITEM_INIT_GOLDENFLOWER = { 0, 1, 0xC, 0xF6, 0xB, 1, 0, 0, 0xA0, 0x1ED, 8, 0x10, 8, 0x10, (int)&D_8011E4CC };
 
@@ -813,7 +845,9 @@ void func_8003F9A4(u8* self)
             *(int*)(self + 0x24) = D_80134018;
         }
         readAnimFrameCount(self);
+#if REGION != REGION_JP
         cullAndQueueDraw(self);
+#endif
         break;
     case 1:
         if (cullAndQueueDraw(self) != 0) {
@@ -925,7 +959,11 @@ void initItemObject(GameObject* obj)
     obj->spriteBank = *(&SPR_DATA[init->spriteBank]);
     obj->animFrame = 1;
     if (obj->id == ITEM_LOSTDWARF) {
+#if REGION == REGION_JP
+        if (obj->param >= 4) {
+#else
         if ((u_long) (obj->param & 0x7F) >= 4U) {
+#endif
             obj->scale = 0x2000;
             setHitbox(obj, (short) (init->hitboxX * 2), (short) (init->hitboxY * 2), (short) (init->hitboxW * 2), (short) (init->hitboxH * 2));
         } else {
@@ -949,6 +987,7 @@ void initItemObject(GameObject* obj)
             y = AP_REWARDS[obj->param & 0x7F].clutY;
             obj->clut = GetClut((int) x, (int) y);
             break;
+#if REGION != REGION_JP
         case 3:
             if (GAME.item[ITEM_JUMPINGPANTS] == 0) {
                 color = 0;
@@ -962,6 +1001,7 @@ void initItemObject(GameObject* obj)
             y = init->clutY;
             obj->clut = GetClut(x, y + color);
             break;
+#endif
     }
 
     switch (init->animMode) {
@@ -998,7 +1038,11 @@ void rewardItem(GameObject* obj)
     current_item = obj->id;
     switch (current_item) {
         case ITEM_BOMB:
+#if REGION == REGION_JP
+            setEventComplete(EVENT_INEEDABOMB, 1);
+#else
             setEventComplete(EVENT_INEEDABOMB, 4);
+#endif
             break;
         case ITEM_PIPE:
             GAME.pipeState = 1;
@@ -1029,7 +1073,10 @@ void rewardItem(GameObject* obj)
 // INCLUDE_ASM("nonmatchings/main/game/reward", rewardHeart);
 void rewardHeart(GameObject* obj)
 {
-    if (D_8009BCA0 == 0) {
+#if REGION != REGION_JP
+    if (D_8009BCA0 == 0)
+#endif
+    {
         func_800E92D4(0x64, obj->x.p.whole, obj->y.p.whole, obj->z.p.whole);
         playSFX(9);
         if (!(obj->param & 0x80)) {
@@ -1091,7 +1138,10 @@ void rewardDirtyMirror(GameObject* obj)
 // INCLUDE_ASM("nonmatchings/main/game/reward", rewardVitalityMaxUp);
 void rewardVitalityMaxUp(GameObject* obj)
 {
-    if (D_8009BCA0 == 0) {
+#if REGION != REGION_JP
+    if (D_8009BCA0 == 0)
+#endif
+    {
         increaseMaxHealth();
         printInfoMessage(MSG_VITALITYMAXUP_ACQUIRED, MSG_TYPE_REWARD);
         playSFX(10);
@@ -1152,7 +1202,10 @@ void rewardGoldenBowl(GameObject* obj)
 {
     u_char health;
 
-    if (D_8009BCA0 == 0) {
+#if REGION != REGION_JP
+    if (D_8009BCA0 == 0)
+#endif
+    {
         health = GAME.playerHealthDisplayed;
         if (health < 16) {
             health += GAME.bonusHealth;
@@ -1178,6 +1231,17 @@ void rewardGoldenBowl(GameObject* obj)
 // INCLUDE_ASM("nonmatchings/main/game/reward", rewardBitingPlantFlower);
 void rewardBitingPlantFlower(GameObject* obj)
 {
+#if REGION == REGION_JP
+    addItemToInventory(ITEM_BITINGPLANTFLOWER, 1, true);
+    setEventStarted(EVENT_BITINGPLANTFLOWER, 0, 0);
+    if (GAME.selectedArea == AREA00_VILLAGEOFALLBEGINNINGS) {
+        GAME.bittingPlantFlowerState = 2;
+    }
+    if (!(obj->param & 0x80)) {
+        func_8002367C(obj->objectIndex);
+    }
+    obj->state++;
+#else
     u_short temp_v0;
     u_char temp_v1;
 
@@ -1216,6 +1280,7 @@ void rewardBitingPlantFlower(GameObject* obj)
             }
             return;
     }
+#endif
 }
 
 // INCLUDE_ASM("nonmatchings/main/game/reward", rewardGrapple);
@@ -1292,9 +1357,11 @@ void rewardPigBag(GameObject* obj)
     switch (obj->subState) {
         case 0:
             addItemToInventory(obj->id, 1, true);
+#if REGION != REGION_JP
             if (!(obj->param & 0x80)) {
                 func_8002367C(obj->objectIndex);
             }
+#endif
             switch (obj->id) {
                 case ITEM_REDPIGBAG:
                     setEventComplete(EVENT_ASTORMYPIGBAG, 2);
@@ -1348,6 +1415,11 @@ void rewardPigBag(GameObject* obj)
                         setEventStarted(EVENT_THEHAUNTEDMANSION, 0, 3);
                         break;
                 }
+#if REGION == REGION_JP
+                if (!(obj->param & 0x80)) {
+                    func_8002367C(obj->objectIndex);
+                }
+#endif
                 obj->state++;
             }
             return;
@@ -1451,8 +1523,10 @@ void rewardAnimalDash(GameObject* obj)
     if (!(obj->param & 0x80)) {
         func_8002367C(obj->objectIndex);
     }
+#if REGION != REGION_JP
     GAME.unk6ad = 1;
     GAME.unk736 = 1;
+#endif
     obj->state++;
 }
 
